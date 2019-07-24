@@ -67,13 +67,13 @@ Once we constructed our data frame, we have a range of handy functions at our di
 \begin{table}[]
 \caption{Basics of data frame handling}
 \label{tab:dataframecommands}
-\begin{tabular}{@{}llll@{}}
+\begin{tabularx}{\textwidth}{XXXXX}
 \toprule
                          & pandas data frame                 & R data.frame & R tibble \\ \midrule
 select rows by index     & df.iloc{[}1, ...... ..            &              &          \\
 select columns by number & df.iloc...                        &              &          \\
 select columns by name   & df{[}'mycolumn'{]} or df.mycolumn &              &          \\ \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{table}
 
 
@@ -123,9 +123,7 @@ RDS/RDA & R objects             & yes & no \\ \bottomrule
 txt files, csv files, and json files are all files that are based on text. Unlike binary file formats, you can read them in any text editor. Try it yourself to understand what is going on under the hood. 
 
 Download the example files from XXXX and open them in a text editor of your choice (for example, Notepad++, Atom, emacs, .... [offer some choice here]). 
-As you will see, a csv file internally just looks like a bunch of text in which each line represents a row and in which the columns are separated by a comma (hence the name comma seperated values (csv)).
-
-[screenshot 1 here]
+As you will see (Figure~\ref{fig:csv-in-editor}), a csv file internally just looks like a bunch of text in which each line represents a row and in which the columns are separated by a comma (hence the name comma seperated values (csv)).
 
 Looking at the data in a text editor is a very good way to find out what happens if reading your files into a data frame does not work as expected - which can happen more frequently than you would expect.
 
@@ -137,9 +135,15 @@ We all know the phenomenon of garbled special characters, like German umlauts or
 
 In principle, this issue has been solved due to the advent of Unicode. Unicode allows to handle all characters from all scripts, including emoticons, Korean and Chinese characters, and so on. The most popular encoding for Unicode characters is called UTF-8, and it has been around for decades. 
 
-To avoid any data loss, it is advisable to make sure that your whole workflow uses UTF-8 files. By far most modern applications support UTF-8, even though some still by default use a different encoding (e.g., 'Windows-1252') to store data. As screenshot 2 illustrates, you can use a text editor to find out what encoding your data has, and many editors also offer an option to change the encoding. However, you cannot recover what has been lost (e.g., if at one point you saved your data with an encoding that only allows 256 different characters, it follows logically that you cannot recover that information).
+To avoid any data loss, it is advisable to make sure that your whole workflow uses UTF-8 files. By far most modern applications support UTF-8, even though some still by default use a different encoding (e.g., 'Windows-1252') to store data. As Figure~\ref{fig:csv-in-editor} illustrates, you can use a text editor to find out what encoding your data has, and many editors also offer an option to change the encoding. However, you cannot recover what has been lost (e.g., if at one point you saved your data with an encoding that only allows 256 different characters, it follows logically that you cannot recover that information).
 
-[screenshot 2, show encoding in editor]
+
+\begin{figure}
+\centering
+\includegraphics[width=0.9\linewidth]{figures/ch6_csv-in-editor}
+\caption{A csv file opened in a text editor, illustrating that the columns are separated by commas, and showing the encoding and the line endings.}
+\label{fig:csv-in-editor}
+\end{figure}
 
 As we will show in the practical code examples below, you can also force Python and R to use a specific encoding, which can come in handy if your data arrives in a legacy encoding.
 
@@ -162,9 +166,9 @@ Second, there may be different ways of how to deal with strings as values in a c
 \todo[inline]{add also json, stata, spss to table}
 
 
-\subsection{File handling beyond dataframes}
+\subsection{File handling beyond data frames}
 
-\
+\todo[inline]{Here something about other ways of interacting with files, e.g. reading a list of keywords/sentiment bla bla from a line-ending separted text file; reading a folder with texts, reading json files into a dict (how does that work in R?)}
 
 
 \section{Gathering data from online sources}
