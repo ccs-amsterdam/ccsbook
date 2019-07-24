@@ -1,0 +1,71 @@
+\documentclass[a4paper,12pt]{book}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern,textcomp}
+\usepackage{graphicx}
+\usepackage{booktabs}
+
+
+%to make line breaks possible at more parts within \texttt
+\renewcommand{\texttt}[1]{%
+	\begingroup
+	\ttfamily
+	\begingroup\lccode`~=`/\lowercase{\endgroup\def~}{/\discretionary{}{}{}}%
+	\begingroup\lccode`~=`[\lowercase{\endgroup\def~}{[\discretionary{}{}{}}%
+	\begingroup\lccode`~=`.\lowercase{\endgroup\def~}{.\discretionary{}{}{}}%
+	\begingroup\lccode`~=`(\lowercase{\endgroup\def~}{(\discretionary{}{}{}}%
+	\catcode`/=\active\catcode`[=\active\catcode`.=\active\catcode`(=\active
+	\scantokens{#1\noexpand}%
+	\endgroup
+}
+
+\usepackage[colorinlistoftodos]{todonotes}
+
+
+\usepackage{listings}
+\lstset{
+	basicstyle=\footnotesize\ttfamily,
+	columns=flexible,
+	breaklines=true,
+	numbers=left,
+	%stepsize=1,
+	numberstyle=\tiny,
+	backgroundcolor=\color[rgb]{1,0,.4}
+}
+
+\lstnewenvironment{exampler}{\lstset{basicstyle=\footnotesize\ttfamily,
+		columns=flexible,
+		breaklines=true,
+		numbers=left,
+		%stepsize=1,
+		numberstyle=\tiny,
+		backgroundcolor=\color[rgb]{0.3,0.3,1}}}{}
+
+
+\lstnewenvironment{examplepy}{\lstset{basicstyle=\footnotesize\ttfamily,
+		columns=flexible,
+		breaklines=true,
+		numbers=left,
+		%stepsize=1,
+		numberstyle=\tiny,
+		%backgroundcolor=\color[rgb]{.7,.7,.7}}}{}
+		backgroundcolor=\color[rgb]{0,.6,.25}}}{}
+
+
+
+\begin{document}
+
+\author{Wouter van Atteveldt, Damian Trilling, Carlos Arcila}
+\title{Computational Analysis of Communication}
+\date{\today}
+
+\frontmatter
+\maketitle
+\tableofcontents
+
+\mainmatter
+\input{chapter06/chapter06.tex}
+
+\backmatter
+% bibliography, glossary and index would go here.
+
+\end{document}

@@ -102,3 +102,12 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# latex
+*.aux
+*.synctex.gz
+*.toc
+*~
+
+# compiled output (maybe remove later fromm .gitignore)
+*.pdf
