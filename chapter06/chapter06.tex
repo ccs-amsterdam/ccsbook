@@ -77,6 +77,7 @@ select columns by name   & df{[}'mycolumn'{]} or df.mycolumn &              &   
 \end{table}
 
 
+\todo[inline]{maybe also (somewhere in this chapter) say more about basic properties of data frames, such as there length, shape, ...}
 
 
 
@@ -201,7 +202,6 @@ df3.to_csv('mynewfile.csv')
 
 
 
-
 \subsection{File handling beyond data frames}
 Dataframes are a very useful data structure for organizing and analyzing data, and will come back in many examples in this book.
 However, not all things that we might want to read from a file needs to go into a dataframe.
@@ -314,4 +314,17 @@ And then do the same for negative reviews.
 \section{Gathering data from online sources}
 \label{sec:gathering}
 
+\todo[inline]{WHAT SHOULD WE COVER HERE THAT IS NOT COVERED IN CHAPTER 13 (WEB SCRAPING), given that we also plan to cover API's there?}
+
+Many data that are interesting to those analyzing communication are nowadays gathered online.
+We can distinguish several scenarios of very different complexity.
+
+First, data sets may already been compiled as, for instance, csv files or json files and just need to be downloaded.
+While we could load these ressources directly from within our R or Python-script, if these are single files, we probably would rather just download them manually and use the methods we already learned in this chapter to read them into a data frame. This also has the advantage that we do not cause any unnecessary load by downloading the same data over and over again when re-running our code.
+
+Second, api with wrapper
+
+Third, general api handling
+
+Lastly, we might want to automatically download large quanties of web pages themselves and extract relevant information. For instance, we might want to retrieve customer reviews from website or articles from news sites. This usually involves a more sophisticated approach called \emph{web scraping}, to which we devote a whole chapter later in this book (ADD REFERENCE CHAPTER WEB SCRAPING)
 
