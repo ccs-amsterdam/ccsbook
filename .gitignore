@@ -109,5 +109,8 @@ venv.bak/
 *.toc
 *~
 
+# MacOS-shit
+.DS_Store
+
 # compiled output (maybe remove later fromm .gitignore)
 *.pdf
