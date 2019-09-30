@@ -5,6 +5,7 @@
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{tikz}
+\usepackage{url}
 
 %to make line breaks possible at more parts within \texttt
 \renewcommand{\texttt}[1]{%
@@ -52,6 +53,7 @@
 		backgroundcolor=\color[rgb]{0,.6,.25}}}{}
 
 \newcommand{\refsec}[1]{Section~\ref{sec:#1}}
+\newcommand{\reffig}[1]{Figure~\ref{fig:#1}}
 
 
 
@@ -62,6 +64,8 @@
 		%stepsize=1,
 		numberstyle=\tiny,
 		backgroundcolor=\color[rgb]{.7,.7,.7}}}{}
+
+\includeonly{chapter02/chapter02}
 
 \begin{document}
 
@@ -75,7 +79,8 @@
 
 \mainmatter
 
-\setcounter{chapter}{2}
+\setcounter{chapter}{1}
+\include{chapter02/chapter02}
 \include{chapter03/chapter03}
 
 \setcounter{chapter}{5}
