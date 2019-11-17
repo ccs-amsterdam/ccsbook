@@ -1,0 +1,379 @@
+\section{About variables and data types}
+
+Now that you have all the necessary software in you own computer we can move on to the very basics of programming in R and Python\footnote{If you have not installed the require software yet and still want to follow this chapter, you may use available online platforms for RStudio (https://rstudio.cloud/) and Python (https://www.python.org/shell/).}.  Remember that both programming languages are object-orientated, which means that we normally have to create an object, upload it into the workspace and operate with it. Simplifying all technical details behind it, we might say that an object is any data structure that has some attributes and methods. You can think of an object as a classical variable you will work with, or as a function you need to store for later deployment. Every time you create an object and upload it into the workspace, you can call it back to see its value by just typing its name in the R or Python consoles; or if your are in IDE's such as RStudio or Sypder you can go to a window where there is a list of all uploaded objects or variables, their types and values.  In fact, creating an object in R and Python is extremely easy using the operators \textless- or =, respectively. We have to distinguish between objects and classes. A class is a blueprint or a prototype for an object, meaning that you include in a class a set of attributes that will characterize any object created or initiated from that class. As a matter of simplicity we will focus first on creating and understanding objects themselves and later in this section we will briefly explain how create a class. 
+
+Let's begin again with R.  As a statistical programming language, R users need to deal with different types of data and perform multiple operations with them. R supports a variety of data types that include: vectors (numeric, character, logical, etc.), lists, matrices, arrays, factors and data frames. For those first-time programmers with knowledge of software such as SPSS or Excel (where you normally only deal with a data frame of rows and columns), this might sound to be a little bit annoying, but in fact it will give much more control on your data analysis process and, in general, on your computational approach. For a very nice and complete explanation of data types in R check  the book by Field, Miles \& Field~\cite{field2012discovering}, but for this book we need to be sure you understand the fundamentals in order to continue to the next chapters. 
+
+First, think of the \emph{vector object} as the basic data type.  There are six types of these atomic vectors: numeric, integer, complex, character, logical and raw. Imagine you want to begin by storing a single numeric value as an object called x\emph{a} with the value of 100. Go to your R console and type:
+
+%!example(name='Test')
+%!chunk(lang='r')
+a <- 100
+print(class(a))
+%!chunk(lang='py')
+a = 100
+# make it longer
+print(type(a))
+%!done
+
+
+The first line is mandatory to create the object \emph{a} and store its value 100; and the second is illustrative and will give you the class of the created object, in this case "numeric". Notice that we are using two native functions of R, \emph{print} and \emph{class}, and including \emph{a} as an argument of \emph{class}, and the very same \emph{class(a)} as an argument of \emph{print}. This is the way we work in object-orientated programming and if you compare to other languages you will realize that is a very simple syntax indeed. Once created, you can now perform multiple operations with \emph{a} and other values or new variables. For example, you could transform \emph{a} by multiplying \emph{a} by 2, create a new variable \emph{b} of value 50 and then create another new object \emph{c} with the result \emph{a} + \emph{b}:
+
+%!example(name='Test 2',output='hide')
+%!chunk(lang='r')
+a <- a * 2
+b <- 50
+c <- a + b
+print(c)
+%!done
+
+Silly test example from Wouter: This code does not compile
+
+%!example(name='Test 2',eval=False)
+%!chunk(lang='py')
+print 'python 2'
+%!done
+
+
+You will get a new numeric vector object \emph{c} of value 250. And this is the way you will mostly operate with data when working with R. Notice that so far you have only used numeric vector objects, but we have some more. Numerics support floats numbers (i.e. 20.5) as well as integers (i.e. 20), however if you want to limit your object to just integers you can change its class just by adding \emph{L} to the number when creating the variable. Same if you want to work with a complex numeric object that includes some declared variable and/or formulae, you just create such object with the internal variables and operators. Let’s see both cases:
+
+\begin{exampler}
+d <- 20L
+print(class(i))
+e <- 100+50x
+print(class(e))
+\end{exampler}
+
+As a computational analyst of communication you will usually work with text objects or string of characters, which are called character vector objects in R, and you can create them just by adding single or double quotes to the value of the variable. Just think of a tweet or a Facebook post that you want to load into your workspace for natural language processing analysis:
+
+\begin{exampler}
+tweet <- "I am happy learning R!!!"
+print(class(tweet))
+\end{exampler}
+
+There are two more types. First, the raw object produces raw bytes from string of characters and is created just by adding the command \emph{charToRaw} before the object. The second is the logical object, which stores a basic constant such as TRUE or FALSE. Here you can see how to create them:
+
+\begin{exampler}
+raw_string <- charToRaw("Any text")
+print(class(v raw_string))
+logical_operator <- TRUE 
+print(class(logical_operator))
+\end{exampler}
+
+Take into account that you can easily operate two numeric objects or one numeric with one integer, but there might be some restrictions when putting together two different types of data, such as multiplying a character by a number. Table~\ref{tab:vector_objects} summarizes all these initial data types.
+
+\begin{table}[ht]
+\label{tab:vector_objects}
+\caption{Classes of vector objects in R}
+\centering
+\begin{tabular}{c c c p{2cm}}
+\hline\hline
+Data type & Example & Code \\ [0.5ex]
+\hline
+Numeric&1, 2.5, 100, 2500.38& a\textless- 100 \\
+Integer&20L, 100L&d\textless- 20L \\
+Complex& 100+50x, 8*3i &e\textless- 100+50x \\
+Character&   \parbox[t]{4cm}{\centering 'a', "I am happy learning R!!!", "200", 'R', "FALSE"} & tweet \textless- "I am happy learning R!!!" \\
+Raw& \parbox[t]{4cm}{\centering "Any text" stored as:  41 6e 79 20 74 65 78 74} & raw\_string \textless- charToRaw("Any text") \\
+Logical& TRUE, FALSE & logical\_operator \textless- TRUE  \\ [1ex]
+\hline
+\end{tabular}
+\label{table:nonlin}
+\end{table}
+
+Thus, by bringing together a set of same-class vector objects we can create a vector. A vector is a basic structure of R and holds different elements of the same type (numeric, integer, complex, character, logical, raw) in a one-dimensional array.	You will use vectors very often to run computation and we can easily create them using the c() function. For example, we can create a numeric vector with the scores of a class of 10 students or a character vector of three countries:
+
+\begin{exampler}
+scores <- c(8, 8, 7, 6, 9, 4, 9, 2, 8, 5)
+class(scores)
+countries <- c('Netherlands', 'Germany', 'Spain')
+class(countries)
+\end{exampler}
+ 
+As you see, the data types will correspond to only one class, either numeric or character, since vectors contain only one class. If we create the vector with two different data types, R will recognize one class forcing some elements to be transformed into the dominant class. For example, if you re-build the vector of scores (a new set of values will be loaded into the workspace) with a new student who has been graded with the letter \emph{b} instead of a number, your vector will become a character vector:
+
+\begin{exampler}
+scores <- c(8, 8, 7, 6, 9, 4, 9, 2, 8, 5,  'b')
+class(scores)
+print(scores)
+\end{exampler}
+
+Beyond the class (which is a powerful function because you can create new classes your self), you can also get the R internal type of the object (storage mode), using the typeof() function:
+
+\begin{exampler}
+typeof(scores)
+\end{exampler}
+
+Having a vector means that you can operate with it in many ways. The basic is \emph{indexing}, which is a technique that you will use with other data types (list, arrays, matrices, data frames) and in other languages such as Python.  Indexing helps you to locate any given element or group of elements within a vector using its or their positions. In R all positions begin in the number 1 (you will see that in Python and other languages they will begin on 0) and you can index using the square brackets [] over the vector:
+
+\begin{exampler}
+scores[11]
+scores[1, 10]
+scores[1:10]
+\end{exampler}
+
+In the first case, we asked for the score of the 11th student ("b"); in the second we asked for the 1st and 10th position ("8"  "5"); and finally for all the elements between the 1st and 10th position ("8" "8" "7" "6" "9" "4" "9" "2" "8" "5"). As the vector was forced to be a string, all the elements –even numeric- are now characters. Indexing is very useful to access elements and also to create new objects from a part of another one. Imagine you want to create a new numeric vector by \emph{slicing} the vector scores with just the numeric values and change its class using the function as.numeric:
+
+\begin{exampler}
+scores2 <- as.numeric(scores[1:10])
+typeof(scores2)
+\end{exampler}
+
+And voilà, we have a new object called scores2 with the original values of the vector scores and of type \emph{double} (double precision floating point numbers, which is equivalent to the class numeric).  We can do many other things like adding a value to an existing vector or creating a vector from scratch by using a function. In the first case, you can include the new numeric score of 7 (imagine we translate the grade \emph{b} to the number 7) to our vector by any of the two following procedures:
+
+\begin{exampler}
+c(scores2, 7)
+\end{exampler}
+
+or
+
+\begin{exampler}
+append(scores2, 7)
+\end{exampler}
+
+If you want to be sure that the new values are correctly loaded into your workspace, you should apply any of these operations to the vary object:
+
+\begin{exampler}
+scores2 <- c(scores2, 7)
+\end{exampler}
+
+or
+
+\begin{exampler}
+scores2 <- append(scores2, 7)
+\end{exampler}
+
+Same in case you want to remove an element from your vector. For dropping the 11th student's score recently included you just index negatively the value of the vector:
+
+\begin{exampler}
+scores2 <- scores2[-11]
+\end{exampler}
+
+For the second case, we might wish to create a vector from an operator or a function, without typing each value. Using the operator ':', we can create numeric vectors with a range of numbers, from 1 to 20 or from -5 to 5:	
+
+\begin{exampler}
+range1 <- 1:20
+range2 <- -5:5
+\end{exampler}
+
+On the other hand, you can use a function to create more complex vectors. For example the function seq() will help you to generate regular sequences by providing the number of points of an interval.  Imagine you want to create a numeric vector than begins in point 0 and finishes in point 1, including all possible values that separate those two points by a step of 0.2. Let's create that vector and check the amount of created elements by using the function length:
+
+\begin{exampler}
+my_sequence <- seq(0,1, by=0.2)
+length(my_sequence)
+\end{exampler}
+
+So far, we have focused on vectors, but there are more data types in R (lists, matrices, arrays, factors, data frames). Now that you have a clear idea of what vector objects and indexing are, and that you have the basics to create and operate with vectors, it will be much easier to understand the other data types. The first R-object that you must be familiar with is the list, which is similar to vectors but may contain different type of elements, functions and even other lists. We create lists in a similar way to vectors, except that we have to add the word \emph{list} before declaring the values. Let's build a list with four different kind of elements, a numeric object, a character object, a square root function (sqrt) and a numeric vector:
+
+\begin{exampler}
+my_list <- list(33, 'Twitter', sqrt, c(1,2,3,4))
+class(my_list)
+\end{exampler}
+
+You can check this is a list of four elements and you can use any of these elements (even the function to get the square root of 16!) using the indexing:
+
+\begin{exampler}
+length(my_sentence)
+my_list[[3]](16)
+\end{exampler}
+
+Matrices are two-dimensional rectangular data sets that include values in rows and columns. This is the kind of data you will have to deal with in many analyses shown in this book, such as those related to machine learning.  To create a matrix in R you have to use the function "matrix" and create a vector of values with the indication of how many rows and columns will be on it. We also have to tell R if the order of the values is determined by the row or not.  Let’s create a simple matrix of 0 and 1’s, and check its shape by using the dimension function:
+
+\begin{exampler}
+my_matrix <- matrix( c(0,0,1,1,0,1), nrow = 2, ncol = 3, byrow = TRUE)
+dim(my_matrix)
+\end{exampler}
+
+Create a new matrix (my\_matrix2) and repeat the above code typing FALSE in the byrow argument and you will better understand how it changes the values of the matrix, even when the shape (2x3) remains identical. As you may cleverly imagine, we can operate with matrices, such as adding up two of them:
+
+\begin{exampler}
+my_matrix + my_matrix2
+\end{exampler}
+
+Another powerful data type are the arrays, which might be similar to matrices but without the restriction of the two-dimensional rectangular space. This means that you create your own dimensions, indicating (in order) the number of rows, columns and matrices of the array. Your will need vectors as inputs and dimensions as parameters. For example, three-dimensional arrays are fundamental when writing pixel values and coding images.  By now, you can create a simple illustration of a 3D array:
+
+\begin{exampler}
+3d_array <- array(c('green', 'yellow', 'red'),dim = c(3,3,3))
+dim(3d_array)
+print(3d_array)
+\end{exampler}
+
+The next R-object is the factor, which might be very useful when working with categorical data. When dealing with factors, you can store the values of a vector with their corresponding labels, which in turn will produce levels. If you create a factor, it will automatically read the labels from the values of the vector, but you may manually change those levels. Let's see the next lines of code. The first line will create again a vector of scores of ten students. Then we automatically convert the vector into a factor (reading the very same values as labels) and finally we create the labels ("fail" or "pass") for each of the possible grades:
+
+\begin{exampler}
+scores <- c(8, 8, 7, 6, 9, 4, 9, 2, 8, 5)
+factor_scores <- factor(scores)
+factor_scores_2 <- factor(scores, levels = c(1,2,3,4,5,6,7,8,9,10), labels = c("fail", "fail", "fail", "fail", "fail", "pass", "pass", "pass", "pass", "pass"))
+\end{exampler}
+
+The factor-type object factor\_scores\_2 will be probably more useful to deal with a bigger amount of students. While we have only two levels (which can be identified with the function nlevels), we can have many values to connect with those labels.
+
+Finally, we have the wonderful data frames. This is the friendly type of data that you find in SPSS or Excel that will help you in a wide range of statistical analysis (though in more advanced exercises such in machine learning you will not be able to use them any more!).  A data frame is a tabular data object that includes rows (usually the instances) and columns (the variables). In a three-column data frame, the first variable can be \emph{numeric}, the second \emph{character} and the third \emph{logic}, but the important thing is that each variable is a vector and that all these vectors must be of the same length. We create data frames from scratch using the data.frame() function.  Let’s generate a simple data frame of three instances (each case is an author of this book) and three variables of the types numeric (\emph{age}), character (\emph{country} where he obtained his master degree) and logic (\emph{living abroad}, weather he currently lives out of his born country). We will create the values of age and living abroad, but we will re-use the values of the above created character vector \emph{conutries} for this exercise:
+
+\begin{exampler}
+authors <- data.frame(age = c(38, 36, 39), countries, living_abroad= c(FALSE, TRUE, TRUE))
+print(authors)
+\end{exampler}
+
+When you print the data frame, you will obtain something like this:
+
+\begin{exampler}
+  	age   	countries 		living_abroad
+1 	 38 	Netherlands         	FALSE
+2 	 36 	Germany         	TRUE
+3 	 39    	Spain          		TRUE
+\end{exampler}
+
+Notice that you have the label of the variables at the top of each column and that it creates an automatic numbering for indexing the rows.  You will learn more about data frames and of all data types in chapter [DATA STRUCTURES], where we will also introduce you to some libraries to deal with different data structures. Now we have to move on to variables and data types in Python.
+
+As an object-orientated language programming, Python allows us to create objects, variables or functions, and load them into its workspace. The fundamentals are the same of R, so if you correctly understood the last explanations you will find very easy to do the same in Python. However, keep in mind that you will probably have to develop more skills to master Python since this programming language is not constrained to statistics and is flexible for many more computational tasks, both at small and large scale. This means that its syntax might become more complex than R, even when you will not need to know all of it to run most of computational analysis of communication.  For a deeper and understandable reading of Python programming we recommend the book by M. Lutz\cite{lutz2013learning}. Nonetheless, in the next paragraphs we will introduce you to the variables and data types in Python, so you can easy follow the book and the proposed exercises.  
+
+A good way to start is to understand the built-in object types in Python and how to operate with them. Similarly to R we have numeric, integer, complex, character and logical, which we will now call float, integer, complex, string and boolean, respectively. Objects will also include lists, tuples, sets, dictionaries, functions and classes. If you are missing vectors, arrays or matrices as objects, do not worry, even when they are not built-in objects in Python, we can create them using specialized libraries such as Numpy (see chapter [DATA STRUCTURES]). Now you can open your Python console and we can create our first objects and load them into our workspace. First, let’s create a couple of objects \emph{x} and \emph{yy} containing only numbers as values, and third object \emph{z} that contains the result of an arithmetic operation between those two:
+
+\begin{examplepy}
+x = 40
+y = 512.23
+z = x * y
+\end{examplepy}
+
+If we now use the native function \emph{type} we will get that \emph{x} is an integer and \emph{y} and \emph{z} floats:
+
+\begin{examplepy}
+type(x)
+type(y)
+type(z)
+\end{examplepy}
+
+So far it is pretty similar to R! You can now create a complex number, which takes two parameters: a real part and an imaginary part:
+
+\begin{examplepy}
+complex = complex(20 + 8i)
+type(complex)
+\end{examplepy}
+
+We will deal a lot with character objects in English and other languages, for which we will use an object composed by a series of characters called string:
+
+\begin{examplepy}
+facebook_post = 'Hello mates! Does anyone find Python easier than R?'
+type(facebook_post)
+\end{examplepy}
+
+Pretty similar to R we create logical objects, called Booleans in Python. Just notice that True or False values are case sensitive and while in R you must capitalize the whole value (TRUE, FALSE), in Python we only capitalize the first letter:
+
+\begin{examplepy}
+boolean = True
+type(boolean)
+\end{examplepy}
+
+Lists are mutable sequences of different types of elements. In other words, they are ordered collections of objects with no fixed size. We build this Python object using square brackets [], instead of parentheses (), as we did in R. Pay attention to this detail because in Python we will create tuples if you use the parentheses. Tuples are similar to lists, except that they are immutable (which means that they are constant or unchangeable and you can not freely change their values, just as numbers or strings).  We can now create our first list and tuple, and get their sizes with the native function len:
+
+\begin{examplepy}
+my_list = [1, 0, -1, 'positive', 'neutral', 'negative']
+len(my_list)
+my_tuple = (1, 0, -1, 'positive', 'neutral', 'negative')
+len(my_tuple)
+\end{examplepy}
+	
+We have created two sequences of six objects (three integers and three strings) that represent common numeric and categorical values for sentiment analysis. The first sequence is a list and the second a tuple. We can get any value of the list or tuple by indexing its position, just keep in mind that indexing in Python begins in 0 and not in 1 like in R. Let's get the value 'neutral' in each:
+
+\begin{examplepy}
+my_list[4]
+my_tuple[4]
+\end{examplepy}
+
+Imagine now that you decide – by any reason - that the value 'neutral' should be substituted by the value 'informative' in the created sequences. You can do it updating the object:
+
+\begin{examplepy}
+my_list[4] = 'informative'
+my_tuple[4] = 'informative'
+\end{examplepy}
+
+The list will be correctly updated, but the code you run to change the tuple will give you an error (with some message such as: "'tuple' object does not support item assignment"). Thus, tuples are immutable and are worth for certain types of operations because they give stability to a particular computation. Notice that we can include any object into lists or tuples. For example, if we include a list into another list we create a nested list, which might be very useful for representing matrices or multi-dimensional arrays in Python:
+
+\begin{examplepy}
+matrix = [[1, 2, 3], [4, 5, 6], [7,8,9]] 
+\end{examplepy}	
+
+We also have another Python object called sets. A set is a mutable collection of \emph{unique} elements (you cannot repeat a value) with no order. As it is not properly ordered, you cannot run any indexing or slicing operation on it. The immutable version of sets are called frozensets:
+
+\begin{examplepy}
+colours = set(['blue', 'yellow', 'red'])
+type(colours)
+colours2 = frozenset(['blue', 'yellow', 'red'])
+type(colours2)
+\end{examplepy}
+
+Finally, Python has dictionaries, another helpful object.	 Dictionaries contain unordered and mutable collections of objects that contain certain information in another object. Python generates this data type in form of { 'key' : \textless value \textgreater} in order to map any object by its key and not by its relative position in the collection. This means that you will index using the key. You will find dictionaries very useful in your journey as a computational scientist or practitioner, since they are flexible ways to store and retrieve structured information. We can create them using the curly brackets {} and including each key-value pair as an element of the collection:
+
+\begin{examplepy}
+sentiments = {"positive" : 1, "neutral" : 0, "negative" : -1}
+type(sentiments)
+\end{examplepy}
+
+An advantage of the dictionaries is that you can create an open object and fill later its values. This is probably the way you will see dictionaries in code:
+
+\begin{examplepy}
+grades =  {}
+grades['A'] = 4
+grades['B'] = 3
+grades['C'] = 2
+grades['D'] = 1
+print(grades)
+\end{examplepy}
+
+As in other objects you can index its elements, by keep in mind that you do it using the key and not the position in the sequences. For example, we want to get the values of the object 'positive' in the dictionary \emph{sentiments} and of the object 'A' in the dictionary \emph{grades}:
+
+\begin{examplepy}
+print(sentiments['positive'])
+print(grades['A'])
+\end{examplepy}
+
+Now that you have gone through most types of objects in R and Python, we need to remember that objects are different from classes, as we mentioned at the beginning of this section. A class is a prototype with attributes that helps to build an object when it is created from that class. R has three class systems: S3 class, S4 class and Reference Class.  Imagine that we have some data of a news item that we want to convert to a class using the basic S3 class:
+
+\begin{exampler}
+news <- list(headline = "Scientists discover how to cure AIDS", date = 21012030, positive_tone = TRUE)
+class(news) <- "news_piece"
+\end{exampler}
+
+Or using Reference Class:
+
+\begin{exampler}
+setRefClass("news_piece")
+\end{exampler}
+
+Then you have stored the information of the class news\_piece.  You can do this also with S4 class, which allows you to define the formal structure of the class:
+
+\begin{exampler}
+setClass("news_piece", slots=list(headline="character", date="numeric", positive_tone="logical"))
+\end{exampler}
+
+Using S4 class definition you can create a new object using the attributes of the created class, which is very useful to maintain consistency:
+
+\begin{exampler}
+news2 <- new("news_piece", headline="Thousands of new refugees run from hunger after war begins", date=22012030, positive_tone = FALSE)
+\end{exampler}
+
+On the contrary, Python has just a single class. We define the class in a similar way we will define functions (see next section). We use the keyword class and, in some cases, the built-in \_\_init\_\_() function.  Let's create a very single class in Python including a numeric object in the class and later using that class to define a new object:
+
+\begin{examplepy}
+class MyWeight:
+...    	 x = 74
+weigth = MyWeight()
+print (weigth.x)
+\end{examplepy}
+
+As you see, we created the object \emph{weight} using the properties (x in this case) of the class MyWeight. This procedure is probably of limited use but good to illustrate what a class is in Python. A more interesting approach to create the class is using the \_\_init\_\_() function, which is a special function that assigns values to object properties and is executed when the class is being initiated. In simpler words, this function helps us to assign different values within the class, creating an internal structure that will be used when we create an object based on that class. You can run the next example on your Python console for a better understanding of the concept. Imagine you want to create the same class news\_piece we did in R and then use that class to create an object:
+
+\begin{examplepy}
+class news_piece:
+...     def __init__(self, headline, date, positive_tone):
+...             self.headline = headline
+...             self.date = date
+...             self.positive_tone = positive_tone
+news2 = news_piece("Thousands of new refugees run from hunger after war begins", 22012030, False)
+print(news2.headline)
+\end{examplepy}
+
+As you see, with the last line of the code we obtain a part of the created object (in this case the headline) based on the structure designed in the class news\_piece.
+
+In the next section you will learn the basics of how to write code in R and Python.

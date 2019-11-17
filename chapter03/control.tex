@@ -1,0 +1,215 @@
+\section{Simple control structures: loops and conditions}	
+
+Having a clear understanding of what an object is allows us to comprehend how object-orientated languages such as R and Python work, but now we need to get some literacy of how to write code and interact with the computer using these programs. Learning a programming language is just like learning any new language.  Imagine you want to speak Italian or you want to learn how to play the piano. First thing will be to learn some words or musical notes, and to get familiarized with some examples or basic structures. This is what we have done so far in the last sections and chapters by providing real examples of computational analysis of communication and explaining you the main types of objects you will have to deal with in R and Python. In the case of Italian or piano, you would have to learn next some grammar: How to form sentences in different times or how play some accords and reproduce patterns, respectively. And this is exactly how we should now move on to acquiring computational literacy; by learning some rules to make the computer do exactly  what you want.
+
+Remember that you can interact with R and Python directly on their consoles just by typing any given command on the shell. However, when you begin to use several of these commands and combine them with a specific syntax you will need to put all these instructions into a script that can run partially or entirely. Scripts are very useful as the syntax of our code becomes more complex and you move to many levels of \emph{indentation} (logical empty spaces - 2 in R and 4 in Pyhton - depicting blocks and sub-blocks on your code structure) that can result messy on a shell. Thus, to learn how to create functions and simple control structures you should create and save documents (i.e. .r or .py) that we call scripts. 
+
+And this is the way computer programs work: you give them some \emph{statements} (directly or from a script) to which they react. Statements are just written instructions that are executed by the console.  We call a sequence of these statements a \emph{computer program} . In the previous section, when we created objects or \emph{variables} (i.e. a \textless- 100 or a = 100) we already dealt with the basic statement, which is called \emph{assignment statement}. But the statements can be more complex and include many internal components, such as \emph{assignment statement}, which are representations of values that combine variables, constants and functions (i.e.  x+1 AND z\textless100). There are some specific expressions (such as \emph{lists of comprehension} in Python) that we will discuss later, but for now you can notice that by using statements, expressions and variables you have the basics for computer programming.
+
+Fortunately, we have great syntactic tools to write code. Both, R and Python have \emph{loops} and \emph{conditional statements}, which will make your coding journey much easier and with more sophisticated results because you can control the way your statements are executed. By controlling the flow of instructions you can deal with a lot of challenges in computer programming such as iterating over unlimited cases or executing part of your code as a function of new inputs. 
+
+Firstly, loops are sequences that are executed once, indefinitely or until a certain condition is reached. This means that you can operate over a set of objects as many times as you want just by giving one instruction. The most common types of loops are \emph{for}, \emph{while} and \emph{repeat} (do-while). Let’s understand this concept by explaining the for-loops. Imagine you have a list of headlines as an object either on R or Python and you want simple code to print out the length of each message. Of course you can go headline by headline using the indexing, but you will get bored or will not have time enough if you have thousands of cases. Thus, the idea is to operate a loop in the list so you can get all the results, from the first until the last element, with just one instruction.  The syntax of the for-loop in R is:
+
+\begin{exampler}
+for (val in sequence)
+{
+statement
+}
+\end{exampler}
+
+Now you can go to R and create a new R document and then run the whole next script to check how to get the number of characters of each headline, both by a manual procedure and by an automatic procedure using a for-loop:
+
+\begin{exampler}
+#This script creates in R a list of headlines and shows two ways to count the number of characters of each string
+#The first way is manual 
+headlines <- list ('US condemns South new terrorist  attacks', 'New elections forces UK to go back to the UE', 'Venezuelan president is dismissed') 
+print('manual results:	')
+print(nchar(headlines[1]))
+print(nchar(headlines[2]))
+print(nchar(headlines[3]))
+#and the second is using a for-loop
+print('for-loop results:')
+for (x in headlines){
+  print(nchar(x))
+}
+\end{exampler}
+
+You can notice that you have same results, but with the loop you can automatize your operation writing few lines of code. As we will stress along this book, a good practice in coding is to be efficient and harmonious in the amount of code we write, which is another justification for using loops.  
+
+In Python the syntax of the for-loop is:
+
+\begin{examplepy}
+for <var> in <iterable>:
+    <statement(s)>
+\end{examplepy}
+
+Thus, you can go to Python and create a similar script, as the example below:
+
+\begin{examplepy}
+#This script creates in Python a list of headlines and shows two ways to count the number of characters of each string
+#We create a list of headlines (strings):
+headlines = ('US condemns South new terrorist  attacks', 'New elections forces UK to go back to the UE', 'Venezuelan president is dismissed') 
+#The first way is manual:
+print('manual results:')
+print(len(headlines[0]))
+print(len(headlines[1]))
+print(len(headlines[2]))
+#and the second is using a for-loop
+print('for-loop results:')
+for x in headlines:
+    print(len(x))
+\end{examplepy}
+
+Another way to iterate in Python is using list comprehensions  (not available natively in R), which are a stylish way to create list of elements automatically even with conditional clauses. This is the syntax:
+
+\begin{examplepy}
+list  = [ expression for item in list if conditional ]
+\end{examplepy}
+
+To make a simple example (without any conditional clause), let's create a list with the number of characters of each headline by executing the next piece of code in your script:
+
+\begin{examplepy}
+#Another way to iterate is the list comprehensions
+len_headlines= [len(x) for x in headlines]
+print(len_headlines)
+\end{examplepy}
+
+Secondly, the conditional statements will allow you to control the flow and order of the statements written on your code. This means you can mandate the machine to do this or that, depending on a given circumstance. These statements use logic operators to test \emph{if} your condition is met (True) or not (False) and execute an instruction accordingly. Both, in R and Python, we use the clauses \emph{if}, \emph{else if} (\emph{elif} in Python) and \emph{else} to write the syntax of the conditional statements. Let's begin showing you the basic structure of the conditional statement in R:
+
+\begin{exampler}
+if (condition) {
+    Statement1
+} else {
+    Statement2
+}
+\end{exampler}
+
+Imagine you want to print the headlines of the above example only if the text is less than 40 characters long. We can include the conditional statement in the loop adding the next code to the script:
+
+\begin{exampler}
+#Print the headline if it is < 40 characters
+for (x in headlines){
+  if (nchar(x)<40) {
+    print(x)}
+  }
+\end{exampler}
+
+Or you could use the clause \emph{else} to return a missing value ('NaN') in all the cases that do not satisfy the condition of length:
+
+\begin{exampler}
+#Print the headline if it is < 40 characters and print 'NaN' in the other cases
+for (x in headlines){
+  if (nchar(x)<40) {
+    print(x)}
+  else 
+    print ('NaN')}
+\end{exampler}
+
+The syntax in Python is even simpler:
+
+\begin{examplepy}
+#Print the headline if it is < 40 characters and print 'NaN' in the other cases
+if condition_1:
+    statement_1
+elif condition_2:
+    statement_2
+else:
+    statement_3
+\end{examplepy}
+
+Notice that we have included the clause \emph{elif} in the structure (in R it is noted \emph{else if}). \emph{elif} is just another clause which statement must be executed only if an earlier condition was not satisfied. However, the reasoning behind the logic operators remains the same. Now, let's re-write all our conditional-statement exercises and include them into the above created Python script:
+
+\begin{examplepy}
+#Print the headline if it is < 40 characters
+for x in headlines:
+  if len(x)<40:
+    print(x)
+
+#Print the headline if it is < 40 characters and print 'NaN' in the other cases
+for x in headlines:
+  if len(x)<40:
+    print(x)
+  else :
+    print ('NaN')
+\end{examplepy}
+
+To finish this chapter, we will talk about \emph{functions} and \emph{methods}, which are fundamental concepts in writing code in object-orientated programming. Both are objects that we use to store a set of statements and operations that we can later use without writing the whole syntax again. This makes our code simpler and more powerful. These two concepts are similar, but the difference between them is that the functions are defined independently from the object, while methods are created based on a class, meaning that they are associated to an object. Methods and functions may include loops and conditionals, as well as any other operators.  We will illustrate how to create simple functions in R and Python, so you will have a better understating of how they work. Imagine you want to create two functions: one that computes the 60\% of any given number and another that estimates this percentage only if the given argument is above the threshold of 5. The structure of a function in R is:
+
+\begin{exampler}
+function_name <- function(arg_1, arg_2, ...) {
+   Function body 
+}
+\end{exampler}
+
+Thus we can write the next script in R to load and test these two simple functions:
+
+\begin{exampler}
+#This scripts in R creates two simple functions to estimate the 60% of any given number
+
+#The first function computes the 60% always
+por_60 <- function(x) {
+  return(x*0.6) 
+}
+print (por_60(10))
+print (por_60(4))
+
+#The second function computes the 60% ONLY IF the argument is above 5, 
+# and the other cases the function returns the very same argument
+
+por_60_cond <- function(x) {
+  if (x>5) {
+    return(x*0.6)
+  } else {
+    return(x)
+  }
+}
+print (por_60_cond(10))
+print (por_60_cond(4))
+\end{exampler}
+
+Imagine that you have a list of 5 scores and you wish to apply the function por\_60\_cond to all the scores at once using a loop. Add these lines to your code:
+
+\begin{exampler}
+#Create the list with the scores and then apply a simple loop
+scores <- list(3,4,5,6,7)
+for (x in scores)
+{
+  print(por_60_cond(x))
+}
+\end{exampler}
+
+Now, let’s see the structure of a function in Python:
+
+\begin{examplepy}
+def function_name(arg_1, arg_2, ...):
+  statement
+\end{examplepy}
+
+And adapt the above script to Python:
+
+\begin{examplepy}
+#This script in Python creates two simple functions to estimate the 60% of any given number
+
+#The first function computes the 60% always
+def por_60(x):
+  return x*0.6
+print (por_60(10))
+print (por_60(4))
+
+#The second function computes the 60% ONLY IF the argument is above 5, 
+# and the other cases the function returns the very same argument
+def por_60_cond(x):
+  if x>5:
+    return x*0.6
+  else:
+    return x
+print (por_60_cond(10))
+print (por_60_cond(4))
+
+#Create the list with the scores and then apply a simple loop
+scores = (3,4,5,6,7)
+for x in scores:
+  print(por_60_cond(x))
+\end{examplepy}
+
+So far you have taken your first steps as a programmer, but there many more advanced things to learn that are out of the scope of this book. You can find a lot of literature, online documentation and even wonderful Youtube tutorials to keep learning. We can recommend the works by M. Crawley\cite{crawley2012r}  and J. VanderPlas\cite{vanderplas2016python}  to have more insights of R and Python, respectively. In the next chapter, we will get deeper into the world of code in order to learn how and why to re-use existing code, what to do if you are stock during your programming journey and what are the best practices when coding.
