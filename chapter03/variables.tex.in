@@ -1,39 +1,72 @@
-\section{About variables and data types}
+\newcommand{\fnarrow}{\footnote{\
+  In both R and Python, the equals sign (=) can be used to assign values. In R, however, the traditional way of doing this is using an arrow (\textless-).
+  In this book we will use the equals sign for assignment in both languages, but remember that for R, (\code{x = 10}) and (\code{x <- 10}) are essentially the same.
+  }}
 
-Now that you have all the necessary software in you own computer we can move on to the very basics of programming in R and Python\footnote{If you have not installed the require software yet and still want to follow this chapter, you may use available online platforms for RStudio (https://rstudio.cloud/) and Python (https://www.python.org/shell/).}.  Remember that both programming languages are object-orientated, which means that we normally have to create an object, upload it into the workspace and operate with it. Simplifying all technical details behind it, we might say that an object is any data structure that has some attributes and methods. You can think of an object as a classical variable you will work with, or as a function you need to store for later deployment. Every time you create an object and upload it into the workspace, you can call it back to see its value by just typing its name in the R or Python consoles; or if your are in IDE's such as RStudio or Sypder you can go to a window where there is a list of all uploaded objects or variables, their types and values.  In fact, creating an object in R and Python is extremely easy using the operators \textless- or =, respectively. We have to distinguish between objects and classes. A class is a blueprint or a prototype for an object, meaning that you include in a class a set of attributes that will characterize any object created or initiated from that class. As a matter of simplicity we will focus first on creating and understanding objects themselves and later in this section we will briefly explain how create a class. 
+\newpage
 
-Let's begin again with R.  As a statistical programming language, R users need to deal with different types of data and perform multiple operations with them. R supports a variety of data types that include: vectors (numeric, character, logical, etc.), lists, matrices, arrays, factors and data frames. For those first-time programmers with knowledge of software such as SPSS or Excel (where you normally only deal with a data frame of rows and columns), this might sound to be a little bit annoying, but in fact it will give much more control on your data analysis process and, in general, on your computational approach. For a very nice and complete explanation of data types in R check  the book by Field, Miles \& Field~\cite{field2012discovering}, but for this book we need to be sure you understand the fundamentals in order to continue to the next chapters. 
+\section{About objects and data types}
 
-First, think of the \emph{vector object} as the basic data type.  There are six types of these atomic vectors: numeric, integer, complex, character, logical and raw. Imagine you want to begin by storing a single numeric value as an object called x\emph{a} with the value of 100. Go to your R console and type:
+Now that you have all the necessary software in you own computer we can move on to the very basics of data analysis in R and Python\footnote{If you have not installed the require software yet and still want to follow this chapter, you may use available online platforms for RStudio (https://rstudio.cloud/) and Python (https://www.python.org/shell/).}.
+In both languages, you write a \emph{script} or \emph{program} containing the commands for the computer to do data processing or other tasks.
+Before we move on to data processing, it is important to take a quick look at how data is actually stored in the computer,
+and the basics of processing commands.
+
+All data is stored in the computer as \emph{objects}, and each object that is stored in memory also has a name.
+You create these objects by assigning a value to a name. For example, the command \code{x = 10} creates a new object\fnarrow, named \code{x}, and stores the value 10 in it.
+This object is now stored in memory and can be used in later commands.
+
+\note{A small note on terminology:
+In programming, a distinction is often made between an object (such as the number 10) and the variable in which (a pointer to) it is store (such as \code{x}).
+However, this distinction is not very relevant for our usage. Morever, in statistics the word variable often refers to a column of data, rather than to the name of the data frame.
+For that reason, we will use the word \emph{object} to refer to both the actual object or value and its name, and will avoid the word variable. }
+
+Objects can be simple values such as the number 10, but they can also be pieces of text, whole data frames, or analysis results.
+The computer keeps track of the \emph{type}, or \emph{class}, of each object.
+You can inspect the type of an object with the \code{type} (python) or \code{class} function, as shown in example X.
+We will explain the concept of a function later, but you can essentially see it as asking a specific question or issuing a command,
+in this case the question of what the type of the given object is. 
 
 %!example(name='Test')
 %!chunk(lang='r')
-a <- 100
-print(class(a))
+a = 100
+class(a)
 %!chunk(lang='py')
 a = 100
-# make it longer
-print(type(a))
+type(a)
 %!done
+
+
+As you can see, R calls the number 'numeric', while python reports it as being 'int', short for integer or whole number.
+Although they use different names, both languages offer very similar data types.
+\reftab{types} provides an overview of the data types we will encounter most frequently in this book. 
+As you can see in the table, both python and R have very similar types for simple data such as numbers, text, and truth values.
+
+\newcommand{\fndouble}{In R, double and numeric can generally be used interchangably (there is a subtle difference, but that is not relevant here).} 
+
+\begin{table}
+  \begin{tabularx}{\textwidth}{lllll}
+    \toprule
+    \multicolumn{2}{c}{Python} & \multicolumn{2}{c}{R}& Description \\
+    \cmidrule(lr){1-2}    \cmidrule(lr){3-4}\\
+    Name & Example & Name & Example \\
+    \midrule
+    int   & \verb+1+             & integer   & \verb+1L+             & whole numbers \\
+    float & \verb+1.3+           & numeric   & \verb+1.3+           & Numbers with decimal \\
+    str   & \verb+"Spam", 'ham'+ & character & \verb+"Spam", 'ham'+ & Textual data  \\ 
+    bool  & \verb+True, False+   & logical   & \verb+TRUE, FALSE+   & The truth values \\
+    \bottomrule
+  \end{tabularx}
+  \caption{Most used data types in python and R}
+\end{table}
+    
+
+%Let's begin again with R.  As a statistical programming language, R users need to deal with different types of data and perform multiple operations with them. R supports a variety of data types that include: vectors (numeric, character, logical, etc.), lists, matrices, arrays, factors and data frames. For those first-time programmers with knowledge of software such as SPSS or Excel (where you normally only deal with a data frame of rows and columns), this might sound to be a little bit annoying, but in fact it will give much more control on your data analysis process and, in general, on your computational approach. For a very nice and complete explanation of data types in R check  the book by Field, Miles \& Field~\cite{field2012discovering}, but for this book we need to be sure you understand the fundamentals in order to continue to the next chapters. 
+
+First, think of the \emph{vector object} as the basic data type.  There are six types of these atomic vectors: numeric, integer, complex, character, logical and raw. Imagine you want to begin by storing a single numeric value as an object called x\emph{a} with the value of 100. Go to your R console and type:
 
 
 The first line is mandatory to create the object \emph{a} and store its value 100; and the second is illustrative and will give you the class of the created object, in this case "numeric". Notice that we are using two native functions of R, \emph{print} and \emph{class}, and including \emph{a} as an argument of \emph{class}, and the very same \emph{class(a)} as an argument of \emph{print}. This is the way we work in object-orientated programming and if you compare to other languages you will realize that is a very simple syntax indeed. Once created, you can now perform multiple operations with \emph{a} and other values or new variables. For example, you could transform \emph{a} by multiplying \emph{a} by 2, create a new variable \emph{b} of value 50 and then create another new object \emph{c} with the result \emph{a} + \emph{b}:
-
-%!example(name='Test 2',output='hide')
-%!chunk(lang='r')
-a <- a * 2
-b <- 50
-c <- a + b
-print(c)
-%!done
-
-Silly test example from Wouter: This code does not compile
-
-%!example(name='Test 2',eval=False)
-%!chunk(lang='py')
-print 'python 2'
-%!done
-
 
 You will get a new numeric vector object \emph{c} of value 250. And this is the way you will mostly operate with data when working with R. Notice that so far you have only used numeric vector objects, but we have some more. Numerics support floats numbers (i.e. 20.5) as well as integers (i.e. 20), however if you want to limit your object to just integers you can change its class just by adding \emph{L} to the number when creating the variable. Same if you want to work with a complex numeric object that includes some declared variable and/or formulae, you just create such object with the internal variables and operators. Let’s see both cases:
 

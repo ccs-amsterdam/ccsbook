@@ -144,7 +144,7 @@ class Chunk:
             data = msg.get('content', {}).get('data', {})
             text = msg.get('content', {}).get('text', {})
             if data:
-                yield data['text/markdown'].rstrip("\n")
+                yield data['text/plain'].rstrip("\n")
             elif text:
                 yield text.rstrip("\n")
 
