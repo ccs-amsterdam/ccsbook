@@ -1,1 +1,73 @@
 \section{Statistical modeling and prediction}
+
+Machine learning, many people joke, is nothing else than a fancy name for statistics.
+And, in fact, there is some truth to this:
+If you say ``logistic regression'', this will sound familiar to both statisticians
+and machine learning practicioners.
+Hence, it does not make much sense to distinguish between statistcs on the one hand
+and machine learning on the other hand.
+
+Still, there are some differences between traditional statistical approaches that
+you may have learned about in your statistics classes and the machine learning
+approach, even if they use the same mathematical tools. One may say that that the
+focus is a different one, and the objective we want to achieve may differ.
+
+Let us illustrate this with an example.
+
+TABLE XXXX gives an overview of dataset YYYY.
+As we can see, it contains information on ZZZZZZ.
+A typical approach would be to run a regression analysis, which could tell us
+how $x_1$, $x_2$, and $x_3$ can explain $y$.
+In an ordinary least square regression (OLS), we would estimate
+$y=\beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3$.
+
+In a typical social-scientific paper, we would then interpret the coefficients
+that we estimated, and say something like: when $x_1$ increases by 0000000000,
+$y$ increases by 9999999999999.
+We sometimes call this ``the effect of $x1$ on $y$ (even though, of course,
+it depends on the study design wether the relationship can really be interpreted
+as a causal effect).
+Additionally, we might look at the explained variance $R^2$, to assess how good
+the model fits our data.
+
+%!example(name='ols')
+%!chunk(lang='py')
+import pandas as pd
+import statsmodels.formula.api as smf
+df = pd.read_csv('datasets/mediause.csv')
+model = smf.ols(formula = 'newspaper ~ age + gender', data = df).fit()
+print(model.summary())
+%!done
+
+%!example(name='ols2')
+%!chunk(lang='r')
+TRANSLATE EXAMPLE TO R
+%!done
+
+Most traditional social-scientific analyses stop after reporting and interpreting
+the coefficients of such a model.
+
+But we can go a step further. Given that we have already estimated our
+regression equation, why not use it to do some \emph{prediction}?
+
+We have just estimated that
+
+$\textrm{newspaperreading} = -0.0896 + 0.0676 \cdot \textrm{age} + 0.1767 \cdot \textrm{gender}$
+
+By just filling in the values for a 20 year old man, or a 40 year old woman,
+we can easily calculate the expected number of days such a person reads
+the newspaper per week, \emph{even if no such person exists in the original dataset}.
+
+We learn that
+
+$\hat{y}_{man20} = -0.0896 + 0.0676 \cdot 20 + 1 \cdot 0.1767 = 1.4391$
+
+$\hat{y}_{woman40} = -0.0896 + 0.0676 \cdot 40 + 0 \cdot 0.1767 = 2.6144$
+
+This was easy to do by hand, but of course, we could do this automatically for a
+large and essentially unlimited number of cases.
+In doing so, we shift our attention from the interpretation of coefficients to
+the prediction of the dependent variable for new, unknown cases. We do not
+care about the coefficents per se, we just need them for our prediction.
+In fact, in many machine learning models, we will have so many of them that
+we do not even bother to report them.
