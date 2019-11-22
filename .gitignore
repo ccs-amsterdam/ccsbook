@@ -108,6 +108,10 @@ venv.bak/
 *.synctex.gz
 *.toc
 *~
+*.bbl
+*.bcf
+*.blg
+*.run.xml
 
 # MacOS-shit
 .DS_Store

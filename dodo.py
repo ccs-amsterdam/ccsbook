@@ -41,7 +41,7 @@ def task_tex():
             'basename': str(outf.relative_to(Path.cwd())),
             'file_dep': [fn] + list(tex_deps(fn)),
             'targets': [outf],
-            'actions': [f"pdflatex {fn}"],
+            'actions': [f"pdflatex {fn}", f"biber {fn.stem}", f"pdflatex {fn}"],
             'verbosity': 2,
             }
         

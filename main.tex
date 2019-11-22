@@ -1,3 +1,5 @@
+% !BIB TS-program = biber
+% !BIB program = biber
 \documentclass[a4paper,12pt]{book}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern,textcomp}
@@ -8,6 +10,17 @@
 \usepackage{url}
 \usepackage{wrapfig}
 
+
+\usepackage[
+backend=biber,
+style=apa,
+natbib=true,
+sortlocale=en_US,
+url=false, 
+doi=true,
+eprint=false
+]{biblatex}
+\addbibresource{references.bib}
 
 %to make line breaks possible at more parts within \texttt
 \renewcommand{\texttt}[1]{%
@@ -136,5 +149,10 @@
 
 \backmatter
 % bibliography, glossary and index would go here.
+
+\begin{small}
+\printbibliography
+\end{small}
+
 
 \end{document}
