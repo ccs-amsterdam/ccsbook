@@ -1,5 +1,5 @@
 \section{Statistical modeling and prediction}
-
+\label{sec:prediction}
 Machine learning, many people joke, is nothing else than a fancy name for statistics.
 And, in fact, there is some truth to this:
 If you say ``logistic regression'', this will sound familiar to both statisticians
@@ -13,18 +13,26 @@ approach, even if they use the same mathematical tools. One may say that that th
 focus is a different one, and the objective we want to achieve may differ.
 
 Let us illustrate this with an example.
+\texttt{mediause.csv}\footnote{You can download the file from ADD GITHUB LINK}
+contains survey data on how many days per week respondents turn to different media
+types in order to follow the news\footnote{For a detailed description of the
+dataset, see \citet{Trilling2013phd}.}. It also contains their
+age (in years), their gender (coded as female = 0, male = 1), and their education
+(on a 5-point scale).
 
-TABLE XXXX gives an overview of dataset YYYY.
-As we can see, it contains information on ZZZZZZ.
-A typical approach would be to run a regression analysis, which could tell us
-how $x_1$, $x_2$, and $x_3$ can explain $y$.
+A straightforward question to ask is how in howfar the sociodemographic
+characteristics of the respondents explain their media use.
+Social scientists would typically approach this question by running a regression
+analysis.
+Such an analysis tell us how some independent variables $x_1, x_2 \ldots x_n$
+can explain $y$.
 In an ordinary least square regression (OLS), we would estimate
-$y=\beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3$.
+$y=\beta_0 + \beta_1 x_1 + \beta_2 x_2 + \ldots + \beta_n x_n$.
 
-In a typical social-scientific paper, we would then interpret the coefficients
-that we estimated, and say something like: when $x_1$ increases by 0000000000,
-$y$ increases by 9999999999999.
-We sometimes call this ``the effect of $x1$ on $y$ (even though, of course,
+In a typical social-science paper, we would then interpret the coefficients
+that we estimated, and say something like: When $x_1$ increases by one unit,
+$y$ increases by $\beta_1$.
+We sometimes call this ``the effect of $x_1$ on $y$ (even though, of course,
 it depends on the study design wether the relationship can really be interpreted
 as a causal effect).
 Additionally, we might look at the explained variance $R^2$, to assess how good
@@ -71,3 +79,31 @@ the prediction of the dependent variable for new, unknown cases. We do not
 care about the coefficents per se, we just need them for our prediction.
 In fact, in many machine learning models, we will have so many of them that
 we do not even bother to report them.
+
+As you see, this implies that we proceed in two steps: First, we use some data
+to estimate our model. Second, we use that model to make predictions.
+
+We used an OLS regression for our first example, because it is very straightforward
+to interpret, and most of our readers will be familiar with it.
+However, a model can take the form of \emph{any} function, as long as it takes
+some characteristics (or ``features'') of the cases (in this case, people) as
+input and return a prediction.
+
+Using such a simple OLS regression approach for prediction, as we did in our
+example, can comes with a couple of problems, though.
+For instance, even though we know that the output should be something between
+0 and 7 (as that's the number of days in a week), but our model will happily
+predict that once a man reaches the age of 105 (rare, but not impossible), he
+will read a newspaper on 7.185 out of 7 days; and a one year old girl will
+even have a negative amount of newspaper reading.
+Also, more in general, it is quite an assumption to make that the relationship
+between these variables are linear -- we will therefore discuss multiple
+models that do not make such assumptions later in this chapter.
+And, finally, in many use cases, we are actually not interested in getting
+an accurate prediction of a continous number, but rather in predicting a
+category. We may want to predict whether a tweet goes viral or not, whether
+a user comment is likely to contain offensive language or not, wheter an article
+is more likely to be about politics, sports, economy, or lifestyle.
+In machine learning terms, these tasks are known as \emph{classification}.
+
+In the next section, we will outline key terms and concepts in machine learning.

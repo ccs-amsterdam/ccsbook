@@ -1,1 +1,108 @@
 \section{Principles of machine learning}
+
+\subsection{Supervised Machine Learning}
+\label{sec:supervised}
+The goal of Supervised Machine Learning can be summarized in one sentence:
+estimate a model based on some data, and then use the model to predict the
+expected outcome for some new cases, for which we do not know the outcome yet.
+Which is exactly what we have done in the introductory example in Section~\ref{sec:prediction}.
+
+But when do we need it?
+
+In short, for the following scenario: First, We have a large dataset (say, $100,000$
+headlines) for which we want to predict to which class they belong (say, whether
+they are clickbait or not). Second, for a random subset of the data (say, $2,000$ of
+the headlines), we already know the class. For example because we have manually
+coded (``annotated'') them.
+
+Before we start using supervised machine learning, though, we first need to have
+a common terminology.
+At the risk of oversimplifying matters, Table~\ref{tab:mllingo} provides a rough
+guideline of how some typical machine learning terms translate to statistical
+terms that you may be familiar with.
+
+\begin{table}
+  \centering
+\begin{tabularx}{\textwidth}{XX}
+\toprule
+machine learning lingo  & statistics lingo\\ \midrule
+feature                 & independent variable  \\
+label                   & dependent variable  \\
+labeled dataset         & dataset with both independent and dependent variables\\
+to train a model        & to estimate \\
+classifier (classification)  & model to predict nominal outcomes \\
+to annotate             & to (manually) code (content analysis) \\
+\bottomrule
+\end{tabularx}
+\caption{Some common machine learning terms explained\label{tab:mllingo}}
+\end{table}
+
+Let us explain them more in detail by walking through a typical supervised
+machine learning workflow.
+
+Before we start, we need to get a \emph{labeled dataset}.
+It may be given to us, or we need to create it ourselves.
+For instance, of we can draw a random sample of our data and use techniques
+of manual content analysis \citep[e.g.,][]{riffe2019analyzing} to
+\emph{annotate} (i.e., to manually code) the data.
+
+It is hard to give a rule of thumb of how many labeled data you need.
+It depends heavily on the type of data you have, and on how evenly distributed
+they are (after all, having $10,000$ annotated headlines doesn't help you if
+$9,990$ are no clickbait and only $10$ are).
+These reservations notwithstanding, it is fair to say that typical sizes in
+our field are (very roughly) speaking often in the order of $1,000$ to $10,000$
+when classifying longer texts \citep[see, for instance,][]{burscher2014teaching},
+even though researchers studying less rich data sometimes annotate larger
+datasets \citep[e.g., $60,000$ social media messages in][]{vermeer2019seeing}.
+
+Once we have established that this labeled dataset is available and have
+ensured that it is of good quality, we randomly split it into two datasets:
+a \emph{training dataset} and a \emph{test dataset}.\footnote{In
+  Section~\ref{sec:validation}, we discuss more advanced approaches, such
+  as splitting into training, validation, and test dataset, and cross-validation.}
+We will use the first one to train our model, and the second to test how
+good our model performs. Common ratios range from 50:50 to 80:20; and especially
+if the size of your labeled dataset is rather limited, you may want to have
+a slightly larger training dataset at the expense of a slightly smaller test
+dataset.
+
+We now \emph{train our classifier} (i.e., estimate our model using the
+training dataset). This can be as straightforward as estimating a logistic
+regression equation (we will discuss different classifiers in
+Section~\ref{sec:nb2dnn})
+It may be that we first need to create new independent variables, so-called
+features, a step known as \emph{feature engineering}, for example by transforming
+existing variables, combining them, or by converting text numerical word frequencies.
+
+But before we can actually use this classifier to do some useful work, though,
+we need to test how capable it actually is to predict the correct labels,
+given a set of features. One might think that we could just feed it the same
+input data (i.e., the same features) again and see whether the predicted labels
+match the actual labels.
+In fact, we could do that.
+But this test would not be strict enough:
+After all, the classifier has been trained on exactly these data, and therefore
+one would expect it to perform pretty well.
+In particular, it may be that the classifier is very good in predicting its
+own training data, but fails at predicting other data, because it overgeneralizes
+some idiosyncrasy in the data, a phenomenon known as overfitting\todo{add plot of overfitting}.
+
+Instead, we use the features of the \emph{test dataset} as input for our classifier,
+and evaluate in how far the predicted labels match the actual labels.
+Remember: the classifier has at no point in time seen the actual labels.
+Therefore, we can in fact calculate how often the prediction is right\footnote{We
+  assume here that the manual annotation is always right; an assumption that one
+  may, of course, challenge. However, in the absence of any better proxy for
+  reality, we assume that this manual annotation is the so-called \emph{gold standard}
+  that reflects the \emph{ground truth} as closely as possible, and that by
+  definition cannot be outperformed.}
+
+\todo[inline]{HERE ALREADY A COUPLE OF SENTENCES ABOUT PRECISION AND RECALL}
+
+
+
+\todo[inline]{ADD CODE EXAMPLE}
+
+\subsection{Unsupervised Machine Learning}
+\label{sec:unsupervised}
