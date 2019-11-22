@@ -6,6 +6,7 @@
 \newpage
 
 \section{About objects and data types}
+\label{sec:datatypes}
 
 Now that you have all the necessary software in you own computer we can move on to the very basics of data analysis in R and Python\footnote{If you have not installed the require software yet and still want to follow this chapter, you may use available online platforms for RStudio (https://rstudio.cloud/) and Python (https://www.python.org/shell/).}.
 In both languages, you write a \emph{script} or \emph{program} containing the commands for the computer to do data processing or other tasks.

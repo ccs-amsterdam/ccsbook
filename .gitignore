@@ -114,9 +114,9 @@ venv.bak/
 
 # compiled output (maybe remove later fromm .gitignore)
 *.pdf
-
+*.dvi
 .doit.db
 .idea/
 chapter03/variables.tex
-
+chapter06/chapter06.tex
 

@@ -4,56 +4,75 @@
 
 \subsection{Arranging data}
 
-In chapter [INTRODUCTION TO PROGRAMMING], we introduced basic data types: strings (which contain text), integers (which contain whole numbers, or numbers without anything 'behing the dot'), floats (floating point numbers; numbers with decimals), and bools (Boolean values, True or False). 
-We also learned that a series of multiple values (e.g., multiple integers, multiple strings) can be stored in what we call a vector (R) or a list (Python):
-\begin{exampler}
-myvector <- c (4, 6, 3, 9)
-\end{exampler}
+In Section~\ref{sec:datatypes}, we introduced basic data types: strings (which contain text), integers (which contain whole numbers, or numbers without anything 'behing the dot'), floats (floating point numbers; numbers with decimals), and bools (Boolean values, True or False). 
+We also learned that a series of multiple values (e.g., multiple integers, multiple strings) can be stored in what we call a vector (R) or a list (Python).
 
-\begin{examplepy}
+In most social-scientific applications, however, we do not deal with isolated series of values. We rather want to link multiple values to each other. One way to achieve this are dictionaries (see Section~\ref{sec:datatypes}).
+Such data structures are really useful for nested data: For example, if we would not want to store people's age but their addresses, we could store a dict within a dict.
+
+
+%!example(name='listvsdict', eval=False)
+%!chunk(lang='py')
+# A list with multiple values
 mylist = [4, 6, 3, 9]
-\end{examplepy}
 
-In most social-scientific applications, however, we do not deal with isolated series of values. We rather want to link multiple values to each other. One way to achieve this are dictionaries \ref{CHAPTERINTRO}:
-
-\begin{examplepy}
+# A dict with one value per key
 mydict = {'Anna': 40, 'Peter': 33, 'Sarah': 40, 'Kees': 70}
-\end{examplepy}
 
-Such data structures are really useful for nested data: For example, if we would not want to store people's age but their addresses, we could store a dict within a dict:
-
-\begin{examplepy}
+# A nested dict
 mydict = {'Anna': {'street': 'Herengracht', city: 'Amsterdam}, 'Peter': {'street': 'Unter den Linden', city: 'Berlin} }
-\end{examplepy}
+%!chunk(lang='r')
+# A vector with multiple values
+myvector = c (4, 6, 3, 9)
+%!done
+
 
 In fact, as we will see later in this chapter, many data that computational social scientists come in such a format. For instance, a tweet consists of the tweet text (a string), the number of likes (an integer), a list of hashtags it contains, and so on.
 
 But ultimately, for many social-scientific analysis, a tabular data format is preferred. We are used to think of observations (cases) as rows in a table, and as columns containing different things that are measured (e.g., age, gender, days per week of newspaper reading, ...). It also simplifies how we can run many statistical analyses later on.
 
-We could simply construct a list of lists to achieve such a tabular data format:
-
-\begin{examplepy}
-mytable = [['Anna', 40],
-           ['Peter', 33],
-           ['Sarah', 40],
-           ['Kees', 70]]
-\end{examplepy}
-
+We could simply construct a list of lists to achieve such a tabular data format.
 In fact, this list-of-lists technique is often used to store tabular data or matrices, and you will probably encounter it in some examples in this book or elsewhere. The list-of-lists approach is very low-level, though: If we wanted to, for instance, insert a column or a row at a specific place, writing the code to do so can be cumbersome. There are also no things like column headers, and no consistency checks: nothing would warn us if one row actually contained more 'columns' than another, which should not be the case in a rectangular table.
 
 To make our lifes easier, we can therefore use a data structure called a data frame. 
 Data frames can be generated from list-of-list structures, from dictionaries, and many others:
 
-\begin{examplepy}
+%!example(name='createdataframes', eval=False)
+%!chunk(lang='r')
+# Create two vectors that will be columns
+vector1 <- c('Anna','Peter','Sarah','Kees')
+vector2 <- c(40,33,40,77)
+
+# Let's create an array of four rows and two columns
+myarray <- array(c(vector1,vector2), dim=c(4,2)
+print(myarray)
+
+# We can convert this array to a dataframe...
+df1=data.frame(myarray)
+
+# ... or create the data frame directly from the vectors
+df2=data.frame(vector1, vector2)
+
+print(df1 == df2)
+%!chunk(lang='py')
 import pandas as pd
+
+mytable = [['Anna', 40],
+           ['Peter', 33],
+           ['Sarah', 40],
+           ['Kees', 70]]
+
+mydict = {'Anna': 40, 'Peter': 33, 'Sarah': 40, 'Kees': 70}
+
+# Let's convert both the list of lists and the dict to a data frame
 df1 = pd.DataFrame(mydict)
 df2 = pd.DataFrame(mytable)
-\end{examplepy}
 
-If you display df1 and df2, these should be identical.
+# Let's check whether they are indeed identical:
+print(df1 == df2)
+%!done
 
-\todo[inline]{ADD EXAMPLE R}
-\todo[inline]{SAY STH ABOUT DIFFERENT FLAVOURS IN R: dataframe, tibble, ...}
+In this book, we will use dataframes a lot, because they are very convenient for handling tabular data, and because they provide a lot of useful convenience functionality, instead of requiring us to re-invent the wheel all the time. In the next section, we will discuss some of them.
 
 
 
@@ -162,9 +181,10 @@ First, even though csv stands for comma separated values, one could use other ch
 
 Second, there may be different ways of how to deal with strings as values in a csv file. For instance, it may be that a specific value contains the same character that is also used as a delimiter. These cases are usually resolved by either putting all strings into quotes, putting only strings that contain such ambiguities in quotes, or by prepending the ambigous character with a specific escape character. Most likely, all of this is just handled automatically under the hood, but in case of problems, you might want to look into this and check out the documentation of the packages you are using on how to specify which strategy is to be used.
 
-Let's get practical and try out reading and writing files into a data frame:
+Let's get practical and try out reading and writing files into a data frame.
 
-\begin{examplepy}
+%!example(name='readfiles', eval=False)
+%!chunk(lang='py')
 # If the csv file looks like pandas expects it, this simple command works:
 df = pd.read_csv('test.csv')
 
@@ -192,30 +212,16 @@ df3.to_csv('mynewfile.csv')
 
 # again, we can specify encodings, delimiter, and so on, or
 # use other file formats using .to_excel etc.
-
-\end{examplepy}
-
-
-\begin{exampler}
-# add example in R
-\end{exampler}
-
+%!chunk(lang='r')
+ADD EXAMPLE R
+%!done
 
 
 \subsection{File handling beyond data frames}
 Dataframes are a very useful data structure for organizing and analyzing data, and will come back in many examples in this book.
 However, not all things that we might want to read from a file needs to go into a dataframe.
 Imagine if we have a list of words that we later want to remove from some texts (so-called stopwords, see CHAPTERXXXXXXXXXXX).
-We could make a list (or vector) of such words directly in our code:
-
-\begin{examplepy}
-stopwords = ['and', 'or', 'a', 'an']
-\end{examplepy}
-
-\begin{exampler}
-stopwords <- c('and', 'or', 'a', 'an')
-\end{exampler}
-
+We could make a list (or vector) of such words directly in our code. 
 But if we have more than a couple of such words, it is easier and more readable to keep them in an external file. We could create a file \texttt{stopwords.txt} in a text editor with one of such words per line:
 
 \begin{lstlisting}
@@ -226,18 +232,25 @@ an
 \end{lstlisting}
 
 There are several ways of reading such a file into a list.
-
 A short way to ``just get the job done'' could be:
 
-\begin{examplepy}
+
+%!example(name='filesbeyonddataframes',eval=False)
+%!chunk(lang='py')
+# bad: define stopword list in the code itself
+stopwords = ['and', 'or', 'a', 'an']
+
+# good: read stopword list from external text file
 stopwords =  [f.strip() for f in open('stopwords.txt').readlines()]
-\end{examplepy}
 
-ADD EXPLANATION............ (DEPENDING ON WHERE WE EXPLAIN THINGS LIKE LIST COMPREHENSION ETC)
+%!chunk(lang='r')
+# bad: define stopword list in the code itself
+stopwords = c('and', 'or', 'a', 'an')
 
-\begin{exampler}
-# ADD EXAMPLE
-\end{exampler}
+# good: read stopword list from external text file
+ADD EXAMPLES
+
+%!done
 
 
 
