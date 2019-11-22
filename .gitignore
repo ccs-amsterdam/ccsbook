@@ -119,4 +119,7 @@ venv.bak/
 .idea/
 chapter03/variables.tex
 chapter06/chapter06.tex
-
+chapter09/modelingprediction.tex
+chapter09/nbtodnn.tex
+chapter09/principles.tex
+chapter09/validation.tex
