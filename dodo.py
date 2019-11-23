@@ -1,6 +1,7 @@
 from pathlib import Path
 import sys
 import re
+from doit.tools import run_once
 
 PYTHON="env/bin/python"
 
@@ -11,6 +12,7 @@ def task_process():
             'name': f"Process {fn} -> {outf}",
             'file_dep': [fn],
             'targets': [outf],
+            'task_dep':['install_kernel'],
             'actions': [f"{PYTHON} process.py {fn} > {outf}"],
         }
         
@@ -45,3 +47,33 @@ def task_tex():
             'verbosity': 2,
             }
         
+
+
+
+def task_install_env():
+    """Install python virutal environment as needed"""
+    requirements = Path("requirements.txt")
+    lib = Path.cwd()/"src"/"lib"
+    yield {
+        'name': f"Install python dependencies in virtual environment env from {requirements}",
+        'file_dep': [requirements],
+        'targets': ['env'],
+        'actions': ["python3 -m venv env",
+                    "env/bin/pip install -U pip wheel",
+                    f"env/bin/pip install -r {requirements}",
+                    ],
+        'verbosity': 2
+    }
+
+def task_install_kernel():
+    """Install R kernel environment as needed"""
+    yield {
+        'name': f"Install R Kernel",
+        'actions': ["(. env/bin/activate; Rscript -e 'if (!require(IRkernel)) install.packages(\"IRkernel\"); IRkernel::installspec()')"],
+        'verbosity': 2,
+        'uptodate': [run_once],
+        'task_dep':['install_env'],
+        
+    }
+
+
