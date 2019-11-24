@@ -1,0 +1,95 @@
+\section{Filtering, selecting and renaming}
+
+
+\paragraph{Selecting and renaming columns}
+A first clean up step we often want to do is removing unnecessary columns and renaming columns with unclear or overly long names.
+In particular, it is often convenient to rename columns that contain spaces or non-standard characters, so it is easier to refer to them later.
+
+\paragraph{Selecting rows}
+As a next step, we can decide to filter out certain rows.
+For example, we might want to use only a subset of the data,
+or we might want to remove certain rows because they are incomplete or incorrect.
+
+\paragraph{Calculating values}
+Very often, we need to calculate values for new columns or change the content of existing columns.
+For example, we might wish to calculate the difference between two columns,
+or we may need to clean a column
+
+%% Q: where do we explain things like do basic calculations and string handling?
+
+As an example, FiveThirtyEight published a quiz about American public opinon about guns,
+and were nice enough to also publish the underlying data\footnote{https://projects.fivethirtyeight.com/guns-parkland-polling-quiz/; see https://github.com/fivethirtyeight/data/tree/master/poll-quiz-guns for the underlying data}.
+\refex{data-filter} gives an example of loadnig and cleaning this data set, starting with the \verb+read_csv+ function to load the data directly from the Internet.
+This data set contains one poll result per row, with a Question column indicating which question was asked,
+and the columns listing how many Americans (adults or registered voters) were in favor of that measure, in total and for Republicans and Democracts.
+Next, the columns \emph{Republican} and \emph{Democratic Support} are renamed to shorten the names and remove the space.
+Then, the URL column is dropped using the \verb+select+ (R) or \verb+drop+ (python) function.
+Notice that the result of these operations is assigned to the same object \verb+d+.
+This means that the original \verb+d+ is overwritten.
+
+\note{[R] In R, the \texttt{select} function is quite versatile.
+  You can specify multiple columns using \texttt{select(d, column1, column2)} or by specifying a range of columns: \texttt{select(d, column1:column3)}.
+  Both commands keep only the specified columns. 
+  As in the example, you can also specify a negative selection with the minus sign: \texttt{select(d, -column1)} drops \texttt{column1}, keeping all other columns.
+  Finally, you can rename columns in the select command as well: \texttt{select(d, column1=col1, column2)} renames \texttt{col} to \texttt{column1}, keeps that column and \texttt{column2},
+  and drops all other columns.}
+  
+In line 6, we filter the data set to list only the polls on whether teachers should be armed
+(you can understand this is close to our heart).
+This is done by comparing the value of the Question column to the value \verb+'arm-teachers'+.
+This comparison is done with a double equals sign (\verb+==+).
+In both python and R, a single equals sign is used for assignment,
+and a double equal sign is used for comparison.
+A final thing to notice is that while in R we used a function (\verb+filter+) to filter out rows,
+in python we \emph{index} the data frame using square brackets on the \verb+loc+(ation) attribute: \verb+d.loc[]+.
+
+We chose to assign the result of this filtering to \verb+d2+,
+so after this operation we have the original full data set \verb+d+ as well as the subset \verb+d2+ at our disposal.
+In general, it is your choice whether you overwrite the data by assigning to the same object,
+or create a copy by assigning to a new name.
+If you will later need to work with a different subset, it is smart to keep the original so you can subset it again later.
+On the other hand, if all your analyses will be on the subset, you might as well overwrite the original.
+We can always re-download it from the internet (or reload it from our harddisk) if it turns out we needed the original anyway. 
+
+%!example(name='data-filter',output='html',keep='py',caption='Reading and filtering data')
+%!chunk(lang='r')
+library(tidyverse)
+url="http://tiny.cc/guns-poll"
+d = read_csv(url)
+d = rename(d, rep=`Republican Support`, dem=`Democratic Support`)
+d = select(d, -URL)
+d2 = filter(d, Question == 'arm-teachers')
+d2
+%!chunk(lang='py')
+import pandas as pd
+url="http://tiny.cc/guns-poll"
+d=pd.read_csv(url)
+d = d.rename(columns={'Republican Support': 'rep', 'Democratic Support': 'dem'})
+d = d.drop(columns='URL')
+d2 = d.loc[d.Question == 'arm-teachers']
+d2
+%!done
+
+\section{Grouping and aggregating}
+
+The functions we used to change data above operated on individual rows.
+Sometimes, however, we wish to compute summary statistics of groups of rows.
+
+
+%!example(name='data-summary',output='html',keep='py',caption='Calculating the average support per question')
+%!chunk(lang='r')
+d %>% group_by(Question) %>% summarize(m=mean(Support), sd=sd(Support))
+%!chunk(lang='py')
+d.groupby('Question').agg({'Support': ['mean', 'std']})
+%!done
+
+
+
+
+%!example(name='data-group-mutate',output='html',keep='py',caption='Adding summary statistics as an extra column')
+%!chunk(lang='r')
+d %>% group_by(Question) %>% mutate(m=mean(Support))
+%!chunk(lang='py')
+d['mean'] = d.groupby('Question').Support.transform('mean')
+%!done1
+

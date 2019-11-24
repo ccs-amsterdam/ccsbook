@@ -9,11 +9,12 @@ def task_process():
     for fn in Path.cwd().glob('**/*.tex.in'):
         outf = fn.parent/fn.stem
         yield {
-            'name': f"Process {fn} -> {outf}",
+            'name': fn.relative_to(Path.cwd()),
             'file_dep': [fn],
             'targets': [outf],
             'task_dep':['install_kernel'],
             'actions': [f"{PYTHON} process.py {fn} > {outf}"],
+            'verbosity': 2,
         }
         
 def _tex_deps(wd: Path, fn: Path, seen=None):

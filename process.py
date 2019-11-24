@@ -3,7 +3,9 @@ import pprint
 import sys
 from collections import namedtuple
 from itertools import takewhile
-
+import tempfile
+import subprocess
+from pathlib import Path
 import re
 import json
 from queue import Empty
@@ -75,8 +77,12 @@ def run_code(kc: KernelClient, code: str, timeout=None):
                 break
             else:
                 continue
-        elif msg_type in ('execute_input', 'execute_result', 'display_data',
-                          'stream', 'error'):
+        elif msg_type == 'stream':
+            log(content['text'])
+        elif msg_type == 'error':
+            msg = f'{content["ename"]}: {content["evalue"]}'
+            raise Exception(msg)
+        elif msg_type in ('execute_input', 'execute_result', 'display_data'):
             # Keep `execute_input` just for execution_count if there's
             # no result
             messages.append(msg)
@@ -98,14 +104,16 @@ def get_kernel(kernel_name: str) -> KernelClient:
 
 
 class Example:
-    def __init__(self, name=None, **options):
+    def __init__(self, name, caption=None, **options):
         self.name = name
+        self.caption = caption or name
         self.options = options
         self.chunks = []
 
     def process_to_latex(self):
         width=".45" if len(self.chunks)>1 else ".95"
         longest_input = max(len(chunk.lines) for chunk in self.chunks)
+        print("\\begin{example}")
         for chunk in self.chunks:
             print(f"\\begin{{minipage}}{{{width}\\linewidth}}")
             if self.options.get('echo', True):
@@ -113,16 +121,52 @@ class Example:
                 print(chunk.code)
                 print("\n"*(longest_input - len(chunk.lines)), end='')
                 print(f"\\end{{ex_{chunk.lang}_in}}")
+            print(r"\end{minipage}")
             if self.options.get('eval', True):
                 chunk.run()
+        if self.options.get('keep') == 'r':
+            chunks = [self.chunks[0]]
+        elif self.options.get('keep') == 'py':
+            chunks = [self.chunks[1]]
+        else:
+            chunks = self.chunks
+        width=".45" if len(chunks)>1 else ".95"
+        
+        if self.options.get('output') != 'hide':
+            for chunk in chunks:
+                print(f"\\begin{{minipage}}{{{width}\\linewidth}}")
+                log(f"Output: {self.options.get('output')}")
                 if self.options.get('output', 'text') == 'text':
                     print(f"\\begin{{ex_{chunk.lang}_out}}")
                     for line in chunk.get_text_output():
                         print(line)
                     print(f"\\end{{ex_{chunk.lang}_out}}")
-            print(r"\end{minipage}")
+                elif self.options.get('output') == 'latex':
+                    for line in chunk.get_latex_output():
+                        print(line)
+                elif self.options.get('output') == 'html':
+                    html = "\n".join(chunk.get_html_output())
+                    open(f"{self.name}.txt","w").write(html)
+                    fig = convert_html_pdf(html, self.name)
+                    print(f"\\includegraphics[width=\linewidth]{{{fig}}}")
+                print(r"\end{minipage}")
+        print(f"\\caption{{{self.caption}}}")
+        print(f"\\label{{ex:{self.name}}}")
+        print("\end{example}")
 
 
+def pipe(command, input, **kargs):
+    proc = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, **kargs)
+    out, _err = proc.communicate(input)
+    return out
+
+def convert_html_pdf(html, name):
+    pdf = pipe(["wkhtmltopdf", "-", "-"], html.encode('ascii', 'xmlcharrefreplace'))
+    outf = Path.cwd()/"figures_generated"/f"{name}.pdf"
+    log(f"Writing html image to {outf}")
+    pdf = pipe(["pdfcrop", "-", str(outf)], pdf)
+    return outf
+        
 class Chunk:
     def __init__(self, lang, **options):
         self.lang = lang
@@ -136,17 +180,38 @@ class Chunk:
 
     def run(self):
         kernel = get_kernel(KERNELNAMES[self.lang])
-        self.output = list(run_code(kernel, self.code))
+        try:
+            self.output = list(run_code(kernel, self.code))
+        except Exception as e:
+            log_error(e)
+            sys.exit(1)
 
     def get_text_output(self):
         assert self.output is not None
         for msg in self.output:
+            #import pprint, sys; pprint.PrettyPrinter(indent=4, stream=sys.stderr).pprint(msg)
             data = msg.get('content', {}).get('data', {})
             text = msg.get('content', {}).get('text', {})
             if data:
                 yield data['text/plain'].rstrip("\n")
             elif text:
                 yield text.rstrip("\n")
+
+    def get_html_output(self):
+        assert self.output is not None
+        for msg in self.output:
+            #import pprint, sys; pprint.PrettyPrinter(indent=4, stream=sys.stderr).pprint(msg)
+            if msg['msg_type'] in ('execute_result', 'display_data'):
+                yield msg['content']['data']['text/html'].rstrip("\n")
+        
+                
+    def get_latex_output(self):
+        assert self.output is not None
+        for msg in self.output:
+            #import pprint, sys; pprint.PrettyPrinter(indent=4, stream=sys.stderr).pprint(msg)
+            if msg['msg_type'] != 'display_data':
+                continue
+            yield msg['content']['data']['text/latex'].rstrip("\n")
 
 
 def process_line(state: Example, line: str):
