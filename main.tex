@@ -11,9 +11,12 @@
 \usepackage{wrapfig}
 \usepackage{newfloat}
 
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable,xparse,raster}
 \DeclareFloatingEnvironment[fileext=ex,placement={!ht},name=Example]{example}
 
-
+\usepackage[scaled]{beramono}
+\usepackage[T1]{fontenc}
 
 \usepackage[
 backend=biber,
@@ -44,13 +47,33 @@ eprint=false
 
 \usepackage{listings}
 \lstset{
-	basicstyle=\scriptsize\ttfamily,
+	basicstyle=\tiny\ttfamily,
 	columns=flexible,
 	breaklines=true,
-	numbers=left,
 	%stepsize=1,
-	numberstyle=\tiny,
-	backgroundcolor=\color[rgb]{1,0,.4}
+}
+
+\definecolor{darkblue}{rgb}{0,0,0.3}
+\lstdefinestyle{r}{language=R,
+  showstringspaces=false,
+  stringstyle=\color{darkblue},
+  morekeywords={select,filter,rename},
+  numbers=left,
+	numberstyle=\tiny\color{gray},
+        numbersep=4pt,
+}
+\lstdefinestyle{py}{language=python,
+  showstringspaces=false,
+  stringstyle=\color{darkblue},
+  morekeywords={select,filter,rename},
+  numbers=left,
+	numberstyle=\tiny\color{gray},
+        numbersep=4pt,
+}
+\lstdefinestyle{out}{language={},
+  showstringspaces=false,
+  stringstyle=\color{darkblue},
+  morekeywords={select,filter,rename},
 }
 
 \lstnewenvironment{exampler}{\lstset{basicstyle=\scriptsize\ttfamily,
@@ -58,8 +81,7 @@ eprint=false
 		breaklines=true,
 		numbers=left,
 		%stepsize=1,
-		numberstyle=\tiny,
-		backgroundcolor=\color[rgb]{0.3,0.3,1}}}{}
+		numberstyle=\tiny}}{}
 
 \lstnewenvironment{ex_r_out}{\lstset{basicstyle=\scriptsize\ttfamily,
 		columns=flexible,
@@ -127,7 +149,33 @@ eprint=false
 
 
 
-%\includeonly{ch_data_wrangling/ch_data_wrangling}
+\newcommand{\rex}[1]{%
+\begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,title=R code]
+  \lstinputlisting[style=r]{#1.r}
+  \tcbsubtitle{Output}
+  \lstinputlisting[style=out]{#1.r.out}
+\end{tcolorbox}}
+
+\newcommand{\pyex}[1]{%
+\begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,title=Python code]
+  \lstinputlisting[style=py]{#1.py}
+  \tcbsubtitle{Output}
+  \lstinputlisting[style=out]{#1.py.out}
+\end{tcolorbox}}
+
+\newtcolorbox{rbox}[1]{#1}
+
+\newcommand{\rpyex}[2]{
+  \begin{example}
+  \begin{tcbraster}[raster columns=2,raster equal height=rows,raster valign=top]
+    \rex{#1}
+    \pyex{#1}
+  \end{tcbraster}
+  \caption{#2}
+  \end{example}
+}
+
+\includeonly{ch_data_wrangling/ch_data_wrangling}
 
 \begin{document}
 

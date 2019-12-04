@@ -6,14 +6,14 @@ from doit.tools import run_once
 PYTHON="env/bin/python"
 
 def task_process():
-    for fn in Path.cwd().glob('**/*.tex.in'):
-        outf = fn.parent/fn.stem
+    for fn in Path.cwd().glob('**/*.ipynb'):
+        if "/env/" in str(fn) or ".ipynb_checkpoint" in str(fn):
+            continue
         yield {
             'name': fn.relative_to(Path.cwd()),
             'file_dep': [fn],
-            'targets': [outf],
             'task_dep':['install_kernel'],
-            'actions': [f"{PYTHON} process.py {fn} > {outf}"],
+            'actions': [f"{PYTHON} jupro.py {fn}"],
             'verbosity': 2,
         }
         

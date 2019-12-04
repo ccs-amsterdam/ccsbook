@@ -51,45 +51,12 @@ If you will later need to work with a different subset, it is smart to keep the 
 On the other hand, if all your analyses will be on the subset, you might as well overwrite the original.
 We can always re-download it from the internet (or reload it from our harddisk) if it turns out we needed the original anyway. 
 
-%!example(name='data-filter',output='html',keep='py',caption='Reading and filtering data')
-%!chunk(lang='r')
-library(tidyverse)
-url="http://tiny.cc/guns-poll"
-d = read_csv(url)
-d = rename(d, rep=`Republican Support`, dem=`Democratic Support`)
-d = select(d, -URL)
-d2 = filter(d, Question == 'arm-teachers')
-d2
-%!chunk(lang='py')
-import pandas as pd
-url="http://tiny.cc/guns-poll"
-d=pd.read_csv(url)
-d = d.rename(columns={'Republican Support': 'rep', 'Democratic Support': 'dem'})
-d = d.drop(columns='URL')
-d2 = d.loc[d.Question == 'arm-teachers']
-d2
-%!done
+\rpyex{ch_data_wrangling/snippets/data-filter}{Filtering}
+
 
 \section{Grouping and aggregating}
 
 The functions we used to change data above operated on individual rows.
 Sometimes, however, we wish to compute summary statistics of groups of rows.
 
-
-%!example(name='data-summary',output='html',keep='py',caption='Calculating the average support per question')
-%!chunk(lang='r')
-d %>% group_by(Question) %>% summarize(m=mean(Support), sd=sd(Support))
-%!chunk(lang='py')
-d.groupby('Question').agg({'Support': ['mean', 'std']})
-%!done
-
-
-
-
-%!example(name='data-group-mutate',output='html',keep='py',caption='Adding summary statistics as an extra column')
-%!chunk(lang='r')
-d %>% group_by(Question) %>% mutate(m=mean(Support))
-%!chunk(lang='py')
-d['mean'] = d.groupby('Question').Support.transform('mean')
-%!done1
-
+\rpyex{ch_data_wrangling/snippets/aggregate}{Aggregation}
