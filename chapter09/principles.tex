@@ -1,7 +1,6 @@
-\section{Principles of machine learning}
+\section{Concepts and Principles}
 
-\subsection{Supervised Machine Learning}
-\label{sec:supervised}
+%\label{sec:supervised}
 The goal of Supervised Machine Learning can be summarized in one sentence:
 estimate a model based on some data, and then use the model to predict the
 expected outcome for some new cases, for which we do not know the outcome yet.
@@ -98,11 +97,24 @@ Therefore, we can in fact calculate how often the prediction is right\footnote{W
   that reflects the \emph{ground truth} as closely as possible, and that by
   definition cannot be outperformed.}
 
-\todo[inline]{HERE ALREADY A COUPLE OF SENTENCES ABOUT PRECISION AND RECALL}
+
+To do so, we rely on two measures: \emph{precision} and \emph{recall}.
+Imagine we build a sentiment classifier, that predicts -- based on the text of a movie review -- whether it is a positive review or a negative review. 
+
+Let us assume that the goal of training this classifier is to build an app that recommends the user only good movies. There are two things that we want to achieve: We want to find as many as possible positive films (recall), but we also want that the selection we found \emph{only} contains positive films (precision).
+
+Precision is calculated as $\frac{TP}{TP+FP}$, where TP are true postivies and FP are false positives. For example, if our classifier retrieves 200 articles that it classifies as positive films, but only 150 of them indeed are positive films, then the precision is $\frac{150}{150+50} = \frac{150}{200} = 0.75$.
+
+Recall is calculated as $\frac{TP}{TP+FN}$, where TP are true postivies and FN are false negatives. If we know that the classifier from the previous paragraph missed 20 positive films, then the recall is $\frac{150}{150+20} = \frac{150}{170}= 0.88$.
+
+In other words: Recall measures how many of the cases we wanted to find we actually found. Precision measures how much of what we have found actually is correct.
+
+Often, we have to make a trade-off between precision and recall. For example, just retrieving \emph{every} film would give us a recall of 1.0 (after all, we didn't miss a single positive film). But on the other hand, we retrieved all the negative films as well, so precision will be extremely low. It can depend on the task at hand whether precision or recall is more important.
 
 
 
-\todo[inline]{ADD CODE EXAMPLE}
 
-\subsection{Unsupervised Machine Learning}
-\label{sec:unsupervised}
+\todo[inline]{ADD CODE EXAMPLE (scikit lean + precision recall of so}
+
+%\subsection{Unsupervised Machine Learning}
+%\label{sec:unsupervised}

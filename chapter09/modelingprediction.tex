@@ -38,7 +38,8 @@ as a causal effect).
 Additionally, we might look at the explained variance $R^2$, to assess how good
 the model fits our data.
 
-\pyex{chapter09/snippets/ols}{OLS regression}
+\pyex{chapter09/snippets/ols}{OLS regression and full model output in Python}
+\rex{chapter09/snippets/ols}{Running an OLS regression (here, without full output) in R}
 
 Most traditional social-scientific analyses stop after reporting and interpreting
 the coefficients of such a model.
@@ -62,6 +63,10 @@ $\hat{y}_{woman40} = -0.0896 + 0.0676 \cdot 40 + 0 \cdot 0.1767 = 2.6144$
 
 This was easy to do by hand, but of course, we could do this automatically for a
 large and essentially unlimited number of cases.
+This could be as simple as shown in \refex{olsprediction}.
+
+\rpyex{chapter09/snippets/olspredict}{Using the OLS model we estimated before to predict the dependent variable for new data, where the dependent variable is unknown.}
+
 In doing so, we shift our attention from the interpretation of coefficients to
 the prediction of the dependent variable for new, unknown cases. We do not
 care about the coefficents per se, we just need them for our prediction.
