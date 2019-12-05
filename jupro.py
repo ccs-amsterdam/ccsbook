@@ -47,8 +47,12 @@ def write_source(cell: dict, out: Path):
 
 def text_output(cell: dict) -> str:
     display = [o for o in cell['outputs'] if o['output_type'] in {"execute_result", "display_data", "stream"}]
+    if len(display)>1:
+        # in case we got multiple outputs, drop the stream version
+        display = [o for o in cell['outputs'] if o['output_type']!='stream'] 
     if len(display) != 1:
         print(json.dumps(cell, indent=2), file=sys.stderr)
+        print(len(display))
         raise ValueError("Cannot parse cell")
     d = display[0]
     data = d.get('data', {})
