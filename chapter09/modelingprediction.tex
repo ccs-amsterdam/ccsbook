@@ -38,19 +38,7 @@ as a causal effect).
 Additionally, we might look at the explained variance $R^2$, to assess how good
 the model fits our data.
 
-%!example(name='ols')
-%!chunk(lang='py')
-import pandas as pd
-import statsmodels.formula.api as smf
-df = pd.read_csv('datasets/mediause.csv')
-model = smf.ols(formula = 'newspaper ~ age + gender', data = df).fit()
-print(model.summary())
-%!done
-
-%!example(name='ols2')
-%!chunk(lang='r')
-TRANSLATE EXAMPLE TO R
-%!done
+\pyex{chapter09/snippets/ols}{OLS regression}
 
 Most traditional social-scientific analyses stop after reporting and interpreting
 the coefficients of such a model.
