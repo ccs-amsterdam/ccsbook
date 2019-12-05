@@ -1,8 +1,10 @@
-\chapter{Introduction to data frames}
+%\chapter{Introduction to data frames}
+\chapter{From file to data frame and back}
 
-\section{Data formats: data frames, matrices, and tibbles}
+%\section{Data formats: data frames, matrices, and tibbles}
+%\subsection{Arranging data}
 
-\subsection{Arranging data}
+\section{Why and when do we use data frames?}
 
 In Section~\ref{sec:datatypes}, we introduced basic data types: strings (which contain text), integers (which contain whole numbers, or numbers without anything 'behing the dot'), floats (floating point numbers; numbers with decimals), and bools (Boolean values, True or False). 
 We also learned that a series of multiple values (e.g., multiple integers, multiple strings) can be stored in what we call a vector (R) or a list (Python).
@@ -23,33 +25,45 @@ One way of doing so is shown in \refex{createdataframe}, but very often, you'd r
 
 \rpyex{chapter06/snippets/createdataframe}{Creating a dataframe from other datastructures}
 
+In this book, we use dataframes a lot, because they are very convenient for handling tabular data, and because they provide a lot of useful convenience functionality, instead of requiring us to re-invent the wheel all the time. In the next section, we will discuss some of them.
 
-In this book, we will use dataframes a lot, because they are very convenient for handling tabular data, and because they provide a lot of useful convenience functionality, instead of requiring us to re-invent the wheel all the time. In the next section, we will discuss some of them.
+Of course, there are some situations when dataframes are \emph{not} a good choice to organize your data:
+\begin{itemize}
+\item Your data is one-dimensional. Think, for example, of ressources like a list of stopwords, or a list of texts without any meta-information.
+\item Your data do not have a tabular structure. Think, for example, of deeply nested data, or of very messy data.
+\item Your data is so large that you cannot (or do not want to) load it into memory. For instance, if you want to process the text of all articles on the wikipedia, you probably want to process them one-by-one instead of loading all articles at the same time.
+\end{itemize}
 
+%\subsection{Basic operations on data frames}
 
-\subsection{Basic operations on data frames}
+%When retrieving data for external sources (Section~\ref{sec:gathering}), we can convert the data we retrieved into a dataframe using the techniques outlined in the previous paragraphs. In many other cases, we will read them directly from files instead (Section~\ref{sec:reading}).
 
-When retrieving data for external sources (Section~\ref{sec:gathering}), we can convert the data we retrieved into a dataframe using the techniques outlined in the previous paragraphs. In many other cases, we will read them directly from files instead (Section~\ref{sec:reading}).
+Therefore, you will come across (and we will introduce you to) examples in which we do \emph{not} use data frames to organize our data.
+But in most cases we will, because they make our life easier:
+Once we constructed our data frame, we have a range of handy functions at our disposal, that allow us to select rows or columns, add new rows or columns, apply functions to them, and so on.
+We will discuss these in Chapter~\ref{chap:datawrangling}.
 
-Once we constructed our data frame, we have a range of handy functions at our disposal, that allow us to select rows or columns, add new rows or columns, apply functions to them, and so on. Table~\ref{tab:dataframecommands} gives an overview of some of them. Many of these commands will come back in subsequent chapters, but we encourage you to already play around a bit with them. That is more fun with a real dataset - and that's why we will load some in the next section.
-
-
-\begin{table}[]
-\caption{Basics of data frame handling}
-\label{tab:dataframecommands}
-\begin{tabularx}{\textwidth}{XXXXX}
-\toprule
-                         & pandas data frame                 & R data.frame & R tibble \\ \midrule
-select rows by index     & df.iloc{[}1, ...... ..            &              &          \\
-select columns by number & df.iloc...                        &              &          \\
-select columns by name   & df{[}'mycolumn'{]} or df.mycolumn &              &          \\ \bottomrule
-\end{tabularx}
-\end{table}
+But how do we -- toy examples like those in \refex{createdataframe} aside -- get data into and out of dataframes? 
 
 
-\todo[inline]{maybe also (somewhere in this chapter) say more about basic properties of data frames, such as there length, shape, ...}
 
-\todo[inline]{also something about column names etc, indices....}
+
+%Table~\ref{tab:dataframecommands} gives an overview of some of them. Many of these commands will come back in subsequent chapters, but we encourage you to already play around a bit with them. That is more fun with a real dataset - and that's why we will load some in the next section.
+
+
+%\begin{table}[]
+%\caption{Basics of data frame handling}
+%\label{tab:dataframecommands}
+%\begin{tabularx}{\textwidth}{XXXXX}
+%\toprule
+%                         & pandas data frame                 & R data.frame & R tibble \\ \midrule
+%select rows by index     & df.iloc{[}1, ...... ..            &              &          \\
+%select columns by number & df.iloc...                        &              &          \\
+%select columns by name   & df{[}'mycolumn'{]} or df.mycolumn &              &          \\ \bottomrule
+%\end{tabularx}
+%\end{table}
+
+
 
 
 \section{Reading and saving data}
@@ -151,73 +165,27 @@ a
 an
 \end{lstlisting}
 
-There are several ways of reading such a file into a list.
-A short way to ``just get the job done'' could be:
 
-
+Then, we could direclty read this file into a vector or list  (see \refex{stopwords}).
 
 \rpyex{chapter06/snippets/stopwords}{Reading files without dataframes}
 
 
+\rpyex{chapter06/snippets/extendedfilehandling}{More examples for reading from and writing to files}
 
-\todo[inline]{We need to look at what the best strategy is here, especially as there are big differences between R and Python here. To get started, the stuff above should be more than fine, but I think we need to also explain the ``manual'' way below, especially because people might need to extract something from deeply nested json files or whatever later on (actually, I even test these kind of things in exams). But I dont even  know how this stuff is usually approached in R }
+\refex{extendedfilehandling} provides you with some more elaborate code examples that allows us to dig a bit deeper into the general way of handling files.
 
-
-!!!!!!!!!!!!!PYTHON-specific stuff below !!!!
-But let us use this example to get a bit deeper into the general way of handling files.
-
-\rpyex{chapter06/snippets/stopwordsextensive}{Reading files without dataframes} 
-
-We can open a file and assign a handle to it that allows us to refer to it (the name of the handle is arbitrary, let's just call it \texttt{f} here:
-
-%\begin{examplepy}
-%with open('stopwords.txt', mode = 'r', encoding = 'utf-8') as f:
-%    # do something with f 
-%\end{examplepy}
-
-For example, we could loop over all lines in the file and add it to a list
-
-%\begin{examplepy}
-%stopwords = []
-%with open('stopwords.txt', mode = 'r', encoding = 'utf-8') as f:
-%    for line in f:
-%        stopwords.append(line.strip())
-%\end{examplepy}
+In the Python example,  we can open a file and assign a handle to it that allows us to refer to it (the name of the handle is arbitrary, let's just call it \texttt{f} here.
+Then, we can use a for loop to iterate over all lines in the file and add it to a list
 
 The \texttt{mode = 'r'} specifies that we want to read from the file. \texttt{mode = 'w'} would open the file for writing, create it if necessary, and immediately deletes all content that may have been in there if the file already existed (!).
-
 Note that the \texttt{.strip()} is necessary to remove the line ending itself, and also possible whitespace at the beginning or end of a line.
-
-If we wanted to save our stopwords, we could do this as follows: 
-%\begin{examplepy}
-%stopwords = ['a', 'an', 'and', 'or]
-%with open('newstopwords.txt', mode = 'w', encoding = 'utf-8') as f:
-%    f.writelines(stopwords)
-%\end{examplepy}
-
-We can use the same to read json files into a python dict or to store a python dict into a json file:
-
-
-%\begin{examplepy}
-%import json
-%with open('test.json', mode = 'r', encoding = 'utf-8') as f:
-%    mydict = json.load(f)
-%with open('test2.json', mode = 'w', encoding = 'utf-8') as f:
-%    json.dump(mydict, f)
-%\end{examplepy}
-
+If we wanted to save our stopwords, we could do this in a similar way: We first open the file (this time, for writing), and then use the file handle's methods to write to it.
+We are not limited to plain text files, here. For instance, we can use the same approach to read json files into a python dict or to store a python dict into a json file.
 
 We could also combine this with a for loop that goes over all files in a dictionary.
-Imagine we have a folder full of positive movie reviews, and another one full of negative movie reviews that we want to use to train a machine learning classifier (see CHAPTERXXXXXXXXXX). Let's further assume that all these reviews are saved as \texttt{.txt} files:
-
-We could read them as follows into a list of strings:
-
-%for fn in glob('/path/to/positive/reviews/*.txt'):
-%    with open(fn, mode='r', encoding='utf-8') as f:
-%        positivereviews.append(f.read())
-
-
-And then do the same for negative reviews.
+Imagine we have a folder full of positive movie reviews, and another one full of negative movie reviews that we want to use to train a machine learning classifier (see CHAPTERXXXXXXXXXX). Let's further assume that all these reviews are saved as \texttt{.txt} files.
+We can iterate over all of them, as shown in \refex{extendedfilehandling}
 
 
 
