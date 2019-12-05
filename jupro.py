@@ -46,7 +46,7 @@ def write_source(cell: dict, out: Path):
 
 
 def text_output(cell: dict) -> str:
-    display = [o for o in cell['outputs'] if o['output_type'] in {"execute_result", "display_data"}]
+    display = [o for o in cell['outputs'] if o['output_type'] in {"execute_result", "display_data", "stream"}]
     if len(display) != 1:
         print(json.dumps(cell, indent=2), file=sys.stderr)
         raise ValueError("Cannot parse cell")
@@ -56,8 +56,10 @@ def text_output(cell: dict) -> str:
     if data:
         return "".join(data['text/plain']).rstrip("\n")
     elif text:
-        return text.rstrip("\n")
-
+        try:
+            return text.rstrip("\n")
+        except:
+            return "\n".join(text).rstrip("\n")
 
 def write_output(cell: dict, out: Path):
     write(out, text_output(cell))
