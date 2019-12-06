@@ -4,7 +4,7 @@ Machine learning, many people joke, is nothing else than a fancy name for statis
 And, in fact, there is some truth to this:
 If you say ``logistic regression'', this will sound familiar to both statisticians
 and machine learning practicioners.
-Hence, it does not make much sense to distinguish between statistcs on the one hand
+Hence, it does not make much sense to distinguish between statistics on the one hand
 and machine learning on the other hand.
 
 Still, there are some differences between traditional statistical approaches that
@@ -13,8 +13,8 @@ approach, even if they use the same mathematical tools. One may say that that th
 focus is a different one, and the objective we want to achieve may differ.
 
 Let us illustrate this with an example.
-\texttt{mediause.csv}\footnote{You can download the file from ADD GITHUB LINK}
-contains survey data on how many days per week respondents turn to different media
+\texttt{mediause.csv}\footnote{You can download the file from \url{http://cssbook.nl/d/mediause.csv}}
+contains a few columns from survey data on how many days per week respondents turn to different media
 types in order to follow the news\footnote{For a detailed description of the
 dataset, see \citet{Trilling2013phd}.}. It also contains their
 age (in years), their gender (coded as female = 0, male = 1), and their education
@@ -83,7 +83,7 @@ some characteristics (or ``features'') of the cases (in this case, people) as
 input and return a prediction.
 
 Using such a simple OLS regression approach for prediction, as we did in our
-example, can comes with a couple of problems, though.
+example, can come with a couple of problems, though.
 For instance, even though we know that the output should be something between
 0 and 7 (as that's the number of days in a week), but our model will happily
 predict that once a man reaches the age of 105 (rare, but not impossible), he
@@ -99,4 +99,4 @@ a user comment is likely to contain offensive language or not, wheter an article
 is more likely to be about politics, sports, economy, or lifestyle.
 In machine learning terms, these tasks are known as \emph{classification}.
 
-In the next section, we will outline key terms and concepts in machine learning.
+In the next section, we will outline key terms and concepts in machine learning. After that, we will then discuss specific models that you can use for different use cases.

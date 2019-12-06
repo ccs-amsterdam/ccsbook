@@ -2,17 +2,19 @@
 
 %\label{sec:supervised}
 The goal of Supervised Machine Learning can be summarized in one sentence:
-estimate a model based on some data, and then use the model to predict the
+Estimate a model based on some data, and then use the model to predict the
 expected outcome for some new cases, for which we do not know the outcome yet.
 Which is exactly what we have done in the introductory example in Section~\ref{sec:prediction}.
 
 But when do we need it?
 
-In short, for the following scenario: First, We have a large dataset (say, $100,000$
+In short, in any scenario where the following two preconditions are fulfilled.
+First, We have a large dataset (say, $100,000$
 headlines) for which we want to predict to which class they belong (say, whether
-they are clickbait or not). Second, for a random subset of the data (say, $2,000$ of
-the headlines), we already know the class. For example because we have manually
-coded (``annotated'') them.
+they are clickbait or not).
+Second, for a random subset of the data (say, $2,000$ of the headlines), we already
+know the class.
+For example because we have manually coded (``annotated'') them.
 
 Before we start using supervised machine learning, though, we first need to have
 a common terminology.
@@ -44,6 +46,8 @@ It may be given to us, or we need to create it ourselves.
 For instance, of we can draw a random sample of our data and use techniques
 of manual content analysis \citep[e.g.,][]{riffe2019analyzing} to
 \emph{annotate} (i.e., to manually code) the data.
+You can download an example for this process (annotating the topic of news
+articles) from \url{http://dx.doi.org/10.6084/m9.figshare.7314896.v1} \citep{Vermeer}.
 
 It is hard to give a rule of thumb of how many labeled data you need.
 It depends heavily on the type of data you have, and on how evenly distributed
@@ -69,7 +73,7 @@ dataset.
 We now \emph{train our classifier} (i.e., estimate our model using the
 training dataset). This can be as straightforward as estimating a logistic
 regression equation (we will discuss different classifiers in
-Section~\ref{sec:nb2dnn})
+Section~\ref{sec:nb2dnn}).
 It may be that we first need to create new independent variables, so-called
 features, a step known as \emph{feature engineering}, for example by transforming
 existing variables, combining them, or by converting text numerical word frequencies.
