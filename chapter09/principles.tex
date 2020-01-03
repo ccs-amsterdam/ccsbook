@@ -9,7 +9,7 @@ Which is exactly what we have done in the introductory example in Section~\ref{s
 But when do we need it?
 
 In short, in any scenario where the following two preconditions are fulfilled.
-First, We have a large dataset (say, $100,000$
+First, we have a large dataset (say, $100,000$
 headlines) for which we want to predict to which class they belong (say, whether
 they are clickbait or not).
 Second, for a random subset of the data (say, $2,000$ of the headlines), we already
@@ -47,7 +47,7 @@ For instance, of we can draw a random sample of our data and use techniques
 of manual content analysis \citep[e.g.,][]{riffe2019analyzing} to
 \emph{annotate} (i.e., to manually code) the data.
 You can download an example for this process (annotating the topic of news
-articles) from \url{http://dx.doi.org/10.6084/m9.figshare.7314896.v1} \citep{Vermeer}.
+articles) from \url{http://dx.doi.org/10.6084/m9.figshare.7314896.v1} \citep{Vermeer2018}.
 
 It is hard to give a rule of thumb of how many labeled data you need.
 It depends heavily on the type of data you have, and on how evenly distributed
@@ -115,10 +115,6 @@ In other words: Recall measures how many of the cases we wanted to find we actua
 
 Often, we have to make a trade-off between precision and recall. For example, just retrieving \emph{every} film would give us a recall of 1.0 (after all, we didn't miss a single positive film). But on the other hand, we retrieved all the negative films as well, so precision will be extremely low. It can depend on the task at hand whether precision or recall is more important.
 
-
-
-
-\todo[inline]{ADD CODE EXAMPLE (scikit lean + precision recall of so}
 
 %\subsection{Unsupervised Machine Learning}
 %\label{sec:unsupervised}
