@@ -10,7 +10,7 @@
 %% Code listing style
 %%%%%%%%%%%%%%%%%%%%%%%%
 
-\lstset{
+\lstset{inputpath=snippets,
 	basicstyle=\tiny\ttfamily,
 	columns=flexible,
 	breaklines=true,
@@ -67,16 +67,15 @@
   \setkeys{codex}{caption,#1}%
   \ifx\codex@caption\empty \def\codex@caption{#2}\fi
   \begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,title=\codex@caption]
-    % the extension defines the style, but take .r.out to mean out
+    % the extension defines the style, (name.r.out -> out)
     \StrCount{#2}{.}[\nbmatch]%
-    \StrCut[\nbmatch]{#2}{.}\basebane\ext%
-    % I'm stupid so I use ifs instead of finding out how to expand an argument
-    \ifx\ext\codex@options@out \lstinputlisting[style=out]{#2}\fi
-    \ifx\ext\codex@options@r \lstinputlisting[style=r]{#2}\fi
-    \ifx\ext\codex@options@py \lstinputlisting[style=py]{#2}\fi
+    \StrCut[\nbmatch]{#2}{.}\tmp\myext%
+    \lstinputlisting[style=\myext]{#2}
 \end{tcolorbox}}%
 }
 
+
+\def\codex@langname#1{\ifx#1\codex@options@py{Python}\else{R}\fi}
 
 % \rpyex[output={both,r,py,none}]
 % 'example' float with (multiple) code examples
@@ -95,12 +94,7 @@
       \codex[caption=R Output]{#2.r.out}      
     \end{tcbraster}
     \else
-    % I get an error if I pass a parameter value as argument, hence the silly if
-    \ifx\codex@output\codex@options@py
-      \codex[caption=Python Output]{#2.py.out}
-      \else
-      \codex[caption=R Output]{#2.r.out}
-      \fi
+      \codex[caption=\codex@langname{\codex@output} Output]{#2.\codex@output.out}
     \fi
   \fi
   \caption{\ifx\codex@caption\empty #2\else \codex@caption\fi}
