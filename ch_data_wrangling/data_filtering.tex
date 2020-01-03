@@ -1,3 +1,4 @@
+
 \section{Filtering, selecting and renaming}
 
 
@@ -10,13 +11,6 @@ As a next step, we can decide to filter out certain rows.
 For example, we might want to use only a subset of the data,
 or we might want to remove certain rows because they are incomplete or incorrect.
 
-\paragraph{Calculating values}
-Very often, we need to calculate values for new columns or change the content of existing columns.
-For example, we might wish to calculate the difference between two columns,
-or we may need to clean a column
-
-%% Q: where do we explain things like do basic calculations and string handling?
-
 As an example, FiveThirtyEight published a quiz about American public opinon about guns,
 and were nice enough to also publish the underlying data\footnote{https://projects.fivethirtyeight.com/guns-parkland-polling-quiz/; see https://github.com/fivethirtyeight/data/tree/master/poll-quiz-guns for the underlying data}.
 \refex{data-filter} gives an example of loadnig and cleaning this data set, starting with the \verb+read_csv+ function to load the data directly from the Internet.
@@ -28,11 +22,15 @@ Notice that the result of these operations is assigned to the same object \verb+
 This means that the original \verb+d+ is overwritten.
 
 \note{[R] In R, the \texttt{select} function is quite versatile.
-  You can specify multiple columns using \texttt{select(d, column1, column2)} or by specifying a range of columns: \texttt{select(d, column1:column3)}.
+  You can specify multiple columns using \texttt{select(d, column1, column2)} 
+  or by specifying a range of columns: \texttt{select(d, column1:column3)}.
   Both commands keep only the specified columns. 
-  As in the example, you can also specify a negative selection with the minus sign: \texttt{select(d, -column1)} drops \texttt{column1}, keeping all other columns.
-  Finally, you can rename columns in the select command as well: \texttt{select(d, column1=col1, column2)} renames \texttt{col} to \texttt{column1}, keeps that column and \texttt{column2},
-  and drops all other columns.}
+  As in the example, you can also specify a negative selection with the minus sign: 
+  \texttt{select(d, -column1)} drops \texttt{column1}, keeping all other columns.
+  Finally, you can rename columns in the select command as well: 
+  \texttt{select(d, column1=col1, column2)} renames \texttt{col} to \texttt{column1},
+  keeps that column and \texttt{column2},and drops all other columns.
+  }
   
 In line 6, we filter the data set to list only the polls on whether teachers should be armed
 (you can understand this is close to our heart).
@@ -43,7 +41,7 @@ and a double equal sign is used for comparison.
 A final thing to notice is that while in R we used a function (\verb+filter+) to filter out rows,
 in python we \emph{index} the data frame using square brackets on the \verb+loc+(ation) attribute: \verb+d.loc[]+.
 
-We chose to assign the result of this filtering to \verb+d2+,
+Note that we chose to assign the result of this filtering to \verb+d2+,
 so after this operation we have the original full data set \verb+d+ as well as the subset \verb+d2+ at our disposal.
 In general, it is your choice whether you overwrite the data by assigning to the same object,
 or create a copy by assigning to a new name.
@@ -51,12 +49,111 @@ If you will later need to work with a different subset, it is smart to keep the 
 On the other hand, if all your analyses will be on the subset, you might as well overwrite the original.
 We can always re-download it from the internet (or reload it from our harddisk) if it turns out we needed the original anyway. 
 
-\rpyex{ch_data_wrangling/snippets/data-filter}{Filtering}
+\pyrex[caption=Filter,output=r,format=html]{ch_data_wrangling/data-filter}
 
+
+\section{Calculating values}
+
+Very often, we need to calculate values for new columns or change the content of existing columns.
+For example, we might wish to calculate the difference between two columns,
+or we may need to clean a column
+
+\pyrex[output=r,format=html,caption=Mutate]{ch_data_wrangling/mutate}
+
+%% Q: where do we explain things like do basic calculations and string handling?
 
 \section{Grouping and aggregating}
 
 The functions we used to change data above operated on individual rows.
 Sometimes, however, we wish to compute summary statistics of groups of rows.
+This essentially shifts the unit of analysis to a higher level of abstraction.
+For example, we could compute per-school statistics from a data file containing information per student;
+or we could compute the average number of mentions of a politician per day from a file containing information per articles.
 
-\rpyex{ch_data_wrangling/snippets/aggregate}{Aggregation}
+In data analysis, this is called \emph{aggregation}.
+In both Python and R, it consists of two steps:
+First, you define which rows are \emph{grouped} together to form a new unit
+by specifying which column identifies these groups.
+In the previous examples, this would be the school name or ID or the date of each article.
+It is also possible to group by multiple columns, for example to compute the average per day per news source.
+
+The next step is to specify one or more summary (or \emph{aggregate}) functions to be computed over the desired value columns.
+These functions compute a summary value, like the mean, sum, or standard deviation, over all the values belonging to each group.
+In the example, to compute average test scores per school we would apply the average (or mean) function to the test score value column.
+In general, you can use multiple functions (e.g.  mean and variance) and multiple columns (e.g. mean test score and mean parental income).
+
+The resulting dataset is reduced both in rows and in columns.
+Each row now represents a group of previuos cases (e.g. school or date),
+and the columns are now only the grouping columns and the computed summary scores.
+
+\refex{data-aggregate} shows the code in R and Python to define groups and compute summary values.
+First, we group by poll question; and for each question, we compute the average and standard deviation.
+The syntax is a little different for R and Python, but the idea is the same:
+first we create a new variable \verb+groups+ that stores the grouping information,
+and then we create the aggregate statistics.
+In this example, we do not store the result of the computation, but print it on the screen.
+To store the results, simply assign it to a new object as normal.
+
+\pyrex[caption=Aggregation]{ch_data_wrangling/aggregate}
+
+In R, you use the \verb+group_by+ function to define the groups,
+and then call the \verb+summarize+ function to compute summary values by specifying
+\verb+name=function(value)+.
+
+In python, the grouping step is quite similar.
+In the summarization step, however, you specify which summaries to compute in a dictionary%
+\footnote{See \refsec{dict} for more information on working with dictionaries}.
+The keys of the dictionary lists the value columns to compute summaries of,
+and the values contain the summary functions to apply, so \verb+{'value': [function]}+.
+
+\subsection{Combining multiple operations}
+
+In the examples above, each line of code (often called a \emph{statement}) contained a single operation, generally a function call.
+The general shape of each line in R was \verb+data = function(data, arguments)+, that is, the data is provided as the first argument to the function.
+In python, you specify the object on which to call the function with a period,
+i.e. \verb+object.function(arguments)+.
+
+Although there is nothing wrong with limiting each line to a single operation, both languages allow multiple operations to be chained together.
+Especially for grouping and summarizing, it can make sense to link these operations together as they can be thought of as a single `data wrangling' step.
+
+In Python, this can be achieved by adding the second \verb+.function()+ directly to the end of the first statement.
+Essentially, this calls the second function on the result of the first function: \verb+data = data.function1(arguments).function2(arguments)+.
+
+In R, the data is of course included in the function arguments, so an alternative method is needed to chain function calls.
+This is done using the \emph{pipe operator} (\verb+%>%+) from the (cutely named) \emph{magrittr} package.
+The pipe operator inserts the result of the first function as the first argument of the second function.
+More technically, \verb+f1(d) %>% f2()+ is equivalent to \verb+f2(f1(d))+.
+This can be used to chain multiple commands together, e.g. \verb+data = data %>% function1(arguments) %>% function2(arguments)+.
+
+\pyrex[caption=Combining multiple functions]{ch_data_wrangling/aggregate2}{
+
+\refex{data-aggregate2} shows the same operation as above, but chained into a single statement.
+
+
+\subsection{Adding summary values}
+
+Rather than reducing a data frame to contain only the group-level information,
+it is sometimes desirable to add the summary values to the original data.
+For example, if we add the average score per school to the student-level data,
+we can then determine whether individual students outperform the school average.
+
+Of course, the summary scores are the same for all rows in the same group:
+all students in the same school have the same school average.
+So, these values will be repeated for these rows, essentially
+mixing individual and group level variables in the same data frame.
+
+\pyrex[caption=Adding summary values to individual cases]{ch_data_wrangling/transform}
+
+\refex{data-transform} shows how this can be achieved in Python and R,
+computing the mean support per question and then calculating how each poll deviates from this mean. 
+
+In R, the code is very similar to \refex{data-aggregate2} above, simply
+replacing the \verb+summary+ function by the \verb+mutate+ function discussed above.
+In this function you can mix summary functions and regular functions, as shown in the example:
+first the mean per group is calculated, followed by the deviation of this mean.
+
+The python code also uses the same syntax used for computing new columns.
+The first line selects the \verb+Support+ column on the grouped dataset,
+and then calls the \verb+transform+ function on that column to compute the mean per group,
+adding it as a new column by assigning it to the column name.
+The second line uses the regular assignment syntax to create the deviation based on the support and calculated mean. 

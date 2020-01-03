@@ -13,8 +13,10 @@
 \usepackage{newfloat}
 
 \usepackage{tcolorbox}
+
+\usepackage{codex}
+
 \tcbuselibrary{skins,breakable,xparse,raster}
-\DeclareFloatingEnvironment[fileext=ex,placement={!ht},name=Example]{example}
 
 \usepackage[scaled]{beramono}
 \usepackage[T1]{fontenc}
@@ -176,7 +178,29 @@ eprint=false
   \end{example}
 }
 
-%\includeonly{ch_data_wrangling/ch_data_wrangling}
+\newcommand{\rexcode}[1]{%
+\begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,title=R code]
+  \lstinputlisting[style=r]{#1.r}
+\end{tcolorbox}}
+
+\newcommand{\pyexcode}[1]{%
+\begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,title=Python code]
+  \lstinputlisting[style=py]{#1.py}
+\end{tcolorbox}}
+
+
+\newcommand{\rpyexcode}[2]{
+  \begin{example}
+  \begin{tcbraster}[raster columns=2,raster equal height=rows,raster valign=top]
+    \rexcode{#1}
+    \pyexcode{#1}
+  \end{tcbraster}
+  \caption{#2}
+  \end{example}
+}
+
+
+\includeonly{ch_data_wrangling/ch_data_wrangling}
 
 \begin{document}
 
