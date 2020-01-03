@@ -1,0 +1,114 @@
+\RequirePackage{xkeyval}
+\RequirePackage{tcolorbox}
+\tcbuselibrary{skins,breakable,xparse,raster}
+\RequirePackage{listings}
+\RequirePackage{newfloat}
+\RequirePackage{xstring}
+\DeclareFloatingEnvironment[fileext=ex,placement={!ht},name=Example]{example}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%% Code listing style
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lstset{
+	basicstyle=\tiny\ttfamily,
+	columns=flexible,
+	breaklines=true,
+	%stepsize=1,
+}
+
+\definecolor{darkblue}{rgb}{0,0,0.3}
+\lstdefinestyle{r}{language=R,
+  showstringspaces=false,
+  stringstyle=\color{darkblue},
+  morekeywords={select,filter,rename},
+  numbers=left,
+	numberstyle=\tiny\color{gray},
+        numbersep=4pt,
+}
+\lstdefinestyle{py}{language=python,
+  showstringspaces=false,
+  stringstyle=\color{darkblue},
+  morekeywords={select,filter,rename},
+  numbers=left,
+	numberstyle=\tiny\color{gray},
+        numbersep=4pt,
+}
+\lstdefinestyle{out}{language={},
+  showstringspaces=false,
+  stringstyle=\color{darkblue},
+  morekeywords={select,filter,rename},
+}
+
+\def\@expandxargs#1#2#3{%
+  \edef\reserved@a{\noexpand#1[#2]{#3}}\reserved@a}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%% Commands
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \codex[lang={py,r},output=true,code=true]{snippet_without_extension}
+% single code example in tcolorbox
+
+% create macros for lang/output options so can be used in ifx
+\def\codex@options@py{py}
+\def\codex@options@r{r}
+\def\codex@options@none{none}
+\def\codex@options@both{both}
+\def\codex@options@out{out}
+
+\define@key{codex}{caption}[]{\def\codex@caption{#1}}
+\define@choicekey{codex}{output}[\codex@output]{r,py,both,none}[both]{}
+\presetkeys{codex}{caption}{caption=}
+
+% \codex[caption=]{snippet.ext}
+% single code listing in a tcolor box
+\newcommand{\codex}[2][]{%
+  \setkeys{codex}{caption,#1}%
+  \ifx\codex@caption\empty \def\codex@caption{#2}\fi
+  \begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,title=\codex@caption]
+    % the extension defines the style, but take .r.out to mean out
+    \StrCount{#2}{.}[\nbmatch]%
+    \StrCut[\nbmatch]{#2}{.}\basebane\ext%
+    % I'm stupid so I use ifs instead of finding out how to expand an argument
+    \ifx\ext\codex@options@out \lstinputlisting[style=out]{#2}\fi
+    \ifx\ext\codex@options@r \lstinputlisting[style=r]{#2}\fi
+    \ifx\ext\codex@options@py \lstinputlisting[style=py]{#2}\fi
+\end{tcolorbox}%
+}
+
+
+% \rpyex[output={both,r,py,none}]
+% 'example' float with (multiple) code examples
+\newcommand{\pyrex}[2][]{%
+  \setkeys{codex}{caption,output,#1}%
+  \begin{example}
+  \begin{tcbraster}[raster columns=2,raster equal height=rows,raster valign=top]
+    \codex[caption=Python Code]{#2.py}
+    \codex[caption=R Code]{#2.r}
+  \end{tcbraster}
+  \ifx\codex@output\codex@options@none
+  \else
+    \ifx\codex@output\codex@options@both
+    \begin{tcbraster}[raster columns=2,raster equal height=rows,raster valign=top]
+      \codex[caption=Python Output]{#2.py.out}
+      \codex[caption=R Output]{#2.r.out}      
+    \end{tcbraster}
+    \else
+    % I get an error if I pass a parameter value as argument, hence the silly if
+    \ifx\codex@output\codex@options@py
+      \codex[caption=Python Output]{#2.py.out}
+      \else
+      \codex[caption=R Output]{#2.r.out}
+      \fi
+    \fi
+  \fi
+  \caption{\ifx\codex@caption\empty #2\else \codex@caption\fi}
+  \end{example}
+}
+
+
+
+
+
+
