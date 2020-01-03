@@ -17,11 +17,11 @@ Use \verb+lang+ to specify the language, and optional \verb+output/code+ to disa
 \subsection*{Examples}
 
 \verb+\codex{mutate.r}+
-\codex{mutate.r}
+\codex[caption=R Code]{ch_data_wrangling/mutate.r}
 
 
-\verb+\codex[caption=Output]{mutate.r.out}+
-\codex[caption=Output]{mutate.r.out}
+\verb+\codex[caption=Output]{ch_data_wrangling/mutate.r.out}+
+\codex[caption=Output]{ch_data_wrangling/mutate.r.out}
 
 \newpage
 
@@ -35,25 +35,22 @@ Syntax:
 
 Produce a side-by-side code block. Use \verb+output+ to give output of either, both, or none of the snippets. 
 
-\subsection*{Simple example}
-
 \verb+\pyrex{mutate}+
-\pyrex{mutate}
-
-\newpage
-\subsection*{Single output, caption}
+\pyrex[caption=Simple Example]{ch_data_wrangling/mutate}
 
 \verb+\pyrex[caption=Single output and custom caption,output=r]{mutate}+
-\pyrex[caption=Single output and custom caption,output=r]{mutate}
-
+\pyrex[caption=Single output and custom caption,output=r]{ch_data_wrangling/mutate}
 
 \verb+\pyrex[caption=Single output and custom caption,output=py]{mutate}+
-\pyrex[caption=Single output and custom caption,output=py]{mutate}
-
-\newpage
-\subsection*{No output}
+\pyrex[caption=Single output and custom caption,output=py]{ch_data_wrangling/mutate}
 
 \verb+\pyrex[output=none,caption=No output]{mutate}+
-\pyrex[output=none,caption=No output]{mutate}
+\pyrex[output=none,caption=No output]{ch_data_wrangling/mutate}
+
+
+\verb+\pyrex[output=py,format=html]{ch_data_wrangling/data-filter}+
+\pyrex[caption=HTML output from python (don't forget to set output:html),output=py,format=html]{ch_data_wrangling/data-filter}
+\pyrex[caption=HTML output from R (don't forget to set output:html),output=r,format=html]{ch_data_wrangling/data-filter}
+
 
 \end{document}
