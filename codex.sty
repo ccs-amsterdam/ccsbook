@@ -63,7 +63,7 @@
 
 % \codex[caption=]{snippet.ext}
 % single code listing in a tcolor box
-\newcommand{\codex}[2][]{%
+\newcommand{\codex}[2][]{{%
   \setkeys{codex}{caption,#1}%
   \ifx\codex@caption\empty \def\codex@caption{#2}\fi
   \begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,title=\codex@caption]
@@ -74,13 +74,13 @@
     \ifx\ext\codex@options@out \lstinputlisting[style=out]{#2}\fi
     \ifx\ext\codex@options@r \lstinputlisting[style=r]{#2}\fi
     \ifx\ext\codex@options@py \lstinputlisting[style=py]{#2}\fi
-\end{tcolorbox}%
+\end{tcolorbox}}%
 }
 
 
 % \rpyex[output={both,r,py,none}]
 % 'example' float with (multiple) code examples
-\newcommand{\pyrex}[2][]{%
+\newcommand{\pyrex}[2][]{{%
   \setkeys{codex}{caption,output,#1}%
   \begin{example}
   \begin{tcbraster}[raster columns=2,raster equal height=rows,raster valign=top]
@@ -105,7 +105,7 @@
   \fi
   \caption{\ifx\codex@caption\empty #2\else \codex@caption\fi}
   \end{example}
-}
+}}
 
 
 
