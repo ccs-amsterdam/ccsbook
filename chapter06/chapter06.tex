@@ -23,7 +23,7 @@ To make our lifes easier, we can therefore use a data structure called a data fr
 Data frames can be generated from list-of-list structures, from dictionaries, and many others.
 One way of doing so is shown in \refex{createdataframe}, but very often, you'd rather read data from a file or an online resource directly into a dataframe (see Section~\ref{sec:reading}).
 
-\rpyex{chapter06/snippets/createdataframe}{Creating a dataframe from other datastructures}
+\pyrex[output=both, caption=Creating a dataframe from other datastructures]{chapter06/createdataframe}
 
 In this book, we use dataframes a lot, because they are very convenient for handling tabular data, and because they provide a lot of useful convenience functionality, instead of requiring us to re-invent the wheel all the time. In the next section, we will discuss some of them.
 
@@ -148,7 +148,7 @@ Second, there may be different ways of how to deal with strings as values in a c
 
 Let's get practical and try out reading and writing files into a data frame (\refex{readfiles}).
 
-\rpyex{chapter06/snippets/readfiles}{Reading files into a dataframe}
+\pyrex[output=none, caption=Reading files into a dataframe]{chapter06/readfiles}
 
 
 \subsection{File handling beyond data frames}
@@ -168,10 +168,10 @@ an
 
 Then, we could direclty read this file into a vector or list  (see \refex{stopwords}).
 
-\rpyex{chapter06/snippets/stopwords}{Reading files without dataframes}
+\pyrex[output=none, caption=Reading files without dataframes]{chapter06/stopwords}
 
 
-\rpyex{chapter06/snippets/extendedfilehandling}{More examples for reading from and writing to files}
+\pyrex[output=both, caption=More examples for reading from and writing to files]{chapter06/extendedfilehandling}
 
 \refex{extendedfilehandling} provides you with some more elaborate code examples that allows us to dig a bit deeper into the general way of handling files.
 
