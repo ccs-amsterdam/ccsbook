@@ -346,12 +346,55 @@ probably better off with one of the other models we discussed.
 
 \subsection{A glimpse into Deep Learning} 
 
-An extensive treatment of Deep Learning is out of the scope of this book (we recommend XXXXX instead), but we will give you a brief introduction, so that you can decide whether it is worth diving deeper into it.
+An extensive treatment of Deep Learning is out of the scope of this
+book (we recommend XXXXX instead), but we will give you a brief
+introduction, so that you can decide whether it is worth diving deeper
+into it.
 
-bla
-bla
-bla
-bla
-bla
+In all of the models we discussed so far (which are also referred to as ``classiical machine learning''), we assume a direct relationship between the features and the labels. Grapically, we could depict this as direct arrows from all features to the output we want to predict (Figure~\ref{fig:classicalml}).
 
-\todo[inline]{ADD THIS SECTION}
+\begin{figure}
+  \centering
+ \begin{neuralnetwork}[height=4]
+        \newcommand{\x}[2]{$x_#2$}
+        \newcommand{\y}[2]{$\hat{y}_#2$}
+        \inputlayer[count=3, bias=true, title=Input\\layer, text=\x]
+        \outputlayer[count=1, title=Output\\layer, text=\y] \linklayers
+ \end{neuralnetwork}
+\caption{Schematic representation of a typical classical machine learning model \label{fig:classicalml}}
+\end{figure}
+
+In tasks such as image recognition or text classification, though,
+this often is too simplistic. For instance, when we want to predict
+whether an image shows a person or not, we do not really believe that
+the color of the pixels in the image (the ``input layer'') can
+directly predict whether it is politician (the ``output layer''). A
+more reasonable assumption is that these pixels can predict some more
+abstract concepts (a ``hidden layer'') which then can predict another
+hidden layer or the output layer (Figure~\ref{fig:nn}).
+
+\begin{figure}
+  \centering
+ \begin{neuralnetwork}[height=4]
+        \newcommand{\x}[2]{$x_#2$}
+        \newcommand{\y}[2]{$\hat{y}_#2$}
+        \newcommand{\hfirst}[2]{\small $h^{(1)}_#2$}
+        \newcommand{\hsecond}[2]{\small $h^{(2)}_#2$}
+        \inputlayer[count=3, bias=true, title=Input\\layer, text=\x]
+        \hiddenlayer[count=5, bias=false, title=Hidden\\layer 1, text=\hfirst] \linklayers
+        \hiddenlayer[count=3, bias=false, title=Hidden\\layer 2, text=\hsecond] \linklayers
+        \outputlayer[count=1, title=Output\\layer, text=\y] \linklayers
+ \end{neuralnetwork}
+\caption{A neural network \label{fig:nn}}
+\end{figure}
+
+These layers are often not interpretable for humans, which can be
+problematic in situations where a classification needs to be
+transparent (for instance, to prevent discrimination). On the other
+hand can these layers often clearly enhance the accuracy of our
+predictions, which may be more important than explainability for many
+applications we are interested in.
+
+It is up to the researcher to specify the number of layers, the number of neurons per layer, the mathematical functions to connect the neurons, and the general architecture of the network. Often, neural networks with many layers (e.g., ten) are referred to as ``deep networks'' (``deep learning''). 
+
+\todo[inline]{Refer to one or two specific code examples elsewhere, e.g. in the text chapter?}
