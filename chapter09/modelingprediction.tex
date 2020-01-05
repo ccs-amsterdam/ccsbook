@@ -1,33 +1,34 @@
 \section{Statistical modeling and prediction}
 \label{sec:prediction}
-Machine learning, many people joke, is nothing else than a fancy name for statistics.
-And, in fact, there is some truth to this:
-If you say ``logistic regression'', this will sound familiar to both statisticians
-and machine learning practicioners.
-Hence, it does not make much sense to distinguish between statistics on the one hand
-and machine learning on the other hand.
+Machine learning, many people joke, is nothing else than a fancy name
+for statistics.  And, in fact, there is some truth to this: If you say
+``logistic regression'', this will sound familiar to both
+statisticians and machine learning practicioners.  Hence, it does not
+make much sense to distinguish between statistics on the one hand and
+machine learning on the other hand.
 
-Still, there are some differences between traditional statistical approaches that
-you may have learned about in your statistics classes and the machine learning
-approach, even if they use the same mathematical tools. One may say that that the
-focus is a different one, and the objective we want to achieve may differ.
+Still, there are some differences between traditional statistical
+approaches that you may have learned about in your statistics classes
+and the machine learning approach, even if they use the same
+mathematical tools. One may say that that the focus is a different
+one, and the objective we want to achieve may differ.
 
 Let us illustrate this with an example.
-\texttt{mediause.csv}\footnote{You can download the file from \url{http://cssbook.nl/d/mediause.csv}}
-contains a few columns from survey data on how many days per week respondents turn to different media
-types in order to follow the news\footnote{For a detailed description of the
-dataset, see \citet{Trilling2013phd}.}. It also contains their
-age (in years), their gender (coded as female = 0, male = 1), and their education
-(on a 5-point scale).
+\texttt{mediause.csv}\footnote{You can download the file from
+  \url{http://cssbook.nl/d/mediause.csv}} contains a few columns from
+survey data on how many days per week respondents turn to different
+media types in order to follow the news\footnote{For a detailed
+  description of the dataset, see \citet{Trilling2013phd}.}. It also
+contains their age (in years), their gender (coded as female = 0, male
+= 1), and their education (on a 5-point scale).
 
-A straightforward question to ask is how in howfar the sociodemographic
-characteristics of the respondents explain their media use.
-Social scientists would typically approach this question by running a regression
-analysis.
-Such an analysis tell us how some independent variables $x_1, x_2 \ldots x_n$
-can explain $y$.
-In an ordinary least square regression (OLS), we would estimate
-$y=\beta_0 + \beta_1 x_1 + \beta_2 x_2 + \ldots + \beta_n x_n$.
+A straightforward question to ask is how in howfar the
+sociodemographic characteristics of the respondents explain their
+media use.  Social scientists would typically approach this question
+by running a regression analysis.  Such an analysis tell us how some
+independent variables $x_1, x_2 \ldots x_n$ can explain $y$.  In an
+ordinary least square regression (OLS), we would estimate $y=\beta_0 +
+\beta_1 x_1 + \beta_2 x_2 + \ldots + \beta_n x_n$.
 
 In a typical social-science paper, we would then interpret the coefficients
 that we estimated, and say something like: When $x_1$ increases by one unit,
@@ -38,11 +39,10 @@ as a causal effect).
 Additionally, we might look at the explained variance $R^2$, to assess how good
 the model fits our data.
 
-\pyex{chapter09/snippets/ols}{OLS regression and full model output in Python}
-\rex{chapter09/snippets/ols}{Running an OLS regression (here, without full output) in R}
+\pyrex[output=r, caption=Obtaining a model through estimating an OLS regression]{chapter09/ols}
 
-Most traditional social-scientific analyses stop after reporting and interpreting
-the coefficients of such a model.
+Most traditional social-scientific analyses stop after reporting and
+interpreting the coefficients of such a model.
 
 But we can go a step further. Given that we have already estimated our
 regression equation, why not use it to do some \emph{prediction}?
@@ -51,9 +51,10 @@ We have just estimated that
 
 $\textrm{newspaperreading} = -0.0896 + 0.0676 \cdot \textrm{age} + 0.1767 \cdot \textrm{gender}$
 
-By just filling in the values for a 20 year old man, or a 40 year old woman,
-we can easily calculate the expected number of days such a person reads
-the newspaper per week, \emph{even if no such person exists in the original dataset}.
+By just filling in the values for a 20 year old man, or a 40 year old
+woman, we can easily calculate the expected number of days such a
+person reads the newspaper per week, \emph{even if no such person
+  exists in the original dataset}.
 
 We learn that
 
@@ -65,7 +66,7 @@ This was easy to do by hand, but of course, we could do this automatically for a
 large and essentially unlimited number of cases.
 This could be as simple as shown in \refex{olsprediction}.
 
-\rpyex{chapter09/snippets/olspredict}{Using the OLS model we estimated before to predict the dependent variable for new data, where the dependent variable is unknown.}
+\pyrex[output=py, caption=Using the OLS model we estimated before to predict the dependent variable for new data where the dependent variable is unknown.]{chapter09/olspredict}
 
 In doing so, we shift our attention from the interpretation of coefficients to
 the prediction of the dependent variable for new, unknown cases. We do not
@@ -76,11 +77,11 @@ we do not even bother to report them.
 As you see, this implies that we proceed in two steps: First, we use some data
 to estimate our model. Second, we use that model to make predictions.
 
-We used an OLS regression for our first example, because it is very straightforward
-to interpret, and most of our readers will be familiar with it.
-However, a model can take the form of \emph{any} function, as long as it takes
-some characteristics (or ``features'') of the cases (in this case, people) as
-input and return a prediction.
+We used an OLS regression for our first example, because it is very
+straightforward to interpret, and most of our readers will be familiar
+with it.  However, a model can take the form of \emph{any} function,
+as long as it takes some characteristics (or ``features'') of the
+cases (in this case, people) as input and return a prediction.
 
 Using such a simple OLS regression approach for prediction, as we did in our
 example, can come with a couple of problems, though.
@@ -99,4 +100,6 @@ a user comment is likely to contain offensive language or not, wheter an article
 is more likely to be about politics, sports, economy, or lifestyle.
 In machine learning terms, these tasks are known as \emph{classification}.
 
-In the next section, we will outline key terms and concepts in machine learning. After that, we will then discuss specific models that you can use for different use cases.
+In the next section, we will outline key terms and concepts in machine
+learning. After that, we will then discuss specific models that you
+can use for different use cases.
