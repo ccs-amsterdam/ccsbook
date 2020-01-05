@@ -80,6 +80,11 @@ class Cell:
         return self.tags(filter="output")
 
     def get_outputs(self):
+        # remove stderror from output so that we can process cells that
+        # first write to stderr (e.g., deprication warnings or loading
+        # r packages) and then to stdout.
+        self.data['outputs'] = [e for e in self.data['outputs'] if e.get('name', '') != 'stderr']
+        
         otypes = [o['output_type'] for o in self.data['outputs']]
         if len(otypes) != len(set(otypes)):
             raise ValueError("output_types are not unique... :-( ")
