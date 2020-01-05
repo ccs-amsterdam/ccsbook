@@ -138,7 +138,7 @@ unbiased estimate of its performance.
 
 
 
-\subsection{Cross-validation}
+\subsection{Cross-validation and grid search}
 
 In an ideal world, we would have a huge labeled dataset and do not
 need to worry about the decreasing size of our training dataset as we
@@ -153,11 +153,42 @@ problem of overfitting, this could lead to underfitting: We may have
 removed the only examples of some specific feature combination, for
 instance.
 
-A common approach to address this issue is $k$-fold cross-validation. To do so, we split our data into $k$ partitions, so-called folds. We then estimate our model $k$ times, and each time leave \emph{one} of the folds aside for validation. Hence, every fold is exactly one time the validation dataset, and exactly $k-1$ times part of the training data. We then simply average the results of our $k$ values for the evaluation metric we are interested in.
+A common approach to address this issue is $k$-fold
+cross-validation. To do so, we split our data into $k$ partitions,
+so-called folds. We then estimate our model $k$ times, and each time
+leave \emph{one} of the folds aside for validation. Hence, every fold
+is exactly one time the validation dataset, and exactly $k-1$ times
+part of the training data. We then simply average the results of our
+$k$ values for the evaluation metric we are interested in.
 
-Very often, cross-validation is used when we want to compare many different model specifications, for example to find optimal hyperparameters.
+If our classfier generalizes well, we would expect that our metric of
+interest (e.g., the accuracy, or the f1-score, \ldots) is very similar
+in all folds. Example~\refex{crossval} performs a cross-validation
+based on the random forest classifier we build above. We see that,
+even though there are no dramatic changes between the runs, there is
+some variation. Running the same cross-validation on our logistic
+regression classifier, instead, would produce not only better (higher)
+means, but also better (lower) standard deviations.
 
+\codex{chapter09/crossval.py}
 
-\todo[inline]{Add example with hyperparameter optimalization using cross-validation}
+Very often, cross-validation is used when we want to compare many
+different model specifications, for example to find optimal
+hyperparameters.
+
+Hyperparameters are parameters of the model that are not estimated
+from the data. These depend on the model, but could for example be the
+estimation method to use, the number of times a bootstrap should be
+repeated, etc.
+
+Using the help function (e.g., \verb+RandomForestClassifier?+ in
+Python or \verb+help(randomForest)+ in R) or the documentation of the
+modules you are using, you can look up which hyperparameters you can
+specify. For a random forest classifier, for instance, this includes
+the number of estimators in the model, the criterion, and whether or
+not to use bootstrapping. \refex{gridsearch} illustrates how you can automatically assess which values you should choose.
+
+\codex{chapter09/gridsearch.py}
+
 
 

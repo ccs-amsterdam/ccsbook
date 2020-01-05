@@ -89,7 +89,15 @@ After all, the classifier has been trained on exactly these data, and therefore
 one would expect it to perform pretty well.
 In particular, it may be that the classifier is very good in predicting its
 own training data, but fails at predicting other data, because it overgeneralizes
-some idiosyncrasy in the data, a phenomenon known as overfitting\todo{add plot of overfitting}.
+some idiosyncrasy in the data, a phenomenon known as overfitting.
+
+\begin{figure} 
+\centering
+\includegraphics[width=\linewidth]{figures/ch09_overfitting}
+\caption{Underfitting and overfitting. Example adapted from https://scikit-learn.org/stable/auto\_examples/model\_selection/plot\_underfitting\_overfitting.html}
+\label{fig:roccurve}
+\end{figure}
+
 
 Instead, we use the features of the \emph{test dataset} as input for our classifier,
 and evaluate in how far the predicted labels match the actual labels.
