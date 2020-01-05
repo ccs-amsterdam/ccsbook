@@ -1,13 +1,21 @@
 \chapter{Data Wrangling}
 \label{chap:datawrangling}
-This chapter shows you have you can do `data wrangling' in R and Python.
+This chapter shows you how to do `data wrangling' in R and Python.
 Data wrangling is the process of transforming raw data into a shape that is suitable for analysis.
 This often involves steps like filtering, adjusting, aggregating, joining, or reshaping the data.
 
+The sections of this chapter first take you through the normal data wrangling pipeline of
+filtering, changing, grouping, and joining data. Finally, the last section shows how you can
+reshape data.
 
 \note{This chapter uses function from the tidyverse (R) and pandas (Python) packages. See \refsec{installing} for information on installing these packages, and \refsec{loading} for an explanation of reading in data from various sources. In this chapter we read the data directly from the Internet page of this book, but instead of a URL you can also use a local file name.}
 
 \input{ch_data_wrangling/data_filtering}
+\input{ch_data_wrangling/mutate}
+\input{ch_data_wrangling/grouping}
+\input{ch_data_wrangling/merge}
+\input{ch_data_wrangling/tidy}
+
 
 
 \section{Merging and linking  data}

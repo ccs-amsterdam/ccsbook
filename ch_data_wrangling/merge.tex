@@ -1,0 +1,53 @@
+\section{Merging data}
+
+In many cases, we need to combine data from different sources or data files.
+For example, we might have election poll results in one file and socio-economic data per area in another.
+To test whether we can explain variance in poll results from factors such as education level,
+we would need to combine the poll results with the economic data.
+This process is often called merging or joining data.
+
+\subsection{Equal units of analysis}
+
+\pyrex[caption=Private and Pulic Capital data (source: Piketty 2014),format=html]{ch_data_wrangling/piketty}
+
+The easiest joins are when both data sets have the same unit of analysis,
+i.e. the rows represent the same units.
+For example, consider the data on public and private capital ownership published by
+\cite{Piketty} alongside his landmark book \emph{Capital in the 21st Century}.
+As shown in \reffig{piketty}, he released separate files for public and private capital ownership.
+If we would want to analyse the relationship between these (for example to recreate Figure 3.6 on page 128 of that book),
+we first need to combine them into a single data frame.
+
+To combine these data frames, we use the \verb+merge+ (Python) or \verb+full_join+ (R) method.
+Both methods join the data frames on one or more \emph{key} columns.
+The key column(s) identify the units in both data frames, so in this case the \verb+Year+ column.
+Often, the key column is some sort of identifier, like a respondent or location ID.
+The resulting data frame will contain the shared key column(s), and all other columns from both joined data frames.
+
+In both Python and R, all columns that occur in both data frames are by default assumed to be the key columns.
+In many cases, this is the desired behaviour as both data frame may contain e.g. a Year or RepondentID column.
+Sometimes, however, this is not the case.
+Possibly, the key column is called differently in both data frames, e.g. respID in one and Respondent in the other. 
+It is also possible that the two frames contain columns with the same name, but which contain actual data that should not be used as key.
+For example, in the Piketty data shown above the key column is called Year in both frames, but they also share the columns for the countries which are data columns.
+
+In these cases, it is possible to explicitly specify which columns to join on (using the \verb+on=+ (Python) / \verb+by=+ argument).
+However, we would generally recommend preprocessing the data first and select and/or rename columns such that the only shared columns are the key columns.
+The reason for that is that if columns in different data frames mean the same thing (i.e. respID and Respondent), they should generally have the same name to avoid confusion.
+In the case of `accidentally' shared column names, such as the country names in the current example,
+if is also better to rename them so it is obvious which is which in the resulting data set:
+if shared columns are not used in the join, by default they get `.x' and `.y' appended to their name, which is not very meaningful.
+Even if the key column is the only shared column, however, it can still be good to explicitly select that column to make it clear to the reader (or the future you) what is happening. 
+
+\pyrex[caption=Merging private and public data for France]{ch_data_wrangling/capital}
+
+This is shown in \refex{capital}.
+The first two lines select only the `Year' and `France' columns, and rename the France column to indicate whether it is the private or public data.
+Lines 3 and 5 do the actual join, with and without the explicit selection of key column, respectively.
+This is then used to compute the correlation between private and public capital, 
+which shows that there is a weak but (just) significant negative correlation ($\rho=-.32, p=.04$)%
+\footnote{Of course, the fact that this is time series data means that the independence assumption of regular correlation is violated badly, so this should be interpreted as a descriptive statistic, e.g. in the years with high private capital there is low public capital and the other way around}.
+
+\subsection{Inner and Outer joins}
+
+\subsection{Nested data}

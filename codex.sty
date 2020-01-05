@@ -92,17 +92,29 @@
   \else
     \ifx\codex@output\codex@options@both
     \begin{tcbraster}[raster columns=2,raster equal height=rows,raster valign=top]
-      \codex[caption=Python Output]{#2.py.out}
-      \codex[caption=R Output]{#2.r.out}      
+
+      \ifx\codex@format\codex@options@html
+        \begin{tcolorbox}[colback=white,colframe=red!75!black,title=Python Output]
+        % note: need the {.html}.pdf notation because latex is stoopid
+          \includegraphics[width=\linewidth]{{snippets/#2.py.html}.pdf}
+        \end{tcolorbox}
+        \begin{tcolorbox}[colback=white,colframe=red!75!black,title=R Output]
+        % note: need the {.html}.pdf notation because latex is stoopid
+          \includegraphics[width=\linewidth]{{snippets/#2.r.html}.pdf}
+        \end{tcolorbox}
+      \else
+        \codex[caption=Python Output]{#2.py.out}
+        \codex[caption=R Output]{#2.r.out}
+      \fi
     \end{tcbraster}
     \else
     \ifx\codex@format\codex@options@html
-    \begin{tcolorbox}[colback=white,colframe=red!75!black,title=Output]
-        % note: need the {.html}.pdf notation because latex is stoopid
-       \includegraphics[width=\linewidth]{{snippets/#2.\codex@output.html}.pdf}
-    \end{tcolorbox}
+      \begin{tcolorbox}[colback=white,colframe=red!75!black,title=Output]
+      % note: need the {.html}.pdf notation because latex is stoopid
+      \includegraphics[width=\linewidth]{{snippets/#2.\codex@output.html}.pdf}
+      \end{tcolorbox}
     \else
-    \codex[caption=\codex@langname{\codex@output} Output]{#2.\codex@output.out}
+      \codex[caption=\codex@langname{\codex@output} Output]{#2.\codex@output.out}
     \fi
     \fi
   \fi

@@ -1,0 +1,66 @@
+\section{Calculating values}
+
+Very often, we need to calculate values for new columns or change the content of existing columns.
+For example, we might wish to calculate the difference between two columns,
+or we may need to clean a column by correcting clerical errors or converting between data types.
+
+In these steps, the general pattern is that a column is assigned a new value based on
+a calculation that generally involves other columns.
+In both R and Python, there are two general ways to accomplish this.
+First, you can simply assign to an existing or new column,
+using the column selection notation discussed in \refsec{datatypes}:
+\verb+df["column"] = ...+ in Python, or \verb+df$column = ...+ in R.
+
+Both Python and R also offer a function that allows multiple columns to be changed,
+returning a new copy of the data frame rather than changing the original data frame.
+In R, this is done using the \verb+mutate+ function, which is the recommended way to compute values.
+The Python equivalent, \verb+assign+, is used more rarely as it does not offer many advantages over direct assignment.
+
+In either case, you can use arithmetic: e.g. \verb|rep - dem| for computes the difference between these columns.
+This works directly in R \verb+mutate+,
+but in Python or in R direct assignment you also need to specify the name of the dataframe.
+In python, this would be \verb+d.rep - d.dem+, while in R this is \verb+d$rep - d$dem+. 
+
+In many cases, however, you want to use various functions to perform tasks like cleaning and data conversion
+(see \refsec{function} for more explanation of built-in and custom functions).
+For example, to convert a column to numeric you would use the \verb+as.numeric+ (R) or \verb+pd.to_numeric+ (Python) function.
+Both functions take a column as argument and convert it to a numeric column.
+
+Almost all R functions work on whole columns like that.
+In Python, however, many functions work on individual values rather than columns.
+To apply a function on each element of a column, you can use \verb+df.col.apply(my_function)+
+(where df and col are the names of your dataframe and column). 
+There are more built-in functions that you can call on a column, for example \verb+df.col.fillna+ replaces
+missing values, and \verb+df.col.str.replace+ does a find and replace.
+Note that these functions (like most functions in pandas) work on whole columns,
+so there is no need to \verb+apply+ them. 
+
+%TODO should we give or point to some overview of possible functions?
+
+\pyrex[output=r,format=html,caption=Mutate]{ch_data_wrangling/mutate}
+
+To illustrate these possibilities, \refex{mutate} has code for cleaning a version of the Guns Polls
+in which we intentionally introduced two problems: we added some typos to the `rep' column
+and introduced a missing value in the `Support' column.
+To clean this, we perform three steps: First, we remove all non-numeric characters using a regular expression
+(see \refsec{regex} for more information on text handling and regular expressions).
+Next, we need to explicitly convert the resulting column into a numeric column so we can later use it in calculations.
+Finally, we replace the missing value by the column mean
+(of course, it is doubtful that that is the best strategy for imputing missing values here,
+we do it mainly to show how one can deal with missing values technically).
+
+The cleaning process is actually performed twice: lines 5-10 use direct assignment,
+while lines 12-18 use the \verb+mutate+/\verb+assign+ function.
+Finally, lines 20-26 show how you can define and apply a custom function to combine the first two cleaning steps.
+This can be quite useful if you use the same cleaning steps in multiple places,
+since it reduces the repetition of code and hence the possibility of introducing bugs or inconsistencies. 
+
+Note that all these versions work fine and produces the same result.
+In the end, it is up to the researcher to determine which feels most natural in the circumstances.
+As noted above, in R we would generally prefer \verb+mutate+ over direct assignment,
+mostly because it fits nicely into the tidyverse workflow and you do not need to repeat the data frame name.
+In Python, we would generally prefer the direct assignment, unless it is desired to make a copy of the data
+with the changes made, in which case \verb+assign+ can be more useful. 
+
+
+
