@@ -4,7 +4,9 @@ To do supervised machine learning, we can use several models, all of
 which have different advantages and disadvantages, and are more useful
 for some use cases than for others.
 
-We will discuss the most common ones in this chapter.
+We limit ourselves to the most common ones in this chapter. The
+website of scikit-learn (\url{http://www.scikit-learn.org}) gives a
+good overview of more alternatives.
 
 
 \subsection{Na\"ive Bayes}
@@ -34,8 +36,8 @@ ever the case -- for instance, in a survey data set, while age and
 gender indeed are fully independent from each other (unless, for
 instance, a war swept away a whole generation of males but not
 females), this is not the case for education, political interest,
-media use, and so on.  And in textual data, whether a word X is used
-is not independent from the use of word Y --- after all, both are not
+media use, and so on.  And in textual data, whether a word $W_1$ is used
+is not independent from the use of word $W_2$ --- after all, both are not
 randomly drawn from a dictionary, but depend on the topic of the text
 (and other things).  Astonishingly, even though these assumptions are
 regularly violated, the Na\"ive Bayes classifier works reasonably well
@@ -86,13 +88,12 @@ we do instead, is that we estimate $P(x_i)$ using a distribution, for
 example a Gaussian, Bernoulli, or multinomial distribution. The core
 idea, though, stays the same.
 
-\pyrex[output=py, caption=A simple Na\"ive Bayes classifier]{chapter09/nb}
-
-Example~\refex{nb} illustrates how to do train a Na\"ive Bayes
-classifier.  We first create the labels (whether someone uses online
-news at all or not), split our data into a training and a test dataset
-(here, we use 80\% for training and 20\% for testing), then fit
-(train) a classifier, before we use it to predict our test data.
+Our example illustrates how to do train a Na\"ive Bayes classifier.
+We first create the labels (whether someone uses online news at all or
+not), split our data into a training and a test dataset (here, we use
+80\% for training and 20\% for testing) (\refex{preparedata}), then
+fit (train) a classifier (\refex{nb}), before we assess how well it
+predicts our training data (\refex{classificationreport}).
 
 In section~\ref{sec:validation}, we discuss in more detail how to
 evaluate different classifiers, but we will already look at some
@@ -139,7 +140,7 @@ example.  The type of regression analysis to use for this is called
 
 In a normal OLS regression, we estimate
 
-$$y = \beta_o + \beta_1 x_1 + \beta_2 x_2 = \ldots + \beta_n x_n$$
+$$y = \beta_o + \beta_1 x_1 + \beta_2 x_2 + \ldots + \beta_n x_n$$
 
 But this gives us a continous outcome, which we do not want. In a
 logistic regression, we therefore use the sigmoid function to map this
@@ -197,18 +198,18 @@ And, of course, you actually can do OLS regression (or more advanced
 regression models) if you want to estimate a continous outcome.
 
 
-\pyrex[output=py, caption=A simple logistic regression classifier]{chapter09/logreg}
+\pyrex[output=none, caption=A simple logistic regression classifier]{chapter09/logreg}
 
 
 
 
 
 \subsection{Support Vector Machines}
-\todo[inline]{maybe more detail/math/plots needed} Support Vector
-Machines are another very popular and versatile approach to supervised
-machine learning.  In fact, they are quite similar to logistic
-regression, but try to optimize a different function. In technical
-terms, SVM minimizes \emph{hinge loss} instead of logistic loss.
+Support Vector Machines are another very popular and versatile
+approach to supervised machine learning.  In fact, they are quite
+similar to logistic regression, but try to optimize a different
+function. In technical terms, SVM minimizes \emph{hinge loss} instead
+of logistic loss.
 
 What does that mean to us? When estimating logistic regressions, we
 are interested in estimating probabilities, while when training a
@@ -222,18 +223,40 @@ But usually, that's all that you want anyway.
 Without going into mathematical detail here (for that, a good source
 would be [ADD LITERATURE REFERENCE], we can say that finding the
 widest separating margin that we can achieve constructing a plane in a
-geographical space (SVM) versus optimizing a log-likelihood function
+graphical space (SVM) versus optimizing a log-likelihood function
 (logistic regression) results in a model that is less sensitive to
 outliers, and tends to be more balanced.
 
-Another advantage of SVMs is that they can be extended to non-linear
+There are a lot of graphical visualizations available, for example in
+the notebooks supplementing \citep{vanderplas2016python}
+(\url{https://jakevdp.github.io/PythonDataScienceHandbook/05.07-support-vector-machines.html}).
+For now, it may suffice to imagine the two-dimensional case: we
+construct a line that seperates two groups of dots \emph{with the
+  broadest possible margin}. The dots that the margin of this line
+just touches are called the ``support vectors'', hence the name.
+
+You could imagine that sometimes, we may want to be a bit lenient
+about the margins. If we have thousands of data points, then maybe it
+is okay if one or two of these datapoints are, in fact, within the
+margin of the separating line (or hyperpane). We can control this with
+a parameter called $C$: For very high values, this is not allowed, but
+the lower the value, the ``softer'' the margin is.  In
+Section~\ref{sec:crossvalidation}, we will show an approach to find
+the optimal value.
+
+A big advantage of SVMs is that they can be extended to non-linear
 separable classes. Using a so-called kernel function, we can transform
 our data so that the dataset becomes linearly separable. Choices
 include but are not limited to multinomial kernels, the radial basis
-function (RBF), or Gaussian kernels.  \todo[inline]{decide how far we
-  want to go here}.
+function (RBF), or Gaussian kernels. If we, for example, have a two
+concentric rings of datapoints (like a donut), then we cannot find a
+straight line separating them. But a RBF kernel can transfer them into
+a linearly separable space. The aforementioned online visualizations
+can be very instructive here.
 
-\pyrex[output=py, caption=A simple Support Vector Machine classifier]{chapter09/svm}
+\pyrex[output=none, caption=A simple Support Vector Machine classifier]{chapter09/svm}
+
+
 
 
 \subsection{Decision Trees and Random Forests}
@@ -306,9 +329,9 @@ Decision trees have two nice properties. First, they are very easy to
 explain.  In fact, a figure like Figure~\ref{fig:decisiontree} is
 understandable for non-experts, which can be important in scenarios
 where for accountability reasons, the decision of a classifier must be
-as transparent as possible.  Second, they allow us to model non-linear
-relationships even if we have very little ideas about how these
-relationships look like.
+as transparent as possible.  Second, they allow us to approximate
+almost all non-linear relationships (be it not necessarily very
+accurately).
 
 However, this comes at large costs.  Formulating a model as a series
 of yes/no questions, as you can imagine, inherently uses a lot of
@@ -331,16 +354,17 @@ account probability values instead of simple votes.
 
 Because random forests alleviate the problems of decision trees, but
 keep the advantage of being able to model non-linear relationships,
-they are frequently used when we expect such relationships.  Also,
-random forests may be a good choice if you have very different types
-of features (some nominal, some continous, etc.) in your model. The
-same holds true if you have a lot (really a lot) features: Methods
-like SVM would require constructing large matrices in memory, which
-random forests do not.  But if the relationships between your features
-and your labels are acually (approximately) linear, then you are
-probably better off with one of the other models we discussed.
+they are frequently used when we expect such relationships (or have no
+idea about how the relationship looks like).  Also, random forests may
+be a good choice if you have very different types of features (some
+nominal, some continous, etc.) in your model. The same holds true if
+you have a lot (really a lot) features: Methods like SVM would require
+constructing large matrices in memory, which random forests do not.
+But if the relationships between your features and your labels are
+acually (approximately) linear, then you are probably better off with
+one of the other models we discussed.
 
-\pyrex[output=py, caption=A simple Random Forest classifier]{chapter09/randomforest}
+\pyrex[output=none, caption=A simple Random Forest classifier]{chapter09/randomforest}
 
 
 
@@ -351,7 +375,11 @@ book (we recommend XXXXX instead), but we will give you a brief
 introduction, so that you can decide whether it is worth diving deeper
 into it.
 
-In all of the models we discussed so far (which are also referred to as ``classiical machine learning''), we assume a direct relationship between the features and the labels. Grapically, we could depict this as direct arrows from all features to the output we want to predict (Figure~\ref{fig:classicalml}).
+In all of the models we discussed so far (which are also referred to
+as ``classiical machine learning''), we assume a direct relationship
+between the features and the labels. Grapically, we could depict this
+as direct arrows from all features to the output we want to predict
+(Figure~\ref{fig:classicalml}).
 
 \begin{figure}
   \centering
@@ -375,7 +403,7 @@ hidden layer or the output layer (Figure~\ref{fig:nn}).
 
 \begin{figure}
   \centering
- \begin{neuralnetwork}[height=4]
+ \begin{neuralnetwork}[height=5]
         \newcommand{\x}[2]{$x_#2$}
         \newcommand{\y}[2]{$\hat{y}_#2$}
         \newcommand{\hfirst}[2]{\small $h^{(1)}_#2$}

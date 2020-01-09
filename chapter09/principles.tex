@@ -43,7 +43,7 @@ machine learning workflow.
 
 Before we start, we need to get a \emph{labeled dataset}.
 It may be given to us, or we need to create it ourselves.
-For instance, of we can draw a random sample of our data and use techniques
+For instance, often we can draw a random sample of our data and use techniques
 of manual content analysis \citep[e.g.,][]{riffe2019analyzing} to
 \emph{annotate} (i.e., to manually code) the data.
 You can download an example for this process (annotating the topic of news
@@ -59,37 +59,53 @@ when classifying longer texts \citep[see, for instance,][]{burscher2014teaching}
 even though researchers studying less rich data sometimes annotate larger
 datasets \citep[e.g., $60,000$ social media messages in][]{vermeer2019seeing}.
 
-Once we have established that this labeled dataset is available and have
-ensured that it is of good quality, we randomly split it into two datasets:
-a \emph{training dataset} and a \emph{test dataset}.\footnote{In
-  Section~\ref{sec:validation}, we discuss more advanced approaches, such
-  as splitting into training, validation, and test dataset, and cross-validation.}
-We will use the first one to train our model, and the second to test how
-good our model performs. Common ratios range from 50:50 to 80:20; and especially
-if the size of your labeled dataset is rather limited, you may want to have
-a slightly larger training dataset at the expense of a slightly smaller test
-dataset.
+Once we have established that this labeled dataset is available and
+have ensured that it is of good quality, we randomly split it into two
+datasets: a \emph{training dataset} and a \emph{test
+  dataset}.\footnote{In Section~\ref{sec:validation}, we discuss more
+  advanced approaches, such as splitting into training, validation,
+  and test dataset, and cross-validation.}  We will use the first one
+to train our model, and the second to test how good our model
+performs. Common ratios range from 50:50 to 80:20; and especially if
+the size of your labeled dataset is rather limited, you may want to
+have a slightly larger training dataset at the expense of a slightly
+smaller test dataset.
 
-We now \emph{train our classifier} (i.e., estimate our model using the
-training dataset). This can be as straightforward as estimating a logistic
-regression equation (we will discuss different classifiers in
-Section~\ref{sec:nb2dnn}).
-It may be that we first need to create new independent variables, so-called
-features, a step known as \emph{feature engineering}, for example by transforming
-existing variables, combining them, or by converting text numerical word frequencies.
+In \refex{preparedata}, we prepare the dataset we already used in
+Section~\ref{sec:prediction} for classification by creating a
+dichotomous variable (the label) and splitting it into a training and
+a test dataset. We use |y_train| to denote the training labels and
+|X_train| to denote the feature matrix of the training dataset;
+|y_test| and |X_test| is the corresponding test dataset. We set a
+so-called random-state seed to make sure that the random splitting
+will be the same when re-running the code.
 
-But before we can actually use this classifier to do some useful work, though,
-we need to test how capable it actually is to predict the correct labels,
-given a set of features. One might think that we could just feed it the same
-input data (i.e., the same features) again and see whether the predicted labels
-match the actual labels.
-In fact, we could do that.
-But this test would not be strict enough:
-After all, the classifier has been trained on exactly these data, and therefore
-one would expect it to perform pretty well.
-In particular, it may be that the classifier is very good in predicting its
-own training data, but fails at predicting other data, because it overgeneralizes
-some idiosyncrasy in the data, a phenomenon known as overfitting.
+\pyrex[output=py, caption=Preparing a dataset for supervised machine learning]{chapter09/preparedata}
+
+We now can \emph{train our classifier} (i.e., estimate our model using the
+training dataset). This can be as straightforward as estimating a
+logistic regression equation (we will discuss different classifiers in
+Section~\ref{sec:nb2dnn}).  It may be that we first need to create new
+independent variables, so-called features, a step known as
+\emph{feature engineering}, for example by transforming existing
+variables, combining them, or by converting text numerical word
+frequencies.
+\refex{nb} shows how easy it is to train a classifier.
+
+\pyrex[output=none, caption=A simple Na\"ive Bayes classifier]{chapter09/nb}
+
+But before we can actually use this classifier to do some useful work,
+though, we need to test how capable it actually is to predict the
+correct labels, given a set of features. One might think that we could
+just feed it the same input data (i.e., the same features) again and
+see whether the predicted labels match the actual labels of the test
+dataset.  In fact, we could do that.  But this test would not be
+strict enough: After all, the classifier has been trained on exactly
+these data, and therefore one would expect it to perform pretty well.
+In particular, it may be that the classifier is very good in
+predicting its own training data, but fails at predicting other data,
+because it overgeneralizes some idiosyncrasy in the data, a phenomenon
+known as overfitting.
 
 \begin{figure} 
 \centering
@@ -98,31 +114,49 @@ some idiosyncrasy in the data, a phenomenon known as overfitting.
 \label{fig:roccurve}
 \end{figure}
 
+Instead, we use the features of the \emph{test dataset} as input for
+our classifier, and evaluate in how far the predicted labels match the
+actual labels.  Remember: the classifier has at no point in time seen
+the actual labels.  Therefore, we can in fact calculate how often the
+prediction is right\footnote{We assume here that the manual annotation
+  is always right; an assumption that one may, of course,
+  challenge. However, in the absence of any better proxy for reality,
+  we assume that this manual annotation is the so-called \emph{gold
+    standard} that reflects the \emph{ground truth} as closely as
+  possible, and that by definition cannot be outperformed.}
 
-Instead, we use the features of the \emph{test dataset} as input for our classifier,
-and evaluate in how far the predicted labels match the actual labels.
-Remember: the classifier has at no point in time seen the actual labels.
-Therefore, we can in fact calculate how often the prediction is right\footnote{We
-  assume here that the manual annotation is always right; an assumption that one
-  may, of course, challenge. However, in the absence of any better proxy for
-  reality, we assume that this manual annotation is the so-called \emph{gold standard}
-  that reflects the \emph{ground truth} as closely as possible, and that by
-  definition cannot be outperformed.}
+\pyrex[output=py, caption=Calculating precision and recall]{chapter09/classificationreport}
 
+To do so, we rely on two measures: \emph{precision} and \emph{recall}, both of which are calculated in \refex{classficationreport}.
+Imagine we build a sentiment classifier, that predicts -- based on the
+text of a movie review -- whether it is a positive review or a
+negative review.
 
-To do so, we rely on two measures: \emph{precision} and \emph{recall}.
-Imagine we build a sentiment classifier, that predicts -- based on the text of a movie review -- whether it is a positive review or a negative review. 
+Let us assume that the goal of training this classifier is to build an
+app that recommends the user only good movies. There are two things
+that we want to achieve: We want to find as many as possible positive
+films (recall), but we also want that the selection we found
+\emph{only} contains positive films (precision).
 
-Let us assume that the goal of training this classifier is to build an app that recommends the user only good movies. There are two things that we want to achieve: We want to find as many as possible positive films (recall), but we also want that the selection we found \emph{only} contains positive films (precision).
+Precision is calculated as $\frac{TP}{TP+FP}$, where TP are true
+postivies and FP are false positives. For example, if our classifier
+retrieves 200 articles that it classifies as positive films, but only
+150 of them indeed are positive films, then the precision is
+$\frac{150}{150+50} = \frac{150}{200} = 0.75$.
 
-Precision is calculated as $\frac{TP}{TP+FP}$, where TP are true postivies and FP are false positives. For example, if our classifier retrieves 200 articles that it classifies as positive films, but only 150 of them indeed are positive films, then the precision is $\frac{150}{150+50} = \frac{150}{200} = 0.75$.
+Recall is calculated as $\frac{TP}{TP+FN}$, where TP are true
+postivies and FN are false negatives. If we know that the classifier
+from the previous paragraph missed 20 positive films, then the recall
+is $\frac{150}{150+20} = \frac{150}{170}= 0.88$.
 
-Recall is calculated as $\frac{TP}{TP+FN}$, where TP are true postivies and FN are false negatives. If we know that the classifier from the previous paragraph missed 20 positive films, then the recall is $\frac{150}{150+20} = \frac{150}{170}= 0.88$.
+In other words: Recall measures how many of the cases we wanted to
+find we actually found. Precision measures how much of what we have
+found actually is correct.
 
-In other words: Recall measures how many of the cases we wanted to find we actually found. Precision measures how much of what we have found actually is correct.
-
-Often, we have to make a trade-off between precision and recall. For example, just retrieving \emph{every} film would give us a recall of 1.0 (after all, we didn't miss a single positive film). But on the other hand, we retrieved all the negative films as well, so precision will be extremely low. It can depend on the task at hand whether precision or recall is more important.
-
-
-%\subsection{Unsupervised Machine Learning}
-%\label{sec:unsupervised}
+Often, we have to make a trade-off between precision and recall. For
+example, just retrieving \emph{every} film would give us a recall of
+1.0 (after all, we didn't miss a single positive film). But on the
+other hand, we retrieved all the negative films as well, so precision
+will be extremely low. It can depend on the task at hand whether
+precision or recall is more important. In
+Section~\ref{sec:validation}, we discuss this tradeoff in detail.

@@ -21,7 +21,7 @@ or a recall higher than some threshold you are willing to accept.
 If we build a classifier to distinguish spam messages from legitimate
 messages, we could ask the following questions:
 \begin{description}
-\item[precision] Which percentage of what our classifier predicts as
+\item[precision] Which percentage of what our classifier predicts to be
   spam really is spam?
 \item[recall]{What percentage of all spam messages has our classifier
   found?}
@@ -139,7 +139,7 @@ unbiased estimate of its performance.
 
 
 \subsection{Cross-validation and grid search}
-
+\label{sec:crossvalidation}
 In an ideal world, we would have a huge labeled dataset and do not
 need to worry about the decreasing size of our training dataset as we
 set aside our validation and test datasets.
@@ -179,16 +179,20 @@ hyperparameters.
 Hyperparameters are parameters of the model that are not estimated
 from the data. These depend on the model, but could for example be the
 estimation method to use, the number of times a bootstrap should be
-repeated, etc.
+repeated, etc. A very good example are the hyperparameters of support
+vector machines (see above): It is hard to know how soft our margins
+should be (the $C$), and we may also be unsure about the right kernel
+(\refex{crossval2}), or in the case of a polinomial kernel, how many
+degrees we want to consider).
 
 Using the help function (e.g., \verb+RandomForestClassifier?+ in
 Python or \verb+help(randomForest)+ in R) or the documentation of the
 modules you are using, you can look up which hyperparameters you can
 specify. For a random forest classifier, for instance, this includes
 the number of estimators in the model, the criterion, and whether or
-not to use bootstrapping. \refex{gridsearch} illustrates how you can automatically assess which values you should choose.
+not to use bootstrapping. \refex{gridsearch} illustrates how you can
+automatically assess which values you should choose.
 
 \codex{chapter09/gridsearch.py}
 
-
-
+\codex{chapter09/gridsearch2.py}

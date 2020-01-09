@@ -1,18 +1,44 @@
 \chapter{Introduction to Statistical Modeling and Supervised Machine Learning}
 
-In this chapter, we introduce the basic concepts and ideas behind machine learning.
-We will outline how machine learning related to traditional statistical approaches that you already might now (and as you will see, there is a lot of overlap), present different types of models, and discuss how to validate them.
+In this chapter, we introduce the basic concepts and ideas behind
+machine learning.  We will outline how machine learning relate to
+traditional statistical approaches that you already might now (and as
+you will see, there is a lot of overlap), present different types of
+models, and discuss how to validate them.
 
-In a later chapter (Chapter~\ref{chap:text}), we will then specifically apply the knoweldge you gained from this chapter to the analysis of textual data, arguably one of the most interesting tasks in the computational analysis of communication.
+In a later chapter (Chapter~\ref{chap:text}), we will then
+specifically apply the knoweldge you gained from this chapter to the
+analysis of textual data, arguably one of the most interesting tasks
+in the computational analysis of communication.
 
-In this chapter, we mostly focus on \emph{supervised} machine learning -- a form of machine learning, where we aim to predict a variable that, for at least a part of our data, is known. To illustrate the idea, imagine that you are interested in predicting the gender based on Twitter biographies. You determine the gender for some of the biographies yourself and hand these examples over to the computer. The computer ``learns'' from your examples, and can then be used to predict the gender for other twitter biographies for which you do not know the gender.
+In this chapter, we mostly focus on \emph{supervised} machine learning
+-- a form of machine learning, where we aim to predict a variable
+that, for at least a part of our data, is known. To illustrate the
+idea, imagine that you are interested in predicting the gender based
+on Twitter biographies. You determine the gender for some of the
+biographies yourself and hand these examples over to the computer. The
+computer ``learns'' from your examples, and can then be used to
+predict the gender for other twitter biographies for which you do not
+know the gender.
 
-In unsupervised machine learning, in contrast, you do not have such examples. We have discussed some of such techniques in [ADD REFERENCE TO EXPLORATIVE DATA CHAPTER], in particular cluster analysis and principal component analysis (PCA)/singular value decomposition (SVD).
-Later, in chapter [ADD REFERENCE TO TOPIC MODELLING CHAPTER], we will discuss topic models, an unsupervised method to extract so-called topics from textual data.
+In unsupervised machine learning, in contrast, you do not have such
+examples. We have discussed some of such techniques in [ADD REFERENCE
+  TO EXPLORATIVE DATA CHAPTER], in particular cluster analysis and
+principal component analysis (PCA)/singular value decomposition (SVD).
+Later, in chapter [ADD REFERENCE TO TOPIC MODELLING CHAPTER], we will
+discuss topic models, an unsupervised method to extract so-called
+topics from textual data.
 
-While both approaches can be combined (for instance, one could first reduce the amount of data using SVD, and then predict some outcome), they can be seen as two fundamentally different approaches, also from a theoretical and conceptual point of view.
-Unsupervised machine learning is a bottom-up approach and corresponds to an inductive reasoning: you do not have a hypothesis of, for instance, which topics are present in a corpus of text; you rather let the topics emerge from the data.
-Supervised machine learning, in contrast, is a top-down approach and can be seen as more deductive: you define a priori which topics to predict.
+Even though both approaches can be combined (for instance, one could
+first reduce the amount of data using SVD, and then predict some
+outcome), they can be seen as fundamentally different, also from a
+theoretical and conceptual point of view.  Unsupervised machine
+learning is a bottom-up approach and corresponds to an inductive
+reasoning: you do not have a hypothesis of, for instance, which topics
+are present in a corpus of text; you rather let the topics emerge from
+the data.  Supervised machine learning, in contrast, is a top-down
+approach and can be seen as more deductive: you define a priori which
+topics to predict.
 
 Both supervised and unsupervised approaches are widely used in the computational analysis of communication, and you will meet them across the book.
 In this chapter, however, we will focus on supervised learning.
