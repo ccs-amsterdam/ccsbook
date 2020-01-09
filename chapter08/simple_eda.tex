@@ -11,7 +11,8 @@ For most of the EDA we will use tidyverse (including: ggplor2, dplyr, tidyr, pus
 
 \textbf{XXX  load  XXX}
 		
-		
+\pyrex[output=py,caption=whatevercaptionyoulike]{chapter08/load}
+
 In the next example, using dplyr and pandas, we selected 13 variables out of the original dataset and renamed the columns using understandable labels. Our first question was to know the distribution of the categorical variable gender, by creating tables that include absolute and relative frequencies. The frequency tables (using functions group\_by() and summarise() of dplyr in R, and value\_counts() of pandas in Python) revealed that 17,718 (53\%) women and 15,477 (46\%) men answered this survey. We can do the same with the level of support of refugees [support\_refugees] (\textit{To what extent do you agree or disagree with the following statement: Our country should help refugees}) and obtain that 4,957 (14.93\%) persons totally agreed with this statement, 12,695 (38\%) tended to agree, 5,931 (16.245) tended to disagree and 3,574 (10.77\%) totally disagreed. Well, now you can tell that you are conducting EDA and getting insights of your data.
 
 \textbf{XXX  frequency  XXX}
