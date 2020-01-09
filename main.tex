@@ -1,6 +1,8 @@
 % !BIB TS-program = biber
 % !BIB program = biber
 \documentclass[a4paper,12pt]{book}
+
+\usepackage{fancyvrb}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern,textcomp}
 \usepackage{graphicx}
@@ -14,6 +16,7 @@
 \usepackage{newfloat}
 \usepackage{tcolorbox}
 \usepackage{codex}
+\usepackage[export]{adjustbox}% http://ctan.org/pkg/adjustbox
 
 \tcbuselibrary{skins,breakable,xparse,raster}
 
@@ -202,9 +205,15 @@ eprint=false
 
 
 %\includeonly{ch_data_wrangling/ch_data_wrangling}
-\includeonly{chapter06/chapter06, ch_data_wrangling/ch_data_wrangling, chapter09/chapter09}
+%\includeonly{chapter06/chapter06, ch_data_wrangling/ch_data_wrangling, chapter09/chapter09}
 
+
+\fvset{fontsize=\footnotesize}
 \begin{document}
+\DefineShortVerb{\|}
+
+
+
 
 \author{Wouter van Atteveldt, Damian Trilling, Carlos Arcila Calder\'on}
 \title{Computational Analysis of Communication}
@@ -216,7 +225,7 @@ eprint=false
 
 \mainmatter
 
-\part{Getting Started}
+% \part{Getting Started}
 
 \setcounter{chapter}{1}
 \include{chapter02/chapter02}
@@ -225,7 +234,7 @@ eprint=false
 \setcounter{chapter}{5}
 \include{chapter06/chapter06}
 
-\part{From Data to Science}
+% \part{From Data to Science}
 
 \setcounter{chapter}{6}
 \include{ch_data_wrangling/ch_data_wrangling}
