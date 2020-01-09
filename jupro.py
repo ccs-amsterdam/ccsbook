@@ -99,6 +99,8 @@ class Cell:
     
     def text_output(self):
         d = self.get_output("execute_result", "display_data", "stream")
+        if d is None:
+            return ""
         data = d.get('data', {})
         text = d.get('text', {})
         if data:
