@@ -73,6 +73,11 @@
     \StrCount{#2}{.}[\nbmatch]%
     \StrCut[\nbmatch]{#2}{.}\tmp\myext%
     \lstinputlisting[style=\myext]{#2}
+
+    \StrCount{\tmp}{/}[\nbmatch]%
+    \StrCut[\nbmatch]{\tmp}{/}\tmptmp\snippetlabel%
+    \label{ex:\snippetlabel}
+
 \end{tcolorbox}}%
 }
 
