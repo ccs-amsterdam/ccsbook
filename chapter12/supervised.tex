@@ -138,20 +138,121 @@ We do not necessarily expect this first model to be the best classifier we could
 
 \subsection{Finding the best classifier}
 
--- zelfs zelf-trained and vader vergelijken
+Let us start by comparing two simple classifiers we know (Na\"ive
+Bayes and Logistic Regression, see Section~\ref{sec:nb2dnn} and two
+vectorizers that transform our texts into two numerical
+representations that we know: word counts and $tf\cdot idf$ scores
+[ADD REF TO CHAPTER 11].
 
-different vectorizers
-but also: pruning!
+We can also tune some things in the vectorizer, such as filtering out
+stopwords, or specifying a minimum number (or proportion) of documents
+in which a word needs to occur in order to be included, or the maximum
+number (or proportion) of documents in which it is allowed to
+occur. For instance, it could make sense to say that a word that
+occurs in less than $n=5$ documents is probably a spelling mistake or
+so unusual that it just unnecessarily bloats our feature matrix; and
+on the other hand, a word that is so common that it occurs in moret
+than 50\% of all documents is so common that it does not help us to
+distinguish between different classes.
 
-feature importance with eli5
-typical examples etc
+We can try all of these things out by hand by just re-running the code
+from \refex{imdbbaseline} and only changing the line in which the
+vectorizer is specified and the line in which the classifier is
+specified. There's nothing wrong with that, but it's a bit cumbersome
+and not too elegant if we want to do this for more than two or three
+sections. Especially in the Python world, copy-pasting essentially the
+same code is considered bad style, as it makes your code unnecessary
+long and increases the likelihood of errors creeping in when you, for
+instance, need to apply the same changes to multiple copies of the
+code.  A more elegant approach is outlined in
+\refex{basiccomparisons}: We define a function that gives us a short
+summary of only the output we are interested in, and then use a
+for-loop to iterate over all configurations we want to evaluate, fits
+them and calls the function we defined before. In fact, with 23 lines
+of code, we manage to compare four different models, while we already
+needed 15 lines (in \refex{imdbbaselne}) to evaluate only one model.
+
+
+\codex{chapter12/basiccomparisons.py}
+\codex{chapter12/basiccomparisons.py.out}
+
+The output of this little example gives us already quite a bit of
+insight of how to tackle our specific classification tasks: First, we
+see that a $tf\cdot idf$ classifier seems to be slightly but
+consistently superior to a count classifier (this is often, but not
+always the case). Second, we see that the logistic regression performs
+better than the Na\"ive Bayes classifier (also this is often, but not
+always, the case). In particular, in our case, the logistic regression
+improved on the exessive misclassifcation of positive reviews as
+negative, and achieves a very balanced performance.
+
+There may be instances where one nevertheless may want to use a Count
+Vectorizer with a Na\"ive Bayes classifier instead (especially if it
+is too computationally expensive to estimate the other model), but for
+now, we may settle on the best performing combination, logistic
+regression with a $tf\cdot idf$ vectorizer. You could also try fitting
+a Support Vector Machine instead, but we have little reason to believe
+that our data isn't linearly separable, which means that there is
+little reason to believe that the SVM will perform better. Given the
+good performance we already achieved, we decide to stick to the
+logistic regression for now.
+
+
+We can now go as far as we like, include more models, use
+crossvalidation and gridsearch (see
+Section~\ref{sec:crossvalidation}), etc. However, our workflow now
+consists of \emph{two} steps: fitting/transforming our input data
+using a vectorizer, and fitting a classifier. To make things easier,
+in scikit-learn, both steps can be combined into a so-called
+pipe. \refex{chapter12/basicpipe} shows how the loop in
+\refex{chapter12/basiccomparisons} can be re-written using pipes (the
+result stays the same).
+
+\codex{chapter12/basicpipe.py}
+
+Such a pipeline lends itself very well for performing a
+gridsearch. \refex{gridsearchlogreg} gives you an example.  With
+|LogisticRegression?| and |TfIdfVectorizer?|, we can get a list of all
+possible hyperparameters that we may want to tune. For instance, these
+could be the minimum and maximum frequency for words to be included or
+whether we want to use only unigrams (single words) or also bigrams
+(combinations of two words, see section [ADD REFERENCE TO APPROPRIATE
+  SECTIONS]). For the Logistic Regression, it may be the
+regularization hyperparameter C, which applies a penalty for too
+complex models.  We can simply put all values for these parameters
+that we want to consider in a dictionary, with as key a string with
+the step of the pipeline followed by two underscores and the name of
+the hyperparameter, and a list of all values we want to consider as
+corresponding value.
+
+The gridsearch procedure will then estimate all combinations of all
+values, using cross-validation (see Section~\ref{sec:validation}). In
+our example, we have $2 \cdot 2 \cdot 2 \cdot 2 \cdot 3 = 24$
+different models, and $24$ models $\cdot 5$ folds $= 120$ models to
+estimate. Hence, it can take you some time to run the code
+\codex{chapter12/gridsearchlogreg.py}
+\codex{chapter12/gridsearchlogreg.py.out}
+
+We see that we could further improve our model to precision and recall values of .90, by excluding extremely infrequent and extremely frequent words), including both unigrams and bigrams (which, we may speculate, helps us accounting for the ``not good'' vs ``not'', ``good'' problem), and changing the default penalty of C=1 to C=100.
 
 
 
 
 
-\subsection{Re-using the model}
+
+
+
+
+\subsection{Using the model}
 
 saving vectorizer and classifier
 
 re-using on new data
+
+-- zelfs zelf-trained and vader vergelijken
+
+feature importance with eli5
+
+typical examples etc
+
+
