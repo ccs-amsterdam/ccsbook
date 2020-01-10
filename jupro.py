@@ -133,7 +133,7 @@ class Cell:
             try:
                 return text.rstrip("\n")
             except:
-                return "\n".join(text).rstrip("\n")
+                return "\n".join([l.rstrip() for l in text]).rstrip("\n")
 
     def html_output(self):
         d = self.get_output("execute_result", "display_data")
