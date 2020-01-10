@@ -1,2 +1,157 @@
 \section{Supervised text analysis: automatic classification and sentiment analysis [Damian]}
 \label{sec:supervised}
+
+For many applications, there are good reasons to use the dictionary
+approach presented in the previous section. First, it is intuitively
+understandable also for lay people, and results can -- in principle --
+even be varified by hand, which can be an advantage when transparency
+or communicatibility is of high importance. Second, it is very easy to
+use.
+
+Dictionary approaches excel under three conditions: First, the
+variable we want to code is \emph{manifest and concrete} rather than
+\emph{latent and abstract}: names of actors, specific physical
+objects, specific phrases, etc., rather than feelings, frames, or
+topics. Second, all synonyms to be included must be known
+beforehand. And third, the dictionary entries must not have multiple
+meanings.
+
+For instance, coding how often gun control is mentioned in political
+speeches fits these criteria. There are only so many ways to talk
+about it, and it is rather unlikely that speeches about other topics
+contain a phrase like ``gun control''. Similarily, if we want to find
+references to Angela Merkel, Donald Trump, or any other well-known
+politician, we can just directly search for their names -- even though
+problems arise when people have very common surnames and are referred
+to by their surnames only.
+
+Sadly, most interesting concepts are more complex to code. Take a
+seemingly straightforward problem: distinguishing whether a news
+article is about the economy or not. This is really easy to do for
+humans: there may be some edge cases, but in general, people rarely
+need longer than a second to grasp whether an article is about the
+economy rather than about sports, culture, etc. Yet, many of these
+article won't directy state that they are about the economy by
+explicitly using the word ``economy''.
+
+We may think of extending our dictionary not only with |economi.*| (a
+regular expression that includes economists, economic, and so on), but
+also come up with other words like ``stock exchange'', ``market'',
+``company'' -- but wait. Here, we run into a problem that we also
+faced when we dicussed the precision-recall tradeoff in
+Section~\ref{sec:validation}: The more terms we add to our
+dictionary, the more false positives we will get: articles about
+geographical space called ``market'', about some celebrity being seen
+in ``company'' of someone else, and so on.
+
+From this example, we can conclude that often (1) it is easy for
+humans to decide to which class a text belongs, but (2) it is very
+hard for humans to come op with a list of words (or rules) on which
+their judgement is based.
+
+Such a situation is the perfect use case for supervised machine
+learing: After all, it won't take us much time to annotate, say, 1000
+articles based on whether they are about the economy or not (probably
+this takes less time than thoroughly finetuning a list of words to in-
+or exclude); and the difficult part, deciding on the exact rules
+underlying the decision to classify an article as economic is done by
+the computer in seconds.
+
+
+\subsection{Putting together a workflow}
+With the knowledge we gained in previous chapters, it is not difficult
+to set up a supervised machine learning classifier to automatically
+determine, for instance, the topic of a news article.
+
+Let us recap the building blocks that we need. In
+Chapter~\ref{chap:introsml}, you learned how to use different
+classifiers, how to evaluate them, and how to choose the best
+settings. However, in these examples, we used numerical data as
+features; now, we have text.  In Chapter [INSERT REF TO CHAPTER
+  10/PROCESSING TEXT], you learned how to turn text into numerical
+features. And that's all we need to get started!
+
+Typical examples for supervised machine learning in the analysis of
+communication include the classification of topics
+\citep[e.g.,][]{Scharkow2011}, frames \citep[e.g.,][]{Burscher2014},
+user characteristics such as gender or ideology \todo{add references},
+or sentiment.
+
+Let us consider the case of sentiment analysis more in
+detail. Classical sentiment analysis is done with a dictionary
+approach: you take a list of positive words, a list of negative words,
+and count what occurs more. Addtionally, one may attach a weight to
+each word, such that ``perfect'' gets a higher weight than ``good'',
+for instance.  An obvious drawbacks include that these pure
+bag-of-words approaches cannot cope with negation (``not good'') and
+intensifiers ``very good''), which is why extensions have been
+developed that take these (and other features, such as punctuation)
+into accout \citep{Thelwall2012,Hutto2014,DeSmedt2012}.
+% come back to this in crowddcoding-chapter: \citep{Haselmayer2016}
+
+But while available off-the-shelf packages that implement these
+extended dictionary-based methods are very easy to use (in fact, they
+spit out a sentiment score with one single line of code), it is
+questionable how well they work in practice. After all, ``sentiment''
+is not exactly a clear, manifest concept for which we can enumerate a
+list of words. It has been shown that results obtained with multiple
+of these packages correlate very poorly with each other and with human
+annotations \todo{add reference paper wouter}.
+
+Consequently, it has been suggested that it is better to use
+supervised machine learning to automatically code the sentiment of
+texts \citep{Gonzalez-Bailon2015,vermeer2019seeing}. In particular,
+one may need to annotate a custom, own dataset: training a classifier
+on, for instance, movie reviews and then using it to predict sentiment
+in political texts violates the assumption that training set, test
+set, and the unlabeled data that are to be classified are (at least in
+principle and approximately) drawn from the same population.
+
+To illustrate the workflow, we will use the ACL IMDB dataset, a large
+dataset that consists out of a training dataset of 25,000 movie
+reviews (out of which 12,500 positives ones and 12,500 negative ones)
+and an equally sized test dataset \citep{aclimdb}. It can be
+downloaded at
+\url{https://ai.stanford.edu/~amaas/data/sentiment/aclImdb_v1.tar.gz}
+
+
+These data do not come in one file, but rather in a set of textfiles
+that are sorted in different folders named after the dataset they
+belong to (|test| or |train|) and their label (|pos| and |neg|). This
+means that we cannot simply use a pre-defined function to read them,
+but we need to think of a way of reading the content into a
+datastructure that we can use. One way of doing so is shown in
+\refex{readimdb}.
+
+\pyrex[output=none, caption=Reading the ACL IMDB dataset]{chapter12/readimdb}
+
+Let us now train our first classifier. We choose a Na\"ive Bayes classifier with a simple count vectorizer (\refex{imdbbaseline}).
+Pay attention to the fitting of the vectorizer: we fit on the training data \emph{and} transorm the training data with it, but we only transform the test data \emph{without re-fitting the vectorizer}. Fitting, here, includes the decision which words to include (by definition, words that are not present in the training data are not included; but we could also choose additional constraints, such as exluding very rare or very common words), but also assigning an (internally used) identifier (variable name) to each word. If we would fit the classifier again, these would not be compatible any more.
+
+\note{A word that is not present in the training data, but is present in the test data, is thus ignored. If you want to use the information such out-of-vocabulary words can entail (e.g., they may be synonyms), you need to use a word embedding approach}
+
+We do not necessarily expect this first model to be the best classifier we could come up with, but it provides us with a reasonable baseline. In fact, even without any further adjustments, it works reasonably well: precision is higher for positive reviews and recall is higher for negative reviews (classifying a positive review as negative happens twice as much as the reverse), but none of the values is concerningly low.
+
+\pyrex[output=py, caption=Training a Na\"ive Bayes classifier with a simple count vectorizer]{chapter12/imdbbaseline}
+
+
+
+\subsection{Finding the best classifier}
+
+-- zelfs zelf-trained and vader vergelijken
+
+different vectorizers
+but also: pruning!
+
+feature importance with eli5
+typical examples etc
+
+
+
+
+
+\subsection{Re-using the model}
+
+saving vectorizer and classifier
+
+re-using on new data

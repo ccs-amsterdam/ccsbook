@@ -28,14 +28,24 @@ You can inspect the type of an object with the \code{type} (python) or \code{cla
 We will explain the concept of a function later, but you can essentially see it as asking a specific question or issuing a command,
 in this case the question of what the type of the given object is. 
 
-%!example(name='Test')
-%!chunk(lang='r')
+\begin{minipage}{.45\linewidth}
+\begin{ex_r_in}
 a = 100
 class(a)
-%!chunk(lang='py')
+\end{ex_r_in}
+\begin{ex_r_out}
+[1] "numeric"
+\end{ex_r_out}
+\end{minipage}
+\begin{minipage}{.45\linewidth}
+\begin{ex_py_in}
 a = 100
 type(a)
-%!done
+\end{ex_py_in}
+\begin{ex_py_out}
+int
+\end{ex_py_out}
+\end{minipage}
 
 
 As you can see, R calls the number 'numeric', while python reports it as being 'int', short for integer or whole number.
