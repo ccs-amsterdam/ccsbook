@@ -60,7 +60,7 @@ def concat_streams(cell):
         if i==0:
             newoutput.append(oldoutput[i])
         else:
-            if (oldoutput[i]['name'] == 'stdout' and oldoutput[i]['output_type'] == 'stream') and (oldoutput[i-1]['name'] == 'stdout' and oldoutput[i-1]['output_type'] == 'stream'):
+            if (oldoutput[i].get('name','') == 'stdout' and oldoutput[i].get('output_type','') == 'stream') and (oldoutput[i-1].get('name','') == 'stdout' and oldoutput[i-1].get('output_type') == 'stream'):
                 delta_i +=1
                 newoutput[i-delta_i]['text'].extend(oldoutput[i]['text'])
             else:
