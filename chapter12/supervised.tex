@@ -233,11 +233,33 @@ estimate. Hence, it can take you some time to run the code
 \codex{chapter12/gridsearchlogreg.py}
 \codex{chapter12/gridsearchlogreg.py.out}
 
-We see that we could further improve our model to precision and recall values of .90, by excluding extremely infrequent and extremely frequent words), including both unigrams and bigrams (which, we may speculate, helps us accounting for the ``not good'' vs ``not'', ``good'' problem), and changing the default penalty of C=1 to C=100.
+We see that we could further improve our model to precision and recall
+values of .90, by excluding extremely infrequent and extremely
+frequent words), including both unigrams and bigrams (which, we may
+speculate, helps us accounting for the ``not good'' vs ``not'',
+``good'' problem), and changing the default penalty of C=1 to C=100.
 
+Let us, just for the sake of it, compare the performance of our model
+with an off-the-shelf sentiment analysis package, in this case Vader
+\citep{Hutto2014}. For any text, it will directly estimate sentiment
+scores (more specifically, a positivity score, a negativity score, a
+neutrality score, and a compound measure that combines them), without
+any need to have training data. However, as \refex{vader} shows, such
+a method is clearly inferior to a supervised machine learning
+approach. While in almost all cases (except $n=11$), Vader was able to
+make a choice (getting scores of 0 is a notorious problem in very
+short texts), precision and recall are clearly worse than even the
+simple baseline model we started with, and much worse than those of
+the final model we finished with. In fact, we miss half (!) of the
+negative reviews. There are probably very few applications in the
+analysis of communication in which we would find this acceptable.
+It is important to highlight that this is not because the off-the-shelf
+package we chose is a particularly bad one (on the contrary, it is
+actually comparatively good), but because of the inherent limitations
+of dictionary-based sentiment analysis.
 
-
-
+\codex{chapter12/vader.py}
+\codex{chapter12/vader.py.out}
 
 
 
@@ -248,8 +270,6 @@ We see that we could further improve our model to precision and recall values of
 saving vectorizer and classifier
 
 re-using on new data
-
--- zelfs zelf-trained and vader vergelijken
 
 feature importance with eli5
 
