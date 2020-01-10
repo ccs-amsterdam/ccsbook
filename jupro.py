@@ -45,7 +45,29 @@ def write_pdf_from_html(file: Path, html: str):
     logging.info(f"Writing html image to {file}")
     pdf = pipe(["pdfcrop", "-", str(file)], pdf)
     
-        
+
+
+def concat_streams(cell):
+    '''Concatenates adjacent text streams in an output cell'''
+    # TODO: Add support for other output types
+    if 'outputs' not in cell:
+        return cell
+    
+    oldoutput = cell['outputs']
+    newoutput = []
+    delta_i = 0   # to correct for diverging i's once one substitution has been made
+    for i in range(len(oldoutput)):
+        if i==0:
+            newoutput.append(oldoutput[i])
+        else:
+            if (oldoutput[i]['name'] == 'stdout' and oldoutput[i]['output_type'] == 'stream') and (oldoutput[i-1]['name'] == 'stdout' and oldoutput[i-1]['output_type'] == 'stream'):
+                delta_i +=1
+                newoutput[i-delta_i]['text'].extend(oldoutput[i]['text'])
+            else:
+                newoutput.append(oldoutput[i])
+    cell['outputs'] = newoutput
+    return cell
+
 class Cell:
     """class representing a jupyter cell"""
     def __init__(self, data):
@@ -84,6 +106,8 @@ class Cell:
         # first write to stderr (e.g., deprication warnings or loading
         # r packages) and then to stdout.
         self.data['outputs'] = [e for e in self.data['outputs'] if e.get('name', '') != 'stderr']
+
+        self.data = concat_streams(self.data)
         
         otypes = [o['output_type'] for o in self.data['outputs']]
         if len(otypes) != len(set(otypes)):
