@@ -1,9 +1,11 @@
+% encoding: UTF-8
 \RequirePackage{xkeyval}
 \RequirePackage{tcolorbox}
 \tcbuselibrary{skins,breakable,xparse,raster}
 \RequirePackage{listings}
 \RequirePackage{newfloat}
 \RequirePackage{xstring}
+\RequirePackage[utf8]{inputenc}
 \DeclareFloatingEnvironment[fileext=ex,placement={!ht},name=Example]{example}
 
 %%%%%%%%%%%%%%%%%%%%%%%%
@@ -14,6 +16,7 @@
 	basicstyle=\tiny\ttfamily,
 	columns=flexible,
 	breaklines=true,
+        literate={Ö}{{\"O}}1 {ö}{{\"o}}1 {Ä}{{\"A}}1 {ä}{{\"a}}1 {ü}{{\"u}}1 {Ü}{{\"u}}1 {°}{\dg}1
 	%stepsize=1,
 }
 
