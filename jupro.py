@@ -107,12 +107,18 @@ class Cell:
         # r packages) and then to stdout.
         self.data['outputs'] = [e for e in self.data['outputs'] if e.get('name', '') != 'stderr']
 
+        # TODO: THINK ABOUT HOW TO DEAL WITH GRAPHICAL OUTPUT
+        # HACK FOR NOW: SKIP, TO ENABLE COMPILING
+        self.data['outputs'] = [e for e in self.data['outputs'] if 'image/png' not in self.data['outputs']]
+
+
         self.data = concat_streams(self.data)
         
         otypes = [o['output_type'] for o in self.data['outputs']]
         if len(otypes) != len(set(otypes)):
             import json; print(json.dumps(self.data['outputs'], indent=2))
-            raise ValueError("output_types are not unique... :-( ")
+            print("output_types are not unique... :-( ")
+            # raise ValueError("output_types are not unique... :-( ")
         return {o['output_type']: o for o in self.data['outputs']}
     
     def get_output(self, *output_types):
