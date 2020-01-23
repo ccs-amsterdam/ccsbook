@@ -1,59 +1,68 @@
-\newcommand{\fnarrow}{\footnote{\
-  In both R and Python, the equals sign (=) can be used to assign values. In R, however, the traditional way of doing this is using an arrow (\textless-).
-  In this book we will use the equals sign for assignment in both languages, but remember that for R, (\code{x = 10}) and (\code{x <- 10}) are essentially the same.
-  }}
+\newcommand{\fnarrow}{\footnote{In both R and Python, the equals
+  sign (\texttt{=}) can be used to assign values. In R, however, the
+  traditional way of doing this is using an arrow (\texttt{\textless-}). In
+  this book we will use the equals sign for assignment in both
+  languages, but remember that for R, \texttt{x = 10} and
+  \texttt{x \textless-10} are essentially the same.}}
 
-\newpage
 
 \section{About objects and data types}
 \label{sec:datatypes}
 
-Now that you have all the necessary software in you own computer we can move on to the very basics of data analysis in R and Python\footnote{If you have not installed the require software yet and still want to follow this chapter, you may use available online platforms for RStudio (https://rstudio.cloud/) and Python (https://www.python.org/shell/).}.
-In both languages, you write a \emph{script} or \emph{program} containing the commands for the computer to do data processing or other tasks.
-Before we move on to data processing, it is important to take a quick look at how data is actually stored in the computer,
-and the basics of processing commands.
+Now that you have all the necessary software in you own computer we
+can move on to the very basics of data analysis in R and
+Python\footnote{If you have not installed the require software yet and
+  still want to follow this chapter, you may use available online
+  platforms for RStudio (https://rstudio.cloud/) and Python
+  (https://www.python.org/shell/).}.  In both languages, you write a
+\emph{script} or \emph{program} containing the commands for the
+computer to do data processing or other tasks.  Before we move on to
+data processing, it is important to take a quick look at how data is
+actually stored in the computer, and the basics of processing
+commands.
 
-All data is stored in the computer as \emph{objects}, and each object that is stored in memory also has a name.
-You create these objects by assigning a value to a name. For example, the command \code{x = 10} creates a new object\fnarrow, named \code{x}, and stores the value 10 in it.
-This object is now stored in memory and can be used in later commands.
+All data is stored in the computer as \emph{objects}, and each object
+that is stored in memory also has a name.  You create these objects by
+assigning a value to a name. For example, the command \texttt{x = 10}
+creates a new object\fnarrow, named \texttt{x}, and stores the value 10
+in it.  This object is now stored in memory and can be used in later
+commands.
 
-\note{A small note on terminology:
-In programming, a distinction is often made between an object (such as the number 10) and the variable in which (a pointer to) it is store (such as \code{x}).
-However, this distinction is not very relevant for our usage. Morever, in statistics the word variable often refers to a column of data, rather than to the name of the data frame.
-For that reason, we will use the word \emph{object} to refer to both the actual object or value and its name, and will avoid the word variable. }
+\note{A small note on terminology: In programming, a distinction is
+  often made between an object (such as the number 10) and the
+  variable in which (a pointer to) it is store (such as \texttt{x}).
+  However, this distinction is not very relevant for our
+  usage. Morever, in statistics the word variable often refers to a
+  column of data, rather than to the name of the data frame.  For that
+  reason, we will use the word \emph{object} to refer to both the
+  actual object or value and its name, and will avoid the word
+  variable. }
 
-Objects can be simple values such as the number 10, but they can also be pieces of text, whole data frames, or analysis results.
-The computer keeps track of the \emph{type}, or \emph{class}, of each object.
-You can inspect the type of an object with the \code{type} (python) or \code{class} function, as shown in example X.
-We will explain the concept of a function later, but you can essentially see it as asking a specific question or issuing a command,
-in this case the question of what the type of the given object is. 
+Objects can be simple values such as the number 10, but they can also
+be pieces of text, whole data frames, or analysis results.  The
+computer keeps track of the \emph{type}, or \emph{class}, of each
+object.  You can inspect the type of an object with the \code{type}
+(python) or \code{class} function, as shown in example X.  We will
+explain the concept of a function later, but you can essentially see
+it as asking a specific question or issuing a command, in this case
+the question of what the type of the given object is.
 
-\begin{minipage}{.45\linewidth}
-\begin{ex_r_in}
-a = 100
-class(a)
-\end{ex_r_in}
-\begin{ex_r_out}
-[1] "numeric"
-\end{ex_r_out}
-\end{minipage}
-\begin{minipage}{.45\linewidth}
-\begin{ex_py_in}
-a = 100
-type(a)
-\end{ex_py_in}
-\begin{ex_py_out}
-int
-\end{ex_py_out}
-\end{minipage}
+Let' create an object that we call |a| (an arbitray name, you can use
+whatever you want) an assign a value, 100, to it (see \refex{var1}).
 
+\pyrex[output=both,caption=Determining the type of an object]{chapter03/var1}
 
-As you can see, R calls the number 'numeric', while python reports it as being 'int', short for integer or whole number.
-Although they use different names, both languages offer very similar data types.
-\reftab{types} provides an overview of the data types we will encounter most frequently in this book. 
-As you can see in the table, both python and R have very similar types for simple data such as numbers, text, and truth values.
+As you can see, R calls the number `numeric', while python reports it
+as being `int', short for integer or whole number.  Although they use
+different names, both languages offer very similar data types.
+\reftab{tab:types} provides an overview of the data types we will
+encounter most frequently in this book.  As you can see in the table,
+both python and R have very similar types for simple data such as
+numbers, text, and truth values.
 
-\newcommand{\fndouble}{In R, double and numeric can generally be used interchangably (there is a subtle difference, but that is not relevant here).} 
+\newcommand{\fndouble}{In R, double and numeric can generally be used
+  interchangably (there is a subtle difference, but that is not
+  relevant here).}
 
 \begin{table}
   \begin{tabularx}{\textwidth}{lllll}
@@ -68,30 +77,54 @@ As you can see in the table, both python and R have very similar types for simpl
     bool  & \verb+True, False+   & logical   & \verb+TRUE, FALSE+   & The truth values \\
     \bottomrule
   \end{tabularx}
-  \caption{Most used data types in python and R}
+  \caption{\label{tab:types}Most used data types in python and R}
 \end{table}
     
 
-%Let's begin again with R.  As a statistical programming language, R users need to deal with different types of data and perform multiple operations with them. R supports a variety of data types that include: vectors (numeric, character, logical, etc.), lists, matrices, arrays, factors and data frames. For those first-time programmers with knowledge of software such as SPSS or Excel (where you normally only deal with a data frame of rows and columns), this might sound to be a little bit annoying, but in fact it will give much more control on your data analysis process and, in general, on your computational approach. For a very nice and complete explanation of data types in R check  the book by Field, Miles \& Field~\cite{field2012discovering}, but for this book we need to be sure you understand the fundamentals in order to continue to the next chapters. 
 
-First, think of the \emph{vector object} as the basic data type.  There are six types of these atomic vectors: numeric, integer, complex, character, logical and raw. Imagine you want to begin by storing a single numeric value as an object called x\emph{a} with the value of 100. Go to your R console and type:
+Let's have a closer look at the code in \refex{var1}.
 
+The first line is mandatory to create the object \emph{a} and store
+its value 100; and the second is illustrative and will give you the
+class of the created object, in this case "numeric". Notice that we
+are using two native functions of R, \fn{print} and \fn{class}, and
+including |a| as an argument of \fn{class}, and the very same
+\fn{class(a)} as an argument of \fn{print}. The only difference
+between R and Python, here, is that the relevant Python function is
+called \fn{type} instead of \fn{class}.
 
-The first line is mandatory to create the object \emph{a} and store its value 100; and the second is illustrative and will give you the class of the created object, in this case "numeric". Notice that we are using two native functions of R, \emph{print} and \emph{class}, and including \emph{a} as an argument of \emph{class}, and the very same \emph{class(a)} as an argument of \emph{print}. This is the way we work in object-orientated programming and if you compare to other languages you will realize that is a very simple syntax indeed. Once created, you can now perform multiple operations with \emph{a} and other values or new variables. For example, you could transform \emph{a} by multiplying \emph{a} by 2, create a new variable \emph{b} of value 50 and then create another new object \emph{c} with the result \emph{a} + \emph{b}:
+This is the way we work in object-orientated programming and if you
+compare to other languages you will realize that is a very simple
+syntax indeed. Once created, you can now perform multiple operations
+with |a| and other values or new variables. For example, you
+could transform |a| by multiplying |a| by 2, create a new
+variable |b| of value 50 and then create another new object
+|c| with the result of |a + b| (\refex{var2}).
 
-You will get a new numeric vector object \emph{c} of value 250. And this is the way you will mostly operate with data when working with R. Notice that so far you have only used numeric vector objects, but we have some more. Numerics support floats numbers (i.e. 20.5) as well as integers (i.e. 20), however if you want to limit your object to just integers you can change its class just by adding \emph{L} to the number when creating the variable. Same if you want to work with a complex numeric object that includes some declared variable and/or formulae, you just create such object with the internal variables and operators. Let’s see both cases:
+\pyrex[output=both,caption=Some simple operations]{chapter03/var2}
 
-\begin{exampler}
-d <- 20L
-print(class(i))
-e <- 100+50x
-print(class(e))
-\end{exampler}
+% DIT HIER HERSCHRIJVEN --- R en PY TEGELIJKERTIJD INT/FLOAT
+
+You will get a new numeric vector object \emph{c} of value 250. And
+this is the way you will mostly operate with data when working with
+R. Notice that so far you have only used numeric vector objects, but
+we have some more. Numerics support floats numbers (i.e. 20.5) as well
+as integers (i.e. 20), however if you want to limit your object to
+just integers you can change its class just by adding \emph{L} to the
+number when creating the variable. Same if you want to work with a
+complex numeric object that includes some declared variable and/or
+formulae, you just create such object with the internal variables and
+operators. Let’s see both cases:
+
+\refex{var3}
+
+\pyrex[caption=Integers and floats]{chapter03/var3}
+
 
 As a computational analyst of communication you will usually work with text objects or string of characters, which are called character vector objects in R, and you can create them just by adding single or double quotes to the value of the variable. Just think of a tweet or a Facebook post that you want to load into your workspace for natural language processing analysis:
 
 \begin{exampler}
-tweet <- "I am happy learning R!!!"
+tweet =- "I am happy learning R!!!"
 print(class(tweet))
 \end{exampler}
 
