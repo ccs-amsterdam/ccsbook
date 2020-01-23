@@ -103,22 +103,46 @@ variable |b| of value 50 and then create another new object
 
 \pyrex[output=both,caption=Some simple operations]{chapter03/var2}
 
-% DIT HIER HERSCHRIJVEN --- R en PY TEGELIJKERTIJD INT/FLOAT
 
-You will get a new numeric vector object \emph{c} of value 250. And
-this is the way you will mostly operate with data when working with
-R. Notice that so far you have only used numeric vector objects, but
-we have some more. Numerics support floats numbers (i.e. 20.5) as well
-as integers (i.e. 20), however if you want to limit your object to
-just integers you can change its class just by adding \emph{L} to the
-number when creating the variable. Same if you want to work with a
-complex numeric object that includes some declared variable and/or
-formulae, you just create such object with the internal variables and
-operators. Let’s see both cases:
 
-\refex{var3}
 
-\pyrex[caption=Integers and floats]{chapter03/var3}
+\subsection{Storing single values: integers, floating-point numbers, booleans}
+
+When working with numbers, we distinguish betwee integers (whole
+numbers) and floating point numbers (numbers with a decimal point,
+called `numeric' in R). Both Python and R automatically determine the
+correct datatype when creating an object, but differ in their default
+behavior when storing a number that can be represented as an int: R
+will store it as float anyway and you need to force it to do
+otherwise, for Python it is the other way round
+(Example~\refex{var3}). We can also convert between types later on,
+even though converting a float to an int might not be a too good idea,
+as you truncate your data.
+
+We also have a data type that is even more restricted and can take
+only two values: true or false (in Python spelled as |True|, in R as
+|TRUE|). It is called `logical' (R) or `bool' (Python). As you can see
+in \refex{var3}, such an object behaves exactly as an integer that is
+only allowed to be 0 or 1, and it can easily be converted to an
+integer.
+
+\pyrex[caption=Floating point numbers, integers, and boolean values]{chapter03/var3}
+
+
+%we have some more. Numerics support floats numbers (i.e. 20.5) as well
+%as integers (i.e. 20), however if you want to limit your object to
+%just integers you can change its class just by adding \emph{L} to the
+%number when creating the variable. Same if you want to work with a
+%complex numeric object that includes some declared variable and/or
+%formulae, you just create such object with the internal variables and
+%operators. Let’s see both cases:
+
+
+
+
+
+
+\subsection{Storing text}
 
 
 As a computational analyst of communication you will usually work with text objects or string of characters, which are called character vector objects in R, and you can create them just by adding single or double quotes to the value of the variable. Just think of a tweet or a Facebook post that you want to load into your workspace for natural language processing analysis:
@@ -128,14 +152,22 @@ tweet =- "I am happy learning R!!!"
 print(class(tweet))
 \end{exampler}
 
-There are two more types. First, the raw object produces raw bytes from string of characters and is created just by adding the command \emph{charToRaw} before the object. The second is the logical object, which stores a basic constant such as TRUE or FALSE. Here you can see how to create them:
+
+
+ the raw object produces raw bytes from string of characters and is created just by adding the command \emph{charToRaw} before the object. 
 
 \begin{exampler}
 raw_string <- charToRaw("Any text")
 print(class(v raw_string))
-logical_operator <- TRUE 
-print(class(logical_operator))
 \end{exampler}
+
+(PLUS BYTES IN PYTHON)
+
+
+
+\subsection{Combining multiple values: lists, vectors, and friends}
+
+
 
 Take into account that you can easily operate two numeric objects or one numeric with one integer, but there might be some restrictions when putting together two different types of data, such as multiplying a character by a number. Table~\ref{tab:vector_objects} summarizes all these initial data types.
 
@@ -254,6 +286,18 @@ length(my_sentence)
 my_list[[3]](16)
 \end{exampler}
 
+
+
+
+
+
+\subsection{From 1D to 2D (and higher): matrices}
+
+
+
+
+
+
 Matrices are two-dimensional rectangular data sets that include values in rows and columns. This is the kind of data you will have to deal with in many analyses shown in this book, such as those related to machine learning.  To create a matrix in R you have to use the function "matrix" and create a vector of values with the indication of how many rows and columns will be on it. We also have to tell R if the order of the values is determined by the row or not.  Let’s create a simple matrix of 0 and 1’s, and check its shape by using the dimension function:
 
 \begin{exampler}
@@ -284,6 +328,9 @@ factor_scores_2 <- factor(scores, levels = c(1,2,3,4,5,6,7,8,9,10), labels = c("
 \end{exampler}
 
 The factor-type object factor\_scores\_2 will be probably more useful to deal with a bigger amount of students. While we have only two levels (which can be identified with the function nlevels), we can have many values to connect with those labels.
+
+
+\subsection{Making life easier: dataframes}
 
 Finally, we have the wonderful data frames. This is the friendly type of data that you find in SPSS or Excel that will help you in a wide range of statistical analysis (though in more advanced exercises such in machine learning you will not be able to use them any more!).  A data frame is a tabular data object that includes rows (usually the instances) and columns (the variables). In a three-column data frame, the first variable can be \emph{numeric}, the second \emph{character} and the third \emph{logic}, but the important thing is that each variable is a vector and that all these vectors must be of the same length. We create data frames from scratch using the data.frame() function.  Let’s generate a simple data frame of three instances (each case is an author of this book) and three variables of the types numeric (\emph{age}), character (\emph{country} where he obtained his master degree) and logic (\emph{living abroad}, weather he currently lives out of his born country). We will create the values of age and living abroad, but we will re-use the values of the above created character vector \emph{conutries} for this exercise:
 
