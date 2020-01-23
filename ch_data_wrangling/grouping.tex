@@ -23,7 +23,7 @@ Each row now represents a group of previuos cases (e.g. school or date),
 and the columns are now only the grouping columns and the computed summary scores.
 
 \refex{data-aggregate} shows the code in R and Python to define groups and compute summary values.
-First, we group by poll question; and for each question, we compute the average and standard deviation.
+First, we group by poll \emph{question}; and for each question, we compute the average and standard deviation.
 The syntax is a little different for R and Python, but the idea is the same:
 first we create a new variable \verb+groups+ that stores the grouping information,
 and then we create the aggregate statistics.
@@ -32,13 +32,13 @@ To store the results, simply assign it to a new object as normal.
 
 \pyrex[caption=Aggregation]{ch_data_wrangling/aggregate}
 
-In R, you use the \verb+group_by+ function to define the groups,
-and then call the \verb+summarize+ function to compute summary values by specifying
+In R, you use the \pkg{dplyr} function \fn{group\_by}  to define the groups,
+and then call the function \fn{summarize~} to compute summary values by specifying
 \verb+name=function(value)+.
 
-In python, the grouping step is quite similar.
+In Python, the grouping step is quite similar.
 In the summarization step, however, you specify which summaries to compute in a dictionary%
-\footnote{See \refsec{dict} for more information on working with dictionaries}.
+\footnote{See \refsec{datatypes} for more information on working with dictionaries}.
 The keys of the dictionary lists the value columns to compute summaries of,
 and the values contain the summary functions to apply, so \verb+{'value': [function]}+.
 
@@ -46,7 +46,7 @@ and the values contain the summary functions to apply, so \verb+{'value': [funct
 
 In the examples above, each line of code (often called a \emph{statement}) contained a single operation, generally a function call.
 The general shape of each line in R was \verb+data = function(data, arguments)+, that is, the data is provided as the first argument to the function.
-In python, you specify the object on which to call the function with a period,
+In Python, you specify the object on which to call the function with a period,
 i.e. \verb+object.function(arguments)+.
 
 Although there is nothing wrong with limiting each line to a single operation, both languages allow multiple operations to be chained together.
@@ -56,7 +56,7 @@ In Python, this can be achieved by adding the second \verb+.function()+ directly
 Essentially, this calls the second function on the result of the first function: \verb+data = data.function1(arguments).function2(arguments)+.
 
 In R, the data is of course included in the function arguments, so an alternative method is needed to chain function calls.
-This is done using the \emph{pipe operator} (\verb+%>%+) from the (cutely named) \emph{magrittr} package.
+This is done using the \emph{pipe operator} (\verb+%>%+) from the (cutely named) \pkg{magrittr} package.
 The pipe operator inserts the result of the first function as the first argument of the second function.
 More technically, \verb+f1(d) %>% f2()+ is equivalent to \verb+f2(f1(d))+.
 This can be used to chain multiple commands together, e.g. \verb+data = data %>% function1(arguments) %>% function2(arguments)+.
@@ -84,12 +84,12 @@ mixing individual and group level variables in the same data frame.
 computing the mean support per question and then calculating how each poll deviates from this mean. 
 
 In R, the code is very similar to \refex{data-aggregate2} above, simply
-replacing the \verb+summary+ function by the \verb+mutate+ function discussed above.
+replacing the \pkg{dplyr} function \fn{summary} by the function \fn{mutate} discussed above.
 In this function you can mix summary functions and regular functions, as shown in the example:
 first the mean per group is calculated, followed by the deviation of this mean.
 
-The python code also uses the same syntax used for computing new columns.
-The first line selects the \verb+Support+ column on the grouped dataset,
-and then calls the \verb+transform+ function on that column to compute the mean per group,
+The Python code also uses the same syntax used for computing new columns.
+The first line selects the \emph{Support} column on the grouped dataset,
+and then calls the \pkg{pandas} function \fn{transform} on that column to compute the mean per group,
 adding it as a new column by assigning it to the column name.
 The second line uses the regular assignment syntax to create the deviation based on the support and calculated mean. 

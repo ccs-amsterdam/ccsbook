@@ -1,4 +1,3 @@
-
 \section{Filtering, selecting and renaming}
 
 
@@ -12,37 +11,37 @@ For example, we might want to use only a subset of the data,
 or we might want to remove certain rows because they are incomplete or incorrect.
 
 As an example, FiveThirtyEight published a quiz about American public opinon about guns,
-and were nice enough to also publish the underlying data\footnote{https://projects.fivethirtyeight.com/guns-parkland-polling-quiz/; see https://github.com/fivethirtyeight/data/tree/master/poll-quiz-guns for the underlying data}.
-\refex{data-filter} gives an example of loadnig and cleaning this data set, starting with the \verb+read_csv+ function to load the data directly from the Internet.
-This data set contains one poll result per row, with a Question column indicating which question was asked,
-and the columns listing how many Americans (adults or registered voters) were in favor of that measure, in total and for Republicans and Democracts.
+and were nice enough to also publish the underlying data\footnote{https://projects.fivethirtyeight.com/guns-parkland-polling-quiz/; see https://github.com/fivethirtyeight/data/tree/master/poll-quiz-guns for the underlying data.}.
+\refex{data-filter} gives an example of loadnig and cleaning this data set, starting with the function \fn{read\_csv} (included in both \pkg{tidyverse} and \pkg{pandas}) to load the data directly from the Internet.
+This data set contains one poll result per row, with a \emph{Question} column indicating which question was asked,
+and the columns listing how many Americans (adults or registered voters) were in favor of that measure, in total and for Republicans and Democrats.
 Next, the columns \emph{Republican} and \emph{Democratic Support} are renamed to shorten the names and remove the space.
-Then, the URL column is dropped using the \verb+select+ (R) or \verb+drop+ (python) function.
-Notice that the result of these operations is assigned to the same object \verb+d+.
-This means that the original \verb+d+ is overwritten.
+Then, the URL column is dropped using the \pkg{tidyverse} function \fn{select} in R or the \pkg{pandas} function \fn{drop} in Python.
+Notice that the result of these operations is assigned to the same object \texttt{d}.
+This means that the original \texttt{d} is overwritten.
 
-\note{[R] In R, the \texttt{select} function is quite versatile.
-  You can specify multiple columns using \texttt{select(d, column1, column2)} 
-  or by specifying a range of columns: \texttt{select(d, column1:column3)}.
+\note{[R] In R, the \pkg{tidyverse} function \fn{select} is quite versatile.
+  You can specify multiple columns using \verb|select(d, column1, column2)| 
+  or by specifying a range of columns: \verb|select(d, column1:column3)|.
   Both commands keep only the specified columns. 
   As in the example, you can also specify a negative selection with the minus sign: 
-  \texttt{select(d, -column1)} drops \texttt{column1}, keeping all other columns.
+  \verb|select(d, -column1)| drops \texttt{column1}, keeping all other columns.
   Finally, you can rename columns in the select command as well: 
-  \texttt{select(d, column1=col1, column2)} renames \texttt{col} to \texttt{column1},
+  \verb|select(d, column1=col1, column2)| renames \texttt{col} to \texttt{column1},
   keeps that column and \texttt{column2},and drops all other columns.
   }
   
 In line 6, we filter the data set to list only the polls on whether teachers should be armed
 (you can understand this is close to our heart).
-This is done by comparing the value of the Question column to the value \verb+'arm-teachers'+.
+This is done by comparing the value of the \emph{Question} column to the value \texttt{'arm-teachers'}.
 This comparison is done with a double equals sign (\verb+==+).
-In both python and R, a single equals sign is used for assignment,
+In both Python and R, a single equals sign is used for assignment,
 and a double equal sign is used for comparison.
-A final thing to notice is that while in R we used a function (\verb+filter+) to filter out rows,
-in python we \emph{index} the data frame using square brackets on the \verb+loc+(ation) attribute: \verb+d.loc[]+.
+A final thing to notice is that while in R we used the \pkg{dplyr} function (\fn{filter}) to filter out rows,
+in Python we \emph{index} the data frame using square brackets on the \pkg{pandas} DataFrame attribute \fn{loc}(ation): \verb+d.loc[]+.
 
-Note that we chose to assign the result of this filtering to \verb+d2+,
-so after this operation we have the original full data set \verb+d+ as well as the subset \verb+d2+ at our disposal.
+Note that we chose to assign the result of this filtering to \texttt{d2},
+so after this operation we have the original full data set \texttt{d} as well as the subset \texttt{d2} at our disposal.
 In general, it is your choice whether you overwrite the data by assigning to the same object,
 or create a copy by assigning to a new name.
 If you will later need to work with a different subset, it is smart to keep the original so you can subset it again later.
