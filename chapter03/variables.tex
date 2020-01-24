@@ -286,75 +286,97 @@ in Python we will create tuples if you use the parentheses. Tuples are
 similar to lists, except that they are immutable (which means that
 they are constant or unchangeable and you can not freely change their
 values, just as numbers or strings).  We can now create our first list
-and tuple, and get their sizes with the native function len:
+and tuple, and get their sizes with the native function len
+(\refex{1darray5}). We have created two sequences of six objects
+(three integers and three strings) that represent common numeric and
+categorical values for sentiment analysis. The first sequence is a
+list and the second a tuple. We can get any value of the list or tuple
+by indexing its position, just keep in mind that indexing in Python
+begins in 0 and not in 1 like in R.
 
-\begin{examplepy}
-my_list = [1, 0, -1, 'positive', 'neutral', 'negative']
-len(my_list)
-my_tuple = (1, 0, -1, 'positive', 'neutral', 'negative')
-len(my_tuple)
-\end{examplepy}
+\codex[caption=Lists and tuples in Python]{chapter03/1darray5.py}
 
-\note{While most of the time, you will not care about mutable or immutable objects, the fact that lists (and, later, data frames) are mutable can be really crucial if you. \refex{mutable} illustrates what happens if you create a new object referring to a mutable object, which -- in contrast to what you may think -- does not create a copy of the object itself. Rather, we now get two names for the same object.}
-
-\codex[The (for many unexpected) behavior of mutable objects]{chapter3/mutable.py}
-
-We have created two sequences of six objects (three integers and three strings) that represent common numeric and categorical values for sentiment analysis. The first sequence is a list and the second a tuple. We can get any value of the list or tuple by indexing its position, just keep in mind that indexing in Python begins in 0 and not in 1 like in R. Let's get the value 'neutral' in each:
-
-\begin{examplepy}
-my_list[4]
-my_tuple[4]
-\end{examplepy}
-
-Imagine now that you decide – by any reason - that the value 'neutral' should be substituted by the value 'informative' in the created sequences. You can do it updating the object:
-
-\begin{examplepy}
-my_list[4] = 'informative'
-my_tuple[4] = 'informative'
-\end{examplepy}
-
-The list will be correctly updated, but the code you run to change the tuple will give you an error (with some message such as: "'tuple' object does not support item assignment"). Thus, tuples are immutable and are worth for certain types of operations because they give stability to a particular computation. Notice that we can include any object into lists or tuples. 
-
-We also have another Python object called sets. A set is a mutable collection of \emph{unique} elements (you cannot repeat a value) with no order. As it is not properly ordered, you cannot run any indexing or slicing operation on it. The immutable version of sets are called frozensets:
-
-\begin{examplepy}
-colours = set(['blue', 'yellow', 'red'])
-type(colours)
-colours2 = frozenset(['blue', 'yellow', 'red'])
-type(colours2)
-\end{examplepy}
+Imagine now that you decide that the value `neutral' should be
+substituted by the value `informative' in the created sequences. You
+can update them by just assigning a new value to an item that is
+identified by its index.  The list will be correctly updated, but the
+code you run to change the tuple will give you an error (with some
+message such as: "'tuple' object does not support item
+assignment"). Thus, tuples are immutable and are worth for certain
+types of operations because they give stability to a particular
+computation. Notice that we can include any object into lists or
+tuples.
 
 
+\note{While most of the time, you will not care about mutable or
+  immutable objects, the fact that lists (and, later, data frames) are
+  mutable can be really crucial if you. \refex{mutable} illustrates
+  what happens if you create a new object referring to a mutable
+  object, which -- in contrast to what you may think -- does not
+  create a copy of the object itself. Rather, we now get two names for
+  the same object.}
 
-np.array???
-
-
-Finally, Python has dictionaries, another helpful object.	 Dictionaries contain unordered and mutable collections of objects that contain certain information in another object. Python generates this data type in form of { 'key' : \textless value \textgreater} in order to map any object by its key and not by its relative position in the collection. This means that you will index using the key. You will find dictionaries very useful in your journey as a computational scientist or practitioner, since they are flexible ways to store and retrieve structured information. We can create them using the curly brackets {} and including each key-value pair as an element of the collection:
-
-\begin{examplepy}
-sentiments = {"positive" : 1, "neutral" : 0, "negative" : -1}
-type(sentiments)
-\end{examplepy}
-
-An advantage of the dictionaries is that you can create an open object and fill later its values. This is probably the way you will see dictionaries in code:
-
-\begin{examplepy}
-grades =  {}
-grades['A'] = 4
-grades['B'] = 3
-grades['C'] = 2
-grades['D'] = 1
-print(grades)
-\end{examplepy}
-
-As in other objects you can index its elements, by keep in mind that you do it using the key and not the position in the sequences. For example, we want to get the values of the object 'positive' in the dictionary \emph{sentiments} and of the object 'A' in the dictionary \emph{grades}:
-
-\begin{examplepy}
-print(sentiments['positive'])
-print(grades['A'])
-\end{examplepy}
+\codex[caption=The \(for many unexpected\) behavior of mutable objects]{chapter03/mutable.py}
 
 
+We also have another Python object called sets. A set is a mutable
+collection of \emph{unique} elements (you cannot repeat a value) with
+no order. As it is not properly ordered, you cannot run any indexing
+or slicing operation on it. The immutable version of sets are called
+frozensets.
+
+\codex[caption=Unordered collections with only unique values\: sets]{chapter03/1darray6.py}
+
+
+While lists give you a lot of flexibility -- e.g., they happily accept entries of very different types --, you sometimes may want a stricter structure like R's vector. This may be especially interesting for high-performance calculations, and therefore, such a structure is avalable from the \pkg{numpy} (\emph{nu}mbers in \emph{py}thon) package: the numpy array (\refex{1darray7}).
+
+\codex[caption=Numpy arrays behave more like R vectors]{chapter03/1darray7.py}
+\codex{chapter03/1darray7.py.out}
+
+
+
+\subsection{Dictionaries}
+Almost all data structures in R have a similar equivalent in Python
+and vice versa. There is one exception, though: \emph{dictionaries}. A
+dictionary, also known as associative array or hash table, is a very
+popular data structure in Python, but does not exist in R.
+
+Dictionaries contain unordered and mutable collections of objects that
+contain certain information in another object. Python generates this
+data type in form of { 'key' : \textless value \textgreater} in order
+to map any object by its key and not by its relative position in the
+collection. This means that you will index using the key. You will
+find dictionaries very useful in your journey as a computational
+scientist or practitioner, since they are flexible ways to store and
+retrieve structured information. We can create them using the curly
+brackets {} and including each key-value pair as an element of the
+collection (\refex{dict}).
+
+\codex[caption=Dictionaries store key-value pairs]{chapter03/dict.py}
+\codex{chapter03/dict.py.out}
+
+As in other objects you can index its elements, by keep in mind that
+you do it using the key and not the position in the sequences. For
+example, we want to get the values of the object 'positive' in the
+dictionary \emph{sentiments} and of the object 'A' in the dictionary
+\emph{grades} (\refex{dict}).
+
+A good analogy for a dictionary is a telephone book (imagine a paper
+one, but it actually often holds true for digital phone books as
+well): The names are the keys, and the associated phone numbers the
+values. If you know someone's name (the key), it is \emph{very easy}
+to look up the corresponding values: even in a phone book of thousands
+of pages, it takes you maybe 10 or 20 seconds to look up the name
+(key). But if you know someones phone number (the value) instead and
+want to look up the name, that's very inefficient: you need to read
+the whole phone book until you find the number.
+
+Just as the elements of a list can be of \emph{any} type, and you can
+have lists of lists, you can also nest dictionaries to get dicts of
+dicts. Think of our phone book example: rather than storing just a
+phone number as value, we could store another dict with the keys
+'office phone', 'mobile phone', etc. This is very often done, and you
+will come across many examples dealing with such data structures.
 
 
 
