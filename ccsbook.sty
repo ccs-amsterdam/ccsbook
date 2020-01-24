@@ -1,0 +1,20 @@
+\usepackage{makeidx}
+\makeindex
+
+
+\newcommand{\refsec}[1]{Section~\ref{sec:#1}}
+\newcommand{\reffig}[1]{Figure~\ref{fig:#1}}
+\newcommand{\reftab}[1]{Table~\ref{tab:#1}}
+\newcommand{\refex}[1]{Example~\ref{ex:#1}}
+
+\newcommand{\code}[1]{\texttt{#1}}
+
+%\newcommand{\fn}[1]{#1\index{#1@\texttt{#1}}}
+\newcommand{\fn}[1]{\index{#1}\texttt{#1}}
+\newcommand{\pkg}[1]{\index{#1}\emph{#1}}
+	
+\newcommand{\note}[1]{\noindent\fbox{
+  \begin{minipage}{\textwidth}
+    \textbf{Note:} #1
+\end{minipage}}}
+

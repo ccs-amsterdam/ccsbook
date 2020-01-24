@@ -34,6 +34,8 @@ eprint=false
 ]{biblatex}
 \addbibresource{references.bib}
 
+\usepackage{ccsbook}
+
 %to make line breaks possible at more parts within \texttt
 \renewcommand{\texttt}[1]{%
 	\begingroup
@@ -132,22 +134,6 @@ eprint=false
 		backgroundcolor=\color[rgb]{0,.6,.25}}}{}
 
 \usepackage[left=2cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
-            
-\newcommand{\refsec}[1]{Section~\ref{sec:#1}}
-\newcommand{\reffig}[1]{Figure~\ref{fig:#1}}
-\newcommand{\reftab}[1]{Table~\ref{tab:#1}}
-\newcommand{\refex}[1]{Example~\ref{ex:#1}}
-
-\newcommand{\code}[1]{\texttt{#1}}
-
-\newcommand{\fn}[1]{#1\index{#1@\texttt{#1}}}
-\newcommand{\pkg}[1]{#1\index{#1@\emph{#1}}}
-	
-\newcommand{\note}[1]{\noindent\fbox{
-  \begin{minipage}{\textwidth}
-    \textbf{Note:} #1
-  \end{minipage}}}
-
 
 \lstnewenvironment{terminal}{\lstset{basicstyle=\scriptsize\ttfamily,
 		columns=flexible,
