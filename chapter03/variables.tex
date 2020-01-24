@@ -259,6 +259,25 @@ create a numeric vector than begins in point 0 and finishes in point
 step of 0.2. Let's create that vector and check the amount of created
 elements by using the function \fn{length} (\refex{1darray3}).
 
+A similar R object is the factor, which might be very useful when
+working with categorical data. When dealing with factors, you can
+store the values of a vector with their corresponding labels, which in
+turn will produce levels. If you create a factor, it will
+automatically read the labels from the values of the vector, but you
+may manually change those levels. Let's have a look at
+\refex{1darray6}.  The first line will create again a vector of scores
+of ten students. Then we automatically convert the vector into a
+factor (reading the very same values as labels) and finally we create
+the labels (``fail" or ``pass") for each of the possible grades.  The
+factor-type object factor\_scores\_2 will be probably more useful to
+deal with a bigger amount of students. While we have only two levels
+(which can be identified with the function \fn{nlevels}), we can have many
+values to connect with those labels.
+
+\codex[caption=Factors can also store labels]{chapter03/1darray6.r}
+
+
+
 While vectors are probably the most common one-dimensional data
 structure in R, there are other ones. In particular, we have
 \emph{lists}. A list is similar to vectors but may contain different
@@ -328,7 +347,12 @@ frozensets.
 \codex[caption=Unordered collections with only unique values\: sets]{chapter03/1darray6.py}
 
 
-While lists give you a lot of flexibility -- e.g., they happily accept entries of very different types --, you sometimes may want a stricter structure like R's vector. This may be especially interesting for high-performance calculations, and therefore, such a structure is avalable from the \pkg{numpy} (\emph{nu}mbers in \emph{py}thon) package: the numpy array (\refex{1darray7}).
+While lists give you a lot of flexibility -- e.g., they happily accept
+entries of very different types --, you sometimes may want a stricter
+structure like R's vector. This may be especially interesting for
+high-performance calculations, and therefore, such a structure is
+avalable from the \pkg{numpy} (\emph{nu}mbers in \emph{py}thon)
+package: the numpy array (\refex{1darray7}).
 
 \codex[caption=Numpy arrays behave more like R vectors]{chapter03/1darray7.py}
 \codex{chapter03/1darray7.py.out}
@@ -381,140 +405,69 @@ will come across many examples dealing with such data structures.
 
 
 
-\subsection{From 1D to 2D (and higher): matrices}
+\subsection{From 1D to 2D (and higher): matrices and n-dimensional arrays}
 
+Matrices are two-dimensional rectangular data sets that include values
+in rows and columns. This is the kind of data you will have to deal
+with in many analyses shown in this book, such as those related to
+machine learning. Often, we can generalize to higher dimensions.
 
-Matrices are two-dimensional rectangular data sets that include values in rows and columns. This is the kind of data you will have to deal with in many analyses shown in this book, such as those related to machine learning.  To create a matrix in R you have to use the function "matrix" and create a vector of values with the indication of how many rows and columns will be on it. We also have to tell R if the order of the values is determined by the row or not.  Let’s create a simple matrix of 0 and 1’s, and check its shape by using the dimension function:
+\pyrex[caption=Working with two- or n-dimensional arrays, output=both]{chapter03/2darray}
 
-\begin{exampler}
-my_matrix <- matrix( c(0,0,1,1,0,1), nrow = 2, ncol = 3, byrow = TRUE)
-dim(my_matrix)
-\end{exampler}
+In Python, the easiest representation is to simply construct a list of
+lists. This is, in fact, often done, but has the disadantage that
+there are no easy ways to get, for instance, the dimensions (the
+shape) of the table, or to print it in a neat(-er) format. To get all
+that, one can transform the list of list into an |array|, a
+datastructure provided by the package \pkg{numpy}.
 
-Create a new matrix (my\_matrix2) and repeat the above code typing FALSE in the byrow argument and you will better understand how it changes the values of the matrix, even when the shape (2x3) remains identical. As you may cleverly imagine, we can operate with matrices, such as adding up two of them:
+To create a matrix in R, you have to use the function \fn{matrix} and
+create a vector of values with the indication of how many rows and
+columns will be on it. We also have to tell R if the order of the
+values is determined by the row or not. In \refex{2darray}, we create
+two matrices in which we vary the |byrow| argument to be TRUE and
+FALSE, respectively, to illustrate how it changes the values of the
+matrix, even when the shape (2x3) remains identical. As you may
+imagine, we can operate with matrices, such as adding up two of them.
 
-\begin{exampler}
-my_matrix + my_matrix2
-\end{exampler}
-
-Another powerful data type are the arrays, which might be similar to matrices but without the restriction of the two-dimensional rectangular space. This means that you create your own dimensions, indicating (in order) the number of rows, columns and matrices of the array. Your will need vectors as inputs and dimensions as parameters. For example, three-dimensional arrays are fundamental when writing pixel values and coding images.  By now, you can create a simple illustration of a 3D array:
-
-\begin{exampler}
-3d_array <- array(c('green', 'yellow', 'red'),dim = c(3,3,3))
-dim(3d_array)
-print(3d_array)
-\end{exampler}
-
-The next R-object is the factor, which might be very useful when working with categorical data. When dealing with factors, you can store the values of a vector with their corresponding labels, which in turn will produce levels. If you create a factor, it will automatically read the labels from the values of the vector, but you may manually change those levels. Let's see the next lines of code. The first line will create again a vector of scores of ten students. Then we automatically convert the vector into a factor (reading the very same values as labels) and finally we create the labels ("fail" or "pass") for each of the possible grades:
-
-\begin{exampler}
-scores <- c(8, 8, 7, 6, 9, 4, 9, 2, 8, 5)
-factor_scores <- factor(scores)
-factor_scores_2 <- factor(scores, levels = c(1,2,3,4,5,6,7,8,9,10), labels = c("fail", "fail", "fail", "fail", "fail", "pass", "pass", "pass", "pass", "pass"))
-\end{exampler}
-
-The factor-type object factor\_scores\_2 will be probably more useful to deal with a bigger amount of students. While we have only two levels (which can be identified with the function nlevels), we can have many values to connect with those labels.
+A powerful data type are the arrays (very much like the \pkg{numpy}
+arrays described above), which might be similar to matrices but
+without the restriction of the two-dimensional rectangular space. This
+means that you create your own dimensions, indicating (in order) the
+number of rows, columns and matrices of the array. Your will need
+vectors as inputs and dimensions as parameters. For example,
+three-dimensional arrays are fundamental when writing pixel values and
+coding images. 
 
 
 \subsection{Making life easier: dataframes}
 
-Finally, we have the wonderful data frames. This is the friendly type of data that you find in SPSS or Excel that will help you in a wide range of statistical analysis (though in more advanced exercises such in machine learning you will not be able to use them any more!).  A data frame is a tabular data object that includes rows (usually the instances) and columns (the variables). In a three-column data frame, the first variable can be \emph{numeric}, the second \emph{character} and the third \emph{logic}, but the important thing is that each variable is a vector and that all these vectors must be of the same length. We create data frames from scratch using the data.frame() function.  Let’s generate a simple data frame of three instances (each case is an author of this book) and three variables of the types numeric (\emph{age}), character (\emph{country} where he obtained his master degree) and logic (\emph{living abroad}, weather he currently lives out of his born country). We will create the values of age and living abroad, but we will re-use the values of the above created character vector \emph{conutries} for this exercise:
+Finally, we have the wonderful data frames. This is the friendly type
+of data that you find in SPSS or Excel that will help you in a wide
+range of statistical analysis (though in more advanced exercises such
+in machine learning you will not be able to use them any more!).  A
+data frame is a tabular data object that includes rows (usually the
+instances) and columns (the variables). In a three-column data frame,
+the first variable can be \emph{numeric}, the second \emph{character}
+and the third \emph{logic}, but the important thing is that each
+variable is a vector and that all these vectors must be of the same
+length. We create data frames from scratch using the data.frame()
+function.  Let’s generate a simple data frame of three instances (each
+case is an author of this book) and three variables of the types
+numeric (\emph{age}), character (\emph{country} where he obtained his
+master degree) and logic (\emph{living abroad}, wether he currently
+lives out of his born country) (\refex{dataframe1}).
 
-\begin{exampler}
-authors <- data.frame(age = c(38, 36, 39), countries, living_abroad= c(FALSE, TRUE, TRUE))
-print(authors)
-\end{exampler}
+\pyrex[caption=Creating a simple dataframe,output=py]{chapter03/dataframe1}
 
-When you print the data frame, you will obtain something like this:
-
-\begin{exampler}
-  	age   	countries 		living_abroad
-1 	 38 	Netherlands         	FALSE
-2 	 36 	Germany         	TRUE
-3 	 39    	Spain          		TRUE
-\end{exampler}
-
-Notice that you have the label of the variables at the top of each column and that it creates an automatic numbering for indexing the rows.  You will learn more about data frames and of all data types in chapter [DATA STRUCTURES], where we will also introduce you to some libraries to deal with different data structures. Now we have to move on to variables and data types in Python.
-
-
-
-
+Notice that you have the label of the variables at the top of each column and that it creates an automatic numbering for indexing the rows.  
 
 
+%As an object-orientated language programming, Python allows us to create objects, variables or functions, and load them into its workspace. The fundamentals are the same of R, so if you correctly understood the last explanations you will find very easy to do the same in Python. However, keep in mind that you will probably have to develop more skills to master Python since this programming language is not constrained to statistics and is flexible for many more computational tasks, both at small and large scale. This means that its syntax might become more complex than R, even when you will not need to know all of it to run most of computational analysis of communication.  For a deeper and understandable reading of Python programming we recommend the book by M. Lutz\cite{lutz2013learning}. Nonetheless, in the next paragraphs we will introduce you to the variables and data types in Python, so you can easy follow the book and the proposed exercises.  
 
-
-
-
-
-As an object-orientated language programming, Python allows us to create objects, variables or functions, and load them into its workspace. The fundamentals are the same of R, so if you correctly understood the last explanations you will find very easy to do the same in Python. However, keep in mind that you will probably have to develop more skills to master Python since this programming language is not constrained to statistics and is flexible for many more computational tasks, both at small and large scale. This means that its syntax might become more complex than R, even when you will not need to know all of it to run most of computational analysis of communication.  For a deeper and understandable reading of Python programming we recommend the book by M. Lutz\cite{lutz2013learning}. Nonetheless, in the next paragraphs we will introduce you to the variables and data types in Python, so you can easy follow the book and the proposed exercises.  
-
-A good way to start is to understand the built-in object types in Python and how to operate with them. Similarly to R we have numeric, integer, complex, character and logical, which we will now call float, integer, complex, string and boolean, respectively. Objects will also include lists, tuples, sets, dictionaries, functions and classes. If you are missing vectors, arrays or matrices as objects, do not worry, even when they are not built-in objects in Python, we can create them using specialized libraries such as Numpy (see chapter [DATA STRUCTURES]). Now you can open your Python console and we can create our first objects and load them into our workspace. First, let’s create a couple of objects \emph{x} and \emph{yy} containing only numbers as values, and third object \emph{z} that contains the result of an arithmetic operation between those two:
+%A good way to start is to understand the built-in object types in Python and how to operate with them. Similarly to R we have numeric, integer, complex, character and logical, which we will now call float, integer, complex, string and boolean, respectively. Objects will also include lists, tuples, sets, dictionaries, functions and classes. If you are missing vectors, arrays or matrices as objects, do not worry, even when they are not built-in objects in Python, we can create them using specialized libraries such as Numpy (see chapter [DATA STRUCTURES]). Now you can open your Python console and we can create our first objects and load them into our workspace. First, let’s create a couple of objects \emph{x} and \emph{yy} containing only numbers as values, and third object \emph{z} that contains the result of an arithmetic operation between those two:
 
 
 
 
 
-
-
-
-For example, if we include a list into another list we create a nested list, which might be very useful for representing matrices or multi-dimensional arrays in Python:
-
-\begin{examplepy}
-matrix = [[1, 2, 3], [4, 5, 6], [7,8,9]] 
-\end{examplepy}	
-
-
-
-
-
-\subsection{DO WE REALLY NEED THIS - CLASSES. IT'S A BIT TOO FAST AND TOO ADVANCED HERE I THINK. I THINK TO UNDERSTAND CLASSES, ONE NEEDS TO UNDERSTAND FUNCTIONS FIRST, AND WE NEED TO TALK ABOUT INHERITENCE, INSTANCES, ...}
-
-Now that you have gone through most types of objects in R and Python, we need to remember that objects are different from classes, as we mentioned at the beginning of this section. A class is a prototype with attributes that helps to build an object when it is created from that class. R has three class systems: S3 class, S4 class and Reference Class.  Imagine that we have some data of a news item that we want to convert to a class using the basic S3 class:
-
-\begin{exampler}
-news <- list(headline = "Scientists discover how to cure AIDS", date = 21012030, positive_tone = TRUE)
-class(news) <- "news_piece"
-\end{exampler}
-
-Or using Reference Class:
-
-\begin{exampler}
-setRefClass("news_piece")
-\end{exampler}
-
-Then you have stored the information of the class news\_piece.  You can do this also with S4 class, which allows you to define the formal structure of the class:
-
-\begin{exampler}
-setClass("news_piece", slots=list(headline="character", date="numeric", positive_tone="logical"))
-\end{exampler}
-
-Using S4 class definition you can create a new object using the attributes of the created class, which is very useful to maintain consistency:
-
-\begin{exampler}
-news2 <- new("news_piece", headline="Thousands of new refugees run from hunger after war begins", date=22012030, positive_tone = FALSE)
-\end{exampler}
-
-On the contrary, Python has just a single class. We define the class in a similar way we will define functions (see next section). We use the keyword class and, in some cases, the built-in \_\_init\_\_() function.  Let's create a very single class in Python including a numeric object in the class and later using that class to define a new object:
-
-\begin{examplepy}
-class MyWeight:
-...    	 x = 74
-weigth = MyWeight()
-print (weigth.x)
-\end{examplepy}
-
-As you see, we created the object \emph{weight} using the properties (x in this case) of the class MyWeight. This procedure is probably of limited use but good to illustrate what a class is in Python. A more interesting approach to create the class is using the \_\_init\_\_() function, which is a special function that assigns values to object properties and is executed when the class is being initiated. In simpler words, this function helps us to assign different values within the class, creating an internal structure that will be used when we create an object based on that class. You can run the next example on your Python console for a better understanding of the concept. Imagine you want to create the same class news\_piece we did in R and then use that class to create an object:
-
-\begin{examplepy}
-class news_piece:
-...     def __init__(self, headline, date, positive_tone):
-...             self.headline = headline
-...             self.date = date
-...             self.positive_tone = positive_tone
-news2 = news_piece("Thousands of new refugees run from hunger after war begins", 22012030, False)
-print(news2.headline)
-\end{examplepy}
-
-As you see, with the last line of the code we obtain a part of the created object (in this case the headline) based on the structure designed in the class news\_piece.
-
-In the next section you will learn the basics of how to write code in R and Python.
