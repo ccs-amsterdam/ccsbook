@@ -3,13 +3,13 @@
 Machine learning, many people joke, is nothing else than a fancy name
 for statistics.  And, in fact, there is some truth to this: If you say
 ``logistic regression'', this will sound familiar to both
-statisticians and machine learning practicioners.  Hence, it does not
+statisticians and machine learning practitioners.  Hence, it does not
 make much sense to distinguish between statistics on the one hand and
 machine learning on the other hand.
 
 Still, there are some differences between traditional statistical
 approaches that you may have learned about in your statistics classes
-and the machine learning approach, even if they use the same
+and the machine learning approach, even if they use some of the same
 mathematical tools. One may say that that the focus is a different
 one, and the objective we want to achieve may differ.
 
@@ -17,10 +17,9 @@ Let us illustrate this with an example.
 \texttt{mediause.csv}\footnote{You can download the file from
   \url{http://cssbook.nl/d/mediause.csv}} contains a few columns from
 survey data on how many days per week respondents turn to different
-media types in order to follow the news\footnote{For a detailed
+media types (\emph{radio}, \emph{newspaper}, \emph{tv} and \emph{internet}) in order to follow the news\footnote{For a detailed
   description of the dataset, see \citet{Trilling2013phd}.}. It also
-contains their age (in years), their gender (coded as female = 0, male
-= 1), and their education (on a 5-point scale).
+contains their \emph{age} (in years), their \emph{gender} (coded as female = 0, male = 1), and their \emph{education} (on a 5-point scale).
 
 A straightforward question to ask is how in howfar the
 sociodemographic characteristics of the respondents explain their
@@ -34,18 +33,17 @@ In a typical social-science paper, we would then interpret the coefficients
 that we estimated, and say something like: When $x_1$ increases by one unit,
 $y$ increases by $\beta_1$.
 We sometimes call this ``the effect of $x_1$ on $y$ (even though, of course,
-it depends on the study design wether the relationship can really be interpreted
+it depends on the study design weather the relationship can really be interpreted
 as a causal effect).
-Additionally, we might look at the explained variance $R^2$, to assess how good
-the model fits our data.
+Additionally, we might look at the explained variance $R^2$, to assess how good the model fits our data. In \refex{ols} we use this regression approach to model the relationship of \emph{age} and \emph{gender} over the number of days per week a person reads a \emph{newspaper}. We fit the linear model using the \pkg{stats} function \fn{lm} in R and the \pkg{statsmodels} (module formula.api) function \fn{ols} in Python.
 
 \pyrex[output=py, caption=Obtaining a model through estimating an OLS regression]{chapter09/ols}
 
 Most traditional social-scientific analyses stop after reporting and
-interpreting the coefficients of such a model.
+interpreting the coefficients of \emph{age} ($\beta = 0.0676$) and \emph{gender} ($\beta = -0.0896$), as well as the total explained variance (19\%) of such a model over our dependent variable \emph{newspaper}.
 
 But we can go a step further. Given that we have already estimated our
-regression equation, why not use it to do some \emph{prediction}?
+regression equation, why not use it to do some \textit{prediction}?
 
 We have just estimated that
 
@@ -62,14 +60,12 @@ $\hat{y}_{man20} = -0.0896 + 0.0676 \cdot 20 + 1 \cdot 0.1767 = 1.4391$
 
 $\hat{y}_{woman40} = -0.0896 + 0.0676 \cdot 40 + 0 \cdot 0.1767 = 2.6144$
 
-This was easy to do by hand, but of course, we could do this automatically for a
-large and essentially unlimited number of cases.
-This could be as simple as shown in \refex{olsprediction}.
+This was easy to do by hand, but of course, we could do this automatically for a large and essentially unlimited number of cases.
+This could be as simple as shown in \refex{olspredict}.
 
 \pyrex[output=py, caption=Using the OLS model we estimated before to predict the dependent variable for new data where the dependent variable is unknown.]{chapter09/olspredict}
 
-In doing so, we shift our attention from the interpretation of coefficients to
-the prediction of the dependent variable for new, unknown cases. We do not
+In doing so, we shift our attention from the interpretation of coefficients to the prediction of the dependent variable for new, unknown cases. We do not
 care about the coefficents per se, we just need them for our prediction.
 In fact, in many machine learning models, we will have so many of them that
 we do not even bother to report them.
@@ -86,19 +82,13 @@ cases (in this case, people) as input and return a prediction.
 Using such a simple OLS regression approach for prediction, as we did in our
 example, can come with a couple of problems, though.
 For instance, even though we know that the output should be something between
-0 and 7 (as that's the number of days in a week), but our model will happily
+0 and 7 (as that is the number of days in a week), but our model will happily
 predict that once a man reaches the age of 105 (rare, but not impossible), he
 will read a newspaper on 7.185 out of 7 days; and a one year old girl will
 even have a negative amount of newspaper reading.
-Also, more in general, it is quite an assumption to make that the relationship
-between these variables are linear -- we will therefore discuss multiple
-models that do not make such assumptions later in this chapter.
+Also, more in general, it is quite an assumption to make that the relationship between these variables are linear -- we will therefore discuss multiple models that do not make such assumptions later in this chapter.
 And, finally, in many use cases, we are actually not interested in getting
-an accurate prediction of a continous number, but rather in predicting a
-category. We may want to predict whether a tweet goes viral or not, whether
-a user comment is likely to contain offensive language or not, wheter an article
-is more likely to be about politics, sports, economy, or lifestyle.
-In machine learning terms, these tasks are known as \emph{classification}.
+an accurate prediction of a continuous number (a \textit{regression} task), but rather in predicting a category. We may want to predict whether a tweet goes viral or not, whether a user comment is likely to contain offensive language or not, whether an article is more likely to be about politics, sports, economy, or lifestyle. In machine learning terms, these tasks are known as \textit{classification}.
 
 In the next section, we will outline key terms and concepts in machine
 learning. After that, we will then discuss specific models that you

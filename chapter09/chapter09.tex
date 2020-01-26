@@ -7,30 +7,28 @@ you will see, there is a lot of overlap), present different types of
 models, and discuss how to validate them.
 
 In a later chapter (Chapter~\ref{chap:text}), we will then
-specifically apply the knoweldge you gained from this chapter to the
+specifically apply the knowledge you gained from this chapter to the
 analysis of textual data, arguably one of the most interesting tasks
 in the computational analysis of communication.
 
-In this chapter, we mostly focus on \emph{supervised} machine learning
+In this chapter, we mostly focus on \emph{supervised} machine learning (SML) 
 -- a form of machine learning, where we aim to predict a variable
-that, for at least a part of our data, is known. To illustrate the
+that, for at least a part of our data, is known. SML is usually related to \textit{classification} and \textit{regression}  problems. To illustrate the
 idea, imagine that you are interested in predicting the gender based
 on Twitter biographies. You determine the gender for some of the
 biographies yourself and hand these examples over to the computer. The
-computer ``learns'' from your examples, and can then be used to
-predict the gender for other twitter biographies for which you do not
+computer ``learns'' this \textit{classification} from your examples, and can then be used to predict the gender for other twitter biographies for which you do not
 know the gender.
 
-In unsupervised machine learning, in contrast, you do not have such
-examples. We have discussed some of such techniques in [ADD REFERENCE
-  TO EXPLORATIVE DATA CHAPTER], in particular cluster analysis and
-principal component analysis (PCA)/singular value decomposition (SVD).
+In unsupervised machine learning (UML), in contrast, you do not have such
+examples, and is usually related to \textit{clustering} and \textit{associations} problems. We have discussed some of such techniques in section \refsec{clustering}, in particular cluster analysis and
+principal component analysis (PCA).
 Later, in chapter [ADD REFERENCE TO TOPIC MODELLING CHAPTER], we will
 discuss topic models, an unsupervised method to extract so-called
 topics from textual data.
 
 Even though both approaches can be combined (for instance, one could
-first reduce the amount of data using SVD, and then predict some
+first reduce the amount of data using PCA, and then predict some
 outcome), they can be seen as fundamentally different, also from a
 theoretical and conceptual point of view.  Unsupervised machine
 learning is a bottom-up approach and corresponds to an inductive
@@ -40,7 +38,7 @@ the data.  Supervised machine learning, in contrast, is a top-down
 approach and can be seen as more deductive: you define a priori which
 topics to predict.
 
-Both supervised and unsupervised approaches are widely used in the computational analysis of communication, and you will meet them across the book.
+Both SML and UML approaches are widely used in the computational analysis of communication, and you will meet them across the book.
 In this chapter, however, we will focus on supervised learning.
 
 \input{chapter09/modelingprediction}

@@ -3,7 +3,7 @@
 \subsection{Finding a balance between precision and recall}
 In the previous sections, we have learned how to fit different models:
 Na\"ive Bayes, logistic regressions, support vector machines, and
-random forests.  We have also had a first look at confucion matrices,
+random forests.  We have also had a first look at confusion matrices,
 precision, and recall.
 
 But how do we find the best model? ``Best'', here, should be read as
@@ -15,7 +15,7 @@ as explainability or computational costs may factor into our decision.
  
 But in any event, we need to decide on which metrics to focus.  We can
 then either manually inspect them and look, for instance, which model
-has the highest accuracy, or the best balance of precision and recall,
+has the highest \emph{accuracy}, or the best balance of precision and recall,
 or a recall higher than some threshold you are willing to accept.
 
 If we build a classifier to distinguish spam messages from legitimate
@@ -50,7 +50,7 @@ We furthermore have:
 So, which one to choose?  If we really do not want to be annoyed by
 any spam in our inbox, we need a high recall (we want to find all spam
 messages). If, instead, we do not want to be sure that we do not
-accidentally throw away legitimate messages, we need a a high
+accidentally throw away legitimate messages, we need a high
 precision (we want to be sure that all spam really is spam).
 
 Maybe you say: well, I want both!  You could look at the accuracy, a
@@ -59,7 +59,7 @@ more legitimate messages than spam (or the other way round), this
 measure can be misleading: after all, even if your classifier finds
 almost none of the spam messages (it has a recall close to zero), you
 still get a very high accuracy, simply because there are so many
-legitimate messages.
+legitimate messages. In other words, the accuracy is not a good measure when working with highly unbalanced classes.
 
 Often, it is therefore a better idea to look at the harmonic mean of
 precision and recall, the f1-score, if you want to find a model that
@@ -92,7 +92,7 @@ chraracteristic), a plot in which (Figure~\ref{fig:roccurve}) we plot
 true positives against false positives at different thresholds.  A
 good model extends until close to the upper left corner, and hence has
 a large area under the curve (AUC).  If we choose a threshold at the
-left end of the curve, we get little false postives (good!), but also
+left end of the curve, we get little false positives (good!), but also
 little true positives (bad!), if we go too far to the right, we get
 the other extreme. So, how can we find the best spot?
 
@@ -115,7 +115,7 @@ labeled dataset into two: a training dataset and a test dataset. The
 logic behind it was simple: If we would calculate precision and recall
 on the training data itself, our assessment would be too optimistic --
 after all, our models have been trained on exactly these data, so
-predicting the label isn't too hard. Assing the models on a different
+predicting the label isn't too hard. Assessing the models on a different
 dataset, the test dataset, instead, gives us an assessment of how
 precision and recall look like if haven't seen the labels earlier --
 which is exactly what we want to know.
@@ -123,7 +123,7 @@ which is exactly what we want to know.
 Unfortunately, if we calculate precision and recall (or any other
 metric) for multiple models on the same test dataset, and use these
 results to determine which metric to use, we can run into a problem:
-We may avoid overfitting our model on the training data, we may now
+We may avoid overfitting of our model on the training data, we may now
 overfit it on the test data! After all, we could tweak our models as
 long until they fit our test data perfectly, even if this makes the
 predictions for other cases worse.
@@ -140,11 +140,11 @@ unbiased estimate of its performance.
 
 \subsection{Cross-validation and grid search}
 \label{sec:crossvalidation}
-In an ideal world, we would have a huge labeled dataset and do not
+In an ideal world, we would have a huge labelled dataset and do not
 need to worry about the decreasing size of our training dataset as we
 set aside our validation and test datasets.
 
-Unfortunately, our labeled datasets in the real world have a limited
+Unfortunately, our labelled datasets in the real world have a limited
 size, and setting aside too many cases can be problematic. Especially
 if you are already on a tight budget, setting aside not only a test
 dataset, but also a validation dataset of meaningful size may lead to
@@ -161,9 +161,9 @@ is exactly one time the validation dataset, and exactly $k-1$ times
 part of the training data. We then simply average the results of our
 $k$ values for the evaluation metric we are interested in.
 
-If our classfier generalizes well, we would expect that our metric of
+If our classifier generalizes well, we would expect that our metric of
 interest (e.g., the accuracy, or the f1-score, \ldots) is very similar
-in all folds. Example~\refex{crossval} performs a cross-validation
+in all folds. ~\refex{crossval} performs a cross-validation
 based on the random forest classifier we build above. We see that,
 even though there are no dramatic changes between the runs, there is
 some variation. Running the same cross-validation on our logistic
@@ -185,8 +185,8 @@ should be (the $C$), and we may also be unsure about the right kernel
 (\refex{crossval2}), or in the case of a polinomial kernel, how many
 degrees we want to consider).
 
-Using the help function (e.g., \verb+RandomForestClassifier?+ in
-Python or \verb+help(randomForest)+ in R) or the documentation of the
+Using the help function (e.g., \fn{RandomForestClassifier} in
+Python or \fn{help(randomForest)} in R) or the documentation of the
 modules you are using, you can look up which hyperparameters you can
 specify. For a random forest classifier, for instance, this includes
 the number of estimators in the model, the criterion, and whether or
@@ -196,3 +196,5 @@ automatically assess which values you should choose.
 \codex{chapter09/gridsearch.py}
 
 \codex{chapter09/gridsearch2.py}
+
+\todo[inline]{Include examples in R for cross-validation.  Include crossval2 example, mentioned in the text. Comment the packages/functions used in examples crossval.py, crossval2.py,  gridsearch.py, gridsearch2.py}
