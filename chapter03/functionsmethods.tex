@@ -1,55 +1,110 @@
+\section{Functions and methods}
+
+\emph{Functions} and \emph{Methods} are fundamental concepts in
+writing code in object-orientated programming. Both are objects that
+we use to store a set of statements and operations that we can later
+use without writing the whole syntax again. This makes our code
+simpler and more powerful.
+
+We have already used some built-in functions, such as \fn{length} and
+\fn{class} (R) and \fn{len} and \fn{type} (Python) to get the length
+of an object and the class to which it belongs. But, as you will learn
+in this chapter, you can also write your own functions. In essence, a
+function takes some input (the \emph{arguments} supplied between
+brackets) and returns some output.  Methods and functions are very
+similar concepts. The difference between them is that the functions
+are defined independently from the object, while methods are created
+based on a class, meaning that they are associated to an object. For
+example, in Python, each string has an associated method \fn{lower},
+so that writing |'HELLO'.lower()| will return 'hello'. In R, in
+contrast, one uses a function, |tolower('HELLO')|. For now, it is not
+really important to know why some things are implemented as a method
+and some are implemented as a function. You can read more about it
+HERE ADD REFERENCE TO WHERE WE TALK A BIT ABOUT CLASSES, OR
+ALTERNATIVELY TO ANOTHER BOOK.
+
+
+
+We will illustrate how to create simple functions in R and Python, so you
+will have a better understating of how they work. Imagine you want to
+create two functions: one that computes the 60\% of any given number
+and another that estimates this percentage only if the given argument
+is above the threshold of 5. The structure of a function in R is:
+
+\begin{verbatim}
+function_name <- function(arg_1, arg_2, ...) {
+   Function body 
+}
+\end{verbatim}
+
+In Python it is:
+
+\begin{verbatim}
+def function_name(arg_1, arg_2, ...):
+  statement
+\end{verbatim}
+
+\refex{functions} shows how to write our function and how to use it.
+\pyrex[caption=Writing functions,output=py]{chapter03/functions}
+
+The power of functions, though, lies in scenarios where they are used
+repeatedly.  Imagine that you have a list of 5 (or 5 million!) scores
+and you wish to apply the function |por_60_cond| to all the scores at
+once using a loop. This costs you only two extra lines of code
+(\refex{functions2}).
+
+\pyrex[caption=Functions are particular useful when used repeatedly,output=py]{chapter03/functions2}
 
 
 
 
-\subsection{DO WE REALLY NEED THIS - CLASSES. IT'S A BIT TOO FAST AND TOO ADVANCED HERE I THINK. I THINK TO UNDERSTAND CLASSES, ONE NEEDS TO UNDERSTAND FUNCTIONS FIRST, AND WE NEED TO TALK ABOUT INHERITENCE, INSTANCES, ...}
 
-Now that you have gone through most types of objects in R and Python, we need to remember that objects are different from classes, as we mentioned at the beginning of this section. A class is a prototype with attributes that helps to build an object when it is created from that class. R has three class systems: S3 class, S4 class and Reference Class.  Imagine that we have some data of a news item that we want to convert to a class using the basic S3 class:
+%Now that you have gone through most types of objects in R and Python, we need to remember that objects are different from classes, as we mentioned at the beginning of this section. A class is a prototype with attributes that helps to build an object when it is created from that class. R has three class systems: S3 class, S4 class and Reference Class.  Imagine that we have some data of a news item that we want to convert to a class using the basic S3 class:
 
-\begin{exampler}
-news <- list(headline = "Scientists discover how to cure AIDS", date = 21012030, positive_tone = TRUE)
-class(news) <- "news_piece"
-\end{exampler}
+%\begin{exampler}
+%news <- list(headline = "Scientists discover how to cure AIDS", date = 21012030, positive_tone = TRUE)
+%class(news) <- "news_piece"
+%\end{exampler}
 
-Or using Reference Class:
+%Or using Reference Class:
 
-\begin{exampler}
-setRefClass("news_piece")
-\end{exampler}
+%\begin{exampler}
+%setRefClass("news_piece")
+%\end{exampler}
 
-Then you have stored the information of the class news\_piece.  You can do this also with S4 class, which allows you to define the formal structure of the class:
+%Then you have stored the information of the class news\_piece.  You can do this also with S4 class, which allows you to define the formal structure of the class:
 
-\begin{exampler}
-setClass("news_piece", slots=list(headline="character", date="numeric", positive_tone="logical"))
-\end{exampler}
+%\begin{exampler}
+%setClass("news_piece", slots=list(headline="character", date="numeric", positive_tone="logical"))
+%\end{exampler}
 
-Using S4 class definition you can create a new object using the attributes of the created class, which is very useful to maintain consistency:
+%Using S4 class definition you can create a new object using the attributes of the created class, which is very useful to maintain consistency:
 
-\begin{exampler}
-news2 <- new("news_piece", headline="Thousands of new refugees run from hunger after war begins", date=22012030, positive_tone = FALSE)
-\end{exampler}
+%\begin{exampler}
+%news2 <- new("news_piece", headline="Thousands of new refugees run from hunger after war begins", date=22012030, positive_tone = FALSE)
+%\end{exampler}
 
-On the contrary, Python has just a single class. We define the class in a similar way we will define functions (see next section). We use the keyword class and, in some cases, the built-in \_\_init\_\_() function.  Let's create a very single class in Python including a numeric object in the class and later using that class to define a new object:
+%On the contrary, Python has just a single class. We define the class in a similar way we will define functions (see next section). We use the keyword class and, in some cases, the built-in \_\_init\_\_() function.  Let's create a very single class in Python including a numeric object in the class and later using that class to define a new object:
 
-\begin{examplepy}
-class MyWeight:
-...    	 x = 74
-weigth = MyWeight()
-print (weigth.x)
-\end{examplepy}
+%\begin{examplepy}
+%class MyWeight:
+%...    	 x = 74
+%weigth = MyWeight()
+%print (weigth.x)
+%\end{examplepy}
 
-As you see, we created the object \emph{weight} using the properties (x in this case) of the class MyWeight. This procedure is probably of limited use but good to illustrate what a class is in Python. A more interesting approach to create the class is using the \_\_init\_\_() function, which is a special function that assigns values to object properties and is executed when the class is being initiated. In simpler words, this function helps us to assign different values within the class, creating an internal structure that will be used when we create an object based on that class. You can run the next example on your Python console for a better understanding of the concept. Imagine you want to create the same class news\_piece we did in R and then use that class to create an object:
+%As you see, we created the object \emph{weight} using the properties (x in this case) of the class MyWeight. This procedure is probably of limited use but good to illustrate what a class is in Python. A more interesting approach to create the class is using the \_\_init\_\_() function, which is a special function that assigns values to object properties and is executed when the class is being initiated. In simpler words, this function helps us to assign different values within the class, creating an internal structure that will be used when we create an object based on that class. You can run the next example on your Python console for a better understanding of the concept. Imagine you want to create the same class news\_piece we did in R and then use that class to create an object:
 
-\begin{examplepy}
-class news_piece:
-...     def __init__(self, headline, date, positive_tone):
-...             self.headline = headline
-...             self.date = date
-...             self.positive_tone = positive_tone
-news2 = news_piece("Thousands of new refugees run from hunger after war begins", 22012030, False)
-print(news2.headline)
-\end{examplepy}
+%\begin{examplepy}
+%class news_piece:
+%...     def __init__(self, headline, date, positive_tone):
+%...             self.headline = headline
+%...             self.date = date
+%...             self.positive_tone = positive_tone
+%news2 = news_piece("Thousands of new refugees run from hunger after war begins", 22012030, False)
+%print(news2.headline)
+%\end{examplepy}
 
-As you see, with the last line of the code we obtain a part of the created object (in this case the headline) based on the structure designed in the class news\_piece.
+%As you see, with the last line of the code we obtain a part of the created object (in this case the headline) based on the structure designed in the class news\_piece.
 
-In the next section you will learn the basics of how to write code in R and Python.
+
