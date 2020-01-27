@@ -18,6 +18,18 @@ Now if you want to explore the possible correlation between the average support 
 
 \pyrex[output=py,caption=Scatterplot of average support of refugees and migrants by year\, and regression line]{chapter08/scatter}
 
+We can check and measure the existence of this correlation by computing the Pearson correlation coefficient (PCC) or Pearson's \emph{r}, which is the most known estimator for a correlation problem. As you probably remember from your statistics class, a correlation refers to a relationship between two continuous variables and is usually applied to measure linear relationships (though it also exists nonlinear correlations). Specifically, the PCC measures the linear correlation between two variables (\emph{X} and \emph{Y}) producing a value between -1 and +1, where 0 depicts the absence of correlation and values near to 1 a strong correlation. The signs (+ or -) represent the direction of the relationship (being positive if two variables variate in the same direction, and negative if they variate in the opposite direction). The PCC is usually represented with \emph{r} or the Greek letter $\rho$ and mathematically expressed as:
+
+$$
+  r =
+  \frac{ \sum_{i=1}^{n}(x_i-\bar{x})(y_i-\bar{y}) }{%
+        \sqrt{\sum_{i=1}^{n}(x_i-\bar{x})^2}\sqrt{\sum_{i=1}^{n}(y_i-\bar{y})^2}}
+$$
+
+You can estimate this correlation coefficient with \pkg{pandas} function \fn{corr} in Python and the base R function \fn{cor} in R. Ass shown in \refex{corr} the two variables plotted above are highly correlated with a coefficient of 0.95.
+
+\pyrex[output=both,caption=Pearson correlation coefficient]{chapter08/corr}
+
 Another useful representation is the heatmap. This figure can help you plot a continuous variable using a colour scale and shows its relation with another two variables.  This means that you represent your data as colours, which might be useful for understanding patterns. For example, we may wonder what is the level of support of refugees given the nationality and the gender of the individual. For this visualization, it is necessary to create a proper dataframe to plot the heatmap, in which each number of your continuous variable \emph{\_refugees\_n} is included in a table where each axe (x= gender, y=country) represents the categorical variables. This pivoted table stored in an object called \texttt{pivot\_data} can be generated using some of the already explained commands.  In the first resulting figure proposed in the example, the lighter the blue the greater the support in each combination of country x gender. You can see that level of support is similar in countries such as Slovenia or Spain, and is different in Czech Republic or Austria. It also seems that women have a higher level of support. For this default heatmap we can use the \pkg{ggplot2} function \fn{geom\_tile} in R and \pkg{seaborn} function \fn{heatmap} in Python.  To personalize the scale colours (i.e. a scale of blues) we can use the \pkg{ggplot2} function \fn{scale\_fill\_gradient} in R or the parameter \texttt{cmap} of the \pkg{seaborn} function \fn{heatmap} in Python. 
 
 \pyrex[output=py,caption=Heatmap of country\, gender and support of refugees]{chapter08/heatmap}
