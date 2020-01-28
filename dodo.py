@@ -26,6 +26,9 @@ def _tex_deps(wd: Path, fn: Path, seen=None):
         m = re.match(r"\\(include|input){(.*?)}", line)
         if m:
             dep = wd.parent / m.group(2)
+            if m.group(2) == "fm":
+                # front matter is not a .tex
+                continue
             if not dep.suffix == ".tex":
                 dep = dep.parent / f"{dep.name}.tex"
             yield dep
@@ -45,7 +48,7 @@ def task_tex():
             'basename': str(outf.relative_to(Path.cwd())),
             'file_dep': [fn] + list(tex_deps(fn)),
             'targets': [outf],
-            'actions': [f"pdflatex {fn}", f"biber {fn.stem}", f"pdflatex {fn}"],
+            'actions': [f"pdflatex {fn}"],
             'verbosity': 2,
             }
         
