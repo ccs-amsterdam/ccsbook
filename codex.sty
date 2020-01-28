@@ -6,7 +6,7 @@
 \RequirePackage{newfloat}
 \RequirePackage{xstring}
 \RequirePackage[utf8]{inputenc}
-\DeclareFloatingEnvironment[fileext=ex,placement={!ht},name=Example]{example}
+\DeclareFloatingEnvironment[fileext=ex,placement={!ht},name=Example]{ccsexample}
 
 %%%%%%%%%%%%%%%%%%%%%%%%
 %% Code listing style
@@ -91,7 +91,7 @@
 % 'example' float with (multiple) code examples
 \newcommand{\pyrex}[2][]{{%
   \setkeys{codex}{caption,output,format,#1}%
-  \begin{example}
+  \begin{ccsexample}
   \begin{tcbraster}[raster columns=2,raster equal height=rows,raster valign=top]
     \codex[caption=Python Code]{#2.py}
     \codex[caption=R Code]{#2.r}
@@ -127,7 +127,7 @@
     \fi
   \fi
   \caption{\ifx\codex@caption\empty #2\else \codex@caption\fi}
-  \end{example}
+  \end{ccsexample}
 }}
 
 

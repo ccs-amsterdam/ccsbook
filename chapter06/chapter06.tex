@@ -91,8 +91,7 @@ The most common file formats that are relevant to us are listed in Table~\ref{ta
 For the sake of completeness, we also listed the native Python and R formats pickle, RDS, and RDA. Because their lack of interoperability, they are not very suitable for long-term storage or for sharing data, but they can have a place in a workflow as an intermediate step to solve the issue that none of the other formats are able of storing all properties of a dataframe (e.g., the csv file cannot store whether a given column in an R dataframe is to be understood as containing strings such as 'man', 'woman', 'non-binary' or a factor with the three levels man, woman, non-binary). If it is of importance to store an object (such as a dataframe) exactly as-it-is, we can use these formats. 
 
 \begin{table}[]
-\caption{Basics of data frame handling}
-\label{tab:fileformats}
+\caption{Basics of data frame handling \label{tab:fileformats}}{%
 \begin{tabular}{@{}llll@{}}
 \toprule
         & Used for?             & open   & interoperable?\\ \midrule
@@ -101,7 +100,7 @@ csv     & tabular data          & yes & yes            \\
 json    & nested data, key-value pairs   & yes & yes             \\ 
 pickle  & Python objects        & yes & no     \\ 
 RDS/RDA & R objects             & yes & no \\ \bottomrule
-\end{tabular}
+\end{tabular}}{}
 \end{table}
 
 

@@ -1,6 +1,8 @@
 % !BIB TS-program = biber
 % !BIB program = biber
-\documentclass[a4paper,12pt]{book}
+\documentclass{book}
+\usepackage{Wiley-AuthoringTemplate}
+\usepackage[authoryear]{natbib}% for name-date citation comment the below line
 
 \usepackage{fancyvrb}
 \usepackage[utf8]{inputenc}
@@ -12,27 +14,10 @@
 \usepackage{pgfplots}
 \usepackage{neuralnetwork}
 \usepackage{url}
-\usepackage{wrapfig}
-\usepackage{newfloat}
-\usepackage{tcolorbox}
 \usepackage{codex}
-\usepackage[export]{adjustbox}% http://ctan.org/pkg/adjustbox
+%\usepackage[export]{adjustbox}% http://ctan.org/pkg/adjustbox
 
-\tcbuselibrary{skins,breakable,xparse,raster}
-
-\usepackage[scaled]{beramono}
 \usepackage[T1]{fontenc}
-
-\usepackage[
-backend=biber,
-style=apa,
-natbib=true,
-sortlocale=en_US,
-url=true, 
-doi=true,
-eprint=false
-]{biblatex}
-\addbibresource{references.bib}
 
 \usepackage{ccsbook}
 
@@ -51,149 +36,6 @@ eprint=false
         
 \usepackage[colorinlistoftodos]{todonotes}
 
-
-\usepackage{listings}
-\lstset{
-	basicstyle=\tiny\ttfamily,
-	columns=flexible,
-	breaklines=true,
-	%stepsize=1,
-}
-
-\definecolor{darkblue}{rgb}{0,0,0.3}
-\lstdefinestyle{r}{language=R,
-  showstringspaces=false,
-  stringstyle=\color{darkblue},
-  morekeywords={select,filter,rename},
-  numbers=left,
-	numberstyle=\tiny\color{gray},
-        numbersep=4pt,
-}
-\lstdefinestyle{py}{language=python,
-  showstringspaces=false,
-  stringstyle=\color{darkblue},
-  morekeywords={select,filter,rename},
-  numbers=left,
-	numberstyle=\tiny\color{gray},
-        numbersep=4pt,
-}
-\lstdefinestyle{out}{language={},
-  showstringspaces=false,
-  stringstyle=\color{darkblue},
-  morekeywords={select,filter,rename},
-}
-
-\lstnewenvironment{exampler}{\lstset{basicstyle=\scriptsize\ttfamily,
-		columns=flexible,
-		breaklines=true,
-		numbers=left,
-		%stepsize=1,
-		numberstyle=\tiny}}{}
-
-\lstnewenvironment{ex_r_out}{\lstset{basicstyle=\scriptsize\ttfamily,
-		columns=flexible,
-		breaklines=true, 
-		numbers=left,
-		%stepsize=1,
-		numberstyle=\tiny,
-		backgroundcolor=\color[rgb]{0.3,0.3,1}}}{}
-
-\lstnewenvironment{ex_r_in}{\lstset{basicstyle=\scriptsize\ttfamily,
-		columns=flexible,
-		breaklines=true,
-		numbers=left,
-                showlines=true,
-		%stepsize=1,
-		numberstyle=\tiny,
-		backgroundcolor=\color[rgb]{0.5,0.5,1}}}{}
-
-\lstnewenvironment{ex_py_out}{\lstset{basicstyle=\scriptsize\ttfamily,
-		columns=flexible,
-		breaklines=true,
-		numbers=left,
-		%stepsize=1,
-		numberstyle=\tiny,
-		backgroundcolor=\color[rgb]{0,0.6,.25}}}{}
-
-\lstnewenvironment{ex_py_in}{\lstset{basicstyle=\scriptsize\ttfamily,
-		columns=flexible,
-		breaklines=true,
-		numbers=left,
-		%stepsize=1,
-                showlines=true,
-		numberstyle=\tiny,
-		backgroundcolor=\color[rgb]{0.2,0.6,0.5}}}{}
-
-\lstnewenvironment{examplepy}{\lstset{basicstyle=\scriptsize\ttfamily,
-		columns=flexible,
-		breaklines=true,
-		numbers=left,
-		%stepsize=1,
-		numberstyle=\tiny,
-		%backgroundcolor=\color[rgb]{.7,.7,.7}}}{}
-		backgroundcolor=\color[rgb]{0,.6,.25}}}{}
-
-\usepackage[left=2cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
-
-\lstnewenvironment{terminal}{\lstset{basicstyle=\scriptsize\ttfamily,
-		columns=flexible,
-		breaklines=true,
-		numbers=left,
-		%stepsize=1,
-		numberstyle=\tiny,
-		backgroundcolor=\color[rgb]{.7,.7,.7}}}{}
-
-
-
-\newcommand{\rex}[1]{%
-\begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,title=R code]
-  \lstinputlisting[style=r]{#1.r}
-  \tcbsubtitle{Output}
-  \lstinputlisting[style=out]{#1.r.out}
-\end{tcolorbox}}
-
-\newcommand{\pyex}[1]{%
-\begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,title=Python code]
-  \lstinputlisting[style=py]{#1.py}
-  \tcbsubtitle{Output}
-  \lstinputlisting[style=out]{#1.py.out}
-\end{tcolorbox}}
-
-\newtcolorbox{rbox}[1]{#1}
-
-\newcommand{\rpyex}[2]{
-  \begin{example}
-  \begin{tcbraster}[raster columns=2,raster equal height=rows,raster valign=top]
-    \rex{#1}
-    \pyex{#1}
-  \end{tcbraster}
-  \caption{#2}
-  \end{example}
-}
-
-\newcommand{\rexcode}[1]{%
-\begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,title=R code]
-  \lstinputlisting[style=r]{#1.r}
-\end{tcolorbox}}
-
-\newcommand{\pyexcode}[1]{%
-\begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,title=Python code]
-  \lstinputlisting[style=py]{#1.py}
-\end{tcolorbox}}
-
-
-\newcommand{\rpyexcode}[2]{
-  \begin{example}
-  \begin{tcbraster}[raster columns=2,raster equal height=rows,raster valign=top]
-    \rexcode{#1}
-    \pyexcode{#1}
-  \end{tcbraster}
-  \caption{#2}
-  \end{example}
-}
-
-
-%\includeonly{ch_data_wrangling/ch_data_wrangling}
 %\includeonly{chapter06/chapter06, ch_data_wrangling/ch_data_wrangling, chapter09/chapter09}
 
 
@@ -209,8 +51,7 @@ eprint=false
 \date{\today}
 
 \frontmatter
-\maketitle
-\tableofcontents
+\include{fm}
 
 \mainmatter
 
@@ -242,9 +83,7 @@ eprint=false
 \backmatter
 % bibliography, glossary and index would go here.
 
-\begin{small}
-\printbibliography
-\end{small}
+%\bibliography
 
 
 \end{document}

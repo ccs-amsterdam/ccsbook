@@ -65,6 +65,7 @@ numbers, text, and truth values.
   relevant here).}
 
 \begin{table}
+  \caption{\label{tab:types}Most used data types in python and R}{
   \begin{tabularx}{\textwidth}{lllll}
     \toprule
     \multicolumn{2}{c}{Python} & \multicolumn{2}{c}{R}& Description \\
@@ -76,8 +77,7 @@ numbers, text, and truth values.
     str   & \verb+"Spam", 'ham'+ & character & \verb+"Spam", 'ham'+ & Textual data  \\ 
     bool  & \verb+True, False+   & logical   & \verb+TRUE, FALSE+   & The truth values \\
     \bottomrule
-  \end{tabularx}
-  \caption{\label{tab:types}Most used data types in python and R}
+  \end{tabularx}}{}
 \end{table}
     
 
@@ -161,7 +161,7 @@ Python, we will discuss them one by one, starting with R.
 
 \begin{table}[ht]
 \label{tab:vector_objects}
-\caption{Classes of vector objects in R}
+\caption{Classes of vector objects in R\label{table:nonlin}}{%
 \centering
 \begin{tabular}{c c c p{2cm}}
 \hline\hline
@@ -174,8 +174,7 @@ Character&   \parbox[t]{4cm}{\centering 'a', "I am happy learning R!!!", "200", 
 Raw& \parbox[t]{4cm}{\centering "Any text" stored as:  41 6e 79 20 74 65 78 74} & raw\_string  = charToRaw("Any text") \\
 Logical& TRUE, FALSE & logical\_operator  = TRUE  \\ [1ex]
 \hline
-\end{tabular}
-\label{table:nonlin}
+\end{tabular}}{}
 \end{table}
 
 
