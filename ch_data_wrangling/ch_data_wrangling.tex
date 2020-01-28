@@ -1,11 +1,24 @@
 \chapter{Data Wrangling}
 \label{chap:datawrangling}
+
+\begin{abstract}{Abstract}
 This chapter shows you how to do `data wrangling' in R and Python.
 Data wrangling is the process of transforming raw data into a shape that is suitable for analysis. The sections of this chapter first take you through the normal data wrangling pipeline of
 filtering, changing, grouping, and joining data. Finally, the last section shows how you can
 reshape data.
+\end{abstract}
 
-\note{This chapter uses functions from the package \pkg{tidyverse} (including: \pkg{ggplot2}, \pkg{dplyr}, \pkg{tidyr}, \pkg{pusss}, \pkg{tibble}, \pkg{stringr} and \pkg{forcats}) in R and the package \pkg{pandas} in Python. See \refsec{installing} for information on installing these packages, and \refsec{reading} for an explanation of reading in data from various sources. In this chapter we read the data directly from the Internet page of this book, but instead of a URL you can also use a local file name.}
+\keywords{Data wrangling, data cleaning, filtering, merging, reshaping}
+
+\begin{objectives}
+\item Filter rows and columns in data frames
+\item Compute new columns and summary statistics for data frames
+\item Reshape and merge data frames
+\end{objectives}
+
+\begin{feature}
+  This chapter uses functions from the package \pkg{tidyverse} (including: \pkg{ggplot2}, \pkg{dplyr}, \pkg{tidyr}, \pkg{pusss}, \pkg{tibble}, \pkg{stringr} and \pkg{forcats}) in R and the package \pkg{pandas} in Python. See \refsec{installing} for information on installing these packages, and \refsec{reading} for an explanation of reading in data from various sources. In this chapter we read the data directly from the Internet page of this book, but instead of a URL you can also use a local file name.
+\end{feature}
 
 \input{ch_data_wrangling/data_filtering}
 \input{ch_data_wrangling/mutate}
