@@ -1,0 +1,27 @@
+\chapter{Text as Data}
+\label{chap:dtm}
+
+\begin{abstract}{Abstract}
+  
+This chapter shows you how to do `data wrangling' in R and Python.
+Data wrangling is the process of transforming raw data into a shape that is suitable for analysis. The sections of this chapter first take you through the normal data wrangling pipeline of
+filtering, changing, grouping, and joining data. Finally, the last section shows how you can
+reshape data.
+\end{abstract}
+
+\keywords{Text as Data, Document-Term Matrix}
+
+\begin{objectives}
+\item Create a document-term matrix from text
+\item Perform feature and document selection and weighting
+\item Understand and use more advanced representations such as n-grams and embeddings
+\end{objectives}
+
+\begin{feature}
+  This chapter shows how you can analyze texts that are stored as a data frame column or variable using functions from the package \pkg{quanteda} in R and the package \pkg{sklearn} in Python in Python and R.
+  Please see \refsec{readtext} for more information on reading and cleaning text and see \refsec{installing} for information on installing these packages.
+\end{feature}
+
+\input{ch_dtm/dtm}
+\input{ch_dtm/dtmselect}
+\input{ch_dtm/ngram}
