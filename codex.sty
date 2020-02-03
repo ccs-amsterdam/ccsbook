@@ -62,6 +62,7 @@
 \def\codex@options@html{html}
 
 \define@key{codex}{caption}[]{\def\codex@caption{#1}}
+\define@key{codex}{label}[]{\def\codex@label{#1}}
 \define@choicekey{codex}{output}[\codex@output]{r,py,both,none}[both]{}
 \define@choicekey{codex}{format}[\codex@format]{plain,html}[plain]{}
 \presetkeys{codex}{caption}{caption=}
@@ -90,7 +91,7 @@
 % \rpyex[output={both,r,py,none}]
 % 'example' float with (multiple) code examples
 \newcommand{\pyrex}[2][]{{%
-  \setkeys{codex}{caption,output,format,#1}%
+  \setkeys{codex}{caption,label,output,format,#1}%
   \begin{ccsexample}
   \begin{tcbraster}[raster columns=2,raster equal height=rows,raster valign=top]
     \codex[caption=Python Code]{#2.py}
@@ -126,7 +127,7 @@
     \fi
     \fi
   \fi
-  \caption{\ifx\codex@caption\empty #2\else \codex@caption\fi}
+  \caption{\ifx\codex@caption\empty #2\else \codex@caption\fi}\ifx\codex@caption\empty\else\label{ex:\codex@label}\fi
   \end{ccsexample}
 }}
 
