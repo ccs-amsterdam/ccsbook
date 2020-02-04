@@ -18,11 +18,10 @@ Python\footnote{If you have not installed the require software yet and
 \emph{script} or \emph{program} containing the commands for the
 computer to do data processing or other tasks.  Before we move on to
 data processing, it is important to take a quick look at how data is
-actually stored in the computer, and the basics of processing
-commands.
+actually stored and at the basics of programming.
 
-All data is stored in the computer as \emph{objects}, and each object
-that is stored in memory also has a name.  You create these objects by
+All data is stored in memory as \emph{objects}, and each object
+has a name.  You create these objects by
 assigning a value to a name. For example, the command \texttt{x = 10}
 creates a new object\fnarrow, named \texttt{x}, and stores the value 10
 in it.  This object is now stored in memory and can be used in later
@@ -30,7 +29,7 @@ commands.
 
 \note{A small note on terminology: In programming, a distinction is
   often made between an object (such as the number 10) and the
-  variable in which (a pointer to) it is store (such as \texttt{x}).
+  variable in which it is store (such as \texttt{x}). The latter is also called a ``pointer''.
   However, this distinction is not very relevant for our
   usage. Morever, in statistics the word variable often refers to a
   column of data, rather than to the name of the data frame.  For that
@@ -42,20 +41,17 @@ Objects can be simple values such as the number 10, but they can also
 be pieces of text, whole data frames, or analysis results.  The
 computer keeps track of the \emph{type}, or \emph{class}, of each
 object.  You can inspect the type of an object with the \code{type}
-(python) or \code{class} function, as shown in example X.  We will
-explain the concept of a function later, but you can essentially see
-it as asking a specific question or issuing a command, in this case
-the question of what the type of the given object is.
+(Python) or \code{class} function, as shown in example \refex{objecttype}. 
 
 Let' create an object that we call |a| (an arbitray name, you can use
-whatever you want) an assign a value, 100, to it (see \refex{var1}).
+whatever you want) an assign a value, 100, to it (see \refex{objecttype}).
 
-\pyrex[output=both,caption=Determining the type of an object]{chapter03/var1}
+\pyrex[output=both,label=objecttype,caption=Determining the type of an object]{chapter03/var1}
 
-As you can see, R calls the number `numeric', while python reports it
+As you can see, R calls the number `numeric', while Python reports it
 as being `int', short for integer or whole number.  Although they use
 different names, both languages offer very similar data types.
-\reftab{tab:types} provides an overview of the data types we will
+\reftab{types} provides an overview of the data types we will
 encounter most frequently in this book.  As you can see in the table,
 both python and R have very similar types for simple data such as
 numbers, text, and truth values.
@@ -86,7 +82,7 @@ Let's have a closer look at the code in \refex{var1}.
 
 The first line is mandatory to create the object \emph{a} and store
 its value 100; and the second is illustrative and will give you the
-class of the created object, in this case "numeric". Notice that we
+class of the created object, in this case ``numeric''. Notice that we
 are using two native functions of R, \fn{print} and \fn{class}, and
 including |a| as an argument of \fn{class}, and the very same
 \fn{class(a)} as an argument of \fn{print}. The only difference
@@ -115,7 +111,7 @@ correct datatype when creating an object, but differ in their default
 behavior when storing a number that can be represented as an int: R
 will store it as float anyway and you need to force it to do
 otherwise, for Python it is the other way round
-(Example~\refex{var3}). We can also convert between types later on,
+(\refex{var3}). We can also convert between types later on,
 even though converting a float to an int might not be a too good idea,
 as you truncate your data.
 
@@ -128,20 +124,34 @@ see in \refex{var3}, such an object behaves exactly as an integer that
 is only allowed to be 0 or 1, and it can easily be converted to an
 integer.
 
-\pyrex[caption=Floating point numbers\, integers\, and boolean values]{chapter03/var3}
+\pyrex[caption={Floating point numbers, integers, and boolean values}]{chapter03/var3}
 
 
 
 
 \subsection{Storing text}
 
-As a computational analyst of communication you will usually work with text objects or string of characters, which are called character vector objects in R, and you can create them just by adding single or double quotes to the value of the variable. Just think of a tweet or a Facebook post that you want to load into your workspace for natural language processing analysis.
+As a computational analyst of communication you will usually work with
+text objects or string of characters, which are called character
+vector objects in R, and you can create them just by adding single or
+double quotes to the value of the variable. Just think of a tweet or a
+Facebook post that you want to load into your workspace for natural
+language processing analysis.
 
 \pyrex[caption=Strings and bytes]{chapter03/var4}
 
-As we will discuss in Section~\ref{sec:encodings}, there are several ways of how textual characters can be stored as bytes. You probably will not encounter this too often, but sometimes we may need a low-level approach in which we care about the exact bytes underlying a string. \refex{var4} shows how to create string and raw (byte) strings.
+As we will discuss in Section~\ref{sec:encodings}, there are several
+ways of how textual characters can be stored as bytes. You probably
+will not encounter this too often, but sometimes we may need a
+low-level approach in which we care about the exact bytes underlying a
+string. \refex{var4} shows how to create string and raw (byte)
+strings.
 
-As you see in \refex{var4}, a string is denoted by quotation marks. You can use either double or single quotation marks, but you need to use the same mark to begin and end the string. This can be useful if you want to use quotationmarks within a string, then you can use the other type to denote the beginning and end of the string.
+As you see in \refex{var4}, a string is denoted by quotation
+marks. You can use either double or single quotation marks, but you
+need to use the same mark to begin and end the string. This can be
+useful if you want to use quotationmarks within a string, then you can
+use the other type to denote the beginning and end of the string.
 
 
 
@@ -169,7 +179,7 @@ Data type & Example & Code \\ [0.5ex]
 \hline
 Numeric&1, 2.5, 100, 2500.38& a = 100 \\
 Integer&20L, 100L&d = 20L \\
-Complex& 100+50x, 8*3i &e = 100+50x \\
+%Complex& 100+50x, 8*3i &e = 100+50x \\
 Character&   \parbox[t]{4cm}{\centering 'a', "I am happy learning R!!!", "200", 'R', "FALSE"} & tweet  = "I am happy learning R!!!" \\
 Raw& \parbox[t]{4cm}{\centering "Any text" stored as:  41 6e 79 20 74 65 78 74} & raw\_string  = charToRaw("Any text") \\
 Logical& TRUE, FALSE & logical\_operator  = TRUE  \\ [1ex]
@@ -184,7 +194,7 @@ create a vector. A vector is a basic structure of R and holds
 different elements of the same type (numeric, integer, complex,
 character, logical, raw) in a one-dimensional array. You will use
 vectors very often to run computation and we can easily create them
-using the c() function. For example, we can create a numeric vector
+using the \fn{c} function. For example, we can create a numeric vector
 with the scores of a class of 10 students or a character vector of
 three countries (\refex{1darray1}).
 
@@ -284,7 +294,7 @@ type of elements, functions and even other lists. We create lists in a
 similar way to vectors, except that we have to add the word |list|
 before declaring the values. Let's build a list with four different
 kind of elements, a numeric object, a character object, a square root
-function (sqrt) and a numeric vector (\refex{1darray4}). In fact, you
+function (\fn{sqrt}) and a numeric vector (\refex{1darray4}). In fact, you
 can use any of the elements in the list through indexing -- even the
 function \fn{sqrt} that you stored in there to get the square root of
 16!
@@ -334,7 +344,9 @@ tuples.
   create a copy of the object itself. Rather, we now get two names for
   the same object.}
 
-\codex[caption=The \(for many unexpected\) behavior of mutable objects]{chapter03/mutable.py}
+\codex[caption={The (for many unexpected) behavior of mutable objects}]{chapter03/mutable.py}
+
+\codex[caption={Output}]{chapter03/mutable.py.out}
 
 
 We also have another Python object called sets. A set is a mutable
@@ -366,7 +378,7 @@ popular data structure in Python, but does not exist in R.
 
 Dictionaries contain unordered and mutable collections of objects that
 contain certain information in another object. Python generates this
-data type in form of { 'key' : \textless value \textgreater} in order
+data type in form of |{key : value}| in order
 to map any object by its key and not by its relative position in the
 collection. This means that you will index using the key. You will
 find dictionaries very useful in your journey as a computational
@@ -414,7 +426,7 @@ machine learning. Often, we can generalize to higher dimensions.
 \pyrex[caption=Working with two- or n-dimensional arrays, output=both]{chapter03/2darray}
 
 In Python, the easiest representation is to simply construct a list of
-lists. This is, in fact, often done, but has the disadantage that
+lists. This is, in fact, often done, but has the disadvantage that
 there are no easy ways to get, for instance, the dimensions (the
 shape) of the table, or to print it in a neat(-er) format. To get all
 that, one can transform the list of list into an |array|, a
@@ -441,7 +453,7 @@ coding images.
 
 \subsection{Making life easier: dataframes}
 
-Finally, we have the wonderful data frames. This is the friendly type
+Finally, we have data frames. This is the friendly type
 of data that you find in SPSS or Excel that will help you in a wide
 range of statistical analysis (though in more advanced exercises such
 in machine learning you will not be able to use them any more!).  A

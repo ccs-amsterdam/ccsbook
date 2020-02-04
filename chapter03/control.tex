@@ -34,17 +34,17 @@ And this is the way computer programs work: you give them some
 \emph{statements} (directly or from a script) to which they
 react. Statements are just written instructions that are executed by
 the console.  We call a sequence of these statements a \emph{computer
-  program} . In the previous section, when we created objects or
-\emph{variables} (i.e. a \textless- 100 or a = 100) we already dealt
+  program}. In the previous section, when we created objects or
+\emph{variables} (i.e. |a = 100|) we already dealt
 with the basic statement, which is called \emph{assignment
-  statement}. But the statements can be more complex and include many
-internal components, such as \emph{assignment statement}, which are
-representations of values that combine variables, constants and
-functions (i.e.  x+1 AND z\textless100). There are some specific
-expressions (such as \emph{lists of comprehension} in Python) that we
-will discuss later, but for now you can notice that by using
-statements, expressions and variables you have the basics for computer
-programming.
+  statement}. But the statements can be more complex.
+%and include many internal components, such as \emph{assignment statement}, which are
+%representations of values that combine variables, constants and
+%functions (i.e.  x+1 AND z\textless100). There are some specific
+%expressions (such as \emph{lists of comprehension} in Python) that we
+%will discuss later, but for now you can notice that by using
+%statements, expressions and variables you have the basics for computer
+%programming.
 
 Fortunately, we have great syntactic tools to write code. Both, R and
 Python have \emph{loops} and \emph{conditional statements}, which will
@@ -76,7 +76,7 @@ statement
 }
 \end{verbatim}
 
-In Python the syntax of the for-loop is:
+In Python, the syntax of the for-loop is:
 
 \begin{verbatim}
 for <var> in <iterable>:
@@ -84,15 +84,17 @@ for <var> in <iterable>:
 \end{verbatim}
 
 
+\pyrex[label=for1,caption=for loops let you repeat operations]{chapter03/forloop}
 
-Now you can go to R and create a new R document and then run the whole next script to check how to get the number of characters of each headline, both by a manual procedure and by an automatic procedure using a for-loop:
-
-\pyrex[caption=for loops let you repeat operations]{chapter03/forloop}
-
-
-You can notice that you have same results, but with the loop you can automatize your operation writing few lines of code. As we will stress along this book, a good practice in coding is to be efficient and harmonious in the amount of code we write, which is another justification for using loops.  
-
-
+As \refex{for1} illustrates, every time you find yourself
+\emph{repeating} something, for instance printing each element from a
+list, you can get the same results easier by \emph{iterating} or
+\emph{looping} over the elements of the list, in this case.  Notice
+that you have same results, but with the loop you can automatize your
+operation writing few lines of code. As we will stress along this
+book, a good practice in coding is to be efficient and harmonious in
+the amount of code we write, which is another justification for using
+loops.
 
 Another way to iterate in Python is using list comprehensions  (not available natively in R), which are a stylish way to create list of elements automatically even with conditional clauses. This is the syntax:
 
