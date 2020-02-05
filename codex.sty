@@ -62,7 +62,7 @@
 \def\codex@options@html{html}
 
 \define@key{codex}{caption}[]{\def\codex@caption{#1}}
-\define@key{codex}{label}[]{\def\codex@label{#1}}
+\define@choicekey{codex}{input}[\codex@input]{r,py,both,none}[both]{}
 \define@choicekey{codex}{output}[\codex@output]{r,py,both,none}[both]{}
 \define@choicekey{codex}{format}[\codex@format]{plain,html}[plain]{}
 \presetkeys{codex}{caption}{caption=}
@@ -78,9 +78,6 @@
     \StrCut[\nbmatch]{#2}{.}\tmp\myext%
     \lstinputlisting[style=\myext]{#2}
 
-    \StrCount{\tmp}{/}[\nbmatch]%
-    \StrCut[\nbmatch]{\tmp}{/}\tmptmp\snippetlabel%
-    \label{ex:\snippetlabel}
 
 \end{tcolorbox}}%
 }
@@ -91,12 +88,20 @@
 % \rpyex[output={both,r,py,none}]
 % 'example' float with (multiple) code examples
 \newcommand{\pyrex}[2][]{{%
-  \setkeys{codex}{caption,label,output,format,#1}%
+  \setkeys{codex}{caption,output,input,format,#1}%
   \begin{ccsexample}
+   \ifx\codex@input\codex@options@none
+  \else
+    \ifx\codex@input\codex@options@both
   \begin{tcbraster}[raster columns=2,raster equal height=rows,raster valign=top]
     \codex[caption=Python Code]{#2.py}
     \codex[caption=R Code]{#2.r}
   \end{tcbraster}
+  \else
+      \codex[caption=\codex@langname{\codex@input} Code]{#2.\codex@input}
+
+   \fi\fi
+  
   \ifx\codex@output\codex@options@none
   \else
     \ifx\codex@output\codex@options@both
@@ -127,7 +132,10 @@
     \fi
     \fi
   \fi
-  \caption{\ifx\codex@caption\empty #2\else \codex@caption\fi}\ifx\codex@caption\empty\else\label{ex:\codex@label}\fi
+  \caption{\ifx\codex@caption\empty #2\else \codex@caption\fi}
+    \StrCount{#2}{/}[\nbmatch]%
+    \StrCut[\nbmatch]{#2}{/}\tmptmp\snippetlabel%
+    \label{ex:\snippetlabel}
   \end{ccsexample}
 }}
 
