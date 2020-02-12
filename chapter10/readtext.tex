@@ -1,4 +1,41 @@
 \section{Reading and cleaning text}
 \label{sec:readtext}
 
-When dealing with textual data, an important step is to normalize the data. Such preprocessing ensures that noise is removed, and reduces the amount of data to deal with. We cover typical steps such as lowercasing and removing punctuation, HTML tags and boilerplate.
+When dealing with textual data, an important step is to normalize the data. Such preprocessing ensures that noise is removed, and reduces the amount of data to deal with. In \refsec{encodings} we explained how to read data from different formats, such as txt, csv or json that can include textual data, and we also mentioned some of the challenges when reading text (i.e. encoding\/decoding from\/to Unicode). In this section we cover typical cleaning steps such as lowercasing and removing punctuation, HTML tags and boilerplate.
+ 
+As a computational communication scientist you will come across with many sources of text that range from electronic versions of newspapers in HTML to parliamentary speeches in PDF. Moreover, most of the contents in their original shape will include data that will not be of interest for the analysis but, instead,  will produce noise that might negatively affect the quality of the research. You have to decide which parts of the raw text should be considered for analysis and determine the shape of these contents in order to have a good input in the analytical process. 
+
+There is not a rule of thumb that can guide you in this preprocessing stage, and it is highly likely that you will have to test different combination of steps and assess what are the best options. For example, in some cases keeping capital letters within a chat might be valuable to detect the tone of the conversation, but in more formal speeches transforming the whole text to lowercases would help to normalize the content. However, it is true that there some typical challenges to reduce the noise from the text.
+
+The first thing to keep in mind is that once you load any text on R or Python you usually store this content as a \emph{character} or \emph{string} object (or you may also think of \emph{lists} or \emph{dictionaries}, but they will have strings inside anyway), which means that basic operations and conditions of this data type apply, such as indexing or slicing to access individual characters or substrings (see \refsec{datatypes}). In fact, base strings operations are very powerful to clean your text and eliminate a big amount of noise of it.  Table~\ref{tab:string_operations} summarises some useful operations on strings in R and Python that will help you in this stage.   
+
+\begin{table}[]
+\caption{Useful strings operations in R and Python to clean noise \label{tab:string_operations}}{%
+\begin{tabular}{@{}llll@{}}
+\toprule
+String operation      & R   & Python\\ \midrule
+Count characters      & nchar(string) & len(string)  \\
+Get a substring       & substr(string, start=n1, stop=n2) & string[n1:n2]            \\
+Split the string into several strings   & strsplit(string, split) & split(string, split)             \\ 
+Convert to lowercase  & tolower(string) & string.lower     \\ 
+Convert to uppercase  & toupper(string) & string.upper     \\ 
+
+
+Find a patter and replace             & yes & no \\ \bottomrule
+\end{tabular}}{}
+\end{table}
+
+Let us apply some of these functions/methods to a simple Wikipedia text that contains HTML tags, punctuation and natural upper/lower case letters. Using base function \fn{gsub} in R and \fn{replace} in Python we can manually remove strings containing expressions such as \texttt{<p>} or \texttt{</b>} and include an empty space instead. We can use this same method to eliminate punctuation taking as a reference a pre-defined list of signs (\texttt{:punct:} in base R and object \texttt{punctuation} from the library \pkg{string} in Python). In the case of converting letters from upper to lower case, we use the base R function \fn{tolower} and the string method \fn{lower} in Python. To remove unnecessary double spaces we apply the base R function \fn{trimws} and method \fn{join} in Python. \refex{clean} shows how to conduct this cleaning process.
+
+\pyrex[output=py,caption=Cleaning text with base functions]{chapter10/clean}
+
+It is good news that we have some extra packages that facilitate this initial stage and clean boilerplate. For instance, you can think of \pkg{stringi} in R (recommended by \citet{welbers2017text} as better option than built-it functions) or \pkg{Beautiful Soup} in Python. \refex{clean_extra} shows how to implement this packages to remove html tags.
+
+\pyrex[output=py,caption=Cleaning text with stringi and Beautiful Soup]{chapter10/clean_extra}
+
+As you can notice in the R example, the library \pkg{stringi} removed the tags using a regular expression, which are very useful in this cleaning stage and that we will explain in the next section.	
+
+
+
+
+
