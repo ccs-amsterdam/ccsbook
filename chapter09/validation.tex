@@ -163,14 +163,17 @@ $k$ values for the evaluation metric we are interested in.
 
 If our classifier generalizes well, we would expect that our metric of
 interest (e.g., the accuracy, or the f1-score, \ldots) is very similar
-in all folds. ~\refex{crossval} performs a cross-validation
-based on the random forest classifier we build above. We see that,
-even though there are no dramatic changes between the runs, there is
-some variation. Running the same cross-validation on our logistic
-regression classifier, instead, would produce not only better (higher)
-means, but also better (lower) standard deviations.
+in all folds. ~\refex{crossval} performs a cross-validation based on
+the logistic regression classifier we build above. We see that the
+standard deviation is really low, indicating that there are almost no
+changes between the runs, which is great.
 
-\codex{chapter09/crossval.py}
+Running the same cross-validation on our random forest, instead, would
+produce not only worse (lower) means, but also worse (higher) standard
+deviations, even though also here, there are no dramatic changes
+between the runs.
+
+\pyrex[input=py, output=py,caption=Crossvalidation]{chapter09/crossval}
 
 Very often, cross-validation is used when we want to compare many
 different model specifications, for example to find optimal
@@ -182,19 +185,48 @@ estimation method to use, the number of times a bootstrap should be
 repeated, etc. A very good example are the hyperparameters of support
 vector machines (see above): It is hard to know how soft our margins
 should be (the $C$), and we may also be unsure about the right kernel
-(\refex{crossval2}), or in the case of a polinomial kernel, how many
+(\refex{gridsearch2}), or in the case of a polinomial kernel, how many
 degrees we want to consider).
 
-Using the help function (e.g., \fn{RandomForestClassifier} in
-Python or \fn{help(randomForest)} in R) or the documentation of the
-modules you are using, you can look up which hyperparameters you can
-specify. For a random forest classifier, for instance, this includes
-the number of estimators in the model, the criterion, and whether or
-not to use bootstrapping. \refex{gridsearch} illustrates how you can
-automatically assess which values you should choose.
+Using the help function (e.g., \fn{RandomForestClassifier} in Python
+or the documentation of the modules you are using, you can look up
+which hyperparameters you can specify. For a random forest classifier,
+for instance, this includes the number of estimators in the model, the
+criterion, and whether or not to use
+bootstrapping. \refex{gridsearch}, \refex{gridsearch2}, and
+\refex{gridsearch3} illustrates how you can automatically assess which
+values you should choose.
 
-\codex{chapter09/gridsearch.py}
+\pyrex[input=py, output=py,caption=A simple gridsearch in Python]{chapter09/gridsearch}
 
-\codex{chapter09/gridsearch2.py}
+\pyrex[input=py,output=py,caption=A gridsearch in Python using multiple CPUs]{chapter09/gridsearch2}
 
-\todo[inline]{Include examples in R for cross-validation.  Include crossval2 example, mentioned in the text. Comment the packages/functions used in examples crossval.py, crossval2.py,  gridsearch.py, gridsearch2.py}
+%\pyrex[input=r,output=r,caption="A gridsearch in R. Note that in R, you cannot (at least, not easily) put any parameter of the model in the grid. Instead, you can look up the ``tunable parameters'' which \emph{must} be present part of the grid in the caret documentation. This means that an exact replication of the grid searches in \refex{gridsearch} and \refex{gridsearch2} is not natively supported using \pkg{caret} and requires either manual testing or writing a so-called caret extension." ]{chapter09/gridsearch3}
+
+\pyrex[input=r,output=r,caption=A gridsearch in R}]{chapter09/gridsearch3}
+
+\begin{feature}
+    Supervised machine learning is one of the areas where you really
+    see differences between Python and R. While in Python, virtually
+    all you need is available via \pkg{scikit-learn}, in R, we often
+    need to combine \pkg{caret} with various libraries providing the
+    actual models. In contrast, all components we need for machine
+    learning in Python are developed within one package, which leads
+    to less friction. This is what you see in the gridsearch examples
+    in this section. In scikit-learn, \emph{any} hyperparameter can be
+    part of the grid, but no hyperparameter has to be.  Note that in
+    R, in contrast, you cannot (at least, not easily) put any
+    parameter of the model in the grid. Instead, you can look up the
+    ``tunable parameters'' which \emph{must} be present part of the
+    grid in the caret documentation. This means that an exact
+    replication of the grid searches in \refex{gridsearch} and
+    \refex{gridsearch2} is not natively supported using \pkg{caret}
+    and requires either manual testing or writing a so-called caret
+    extension.
+
+    While in the end, you can find a supervised machine learning
+    solution for all your use cases in R as well, if supervised
+    machine learning is at the core of your project, it may save you a
+    lot of cursing to do this in Python.
+\end{feature}
+
