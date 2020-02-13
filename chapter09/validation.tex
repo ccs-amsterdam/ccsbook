@@ -201,9 +201,7 @@ values you should choose.
 
 \pyrex[input=py,output=py,caption=A gridsearch in Python using multiple CPUs]{chapter09/gridsearch2}
 
-%\pyrex[input=r,output=r,caption="A gridsearch in R. Note that in R, you cannot (at least, not easily) put any parameter of the model in the grid. Instead, you can look up the ``tunable parameters'' which \emph{must} be present part of the grid in the caret documentation. This means that an exact replication of the grid searches in \refex{gridsearch} and \refex{gridsearch2} is not natively supported using \pkg{caret} and requires either manual testing or writing a so-called caret extension." ]{chapter09/gridsearch3}
-
-\pyrex[input=r,output=r,caption=A gridsearch in R}]{chapter09/gridsearch3}
+\pyrex[input=r,output=r,caption={A gridsearch in R. Note that in R, not all parameters are ``tunable'' using standard \pkg{caret}. Therefore, an exact replication of the grid searches in \refex{gridsearch} and \refex{gridsearch2} would requires either manual comparisons or writing a so-called caret extension.}]{chapter09/gridsearch3} 
 
 \begin{feature}
     Supervised machine learning is one of the areas where you really
