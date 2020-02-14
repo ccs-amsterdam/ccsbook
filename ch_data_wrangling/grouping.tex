@@ -30,7 +30,7 @@ and then we create the aggregate statistics.
 In this example, we do not store the result of the computation, but print it on the screen.
 To store the results, simply assign it to a new object as normal.
 
-\pyrex[caption=Aggregation]{ch_data_wrangling/aggregate}
+\pyrex[caption=Aggregation,output=r,format=table]{ch_data_wrangling/aggregate}
 
 In R, you use the \pkg{dplyr} function \fn{group\_by}  to define the groups,
 and then call the function \fn{summarize~} to compute summary values by specifying
@@ -61,7 +61,7 @@ The pipe operator inserts the result of the first function as the first argument
 More technically, \verb+f1(d) %>% f2()+ is equivalent to \verb+f2(f1(d))+.
 This can be used to chain multiple commands together, e.g. \verb+data = data %>% function1(arguments) %>% function2(arguments)+.
 
-\pyrex[caption=Combining multiple functions]{ch_data_wrangling/aggregate2}{
+\pyrex[caption=Combining multiple functions,output=r,format=table]{ch_data_wrangling/aggregate2}{
 
 \refex{data-aggregate2} shows the same operation as above, but chained into a single statement.
 

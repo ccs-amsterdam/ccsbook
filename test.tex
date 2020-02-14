@@ -4,20 +4,14 @@
 
 \usepackage{codex}
 \usepackage{ccsbook}
+\usepackage{tabularx}
+\usepackage{booktabs}
+
 
 
 \begin{document}
 
-\verb|\pyrex[input=py,output=py]{chapter03/forloop}|
-\pyrex[input=py,output=py]{chapter03/forloop}
-
-See \refex{forloop}
-\newpage
-
-\verb|\pyrex[input=none,output=py]{chapter03/dict}|
-\pyrex[input=none,output=py]{chapter03/dict}
-
-See \refex{dict}
+\pyrex[caption=Aggregation,output=r,format=table]{ch_data_wrangling/aggregate}
 
 
 \end{document}
