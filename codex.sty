@@ -82,6 +82,28 @@
 \end{tcolorbox}}%
 }
 
+\newcommand{\doublecodex}[1]{
+\begin{tcbraster}[raster columns=2,raster equal height=rows,raster valign=top]
+   \codex[caption=Python Code]{#1.py}
+   \codex[caption=R Code]{#1.r}
+\end{tcbraster}
+}
+
+
+\newcommand{\doubleoutput}[1]{
+\begin{tcbraster}[raster columns=2,raster equal height=rows,raster valign=top]
+   \codex[caption=Python Output]{#1.py}
+   \codex[caption=R Output]{#1.r}
+\end{tcbraster}
+}
+
+\newcommand{\codexoutputpng}[1]{
+      \begin{tcolorbox}[colback=white,colframe=red!75!black,title=Output]
+      % note: need the {.html}.pdf notation because latex is stoopid
+      \includegraphics[width=\linewidth]{{snippets/#1}.png}
+      \end{tcolorbox}
+}
+   
 
 \def\codex@langname#1{\ifx#1\codex@options@py{Python}\else{R}\fi}
 
@@ -92,7 +114,7 @@
   \begin{ccsexample}
    \ifx\codex@input\codex@options@none
   \else
-    \ifx\codex@input\codex@options@both
+  \ifx\codex@input\codex@options@both
   \begin{tcbraster}[raster columns=2,raster equal height=rows,raster valign=top]
     \codex[caption=Python Code]{#2.py}
     \codex[caption=R Code]{#2.r}
