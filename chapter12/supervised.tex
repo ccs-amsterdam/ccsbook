@@ -1,4 +1,4 @@
-\section{Supervised text analysis: automatic classification and sentiment analysis [Damian]}
+\section{Supervised text analysis: automatic classification and sentiment analysis}
 \label{sec:supervised}
 
 For many applications, there are good reasons to use the dictionary
@@ -123,20 +123,72 @@ but we need to think of a way of reading the content into a
 datastructure that we can use. One way of doing so is shown in
 \refex{readimdb}.
 
-\pyrex[output=none, caption=Reading the ACL IMDB dataset]{chapter12/readimdb}
+\pyrex[output=none, caption={Reading the ACL IMDB dataset.}]{chapter12/readimdb}
 
-Let us now train our first classifier. We choose a Na\"ive Bayes classifier with a simple count vectorizer (\refex{imdbbaseline}).
-Pay attention to the fitting of the vectorizer: we fit on the training data \emph{and} transorm the training data with it, but we only transform the test data \emph{without re-fitting the vectorizer}. Fitting, here, includes the decision which words to include (by definition, words that are not present in the training data are not included; but we could also choose additional constraints, such as exluding very rare or very common words), but also assigning an (internally used) identifier (variable name) to each word. If we would fit the classifier again, these would not be compatible any more.
 
-\note{A word that is not present in the training data, but is present in the test data, is thus ignored. If you want to use the information such out-of-vocabulary words can entail (e.g., they may be synonyms), you need to use a word embedding approach}
+\begin{feature}
+  \textbf{Sparse versus dense matrices and why it matters a lot for
+    choosing between R and Python for machine learning.} In a
+  document-term matrix, you would typically find a lot of zeros: most
+  words do \emph{not} appear in any given document. For instance, the
+  reviews in the IMDB dataset contain more than 100,000 unique
+  words. Hence, the matrix has more than 100,000 columns. Yet, most
+  reviews only consist of a couple of hundreds of words. As a
+  consequence, more than 99\% of the cells in the table contain a
+  zero. In a sparse matrix, we do not store all these zeros, but only
+  store the values for cells that actually contain a value. This
+  drastically reduces the memory needed.  But even if you have a huge
+  amount of memory, this does not solve the issue: In R, the number of
+  cells in a matrix is limited to 2,147,483,647. It is therefore
+  impossible to store a matrix with 100,000 features and 25,000
+  documents as a dense matrix. Unfortunately, many models that you can
+  run via \pkg{caret} in R will convert your sparse document-term
+  matrix to a dense matrix, and hence are effectively only usable for
+  very small datasets. An alternative is using the \pkg{quanteda} package,
+  which does use sparse matrices throughout. However, at the time of
+  writing this book, quanteda only provides a very limited number of
+  models. As all of these problems do not arise in \pkg{scikit-learn},
+  you may want to consider using Python for many text classification tasks.
+\end{feature}
 
-We do not necessarily expect this first model to be the best classifier we could come up with, but it provides us with a reasonable baseline. In fact, even without any further adjustments, it works reasonably well: precision is higher for positive reviews and recall is higher for negative reviews (classifying a positive review as negative happens twice as much as the reverse), but none of the values is concerningly low.
 
-\pyrex[output=py, caption=Training a Na\"ive Bayes classifier with a simple count vectorizer]{chapter12/imdbbaseline}
+Let us now train our first classifier. We choose a Na\"ive Bayes
+classifier with a simple count vectorizer (\refex{imdbbaseline}).  In
+the Python example, pay attention to the fitting of the vectorizer: we
+fit on the training data \emph{and} transorm the training data with
+it, but we only transform the test data \emph{without re-fitting the
+  vectorizer}. Fitting, here, includes the decision which words to
+include (by definition, words that are not present in the training
+data are not included; but we could also choose additional
+constraints, such as exluding very rare or very common words), but
+also assigning an (internally used) identifier (variable name) to each
+word. If we would fit the classifier again, these would not be
+compatible any more. In R, the same is achieved in a slightly
+different way: Two term-document matrices are created independently,
+before they are matched in such a way that only the features that are
+presen t in the training matrix are retained in the test matrix.
+
+
+\note{A word that is not present in the training data, but is present
+  in the test data, is thus ignored. If you want to use the
+  information such out-of-vocabulary words can entail (e.g., they may
+  be synonyms), you need to use a word embedding approach}
+
+We do not necessarily expect this first model to be the best
+classifier we could come up with, but it provides us with a reasonable
+baseline. In fact, even without any further adjustments, it works
+reasonably well: precision is higher for positive reviews and recall
+is higher for negative reviews (classifying a positive review as
+negative happens twice as much as the reverse), but none of the values
+is concerningly low.
+
+\pyrex[output=py, caption=Training a Na\"ive Bayes classifier with simple word counts as features]{chapter12/imdbbaseline}
 
 
 
 \subsection{Finding the best classifier}
+
+\todo[inline]{\url{https://github.com/quanteda/quanteda.textmodels} seems to be under heavy development right now. In the CRAN version of quanteda, there is only a NB classifier present. Let's wait for a moment to check which textmodels will be available via quanteda and then incorporate them here.}
 
 Let us start by comparing two simple classifiers we know (Na\"ive
 Bayes and Logistic Regression, see Section~\ref{sec:nb2dnn} and two
@@ -296,11 +348,24 @@ fitting a new vectorizer. Therefore, as you see, you do not do any fitting any m
 
 
 
-Another thing that we might want to do is to get a better idea of the features that the model uses to arrive at its prediction; in our example, what actually characterizes the best and the worst reviews. \refex{eli5} shows how this can be done in one line of code using eli5 -- a model that aims to ``\emph{e}xplain [the model] \emph{l}ike \emph{I}'m \emph{5} years old''. Here, we re-use the |pipe| we constructed earlier to provide both the vectorizer and the classifier to the eli5 -- if we would have only provided the classifier, than the feature names would have been internal identifiers (which are meaningless to us) rather than human-readable words.
+Another thing that we might want to do is to get a better idea of the
+features that the model uses to arrive at its prediction; in our
+example, what actually characterizes the best and the worst
+reviews. \refex{eli5} shows how this can be done in one line of code
+using eli5 -- a model that aims to ``\emph{e}xplain [the model]
+\emph{l}ike \emph{I}'m \emph{5} years old''. Here, we re-use the
+|pipe| we constructed earlier to provide both the vectorizer and the
+classifier to the eli5 -- if we would have only provided the
+classifier, than the feature names would have been internal
+identifiers (which are meaningless to us) rather than human-readable
+words.
 
 \pyrex[output=py, format=html, caption=Using ELI5 to get the most predictive features]{chapter12/eli5}
 
-We can also use eli5 to explain how the classifier arrived at a prediction for a specific document, by using different shades of green and red to explain how much different features contributed to the classification, and in which direction (\refex{eli5b}).
+We can also use eli5 to explain how the classifier arrived at a
+prediction for a specific document, by using different shades of green
+and red to explain how much different features contributed to the
+classification, and in which direction (\refex{eli5b}).
 
 \pyrex[output=py, format=html, caption=Using ELI5 to explain a prediction]{chapter12/eli5b}
 
