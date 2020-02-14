@@ -1,7 +1,7 @@
 \section{The bag of words and term-document matrix}
 \label{sec:dtm}
 
-Before we can analyse text using the computer, the text must be represented in a way that is understandable for the computer.
+Before you can analyse text using the computer, the text must be represented in a way that is understandable for the computer.
 
 The Document-term matrix (DTM, also called the term-document matrix or TDM) is a common numerical representation of text.
 This represents a corpus as a matrix or table, where each row represents a document, each column represents a term (word),
@@ -9,4 +9,48 @@ and the numbers in each cell show how often that word occurs in that document.
 
 \pyrex[caption=Example document-term matrix,output=r]{ch_dtm/dtm}
 
-As an example, \refex{dtm}
+As an example, \refex{dtm} shows a DTM made from two lines from the famous poem by Mary Angelou.
+The resulting matrix has two rows, one for each line; and 11 columns, one for each unique term (word).
+In the columns you see the document frequencies of each term: the word ``bird'' occurs once in each line,
+but the word ``with'' occurs only in the first line (text1) and not in the second (text2).
+
+In R, you can use the \fn{dfm} function from the \pkg{quanteda} package.
+This function can take a vector or column of texts and transforms it directly into a DTM.
+In Python, you achieve the same by creating an object of the \cls{TextVectorizer} class, which has a \fn{fit\_transform} function.
+
+\begin{feature}
+  \textbf{R: Why is it a document-feature matrix?}
+The package \pkg{quanteda} uses the term document-feature matrix because the columns can also contain
+other information instead of terms, such as word pairs, and these are collectively called \emph{features} of the text.
+
+\noindent\textbf{Python: Why fit\_transform?}
+In Python, you don't have a function that directly transforms text into a DTM.
+Instead, you create an \emph{transformer} called a CountVectorizer,
+which can then be used to 'vectorize' texts (turn it into a row of numbers)
+by counting how often each word occurs.
+This uses the \fn{fit\_transform} function which is offered by all \sklearn\ transformers.
+It `fits' the model on the training data, which in this case means learning the vocabulary.
+It can then be used to transform other data into a DTM with the exact same columns,
+which is often required for algorithms. 
+\end{feature}
+
+As you can see already in this simple example, the document-term matrix discards quite a lot of information from text.
+Specifically, it disregards the order or words in a text: `John fired Mary' and `Mary fired John' both result in the same DTM,
+even though the meaning of the sentences is quite different.
+For this reason, a DTM is often called a `bag of words', in the sense that all words in the document are simply put in a big bag
+without looking at the sentences or context of these words. 
+
+Thus, the DTM can be said to be a specific and `lossy' representation of the text, that turns out to be quite useful for certain tasks:
+The frequent occurrence of words like ``employment'', ``great'', or ``I'' might well be good indicators that a text is about the economy,
+is positive, or contains personal expressions respectively.
+As we will see in the next chapter, the DTM representation can be used for many different text analyses, from dictionaries to supervised and unsupervised machine learning.
+
+Sometimes, however, you need information that is encoded in the order of words.
+For example, in analysing conflict coverage it might be quite important to know who attack whom, not just that attacking took place.
+In the last section of this chapter we will look at some ways to create a richer matrix-representation by using word pairs.
+Although it is beyond the scope of this book,
+you can also use automatic syntactic analysis to take grammatical relations into account as well.
+As is always the case with automatic analyses, it is important to understand what information the computer is looking at,
+as the computer cannot find patterns in information that it doesn't have.
+
+
