@@ -50,6 +50,10 @@
 %% Commands
 %%%%%%%%%%%%%%%%%%%%%%%%
 
+\newcommand{\ccstablehead}[1]{\multicolumn{1}{l}{#1}}
+\newcommand{\ccstablesubhead}[1]{\ccstablehead{\gray\tiny#1}}
+
+
 % \codex[lang={py,r},output=true,code=true]{snippet_without_extension}
 % single code example in tcolorbox
 
@@ -152,11 +156,18 @@
       \includegraphics[width=\linewidth]{{snippets/#2.\codex@output.html}.pdf}
       \end{tcolorbox}
     \else\ifx\codex@format\codex@options@table
+    \begin{tcolorbox}[title=Output]
+      {\scriptsize\singlespacing\resizebox{\textwidth}{!}{%
+          \input{snippets/#2.\codex@output.table.tex}
+      }}
+      \end{tcolorbox}
+    \else\ifx\codex@format\codex@options@png
       \begin{tcolorbox}[title=Output]
-      \input{snippets/#2.\codex@output.table.tex}
+        \includegraphics[width=\linewidth]{{snippets/#2.\codex@output}.png}
       \end{tcolorbox}
     \else
       \codex[caption=\codex@langname{\codex@output} Output]{#2.\codex@output.out}
+    \fi
     \fi
     \fi
     \fi
