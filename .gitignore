@@ -126,3 +126,6 @@ venv.bak/
 
 snippets
 chapter12/aclImdbtest.tex
+test.tex
+*.idx
+*.out
