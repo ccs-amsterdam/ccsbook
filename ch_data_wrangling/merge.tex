@@ -8,7 +8,7 @@ This process is often called merging or joining data.
 
 \subsection{Equal units of analysis}
 
-\pyrex[caption=Private and Pulic Capital data (source: Piketty 2014),format=html]{ch_data_wrangling/piketty}
+\pyrex[caption=Private and Pulic Capital data (source: Piketty 2014)]{ch_data_wrangling/piketty}
 
 The easiest joins are when both data sets have the same unit of analysis,
 i.e. the rows represent the same units.
@@ -28,8 +28,10 @@ In both Python and R, all columns that occur in both data frames are by default 
 In many cases, this is the desired behaviour as both data frame may contain e.g. a \emph{Year} or \emph{RepondentID} column.
 Sometimes, however, this is not the case.
 Possibly, the key column is called differently in both data frames, e.g. \emph{respID} in one and \emph{Respondent} in the other. 
-It is also possible that the two frames contain columns with the same name, but which contain actual data that should not be used as key.
-For example, in the Piketty data shown above the key column is called \emph{Year} in both frames, but they also share the columns for the countries which are data columns.
+It is also possible that the two frames contain columns with the same name,
+but which contain actual data that should not be used as key.
+For example, in the Piketty data shown above the key column is called \emph{Year} in both frames,
+but they also share the columns for the countries which are data columns.
 
 In these cases, it is possible to explicitly specify which columns to join on (using the \verb+on=+ (Python) / \verb+by=+ argument).
 However, we would generally recommend preprocessing the data first and select and/or rename columns such that the only shared columns are the key columns.
@@ -38,6 +40,13 @@ In the case of `accidentally' shared column names, such as the country names in 
 if is also better to rename them so it is obvious which is which in the resulting data set:
 if shared columns are not used in the join, by default they get `.x' and `.y' appended to their name, which is not very meaningful.
 Even if the key column is the only shared column, however, it can still be good to explicitly select that column to make it clear to the reader (or the future you) what is happening. 
+
+%\begin{ccsexample}
+%\doublecodex{ch_data_wrangling/capital}
+%\doubleoutput{ch_data_wrangling/capital}
+%\caption{Merging private and public data for France}
+%\end{ccsexample}
+
 
 \pyrex[caption=Merging private and public data for France]{ch_data_wrangling/capital}
 
@@ -108,7 +117,7 @@ Democratic primary.
 Conversely, the \texttt{counties} data set shows a large number of facts about these counties,
 such as population, change in population, gender and education distribution, etc. 
 
-\pyrex[caption=2016 Primary results and county-level metadata,format=html]{ch_data_wrangling/primary}
+\pyrex[caption=2016 Primary results and county-level metadata]{ch_data_wrangling/primary}
 
 Suppose we hypothesize that Hillary would do relatively well in areas with more black voters.
 We would then need to combine the county level data about ethnic composition with the country $\times$ candidate
