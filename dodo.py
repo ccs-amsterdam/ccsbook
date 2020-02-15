@@ -14,7 +14,7 @@ def task_process():
             'name': fn.relative_to(Path.cwd()),
             'file_dep': [fn],
             'task_dep':['install_kernel'],
-            'actions': [f"{PYTHON} jupro.py {fn}"],
+            'actions': [f"{PYTHON} -m jupro {fn}"],
             'verbosity': 2,
         }
         
@@ -65,6 +65,7 @@ def task_install_env():
         'targets': ['env'],
         'actions': ["python3 -m venv env",
                     "env/bin/pip install -U pip wheel",
+                    "env/bin/pip install -U jupro",
                     f"env/bin/pip install -r {requirements}",
                     ],
         'verbosity': 2

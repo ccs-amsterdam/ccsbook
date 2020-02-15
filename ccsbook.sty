@@ -24,6 +24,8 @@
 \end{minipage}}}
 
 
+\tcbset{boxrule=0pt,size=small,frame hidden}
+\tcbset{colback=white,colframe=white!75!black}
 
 \lstnewenvironment{terminal}{\lstset{basicstyle=\scriptsize\ttfamily,
 		columns=flexible,
@@ -32,3 +34,16 @@
 		%stepsize=1,
 		numberstyle=\tiny,
 		backgroundcolor=\color[rgb]{.7,.7,.7}}}{}
+
+
+
+
+% Define the NN counters so includeonly works...
+\newcounter{nn@layerindex@counter}
+\newcounter{nn@lastlayerstart@counter}
+\newcounter{nn@thislayerstart@counter}
+\newcounter{nn@lastlayercount@counter}
+\newcounter{nn@thislayercount@counter}
+\newcounter{nn@lastlayerindex@counter}
+\newcounter{nn@thislayerindex@counter}
+
