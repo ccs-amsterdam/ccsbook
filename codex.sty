@@ -107,20 +107,38 @@
 \end{tcbraster}
 }
 
-\newcommand{\codexoutputpng}[2][Output]{
-\begin{tcolorbox}[title=#1]
+\newcommand{\codexoutputpng}[2][]{
+  \def\codex@tmp{#1}
+  \ifx\codex@tmp\empty
+      \def\codex@tmp{Output}
+      \else
+      \def\codex@tmp{Output: #1}    
+    \fi  
+\begin{tcolorbox}[title=\codex@tmp]
     \includegraphics[width=\linewidth]{{snippets/#2}.png}
 \end{tcolorbox}
 } 
 
-\newcommand{\codexoutputhtml}[2][Output]{
-\begin{tcolorbox}[title=#1]
+\newcommand{\codexoutputhtml}[2][]{
+  \def\codex@tmp{#1}
+  \ifx\codex@tmp\empty
+      \def\codex@tmp{Output}
+      \else
+      \def\codex@tmp{Output: #1}    
+    \fi  
+\begin{tcolorbox}[title=\codex@tmp]
     \includegraphics[width=\linewidth]{{snippets/#2.html}.pdf}
 \end{tcolorbox}
 } 
 
-\newcommand{\codexoutputtable}[2][Output]{
-  \begin{tcolorbox}[title=#1]
+\newcommand{\codexoutputtable}[2][]{
+  \def\codex@tmp{#1}
+  \ifx\codex@tmp\empty
+      \def\codex@tmp{Output}
+      \else
+      \def\codex@tmp{Output: #1}    
+    \fi  
+  \begin{tcolorbox}[title=\codex@tmp]
     {\scriptsize\singlespacing
       \input{snippets/#2.table.tex}
     }
@@ -134,11 +152,6 @@
 \newcommand{\pyrex}[2][]{{%
   \setkeys{codex}{caption,output,input,format,outputtitle,#1}%
   \begin{ccsexample}
-    \ifx\codex@outputtitle\empty
-      \def\codex@outputtitle@expanded{Output}
-      \else
-      \def\codex@outputtitle@expanded{Output: \codex@outputtitle}    
-    \fi  
     % Source code block (none, both, r/py)
     \ifx\codex@input\codex@options@none
       % do nothing  
@@ -159,16 +172,16 @@
         \doubleoutput{#2}
       \else
         \ifx\codex@format\codex@options@html
-          \codexoutputhtml[\codex@outputtitle@expanded]{#2.\codex@output}
+          \codexoutputhtml[\codex@outputtitle]{#2.\codex@output}
         \fi
         \ifx\codex@format\codex@options@table
-          \codexoutputtable[\codex@outputtitle@expanded]{#2.\codex@output}
+          \codexoutputtable[\codex@outputtitle]{#2.\codex@output}
         \fi
         \ifx\codex@format\codex@options@png
-          \codexoutputpng[\codex@outputtitle@expanded]{#2.\codex@output}
+          \codexoutputpng[\codex@outputtitle]{#2.\codex@output}
         \fi
         \ifx\codex@format\codex@options@plain
-          \codex[caption=\codex@outputtitle@expanded]{#2.\codex@output.out}
+          \codex[caption=\codex@outputtitle]{#2.\codex@output.out}
         \fi
       \fi
     \fi
