@@ -29,7 +29,17 @@ good''. Also, all words are either positive or negative, while
 dictionary-based sentiment analysis packages like \cite{vader},
 \cite{sentistrength} include such functionality. Yet, as we will
 discuss in Section~\ref{sec:supervised}, also these off-the-shelf
-packages perform very poorly in many sentiment analysis tasks.
+packages perform very poorly in many sentiment analysis tasks,
+especially outside of the domains they were developed for.
+Dictionary-based sentiment analysis has been shown to be problematic
+when analyzing news content \citep[e.g.][]{Gonzalez-Bailon2015,
+  Boukes2019}. They are problematic when accuracy on the sentence
+level is imporant, but may be satisfactory with longer texts for
+comparatively easy tasks such as movie review classification
+\citep{Reagon2017}, where there is clear ground truth data and the
+genre convention implies that the whole text is evaluative and
+evaluates one object (the film).
+
 
 Still, there are many use cases where dictionary approaches work very
 well. Because your list of words can contain anything, not just
