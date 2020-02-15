@@ -48,7 +48,11 @@ def task_tex():
             'basename': str(outf.relative_to(Path.cwd())),
             'file_dep': [fn] + list(tex_deps(fn)),
             'targets': [outf],
-            'actions': [f"pdflatex {fn}"],
+            'actions': [f"pdflatex {fn.stem}",
+                        f"bibtex {fn.stem}",
+                        f"makeindex {fn.stem}",
+                        f"pdflatex {fn.stem}",
+            ],
             'verbosity': 2,
             }
         
@@ -65,7 +69,7 @@ def task_install_env():
         'targets': ['env'],
         'actions': ["python3 -m venv env",
                     "env/bin/pip install -U pip wheel",
-                    "env/bin/pip install -U jupro",
+                    "env/bin/pip install -U jupro jupyter",
                     f"env/bin/pip install -r {requirements}",
                     ],
         'verbosity': 2
