@@ -69,10 +69,12 @@
 \def\codex@options@plain{plain}
 
 \define@key{codex}{caption}[]{\def\codex@caption{#1}}
+\define@key{codex}{outputtitle}[]{\def\codex@outputtitle{#1}}
 \define@choicekey{codex}{input}[\codex@input]{r,py,both,none}[both]{}
 \define@choicekey{codex}{output}[\codex@output]{r,py,both,none}[both]{}
 \define@choicekey{codex}{format}[\codex@format]{plain,html,table,png}[plain]{}
 \presetkeys{codex}{caption}{caption=}
+\presetkeys{codex}{outputtitle}{outputtitle=Output}
 
 % \codex[caption=]{snippet.ext}
 % single code listing in a tcolor box
@@ -105,22 +107,22 @@
 \end{tcbraster}
 }
 
-\newcommand{\codexoutputpng}[1]{
-\begin{tcolorbox}[title=Output]
-    \includegraphics[width=\linewidth]{{snippets/#1}.png}
+\newcommand{\codexoutputpng}[2][Output]{
+\begin{tcolorbox}[title=#1]
+    \includegraphics[width=\linewidth]{{snippets/#2}.png}
 \end{tcolorbox}
 } 
 
-\newcommand{\codexoutputhtml}[1]{
-\begin{tcolorbox}[title=Output]
-    \includegraphics[width=\linewidth]{{snippets/#1.html}.pdf}
+\newcommand{\codexoutputhtml}[2][Output]{
+\begin{tcolorbox}[title=#1]
+    \includegraphics[width=\linewidth]{{snippets/#2.html}.pdf}
 \end{tcolorbox}
 } 
 
-\newcommand{\codexoutputtable}[1]{
-  \begin{tcolorbox}[title=Output]
+\newcommand{\codexoutputtable}[2][Output]{
+  \begin{tcolorbox}[title=#1]
     {\scriptsize\singlespacing
-      \input{snippets/#1.table.tex}
+      \input{snippets/#2.table.tex}
     }
   \end{tcolorbox}
 } 
@@ -130,8 +132,13 @@
 % \rpyex[output={both,r,py,none}]
 % 'example' float with (multiple) code examples
 \newcommand{\pyrex}[2][]{{%
-  \setkeys{codex}{caption,output,input,format,#1}%
+  \setkeys{codex}{caption,output,input,format,outputtitle,#1}%
   \begin{ccsexample}
+    \ifx\codex@outputtitle\empty
+      \def\codex@outputtitle@expanded{Output}
+      \else
+      \def\codex@outputtitle@expanded{Output: \codex@outputtitle}    
+    \fi  
     % Source code block (none, both, r/py)
     \ifx\codex@input\codex@options@none
       % do nothing  
@@ -152,16 +159,16 @@
         \doubleoutput{#2}
       \else
         \ifx\codex@format\codex@options@html
-          \codexoutputhtml{#2.\codex@output}
+          \codexoutputhtml[\codex@outputtitle@expanded]{#2.\codex@output}
         \fi
         \ifx\codex@format\codex@options@table
-          \codexoutputtable{#2.\codex@output}
+          \codexoutputtable[\codex@outputtitle@expanded]{#2.\codex@output}
         \fi
         \ifx\codex@format\codex@options@png
-          \codexoutputpng{#2.\codex@output}
+          \codexoutputpng[\codex@outputtitle@expanded]{#2.\codex@output}
         \fi
         \ifx\codex@format\codex@options@plain
-          \codex[caption=\codex@langname{\codex@output} Output]{#2.\codex@output.out}
+          \codex[caption=\codex@outputtitle@expanded]{#2.\codex@output.out}
         \fi
       \fi
     \fi
