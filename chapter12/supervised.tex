@@ -225,8 +225,8 @@ of code, we manage to compare four different models, while we already
 needed 15 lines (in \refex{imdbbaselne}) to evaluate only one model.
 
 
-\codex{chapter12/basiccomparisons.py}
-\codex{chapter12/basiccomparisons.py.out}
+\pyrex[input=py, output=py, caption={An example of a custom function to give a brief overview of the performance of four simple vectorizer-classifier combinations.}]{chapter12/basiccomparisons}
+
 
 The output of this little example gives us already quite a bit of
 insight of how to tackle our specific classification tasks: First, we
@@ -260,7 +260,7 @@ pipe. \refex{chapter12/basicpipe} shows how the loop in
 \refex{chapter12/basiccomparisons} can be re-written using pipes (the
 result stays the same).
 
-\codex{chapter12/basicpipe.py}
+\pyrex[input=py, output=none, caption={Instead of fitting vectorizer and classifier separately, they can be combined in a pipeline.}]{chapter12/basicpipe}
 
 Such a pipeline lends itself very well for performing a
 gridsearch. \refex{gridsearchlogreg} gives you an example.  With
@@ -281,9 +281,9 @@ The gridsearch procedure will then estimate all combinations of all
 values, using cross-validation (see Section~\ref{sec:validation}). In
 our example, we have $2 \cdot 2 \cdot 2 \cdot 2 \cdot 3 = 24$
 different models, and $24$ models $\cdot 5$ folds $= 120$ models to
-estimate. Hence, it can take you some time to run the code
-\codex{chapter12/gridsearchlogreg.py}
-\codex{chapter12/gridsearchlogreg.py.out}
+estimate. Hence, it can take you some time to run the code.
+
+\pyrex[input=py, output=py, caption={A gridsearch to find the best hyperparameters for a pipeline consisting of a vectorizer and a classifier. Note that we can tune any parameter that either the vectorizer or the classifier accepts as an input, not only the four hyperparameters we chose in this example.}]{chapter12/gridsearchlogreg}
 
 We see that we could further improve our model to precision and recall
 values of .90, by excluding extremely infrequent and extremely
@@ -310,8 +310,7 @@ package we chose is a particularly bad one (on the contrary, it is
 actually comparatively good), but because of the inherent limitations
 of dictionary-based sentiment analysis.
 
-\codex{chapter12/vader.py}
-\codex{chapter12/vader.py.out}
+\pyrex[input=py, output=py, caption={For the sake of comparison, we calculate how an off-the-shelf sentiment analysis package would have performed in this task}]{chapter12/vader}
 
 We need to keep in mind, though, that with this dataset, we chose one
 of the easiest sentiment analysis tasks: a set of long, rather formal
