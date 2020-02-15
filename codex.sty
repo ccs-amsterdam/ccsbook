@@ -144,23 +144,25 @@
     % Output block (none, both, single)
     \ifx\codex@output\codex@options@none
       % do nothing
-    \else\ifx\codex@output\codex@options@both
-      \ifx\codex@format\codex@options@plain\else  % sorry, using if/else instead of not because I don't speak latex very good
-        \PackageError{codex}{Specify output (py or r) when using format=\codex@format}{Custom formats are only supported for single outputs}
-      \fi
-      \doubleoutput{#2}
     \else
-      \ifx\codex@format\codex@options@html
-        \codexoutputhtml{#2.\codex@output}
-      \fi
-      \ifx\codex@format\codex@options@table
-        \codexoutputtable{#2.\codex@output}
-      \fi
-      \ifx\codex@format\codex@options@png
-        \codexoutputpng{#2.\codex@output}
-      \fi
-      \ifx\codex@format\codex@options@plain
-        \codex[caption=\codex@langname{\codex@output} Output]{#2.\codex@output.out}
+      \ifx\codex@output\codex@options@both
+        \ifx\codex@format\codex@options@plain\else  % sorry, using if/else instead of not because I don't speak latex very good
+          \PackageError{codex}{Specify output (py or r) when using format=\codex@format}{Custom formats are only supported for single outputs}
+        \fi
+        \doubleoutput{#2}
+      \else
+        \ifx\codex@format\codex@options@html
+          \codexoutputhtml{#2.\codex@output}
+        \fi
+        \ifx\codex@format\codex@options@table
+          \codexoutputtable{#2.\codex@output}
+        \fi
+        \ifx\codex@format\codex@options@png
+          \codexoutputpng{#2.\codex@output}
+        \fi
+        \ifx\codex@format\codex@options@plain
+          \codex[caption=\codex@langname{\codex@output} Output]{#2.\codex@output.out}
+        \fi
       \fi
     \fi
     % caption and label (set to ex:snippetname)
