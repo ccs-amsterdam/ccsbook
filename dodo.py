@@ -69,7 +69,7 @@ def task_install_env():
         'targets': ['env'],
         'actions': ["python3 -m venv env",
                     "env/bin/pip install -U pip wheel",
-                    "env/bin/pip install -U jupro",
+                    "env/bin/pip install -U jupro jupyter",
                     f"env/bin/pip install -r {requirements}",
                     ],
         'verbosity': 2
