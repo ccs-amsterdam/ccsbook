@@ -7,28 +7,29 @@ As a computational communication scientist you will come across with many source
 
 There is not a rule of thumb that can guide you in this preprocessing stage, and it is highly likely that you will have to test different combination of steps and assess what are the best options. For example, in some cases keeping capital letters within a chat conversation or a news comment might be valuable to detect the tone of the message, but in more formal speeches transforming the whole text to lowercases would help to normalize the content. However, it is true that there some typical challenges to reduce the noise from the text.
 
-The first thing to keep in mind is that once you load any text on R or Python you usually store this content as a \emph{character} or \emph{string} object (or you may also think of \emph{lists} or \emph{dictionaries}, but they will have strings inside anyway), which means that basic operations and conditions of this data type apply, such as indexing or slicing to access individual characters or substrings (see \refsec{datatypes}). In fact, base strings operations are very powerful to clean your text and eliminate a big amount of noise of it.  Table~\ref{tab:string_operations} summarises some useful operations on strings in R and Python that will help you in this stage.   
+The first thing to keep in mind is that once you load any text on R or Python you usually store this content as a \emph{character} or \emph{string} object (or you may also think of \emph{lists} or \emph{dictionaries}, but they will have strings inside anyway), which means that basic operations and conditions of this data type apply, such as indexing or slicing to access individual characters or substrings (see \refsec{datatypes}). In fact, base strings operations are very powerful to clean your text and eliminate a big amount of noise of it.  Table~\ref{tab:stringoperations} summarises some useful operations on strings in R and Python that will help you in this stage.   
 
-\begin{table}[]
-\caption{Useful strings operations in R and Python to clean noise \label{tab:string_operations}}{%
-\begin{tabular}{@{}llll@{}}
-\toprule
+\begin{table}
+  \caption{\label{tab:stringoperations}Useful strings operations in R and Python to clean noise}{
+  \begin{tabularx}{\textwidth}{lllll}
+    \toprule
 String operation      & R   & Python\\ \midrule
 Count characters      & nchar(string) & len(string)  \\
 Get a substring       & substr(string, start=n1, stop=n2) & string[n1:n2]            \\
 Split the string into several strings   & strsplit(string, split) & split(string, split)             \\ 
 Convert to lowercase  & tolower(string) & string.lower     \\ 
 Convert to uppercase  & toupper(string) & string.upper     \\ 
-Find and replace      & gsub("substring1","substring2",string) & string.replace('substring1','substring2') \\ \bottomrule
-\end{tabular}}{}
+Find and replace      & gsub("substring1","substring2",string) & string.replace('substring1','substring2') \\ 
+    \bottomrule
+  \end{tabularx}}{}
 \end{table}
 
 Let us apply some of these functions\/methods to a simple Wikipedia text that contains HTML tags or boilerplate, punctuation and natural upper/lower case letters. Using base function \fn{gsub} in R and \fn{replace} in Python we can remove strings containing specific expressions such as \texttt{<p>} or \texttt{</b>} and include an empty space instead. We can use this same method to eliminate punctuation taking as a reference a pre-defined list of signs (\texttt{:punct:} in base R or the object \texttt{punctuation} from the library \pkg{string} in Python). In the case of converting letters from upper to lower case, we use the base R function \fn{tolower} and the string method \fn{lower} in Python. To remove unnecessary double spaces we apply the base R function \fn{trimws} and method \fn{join} in Python. \refex{clean} shows how to conduct this cleaning process.
 
 \pyrex[output=both,caption=Cleaning text with base functions]{chapter10/clean}
 
-It is good news that we have some extra packages that facilitate this initial stage and clean boilerplate. For instance, you can think of \pkg{stringi} in R (recommended by \citet{welbers2017text} as a better option than built-it functions) or \pkg{Beautiful Soup} in Python. \refex{clean_extra} shows how to implement these packages to remove html tags.
+It is good news that we have some extra packages that facilitate this initial stage and clean boilerplate. For instance, you can think of \pkg{stringi} in R (recommended by \citet{welbers2017text} as a better option than built-it functions) or \pkg{Beautiful Soup} in Python. \refex{cleanextra} shows how to implement these packages to remove html tags.
 
-\pyrex[output=both,caption=Cleaning text with stringi and Beautiful Soup]{chapter10/clean_extra}
+\pyrex[output=both,caption=Cleaning text with stringi and Beautiful Soup]{chapter10/cleanextra}
 
-As you can notice in the R example, the package \pkg{stringi} removed the tags using the function \fn{stri\_replace\_all} and a \emph{regular expression} (which are very useful in this cleaning stage and that we will explain in the next section). We also eliminated the surrounding white spaces with the function \fn{stri\_trim}. In the case of the Python example, the library \pkg{BeautifulSoup} helps you to \emph{parse} the text with the same-name function \fn{BeautifulSoup} and the extract the text without the html tags using the function \fn{get\_text}.
+As you can notice in the R example, the package \pkg{stringi} removed the tags using the function \fn{stri\_replace\_all} and a \emph{regular expression} (which are very useful in this cleaning stage and that we will explain in the next section). We also eliminated the surrounding white spaces with the function \fn{stri\_trim}. In the case of the Python example, the library \pkg{BeautifulSoup} helps you to \emph{parse} the text with the same-name function \fn{BeautifulSoup} and then extract the text without the html tags using the function \fn{get\_text}.	

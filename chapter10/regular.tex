@@ -3,7 +3,48 @@
 
 A regular expression or \emph{regex} is a powerful language to locate strings that conform to a given pattern. For instance, we can extract usernames or email-addresses from text, or normalize spelling variations and improve the cleaning methods covered in the previous section. Specifically, regular expressions are a sequence of characters that we can use to design a pattern and then use this pattern to \emph{find} strings (identify or extract) and also \emph{replace} those strings by new ones. 
 
-We will show how you can use regexes preprocess text. The good thing is that regular expression syntax are kind of similar in R and Python and once you learn how to write a pattern in one language it is easy to do the same in the other.  However they are not identical!\footnote{Even it is out of the scope of this book, you can trace the specific standards of each language and its different versions. You will come across with some standards of the Portable Operating System Interface (POSIX), such as the Basic Regular Expressions (BRE) or Extended Regular Expressions (ERE), or also with the Perl Compatible Regular Expressions (PCRE)}, and you might choose which standard you will use. In the case of the Python \fn{re} module regexes match operations similar to Perl, but in the case of R \fn{grep} function you will have set a parameter (\verb|perl = TRUE|) to work with Perl compatible regular expressions.	
+We will show how you can use regexes preprocess text. The good thing is that regular expression syntax can be similar in R and Python and once you learn how to write a pattern in one language it is easy to do the same in the other.  However they are not identical! Even it is out of the scope of this book, you can trace the specific standards of each language and its different versions. You will come across with some standards of the Portable Operating System Interface (POSIX), such as the Basic Regular Expressions (BRE) or Extended Regular Expressions (ERE), or also with the Perl Compatible Regular Expressions (PCRE).  By default R function \fn{grep} uses ERE but you can set a parameter (\verb|perl = TRUE|) to work with PCRE, and in the case of Python \fn{re} module regexes match operations similar to PCRE as a default.
+
+In Table~\ref{tab:regex} you will find some basic regular expression syntax that will work fine in R and Python no matter the specific standard you are using.
+
+\begin{table}
+  \caption{\label{tab:regex}Some regular expression syntax in R and Python}{
+  \begin{tabularx}{\textwidth}{lllll}
+    \toprule
+Regular expression      & R   & Python\\ \midrule
+Match the beginning of the string	& \verb+^+ & \verb+^+  \\
+Match the ending	 of the string   & \verb+$+ & \verb+$+ \\
+Match all characters except for new lines   & \verb+.+ & \verb+.+ 	\\ 
+Escape special character  & \verb+\+ & \verb+\+     \\ 
+Match either first or second option  & \verb+|+ & \verb+|+     \\ 
+Match any occurrence of a given preceding string & \verb+*+ & \verb+*+ \\ 
+Match at least one occurrence of a given preceding string & \verb|+| & \verb|+| \\ 
+Match either zero or one occurrence of a given preceding string & \verb|?| & \verb|?| \\ 
+Match any digit from 0 to 9	& \verb+\d+ & \verb+\d+  \\
+Match nondigits	& \verb+\D+ & \verb+\D+  \\
+Match white spaces	& \verb+\s+ & \verb+\s	+  \\
+Match non white spaces	& \verb+\S+ & \verb+\S	+  \\
+Match word characters	 & \verb+\w+ & \verb+\w+  \\
+Match nonword characters	& \verb+\W+ & \verb+\W+  \\
+Match tab	& \verb+\t+ & \verb+\t	+  \\
+Match new line	& \verb+\n+ & \verb+\n		+  \\
+    \bottomrule
+  \end{tabularx}}{}
+\end{table}
 
 
-Find a patter and replace 
+As you may imagine, control characters (\verb!+ ? . * ^ $ ( ) [ ] { } | \!) do not match themselves, but you can skip this limitation by adding a backslash behind it.
+
+Let us now make a simple example to remove again HTML tags using regular expressions. Think of a combination of \verb+.+, \verb+*+ and \verb+?+, and put that rule into a known patter (\verb+<+ ... \verb+>+) of building tags in HTML, and you will get a basic syntax to match all characters with any occurrence (even 0 or 1) within the character \verb+<+ and the character \verb+>+. We already used this rule in the last section with the R package \fn{stringi}, but in \refex{regex} you can see how we deploy a find and replace task with the base R function \fn{gsub} and the method \fn{sub} of Python \fn{re} module.		
+
+\pyrex[output=both,caption=Using regular expressions to remove hltm tags]{chapter10/regex}
+
+These regular expression can also help us to normalize our text to avoid misspellings or unify different spellings. Think for example of the word \emph{acknowledge}, which is one of the most common misspelled terms in English with non-existing terms such as \emph{acknowlege} or \emph{aknowledge}. Or you may also think of words with different correct spellings, such as \emph{color} or \emph{favorite} in the US and \emph{colour} or \emph{favourite} in the UK, that you need to unify in order to focus your analysis on the same concept they represent. In \refex{regex2} you will see how to conduct this tasks using \verb+.+, \verb|+|, \verb+?+ and also \verb+|+.
+
+\pyrex[output=both,caption=Using regular expressions to unify spellings]{chapter10/regex2}
+
+You can also use this approach to extract strings of the text based on a pattern. Imagine for example you want to get the Twitter usernames included in the object \texttt{tweets} and you know its structure a priori: they all begin with the character \texttt{@}. \refex{regex3} show you how you can deploy this task using regexes. In the case of R you can first generate a list of words (with \fn{unlist} and \fn{strsplit}) and then apply the regular expression rules (obtain the strings with \texttt{@}) with functions \fn{gsub} and \fn{grep}. In the Python example, we do not initially convert the complete string to a list of words, but use the \fn{compile} method of \fn{re} with the regex syntax and then the function \fn{findall} to get the list of usernames.
+
+\pyrex[output=both,caption=Using regular expressions to extract usernames of tweets]{chapter10/regex3}	
+
+There are infinite combinations of regular expression syntaxes and base functions in R and Python that can help you in many tasks to clean your texts from noise. Once you get used to this jargon it will be easy to apply it to different kinds of operations and make your life easier.
