@@ -66,6 +66,7 @@
 \def\codex@options@html{html}
 \def\codex@options@table{table}
 \def\codex@options@png{png}
+\def\codex@options@plain{plain}
 
 \define@key{codex}{caption}[]{\def\codex@caption{#1}}
 \define@choicekey{codex}{input}[\codex@input]{r,py,both,none}[both]{}
@@ -83,10 +84,12 @@
     \StrCount{#2}{.}[\nbmatch]%
     \StrCut[\nbmatch]{#2}{.}\tmp\myext%
     \lstinputlisting[style=\myext]{#2}
-
-
 \end{tcolorbox}}%
 }
+
+% Functions for outputting parts of example boxes
+% All functions take the snippetname as argument (so without the snippets/ path)
+% Except for doublecodex, the .py or .r should be included
 
 \newcommand{\doublecodex}[1]{
 \begin{tcbraster}[raster columns=2,raster equal height=rows,raster valign=top]
@@ -95,21 +98,32 @@
 \end{tcbraster}
 }
 
-
 \newcommand{\doubleoutput}[1]{
 \begin{tcbraster}[raster columns=2,raster equal height=rows,raster valign=top]
-   \codex[caption=Python Output]{#1.py}
-   \codex[caption=R Output]{#1.r}
+   \codex[caption=Python Output]{#1.py.out}
+   \codex[caption=R Output]{#1.r.out}
 \end{tcbraster}
 }
 
 \newcommand{\codexoutputpng}[1]{
-      \begin{tcolorbox}[title=Output]
-      % note: need the {.html}.pdf notation because latex is stoopid
-      \includegraphics[width=\linewidth]{{snippets/#1}.png}
-      \end{tcolorbox}
-}
-   
+\begin{tcolorbox}[title=Output]
+    \includegraphics[width=\linewidth]{{snippets/#1}.png}
+\end{tcolorbox}
+} 
+
+\newcommand{\codexoutputhtml}[1]{
+\begin{tcolorbox}[title=Output]
+    \includegraphics[width=\linewidth]{{snippets/#1.html}.pdf}
+\end{tcolorbox}
+} 
+
+\newcommand{\codexoutputtable}[1]{
+  \begin{tcolorbox}[title=Output]
+    {\scriptsize\singlespacing
+      \input{snippets/#1.table.tex}
+    }
+  \end{tcolorbox}
+} 
 
 \def\codex@langname#1{\ifx#1\codex@options@py{Python}\else{R}\fi}
 
@@ -118,64 +132,42 @@
 \newcommand{\pyrex}[2][]{{%
   \setkeys{codex}{caption,output,input,format,#1}%
   \begin{ccsexample}
-   \ifx\codex@input\codex@options@none
-  \else
-  \ifx\codex@input\codex@options@both
-  \begin{tcbraster}[raster columns=2,raster equal height=rows,raster valign=top]
-    \codex[caption=Python Code]{#2.py}
-    \codex[caption=R Code]{#2.r}
-  \end{tcbraster}
-  \else
+    % Source code block (none, both, r/py)
+    \ifx\codex@input\codex@options@none
+      % do nothing  
+    \else\ifx\codex@input\codex@options@both
+      \doublecodex{#2}
+    \else
       \codex[caption=\codex@langname{\codex@input} Code]{#2.\codex@input}
+    \fi\fi
 
-   \fi\fi
-  
-  \ifx\codex@output\codex@options@none
-  \else
-    \ifx\codex@output\codex@options@both
-    \begin{tcbraster}[raster columns=2,raster equal height=rows,raster valign=top]
-
-      \ifx\codex@format\codex@options@html
-        \begin{tcolorbox}[title=Python Output]
-        % note: need the {.html}.pdf notation because latex is stoopid
-          \includegraphics[width=\linewidth]{{snippets/#2.py.html}.pdf}
-        \end{tcolorbox}
-        \begin{tcolorbox}[title=R Output]
-        % note: need the {.html}.pdf notation because latex is stoopid
-          \includegraphics[width=\linewidth]{{snippets/#2.r.html}.pdf}
-        \end{tcolorbox}
-      \else
-        \codex[caption=Python Output]{#2.py.out}
-        \codex[caption=R Output]{#2.r.out}
+    % Output block (none, both, single)
+    \ifx\codex@output\codex@options@none
+      % do nothing
+    \else\ifx\codex@output\codex@options@both
+      \ifx\codex@format\codex@options@plain\else  % sorry, using if/else instead of not because I don't speak latex very good
+        \PackageError{codex}{Specify output (py or r) when using format=\codex@format}{Custom formats are only supported for single outputs}
       \fi
-    \end{tcbraster}
+      \doubleoutput{#2}
     \else
-    \ifx\codex@format\codex@options@html
-      \begin{tcolorbox}[title=Output]
-      % note: need the {.html}.pdf notation because latex is stoopid
-      \includegraphics[width=\linewidth]{{snippets/#2.\codex@output.html}.pdf}
-      \end{tcolorbox}
-    \else\ifx\codex@format\codex@options@table
-    \begin{tcolorbox}[title=Output]
-      {\scriptsize\singlespacing
-          \input{snippets/#2.\codex@output.table.tex}
-      }
-      \end{tcolorbox}
-    \else\ifx\codex@format\codex@options@png
-      \begin{tcolorbox}[title=Output]
-        \includegraphics[width=\linewidth]{{snippets/#2.\codex@output}.png}
-      \end{tcolorbox}
-    \else
-      \codex[caption=\codex@langname{\codex@output} Output]{#2.\codex@output.out}
+      \ifx\codex@format\codex@options@html
+        \codexoutputhtml{#2.\codex@output}
+      \fi
+      \ifx\codex@format\codex@options@table
+        \codexoutputtable{#2.\codex@output}
+      \fi
+      \ifx\codex@format\codex@options@png
+        \codexoutputpng{#2.\codex@output}
+      \fi
+      \ifx\codex@format\codex@options@plain
+        \codex[caption=\codex@langname{\codex@output} Output]{#2.\codex@output.out}
+      \fi
     \fi
-    \fi
-    \fi
-    \fi
-    \fi
-  \caption{\ifx\codex@caption\empty #2\else \codex@caption\fi}
-    \StrCount{#2}{/}[\nbmatch]%
-    \StrCut[\nbmatch]{#2}{/}\tmptmp\snippetlabel%
-    \label{ex:\snippetlabel}
+    % caption and label (set to ex:snippetname)
+    \caption{\ifx\codex@caption\empty #2\else \codex@caption\fi}
+      \StrCount{#2}{/}[\nbmatch]%
+      \StrCut[\nbmatch]{#2}{/}\tmptmp\snippetlabel%
+      \label{ex:\snippetlabel}
   \end{ccsexample}
 }}
 
