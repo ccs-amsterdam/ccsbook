@@ -8,7 +8,16 @@ This process is often called merging or joining data.
 
 \subsection{Equal units of analysis}
 
-\pyrex[caption=Private and Pulic Capital data (source: Piketty 2014)]{ch_data_wrangling/piketty}
+%\pyrex[caption=Private and Pulic Capital data (source: Piketty 2014)]{ch_data_wrangling/piketty}
+
+\begin{ccsexample}
+  \doublecodex{ch_data_wrangling/piketty_1}
+  \codexoutputtable{ch_data_wrangling/piketty_1.r}
+  \doublecodex{ch_data_wrangling/piketty_2}
+  \codexoutputtable{ch_data_wrangling/piketty_2.r}
+\caption{Private and Pulic Capital data (source: Piketty 2014)}\label{ex:piketty}
+\end{ccsexample}
+
 
 The easiest joins are when both data sets have the same unit of analysis,
 i.e. the rows represent the same units.
@@ -41,14 +50,16 @@ if is also better to rename them so it is obvious which is which in the resultin
 if shared columns are not used in the join, by default they get `.x' and `.y' appended to their name, which is not very meaningful.
 Even if the key column is the only shared column, however, it can still be good to explicitly select that column to make it clear to the reader (or the future you) what is happening. 
 
-%\begin{ccsexample}
-%\doublecodex{ch_data_wrangling/capital}
-%\doubleoutput{ch_data_wrangling/capital}
-%\caption{Merging private and public data for France}
-%\end{ccsexample}
+\begin{ccsexample}
+\doublecodex{ch_data_wrangling/capital_1}
+\codexoutputtable{ch_data_wrangling/capital_1.r}
+\doublecodex{ch_data_wrangling/capital_2}
+\doubleoutput{ch_data_wrangling/capital_2}
+\caption{Merging private and public data for France}
+\end{ccsexample}
 
 
-\pyrex[caption=Merging private and public data for France]{ch_data_wrangling/capital}
+%\pyrex[caption=Merging private and public data for France]{ch_data_wrangling/capital}
 
 This is shown in \refex{capital}.
 The first two lines select only the \emph{Year} and \emph{France} columns, and rename the \emph{France} column to indicate whether it is the private or public data.
