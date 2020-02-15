@@ -7,31 +7,34 @@ We will show how you can use regexes preprocess text. The good thing is that reg
 
 In Table~\ref{tab:regex} you will find some basic regular expression syntax that will work fine in R and Python no matter the specific standard you are using.
 
+
+\newcommand{\bs}[1]{\texttt{\textbackslash#1}}
+
 \begin{table}
   \caption{\label{tab:regex}Some regular expression syntax in R and Python}{
   \begin{tabularx}{\textwidth}{lllll}
     \toprule
-Regular expression      & R   & Python\\ \midrule
-Match the beginning of the string	& \texttt{^} & \texttt{^}  \\
-Match the ending	 of the string   & \texttt{\$} & \texttt{\$} 
+    Regular expression      & R   & Python  \\
+    \midrule
+Match the beginning of the string	& \texttt{\^} & \texttt{\^}  \\
+Match the ending	 of the string   & \texttt{\$} & \texttt{\$} \\
 Match all characters except for new lines   & \texttt{.} & \texttt{.} 	\\ 
-Escape special character  & \texttt{\\} & \texttt{\\}     \\ 
+Escape special character  & \texttt{\textbackslash} & \texttt{\textbackslash}     \\ 
 Match either first or second option  & \texttt{|} & \texttt{|}    \\ 
 Match any occurrence of a given preceding string & \texttt{*} & \texttt{*} \\ 
 Match at least one occurrence of a given preceding string & \texttt{+} & \texttt{+} \\ 
 Match either zero or one occurrence of a given preceding string & \texttt{?} & \texttt{?} \\ 
-Match any digit from 0 to 9	& \texttt{\\d} & \texttt{\\d}  \\
-Match nondigits	& \texttt{\\D} & \texttt{\\D}  \\
-Match white spaces	& \texttt{\\s} & \texttt{\\s}	+  \\
-Match non white spaces	& \texttt{\\S} & \texttt{\\S}	+  \\
-Match word characters	 & \texttt{\\w} & \texttt{\\w}  \\
-Match nonword characters	& \texttt{\\W} & \texttt{\\W}  \\
-Match tab	& \texttt{\\t} & \texttt{\\t}	+  \\
-Match new line	& \texttt{\\n} & \texttt{\\n}		+  \\
+Match any digit from 0 to 9	& \bs{d} & \bs{d}  \\
+Match nondigits	& \bs{D} & \bs{D}  \\
+Match white spaces	& \bs{s} & \bs{s}	  \\
+Match non white spaces	& \bs{S} & \bs{S}	  \\
+Match word characters	 & \bs{w} & \bs{w}  \\
+Match nonword characters	& \bs{W} & \bs{W}  \\
+Match tab	& \bs{t} & \bs{t} \\
+Match new line	& \bs{n} & \bs{n} \\
     \bottomrule
   \end{tabularx}}{}
 \end{table}
-
 
 As you may imagine, control characters (\verb!+ ? . * ^ $ ( ) [ ] { } | \!) do not match themselves, but you can skip this limitation by adding a backslash behind it.
 
