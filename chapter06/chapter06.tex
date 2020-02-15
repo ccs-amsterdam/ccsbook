@@ -151,6 +151,14 @@ Let's get practical and try out reading and writing files into a data frame (\re
 
 \pyrex[output=none, caption=Reading files into a dataframe]{chapter06/readfiles}
 
+Of course, we can read more than just csv files. In the Python
+example, you can use tabcompletion to get an overview of all file
+formats Python supports: Type |pd.read| and then press the TAB key to
+get a list of all supported files. For instance, you could to
+|pd.read_excel('test.xlsx')|, |df3 = pd.read_stata('test.dta')|, or
+|df4 = pd.read_json('test.json')| Similarily, for R, you can hit TAB
+after typing |haven::| to get an overview over functions such as
+|read_spss|.
 
 \subsection{File handling beyond data frames}
 Dataframes are a very useful data structure for organizing and analyzing data, and will come back in many examples in this book.
@@ -166,13 +174,15 @@ a
 an
 \end{lstlisting}
 
+If you are too lazy to create this list yourself, you could also
+download one from \url{http://cssbook.net/d/stopwords.txt} and save it
+in the same directory as your Python or R script.
 
-Then, we could direclty read this file into a vector or list  (see \refex{stopwords}).
+Then, you can read this file into a vector or list  (see \refex{stopwords}).
 
 \pyrex[output=none, caption=Reading files without dataframes]{chapter06/stopwords}
 
-
-\pyrex[output=both, caption=More examples for reading from and writing to files]{chapter06/extendedfilehandling}
+\pyrex[output=none, caption={More examples for reading from and writing to files. Because dictionaries do not exist in R and handling non-rectangular data is more uncommon in R, we do not show an example for direct interaction with JSON files without involvement of a dataframe in the R example.}]{chapter06/extendedfilehandling}
 
 \refex{extendedfilehandling} provides you with some more elaborate code examples that allows us to dig a bit deeper into the general way of handling files.
 
@@ -185,8 +195,8 @@ If we wanted to save our stopwords, we could do this in a similar way: We first 
 We are not limited to plain text files, here. For instance, we can use the same approach to read json files into a python dict or to store a python dict into a json file.
 
 We could also combine this with a for loop that goes over all files in a dictionary.
-Imagine we have a folder full of positive movie reviews, and another one full of negative movie reviews that we want to use to train a machine learning classifier (see CHAPTERXXXXXXXXXX). Let's further assume that all these reviews are saved as \texttt{.txt} files.
-We can iterate over all of them, as shown in \refex{extendedfilehandling}
+Imagine we have a folder full of positive movie reviews, and another one full of negative movie reviews that we want to use to train a machine learning classifier (see Section~\ref{sec:supervised}). Let's further assume that all these reviews are saved as \texttt{.txt} files.
+We can iterate over all of them, as shown in \refex{readimdb}. If you want to read text files into a dataframe in R, the \pkg{readtext} package may be interesting for you.
 
 
 
@@ -197,20 +207,17 @@ We can iterate over all of them, as shown in \refex{extendedfilehandling}
 \section{Gathering data from online sources}
 \label{sec:gathering}
 
-\todo[inline]{WHAT SHOULD WE COVER HERE THAT IS NOT COVERED IN CHAPTER 13 (WEB SCRAPING), given that we also plan to cover API's there?}
+Many data that are interesting to those analyzing communication are
+nowadays gathered online.  In Chapter ADDREFERENCELATER, you will
+learn how to use APIs to retrieve data from web services, and how to
+write your own web scraper to automatically download large quanties of
+web pages and extract relevant information. For instance, we might
+want to retrieve customer reviews from website or articles from news
+sites.
 
-Many data that are interesting to those analyzing communication are nowadays gathered online.
-We can distinguish several scenarios of very different complexity.
+However, there are also a lot of existing ressources where you can find relevant datasets.
 
-First, data sets may already been compiled as, for instance, csv files or json files and just need to be downloaded.
-While we could load these ressources directly from within our R or Python-script, if these are single files, we probably would rather just download them manually and use the methods we already learned in this chapter to read them into a data frame. This also has the advantage that we do not cause any unnecessary load by downloading the same data over and over again when re-running our code.
-
-Second, api with wrapper
-
-Third, general api handling
-
-Lastly, we might want to automatically download large quanties of web pages themselves and extract relevant information. For instance, we might want to retrieve customer reviews from website or articles from news sites. This usually involves a more sophisticated approach called \emph{web scraping}, to which we devote a whole chapter later in this book (ADD REFERENCE CHAPTER WEB SCRAPING)
-
+\todo[inline]{ADD RESOURCES: dataset search, built-in datasets, kaggle, ...}
 
 
 
