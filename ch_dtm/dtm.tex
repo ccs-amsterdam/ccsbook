@@ -7,7 +7,7 @@ The Document-term matrix (DTM, also called the term-document matrix or TDM) is a
 This represents a corpus as a matrix or table, where each row represents a document, each column represents a term (word),
 and the numbers in each cell show how often that word occurs in that document.
 
-\pyrex[caption=Example document-term matrix,output=r]{ch_dtm/dtm}
+\pyrex[caption=Example document-term matrix,output=r,format=table]{ch_dtm/dtm}
 
 As an example, \refex{dtm} shows a DTM made from two lines from the famous poem by Mary Angelou.
 The resulting matrix has two rows, one for each line; and 11 columns, one for each unique term (word).
@@ -18,11 +18,19 @@ In R, you can use the \fn{dfm} function from the \pkg{quanteda} package.
 This function can take a vector or column of texts and transforms it directly into a DTM.
 In Python, you achieve the same by creating an object of the \cls{TextVectorizer} class, which has a \fn{fit\_transform} function.
 
+\pyrex[caption=Example document-term matrix]{ch_dtm/sotu}
+
+\refex{sotu} shows a slightly more realistic example.
+It downloads all US presidential 'State of the Union' speeches and creates a
+document-term matrix from them.
+
 \begin{feature}
   \textbf{R: Why is it a document-feature matrix?}
 The package \pkg{quanteda} uses the term document-feature matrix because the columns can also contain
 other information instead of terms, such as word pairs, and these are collectively called \emph{features} of the text.
+\end{feature}
 
+\begin{feature}
 \noindent\textbf{Python: Why fit\_transform?}
 In Python, you don't have a function that directly transforms text into a DTM.
 Instead, you create an \emph{transformer} called a CountVectorizer,
@@ -31,10 +39,14 @@ by counting how often each word occurs.
 This uses the \fn{fit\_transform} function which is offered by all \sklearn\ transformers.
 It `fits' the model on the training data, which in this case means learning the vocabulary.
 It can then be used to transform other data into a DTM with the exact same columns,
-which is often required for algorithms. 
+which is often required for algorithms.
+Because the feature names (the words themselves) are stored in the CountVectorizer
+rather than the document-term matrix, you generally need to keep both objects.
 \end{feature}
 
-As you can see already in this simple example, the document-term matrix discards quite a lot of information from text.
+
+
+As you can see already in these simple examples, the document-term matrix discards quite a lot of information from text.
 Specifically, it disregards the order or words in a text: `John fired Mary' and `Mary fired John' both result in the same DTM,
 even though the meaning of the sentences is quite different.
 For this reason, a DTM is often called a `bag of words', in the sense that all words in the document are simply put in a big bag
