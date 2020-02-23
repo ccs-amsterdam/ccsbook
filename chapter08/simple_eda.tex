@@ -13,8 +13,13 @@ For most of the EDA we will use \pkg{tidyverse} in R and \pkg{pandas} in Python.
 		
 Our first question was to know the distribution of the categorical variable \textit{gender}, by creating tables that include absolute and relative frequencies. The frequency tables (using the \fn{dplyr} functions \fn{group\_by} and \fn{summarise} in R, and \pkg{pandas} function \fn{value\_counts} in Python) revealed that 17,716 (53.38\%) women and 15,477 (46.63\%) men answered this survey. We can do the same with the level of support of refugees [\textit{support\_refugees}] (\textit{To what extent do you agree or disagree with the following statement: Our country should help refugees}) and obtain that 4,957 (14.93\%) persons totally agreed with this statement, 12,695 (38.25\%) tended to agree, 5,931 (16.24\%) tended to disagree and 3,574 (10.77\%) totally disagreed. Well, now you can tell that you are conducting EDA and getting insights of your data.
 
-%Check why tables outputs in R are not supported well
-\pyrex[output=py,caption=Absolute and relative frequencies of support of refugees and gender]{chapter08/frequency}
+\begin{ccsexample}
+\doublecodex{chapter08/frequency}
+\codexoutputtable[Absolute and relative frequencies of gender:]{chapter08/frequency.r}
+\doublecodex{chapter08/frequency2}
+\codexoutputtable[Absolute and relative frequencies of support of refugees:]{chapter08/frequency2.r}
+\caption{Absolute and relative frequencies of support of refugees and gender}
+\end{ccsexample}
 
 
 However, before going further to any \textit{between} variables analysis, you might have noticed that there might be some missing values in the data. These values represent an important amount of data in many real social and communication analysis (just think that you cannot be forced to answer to every question in a survey!). From a statistical point of view, we can have many approaches to address missing values that go from drop either the rows or columns that contain any of them, to compensate those values doing imputation (predicting which would the value based on its relation with other variables), as we did in \refsec{calculate} by replacing the missing values with the column mean. It goes beyond of this chapter to explain all the imputation methods, but at least we must know how to identify the missing values in our data and how to drop the cases that contain them from our dataset.
@@ -26,4 +31,4 @@ In the case of the variable \textit{support\_refugees} we can count its missing 
 Now let us imagine that we want to cross tabulate the \textit{gender} and \textit{support\_refugees} to have an initial idea of how the relation between these two variables might be. With this purpose we create a contingency table or cross-tabulation to get the frequencies in each combination of categories (using \pkg{dplyr} functions \fn{group\_by}, \fn{summarise} and \fn{spread} in R, and \pkg{pandas} function \fn{crosstab} in Python). From this table you can easily get that 2,178 women totally supported to help refugees and 1,524 men totally did not.  Furthermore, other interesting questions about our data might now arise if we compute summary statistics for group of cases (using again \pkg{dplyr} functions \fn{group\_by}, \fn{summarise} and \fn{spread}, and base \fn{mean} in R; and \pkg{pandas} function \fn{groupby} and base \fn{mean} in Python). For example, you might wonder what are the average ages of women that totally supported (52.42) or not (53.2) to help of refugees.  This approach will open a huge amount of possible analysis by grouping variables and estimating different statistics beyond the mean, such as count, sum, median, mode, minimum or maximum, among others.
 
 %Check why tables outputs in R are not supported well
-\pyrex[output=py,caption=Cross tabulation of support of refugees and gender\, and summary statistics]{chapter08/cross}
+\pyrex[output=both,caption=Cross tabulation of support of refugees and gender\, and summary statistics]{chapter08/cross}
