@@ -3,17 +3,111 @@
 
 
 \section{The role of computational analysis in social science}
+The use of computers is nothing new in the social sciences. In fact,
+one could argue that some disciplines within the social sciences have
+even be early adopters of computational approaches. Take the
+gathering and analyzing of large-scale survey data, going back until
+the use of the Hollerith Machine in the 1890 US census. Long before
+every scholar had a personal computer on their desk, social scientists
+were using punch cards and mainframe computers to deal with such
+data. And also if we think of the analysis of \emph{communication}
+more specifically, we see attempts to automate content analysis
+already in the 1960's \citep[see, e.g.,]{Scharkow2017}.
+
+Yet, something has profundly changed in the last decades. The amount
+and kind of data we can collect as well as the computational power we
+have access to have increased dramatically. In particular, digital
+traces that we leave when communicating online, from access logs to
+comments we place, have required new approaches \citep[see,
+  e.g.,]{Trilling2017b}. At the same time, better computational
+facilities now allow us to ask questions we could not answer before.
+
+\citet{Gonzalez-Bailon2017}, for instance, argued that the
+computational analysis of communication now allows us to test theories
+that have been formulated a century ago, such as XXXXXXXXXXXXXXX. And
+\citet{Salganik2019} shows that XXXXXXXXXXXXXXXXXXXXXXXXX.
+
+A frequent misunderstanding, then, about computational approaches is
+that they would somehow be a-theoretical. This is probably fueled by
+clich\'{e}s coied during ``Big Data''-hype in the 2010's, such as the
+infamous saying that in the age of Big Data, correlation is enough,
+but one could not be more wrong: As the work of
+\cite{Kitchin2014,Kitchen2014data} shows, computational approaches can
+be well situated within existing epistemologies. The computational
+scientists' toolbox includes both more data-driven and more
+theory-driven techniques; some are more bottom-up and inductive,
+others are more top-down and deductive. What matters here, and what is
+often overlooked, is in which stage of the research process they are
+employed.
+
+In particular, we suggest to think of the data collection and data
+analysis process as a pipeline. To test, for instance, a theoretically
+grounded hypothesis about personalization in the news, we could
+imagine a pipeline that starts with scraping online news, proceeds
+with some natural-language processing techniques such as Named Entity
+Recognition, and finally tests whether the mentioning of persons has
+an influence on the placement of the stories. We can distinguish here
+between parts of the pipeline that are just necessary but not
+inherently interesting to us, and parts of the pipeline that answer a
+genuiely interesting question. In this example, the inner workings of
+the Named Entity Recognition step are not genuinly interesting for us
+-- we just need to do it to answer our question. We do care about how
+well it works, which biases it has, and so on, but we are indeed not
+evaluating any theory here. We are, however, answering a theoretically
+interesting when we look at the pipeline as a whole.  Of course, what
+is genuinly interesting depends on one's discipline: For a
+computational linguist, the workings of the named entity recognition
+may be the interesting part, and our research question just one
+possible ``downstream task''.
+
+This distinction is also sometimes referred to as ``building a better
+mouse trap'' vs. ``understanding'' \todo{Wouter has some lit or so on
+  this, right?}
+The book here is to some extend about both. When you are building a supervised machine learning classifier to determine the topic of each text in a large collection of news articles or parliamentary speeches, you are building a (better) mouse trap. But as a social scientists, your work does not stop there. You need to use the mouse trap to answer some theoretically interesting question.
 
 
-- top down/bottom up; theory vs data driven
-- mouse trap vs understanding (part of the pipeline that’s just necessary vs genuinely interesting questions
-- computational analysis of COMMUNICATION: keep broad, but also mark boundaries: No ABM for example; link to text-as-data, media studies, journalism ….
-- How we differ from tech books on the one hand and conceptual/theory/… books on the other hand
+
+When planning this book, we needed to make a couple of tough
+choices. We aimed to at least give an introduction to all techniques
+that students and scholars that want to computationally analyze
+communication probably will be confronted with. Of course, specific --
+technical -- literature on techniques such as, for instance, machine
+learning can go more in-depth, and the interested student may indeed
+want to dive into one or several of the techniques we cover more
+deeply. Our goal here is to offer enough working knowledge to apply
+these techniques and to know what to look for.  While trying to cover
+the breadth of the field without sacrificing too much depth when
+covering each technique, we still needed to draw some boundaries. One
+technique that some readers may miss is agent-based modeling
+(ABM). Arguably, such simulation techniques are an important technique
+in the computational social sciences more broadly
+\citep{cioffi-revilla2014}, and they have recently been applied to the
+analysis of communication as well
+\citep{Waldherr2014,Wettstein2020}. Nevertheless, when reviewing the
+curricula of current courses teaching the computational analysis of
+communication, simulation approaches seem not to be at the core of
+such analyses (yet).  Instead, when looking at the use of compuational
+techniques in fields such as journalism studies
+\citep[e.g.,][]{Boumans2016}, media studies \todo{add reference}, or
+the text-as-data movement\todo{add reference}, we see a core of
+techniques that are used all-over again, and that we therefore
+included in our book. In partiuclar, these are techniques for
+gathering data such as web scraping or the use of API's; techniques
+for dealing with text such as natural language processing and
+different ways to turn text into numbers; supervised and unsupervised
+machine learning techniques; and network analysis.
+
+
+
 
 \section{Why Python and/or R?}
 
 
 \section{How to use this book?}
+
+
+- How we differ from tech books on the one hand and conceptual/theory/… books on the other hand
+
 
 - What do you need to know?
 - You can skip chapters, do … .. ….
