@@ -9,14 +9,19 @@
 
 \newcommand{\code}[1]{\texttt{#1}}
 
+\newcommand{\concept}[2][\@empty]{%
+  \index{\ifx\@empty#1\relax#2\else#1\fi}\emph{#2}}
+
 %\newcommand{\fn}[1]{#1\index{#1@\texttt{#1}}}
 \newcommand{\fn}[1]{\index{#1}\texttt{#1}}
 \newcommand{\cls}[1]{\index{#1}\texttt{#1}}
 \newcommand{\pkg}[1]{\index{#1}\emph{#1}}
 	
-\newcommand{\pandas}[1]{\pkg{pandas}}
-\newcommand{\tidyverse}[1]{\pkg{tidyverse}}
-\newcommand{\sklearn}[1]{\pkg{scikit-learn}}
+\newcommand{\tidyverse}{\pkg{tidyverse}}
+\newcommand{\quanteda}{\pkg{quanteda}}
+
+\newcommand{\pandas}{\pkg{pandas}}
+\newcommand{\sklearn}{\pkg{scikit-learn}}
 
 \newcommand{\note}[1]{\noindent\fbox{
   \begin{minipage}{\textwidth}
