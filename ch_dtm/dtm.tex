@@ -4,7 +4,7 @@
 Before you can analyse text using the computer, the text must be represented in a way that is understandable for the computer.
 
 The Document-term matrix (DTM, also called the term-document matrix or TDM) is a common numerical representation of text.
-This represents a corpus as a matrix or table, where each row represents a document, each column represents a term (word),
+This represents a \concept{corpus} (or set of documents) as a matrix or table, where each row represents a document, each column represents a term (word),
 and the numbers in each cell show how often that word occurs in that document.
 
 \pyrex[caption=Example document-term matrix,output=r,format=table]{ch_dtm/dtm}
@@ -16,13 +16,81 @@ but the word ``with'' occurs only in the first line (text1) and not in the secon
 
 In R, you can use the \fn{dfm} function from the \pkg{quanteda} package.
 This function can take a vector or column of texts and transforms it directly into a DTM.
-In Python, you achieve the same by creating an object of the \cls{TextVectorizer} class, which has a \fn{fit\_transform} function.
+In Python, you achieve the same by creating an object of the \cls{CountVectorizer} class, which has a \fn{fit\_transform} function.
+
+
+\subsection{Tokenization}
+
+In order to turn a corpus into a matrix, each text needs to be \concept{tokenized},
+meaning that it must be split into a list (vector) of words.
+This seems trivial, as English (and most western) text generally uses spaces to demarcate words.
+However, even for English there are a number of edge cases. 
+For example, should `haven't' be seen as a single word, or two?
+
+\pyrex[caption=Differences between tokenizers]{ch_dtm/tokenize}
+
+\refex{tokenize} shows how Python and R deal with the sentence ``I haven't seen John't derring-do''.
+For Python, we first use |CountVectorizer.build_tokenizer| to access the built-in tokenizer.
+As you can see in the first line of input, this tokenizes ``haven't'' to |haven|,
+which of course has a radically differeny meaning. Moreover, it silently drops all single-letter words,
+including the |'t|, |'s|, and |I|.
+A more reasonable tokenizer is the \cls{TreebankWordTokenizer} included in the \pkg{nltk} package, which contains a number of functions for doing natural language processing in python.
+This tokenizer splits ``haven't'' into |have| and |n't|, which is a reasonable outcome.
+
+For R, we simply call the \fn{tokens} function from the \quanteda\ package.
+This keeps |haven't| and |John's| as a single word, which is probably less desirable than splitting the words
+but at least better than outputting the word |haven|.
+
+As this simple example shows, even a relatively simple sentence is tokenized differently by the three tokenizers considered here.
+Depending on the research question, these differences might or might not be important.
+However, it is always a good idea to check the output of this (and other) preprocessing steps so you understand
+what information is kept or discarded.
+
+% \pyrex[caption=Tokenization of Japanese verse]{ch_dtm/haiku}
+
+Note that for languages such as Chinese, Japanese, and Korean, which do not use spaces to delimit words, the story is more difficult.
+Although a full treatment is beyond the scope of this book, \refex{haiku} shows a small example of tokenizing Japanese text,
+in this case the famous haiku ``the sound of water'' by Bash\={o}.
+The default tokenizer in quanteda actually does a good job, in contrast to the default python tokenizer
+that simply keeps the whole string as one word
+(which makes sense since this tokenizer only looks for whitespace or punctuation).
+For python the best bet is to use a custom package for tokenizing Japanese, such as the \pkg{nagisa} package.
+This package contains a tokenizer which is able to tokenize the Japanese text, and we could use this in the \cls{CountVectorizer}
+much like we used the \cls{TreebankWordTokenizer} for English earlier.
+Similarly, with heavily inflected languages such as Hungarian or Arabic,
+it might be better to use preprocessing tools developed specifically for these languages, but treating those is unfortunately
+beyong the scope of this book. 
+
+
+\subsection{The DTM as a Sparse Matrix}
 
 \pyrex[caption=Example document-term matrix]{ch_dtm/sotu}
 
 \refex{sotu} shows a slightly more realistic example.
-It downloads all US presidential 'State of the Union' speeches and creates a
-document-term matrix from them.
+It downloads all US presidential 'State of the Union' speeches and creates a document-term matrix from them.
+Since the matrix is now easily too large to print, both python and R simply list the size of the matrix.
+R lists $85$ documents (rows) and $17,999$ features (columns), and Python reports that it's size is $85\times22219$.
+Note the difference in the amount of columns (unique terms) due to the differences in tokenization as discussed above. 
+
+For both languages, the output also notes the sparse nature of the result.
+As you can imagine, most texts use only a small subset of all possible words.
+A very common word like `the' might occur in almost all texts, but most words,
+like `occur', will only actually occur in a small minority of texts.
+In other words, the document-term matrix mostly contains zeroes.
+In fact, R reports that the dtm is $91\%$ sparse, meaning that percentage of all entries is zero.
+Python reports a similar figure, namely that there are only just under 150 thousand non-zero entries
+out of a possible $8\times22219$, which boils down to a 92\% sparse matrix.
+
+An important implication is that it would be very inefficient to store the matrix in a \concept[dense matrix]{dense} format.
+In a dense matrix, all entries are stored as a long list of numbers.
+For a reasonably large corpus with tens of thousands of documents and different words, this can quickly run billions of numbers,
+which can cause problems even on modern computers and is moreover very inefficient.
+For this reason, document-term matrices should always be kept in a \concept{sparse matrix} format,
+in which only non-zero entries are stored.
+With sparsities of often above 99\%, this can easily reduce storage requirements by a hundred times and in the process speed up calculations by reducing the number of entries that need to be inspected.
+Both \quanteda\ and \sklearn\ store DTMs as sparse matrices by default,
+and most analysis tools are able to deal with sparse matrices very efficiently
+(but see \refsec{sparseml} for problems with machine learning on sparse matrices in R). 
 
 \begin{feature}
   \textbf{R: Why is it a document-feature matrix?}
@@ -44,12 +112,13 @@ Because the feature names (the words themselves) are stored in the CountVectoriz
 rather than the document-term matrix, you generally need to keep both objects.
 \end{feature}
 
+\subsection{The DTM as a `bag of words'}
 
 
 As you can see already in these simple examples, the document-term matrix discards quite a lot of information from text.
 Specifically, it disregards the order or words in a text: `John fired Mary' and `Mary fired John' both result in the same DTM,
 even though the meaning of the sentences is quite different.
-For this reason, a DTM is often called a `bag of words', in the sense that all words in the document are simply put in a big bag
+For this reason, a DTM is often called a \concept{bag of words}, in the sense that all words in the document are simply put in a big bag
 without looking at the sentences or context of these words. 
 
 Thus, the DTM can be said to be a specific and `lossy' representation of the text, that turns out to be quite useful for certain tasks:
@@ -64,5 +133,3 @@ Although it is beyond the scope of this book,
 you can also use automatic syntactic analysis to take grammatical relations into account as well.
 As is always the case with automatic analyses, it is important to understand what information the computer is looking at,
 as the computer cannot find patterns in information that it doesn't have.
-
-
