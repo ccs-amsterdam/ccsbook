@@ -32,17 +32,16 @@ software or when writing the absolute or relative paths in the code).
 
 Firstly, we will install R and its most popular IDE RStudio, and we
 will learn how to install additional packages and how to run a
-script. Remember that R is an object-based programming language
+script. R is an object-based programming language
 orientated to statistical computing that can be used for most of the
 stages of computational analysis of communication.  If you are
 completely new to R, but familiar with other popular
 statistical packages in social sciences (such as SPSS or STATA), you
 will find that you can perform in R many already-known statistical
 operations. If you are not familiar with other statistical packages,
-do not panic, we will guide you from the very beginning. Probably, the
-first thing you have to be aware of when installing R is that unlike
-many traditional software that require just one complete and initial
-installation, when working with R we will first install the raw
+do not panic, we will guide you from the very beginning. Unlike
+many traditional software that requires just one complete and initial
+installation, when working with R, we will first install the raw
 programming language and then we will keep on installing additional
 components during all of our journey. It might sound cumbersome, but
 in fact it will make your work more powerful and flexible, since you
@@ -54,7 +53,7 @@ webpage\footnote{https://www.r-project.org}, where you will find lots
 of valuable information about the environment as well as the necessary
 documentation for working in R.  There are different versions of R,
 since there is a global community of developers that help to improve
-the software every year. You should go the CRAN mirrors and click onto
+the software continously. You should go the CRAN mirrors and click onto
 any mirror (or the one you consider more close to your place of
 work). Within the mirror you can download the version you need
 depending of your operating system (figure~\ref{fig:cran}). In case
@@ -62,6 +61,10 @@ you're not familiar with terms ``CRAN'' or ``mirror'', the first
 refers to the \textit{Comprehensive R Archive Network}, which is an
 online repository of R packages; and the second, to the server where a
 copy of any package is available for download.
+
+\note{If you use Linux, you may want to install R via your package
+  manager (such as \texttt{apt} on Debian and Ubuntu) instead.}
+
 
 \begin{figure}
 \centering
@@ -110,17 +113,16 @@ with some useful icons. For example, the empty document icon \icon
 code. You can later use R document icon \doc \ to modify any given
 script or the general R icon \rcom \ to run the script or to load data
 in R. On the upper menu you will also find convenient tools such as
-Workspace or Packages \& Data. On the one hand, remember that R is an
+Workspace or Packages \& Data. Because R is an
 object-orientated programming language, which means that all
 operations are performed with objects that we create or import, from
 simple variables to complex recursive functions. If you create an
-object \emph{x} with the value 17 (x \textless- 17), this object will
-be loaded into RAM memory so you can call it every time you type
-\emph{x}.  Well, the menu Workspace will let you know which objects
+object \texttt{x} with the value 17 (x \textless- 17), this object will
+be loaded into RAM memory so you can access by just typing \texttt{x}.
+The menu Workspace will let you know which objects
 have been uploaded to this virtual space. We will go back to this
 issue later in this chapter when we discuss statements, expressions,
-variables, functions and methods. On the other hand, as we mentioned
-earlier, R can perform thousands of statistical operations with its
+variables, functions and methods. R can perform many statistical operations with its
 raw language, but one of its greatest advantages is that we can use
 existing packages (also called libraries) that others have created to
 simplify our coding and to expand our possibilities in data
@@ -149,7 +151,7 @@ commands you will use will follow a similar logic. In this case you
 have a native command (install) with a module (packages) and an
 argument (``Rcmdr'') with an option (dependencies=TRUE). It is worth
 mentioning that once you have installed any package on your computer,
-you have to ``call'' it in the R environment every time you are going
+you have to import it it in the R environment every time you are going
 to work with it. This means that you have to indicate either on your R
 console or R Document, which libraries you will be using, so the
 program can load the package. The are two common methods to load or
@@ -177,7 +179,8 @@ properly called when your are running the script.
 Now that you have learned how to install R and its packages on your
 computer, we should move on to get familiar with additional resources
 that are of great help when working with R. In particular we introduce
-RStudio, which is an IDE, free of charge and open source that will
+RStudio, which is an IDE (Integrated Development Environment),
+free of charge and open source that will
 make our computational journey with R much more friendly and
 easier. Among many other advantages, in this environment you will have
 a workspace where you can simultaneously visualize your R documents
@@ -210,7 +213,7 @@ to work with reproducible R documents based on a very simple syntax
 and ready-to-export to most universal formats such as HTML or PDF. The
 down-left window is the R console where you can directly write a
 syntax or where your will get the outcome from the code you have
-written and run in the R document. Please look at the up-left window
+written and run in the R document. Look at the up-left window
 and notice that there is a button named \emph{run}, which you will
 often use. By selecting partial or total lines of code in your script
 and clicking on this button you will execute the code and get the
@@ -243,12 +246,11 @@ even from a file saved on your computer with a friendly interface.
 \subsection{Installing Python}
 
 Now that you have installed R and RStudio, let's change to Python. As
-most computational scientists do, we will jump from one application to
+many computational scientists do, we will jump from one application to
 another throughout this book, so do not worry if you have to wear two
 hats the same day, even at the very same time! The first thing will be
 to install Python on your local computer (though some operating
-systems come already with it as a default). As explained in chapter
-[INTRODUCTION], Python is an object-orientated programming language
+systems come already with it as a default). As explained in \refchap{introduction}, Python is an object-orientated programming language
 and it is probably the favourite language of computational and data
 scientists in all disciplines around the world. There are different
 releases of Python, but you will usually find a distinction between
@@ -273,17 +275,21 @@ webpage\footnote{https://www.python.org/downloads/}, selecting the
 right software according to your operating system (Windows,
 Linux/UNIX, Mac OS X).
 
+\note{If you use Linux, you may want to install Python via your package
+  manager (such as \texttt{apt} on Debian and Ubuntu) instead.}
+
+
 During the installation, you will be informed that some additional
 features will be installed along with Python: normally an
 \emph{integrated development environment} called \pkg{IDLE}, a package
 manager called \pkg{pip} and \emph{documentation}. Even though more
-advanced IDEs are available (for instance, you may like \pkg{spyder}
-which looks a lot like \pkg{Rstudio} or \pkg{pycharm}), IDLE will
+advanced IDEs are available (for instance, you may like \pkg{spyder},
+which looks a lot like \pkg{Rstudio}, or \pkg{pycharm}, which has a lot of functionality that appeal to advanced programmers), IDLE will
 provide you with a basic interface to work with Python files (|.py|)
 and the Python console. \pkg{pip} is a basic package that will help
 you to install and manage more software packages within Python. And
 documentation will provide you with basic help to work in this
-programming language.  In addition, you might be questioned if you
+programming language.  In addition, you might be asked if you
 want to add Python to your path, which means that you set the
 \emph{path variable} in order to call the executable software from
 your \emph{system terminal} just by typing the word |python|. We

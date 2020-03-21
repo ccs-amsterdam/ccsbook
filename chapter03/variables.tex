@@ -69,9 +69,9 @@ numbers, text, and truth values.
     Name & Example & Name & Example \\
     \midrule
     int   & \verb+1+             & integer   & \verb+1L+             & whole numbers \\
-    float & \verb+1.3+           & numeric   & \verb+1.3+           & Numbers with decimal \\
-    str   & \verb+"Spam", 'ham'+ & character & \verb+"Spam", 'ham'+ & Textual data  \\ 
-    bool  & \verb+True, False+   & logical   & \verb+TRUE, FALSE+   & The truth values \\
+    float & \verb+1.3+           & numeric   & \verb+1.3+           & numbers with decimals \\
+    str   & \verb+"Spam", 'ham'+ & character & \verb+"Spam", 'ham'+ & textual data  \\ 
+    bool  & \verb+True, False+   & logical   & \verb+TRUE, FALSE+   & the truth values \\
     \bottomrule
   \end{tabularx}}{}
 \end{table}
@@ -132,8 +132,8 @@ integer.
 \subsection{Storing text}
 
 As a computational analyst of communication you will usually work with
-text objects or string of characters, which are called character
-vector objects in R, and you can create them just by adding single or
+text objects or strings of characters, which are called character
+vector objects in R. You can create them just by adding single or
 double quotes to the value of the variable. Just think of a tweet or a
 Facebook post that you want to load into your workspace for natural
 language processing analysis.
@@ -153,7 +153,7 @@ need to use the same mark to begin and end the string. This can be
 useful if you want to use quotationmarks within a string, then you can
 use the other type to denote the beginning and end of the string.
 
-
+\note{Since Python 3.6, there is a new type of string, the f-string. These are strings that are prefixed with the letter \texttt{f} and are \emph{formatted} strings. This means that these strings will automatically insert a value were curly brackets indicate you wish to do so. This means that you can write: \texttt{print(f'The value of i is \{i\}'} to print ``The value of i is 5'', given that i is 5. In a similar fashion, you can prevent Python from interpreting special characters by prefixing the string with the letter \texttt{r}, which can be useful when writing regular expressions (\refsec{regular}). In R, the \pkg{glue} package allows you to use a f-string-like syntax as well.}
 
 
 \subsection{Combining multiple values: lists, vectors, and friends}
@@ -198,7 +198,7 @@ using the \fn{c} function. For example, we can create a numeric vector
 with the scores of a class of 10 students or a character vector of
 three countries (\refex{1darray1}).
 
-\codex[caption=Vectors in R]{chapter03/1darray1.r}
+\pyrex[caption=Vectors in R, output=r, input=r]{chapter03/1darray1}
 
 As you see, the data types will correspond to only one class, either
 numeric or character, since vectors contain only one class. If we
@@ -215,8 +215,8 @@ values are now displayed surrounded by |"|.
 %typeof(scores)
 %\end{exampler}
 
-Having a vector means that you can operate with it in many ways. The
-basic is \emph{indexing}, which is a technique that you will use with
+Having a vector means that you can operate with it in many ways. One of the
+basic operations is \emph{indexing}, which is a technique that you will use with
 other data types (list, arrays, matrices, data frames) and in other
 languages such as Python.  Indexing helps you to locate any given
 element or group of elements within a vector using its or their
@@ -224,7 +224,7 @@ positions. In R all positions begin in the number 1 (you will see that
 in Python and other languages they will begin on 0) and you can index
 using the square brackets [] over the vector (\refex{1darray2}).
 
-\codex[caption=Slicing vectors and converting data types]{chapter03/1darray2.r}
+\pyrex[input=r, output=r, caption=Slicing vectors and converting data types]{chapter03/1darray2}
 
 In the first case, we asked for the score of the 11th student ("b");
 in the second we asked for the 1st and 10th position ("8" "5"); and
@@ -246,7 +246,7 @@ And voilà, we have a new object called scores3 with the original
 values of the vector scores and of the class numeric.
 % \emph{double} (double precision floating point numbers, which is equivalent to the class numeric).
 
-\codex[caption=Some more vector operations]{chapter03/1darray3.r}
+\pyrex[input=r, output=r, caption=Some more vector operations]{chapter03/1darray3}
 
 We can do many other things like adding a value to an existing vector
 or creating a vector from scratch by using a
@@ -283,7 +283,7 @@ deal with a bigger amount of students. While we have only two levels
 (which can be identified with the function \fn{nlevels}), we can have many
 values to connect with those labels.
 
-\codex[caption=Factors can also store labels]{chapter03/1darray6.r}
+\pyrex[input=r, output=none, caption=Factors can also store labels]{chapter03/1darray6}
 
 
 
@@ -299,7 +299,7 @@ can use any of the elements in the list through indexing -- even the
 function \fn{sqrt} that you stored in there to get the square root of
 16!
 
-\codex[caption=Lists can store multiple data types]{chapter03/1darray4.r}
+\pyrex[input=r, output=r, caption=Lists can store multiple data types]{chapter03/1darray4}
 
 
 
@@ -322,7 +322,7 @@ list and the second a tuple. We can get any value of the list or tuple
 by indexing its position, just keep in mind that indexing in Python
 begins in 0 and not in 1 like in R.
 
-\codex[caption=Lists and tuples in Python]{chapter03/1darray5.py}
+\pyrex[input=py, output=py, caption=Lists and tuples in Python]{chapter03/1darray5}
 
 Imagine now that you decide that the value `neutral' should be
 substituted by the value `informative' in the created sequences. You
@@ -344,9 +344,8 @@ tuples.
   create a copy of the object itself. Rather, we now get two names for
   the same object.}
 
-\codex[caption={The (for many unexpected) behavior of mutable objects}]{chapter03/mutable.py}
+\pyrex[input=py, output=py, caption={The (for many unexpected) behavior of mutable objects}]{chapter03/mutable}
 
-\codex[caption={Output}]{chapter03/mutable.py.out}
 
 
 We also have another Python object called sets. A set is a mutable
@@ -355,7 +354,7 @@ no order. As it is not properly ordered, you cannot run any indexing
 or slicing operation on it. The immutable version of sets are called
 frozensets.
 
-\codex[caption=Unordered collections with only unique values\: sets]{chapter03/1darray6.py}
+\pyrex[input=py, output=py, caption={Unordered collections with only unique values: sets}]{chapter03/1darray6}
 
 
 While lists give you a lot of flexibility -- e.g., they happily accept
@@ -365,8 +364,7 @@ high-performance calculations, and therefore, such a structure is
 avalable from the \pkg{numpy} (\emph{nu}mbers in \emph{py}thon)
 package: the numpy array (\refex{1darray7}).
 
-\codex[caption=Numpy arrays behave more like R vectors]{chapter03/1darray7.py}
-\codex{chapter03/1darray7.py.out}
+\pyrex[input=py, output=py, caption=Numpy arrays behave more like R vectors]{chapter03/1darray7}
 
 
 
@@ -378,17 +376,18 @@ popular data structure in Python, but does not exist in R.
 
 Dictionaries contain unordered and mutable collections of objects that
 contain certain information in another object. Python generates this
-data type in form of |{key : value}| in order
+data type in form of |{key : value}| pairs in order
 to map any object by its key and not by its relative position in the
-collection. This means that you will index using the key. You will
+collection. Unlike in a list, in which you index with an integer denoting
+the position in a list, you can index a dictionary using the key. You will
 find dictionaries very useful in your journey as a computational
 scientist or practitioner, since they are flexible ways to store and
 retrieve structured information. We can create them using the curly
 brackets {} and including each key-value pair as an element of the
 collection (\refex{dict}).
 
-\codex[caption=Dictionaries store key-value pairs]{chapter03/dict.py}
-\codex{chapter03/dict.py.out}
+\pyrex[input=py, output=py, caption=Dictionaries store key-value pairs]{chapter03/dict}
+
 
 As in other objects you can index its elements, by keep in mind that
 you do it using the key and not the position in the sequences. For
@@ -453,8 +452,8 @@ coding images.
 
 \subsection{Making life easier: dataframes}
 
-Finally, we have data frames. This is the friendly type
-of data that you find in SPSS or Excel that will help you in a wide
+Dataframes are friendly data structures that look very much like
+what you find in SPSS or Excel. They will help you in a wide
 range of statistical analysis (though in more advanced exercises such
 in machine learning you will not be able to use them any more!).  A
 data frame is a tabular data object that includes rows (usually the
