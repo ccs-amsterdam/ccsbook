@@ -1,38 +1,62 @@
-\chapter{Introduction (Damian)}
+\chapter{Introduction}
 \label{chap:introduction}
 
+\begin{abstract}{Abstract}
+This chapter explains how the methods outlined in this book are
+situated within the methodological and epistemological frameworks used
+by social scientists. It argues why the use of Python and R is
+fundamental for the computational analysis of communication. Finally,
+it shows how this book can be used by students and scholars.
+\end{abstract}
 
-\section{The role of computational analysis in social science}
+\keywords{computational social science, Python, R}
+
+\begin{objectives}
+\item Understand the role of computational analysis in the social sciences
+\item Understand the choice for Python and/or R
+\item Know how to read this book
+\end{objectives}
+
+\begin{feature}
+This chapter does not introduce any specific packages yet, but invites
+you to reflect on what we are doing in this book. It proposes to place
+the techniques and languages taught in the broader context of
+social-scientific research.
+\end{feature}
+
+\section{The role of computational analysis in the social sciences}
 The use of computers is nothing new in the social sciences. In fact,
 one could argue that some disciplines within the social sciences have
 even be early adopters of computational approaches. Take the
-gathering and analyzing of large-scale survey data, going back until
+gathering and analyzing of large-scale survey data, dating back until
 the use of the Hollerith Machine in the 1890 US census. Long before
 every scholar had a personal computer on their desk, social scientists
 were using punch cards and mainframe computers to deal with such
 data. And also if we think of the analysis of \emph{communication}
 more specifically, we see attempts to automate content analysis
-already in the 1960's \citep[see, e.g.,]{Scharkow2017}.
+already in the 1960's \citep[see, e.g.][]{Scharkow2017}.
 
 Yet, something has profundly changed in the last decades. The amount
 and kind of data we can collect as well as the computational power we
 have access to have increased dramatically. In particular, digital
 traces that we leave when communicating online, from access logs to
-comments we place, have required new approaches \citep[see,
-  e.g.,]{Trilling2017b}. At the same time, better computational
+comments we place, have required new approaches \citep[e.g.,][]{Trilling2017b}. At the same time, better computational
 facilities now allow us to ask questions we could not answer before.
 
 \citet{Gonzalez-Bailon2017}, for instance, argued that the
 computational analysis of communication now allows us to test theories
-that have been formulated a century ago, such as XXXXXXXXXXXXXXX. And
-\citet{Salganik2019} shows that XXXXXXXXXXXXXXXXXXXXXXXXX.
+that have been formulated a century ago, such as Tarde's theory of
+social imitation. And \citet{Salganik2019} tells an impressive
+methododoligical story of continuity in showing how new digital
+research methods build on and relate to etablished methods such as
+surveys and experiments, but offer new possibilities by observing
+behavior in new ways.
 
 A frequent misunderstanding, then, about computational approaches is
 that they would somehow be a-theoretical. This is probably fueled by
 clich\'{e}s coied during ``Big Data''-hype in the 2010's, such as the
 infamous saying that in the age of Big Data, correlation is enough,
-but one could not be more wrong: As the work of
-\cite{Kitchin2014,Kitchen2014data} shows, computational approaches can
+but one could not be more wrong: As the work of \cite{Kitchin2014,Kitchin2014data} shows, computational approaches can
 be well situated within existing epistemologies. The computational
 scientists' toolbox includes both more data-driven and more
 theory-driven techniques; some are more bottom-up and inductive,
@@ -61,8 +85,16 @@ may be the interesting part, and our research question just one
 possible ``downstream task''.
 
 This distinction is also sometimes referred to as ``building a better
-mouse trap'' vs. ``understanding'' \todo{Wouter has some lit or so on
-  this, right?}  The book here is to some extend about both. When you
+mouse trap'' vs. ``understanding''. For instace, \cite{Breiman2001}
+remarked: ``My attitude toward new and/or complicated methods is
+pragmatic. Prove that you've got a better mousetrap and I'll buy
+it. But the proof had better be concrete and convincing.''
+(p.~230). In contrast, many social scientists are using statistical
+models to test theories and to understand social processes: they want
+to specically understand how x relates to y, even if y may be better
+predcited by another (theoretically uninteresting) variable instead.
+
+The book here is to some extend about both building mouse traps and undertanding. When you
 are building a supervised machine learning classifier to determine the
 topic of each text in a large collection of news articles or
 parliamentary speeches, you are building a (better) mouse trap. But as
@@ -92,8 +124,8 @@ curricula of current courses teaching the computational analysis of
 communication, simulation approaches seem not to be at the core of
 such analyses (yet).  Instead, when looking at the use of compuational
 techniques in fields such as journalism studies
-\citep[e.g.,][]{Boumans2016}, media studies \todo{add reference}, or
-the text-as-data movement\todo{add reference}, we see a core of
+\citep[e.g.,][]{Boumans2016}, media studies \citep[e.g.,][]{Rieder2017}, or
+the text-as-data movement \citep{Grimmer2013}, we see a core of
 techniques that are used all-over again, and that we therefore
 included in our book. In partiuclar, these are techniques for
 gathering data such as web scraping or the use of API's; techniques
@@ -106,11 +138,12 @@ machine learning techniques; and network analysis.
 \section{Why Python and/or R?}
 By far most work in the computational social sciences is done using
 Python and/or R. Sure, for some specific tasks there are standalone
-programs that are occasionally used; and there are some applications
+programs that are occasionally used; and there are some useful applications
 written in other languages such as C or Java. But we believe it is
 fair to say that it very hard to delve into the computational analysis
 of communication without learning at least either Python or R, and
 preferrably even both of them.
+There are very few tasks that you cannot do with at least one of them.
 
 Some people have strong believes which language is ``better'' -- we do
 not belong to them. Most techniques that are relevant to us can be
@@ -122,7 +155,8 @@ statistical models in just one line of code. Python started out as a
 general-purpose programming language, which means that some things we
 do feel a bit more `low-level' -- Python abstracts away less of the
 underlying programming concepts than R does. This sometimes gives us
-more flexibility. In the last years, however, Python and R have been
+more flexibility -- at the cost of being more wordy.
+In the last years, however, Python and R have been
 growing closer to each other: With modules like \pkg{pandas} and
 \pkg{statsmodels}, Python now has R-like functionality handling data
 frames and estimating common statistical models on them; and with
@@ -148,7 +182,7 @@ given task, we indicate so; for the rest, we believe that it is up to
 the reader to choose.
 
 
-\section{How to use this book?}
+\section{How to use this book}
 
 This book differs from more technically oriented books on the one hand
 and more conceptual books on the other hand. We do cover the technical
