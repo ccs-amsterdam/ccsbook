@@ -1,11 +1,53 @@
 \section{Clustering and dimensionality reduction}
 \label{sec:clustering}
 
-So far in this chapter we have reviewed traditional statistical exploratory and visualization techniques that any social scientist must manage. However, a more computational approach in EDA is using machine learning (ML) to let our computer “learn” about our data and in turn give us more initial insights.  ML is a branch of artificial intelligence that uses algorithms to interact with data and obtain some patterns or rules that characterize that data. We normally distinguish between supervised machine learning (SML) and unsupervised machine learning (UML). The main difference between these two approaches is that in SML we give the algorithm some “examples” in order to learn from them, and in UML we just give the algorithm the whole data and ask to learn the patterns directly from it. We will cover SML in the  chapter~\ref{chap:introsml}. In this chapter, we will focus on UML as a means of finding groups and latent dimensions in our data, which can also help to reduce our number of variables. Specifically, we will use base R and Python’s \pkg{scikit-learn} to conduct k-means clustering, hierarchical clustering and principal component analysis (PCA). 
+So far, we have reviewed traditional statistical exploratory and
+visualization techniques that any social scientist must manage. A more
+computational next step in your EDA wirkflow is using machine learning
+(ML) to let our computer ``learn'' about our data and in turn give us
+more initial insights.  ML is a branch of artificial intelligence that
+uses algorithms to interact with data and obtain some patterns or
+rules that characterize that data. We normally distinguish between
+supervised machine learning (SML) and unsupervised machine learning
+(UML). In \refchap{introsml}, we will come back to this distinction.
+For now, it may suffice to say that the main characteristic of
+unsupervised methods is that we do not have any measuremeant available
+for a dependent variable, label, or categorization, for which we want
+to learn how they can be predicted. Instead, we want to identify
+\emph{patterns} in the data without knowing in advance how these may
+look like. In this, unsupervised machine learning is very much of a
+inductive, bottom-up technique (see \refchap{introduction} and
+\cite{Boumans2016}).
 
-In data mining, we use clustering as a UML technique that aims to find the relationship between a set of descriptive variables (instead of finding the relationship between those descriptive features and a target variable, as in SML). By doing cluster analysis we can identify underlying groups in our data that we will call \textit{clusters}. Imagine we want to explore how European countries can be grouped based on their average support to refugees/migrants, age and educational level. We might create some \textit{a priori} groups (such as Southern vs. Northern countries), but cluster analysis would be a great method to let the data “talk” and then create the most appropriate groups for this specific case. As in all UML, the groups will come unlabelled and the computational analyst will be in charge of finding an appropriate and meaningful label for each cluster for a better communication of results. In spite of this challenge, clustering is a very powerful approach for many EDA tasks and can help the analysis to discover patterns in data.
+In this chapter, we will focus on UML as a means of finding groups and
+latent dimensions in our data, which can also help to reduce our
+number of variables. Specifically, we will use base R and Python's
+\pkg{scikit-learn} to conduct $k$-means clustering, hierarchical
+clustering and principal component analysis (PCA) as well as the
+closely related singular value decomposition (SVD).
 
-K-means is the most known algorithm to perform cluster analysis. It is a method that takes any number of observations (cases) and group them into a given number of clusters based on the proximity of each observation to the mean of the formed cluster (centroid).  Mathematically, we measure this proximity as the distance of any given point to its cluster center, and can be expressed as
+In data mining, we use clustering as a UML technique that aims to find
+the relationship between a set of descriptive variables. By doing
+cluster analysis we can identify underlying groups in our data that we
+will call \textit{clusters}. Imagine we want to explore how European
+countries can be grouped based on their average support to
+refugees/migrants, age and educational level. We might create some
+\textit{a priori} groups (such as Southern vs. Northern countries),
+but cluster analysis would be a great method to let the data ``talk''
+and then create the most appropriate groups for this specific case. As
+in all UML, the groups will come unlabelled and the computational
+analyst will be in charge of finding an appropriate and meaningful
+label for each cluster for a better communication of results. 
+
+\subsection{$k$-means clustering}
+
+$k$-means is a very frequently used algorithm to perform cluster
+analysis. Its main advantage is that, compared to the hierarchical
+clustering methods we will discuss later, it is very fast and does not
+consume much resources. This makes it especially useful for larger
+datasets.
+
+$k$-means cluster analysis is a method that takes any number of observations (cases) and group them into a given number of clusters based on the proximity of each observation to the mean of the formed cluster (centroid).  Mathematically, we measure this proximity as the distance of any given point to its cluster center, and can be expressed as
 
 $$J = \sum_{j=1}^{k} \sum_{i=1}^{n} \big\| X_i^{(j)} - c_j \big\| ^2$$
 
@@ -13,21 +55,74 @@ where $ \big\| X_i^{(j)} - C_j \big\| ^2$ is the distance between the data point
 
 Instead of taking the mean, some variations of this algorithm take the median (k-medians) or a representative observation, also called medoid (k-medoids or partitioning around medoids, PAM) as a way to optimize the initial method.
 
-The first thing is to prepare a proper dataset, using only continuous variables, scaling the data (for comparability) and avoiding missing values (drop or impute). In \refex{elbow}, we will use the variables support to refugees (\emph{support\_refugees\_n}), support to migrants(\emph{support\_migrants\_n}), age (\emph{age}) and educational level (number of years of education) (\emph{educational\_n}) and will create a dataframe \verb+d3+ with the mean of all theses variables for each \emph{country} (each observation will be a country). Before conducting cluster analysis, we should establish how many clusters we want to have. This is a tricky question, since you have to tell k-means how many of them you want to and there are different ways to estimate this number (besides of arbitrarily decide it!). 
+Because $k$-means clustering calculates \emph{distances} between cases,
+these distances need to be meaningful -- which is only the cases if
+the scales on which the variables are measured are comparable. If all
+your variables are measured on the same (continous) scale with the
+same endpoints, you may be fine. In most cases, you need to normalize
+your data by transforming them into, for instance, z-scores, or a
+scale from 0 to 1.
 
-The simplest method to obtain the optimal number of clusters is by estimating the variability within the groups for different executions of the k-means function. This means that we must run k-means for different number of clusters (i.e. 1 to 15 clusters) and then choose the number of clusters that decreases the variability maintaining the highest number of clusters. If it is confusing, do not worry!  When you generate and plot a vector with the variability , or in more technical words, the within-cluster sum of squares (WSS) obtained after each execution, it is very easy to identify the optimal number: Just look at the bend (\textit{knee} or \textit{elbow}) and you will find the point where it decreases the most and then get the optimal number of clusters (3 clusters in our example).
+Hence, the first thing we do in our example, is to prepare a proper
+dataset with only continuous variables, scaling the data (for
+comparability) and avoiding missing values (drop or impute). In
+\refex{elbow}, we will use the variables support to refugees
+(\emph{support\_refugees\_n}), support to
+migrants(\emph{support\_migrants\_n}), age (\emph{age}) and
+educational level (number of years of education)
+(\emph{educational\_n}) and will create a dataframe \verb+d3+ with the
+mean of all theses variables for each \emph{country} (each observation
+will be a country). $k$-means requires us to specify the number of
+clusters, $k$, in advance. This is a tricky question, and (besides of
+arbitrarily deciding $k$!), you essentially need to re-estimate your
+model multiple times with different $k$s.
+
+The simplest method to obtain the optimal number of clusters is to
+estimating the variability within the groups for different runs. This
+means that wWe must run $k$-means for different number of clusters
+(i.e. 1 to 15 clusters) and then choose the number of clusters that
+decreases the variability maintaining the highest number of
+clusters. When you generate and plot a vector with the variability ,
+or in more technical words, the within-cluster sum of squares (WSS)
+obtained after each execution, it is very easy to identify the optimal
+number: Just look at the bend (\textit{knee} or \textit{elbow}) and
+you will find the point where it decreases the most and then get the
+optimal number of clusters (3 clusters in our example).
 
 \pyrex[output=py,format=png,caption=Getting the optimal number of clusters]{chapter08/elbow}
 
-Now we can finally conduct k-means (\refex{kmeans}). We generate 25 initial random centroids (the algorithm will choose the one that optimizes the cost). The default of this parameter is 1, but it is recommended to set it with a higher number (i.e. 20 to 50) to guaranty the maximum benefit of the method. The base R function \fn{kmeans} and \pkg{scikit-learn} function \fn{KMeans} in Python will produce the clustering. You can observe the mean (scaled) for each variable in each cluster, as well as the corresponding cluster for each observation. 
+Now we now estimate our final model (\refex{kmeans}). We generate 25
+initial random centroids (the algorithm will choose the one that
+optimizes the cost). The default of this parameter is 1, but it is
+recommended to set it with a higher number (i.e. 20 to 50) to guaranty
+the maximum benefit of the method. The base R function \fn{kmeans} and
+\pkg{scikit-learn} function \fn{KMeans} in Python will produce the
+clustering. You can observe the mean (scaled) for each variable in
+each cluster, as well as the corresponding cluster for each
+observation.
 
 \pyrex[output=py,caption=Using Kmeans to group countries based on the average support of refugees and migrants\, age and educational level]{chapter08/kmeans}
 
-Using the function \fn{fviz\_cluster} of the library \pkg{factoextra} in R, or the \pkg{pyplot} function \fn{scatter} in Python, you can have a great visualization of the clusters! In \refex{kmeans2} you can clearly identify that the clusters correspond to Nordic countries (more support to foreigners, more education and age), Central and Southern European countries (middle support, lower education and age), and Eastern European countries (less support, lower education and age)\footnote{We can re-run this cluster analysis using k-medoids or partitioning around medoids (PAM) and get similar results (the three medoids are: Slovakia, Belgic and Denmark), both in data and visualization. In R you must install the package \pkg{cluster} than contains the function \fn{pam}, and in Python the package \pkg{scikit-learn-extra} with the function \fn{Kmedoids}.} .
+Using the function \fn{fviz\_cluster} of the library \pkg{factoextra} in R, or the \pkg{pyplot} function \fn{scatter} in Python, you can get a visualization of the clusters. In \refex{kmeans2} you can clearly identify that the clusters correspond to Nordic countries (more support to foreigners, more education and age), Central and Southern European countries (middle support, lower education and age), and Eastern European countries (less support, lower education and age)\footnote{We can re-run this cluster analysis using k-medoids or partitioning around medoids (PAM) and get similar results (the three medoids are: Slovakia, Belgic and Denmark), both in data and visualization. In R you must install the package \pkg{cluster} than contains the function \fn{pam}, and in Python the package \pkg{scikit-learn-extra} with the function \fn{Kmedoids}.} .
 
 \pyrex[output=py,format=png,caption=Visualization of clusters]{chapter08/kmeans2}
 
-Another method to deploy cluster analysis is hierarchical clustering, which builds a hierarchy of clusters that we can visualize in a dendogram.  This algorithm has two versions: a bottom-up approach (observations begin in their own clusters), also called \textit{agglomerative}, and a top-down approach (all observations begin in one cluster), also called \textit{divisive}. We will follow the bottom-up approach in this chapter and when you will look at the dendogram you will realize how this strategy repeatedly combines the two \textit{nearest} clusters at the bottom into a larger one in the top. The distance between clusters is initially estimated for every pair observation points and then put every point in its own cluster in order to get the closest pair of points and iteratively compute the distance between each new cluster and the previous ones. This is the internal rule of the algorithm and we must choose a specific linkage method (complete, single, average or centroid or ward). In \refex{hc} we will use the function \fn{hcut} of the package \pkg{factoextra} in R and \pkg{scikit-learn} function \fn{AgglomerativeClustering} in Python, to compute the hierarchical clustering. 
+
+\subsection{Hierarchical clustering}
+
+Another method to conduct a cluster analysis is hierarchical clustering, which builds a hierarchy of clusters that we can visualize in a dendogram.  This algorithm has two versions: a bottom-up approach (observations begin in their own clusters), also called \textit{agglomerative}, and a top-down approach (all observations begin in one cluster), also called \textit{divisive}. We will follow the bottom-up approach in this chapter and when you will look at the dendogram you will realize how this strategy repeatedly combines the two \textit{nearest} clusters at the bottom into a larger one in the top. The distance between clusters is initially estimated for every pair observation points and then put every point in its own cluster in order to get the closest pair of points and iteratively compute the distance between each new cluster and the previous ones. This is the internal rule of the algorithm and we must choose a specific linkage method (complete, single, average or centroid or Ward's linkage). Ward's linkage is a good default choice: It inimizes the variance of the clusters being merged. In doing so, tends to produce roughly evenly sized cluster and is less sensitive to noise and outliers than some of the other methods. 
+
+In \refex{hc} we will use the function \fn{hcut} of the package \pkg{factoextra} in R and \pkg{scikit-learn} function \fn{AgglomerativeClustering} in Python, to compute the hierarchical clustering. 
+
+A big advantage of hierarchical clustering is that, once estimated,
+you can freely choose the number of clusters in which to group your
+cases without re-estimating the model. If you decide, for instance, to
+use four instead of three clusters after all, then the cases in one of
+your three clusters are divided into two subgroups. With $k$-means, in
+contrast, a three-cluster solution can be completely different from a
+four-cluster solution. However, this comes at a big cost: hierarchical
+clustering requires a lot more computing resources and may therefore
+not be feasible for large datasets.
 
 \pyrex[output=py,caption=Using hierarchical clustering to group countries based on the average support of refugees and migrants\, age and educational level]{chapter08/hc}
 
@@ -35,15 +130,47 @@ We can then plot the dendogram  with base R function \fn{plot} and \pkg{scipy} (
 
 \pyrex[output=py,format=png,caption=Dendogram to visualize the hierarchical clusterin]{chapter08/dendogram}
 
-If you re-run the hierarchical clustering for 3 clusters (\refex{hc3}) and visualize it (\refex{vishc3}) you will get a graph similar to the one produced by k-means!
+If you re-run the hierarchical clustering for 3 clusters (\refex{hc3}) and visualize it (\refex{vishc3}) you will get a graph similar to the one produced by $k$-means.
 
 \pyrex[output=py,caption=Re-run hierarchical clustering with 3 clusters]{chapter08/hc3}
 
 \pyrex[output=py,format=png,caption=Re-run hierarchical clustering with 3 clusters]{chapter08/vishc3}
 
-Finally, we will cover principal component analysis (PCA). This uns	upervised method is useful to reduce the dimensionality of your data by creating new uncorrelated variables or \textit{components} that describe the original dataset. PCA uses lineal transformation to create principal components that are ordered by the level of explained variance (the first component will catch the largest variance). We will get as many principal components as number of variables we have in the dataset, but when we look at the cumulative variance we can easily select only few of these components to explain most of the variance and thus work with a smaller and summarised dataframe that might be more convenient for many tasks (i.e. those that require avoiding multicollinearity or just need to be more computationally efficient). By simplifying the complexity of our data we can have a first understanding of how our variables are related and also of how our observations might be grouped. All components have specific loads for each original variable, which can tell you how the old variables are represented in the new components. This statistical technique is especially useful in EDA when working with high dimensional datasets but it can be used in many other situations.  
 
-The mathematics behind PCA can be  relatively easy to understand. However, for the sake of simplicity, we will just say that in order to obtain the principal components the algorithm firstly has to compute the mean of each variable and then compute the covariance matrix of the data. This matrix contains the covariance between the elements of a vector and the output will be a square matrix with identical number of rows and columns, corresponding to the total number of dimensions of original dataset. Specifically, we can calculate the covariance matrix of the variables \emph{X} and \emph{y} with the next formula
+\subsection{Principal component analysis and singular value decomposition}
+
+Cluster analyses are in principle used to group similar
+cases. Sometimes, we want to group similar variables instead.  A
+well-known method for this is principal component analysis (PCA). This
+unsupervised method is useful to reduce the dimensionality of your
+data by creating new uncorrelated variables or \textit{components}
+that describe the original dataset. PCA uses linear transformations to
+create principal components that are ordered by the level of explained
+variance (the first component will catch the largest variance). We
+will get as many principal components as number of variables we have
+in the dataset, but when we look at the cumulative variance we can
+easily select only few of these components to explain most of the
+variance and thus work with a smaller and summarised dataframe that
+might be more convenient for many tasks (i.e. those that require
+avoiding multicollinearity or just need to be more computationally
+efficient). By simplifying the complexity of our data we can have a
+first understanding of how our variables are related and also of how
+our observations might be grouped. All omponents have specific loads
+for each original variable, which can tell you how the old variables
+are represented in the new components. This statistical technique is
+especially useful in EDA when working with high dimensional datasets
+but it can be used in many other situations.
+
+The mathematics behind PCA can be relatively easy to
+understand. However, for the sake of simplicity, we will just say that
+in order to obtain the principal components the algorithm firstly has
+to compute the mean of each variable and then compute the covariance
+matrix of the data. This matrix contains the covariance between the
+elements of a vector and the output will be a square matrix with
+identical number of rows and columns, corresponding to the total
+number of dimensions of original dataset. Specifically, we can
+calculate the covariance matrix of the variables \emph{X} and \emph{y}
+with the next formula
 
 $$cov_{x,y}=\frac{\sum_{i=1}^{N}(x_{i}-\bar{x})(y_{i}-\bar{y})}{N-1}$$
 
@@ -53,9 +180,9 @@ Let us now conduct a PCA over the Eurobarometer data.  In \refex{pca} we will re
 
 \pyrex[output=py,caption=Principal component analysis (PCA) of a dataframe with 30 records and 4 variables]{chapter08/pca}
 
-The generated object with the PCA contains different elements (in R "sdev",     "rotation", "center",  "scale" and   "x") or attributes in Python (components\_, explained\_variance\_, explained\_variance\_ratio, singular\_values\_, mean\_, n\_components\_, n\_features\_, n\_samples\_ and noise\_variance\_). In the resulting object we can see the values of 4 principal components of each country, and the values of the loadings, technically called \textit{eigenvalues}, for the variables in each principal component. In our example we can notice that support to refugees and migrants are more represented on PC1, while age and educational level on PC2. If we plot the first two principal components (using base function \fn{biplot} in R and and ad hoc function created with \pkg{pyplot} in Python) we can clearly see how the variables are associated with either PC1 or with PC2 (we might also want to plot any pair of the four components!). But we can also get a picture of how countries are grouped based only in this two new variables.
+The generated object with the PCA contains different elements (in R "sdev",     "rotation", "center",  "scale" and   "x") or attributes in Python (components\_, explained\_variance\_, explained\_variance\_ratio, singular\_values\_, mean\_, n\_components\_, n\_features\_, n\_samples\_ and noise\_variance\_). In the resulting object we can see the values of 4 principal components of each country, and the values of the loadings, technically called \textit{eigenvalues}, for the variables in each principal component. In our example we can notice that support to refugees and migrants are more represented on PC1, while age and educational level on PC2. If we plot the first two principal components (using base function \fn{biplot} in R and and ad hoc function created with \pkg{matplotlib} in Python) we can clearly see how the variables are associated with either PC1 or with PC2 (we might also want to plot any pair of the four components!). But we can also get a picture of how countries are grouped based only in this two new variables.
 
-\pyrex[output=py,format=png,format=png,caption=Plot PC1 and PC2]{chapter08/plot_pca}
+\pyrex[output=py,format=png,caption=Plot PC1 and PC2]{chapter08/plot_pca}
 
 So far we are not sure of how many components are enough to accurately represent our data, so we need to know how much variance (which is the square of the standard deviation) is explained by each component. We can get the values (\refex{prop}) and plot  the proportion of explained variance (\refex{prop2}). We get that the first component explain 57.85\% of the variance, the second 27.97\%, the third 10.34\% and the fourth just 3.83\%. 
 
@@ -67,8 +194,23 @@ When we estimate (\refex{acum}) and plot (\refex{acum2}) the cumulative explaine
 \pyrex[output=py,caption=Cumulative explained variance]{chapter08/acum}
 \pyrex[output=py,format=png,caption=Plot of the cumulative explained variance]{chapter08/acum2}
 
-And what if we want to use this PCA and deploy a clustering (as explained above) with just these two new variables instead of the four original ones?  Just repeat the k-means procedure but now using a new smaller dataframe selecting PC1 and PC2 from the PCA. After estimating the optimal number of clusters (3 again!) we can compute and visualize the clusters, and get a very similar picture to the one obtained in the previous examples, with little differences such as the change of cluster of the Netherlands (more similar now to the Nordic countries!). 
+And what if we want to use this PCA and deploy a clustering (as explained above) with just these two new variables instead of the four original ones?  Just repeat the $k$-means procedure but now using a new smaller dataframe selecting PC1 and PC2 from the PCA. After estimating the optimal number of clusters (3 again!) we can compute and visualize the clusters, and get a very similar picture to the one obtained in the previous examples, with little differences such as the change of cluster of the Netherlands (more similar now to the Nordic countries!). This last exercise is a good example of how to combine different techniques in EDA.
 
-\pyrex[output=none,caption=Combining PCA to reduce dimensionality and k-means to group countries]{chapter08/new}
+\pyrex[output=none,caption=Combining PCA to reduce dimensionality and $k$-means to group countries]{chapter08/new}
 
-This last exercise is a good example of how to combine different techniques in EDA. In the next chapter (chapter~\ref{chap:introsml}) we will continue explaining machine learning, but we will focus on supervised methods that will be of mandatory use for many computational analyses of both structured and unstructured data.
+When your dataset gets bigger, though, you may actually not use PCA
+but the very much related singular value decomposition, SVD. They are
+closely interrelated, and in fact SVD can be used ``under the hood''
+to estimate a PCA. While PCA is taught in a lot of classical textbooks
+for statistics in the social sciences, SVD is usually not. Yet, it has
+a great advantage: In the way how it is implemented in
+\pkg{scikit-learn}, it does not require to store the (dense)
+covatiance matrix in memory (see the feature box on
+p.~\pageref{feature:sparse} for more information on sparse versus dense
+matrices). This means that while once your dataset grows bigger than
+typical survey datasets, a PCA may be quickly impossible to estimate,
+while the SVD can still be estimated without much ressources
+needed. Therefore, especially when you are working with textual data,
+you will see that SVD is used instead of PCA. For all practical
+purposes, the way how you can use and interpret the results stays the
+same, though.
