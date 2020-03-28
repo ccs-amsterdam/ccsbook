@@ -8,6 +8,7 @@
 \RequirePackage[utf8]{inputenc}
 \DeclareFloatingEnvironment[fileext=ex,placement={!ht},name=Example]{ccsexample}
 
+\DeclareUnicodeCharacter{22EF}{\ldots}
 %%%%%%%%%%%%%%%%%%%%%%%%
 %% Code listing style
 %%%%%%%%%%%%%%%%%%%%%%%%
@@ -16,7 +17,7 @@
 	basicstyle=\tiny\ttfamily,
 	columns=flexible,
 	breaklines=true,
-        literate={Ö}{{\"O}}1 {ö}{{\"o}}1 {Ä}{{\"A}}1 {ä}{{\"a}}1 {ü}{{\"u}}1 {Ü}{{\"u}}1 {°}{\dg}1
+        literate={Ö}{{\"O}}1 {ö}{{\"o}}1 {Ä}{{\"A}}1 {ä}{{\"a}}1 {ü}{{\"u}}1 {Ü}{{\"u}}1 {°}{\dg}1 {⋯}{{\ldots}}1
 	%stepsize=1,
 }
 

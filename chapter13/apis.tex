@@ -1,2 +1,29 @@
 \section{Using open web APIs: from twitter and guarding to open government}
 \label{sec:apis}
+
+
+
+
+MAYBE OUTDATED SOON
+We do not
+
+see docs here:
+https://developers.google.com/books/docs/v1/using
+
+
+As \refex{googleapi} shows....
+
+
+\pyrex[output=py,caption=Retrieving JSON data from the Google Books API]{chapter13/googleapi1}
+
+
+These are nested data, and hence, they do not really ``fit'' in a tabular dataframe. We could keep the data as they are (and then, for instance, just extract the key-value pairs that we are interested in), but -- for the sake of getting a quick overview -- let's flatten the data so that they can be represented in a dataframe (\refex{googleapi2}). This works quite well here, but may be more problematic when the items have a widely varying structure.
+
+\pyrex[output=none,caption=Transorming the data into a dataframe]{chapter13/googleapi2}
+
+Many APIs work with pagination. Instead of .... \refex{googleapi3} combines all...
+
+\pyrex[output=none,caption=Full script including pagination]{chapter13/googleapi3}
+
+
+output is really big table therefore not shown
