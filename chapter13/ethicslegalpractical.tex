@@ -1,2 +1,59 @@
 \section{Ethical, legal and practical considerations}
 \label{sec:ethicallegalpractical}
+Web scraping is a powerful tool, but it needs to be handled
+responsibly. Between the white area of sites that explicitly consented
+to creating a copy of their data (for instance, by using a creative
+commons license) and the black area of an exact copy of copyrighted
+material and redistributing it as it is, there is a large gray area
+where it is less clear what is acceptable and what is not.
+
+There is a tension between legitimate interests of the operators of
+web sites and the producers of content on the one hand, and the
+societal interest of studying online communication on the other
+hand. Which interest prevails may differ on a case-to-case basis. For
+instance, when using APIs as described in \refsec{apis}, in most
+cases, you have to consent to the terms of service (TOS) of the API
+provider.
+
+For instance, the Twitter TOS allow you to redistribute the numerical
+tweet ids, but not the tweets themselves, and therefore, it is common
+to share such lists of ids with fellow researchers instead of the
+``real'' Twitter datasets. Of course, this is not optimal from a
+reproducability point of view: if another researcher has to retrieve
+the tweets again based on their ids, then this is not only cumbersome,
+but most likely also leads to a slightly different dataset, because
+tweets may have been deleted in the meantime. At the same time, it is
+a compromise most people can live with.
+
+Other social media platforms have closed their APIs or tightened the
+restrictions a lot, making it impossible to study many pressing
+research questions. Therefore, some have even called researchers to
+neglecthese TOS, because ``in some circumstances the benefits to
+society from breaching the terms of service outweigh the detriments to
+the platform itself'' \citep[p.~1561]{Bruns2019}. Others acknowledge
+the problem, but doubt that this is a good solution
+\citep{Puschmann2019}.
+
+In general, one needs to distinguish between the act of collecting the
+data and sharing the data. For instance, in many juristictions, there
+are legal excemptions for collecting data for scientific purposes, but
+that does not mean that they can be re-distributed as they are
+\citep{VanAtteveldt2019}.
+
+This chapters can by no means replace the consultation of a legal
+expert and/or an ethics board, but we would like to offer some
+strategies to minimize potential problems.
+
+\paragraph{Be nice} Of course, you could send hundreds of requests per minute (or second) to a website and try to download everything that they have ever published. However, this causes unnecessary load on their servers (and you probably would get blocked). If, on the other hand, you carefully think about what you really need to download, and include a lot of waiting times (for instance, using \fn{sys.sleep} (R) or \fn{time.sleep} (Python) so that your script essentially does the same what could be done by hiring a couple of student assistants to copy-paste the data manually, then problems are much less likely to arise.
+
+\paragraph{Collaborate} Another way to minimize traffic and server load is to collaborate more. A concerted effort with multiple researcher may to less duplicate data and in the end probably an even better, re-usable dataset.
+
+\paragraph{Be extra careful with personal data} Both from an ethical and a legal point of view, the situation changes drastically as soon as personal data are involved. Especially since the GDPR regulations took effect in the European Union, collecting and processing such data requires a lot of additional precaution and is usually subject to explicit consent. It is clearly infeasible to ask every Twitter user to ask for consent to process their tweet and doing so is probably covered by research exceptions, the general advise is to store as little personal data as possible and as absolutely needed. Most likely, you need to have a data management plan in place, and should get appropriate legal advise from your department. Therefore, think carefully whether you really need, for instance, the user names of the authors of reviews you are going to scrape, or whether the text alone suffices.
+
+Once all ethical and legal concerns are sorted out and you made sure that you wrote a scraper in such a way that it does not cause unncessary traffic and load on the servers from which you are scraping, and after doing some test runs, it is time to think about how to actually run it on a larger scale. You may already have figured that you probably do not want to run your scraper from a Jupyter Notebook that is constantly open in your browser on your personal laptop. Also here, we would like to offer some suggestions.
+
+\paragraph{Consider using a database} Imagine the following scenario: your scraper visits hundreds of websites, collects its results in a list or in a dataframe, and after hours of running suddenly crashes -- maybe because some element that you were sure must exist on each page, well, exists only on 999 out of 1000 pages, because a connection timed out, or any other error. Your data is lost, you need to start again (not only annoying, but also undesirable from a traffic minimization point of view). A better strategy may be to immediately write the data for each page that to a file. But then, you need to handle a potentially huge amount of files later on. A much better approach, especially if you plan to run your scraper repeatedly over a long period of time, is considering the use of a database in which you dump the results immediately after a page has been scraped (see \refsec{databases}).
+
+\paragraph{Run your script from the command line} Store your scraper as a .py or .R script and run it from your terminal (your command line) by typing |python myscript.py| or |R myscript.R| rather than using an IDE such as Spyder or R Studio or a Jupyter Notebook. You may want to have your script print a lot of status information (for instance, which page it is currently scraping), so that you can watch what it is doing. If you want to, you can have your computer run this script in regular intervals (e.g., once an hour). On Linux and MacOS, for instance, you can use a so-called \pkg{cron} job to automate this.
+
+\paragraph{Run your script on a server} If your scraper runs longer than a couple of hours, you may not want to run it on your laptop, especially if your internet connection is not stable. Instead, you may consider using a server. As we will explain in \refsec{cloudcomputing}, it is quite affordable to set up a Linux VM on a cloud computing platform (and next to commercial services, in some countries and institutions there are free services for academics). You can then use tools like \pkg{nohup} or \pkg{screen} to run your script on the background, even if you are not connected to the server any more.
