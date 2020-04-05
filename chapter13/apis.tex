@@ -1,29 +1,140 @@
-\section{Using open web APIs: from twitter and guarding to open government}
+\section{Using web APIs: from open resources to Twitter}
 \label{sec:apis}
 
 
+Let's assume we want to retrieve data from some online service. This
+could be some social media platform, but also a government website,
+some \emph{open data} platform or initiative, or sometimes a
+commercial organization that provides some online service.  Of course,
+we could surf to their website, enter a search query, and somehow save
+the result. This would result in a lot of impracticalities,
+though. Most notably, websites are designed such that they are
+perfectly readable and understandable for humans, but the cues that
+are used often have no ``meaning'' for a computer program. As humans,
+we have no problem understanding which parts of a web page refer to
+the author of some item on a web page, what the numbers ``2006'' and
+``2008'' mean, and on. But it is not trivial to think of a way to
+explain to a computer program how to identify variables like
+\texttt{author}, \texttt{title}, or \texttt{year} on a web page.
+
+We will learn how to do exactly that in \refsec{webpages}. Writing
+such a \emph{parser} is often necesarry, but it is also error-prone
+and some kind of a detour, as we are trying to bring some information
+that has been optimized for human reading \emph{back} to a more
+structured data structure. 
+
+Luckily, however, many online services do not only have web interfaces
+optimized for human reading, but also offer another possibility to
+access the data they provide: an API (Application Programming
+Interface).
+
+The vast amount of contempory web APIs works like this: you send a
+\emph{request} to some URL, and you get back a JSON object. As you
+learned in \refsec{reading}, JSON is a nested data structure, very
+much like a Python dictionary (and, in fact, JSON data typically are
+represented as a dictionary in Python). In other words: APIs directly
+gives us machine-readable data that we can work with without any need
+to develop a custom parser.
+
+Discussing specific APIs in a book can be a bit tricky, as there is a
+chance that it will be outdated: After all, the API provider may change
+it at any time. We therefore decided not to include a chapter on very
+specific application such as ``How to use the Twitter API'' or similar --
+given the popularity of such APIs, a quick online search will surface
+enough up-to-date (and out-of-date) tutorials on these. Instead,
+we discuss the generic principles of APIs that should easily translate
+to other examples than ours.
 
 
-MAYBE OUTDATED SOON
-We do not
+In its most simple form, using an API is nothing else than visiting
+a specific URL. The first part of the URL specifies the so-called
+API endpoint: the address of the specific API you want to use. This
+address is then followed by a |?| and one or more key-value pairs with an
+equal sign like this: |key=value|. Multiple key-value pairs are
+separated with a |\&|.
 
-see docs here:
-https://developers.google.com/books/docs/v1/using
+For instance, at the time of the writing of this book, Google offers
+an API endpoint, |https://www.googleapis.com/books/v1/volumes|, to search for books on Google Books.
+If you want to search for books about Python, you can supply a key |q| (which stands for query) with
+the value ``python'' (\refex{googleapi1}). We do not need any specific
+software for this -- we could, in fact, use a web browser as well.
+Popular packages that allow us to do it programatically are \pkg{httr}
+in combination with \pkg{jsonlite} (R) and \pkg{requests} (Python).
+
+But how do we know which parameters (i.e., which key-value pairs) we can use?
+We need to look it up in the documentation of the API we are
+interest in (in this example \url{https://developers.google.com/books/docs/v1/using}).
+There is no other way of getting to know that the key to submit a query
+is called |q|, and which other parameters can be specified.
+
+\begin{feature}
+  In our example, we used a simple value to include in the request:
+  the string ``python''.  But what if we want to submit a string that
+  contains, let's say, a space, or a character like |&| or |?| which,
+  as we have seen, have a special meaning in the request? In these
+  cases, you need to ``encode'' your URL using a mechanism called URL
+  encoding or percent encoding. You may have seen this earlier: a
+  space, for instance, is represented by |\%20|
+\end{feature}
 
 
-As \refex{googleapi} shows....
+
+\pyrex[output=py,caption={Retrieving JSON data from the Google Books API. In the Python example, we have more control over what to print exactly, as the JSON object translates neatly into native Python dictionaries.}]{chapter13/googleapi1}
 
 
-\pyrex[output=py,caption=Retrieving JSON data from the Google Books API]{chapter13/googleapi1}
-
-
-These are nested data, and hence, they do not really ``fit'' in a tabular dataframe. We could keep the data as they are (and then, for instance, just extract the key-value pairs that we are interested in), but -- for the sake of getting a quick overview -- let's flatten the data so that they can be represented in a dataframe (\refex{googleapi2}). This works quite well here, but may be more problematic when the items have a widely varying structure.
+The data our request returns are nested data, and hence, they do not
+really ``fit'' in a tabular dataframe. We could keep the data as they
+are (and then, for instance, just extract the key-value pairs that we
+are interested in), but -- for the sake of getting a quick overview --
+let's flatten the data so that they can be represented in a dataframe
+(\refex{googleapi2}). This works quite well here, but may be more
+problematic when the items have a widely varying structure. If that
+is the case, we probably would want to write a loop to iterate
+over the different items and extract the information we care about.
 
 \pyrex[output=none,caption=Transorming the data into a dataframe]{chapter13/googleapi2}
 
-Many APIs work with pagination. Instead of .... \refex{googleapi3} combines all...
+You may have realized that you did not get \emph{all} results.
+This protects you from accidentally downloading a huge dataset (you
+may have underestimated the number of Python books available on the
+market), and saves the provided of the API a lot of bandwith.
+This does not mean that you cannot get more data. In fct, many APIs work
+with \emph{pagination}: you first get the first ``page'' of results,
+then the next, and so on. Sometimes, the API response contains
+a specific key-value pair (sometimes called a ``continuation key'')
+that you can use to get the next results; sometimes, you can just
+say at which result you want to start (say, result number 11) and
+then get the next ``page''. You can then write a loop to retrieve
+as many results as you need (\refex{googleapi3}) -- just make sure
+that you do not get stuck in an eternal loop. When you start playing
+around with APIs, make sure you do not cause unnecessary traffic,b
+but limit the number of calls that are made (see also \refsec{ethicallegalpractical}).
 
-\pyrex[output=none,caption=Full script including pagination]{chapter13/googleapi3}
+
+\pyrex[output=none,caption={Full script including pagination. Because of the size of the table, the output is not shown.}]{chapter13/googleapi3}
 
 
-output is really big table therefore not shown
+
+Many APIs work very much like the example we discussed, and you
+can adapt the logic above to many APIs once you have read their
+documentation. You would usually start by playing around with
+single requests, and then try to automate the process by means
+of a loop.
+
+However, many APIs have restrictions regarding who can use them,
+how many requests can be made, and so on.
+
+For instance, you may need to limit the number of requests per minute
+by calling a \fn{sleep} function within your loop to delay the
+execution of the next call. Or, you may need to authenticate
+yourself. In the example of the Google Books API, this will
+allow you to request more data (such as whether you own an
+(electronic) copy of the books you retrieved). In this case,
+the documentation outliens that you can simpy pass an authentication
+token as a parameter with the URL. However, many APIs use
+more advanced authentication methods such as OAuth (see \refsec{authentication}).
+
+Lastly, for many APIs that are very popular with social
+scientists, specific wrapper packages exist (such as, to name just one example, \pkg{tweepy})
+which are a bit more user-friendly and handle things like authentication,
+respecting rate-limits, etc. for you.
