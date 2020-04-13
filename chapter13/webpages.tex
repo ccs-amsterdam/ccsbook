@@ -1,2 +1,262 @@
 \section{Retrieving and parsing web pages}
 \label{sec:webpages}
+
+Unfortunately, not all online services we may be interested in offer
+an API -- in fact, it has even been suggested that computational
+researchers has arrived in an ``post-API age'' \citep{Freelon2018}, as
+API access for researchers has become increasingly restricted.
+
+If data cannot be collected using an API (or a similar service, such
+as RSS feeds), we need to restort to web scraping. Before you start a
+web scraping project, make sure to ask the appropriate instances for
+ethical and legal advice (see also \refsec{ethicallegalpractical}).
+
+Web scraping (sometimes also referred to as harvesting), in essence,
+boils down to automatically downloading web pages aimed at a human
+audience, and extracting meaningful information out of them. One could
+also say that we are reverse-engineering the way the information was
+published on the web. For instance, a news site may always use a
+specific formatting to denote the title of an article -- and we would
+then use this to extract the title. This process is called `parsing',
+which in this context is just a fancy term for `extracting meaningful
+information'.
+
+When scraping data from the web, we can distinguish two different
+tasks: (1) downloading a (possibly large) number of webpages, and (2)
+parsing the content of the webpages. Often, both go hand in
+hand. For instance, the URL of the next page to be downloaded might
+actually be parsed from the content of the current page; or some
+overview page may contain the links and thus has to be parsed first in
+order to download subsequent pages.
+
+We will first discuss how to parse a single HTML page (say, the page
+containing one specific product review, or one specific news article),
+and then describe how to ``scale up'' and repeat the process in a
+loop (to scrape, let's say, all reviews for the product; or all
+articles in a specific time frame).
+
+
+
+
+\subsection{Retrieving and parsing a HTML page}
+\todo[inline]{WE NEED TO FIND AN EXAMPLE THAT IS UNLIKELY TO CHANGE. MAYBE EVEN A SITE WE MANAGE?}
+
+In order to parse a HTML file, you need to have a basic understanding
+of the structure of an HTML file. Open your web browser, visit a
+website of your choice (we suggest to use a simple page, such as
+\url{http://css-book.net/example.html}) \todo{create this one}, and
+look inspect its underlying HTML code (almost all browsers have a
+function called something like ``view source'', which enables you to
+do so).
+
+You will see that there are some regular patterns in there. For
+example, you may see that each paragraph is enclosed with the tags
+|<p>| and |</p>|. Thinking back of \refsec{regular}, you may figure
+that you could, for instance, use a regular expression to extract
+the text of the first paragraph. In fact, packages like \pkg{beautifulsoup}
+under the hood use regular expressions to do exactly that.
+
+But writing your own set of regular expressions to parse a HTML
+page usually is not a good idea (but it can be a last resort when
+everything else fails). Chances are high that you make
+a mistake or do not handle some edge case correctly; and besides,
+it would be a bit like re-inventing the wheel. Packages like
+\pkg{rvest} (R), \pkg{beautifulsoup}, and \pkg{lxml} (both Python)
+already do this for you.
+
+In order to use them, though, you need need to have a basic
+understanding of how a HTML page looks like. Here is a simplified
+example:
+
+\begin{lstlistingoutput}
+<html>
+<body>
+<h1>This is a title</h1>
+<div>
+<p> Some text with one <a href=bla.html>link </a> </p>
+<img src = plaatje.jpg>an image </img>
+</div>
+<div>
+<p> Some more text </p>
+<p> Even more... </p>
+<p> And more. </p>
+</div>
+</body>
+</html>
+\end{lstlistingoutput}
+
+For now, it is not too important to understand the function of each
+specific tag (although it might help, for instance, to realize that
+\texttt{a} denotes a link, \texttt{h1} a first-level heading,
+\texttt{p} a paragraph and \texttt{div} some kind of section).
+
+What is important, though, is to realize that each tag is opened and
+closed (with \texttt{/}). Because tags can be nested, we can actually
+draw the code as a tree. In our example, this would look like this:
+
+\dirtree{%
+.1 html.
+.2 body.
+.3 h1.
+.3 div.
+.4 p.
+.5 a.
+.4 img.
+.3 div.
+.4 p.
+.4 p.
+.4 p.
+}
+
+
+Additionally, tags can have \emph{attributes}. For instance, the
+makers of a page with customer reviews may use attributes to specify
+to specify what a section contains. For instance, they may write |<div
+class="reviewtext"> ... </div>| to mark the text of a review (where
+|...| is the text), and |<div class="ratings">...</div>" to mark the
+scores a product received. This enables them to format them nicely
+using a technique called Cascading Style Sheets (CSS). We can exploit
+this information to tell our parser where to find the elements we
+are interested in. Note that |class| is just one possible attribute
+attribute; you may encounter others.
+
+
+We can use so-called CSS selectors to select the elements we are
+interested in.  For instance, to select all elements that have an
+attribute \texttt{class} with the value \texttt{ratings}, we can just
+write: \texttt{.ratings} (with a dot).  And to select all \texttt{h1}
+tags, we can just write: \texttt{h1} (without a dot).
+
+For an overview of all possible CSS selectors, see
+\url{https://www.w3schools.com/cssref/css_selectors.asp}.
+
+Sometimes, you cannot express the elements you need using CSS
+selectors. For instance, there may be many elements using the same
+selectors, and you are only interested in a specific one. In these
+cases, you may want to use the XPATH syntax tp specify your elements
+of interested.
+
+As we have seen above, we can represent the HTML code of a web page as
+a tree (also referred to as the Document Object Model (DOM), or a DOM
+tree). We can then describe each location in the page by describing
+how to walk through the tree to arrive at the correct position.  For
+instance, to describe where to find ``Even more text'' in our example
+above, we could say: start at |html|, go to |body|, go to the second |div|,
+and take the first |p| element.
+
+If we translate this verbal explanation into a so-called XPATH, it reads:
+|/html/body/div[2]/p[1]|
+
+
+ You can compare the syntax of an XPATH with the path of a given file
+ (\texttt{/home/tim/Desktop/slides.pdf}), where the leftmost element
+ is the "highest" level, and where after each \texttt{/}, it indicates
+ to which lower level one has to turn before finally arriving at the
+ file (\texttt{slides.pdf}).
+
+If we leave away the \texttt{[1]} after \texttt{p}, we retrieve a list
+of all the three texts within the second div -- which makes it ease
+to, for instance, retrieve all reviews from a web page instead of only
+one specific review.
+
+Also within an XPATH, we can specify that some specific attribute needs to have a specific value. For instance, we could modify our example such that it does not take the second |div| element, but the |div| element where the attribute |class| has the value |ratings|:
+
+|/html/body/div[@class="hotel"]/p[1]|
+
+
+\todo[inline]{add example of parsing using CSS Selectors and XPATHs, maybe from book}
+
+%Thus, we need a module that transforms our web page into such a tree and allows us to address parts of the tree by their XPATH. Such a module is \texttt{lxml}, which will be presented in the next session.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CSS-SELECTORS
+
+
+% (wouter says rvest is fun)
+
+lxml
+beautifulsoup
+
+
+
+
+Requests
+
+User-agent strings
+
+
+
+
+\subsection{Crawling websites}
+
+Let us consider the example of a hotel review website. We might, for example, be interested in retrieving all reviews from hotels in Amsterdam.
+Maybe the site has an overview page that lists all Hotels in Amsterdam. There are (too) many hotels in Amsterdam, so they probably do not fit on one page, but we will ignore that for now and come back to it later. 
+
+Our approach, thus, could look as follows:
+
+\begin{enumerate}
+	\item Retrieve the overview page.
+	\item Parse the names of the hotels and the corresponding links.
+	\item Loop over all the links, retrieve the corresponding pages.
+	\item On each of these pages, parse the interesting content (i.e., the reviews, ratings, and so on).
+\end{enumerate}
+
+
+
+So, what if there are multiple overview pages (or multiple pages with reviews)? Basically, there are two possibilities:
+The first possibility is to look for the link to the next page, parse it, download the next page, and so on.
+The second possibility exploits the fact that often, URLs are very systematic: For instance, the first page of hotels might have a URL such as \url{http://myreviewsite.com/amsterdam/hotels.html?page=1}.
+If this is the case, we can simply construct a list with all possible URLs:
+\begin{lstlisting}
+baseurl = 'http://myreviewsite.com/amsterdam/hotels.html?page='
+tenpages = [baseurl+str(i+1) for i in range(10)]
+\end{lstlisting}
+Afterwards, we would just loop over this list and retrieve all the pages.
+
+
+
+
+frameworks like scrapy
+
+
+
+
+
+\subsection{Dynamic web pages}
+\label{sec:selenium}
+
+You may have realized that all our scraping efforts until now proceeded in two steps: we retrieved (downloaded) the HTML source of a web page and then parsed it. However, modern websites more and more are dynamic instead of static. For example, after being loaded, they load additional content, or what is displayed changes based on what the user does. Frequently, some JavaScript is run within the user's browser to do that. However, we do not have a browser here. The HTML code we downloaded may contain some instructions for the browser that some code needs to be run, but in the absence of a browser, our Python or R script cannot do this.
+
+A first test to check out whether this is a concern, you can simply check whether the HTML code in your browser is the same that you would get if you downloaded it with R or Python.
+
+\todo[inline]{Add example with retrieve/ save to file/ compare to browser}
+
+
+If this test indeed shows that the data you are interested in is indeed not part of the HTML code you can retrieve with R or Python, use the following checklist to find 
+
+\begin{enumerate}
+\item Does using a different user-agent string (see above) solve the issue?
+\item Is the issue due to some cookie that needs to be accepted (see below)?
+\item STH ELSE???
+\end{enumerate}
+
+If all of this does not help, or if you already know for sure that the content you are interested in is dynamically fetched via JavaScript or similar, you can use \pkg{selenium} to literally start a browser and extract the content you are interested in from there. Selenium has been designed for testing web sites and allows you to automate clicks etc. in a browser window, and also supports CSS selectors and XPATHS to specify parts of the web page.
+
+ADD E=
+
+selenium/RSelenium
+
+
+headless browser
