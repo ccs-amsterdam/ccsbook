@@ -39,12 +39,11 @@ articles in a specific time frame).
 
 
 \subsection{Retrieving and parsing a HTML page}
-\todo[inline]{WE NEED TO FIND AN EXAMPLE THAT IS UNLIKELY TO CHANGE. MAYBE EVEN A SITE WE MANAGE?}
 
 In order to parse a HTML file, you need to have a basic understanding
 of the structure of an HTML file. Open your web browser, visit a
 website of your choice (we suggest to use a simple page, such as
-\url{http://css-book.net/example.html}) \todo{create this one}, and
+\url{http://css-book.net/d/restaurants/index.html}), and
 look inspect its underlying HTML code (almost all browsers have a
 function called something like ``view source'', which enables you to
 do so).
@@ -68,7 +67,7 @@ In order to use them, though, you need need to have a basic
 understanding of how a HTML page looks like. Here is a simplified
 example:
 
-\begin{lstlistingoutput}
+\begin{lstlisting}
 <html>
 <body>
 <h1>This is a title</h1>
@@ -83,7 +82,7 @@ example:
 </div>
 </body>
 </html>
-\end{lstlistingoutput}
+\end{lstlisting}
 
 For now, it is not too important to understand the function of each
 specific tag (although it might help, for instance, to realize that
@@ -111,15 +110,14 @@ draw the code as a tree. In our example, this would look like this:
 
 Additionally, tags can have \emph{attributes}. For instance, the
 makers of a page with customer reviews may use attributes to specify
-to specify what a section contains. For instance, they may write |<div
-class="reviewtext"> ... </div>| to mark the text of a review (where
-|...| is the text), and |<div class="ratings">...</div>" to mark the
+to specify what a section contains. For instance, they may write
+\texttt{<div class="reviewtext"> ... </div>}  to mark the text of a review (where
+|...| is the text), and \texttt{<div class="ratings"> ...</div>} to mark the
 scores a product received. This enables them to format them nicely
 using a technique called Cascading Style Sheets (CSS). We can exploit
 this information to tell our parser where to find the elements we
 are interested in. Note that |class| is just one possible attribute
 attribute; you may encounter others.
-
 
 We can use so-called CSS selectors to select the elements we are
 interested in.  For instance, to select all elements that have an
@@ -147,7 +145,6 @@ and take the first |p| element.
 If we translate this verbal explanation into a so-called XPATH, it reads:
 |/html/body/div[2]/p[1]|
 
-
  You can compare the syntax of an XPATH with the path of a given file
  (\texttt{/home/tim/Desktop/slides.pdf}), where the leftmost element
  is the "highest" level, and where after each \texttt{/}, it indicates
@@ -157,44 +154,53 @@ If we translate this verbal explanation into a so-called XPATH, it reads:
 If we leave away the \texttt{[1]} after \texttt{p}, we retrieve a list
 of all the three texts within the second div -- which makes it ease
 to, for instance, retrieve all reviews from a web page instead of only
-one specific review.
+one specific review. An asterisk |*| can be used to indicate an
+arbitrary number.
 
-Also within an XPATH, we can specify that some specific attribute needs to have a specific value. For instance, we could modify our example such that it does not take the second |div| element, but the |div| element where the attribute |class| has the value |ratings|:
+Within an XPATH, we can also specify that some specific attribute
+needs to have a specific value. For instance, we could modify our
+example such that it does not take the second |div| element, but the
+|div| element where the attribute |class| has the value |ratings|:
 
-|/html/body/div[@class="hotel"]/p[1]|
+|/html/body/div[@class="restaurant"]/p[1]|
 
-
-\todo[inline]{add example of parsing using CSS Selectors and XPATHs, maybe from book}
-
-%Thus, we need a module that transforms our web page into such a tree and allows us to address parts of the tree by their XPATH. Such a module is \texttt{lxml}, which will be presented in the next session.
-
-
-
-
-
-
-
-
-
-
+Additionally, we can use two |//| to ``leave out'' part of the tree
+and indicate that arbitray steps may be taken here. For instance, one
+could say: \texttt{//div[@class="restaurant"]//a}, which means that
+you do not care \emph{how} to get from the root to the |div| of class
+|restaurant|, and that you want all |a| tags below this tag, even if
+several steps need to be taken in between. In this context, one also
+talks about ``parents'' and ``children'': the |a| elements are
+children (or grandchildren) of the |div| element.
 
 
+\refex{htmlparse1} shows how to use XPATHs and CSS selectors to parse
+a HTML page. To fully understand it, open
+\url{http://cssbook.net/d/restaurants/index.html} in a browser and
+look at its source code (all modern browsers have a function ``View
+page source'' or similar), or -- more comfortable -- right-click on an
+element you are interested in (such as a restaurant name) and select
+``Inspect element'' or similar. This will give you a user-friendly
+view of the HTML code.
+
+\pyrex[output=py,caption={Parsing websites using XPATHs or CSS selectors}]{chapter13/htmlparse1}
 
 
-CSS-SELECTORS
+Of course, \refex{htmlparse1} only parses one possible element of interest: the restaurant names. Try to retrieve other elements as well!
+
+\begin{feature}\textbf{Do you care about children as well?}
+Regardless of whether you use XPATHS or CSS Selectors to specify which part of the page you are interested in, it is often the case that there are other elements within it. Depending on whether you want to also retrieve the text of these elements or not, you have to use different approaches (see \refex{htmlparse2}).
+\end{feature}
+
+\pyrex[output=py,caption={Getting the text of an HTML element versus getting the text of the element and its children}]{chapter13/htmlparse2}
 
 
-% (wouter says rvest is fun)
 
-lxml
-beautifulsoup
+\begin{feature}\textbf{Pretending to be a specific browser.}  When \pkg{lxml}, \pkg{rvest}, or your web browser download a HTML page, they send a so-called HTTP request. This request contains the URL, but also some meta-data, such as a so-called user-agent string. This string specifies the name and version of the browser. Some sites may block specific user agents (such as, for instance, the ones \pkg{lxml} pr \pkg{rvest} use); and sometimes, they deliver different content for different browser. By using a more powerful module for downloading the HTML code (such as \pkg{requests} or \pkg{httr}) before parsing it, you can specify your own user-agent string and thus pretend to be a specific browser. If you do a web search, you will quickly find long lists with popular strings. In \refex{htmlparse1useragent}, we rewrote \refex{htmlparse1} such that a custom user-agent can be specified. 
+\end{feature}
 
-
-
-
-Requests
-
-User-agent strings
+\pyrex[output=py,caption={Specifying a user agent to pretend to be a
+    specific browser}]{chapter13/htmlparse1useragent}
 
 
 
