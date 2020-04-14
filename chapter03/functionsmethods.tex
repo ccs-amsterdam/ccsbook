@@ -63,9 +63,17 @@ once using a loop. This costs you only two extra lines of code
 \pyrex[caption=Functions are particular useful when used repeatedly,output=py]{chapter03/functions2}
 
 
+\begin{feature}
+  A specific type of Python functions that you may come across at one point (for instance, in \refsec{crawling}) is the \fn{generator}. Think of a function that returns a list of multiple values. Often, you do not need all values at once: you may only need the \emph{next} value at a time. This is especially interesting when calculating the whole list would take a lot of time or a lot of memory. Rather than waiting for all values to be calculated, you can immediately begin processing the first value before the next arrives; or you can work with data so large that do not fit into your memory at the same time.  You recognize a generator by the |yield| keyword instead of a |return| keyword (\refex{generators})
+\end{feature}
+
+\pyrex[input=py, output=py, caption={Generators behave like lists in that you can iteratre (loop) over them, but each element is only calculated when it is needed. Hence, they do not have a length.}]{chapter03/generators}
 
 
-\note{A central concept of object-oriented programming that we do not cover in this book are \fn{class}es. You can think of them as a blueprint for creating an object, and sometimes, this will shine through. For instance, if we write \texttt{c = Counter()} in Python, we create a new object \texttt{c}. This object is an \emph{instance} of the \emph{class} Counter (which we need to import from the package \pkg{collections} first). A counter is a class that allows you to count things, such as the most common words in a list of strings. You could say that you created your own counter, c, based on a template, the class Counter. In R, there are even different types of classes, called S3, S4, and reference. However, you are less likely to get exposed to them in your daily work.}
+
+\begin{feature}
+  A central concept of object-oriented programming that we do not cover in this book are \fn{class}es. You can think of them as a blueprint for creating an object, and sometimes, this will shine through. For instance, if we write \texttt{c = Counter()} in Python, we create a new object \texttt{c}. This object is an \emph{instance} of the \emph{class} Counter (which we need to import from the package \pkg{collections} first). A counter is a class that allows you to count things, such as the most common words in a list of strings. You could say that you created your own counter, c, based on a template, the class Counter. In R, there are even different types of classes, called S3, S4, and reference. However, you are less likely to get exposed to them in your daily work.
+  \end{feature}
 
 
 
