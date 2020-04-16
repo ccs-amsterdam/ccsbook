@@ -188,11 +188,16 @@ view of the HTML code.
 
 Of course, \refex{htmlparse1} only parses one possible element of interest: the restaurant names. Try to retrieve other elements as well!
 
-\begin{feature}\textbf{Do you care about children as well?}
+\begin{feature}\textbf{Do you care about children?}
 Regardless of whether you use XPATHS or CSS Selectors to specify which part of the page you are interested in, it is often the case that there are other elements within it. Depending on whether you want to also retrieve the text of these elements or not, you have to use different approaches (see \refex{htmlparse2}).
 \end{feature}
 
 \pyrex[output=py,caption={Getting the text of an HTML element versus getting the text of the element and its children}]{chapter13/htmlparse2}
+
+
+Notably, you may want to parse links. In HTML, links use a specific tag, |a|. These tags have an attribute, |href|, which contains the link itself. \refex{htmlparse3} shows how, after selecting the |a| tags, we can access these attributes. 
+
+\pyrex[output=py,caption={Parsing link texts and links}]{chapter13/htmlparse3}
 
 
 
@@ -206,9 +211,19 @@ Regardless of whether you use XPATHS or CSS Selectors to specify which part of t
 
 
 \subsection{Crawling websites}
+\label{sec:crawling}
 
-Let us consider the example of a hotel review website. We might, for example, be interested in retrieving all reviews from hotels in Amsterdam.
-Maybe the site has an overview page that lists all Hotels in Amsterdam. There are (too) many hotels in Amsterdam, so they probably do not fit on one page, but we will ignore that for now and come back to it later. 
+Once we have mastered parsing a single HTML page, it is time to scale
+up. Only rarely are we interested in parsing a single page. In most
+cases, we want to use a HTML page as a starting point, parse it,
+follow a link to some other interesting page, parse it as well, and so
+on. There are some dedicated frameworks for this such as \pkg{scrapy},
+but in our experience, it may be more of a burden to learn that
+framework than to just implement your crawler yourself.
+
+Staying with the example of a restaurant review website, we might be
+interested retrieving all restaurants from a specific city, and for
+all of these restaurants, all available reviews.
 
 Our approach, thus, could look as follows:
 
@@ -219,24 +234,92 @@ Our approach, thus, could look as follows:
 	\item On each of these pages, parse the interesting content (i.e., the reviews, ratings, and so on).
 \end{enumerate}
 
+So, what if there are multiple overview pages (or multiple pages with
+reviews)? Basically, there are two possibilities: The first
+possibility is to look for the link to the next page, parse it,
+download the next page, and so on.  The second possibility exploits
+the fact that often, URLs are very systematic: For instance, the first
+page of restaurants might have a URL such as
+\url{http://myreviewsite.com/amsterdam/restaurants.html?page=1}.  If this
+is the case, we can simply construct a list with all possible URLs
+(\refex{createurls})
 
+\pyrex[output=py,caption={Generating a list of URLs that follow the same pattern.}]{chapter13/createurls}
 
-So, what if there are multiple overview pages (or multiple pages with reviews)? Basically, there are two possibilities:
-The first possibility is to look for the link to the next page, parse it, download the next page, and so on.
-The second possibility exploits the fact that often, URLs are very systematic: For instance, the first page of hotels might have a URL such as \url{http://myreviewsite.com/amsterdam/hotels.html?page=1}.
-If this is the case, we can simply construct a list with all possible URLs:
-\begin{lstlisting}
-baseurl = 'http://myreviewsite.com/amsterdam/hotels.html?page='
-tenpages = [baseurl+str(i+1) for i in range(10)]
-\end{lstlisting}
-Afterwards, we would just loop over this list and retrieve all the pages.
+Afterwards, we would just loop over this list and retrieve all the
+pages (a bit like how we approached \refex{googleapi3} in \refsec{apis}).
 
+However, often, things are not as straightforward, and we need to find
+the correct links on a page that we have been parsing -- that's why we
+\emph{crawl} through the website.
 
+Writing a good crawler can take some time, and they will look very
+differently for different pages. The best advise is to build them up
+step-by-step. Carefully inspect the website you are interested in.
+Take a sheet of paper, draw its structure, and try to find out which
+pages you need to parse, and how you can get from one page to the next.
+Also think about how the data that you want to extract should be organized.
 
+We will illustrate this process using our mockup review website \url{http://cssbook.net/d/restaurants/}.
+First, have a look at the site and try to understand its structure.
 
-frameworks like scrapy
+You will see that it has an overview page, |index.html|, with the
+names of all restaurants and, per restaurant, a link to a page with reviews.
+Click on these links, and note your observations, such as:
+\begin{itemize}
+\item the pages have different numbers of reviews;
+\item each review consists of a author name, a review text, and a rating;
+\item some, but not all, pages have a link saying ``Get older reviews''
+\item \ldots
+\end{itemize}
 
+If you combine what you just learned about extracting text and links from HTML
+pages with your knowledge about control structures like loops and conditional
+statements (\refsec{controlstructures}), you can now write your own crawler.
 
+Writing a scraper is a craft, and there are several ways of achieving your goal.
+You probably want to develop your scraper in steps: first write a function to
+parse the overview page, then a function to parse the review pages, then try
+to combine all elements into one script. Before you read on, try to write
+such a scraper.
+
+To show you one possible solution, we implemented a scraper in Python
+that crawls and parses all reviews for all restaurants
+(\refex{crawling}), which we describe in detail below.
+
+\pyrex[output=py,input=py,caption={Crawling a website}]{chapter13/crawling}
+
+First, we need to get a list of all restaurants and the links to their
+reviews. That's what is done in the function |get_restaurants|. This
+is actually the first thing we do (see line 34--35).
+
+We now want to loop over these links and retrieve the reviews.  We
+decided to use a \emph{generator} (\refsec{controlstructures}): instead of writing a
+function that collects \emph{all} reviews in a list first, we let the
+function yield each review immediately -- and immediately append that review
+to a file. This has a big advantage: if our scraper fails (for
+instance, due to a time out, a block, or a programming error), then we
+already saved the reviews we got so far.
+
+We loop over the links to the restaurants (line 38) and call the
+function |get_reviews| (line 40). Each review it returns (the review
+is a dict) gets the name of the restaurant as an extra key, and then
+gets written to a file which contains one JSON-object per line (also
+known as a jsonlines-file).
+
+The function |get_reviews| takes a link to a review page as input and
+yields reviews. If we knew all pages with reviews already, then we
+would not need the while loop statement in line 16 and the lines
+28--33. However, as we have seen, some review pages contain a link to
+older reviews. We therefore use a loop that runs forever (that is what
+|while True:| does), \emph{unless} it encounters a |break| statement
+(line 33).  An inspection of the HTML code shows that these links have
+a |span| tag with the attribute |class="backbutton"|. We therefore
+check if such a button exists (line 27), and if so, we get its |href|
+attribute (i.e., the link itself), overwrite the |url| variable with
+it, and then go back to line 16, the beginning of the loop, so that we
+can download and parse this next URL.  This goes on as long as such a
+link is not found any more.
 
 
 
