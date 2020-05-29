@@ -1,5 +1,4 @@
-\section{Storing data in SQL and noSQL databases (DAMIAN)}
-\todo[inline]{DO WE WANT CODE EXAMPLES? MAYBE THAT'S OUT OF SCOPE? AFTER ALL, WE WOULD ALSO NEED TO EXPLAIN HOW TO SET UP THE DATABASES ON DIFFERENT OS}
+\section{Storing data in SQL and noSQL databases}
 \label{sec:databases}
 
 \subsection{When to use a database}
@@ -20,9 +19,7 @@ the data from your disk into memory\footnote{In fact, this is
   sometimes a reason to avoid dataframes: for instance, it is possible
   to use a generator that reads data line-by-line from a file and
   yields them to \pkg{scikit-learn}. In this way, only \emph{one} row
-  of data is in your memory at the same time.}.\todo{MAKE SURE WE
-  COVER WHAT A GENERATOR IS IN AN EARLIER CHAPTER -- AT LEAST IN AN
-  EXTRA FEATURE BOX}.
+  of data is in your memory at the same time (see \refsec{functions}).}
 
 But what if we want to scale up our analyes a bit
 \cite[see][]{Trilling2018b}? Maybe we want to build up a larger
@@ -136,3 +133,43 @@ flexible, noSQL approach, for instance using \pkg{MongoDB} or
 
 
 \paragraph{How flexible does it need to be?} In relational databases, it is relatively hard to change the structure afterwards. In contrast, a noSQL database has no problem whatsoever with adding a new document that contains keys that did not exist before. There is no assumption that all documents contain the same keys. Therefore, if it is hard to tell in advance which ``columns'' or ``keys'' may represent your data best, you should stay clear of SQL databases. In particular, if you think of gradually extending your data and use it on a long timeline for re-use, potentially even by multiple teams, the flexibility of a noSQL database may be a game changer.
+
+
+
+\subsection{A brief example using SQLite}
+
+Installing a database server such as \pkg{mysql}, \pkg{mariadb} (an
+open-source fork of mysql), \pkg{MongoDB}, or \pkg{Elasticsearch} is
+not really difficult (in fact, it may already be come pre-packaged
+with your operating system), but the exact configuration and setup may
+differ widely depending on your computer and your needs. Most
+importantly, especially if you store sensitive data in your database,
+you will need to think about authentication, roles, etc. --- all
+beyond the scope of this book.
+
+Luckily, there is a compromise between storing your data in files
+that you need to manage yourself and setting up a database server,
+locally or remotely. The libray \pkg{sqlite} offers a self-contained
+database engine -- essentially, it allows you to store a whole
+database in one file and interact with it using the SQL query language.
+Both R and Python offer multiple ways of directly interacting with
+sqlite files (\refex{sqlite}). This gives you access to some great
+functionality way: after all, you can issue (almost) any SQL command
+now, including (and maybe most imporantly) commands for filtering,
+joining, and aggregating data. Or you could consider immediately writing
+each datapoint you get from an API or a webscraper (\refchap{scraping})
+without risking to loose any data if connections time out or scraping
+fails halfway.
+
+\pyrex[input=both, output=py, format=table, caption={\pkg{SQLite} offers you database functionality without setting up a database server such as \pkg{mysql}}]{chapter17/sqlite}
+
+Of course, SQLite cannot give you the same performance that a ``real''
+mysql (or similar) installation would could offer. Therefore, if your
+project grows bigger, or if you have a lot of read- or
+write-operations per second, then you may want to switch at one
+point. But as you can see in \refex{sqlite}, Python and R do not
+really care about the backend: all you need to do is to change the
+connection |conn| such that it points to your new database instead of
+to the mysql database.
+
+
