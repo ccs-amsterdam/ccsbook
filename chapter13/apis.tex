@@ -51,7 +51,7 @@ a specific URL. The first part of the URL specifies the so-called
 API endpoint: the address of the specific API you want to use. This
 address is then followed by a |?| and one or more key-value pairs with an
 equal sign like this: |key=value|. Multiple key-value pairs are
-separated with a |\&|.
+separated with a \texttt{\&}.
 
 For instance, at the time of the writing of this book, Google offers
 an API endpoint, |https://www.googleapis.com/books/v1/volumes|, to search for books on Google Books.
@@ -74,7 +74,7 @@ is called |q|, and which other parameters can be specified.
   as we have seen, have a special meaning in the request? In these
   cases, you need to ``encode'' your URL using a mechanism called URL
   encoding or percent encoding. You may have seen this earlier: a
-  space, for instance, is represented by |\%20|
+  space, for instance, is represented by \texttt{\%20}
 \end{feature}
 
 
@@ -98,7 +98,7 @@ You may have realized that you did not get \emph{all} results.
 This protects you from accidentally downloading a huge dataset (you
 may have underestimated the number of Python books available on the
 market), and saves the provided of the API a lot of bandwith.
-This does not mean that you cannot get more data. In fct, many APIs work
+This does not mean that you cannot get more data. In fact, many APIs work
 with \emph{pagination}: you first get the first ``page'' of results,
 then the next, and so on. Sometimes, the API response contains
 a specific key-value pair (sometimes called a ``continuation key'')
@@ -107,7 +107,7 @@ say at which result you want to start (say, result number 11) and
 then get the next ``page''. You can then write a loop to retrieve
 as many results as you need (\refex{googleapi3}) -- just make sure
 that you do not get stuck in an eternal loop. When you start playing
-around with APIs, make sure you do not cause unnecessary traffic,b
+around with APIs, make sure you do not cause unnecessary traffic,
 but limit the number of calls that are made (see also \refsec{ethicallegalpractical}).
 
 

@@ -39,7 +39,7 @@ articles in a specific time frame).
 
 
 \subsection{Retrieving and parsing a HTML page}
-
+\label{sec:parsehtml}
 In order to parse a HTML file, you need to have a basic understanding
 of the structure of an HTML file. Open your web browser, visit a
 website of your choice (we suggest to use a simple page, such as
@@ -124,7 +124,6 @@ interested in.  For instance, to select all elements that have an
 attribute \texttt{class} with the value \texttt{ratings}, we can just
 write: \texttt{.ratings} (with a dot).  And to select all \texttt{h1}
 tags, we can just write: \texttt{h1} (without a dot).
-
 For an overview of all possible CSS selectors, see
 \url{https://www.w3schools.com/cssref/css_selectors.asp}.
 
@@ -326,26 +325,71 @@ link is not found any more.
 \subsection{Dynamic web pages}
 \label{sec:selenium}
 
-You may have realized that all our scraping efforts until now proceeded in two steps: we retrieved (downloaded) the HTML source of a web page and then parsed it. However, modern websites more and more are dynamic instead of static. For example, after being loaded, they load additional content, or what is displayed changes based on what the user does. Frequently, some JavaScript is run within the user's browser to do that. However, we do not have a browser here. The HTML code we downloaded may contain some instructions for the browser that some code needs to be run, but in the absence of a browser, our Python or R script cannot do this.
+You may have realized that all our scraping efforts until now
+proceeded in two steps: we retrieved (downloaded) the HTML source of a
+web page and then parsed it. However, modern websites more and more
+are dynamic instead of static. For example, after being loaded, they
+load additional content, or what is displayed changes based on what
+the user does. Frequently, some JavaScript is run within the user's
+browser to do that. However, we do not have a browser here. The HTML
+code we downloaded may contain some instructions for the browser that
+some code needs to be run, but in the absence of a browser, our Python
+or R script cannot do this.
 
-A first test to check out whether this is a concern, you can simply check whether the HTML code in your browser is the same that you would get if you downloaded it with R or Python.
+A first test to check out whether this is a concern, you can simply
+check whether the HTML code in your browser is the same that you would
+get if you downloaded it with R or Python.  After having retrieved the
+page (\refex{htmlparse1useragent}), you simply dump it to a file
+(\refex{htmltofile}) and open this file in your browser to verify that
+you indeed downloaded what you intended to download (and not, for
+instance, a login page, a cookie wall, or an error message).
 
-\todo[inline]{Add example with retrieve/ save to file/ compare to browser}
+\pyrex[output=none,caption={Dumping the HTML source to a file}]{chapter13/htmltofile}
 
 
-If this test indeed shows that the data you are interested in is indeed not part of the HTML code you can retrieve with R or Python, use the following checklist to find 
+If this test indeed shows that the data you are interested in is
+indeed not part of the HTML code you can retrieve with R or Python,
+use the following checklist to find
 
 \begin{enumerate}
 \item Does using a different user-agent string (see above) solve the issue?
-\item Is the issue due to some cookie that needs to be accepted (see below)?
-\item STH ELSE???
+\item Is the issue due to some cookie that needs to be accepted or you need to log in (see below)?
+\item Is a differnet page delivered for different browsers, devices, display settings, etc.?
 \end{enumerate}
 
-If all of this does not help, or if you already know for sure that the content you are interested in is dynamically fetched via JavaScript or similar, you can use \pkg{selenium} to literally start a browser and extract the content you are interested in from there. Selenium has been designed for testing web sites and allows you to automate clicks etc. in a browser window, and also supports CSS selectors and XPATHS to specify parts of the web page.
+If all of this does not help, or if you already know for sure that the
+content you are interested in is dynamically fetched via JavaScript or
+similar, you can use \pkg{selenium} to literally start a browser and
+extract the content you are interested in from there. Selenium has
+been designed for testing web sites and allows you to automate clicks
+etc. in a browser window, and also supports CSS selectors and XPATHS
+to specify parts of the web page.
 
-ADD E=
+Using selenium may require some additional setup on your computer,
+which may depend on your operating system and software versions you
+are using -- check out the usual online sources for guidance if
+needed.  It is possible to use Selenium through R using
+\pkg{Rselenium}. However, doing so can be quite a hassle and requires,
+for instance, running a separate Selenium server, for instance using
+Docker. If you opt to use Selenium for web scraping, your safest bet
+is probably to follow an online tutorial and/or to dive into the
+documentation. To give you a first impression of the general working,
+\refex{selenium} shows you how to (at the time of writing of this
+book) open Firefox, surf to Google, google for Tintin by entering that
+string and pressing the Return key, click on the first link containing
+that string, and take a screenshot of the result.
 
-selenium/RSelenium
+\pyrex[output=none,input=py,caption={Using Selemium to literally open a browser, input text, click on a link, and take a screenshot.}]{chapter13/selenium}
 
 
-headless browser
+\begin{feature}\textbf{Loosing your head}
+If you want to run long-lasting scraping processes using Selenium on
+the background (or on a server without a graphical user interface),
+you may want to look into what is called a ``headless'' browser. For
+instance, Selenium can start Firefox in ``headless'' mode, which means
+that it will run without making any connection to a graphical
+interface. Of course, that also means that you cannot watch Selenium
+scrape, which may make debugging more difficult. You could opt for
+developing your scraper first using a normal browser, and then
+changing it to use a headless browser once everything works.
+\end{feature}
