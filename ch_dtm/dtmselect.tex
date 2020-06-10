@@ -1,9 +1,101 @@
 \section{Weighting and selecting documents and terms}
 \label{sec:dtmselect}
 
-\subsection{Stopword removal}
+So far, the DTMs you made in this chapter simply show the count of each word in each document.
+Many words, however, are not informative for many questions.
+This is especially apparent if you look at a \concept{word cloud},
+essentially a plot of the most frequent words in a \concept{corpus}
+(which is just a fancy word for a set of documents).
 
-\subsection{Trimming a DTM}
+\pyrex[caption=Word Cloud of the US State of the Union corpus,format=png]{ch_dtm/wordcloud}
+
+\refex{wordcloud} shows the word cloud for the state of the union DTM created above.
+In R, this is done using the \quanteda\ function \fn{textplot\_wordcloud}.
+In Python we need to work a little harder, since the only has the counts, not the actual words.
+So, we sum the DTM columns to get the frequency of each word, and combine that with the feature names (words)
+from the |CountVectorized| object |cv|. Then we can create the WordCloud and give it the frequencies to use.
+Finally, we plot the cloud and remove the axes.
+
+The results from Python and R look differently at first -- for one think, R is nice and round but Python has more colors!
+However, if you look at the cloud you can see both are not very meaningful: the largest words are all punctuation or words like
+`a', `and', or `the'.
+You have to look closely to find words like `federal' or `security' that give a hint on what the texts were actually about.
+
+The reason for this is that the `noise' caused by punctuation and very common \concept{stop words} such as `a' and `the' is drowning out the signal of meaningful words.
+Before doing a substantive analysis of a corpus, we almost always have to perform a number of steps to clean and preprocess it.
+The remainder of this chapter will discuss the most common cleaning and preprocessing steps,
+show how they can be performed in R and Python, and discuss when these are useful or not. 
+
+\subsection{Removing stopwords}
+
+A first step in cleaning a DTM can be \concept{stop word removal}.
+Words such as `a' and `the' are often called stop words, i.e.  that do not tell us much about the content.
+Both \quanteda\ and \sklearn\ include built-in lists of stop words, making it very easy to remove the most common words.
+\refex{stopwords} shows the result of specifying `english' stop words to be removed for both packages.
+
+\pyrex[caption=Simple stop word removal,format=png]{ch_dtm/stopwords}
+
+Note, however, that it might seem easy to list words like `a` and `and',
+but as it turns out there is no single well-defined list of stop words,
+and (as always) the best choice depends on your data and your research question.
+
+Linguistically, stop words are generally function words or closed word classes such as determiner or pronoun,
+with closed classes meaning that while you can coin new nouns, you can't simply invent a new determiner or preposition.
+However, there are many different stop word lists around, which make different choices and are compatible with
+different kinds of preprocessing.
+The Python word cloud in \refex{stopwords} shows a nice example of the importance of matching stopwords with the used
+tokenization: a central `word' in the cloud is the contraction |'s|.
+We are using the NLTK tokenizer, which splits |'s| from the word it was attached to, but the \sklearn\ stop word list
+does not include that term.
+So, it is important to make sure that the words created by the tokenization match how words appear in the stop word list.
+
+As an example of the substantive choices inherent in using a stop word lists,
+consider the word `will'.
+As an auxilliary verb, this is probably indeed a stop word: for most substantive questions, there is no difference
+whether you will do something or simply do it.
+However, `will' can also be a noun (a testament) and a name (e.g. Will Smith).
+Simply dropping such words from the corpus can be problematic; see \refsec{nlp} for ways of telling nouns and verbs apart
+for more fine-grained filtering.
+
+Moreover, some research questions might actually be interested in certain stop words.
+If you are interesting in references to the future or specific modalities,
+the word might actually be a key indicator. 
+Similarly, if you are studying self-expression on Internet forums, social identity theory, or populist rhetoric,
+words like `I', `us' and `them' can actually be very informative.
+
+For this reason, it is always a good idea to understand and inspect what stop word list you are using,
+and use a different one or customize it as needed \citep[see also][]{nothman18}.
+\refex{stopwords2} shows how you can inspect and customize stop word lists.
+See the package documentation for the \pkg{stopwords} packages in both Python and R
+for more details on which lists are available and what choices these lists make. 
+
+\pyrex[caption=Inspecting and Customizing stop word lists]{ch_dtm/stopwords2}
+
+%J. Nothman, H. Qin and R. Yurchak (2018). “Stop Word Lists in Free Open-source Software Packages”. In Proc. Workshop for NLP Open Source Software.
+
+\subsection{Removing punctuation and noise}
+
+Next to stop words, text often contains punctuation and other things that can be considered `noise' for most research questions.
+For example, it could contain emoticons or emoji, twitter hashtags or at-mentions, or html tags or other annotations.
+
+In both python and R, we can use regular expressions to select which words to keep or remove.
+As explained above in \ref{sec:regex}, regular expressions are a powerful way to specify (sequences of) characters which are to be kept or removed.
+You can use this, for example, to remove things like punctuation, emoji, or HTML tags.
+This can be done either before or after tokenizing (splitting the text into words). 
+If you only want to keep or remove certain words, it is often easiest to do after tokenization
+using a regular expression to select the words to keep or remove.
+If you want to remove parts of words (e.g. to remove the leading `#` in hashtags) if is easiest to do that before tokenization,
+that is, as a preprocessing step before the tokenization.
+
+Finally, note that \quanteda\ contains a number of built-in functions for common use cases such as removing
+punctuation, numbers, and twitter-punctuation (at-mentions and hashtags).
+You can do these steps yourself using regular expressions in a very flexible way, but as the final part of example \refex{dtmregex}
+shows, it is a lot easier to just use these options on the \fn{dfm} function. 
+
+
+\subsection{Trimming and weighting a DTM}
+
+
 
 
 \subsection{Weighting a DTM}
