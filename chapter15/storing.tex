@@ -44,7 +44,31 @@ Now, in \refex{imagergb} we convert our original JPG file to a RGB object and th
 
 Instead of pixels, there are other ways to store digital images. One of them is the \textit{vector graphics}, with formats such as .ai, .eps, .svg or .drw. Differently to bitmap images, they don't have a grid of dots but a set of \textit{paths} (lines, triangles, square, curvy shapes, etc.) that have a start and end point, so simple and complex images are created with with paths. The great advantage of this format is that images do not get "pixeled" when you enlarge them because the paths can easily be transformed 	while remaining smooth. However, to obtain the standard mathematical representation of images you can easily convert (back and forth) the vector graphics to raster graphics such as RGB.
 
-  
-crop
-resize
+Now, let's see how to conduct basic image manipulation in order to address some typical problems when working with pictures. One of the most common tasks in the preprocessing stage is to change the dimensions of the image in order to adjust width and height to a different size. In \refex{resize} we use \fn{resize} function in \pkg{pil} and \fn{image_scale} function in \pkg{imagemagik} to reduce the first of our original pictures in RGB (\texttt{my_image1_RGB}) to 25\% . Notice that we first obtain the original dimensions of the photograph (i.e. \texttt{my\_image1\_RGB.width} or \texttt{image_info(my\_image1\_RGB)['width'][[1]]}) and then multiply by 0.25 in order to obtain the new size which is the argument required by the functions.
+
+\pyrex[output=both,format=png,caption=Resize to 25\% and visualize a picture]{chapter15/resize}
+
+Sometimes you need to convert your image to a specific size. For example, in the case of image classification (see XXXX) this is a very important step since all the input images of the model must have the same size. Using the same functions of the latter example, we specify in \refex{resize2} how to resize the same picture to 224 x 244, which is one of the standard dimensions in computer vision. 
+
+\pyrex[output=both,format=png,caption=Resize to 224 x 224 and visualize a picture]{chapter15/resize2}
+
+You may have noticed that the new image has now the correct width and height but that it looks deformed. The reason is that the original picture was not squared and our order was to forcedly fit it into a 224 x 224 square, loosing its original aspect. There are different alternative to solve this issue, but probably the most extended is to \textit{crop} the original image to create a squared picture. As you can see in \refex{crop} we can create a function that first determines the orientation of the picture (vertical versus horizontal) and then cut the margins (upper and down if it is vertical; and left and right if it is vertical) to create a square. After applying this ad hoc function \fn{crop} to the original image we can resize again to obtain a non-distorted 224 x 224 image.
+
+Of course you are loosing now part of the picture information, so you may think of other alternatives such as filling a couple of sides with blank pixels (or \texttt{padding}) in order to create the square by adding information instead of removing.
+
+\pyrex[output=both,format=png,caption=Function to crop the image to create a square and the resize the picture]{chapter15/crop}
+
+You can also adjust the orientation of the image, flip or flop it, or change its background, among other commands. These techniques might be useful for creating extra images in order to enlarge the training set in image classification (see xxx). This is called \textit{data augmentation} and consists for duplicating the initial examples from where the model learn and give them some twist so the algorithm can be more robust and generalize better. In \refex{crop} we used the \fn{rotate} method in \pkg{pil} and \fn{image\_rotate} function in \pkg{imagemagik} to rotate 45 degrees the above resized image \texttt{my\_image1\_RGB\_224} to see how easy we can get an alternative picture with similar information to include in an augmented training set.
+
+\pyrex[output=both,format=png,caption=Rotating 45 degrees a picture]{chapter15/rotate}
+
+Finally, the numerical representation of visual contents can help us to \textit{compare} pictures in order find similar or even duplicate images. Let's take the case of RGB images which in \refex{imagergb} we showed how to transform into a three two-dimensional array. If we now convert the 3D matrix of the image into a flatten vector we can use use new simpler numerical representation to estimate similarities. Specifically, as we do in \refex{flatten}, we can take the vectors two \textit{flatten images} of resized 15 x 15 images to ease computation (\texttt{img\_vect1} and \texttt{img\_vect2}) and use \textit{cosine similarity} to estimate how akin those images are. We stacked the two vectors in a matrix and then used the \fn{cosine_similarity} function of the \fn{metrics} module of the  \pkg{sklearn} package in Python and \fn{cosine} function of the \pkg{lsa} package in R.
+
+\pyrex[output=both,caption=Comparing two flatten vectors to detect similarities between images]{chapter15/flatten}
+ 
+As you can notice in the resulting matrix when the images are compared with themselves (that would be the case of an exact duplicate) the obtain a value of 1. Similar images would obtain values under 1 but still close to it, while dissimilar images would obtain low values.
+
+
+
+
 compare with Flatten vector
