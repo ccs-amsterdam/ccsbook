@@ -22,7 +22,7 @@ It is beyond of the scope of this book to address the implementation of object d
 
 In Chapter~\ref{chap:introsml} we introduced you into the exciting world of machine learning and in Section~\ref{sec:supervised} we showed how to used the \textit{supervised} approach to classify texts. Most of the discussed models were based in the so called \textit{shallow} algorithms (Naïve Bayes, Regression, Support Vector Machines, Decision Trees or Random Forest), in opposition to other algorithms liked to \textit{deep} learning. As we will see in the next section, deep neural networks are nowadays the best option for complex tasks in image classification. However, we will now explain how to conduct simple multi-class classification of images that contain numbers with some shallow algorithms.
 
-Let us begin by training a model to recognize numbers using 70,000 small images of digits handwritten from the Modified National Institute of Standards and Technology (MNIST) dataset. This popular training corpus contains gray-scale examples of numbers written by American students and workers and it is usually employed to test machine learning models (60,000 for training and 10,000 for testing). Image sizes are 28 x 28, which generates 784 features for each image, with pixels values from white to black represented by a 0-255 scales. In Figure~\ref{fig:numbers} you can observe the 
+Let us begin by training a model to recognize numbers using 70,000 small images of digits handwritten from the Modified National Institute of Standards and Technology (MNIST) dataset  (\cite{lecun1998gradient}). This popular training corpus contains gray-scale examples of numbers written by American students and workers and it is usually employed to test machine learning models (60,000 for training and 10,000 for testing). Image sizes are 28 x 28, which generates 784 features for each image, with pixels values from white to black represented by a 0-255 scales. In Figure~\ref{fig:numbers} you can observe the first 10 handwritten numbers used in both training and test set.
 
 \begin{figure}
 \centering
@@ -31,14 +31,17 @@ Let us begin by training a model to recognize numbers using 70,000 small images 
 \label{fig:numbers}
 \end{figure}
 
-In \refex{mnist} we...
+You can download the MNIST images from its project web page\footnote{http://yann.lecun.com/exdb/mnist/}, but many libraries also offer this dataset. In \refex{mnist} we use the \fn{read\_mnist} function from the \pkg{dslabs} package (Data Science Labs) in R and the \fn{fetch\_openml} function from the \pkg{sklearn} package (\texttt{datasets} module) in Python to read and load a \texttt{mnist} object into our workspace. We then create the four necessary objects (\texttt{X\_train}, \texttt{X\_test}, \texttt{y\_train}, \texttt{y\_test}) to generate a ML model and print the first numbers in training and test sets and check they coincide with those in \ref{fig:numbers}.
 
-\pyrex[output=both,caption=XXX]{chapter15/mnist}
+\pyrex[output=both,caption=Loading MNIST dataset and preparing training and test sets]{chapter15/mnist}
 
-And in \refex{multiclass}  we    with 100 trees ... obtain an accuracy over 0.97
+Once we are ready to model the numbers we choose one of the shallow algorithms explained in Section \ref{sec:nb2dnn} to deploy a binary or multiclass image classification task. In the case of binary, we should select a number of reference (for instance "3") and then create the model of that number against all the others (to answer questions such as "What's the probability of this digit of being number 3?). On the other hand, if we choose multiclass classification our model can predict any of the ten numbers (0, 1, 2, 3, 4, 5, 6, 7, 8, 9) included in our examples.
+
+Now, we used the basic concepts of the Random Forest algorithm (see subsection~\ref{subsec:randomforest}) to create and fit a model with 100 trees (\texttt{forest\_clf}). In \refex{multiclass} we use again the \pkg{randomForest} package in R and \pkg{sklearn} package in Python to estimate a model for the ten classes using the corpus of 60,000 images (classes were similarly balanced (~9-11\% each). As we do in the examples, you can check the predictions for the first ten images of the test set (\texttt{X\_test}), which correctly correspond to the right digits, and also check the (\texttt{predictions}) for the whole test set and the some metrics of the model. The accuracy is over 0.97 which is a good indicator in the classification task.
 
 \pyrex[output=both,caption=XXX]{chapter15/multiclass}
 
+This approach based on shallow algorithms seems to work pretty well for simple images, but has a lot of limitations for more complex images such as figures or real pictures. In the next section we introduce the use of deep learning in image classification which is nowadays a more accurate approach for complex tasks.
 
 
 \subsection{Deep learning for image analysis}
