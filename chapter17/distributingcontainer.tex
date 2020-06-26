@@ -1,2 +1,24 @@
 \section{Distributing your software as container}
 \label{sec:container}
+When publishing your software, you can think of multiple user
+groups. Some maybe interesting in building on and further developing
+your code. Some may not care about your code at all and just want your
+software to run. And many others will be somewhere in between.
+
+\emph{Only} publishing your source code \refsec{publishingsource} may
+be a burden for those who want your code to ``just run'' once your
+code becomes more complex and has more dependencies. Imagine a
+scenario where your software requires a specific version of
+Python or R and/or some very specific (or maybe incompatible) libraries
+that you do not want to force the user to install.
+
+And maybe your prospective user does not even know any R or Python.
+
+For such cases, so-called containers are the solution, with as most
+prominent platform \pkg{Docker}. You can envision a container as a
+minimalistic virtual machine that includes everything to run your
+software. To the outside, none of that is visible -- just a network
+port to connect to, or a command line to interact with, depending on
+your choices.
+
+\todo[inline]{ADD EXAMPLE}
