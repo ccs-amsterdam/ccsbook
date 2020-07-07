@@ -47,9 +47,25 @@ This approach based on shallow algorithms seems to work pretty well for simple i
 \subsection{Deep learning for image analysis}
 \label{subsec:deep}
 
+Even when require heavy computations, Deep Neural Networks (DNN) are nowadays the best way to conduct image classification because its performance is normally higher than shallow algorithms. One of the simplest DNNs architectures is the Multilayer Perceptron (MLP) which contains one input layer, one or many hidden layers, and one output layer (all of them \textit{fully} connected and with bias neurons except for the put layer). We could also say that this is a \texttt{vanilla} neural network if we compare with more sophisticated architectures such as recurrent neural networks (RNN) or convolutional neural networks (CNN). Origginaly in a MLP the he signals propagate from the inputs to the outputs (in one direction), which we call a feedforward neural network (FNN), but using Gradient Decent we can apply \textit{backpropagation} (automatically computing the gradients of the network's errors in two stages: one forward and one backward) and then obtain a more efficient training.
+
+We can use MLPs for binary and multiclass classification. In the first case, we normally use a single output neuron with the \textit{logistic} activation function (probability from 0 to 1); and in the second case we will need one output neuron per class with the \textit{softmax} activation function (probabilities from 0 to 1 for each class but they must add 1 if the classes are exclusive). To predict probabilities, in both cases we will need a \textit{loss} function and the one that is normally recommended is the \textit{cross entropy loss} or simply \textit{log loss}.
+
+The state-of-the-art library for neural networks in general and for computer vision in particular is \pkg{TensorFlow} (originally created by Google by later publicly released) and the high-level Deep Learning API \pkg{Keras}, although you can find other good implementation packages such as \pkg{PyTorch} (created by Facebook), which has many straightforward functionalities and has also become popular in the last years (see image classification tasks for social sciences conducted in \pkg{PyTorch} by WEBB, CASAS\& WILKERSON, forthcoming XXX). All these packages have current versions for both R and Python. 
+
+We will deploy \pkg{TensorFlow} \textit{2} in our exercises. 
+
+
+
+
+
 MLP for image classification p 297   Fashion MNIST (https://github.com/zalandoresearch/fashion-mnist)
 
+
+Using the above-described concepts and code you may try to train a new MLP using color images of ten classes (airplane, automobile, bird, cat, deer, dog, frog, horse, ship and truck) using the CIFAR-10 and CIFAR-100 datasets\footnote{https://www.cs.toronto.edu/~kriz/cifar.html}!
+
+
 \subsection{Fine tuning an open source CNN}
-\label{subsec:deep}
+\label{subsec:tuning}
 
 Fine tuning an open source CNN   RestNet 18? (Andreu example)
