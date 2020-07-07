@@ -39,7 +39,7 @@ Once we are ready to model the numbers we choose one of the shallow algorithms e
 
 Now, we used the basic concepts of the Random Forest algorithm (see subsection~\ref{subsec:randomforest}) to create and fit a model with 100 trees (\texttt{forest\_clf}). In \refex{multiclass} we use again the \pkg{randomForest} package in R and \pkg{sklearn} package in Python to estimate a model for the ten classes using the corpus of 60,000 images (classes were similarly balanced (~9-11\% each). As we do in the examples, you can check the predictions for the first ten images of the test set (\texttt{X\_test}), which correctly correspond to the right digits, and also check the (\texttt{predictions}) for the whole test set and the some metrics of the model. The accuracy is over 0.97 which is a good indicator in the classification task.
 
-\pyrex[output=both,caption=XXX]{chapter15/multiclass}
+\pyrex[output=both,caption=Modeling the handwritten digits with RandomForest and predicting some outcomes]{chapter15/multiclass}
 
 This approach based on shallow algorithms seems to work pretty well for simple images, but has a lot of limitations for more complex images such as figures or real pictures. In the next section we introduce the use of deep learning in image classification which is nowadays a more accurate approach for complex tasks.
 
@@ -47,19 +47,33 @@ This approach based on shallow algorithms seems to work pretty well for simple i
 \subsection{Deep learning for image analysis}
 \label{subsec:deep}
 
-Even when require heavy computations, Deep Neural Networks (DNN) are nowadays the best way to conduct image classification because its performance is normally higher than shallow algorithms. One of the simplest DNNs architectures is the Multilayer Perceptron (MLP) which contains one input layer, one or many hidden layers, and one output layer (all of them \textit{fully} connected and with bias neurons except for the put layer). We could also say that this is a \texttt{vanilla} neural network if we compare with more sophisticated architectures such as recurrent neural networks (RNN) or convolutional neural networks (CNN). Origginaly in a MLP the he signals propagate from the inputs to the outputs (in one direction), which we call a feedforward neural network (FNN), but using Gradient Decent we can apply \textit{backpropagation} (automatically computing the gradients of the network's errors in two stages: one forward and one backward) and then obtain a more efficient training.
+Even when require heavy computations, Deep Neural Networks (DNN) are nowadays the best way to conduct image classification because its performance is normally higher than shallow algorithms. One of the simplest DNNs architectures is the Multilayer Perceptron (MLP) which contains one input layer, one or many hidden layers, and one output layer (all of them \textit{fully} connected and with bias neurons except for the put layer). We could also say that this is a \texttt{vanilla} neural network if we compare with more sophisticated architectures such as recurrent neural networks (RNN) or convolutional neural networks (CNN). Origginaly in a MLP the he signals propagate from the inputs to the outputs (in one direction), which we call a feedforward neural network (FNN), but using Gradient Decent as an optimizer we can apply \textit{backpropagation} (automatically computing the gradients of the network's errors in two stages: one forward and one backward) and then obtain a more efficient training.
 
 We can use MLPs for binary and multiclass classification. In the first case, we normally use a single output neuron with the \textit{logistic} activation function (probability from 0 to 1); and in the second case we will need one output neuron per class with the \textit{softmax} activation function (probabilities from 0 to 1 for each class but they must add 1 if the classes are exclusive). To predict probabilities, in both cases we will need a \textit{loss} function and the one that is normally recommended is the \textit{cross entropy loss} or simply \textit{log loss}.
 
-The state-of-the-art library for neural networks in general and for computer vision in particular is \pkg{TensorFlow} (originally created by Google by later publicly released) and the high-level Deep Learning API \pkg{Keras}, although you can find other good implementation packages such as \pkg{PyTorch} (created by Facebook), which has many straightforward functionalities and has also become popular in the last years (see image classification tasks for social sciences conducted in \pkg{PyTorch} by WEBB, CASAS\& WILKERSON, forthcoming XXX). All these packages have current versions for both R and Python. 
+The state-of-the-art library for neural networks in general and for computer vision in particular is \pkg{TensorFlow}\footnote{We will deploy \pkg{TensorFlow} \textit{2} in our exercises.}  (originally created by Google by later publicly released) and the high-level Deep Learning API \pkg{Keras}, although you can find other good implementation packages such as \pkg{PyTorch} (created by Facebook), which has many straightforward functionalities and has also become popular in the last years (see image classification tasks for social sciences conducted in \pkg{PyTorch} by WEBB, CASAS\& WILKERSON, forthcoming XXX). All these packages have current versions for both R and Python. 
 
-We will deploy \pkg{TensorFlow} \textit{2} in our exercises. 
+Now, let's train a MLP to build an image classifier to recognize fashion items using the Fashion MNIST dataset\footnote{https://github.com/zalandoresearch/fashion-mnist}. This dataset contains 70,000 (60,000 for training and 10,000 for test) gayscale examples (28x28) of ten different classes that include ankle boots, bags, coats, dresses, pullovers, sandals, shirts, sneakers, t-shirts/tops and trousers (Figure~\ref{fig:fashion}). If compare this dataset with the MINST we will find that figures of fashion items are more complex than handwritten digits, which normally generates a lower accuracy in supervised classification.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.9\linewidth]{figures/ch15_fashion.png}
+\caption{Examples of Fashion MNIST items}.
+\label{fig:fashion}
+\end{figure}
+
+You can use \pkg{Keras} to load the Fashion MNIST. In \refex{fashion} load the complete data set and create the necessary objects for modeling (\texttt{X\_train\_full}, \texttt{y\_train\_full}, \texttt{X\_test}, \texttt{y\_test}). In addition we extract 5,000 records from the training set to create a validation test (\texttt{X\_valid}, \texttt{y\_valid}) and rescale all the input features from 0-255 to 0-1 by dividing them by 255 in order to apply Gradient Decent. Then, we will obtain three sets with 28x28 arrays (55,000 in the training, 10,000 in the test and 5,000 in the validation).
 
 
+\pyrex[output=both,caption=Loading Fashion MNIST dataset and preparing training\, test and validation sets]{chapter15/fashion}
 
 
+\pyrex[output=both,caption=XXX]{chapter15/mlp}
 
-MLP for image classification p 297   Fashion MNIST (https://github.com/zalandoresearch/fashion-mnist)
+\pyrex[output=both,caption=XXX]{chapter15/model}
+
+\pyrex[output=both,caption=XXX]{chapter15/predict}
+
 
 
 Using the above-described concepts and code you may try to train a new MLP using color images of ten classes (airplane, automobile, bird, cat, deer, dog, frog, horse, ship and truck) using the CIFAR-10 and CIFAR-100 datasets\footnote{https://www.cs.toronto.edu/~kriz/cifar.html}!
