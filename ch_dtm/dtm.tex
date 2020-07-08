@@ -133,3 +133,39 @@ Although it is beyond the scope of this book,
 you can also use automatic syntactic analysis to take grammatical relations into account as well.
 As is always the case with automatic analyses, it is important to understand what information the computer is looking at,
 as the computer cannot find patterns in information that it doesn't have.
+
+\subsection{The (unavoidable) Word Cloud}
+
+One of the most famous text visualizations is without doubt the word cloud.
+Essentially, a word cloud is an image where each word is displayed in a size that is representative of its frequency.
+Depending on preference, word position and colour can be random, depending on word frequency, or in a decorative shape.
+
+Word Clouds are often criticised since they are (sometimes) pretty but mostly not very informational.
+The core reason for that is that only a single aspect of the words is visualized (frequency),
+and simple word frequency is often not that informative: the most frequent words are generally uninformative `stop words' like ``the'' and ``I''.
+
+For example, \refex{wordcloud} shows the word cloud for the state of the union speeches downloaded above.
+In R, this is done using the \quanteda\ function \fn{textplot\_wordcloud}.
+In Python we need to work a little harder, since the only has the counts, not the actual words.
+So, we sum the DTM columns to get the frequency of each word, and combine that with the feature names (words)
+from the |CountVectorized| object |cv|. Then we can create the WordCloud and give it the frequencies to use.
+Finally, we plot the cloud and remove the axes.
+
+\pyrex[caption=Word Cloud of the US State of the Union corpus,format=png]{ch_dtm/wordcloud}
+
+\note{%
+These differences between Python and R reflect a pattern that is true in many (but not all) cases:
+In python libraries such as \scipy\ and \sklearn\ are setup to maximize performance,
+while in R a library such as \quanteda\ or \tidyverse\ is more geared towards ease of use.
+For that reason, the DTM in python does not `remember' the actual words, it uses the index of each word,
+so it consumes less memory if you don't need to use the actual words in e.g. a machine learning setup.
+R, on the other hand, stores the words and also the document IDs and metadata in the DFM object.
+This is easier to use if you need to look up a word or document, but it consumes (slightly) more memory. 
+}
+
+The results from Python and R look differently at first -- for one think, R is nice and round but Python has more colors!
+However, if you look at the cloud you can see both are not very meaningful: the largest words are all punctuation or words like
+`a', `and', or `the'.
+You have to look closely to find words like `federal' or `security' that give a hint on what the texts were actually about.
+
+

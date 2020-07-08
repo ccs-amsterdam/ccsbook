@@ -4,31 +4,55 @@
 So far, the DTMs you made in this chapter simply show the count of each word in each document.
 Many words, however, are not informative for many questions.
 This is especially apparent if you look at a \concept{word cloud},
-essentially a plot of the most frequent words in a \concept{corpus}
-(which is just a fancy word for a set of documents).
+essentially a plot of the most frequent words in a  \concept{corpus} (set of documents).
 
-\pyrex[caption=Word Cloud of the US State of the Union corpus,format=png]{ch_dtm/wordcloud}
+\note{
+  \textbf{Vectors and a geometric interpretation of document-term matrices}
+  We said that a document is represented by a `vector' of numbers, where each number (for a document-term matrix)
+  is the frequency of a specific word in that document. This term is also seen in the name for the tokenizer \sklearn:
+  a \concept{vectorizer} or function to turn texts into vectors. 
 
-\refex{wordcloud} shows the word cloud for the state of the union DTM created above.
-In R, this is done using the \quanteda\ function \fn{textplot\_wordcloud}.
-In Python we need to work a little harder, since the only has the counts, not the actual words.
-So, we sum the DTM columns to get the frequency of each word, and combine that with the feature names (words)
-from the |CountVectorized| object |cv|. Then we can create the WordCloud and give it the frequencies to use.
-Finally, we plot the cloud and remove the axes.
+  The term \concept{vector} here can be read as just a fancy word for a group of numbers.
+  In this meaning, the term is also often used in R, where a column of a dataframe is called a vector,
+  and where functions that can be called on a whole vector at once is called \em{vectorized}. 
 
-The results from Python and R look differently at first -- for one think, R is nice and round but Python has more colors!
-However, if you look at the cloud you can see both are not very meaningful: the largest words are all punctuation or words like
-`a', `and', or `the'.
-You have to look closely to find words like `federal' or `security' that give a hint on what the texts were actually about.
+  More generally, however, a vector in geometry is a point (or line from the origin) in an n-dimensional space,
+  where n is the length or dimensionality of the vector.
+  This is also a very useful interpretation for vectors in text analysis:
+  the dimensionality of the space is the number of unique words (columns) in the document-term matrix,
+  and each document is a point in that n-dimensional space.
 
-The reason for this is that the `noise' caused by punctuation and very common \concept{stop words} such as `a' and `the' is drowning out the signal of meaningful words.
-Before doing a substantive analysis of a corpus, we almost always have to perform a number of steps to clean and preprocess it.
-The remainder of this chapter will discuss the most common cleaning and preprocessing steps,
-show how they can be performed in R and Python, and discuss when these are useful or not. 
+  In that interpretation, various geometric distances between documents can be calculated an indicator for how similar
+  two documents are. Techniques that reduce the number of columns in the matrix (such as clustering or topic modeling)
+  can then be seen as dimensionality reduction techniques since they turn the DTM into a matrix with lower dimensionality
+  (while hopefully retaining as much of the relevant information as possible).
+  }
+  
+More formally, a document-term matrix can be seen as a representation of data points about documents:
+each document (row) is represented as a vector containing ane count per word (column).
+Although it is a simplification compared to the original text,
+an unfiltered document-term matrix contains a relevant information.
+For example, if a president uses the word `terrorism' more often than the word `economy', that could be an indication of their policy priorities.
+
+However, there is also a lot of \emph{noise} crowding out this \emph{signal}:
+as seen in the word cloud in the previous section the most frequent words are generally quite uninformative.
+The same holds for words that hardly occur in any document (but still require a column to be represented)
+and noisy `words' such as punctuation or technical artefacts like HTML code. 
+
+This section will discuss a number of techniques for cleaning a corpus or document-term matrix in order to minimize the amount of noise: removing stop words, cleaning punctuation and other artefacts, and trimming and weighting.  
+As a running example in this section, we will use a collection of tweets from U.S. president Donald Trump.
+\refex{trumptweets} shows how to load these tweets into a data frame containing the ID and text of the tweet,
+creates a document-term matrix and shows the top words.
+
+\pyrex[caption=Top words used in Trump Tweets,format=png]{ch_dtm/stopwords}
+
+Although tweets are perhaps overused as a source of scientific information,
+we use them here as an example since they nicely exemplify issues around non-textual elements such as hyperlinks.
+See \refchap{scraping} for information on how to use the Twitter API to collect your own data.
 
 \subsection{Removing stopwords}
 
-A first step in cleaning a DTM can be \concept{stop word removal}.
+A first step in cleaning a DTM is often \concept{stop word removal}.
 Words such as `a' and `the' are often called stop words, i.e.  that do not tell us much about the content.
 Both \quanteda\ and \sklearn\ include built-in lists of stop words, making it very easy to remove the most common words.
 \refex{stopwords} shows the result of specifying `english' stop words to be removed for both packages.
@@ -82,21 +106,69 @@ In both python and R, we can use regular expressions to select which words to ke
 As explained above in \ref{sec:regex}, regular expressions are a powerful way to specify (sequences of) characters which are to be kept or removed.
 You can use this, for example, to remove things like punctuation, emoji, or HTML tags.
 This can be done either before or after tokenizing (splitting the text into words). 
+
 If you only want to keep or remove certain words, it is often easiest to do after tokenization
 using a regular expression to select the words to keep or remove.
 If you want to remove parts of words (e.g. to remove the leading `\#` in hashtags) if is easiest to do that before tokenization,
 that is, as a preprocessing step before the tokenization.
+Similarly, if you want to remove a term that would be split by the tokenization (such as hyperlinks),
+if can be better to remove them before the tokenization occurs.
 
-Finally, note that \quanteda\ contains a number of built-in functions for common use cases such as removing
+\refex{noise} shows how we can use regular expressions to remove noise in Python and R.
+First, we use the expression \verb#https?://\\S*|&\\w+;# to remove hyperlinks and HTML escapes from the untokenized texts.
+Regular expressions are explained fully in \refsec{regex}, so I will keep the explanation short:
+The \verb#|# splits the pattern in two parts, i.e. it will match if it finds either of the subpatterns.
+The first pattern looks for the literal text \verb#http#, followed by an optional \verb#s# and the sequence \verb#://#.
+Then, it takes all non-whitespace characters it finds, i.e. the patter ends at the next whitespace or end of the text.
+The second pattern looks for an ampersand (\verb#&#) followed by one or more letters (\verb#\\w+#), follwed by a semicolon (\verb#;#).
+This matches HTML escapes like \verb#&amp;# for an ampersand.
+
+After this, the texts are tokenized and all hashtags and at-mentions are removed.
+In python, this is done by using list expressions (\verb#[process(item) for item in list]#): first for tokenizing each document; and a nested list expression for filtering each token in each document.
+In R this is not needed as both the \fn{tokens} and \fn{tokens_keep} functions are \concept{vectorized}, that is, they directly run over all the texts.
+
+As a final example, \refex{bla} repeats all these steps in a single block, but rather than removing hashtags it keeps only the hash tags.
+It also showcases some of the built-in arguments in \quanteda\ for 
+for common use cases such as removing
 punctuation, numbers, and twitter-punctuation (at-mentions and hashtags).
-You can do these steps yourself using regular expressions in a very flexible way, but as the final part of example \refex{dtmregex}
+You can do these steps yourself using regular expressions in a very flexible way, but as the final part of example \refex{bla}
 shows, it is a lot easier to just use these options on the \fn{dfm} function. 
 
 
-\subsection{Trimming and weighting a DTM}
+\subsection{Trimming a DTM}
 
+The techniques above both drop terms from the DTM based on specific choices or patterns.
+It can also be beneficial to trim a DTM by removing words that occur very infrequently or overly frequently.
+For the former, the reason is that if a word only occurs in a very small percentage of documents if is unlikely to be very informative.
+Overly frequent words, for example occurring in more than half or 75\% of all documents, function basically like stop word for this corpus.
+In many cases, this can be a result of the selection strategy. If we select all tweets containing 'Trump', the word Trump itself is no longer informative about their content.
+It can also be that some words are used as standard phrases, for example `fellow Americans' in state of the union speeches.
+If every president in the corpus uses those terms, they are no longer informative about differences between presidents.
 
+\refex{trimming} shows how you can use the \concept{relative document frequency} to trim a DTM in python and R.
+We keep only words with a document frequency of between 1\% and 75\%.
 
+Although these are reasonable numbers it can depend on the corpus and the research question, so it can be a good idea to check which words are dropped.
+\refex{docfreq} shows how you can make a table of all word frequencies in the corpus, and filter for excluded words.
+If you see words that are seemingly relevant to your research question in the top of this list,
+if can be a good idea to tweak the selection criteria. 
+
+Note that dropping words that occur almost never should normally not influence the results that much, since those words do not occur anyway.
+However, trimming a DTM to e.g. at least 1\% document frequency often radically reduces the number of words (columns) in the DTM.
+Since many algorithms have to assign weights or parameters to each word, this can provide a significant improvement in computing speed or memory use. 
 
 \subsection{Weighting a DTM}
+
+The DTMs created above all us the raw frequencies as cell values.
+It can also be useful for weight the words so more informative words have a higher weight than less informative ones.
+A common technique for this is \concept{tf-idf} weighting.
+This stands for \emph{term frequency - inverse document frequency} and weights each occurrency by its raw frequency (term frequency) corrected for how often it occurs in all documents (inverse document frequency). In a formula, the most common implementation of this weight is given as follows:
+
+$tfidf(t,d)=tf(t,d)\cdot idf(t)=f_{t,d}\cdot -\log \frac{n_t}{N}$
+
+Where $f_{t,d}$ is the frequency of term $t$ in document $d$, $N$ is the total number of documents, and $n_t$ is the number of documents in which term $t$ occurs. In other words, the term frequency is weighted by the negative log of the fraction of documents in which that term occurs. Since $\log(1)$ is zero, terms that occur in every document are disregarded, and in general the less frequent a term is, the higher the weight will be. 
+
+Tf-idf weighting is a fairly common technique and can improve the results of subsequent analyses such as supervised machine learning.
+As such, it is no surprise that it is easy to apply this in both python and R, as shown in \refex{tfidf}
+
 

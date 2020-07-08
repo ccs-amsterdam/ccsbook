@@ -1,2 +1,106 @@
-\section{Advanced representation of text: n-grams, skip-grams, embeddings}
+\section{Advanced representation of text}
 \label{ngram}
+
+The examples above all created document-term matrices where each column is actually represents a word.
+There is more information in a text, however, than pure word counts.
+The phrases: \emph{the movie was not good, it was in fact quite bad} and \emph{the movie was not bad, in fact it was quite good}
+have exactly the same word frequencies, but are quite different in meaning.
+Similarly, \emph{the new residents of York} and \emph{the residents of New York} are talking about quite different people. 
+
+Of course, in the end which aspect of the meaning of a text is important depends on your research question:
+if you want to know the sentiment about the movie, it is important to take a word like `not' into account;
+but if you are interested in the topic or genre of the review, or the extremity of the language used, this might not be relevant.
+
+The core idea of this section is that in many cases this information can be captured in a DTM by having the columns represent different information than just words, for example word combinations or groups of related words.
+This is often called \concept{feature engineering}, as we are using our domain expertise to find the right features (columns, independent variables) to capture the relevant meaning for our research question.
+If we are using other columns than words it is also technically more correct to use the name \concept{Document-feature matrix}, as \quanteda\ does, but we will stick to the most common name here and simply continue using the name DTM.
+
+\subsection{N-grams}
+
+The first feature we will discuss are n-grams.
+The simplest case is a bigram (or 2-gram), where each feature is a pair of adjacent words.
+The example used above, \emph{the movie was not bad}, will yield the following bigrams: \emph{the-movie}, \emph{movie-was}, \emph{was-not}, and \emph{not-bad}.
+Each of those bigrams is then treated as a feature, that is, a DTM would contain one column for each word pair.
+
+As you can see in this example, we can now see the difference between \emph{not-bad} and \emph{not-good}.
+The downside of using n-grams is that there are many more unique word pairs than unique words,
+so the resulting DTM will have many more columns.
+Moreover, there is a bigger \concept{data scarcity problem}, as each of those pairs will be less frequent,
+making it more difficult to find sufficient examples of each to generalize over.
+
+Although bigrams are the most frequent use case, trigrams (3-grams) and (rarely) higher-order n-grams can also be used.
+As you can imagine, this will create even bigger DTMS and worse data scarcity problems,
+so require even more attention paid to feature selection and/or trimming.
+
+\refex{ngram} shows how to create bigrams using R or Python. @...
+
+\subsection{Collocations}
+
+A special case of n-grams are collocations.
+In the strict corpus linguistic sense of the word, collocations are pairs of words that occur more frequently than expected
+based on their underlying occurence.
+For example, the prhase \emph{crystal clear} presumably occurs much more often than would be expected by chance given
+how often \emph{crystal} and \emph{clear} occur separately.
+Collocations are important for text analysis since they often have a specific meaning,
+for example because they refer to names such as \emph{New York} or disambiguate a term like \emph{sound} in \emph{sound asleep},
+a \emph{sound proposal}, or \emph{loud sound}.
+
+\refex{colloc} shows how you can automatically extract collocations by looking for word pairs that occur more often than the product of the occurrence of the underlying words. As you can see, ...@
+
+\subsection{Word Embeddings}
+
+A recent addition to the text analysis toolbox are \concept{word embeddings}.
+Although it is beyond the scope of this book to give a full explanation of the algorithms behind word embeddings,
+they are relatively easy to use and understand and use at an intuitive level.
+
+The first core idea behind word embeddings is that the meaning of a word can be expressed using a relatively small \concept{embedding vector}, generally consisting of around 300 numbers which can be interpreted as dimensions of meaning.
+The second core idea is that these embedding vectors can be derived by scanning the context of each word in millions and millions of documents.
+
+
+These embedding vectors can then be used as features or DTM columns for further analysis.
+Using embedding vectors instead of word frequencies has the advantages of strongly reducing the dimensionality of the DTM:
+instead of (tens of) thousands of columns for each unique word we only need hundreds of columns for the embedding vectors.
+This means that further processing can be more efficient as fewer parameters need to be fit,
+or conversely that more complicated models can be used without blowing up the parameter space.
+Another advantage is that a model can also give a result for words it never saw before, as these words mosty likely will have an embedding vector and so can be fed into the model.
+Finally, since words with similar meanings should have similar vectors,
+a model fit on embedding vectors gets a `head start' since the vectors for words like `great' and `fantastic' will already be relative close to each other, while all columns in a normal DTM are treated independently.
+
+The assumption that words with similar meanings have similar vectors can also be used directly to extract synonyms.
+This can be very useful, for example for (semi-)automatically expanding a dictionary for a concept.
+\refex{embedding} shows how to download and use pre-trained embedding vectors to extract synonyms.
+Moreover, it shows how you can also extract analogies, as X stands to Y as Z stands to ...@
+
+
+
+\subsection{Linguistic Preprocessing}
+
+A final technique to be discussed here is the use of linguistic preprocessing steps to enrich and filter a DTM.
+So far, all techniques discussed here are language independent.
+However, there are also many language-specific tools for automatically enriching text developed by computational linguistics communities around the world.
+Two techniques will be discussed here as they are relatively widely available for many language and easy and quick to apply: \concept{Part-of-seech tagging} and \concept{lemmatizing}.
+
+In \concept{part-of-speech tagging} or POS-tagging, each word is enriched with information on its function in the sentence: verb, noun, determiner etc.
+For most languages, this can be determined with very high accuracy, although sometimes text can be ambiguous:
+in one famous example, the flies in \emph{fruit flies} is generally a noun (fruit flies are a type of fly), but it can also be a verb (if fruit could fly). 
+Althugh there are different sets of POS tags used by different tools, there is broad agreement on the core set of tags listed in \reftab{postags}.
+
+POS tags are useful since it allows to to e.g. analyse only the nouns if we care about the things that are discussed, or only the verbs if we care about actions that are described.
+Moreover, knowing the POS tag of a word can help disambiguate it.
+For example, like as a verb (I like books) is generally positive, but like as a preposition (a day like no other) has no clear sentiment attached.
+
+\concept{Lemmatizing} is a technique for reducing each word to its root or \concept{lemma} (plural: lemmata).
+For example, the lemma of the verb \emph{reads} is (to) \emph{read} and the lemma of the noun \emph{books} is \emph{book}.
+Lemmatizing is useful since for most of our research question we do not care about these different conjugations of the same word.
+By lemmatizing the texts, we do not need to include all conjugations in a dictionary,
+and it reduces the dimensionality of the DTM -- and thus also the data scarcity.
+
+Note that lemmatizing is related to a technique called \emph{stemming}, which removes known suffixes (endings) from words.
+For example, for English it will remove the `s' from both reads and books.
+Stemming is much less sophisticated than lemmatizing, however, and will trip over irregular conjugations
+(e.g. \emph{are} as a form of to be) and regular word endings that look like conjugations (e.g. \emph{virus} will be stemmed to \emph{viru}).
+English has relatively simple conjugations and stemming can produce adequate results.
+For morphologically richer languages such as German or French, however, it is strongly advised to use lemmatizing instead of stemming.
+Even for English I would generally advice lemmatization since is so easy nowadays and will yield better results than stemming.
+
+\refex{lemmatizing}
