@@ -1,10 +1,68 @@
 \section{Authentication, cookies, and sessions}
 \label{sec:authentication}
 
-\todo[inline]{We need to discuss what else needs to go in here. Originally, it said, for instance: OAuth. BUT: is there any situation in which someone will use OAuthlib directly? For virtually all APIs that use Oauth, there is some wrapper; and we decided not to discuss specific APIs (``the Twitter API'') because these things get outdated fast. Also, everything is so tailored to specific examples that it is hard to give general guidance. Ideas?}
+\subsection{Authentication and APIs}
+\label{sec:authapi}
+When we introduced APIs in \refsec{apis}, we used an example of an
+API where you did not need to authenticate yourself. As we have seen,
+using such an API is as simple as sending an HTTP request to an
+endpoint and getting a response (usually, a JSON object) back. And
+indeed, there are plenty of interesting APIs (think for instance of
+open governemnt APIs) that work this way.
 
-In this chapter, we briefly discuss different approaches for dealing
-with web services where you need to log on, accept something (e.g., a
+While this has obvious advantages for you, it also has some serious
+dowmsides from the perspective of the API provider as well as from
+a security and privacy standpoint. The more confidential the data is,
+the more likely it is that the API provider needs to know who you
+are in order to determine which data you are allowed to retrieve;
+and even if the data are not confidential, authentication may be
+used to limit the number of requests that an individual can make
+in a given time frame.
+
+In its most simple form, you just need to provide a unique key that
+identifies you as a user. For instance, \refex{textrazor} shows how
+such a key can be passed along as HTTP header, essentially as
+additional information next to the URL that you want to retrieve (see
+also \refsec{authweb}). The example shows a call to an endpoint
+of a commercial API for natural language processing to inform how
+many requests we have made today.
+
+\pyrex[output=py,input=both, caption={Passing a key as HTTP request header to authenticate at an API endpoint}]{chapter13/textrazor}
+
+As you see, using an API that requires authentication by passing a key
+as a HTTP header is hardly more complicated than using APIs that do
+not require authentication such as outlined in \refsec{apis}.
+However, many APIs use more complex protocols for authentication.
+
+The most popular one is called OAuth, and it is used by many APIs
+provided by major players such as Google, Facebook, Twitter, Github,
+LinkedIn, etc. Here, you have a client ID and a client secret
+(sometimes also called consumer key and consumer secret) and an
+access token with associated access token secret. The first pair
+authenticates you as a user, the second pair authenticates the
+specific ``app'' (i.e., your script). Once authenticated, your
+script can then interact with the API. While it is possible to
+directy work with OAuth HTTP requests using \pkg{requests_oauthlib}
+(Python) or \pkg{httr} (R), chances are relatively low that you
+have to do so, unless you plan on really developing your own app
+or even your own API: For all popular API's, so-called wrappers,
+packages that provide a simpler interface to the API, are available
+on pypi and CRAN. Still, all of these require to have at least
+a consumer key and a consumer secret. The access token sometimes
+is generated via a web interface where you manage your account
+(e.g., in the case of Twitter), or can be aquired by your script
+itself, which then will redirect the user to a website in which
+they are asked to authenticate the app. The nice thing about this
+is that it only needs to happen once: Once your app is authenticated,
+it can keep making requests.
+
+
+
+
+\subsection{Authentication and webpages}
+\label{sec:authweb}
+In this section, we briefly discuss different approaches for dealing
+with websites where you need to log on, accept something (e.g., a
 so-called cookie wall), or have to otherwise authenticate yourself.
 One approach can be the use of a web testing framework like Selenium
 (see \refsec{selenium}): You let your script literally open a browser
