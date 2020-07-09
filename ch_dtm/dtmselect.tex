@@ -130,7 +130,7 @@ This matches HTML escapes like \verb#&amp;# for an ampersand.
 
 After this, the texts are tokenized and all hashtags and at-mentions are removed.
 In python, this is done by using list expressions (\verb#[process(item) for item in list]#): first for tokenizing each document; and a nested list expression for filtering each token in each document.
-In R this is not needed as both the \fn{tokens} and \fn{tokens_keep} functions are \concept{vectorized}, that is, they directly run over all the texts.
+In R this is not needed as both the \fn{tokens} and \fn{tokens\_keep} functions are \concept{vectorized}, that is, they directly run over all the texts.
 
 As a final example, \refex{bla} repeats all these steps in a single block, but rather than removing hashtags it keeps only the hash tags.
 It also showcases some of the built-in arguments in \quanteda\ for 
@@ -178,7 +178,7 @@ As such, it is no surprise that it is easy to apply this in both python and R, a
 This example uses the same data as \refex{sotu} above, so you can compare the resulting weighted values with the results reported there.
 As you can see, the TF-IDF weighting in both languages have roughly the same effect:
 very frequent terms such as \emph{the} are made less important compared to less frequent words such as \emph{submit}.
-For example, in the raw frequencies for the 1965 Johnson speech, \emph{the} occurred 355 times compared to \submit{submit} only once.
+For example, in the raw frequencies for the 1965 Johnson speech, \emph{the} occurred 355 times compared to \emph{submit} only once.
 In the weighted matrix, the weight for \emph{submit} is only 4 times as low as the weight for \emph{the}.
 
 There are two more things to note if you compare the examples from R and Python.
