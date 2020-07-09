@@ -1,31 +1,33 @@
 \section{Installing R and Python}
 \label{sec:installing}
 
-In the previous chapter, we had fun with data using the provided
-docker, which meant that there were very few things to install in
-order to run the initial examples. However, if you want to enjoy all
-the power of computational analysis of communication you must be able
-to install from scratch all the necessary software, packages and
-dependencies in order to complete your first steps as a programmer and
-then be able to write, adapt and run code. Nowadays you may find many
-online and cloud services that provide web interfaces to run code,
-both in R and Python, which might result useful depending on your
+In the previous chapter, we had fun with data using online platforms.
+However, if you want to enjoy all the power of computational analysis
+of communication, you need to install the necessary software to write,
+adapt, and run code. Nowadays you may find many online and cloud
+services that provide web interfaces to run code, both in R and
+Python, which can be very useful depending on your
 needs. Nevertheless, we encourage you to install on your local
 computer all the basic software and packages that we will use
 throughout this book and that you will likely use in the near future
 in order to apply the learned techniques in your own research.
 
-As we already justified in the introduction of this book, R and Python
-are the most popular programming languages that data scientists and
-computational scholars have adopted to conduct their work.  Now, we
-should download and install these open-source and free applications on
-our local computers and become familiar with some additional
-resources, such as popular \emph{integrated development environment}
-(IDEs) and notebooks, which provide a more friendly interaction with
-your code. All the resources are typically available for MacOS,
-Windows and Linux, but keep in mind that their implementation in each
-operating system might differ (for example, in the way you install the
-software or when writing the absolute or relative paths in the code).
+R and Python are the most popular programming languages that data
+scientists and computational scholars have adopted to conduct their
+work (see \refchap{introduction}). While many develop a preference
+for the one or the other language, chances are very high that you
+will ultimately switch back and forth between them, depending on
+the specific task at hand and the project you are involved in.
+
+For Python as well as R, you need several components to create a
+comfortable work environment: an interpreter for the language itself,
+a program to write your code in such as an \emph{integrated
+  development environment} (IDE) or a notebook, and additional
+libraries (packages) to extend the functionality of R and Python.  All
+of these resources are typically available for MacOS, Windows and
+Linux, but keep in mind that their implementation in each operating
+system might differ (for example, in the way you install the software
+or when writing the absolute or relative paths in the code).
 
 \begin{feature}\textbf{Anaconda}. An alternative to installing 
   R, Python, and optional libraries separately and as you need them
@@ -44,7 +46,7 @@ software or when writing the absolute or relative paths in the code).
   important software to perform computational analysis of
   communication.  So, should you install Anaconda, or should you
   install all software separately as outlined in this chapter? It
-  depends. On the pro side, you just have everything at once and do
+  depends. On the pro side, you just have everything installed at once and do
   not have to worry about dependencies (e.g., Windows users ususally
   do not have a C compiler installed, but some packages may need
   it). On the con side, next to that it is huge and also installs many
@@ -87,7 +89,7 @@ since there is a global community of developers that help to improve
 the software continously. You should go the CRAN mirrors and click onto
 any mirror (or the one you consider more close to your place of
 work). Within the mirror you can download the version you need
-depending of your operating system (figure~\ref{fig:cran}). In case
+depending of your operating system (Figure~\ref{fig:cran}). In case
 you're not familiar with terms ``CRAN'' or ``mirror'', the first
 refers to the \textit{Comprehensive R Archive Network}, which is an
 online repository of R packages; and the second, to the server where a
@@ -106,7 +108,7 @@ copy of any package is available for download.
 
 Once you have downloaded and installed R on your computer (follow the
 instructions on the page for each operating system), you will be able
-to open an R console (figure~\ref{fig:r_console}), where you can
+to open an R console (Figure~\ref{fig:r_console}), where you can
 perform all operations, from reading datasets to execute sophisticated
 data analysis. If you are new to computer science jargon, it is worthy
 to clarify what a \textit{console} is and what is the difference with
@@ -148,7 +150,7 @@ Workspace or Packages \& Data. Because R is an
 object-orientated programming language, which means that all
 operations are performed with objects that we create or import, from
 simple variables to complex recursive functions. If you create an
-object \texttt{x} with the value 17 (x \textless- 17), this object will
+object \texttt{x} with the value 17 (|x = 17|), this object will
 be loaded into RAM memory so you can access by just typing \texttt{x}.
 The menu Workspace will let you know which objects
 have been uploaded to this virtual space. We will go back to this
@@ -185,11 +187,11 @@ mentioning that once you have installed any package on your computer,
 you have to import it it in the R environment every time you are going
 to work with it. This means that you have to indicate either on your R
 console or R Document, which libraries you will be using, so the
-program can load the package. The are two common methods to load or
-attach an add-on package: \fn{require} and \fn{library}. \fn{require}
-will return an error if the package is not installed. Whenever you
-want to know more about a method you can call for documentation using
-the |?| symbol, e.g. |?require|.
+program can load the package, which you can do with the command
+\fn{library}. You can for instance write |library(base)| to import
+the library named ``base''. Whenever you want to know more about a
+command you can ask for documentation using the |?| symbol,
+e.g. |?library|.
 
 Now, let’s load R Commander by typing |require(Rcmdr)| into the R consule.
 
@@ -253,15 +255,28 @@ it will be very useful to have the script in one window and gradually
 run parts of the code, instead of executing the whole document at once
 or to run it line by line in the console.
 
-In the right side of RStudio workspace you will find two additional
-windows. In the up-right window there are three tabs. You will mostly
-use \emph{environment} and \emph{history}, and seldom
-\emph{connection} (just to connect to existing data sources such as
-those from ODBC or Spark). In \emph{environment} you can manage your
-workspace (the set of elements you need to deploy for data analysis)
-and have a list of the objects you have uploaded to it. You may also
-import datasets with this tool, and most importantly, you can save
-your workspace or open a previous one. In \emph{history} you will
+On the right side of RStudio workspace you will find two additional
+windows. In the up-right window there are two or more tabs:
+\emph{environment} and \emph{history}, and depending on additional
+packages you may have installed maybe some more.  In
+\emph{environment} you can manage your workspace (the set of elements
+you need to deploy for data analysis) and have a list of the objects
+you have uploaded to it. You may also import datasets with this tool.
+It is also possible to save your ``workspace'' or open a previous one.
+However, relying on this functionality is often not a good idea: it
+will only save the state of your current session, whereas you most
+likely want to save your R syntax file and/or your data instead.
+If you have your raw input data (e.g., as a csv file, see \refchap{filetodata})
+and a |.R| syntax file (by clicking on File/Save As), you can always
+reproduce what you have been doing. If you only have a snapshot of
+your workspace, you know state in which you arrived, but cannot
+necessarily reproduce (or change) how you got there. A better idea
+to bundle everything that you need (data and code) is to create (and
+later re-open) a new project (via File/New Project), which will
+initialize a new folder to work in. Saving your workspace, in contrast,
+is usually not necessary, even though RStudio may ask you for it.
+
+In \emph{history} you will
 have an inventory of code executions, which you can save to a file, or
 move directly to console or to an R document. In the down-right window
 you will have five more useful tabs. In \emph{files} you can explore
@@ -357,10 +372,10 @@ mostly prefer to write the script in a Python file (.py) or similar
 it will be worth to keep the Python console open and write your first
 line of code on it, using the native function \fn{print} (see \refex{helloworld}).
 
-\codex{chapter03/helloworld.py}
+\pyrex[output=py,input=py,caption=Your first program]{chapter03/helloworld}
 
 After running this line, you will get your first result or
-output (Figure~\ref{fig:python_from_terminal}), which will be to
+output (see also Figure~\ref{fig:python_from_terminal}), which will be to
 display on the screen a sequence of characters, called a
 \emph{string}. You might tell your colleagues that you have written
 your first computer program, just as many computer scientists have
@@ -374,27 +389,28 @@ classical one is by using the command pip from your system
 terminal. In order to quit the Python console and return to the system
 terminal, just type |exit()| and press Enter.
 
-Once you are back in your system terminal again you can use pip to
+Once you are back in your system terminal again you can use \pkg{pip} to
 install any package under your default python version (notice that if
-you have different versions or environments of Python, the package
-will not be installed in all of them).  In the last versions of Python
-some packages such as \pkg{numpy} (for computing large
-multi-dimensional arrays and matrices) will be included by default,
-but most likely you will need to install many others.  This is the
-case of \pkg{tweepy}, which is a library to connect to the API's of
-Twitter and we will work with it in chapter [SCRAPING ONLINE DATA]. To
-install this package just run the next line on your system terminal:
+you have different versions of Python, the package
+will not be installed in all of them).  If you installed Anaconda
+(see above) some packages such as \pkg{numpy} (for computing large
+multi-dimensional arrays and matrices) are included by default,
+but most likely you will need to install at least some additional
+packages. For instance, to install \pkg{tweepy}, which is a library
+to connect to the Twitter API (see \refsec{apis}). To
+install this package just run the next line on your system terminal:\footnote{On MacOS and Linux, you may need administrator rights to install a package system-wide (i.e., for all users). In that case, run \texttt{sudo pip install tweepy}
+instead. Also, it may be that on your system, the appropriate command is called \texttt{pip3} instead of \texttt{pip}.}
 
 |pip install tweepy|
 
 With this simple command, you will download and install this powerful
 package on your computer. You may try to check if you can now use the
 package, just by going again to Python console and use the command
-import to bring the library to your current session.
+import to bring the library to your current session (\refex{importtweepy}).
 
-\codex[caption=Importing a python module]{chapter03/importtweepy.py}
+\pyrex[output=none,input=py,caption=Importing a python module]{chapter03/importtweepy}
 
-If no error is shown, you can be happy that you successfully
+Note that you do not get any output. If no error is shown, you can be happy that you successfully
 installed your first package in Python in just few seconds, using the
 system terminal and the raw Python software. Far beyond this basic
 environment, you might find more functionalities and shortcuts in this
@@ -419,10 +435,46 @@ and more productive.
 \label{fig:python_idle}
 \end{figure}
 
-The next useful IDE is \pkg{PyCharm}, which provides an even more graphical
-and integrated interface to deal with Python.  Developed by JetBrains,
-PyCharm has a free and open source \emph{Community} version that you
-can download and install on your local computer from its
+While there is nothing wrong with using IDLE, most people will
+find it a bit too limited and not tailored towards the needs of
+a data analyst. We will therefore introduce three alternatives:
+Spyder, Jupyter, and PyCharm.
+
+Many people who move from R to Python like \pkg{spyder}, as it
+looks pretty much like R Studio. Even if it is a bit less powerful,
+it includes the same basic elements: a section to write a script,
+a console for issuing ad-hoc commands (and reading output), and
+a graphical overview of objects in the environment, here called
+the variable inspector (Figure~\ref{fig:python_spyder}). 
+
+\begin{figure}
+\centering
+\includegraphics[width=0.9\linewidth]{figures/ch3-spyder}
+\caption{A bit of an R feeling in Python: \pkg{spyder}}
+\label{fig:python_spyder}
+\end{figure}
+
+Another popular way to write and run Python code in the realm of data
+analysis are so-called \pkg{jupyter} notebooks. These notebooks, which
+are also included in the IDE JupyterLab, are run as a web application
+that allowsyou to create documents that contain live code and text
+(and also equations and visualizations).  One of the nicest things of
+the Jupyter Notebook is that the code is inserted in fields that you
+can run one by one, getting its respective output, which added to the
+designed narrative text will make your script more clean and
+reproducible. You can also add formatted text blocks to explain to the
+reader what you are doing. In \refsec{practices}, we will address
+notebooks again as a good practice for a computational scientist.
+
+
+Finally, we introduce \pkg{PyCharm}, an IDE that provides an even more
+graphical and integrated interface to deal with Python than for
+instance \pkg{spyder}. It is especially popular among programmers, and
+many features may feel overwhelming if you are just about to start,
+but it is an excellent choice, especially if you work on bigger projects.
+Developed by JetBrains, PyCharm has a free and
+open source \emph{Community} version that you can download and install
+on your local computer from its
 webpage\footnote{https://www.jetbrains.com/pycharm/download/} with
 options for Windows, MacOS and Linux. Once installed you can connect
 the software to any of the already installed versions of Python or
@@ -472,21 +524,9 @@ expected output in a separate window within the same frame.
 \label{fig:pycharm}
 \end{figure}
 
-The next two extra tools we would like you to familiarize with are
-Spyder and Jupyter Notebook. Spyder is an IDE for Python (pretty
-similar to PyCharm with a file editor and a console, but including a
-variable inspector) and Jupyter Notebook (included in the interactive
-development environment JupyterLab) is a web application that allows
-you to create and share documents that contain live code and text (and
-also equations and visualizations).  One of the nicest things of the
-Jupyter Notebook is that the code is inserted in fields that you can
-run one by one, getting its respective output, which added to the
-designed narrative text will make your script more clean and
-reproducible. In \refsec{practices}, we will address notebooks again as a good practice for a computational
-scientist.
 
 It is important to notice that you do not have to install Python
-\textit{and} Spyder, \textit{and} PyCharm \textit{and} Anaconda,
+\textit{and} Spyder \textit{and} Jupyter \textit{and} PyCharm \textit{and} Anaconda,
 though it is typical that many computational scientist have different
-IDLEs in their computers. You can choose which of them are more
-appropriate for your work.
+IDEs in their computers. You can choose which of them are most
+appropriate for your work -- and which one you feel most comfortable with.
