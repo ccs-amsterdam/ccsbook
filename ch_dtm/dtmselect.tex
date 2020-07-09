@@ -10,18 +10,18 @@ essentially a plot of the most frequent words in a  \concept{corpus} (set of doc
   \textbf{Vectors and a geometric interpretation of document-term matrices}
   We said that a document is represented by a `vector' of numbers, where each number (for a document-term matrix)
   is the frequency of a specific word in that document. This term is also seen in the name for the tokenizer \sklearn:
-  a \concept{vectorizer} or function to turn texts into vectors. 
-
+  a \concept{vectorizer} or function to turn texts into vectors. \\%
+  %
   The term \concept{vector} here can be read as just a fancy word for a group of numbers.
   In this meaning, the term is also often used in R, where a column of a dataframe is called a vector,
-  and where functions that can be called on a whole vector at once is called \em{vectorized}. 
-
+  and where functions that can be called on a whole vector at once is called \emph{vectorized}. \\%
+  %
   More generally, however, a vector in geometry is a point (or line from the origin) in an n-dimensional space,
   where n is the length or dimensionality of the vector.
   This is also a very useful interpretation for vectors in text analysis:
   the dimensionality of the space is the number of unique words (columns) in the document-term matrix,
-  and each document is a point in that n-dimensional space.
-
+  and each document is a point in that n-dimensional space.\\%
+  %
   In that interpretation, various geometric distances between documents can be calculated an indicator for how similar
   two documents are. Techniques that reduce the number of columns in the matrix (such as clustering or topic modeling)
   can then be seen as dimensionality reduction techniques since they turn the DTM into a matrix with lower dimensionality
@@ -41,23 +41,26 @@ and noisy `words' such as punctuation or technical artefacts like HTML code.
 
 This section will discuss a number of techniques for cleaning a corpus or document-term matrix in order to minimize the amount of noise: removing stop words, cleaning punctuation and other artefacts, and trimming and weighting.  
 As a running example in this section, we will use a collection of tweets from U.S. president Donald Trump.
-\refex{trumptweets} shows how to load these tweets into a data frame containing the ID and text of the tweet,
-creates a document-term matrix and shows the top words.
+\refex{trumptweets} shows how to load these tweets into a data frame containing the ID and text of the tweets.
+As you can see, this data set contains a lot of non-textual features such as hyperlinks and hash tags as well as regular punctuation and stop words.
+Before we can start analysing this data, we need to decide on and perform multiple cleaning steps such as detailed below. 
 
-\pyrex[caption=Top words used in Trump Tweets,format=png]{ch_dtm/stopwords}
+\pyrex[caption=Top words used in Trump Tweets,format=png,output=py]{ch_dtm/trumptweets}
 
-Although tweets are perhaps overused as a source of scientific information,
+Please note that although tweets are perhaps overused as a source of scientific information,
 we use them here as an example since they nicely exemplify issues around non-textual elements such as hyperlinks.
-See \refchap{scraping} for information on how to use the Twitter API to collect your own data.
+See \refchap{scraping} for information on how to use the Twitter and other APIs to collect your own data.
 
 \subsection{Removing stopwords}
 
 A first step in cleaning a DTM is often \concept{stop word removal}.
-Words such as `a' and `the' are often called stop words, i.e.  that do not tell us much about the content.
+Words such as `a' and `the' are often called stop words, i.e. words that do not tell us much about the content.
 Both \quanteda\ and \sklearn\ include built-in lists of stop words, making it very easy to remove the most common words.
 \refex{stopwords} shows the result of specifying `english' stop words to be removed for both packages.
 
 \pyrex[caption=Simple stop word removal,format=png]{ch_dtm/stopwords}
+
+
 
 Note, however, that it might seem easy to list words like `a` and `and',
 but as it turns out there is no single well-defined list of stop words,
@@ -68,8 +71,8 @@ with closed classes meaning that while you can coin new nouns, you can't simply 
 However, there are many different stop word lists around, which make different choices and are compatible with
 different kinds of preprocessing.
 The Python word cloud in \refex{stopwords} shows a nice example of the importance of matching stopwords with the used
-tokenization: a central `word' in the cloud is the contraction |'s|.
-We are using the NLTK tokenizer, which splits |'s| from the word it was attached to, but the \sklearn\ stop word list
+tokenization: a central `word' in the cloud is the contraction \emph{'s}.
+We are using the NLTK tokenizer, which splits \emph{'s} from the word it was attached to, but the \sklearn\ stop word list
 does not include that term.
 So, it is important to make sure that the words created by the tokenization match how words appear in the stop word list.
 
@@ -90,8 +93,9 @@ words like `I', `us' and `them' can actually be very informative.
 For this reason, it is always a good idea to understand and inspect what stop word list you are using,
 and use a different one or customize it as needed \citep[see also][]{nothman18}.
 \refex{stopwords2} shows how you can inspect and customize stop word lists.
-See the package documentation for the \pkg{stopwords} packages in both Python and R
-for more details on which lists are available and what choices these lists make. 
+For more details on which lists are available and what choices these lists make,
+see the package documentation for the \pkg{stopwords} package in Python (part of NLTK) and R (part of quanteda)
+
 
 \pyrex[caption=Inspecting and Customizing stop word lists]{ch_dtm/stopwords2}
 
@@ -102,12 +106,13 @@ for more details on which lists are available and what choices these lists make.
 Next to stop words, text often contains punctuation and other things that can be considered `noise' for most research questions.
 For example, it could contain emoticons or emoji, twitter hashtags or at-mentions, or html tags or other annotations.
 
-In both python and R, we can use regular expressions to select which words to keep or remove.
-As explained above in \ref{sec:regex}, regular expressions are a powerful way to specify (sequences of) characters which are to be kept or removed.
+In both python and R, we can use regular expressions to remove (parts of) words. 
+As explained above in \refsec{regex}, regular expressions are a powerful way to specify (sequences of) characters which are to be kept or removed.
 You can use this, for example, to remove things like punctuation, emoji, or HTML tags.
-This can be done either before or after tokenizing (splitting the text into words). 
+This can be done either before or after tokenizing (splitting the text into words):
+in othe words, we can clean the raw texts or the individual words (tokens). 
 
-If you only want to keep or remove certain words, it is often easiest to do after tokenization
+In general, if you only want to keep or remove certain words, it is often easiest to do so after tokenization
 using a regular expression to select the words to keep or remove.
 If you want to remove parts of words (e.g. to remove the leading `\#` in hashtags) if is easiest to do that before tokenization,
 that is, as a preprocessing step before the tokenization.
@@ -132,8 +137,8 @@ It also showcases some of the built-in arguments in \quanteda\ for
 for common use cases such as removing
 punctuation, numbers, and twitter-punctuation (at-mentions and hashtags).
 You can do these steps yourself using regular expressions in a very flexible way, but as the final part of example \refex{bla}
-shows, it is a lot easier to just use these options on the \fn{dfm} function. 
-
+shows, it is a lot easier to just use these options on the \fn{dfm} function.
+ 
 
 \subsection{Trimming a DTM}
 
@@ -169,6 +174,28 @@ $tfidf(t,d)=tf(t,d)\cdot idf(t)=f_{t,d}\cdot -\log \frac{n_t}{N}$
 Where $f_{t,d}$ is the frequency of term $t$ in document $d$, $N$ is the total number of documents, and $n_t$ is the number of documents in which term $t$ occurs. In other words, the term frequency is weighted by the negative log of the fraction of documents in which that term occurs. Since $\log(1)$ is zero, terms that occur in every document are disregarded, and in general the less frequent a term is, the higher the weight will be. 
 
 Tf-idf weighting is a fairly common technique and can improve the results of subsequent analyses such as supervised machine learning.
-As such, it is no surprise that it is easy to apply this in both python and R, as shown in \refex{tfidf}
+As such, it is no surprise that it is easy to apply this in both python and R, as shown in \refex{tfidf}.
+This example uses the same data as \refex{sotu} above, so you can compare the resulting weighted values with the results reported there.
+As you can see, the TF-IDF weighting in both languages have roughly the same effect:
+very frequent terms such as \emph{the} are made less important compared to less frequent words such as \emph{submit}.
+For example, in the raw frequencies for the 1965 Johnson speech, \emph{the} occurred 355 times compared to \submit{submit} only once.
+In the weighted matrix, the weight for \emph{submit} is only 4 times as low as the weight for \emph{the}.
+
+There are two more things to note if you compare the examples from R and Python.
+First, to make the two cases somewhat comparable we have to use two options for R, namely to set the term frequency to proportional (\verb|scheme_tf='prop'|),
+and to add smoothing to the document frequencies (\verb|smooth=1|).
+Without those options, the counts for the first columns would all be zero (since they occur in all documents, and $\log \frac{85}{85}=0$),
+and the other counts would be greater than one since they would only be weighted, not normalized.
+
+Even with those options the results are still different (in details if not in proportions),
+mainly because R normalizes the frequencies before weighting, while Python normalizes after the weighting.
+Moreover, Python by default uses L2 normalizatoin, meaning that the length of the document vectors will be one,
+while R uses L1 normalization, that is, the row sums are one (before weighting).
+Both R and Python have various parameters to control these choices which are explained in their respective help pages.
+However, although the differences in absolute values look large, the relative effect of making more frequent terms less important is the same,
+and the specific weighting scheme and options will probably not matter that much for the final results.
+However, it is always good to be aware of the specific options available and try out which work best for your specific research question.
+
+
 
 
