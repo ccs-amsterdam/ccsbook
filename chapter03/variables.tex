@@ -30,15 +30,15 @@ commands.
 \note{A small note on terminology: In programming, a distinction is
   often made between an object (such as the number 10) and the
   variable in which it is store (such as \texttt{x}). The latter is also called a ``pointer''.
-  However, this distinction is not very relevant for our
-  usage. Morever, in statistics the word variable often refers to a
-  column of data, rather than to the name of the data frame.  For that
+  However, this distinction is not very relevant for most of our
+  purposes. Morever, in statistics, the word variable often refers to a
+  column of data, rather than to the name of, for instance, the object
+  containing the whole data frame (or table).  For that
   reason, we will use the word \emph{object} to refer to both the
-  actual object or value and its name, and will avoid the word
-  variable. }
+  actual object or value and its name.}
 
 Objects can be simple values such as the number 10, but they can also
-be pieces of text, whole data frames, or analysis results.  The
+be pieces of text, whole data frames (tables), or analysis results.  The
 computer keeps track of the \emph{type}, or \emph{class}, of each
 object.  You can inspect the type of an object with the \code{type}
 (Python) or \code{class} function, as shown in example \refex{objecttype}. 
@@ -52,8 +52,8 @@ As you can see, R calls the number `numeric', while Python reports it
 as being `int', short for integer or whole number.  Although they use
 different names, both languages offer very similar data types.
 \reftab{types} provides an overview of the data types we will
-encounter most frequently in this book.  As you can see in the table,
-both python and R have very similar types for simple data such as
+encounter most frequently in this book.  As you can see,
+both Python and R have very similar types for simple data such as
 numbers, text, and truth values.
 
 \newcommand{\fndouble}{In R, double and numeric can generally be used
@@ -113,13 +113,23 @@ will store it as float anyway and you need to force it to do
 otherwise, for Python it is the other way round
 (\refex{var3}). We can also convert between types later on,
 even though converting a float to an int might not be a too good idea,
-as you truncate your data.
+as you truncate your data. So why not just always use a float? First,
+floating point operations usually take more time than integer operations.
+Second, because floating point numbers are stored as a combination of
+a coefficient and an exponent (to the base of 2), many integers (or,
+in fact, many decimal fractions) can only approximately be stored
+as a floating point number. Except for specific domains (such
+as finance), these inaccuracies are often not of practical importance.
+But it explains why calculating |6*6/10| in Python returns 3.6, while
+|6*0.6| or |6*(6/10)| returns 3.5999999999999996. Therefore, if
+a value can logically only be a whole number (anything that is
+countable, in fact), it makes sense to restrict it to an integer.
 
 We also have a data type that is even more restricted and can take
 only two values: true or false. It is called `logical' (R) or `bool'
 (Python).  Just notice that True or False values are case sensitive
-and while in R you must capitalize the whole value (TRUE, FALSE), in
-Python we only capitalize the first letter: True, False.  As you can
+and while in R you must capitalize the whole value (|TRUE|, |FALSE|), in
+Python we only capitalize the first letter: |True|, |False|.  As you can
 see in \refex{var3}, such an object behaves exactly as an integer that
 is only allowed to be 0 or 1, and it can easily be converted to an
 integer.
@@ -133,7 +143,7 @@ integer.
 
 As a computational analyst of communication you will usually work with
 text objects or strings of characters, which are called character
-vector objects in R and Python. You can create them just by adding single or double quotes to the value of the variable (keep in mind to begin and finish the string either with single or with double quotes, and not to use the indistinctly). Just think of a tweet or a Facebook post that you want to load into your workspace for natural
+vector objects in R. You can create them just by adding single or double quotes to the value of the variable (keep in mind to begin and finish the string either with single or with double quotes, and not to use the indistinctly). Just think of a tweet or a Facebook post that you want to load into your workspace for natural
 language processing analysis.
 
 \pyrex[caption=Strings and bytes]{chapter03/var4}
@@ -237,9 +247,9 @@ In the first case, we asked for the score of the 11th student ("b");
 in the second we asked for the 1st and 10th position ("8" "5"); and
 finally for all the elements between the 1st and 10th position ("8"
 "8" "7" "6" "9" "4" "9" "2" "8" "5"). We can directly indicate a range
-by using a |:|. After the colon, in Python, we provide the index of
-the element \emph{before} which we want to stop; in R, the element
-with the provided index is included\footnote{This is related to the
+by using a |:|. After the colon, we provide the index of
+the last element (in R), while Python stops just \emph{before} the index
+\footnote{This is related to the
 reason why Python starts counting with zero. If you are intetested
 in this, have a look at \url{https://www.cs.utexas.edu/users/EWD/transcriptions/EWD08xx/EWD831.html}}
 If we want to pass multiple single index values instead of a range,
@@ -317,7 +327,7 @@ function \fn{sqrt} that you stored in there to get the square root of
 In Python, such lists are, in fact, the most common type for creating
 a one-dimensional collection of basic data types. 
 
-Lists are mutable sequences of different types of elements. In other
+Python lists are mutable sequences of different types of elements. In other
 words, they are ordered collections of objects with no fixed size. We
 build this Python object using square brackets [], instead of
 parentheses (), as we did in R. Pay attention to this detail because
@@ -390,7 +400,10 @@ contain certain information in another object. Python generates this
 data type in form of |{key : value}| pairs in order
 to map any object by its key and not by its relative position in the
 collection. Unlike in a list, in which you index with an integer denoting
-the position in a list, you can index a dictionary using the key. You will
+the position in a list, you can index a dictionary using the key.
+For example, in \refex{dict}, we want to get the values of the object 'positive' in the
+dictionary \emph{sentiments} and of the object 'A' in the dictionary
+\emph{grades}.You will
 find dictionaries very useful in your journey as a computational
 scientist or practitioner, since they are flexible ways to store and
 retrieve structured information. We can create them using the curly
@@ -398,13 +411,6 @@ brackets {} and including each key-value pair as an element of the
 collection (\refex{dict}).
 
 \pyrex[input=py, output=py, caption=Dictionaries store key-value pairs]{chapter03/dict}
-
-
-As in other objects you can index its elements, by keep in mind that
-you do it using the key and not the position in the sequences. For
-example, we want to get the values of the object 'positive' in the
-dictionary \emph{sentiments} and of the object 'A' in the dictionary
-\emph{grades} (\refex{dict}).
 
 A good analogy for a dictionary is a telephone book (imagine a paper
 one, but it actually often holds true for digital phone books as
@@ -469,13 +475,13 @@ coding images.
 \subsection{Making life easier: dataframes}
 
 Dataframes are friendly data structures that look very much like
-what you find in SPSS or Excel. They will help you in a wide
+what you find in SPSS, Stata, or Excel. They will help you in a wide
 range of statistical analysis (though in more advanced exercises such
 in machine learning you will not be able to use them any more!).  A
 data frame is a tabular data object that includes rows (usually the
-instances) and columns (the variables). In a three-column data frame,
+instances or cases) and columns (the variables). In a three-column data frame,
 the first variable can be \emph{numeric}, the second \emph{character}
-and the third \emph{logic}, but the important thing is that each
+and the third \emph{logical}, but the important thing is that each
 variable is a vector and that all these vectors must be of the same
 length. We create data frames from scratch using the data.frame()
 function.  Let’s generate a simple data frame of three instances (each
