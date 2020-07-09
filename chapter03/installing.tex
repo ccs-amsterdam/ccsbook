@@ -27,6 +27,37 @@ Windows and Linux, but keep in mind that their implementation in each
 operating system might differ (for example, in the way you install the
 software or when writing the absolute or relative paths in the code).
 
+\begin{feature}\textbf{Anaconda}. An alternative to installing 
+  R, Python, and optional libraries separately and as you need them
+  (which we will explain in this chapter) is to install the so called
+  Anaconda distribution, one of the most used and extensive platforms
+  to perform data science. Anaconda is free and open-source, and is
+  conceived to run Python and R code for data analysis and machine
+  learning. Installing the complete Anaconda Distribution on your
+  computer\footnote{\url{https://www.anaconda.com/distribution/\#download-section}}
+  provides you with everything that you need to follow the examples in
+  this book and includes development environments such as Spyder,
+  Jupyter, and RStudio. It also includes a large set of pre-installed
+  packages often used in data science and an own package manager,
+  \pkg{conda}, which will help you to install and update other
+  libraries or dependencies. In short, Anaconda bundles the almost all
+  important software to perform computational analysis of
+  communication.  So, should you install Anaconda, or should you
+  install all software separately as outlined in this chapter? It
+  depends. On the pro side, you just have everything at once and do
+  not have to worry about dependencies (e.g., Windows users ususally
+  do not have a C compiler installed, but some packages may need
+  it). On the con side, next to that it is huge and also installs many
+  things you don not need, you essentially get a non-standard
+  installation, in which programs and packages are stored in different
+  locations than you (or your computer may expect).  As many computers
+  actually already \emph{have} Python installed (even though you may
+  not know it), you also end up in a possibly confusing situation
+  where it may be unclear which version you are actually running, or
+  for which version you installed a package.
+\end{feature}
+
+
 
 \subsection{Installing R}
 
@@ -451,24 +482,11 @@ also equations and visualizations).  One of the nicest things of the
 Jupyter Notebook is that the code is inserted in fields that you can
 run one by one, getting its respective output, which added to the
 designed narrative text will make your script more clean and
-reproducible. Both Spyder and Jupyter Notebook, are nowadays
-contained into the so called Anaconda Distribution, which you have
-probably heard about and that is one of the most used and extended
-platforms to perform data science. Anaconda is free and open-source,
-and is conceived to run Python and R code for data analysis and
-machine learning. This is a great tool for computational scientists
-and if you plan to follow this book we recommend you to install the
-complete Anaconda Distribution on your
-computer\footnote{https://www.anaconda.com/distribution/\#download-section}. In
-addition to Spyder and Jupyter Notebooks (and RStudio!), you will also
-get a set of pre-installed packages often used in data science
-(Pandas, Numpy, Scipy, Numba, Dask, Boreh, HoloViews, Datashader,
-Matplotlib, ScikitLearn, TensorFlow, etc.). Moreover, it will include
-the \pkg{conda}, which is an environment management system
-that will help you to install and update other libraries or
-dependencies. Once Anaconda is installed, you may say that you have on
-your local machine the most important software to perform
-computational analysis of communication. In \refsec{practices}, we will address notebooks again as a good practice for a computational
+reproducible. In \refsec{practices}, we will address notebooks again as a good practice for a computational
 scientist.
 
-It is important to notice that you do not have to install Python \textit{and} Spyder, \textit{and} PyCharm \textit{and} Anaconda, though it is typical that many computational scientist have different IDLEs in their computers. You can choose which of them are more appropriate for your work!
+It is important to notice that you do not have to install Python
+\textit{and} Spyder, \textit{and} PyCharm \textit{and} Anaconda,
+though it is typical that many computational scientist have different
+IDLEs in their computers. You can choose which of them are more
+appropriate for your work.
