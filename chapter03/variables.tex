@@ -104,7 +104,7 @@ variable |b| of value 50 and then create another new object
 
 \subsection{Storing single values: integers, floating-point numbers, booleans}
 
-When working with numbers, we distinguish betwee integers (whole
+When working with numbers, we distinguish between integers (whole
 numbers) and floating point numbers (numbers with a decimal point,
 called `numeric' in R). Both Python and R automatically determine the
 correct datatype when creating an object, but differ in their default
@@ -138,12 +138,21 @@ language processing analysis.
 
 \pyrex[caption=Strings and bytes]{chapter03/var4}
 
-As we will discuss in Section~\ref{sec:encodings}, there are several
-ways of how textual characters can be stored as bytes. You probably
-will not encounter this too often, but sometimes we may need a
-low-level approach in which we care about the exact bytes underlying a
-string. \refex{var4} shows how to create string and raw (byte)
-strings.
+There are several ways of how textual characters can be stored as
+bytes. You probably will not encounter this too often, but sometimes
+we have to process raw bytes. Quite confusingly, bytes are also often
+displayed as letters, but they are different: To begin with, a byte
+only has $2^8=256$ possible values, while there are more than one
+million possible characters that can form one character in a (Unicode)
+string may need a low-level approach in which we care about the exact
+bytes underlying a string. You can read more about this in
+\refsec{encodings}.  \refex{var4} shows how to create strings and raw
+(byte) strings. In your daily work, you will almost never want to
+create raw byte strings, but you may encounter them either because
+they have been used historically (in Python 2, strings by default
+were considered raw byte strings, and you needed to specify if
+you wanted to do otherwise), or because data that you retrieve from
+online sources may come as raw bytes (see \refchap{scraping}).
 
 As you see in \refex{var4}, a string is denoted by quotation
 marks. You can use either double or single quotation marks, but you
@@ -227,10 +236,14 @@ using the square brackets [] over the vector (\refex{1darray2}).
 In the first case, we asked for the score of the 11th student ("b");
 in the second we asked for the 1st and 10th position ("8" "5"); and
 finally for all the elements between the 1st and 10th position ("8"
-"8" "7" "6" "9" "4" "9" "2" "8" "5"). Note that while we can directly
-indicate a range by using a |:|, but if we want to pass multiple
-single index values, we need to create a vector of these indices by
-using |c()| (\refex{1darray2}).
+"8" "7" "6" "9" "4" "9" "2" "8" "5"). We can directly indicate a range
+by using a |:|. After the colon, in Python, we provide the index of
+the element \emph{before} which we want to stop; in R, the element
+with the provided index is included\footnote{This is related to the
+reason why Python starts counting with zero. If you are intetested
+in this, have a look at \url{https://www.cs.utexas.edu/users/EWD/transcriptions/EWD08xx/EWD831.html}}
+If we want to pass multiple single index values instead of a range,
+we need to create a vector of these indices by using |c()| (\refex{1darray2}). 
 
 As the vector |scores2| was forced to be a string, all the elements --
 even those that could be represented as numeric -- are now
@@ -318,7 +331,7 @@ and tuple, and get their sizes with the native function len
 categorical values for sentiment analysis. The first sequence is a
 list and the second a tuple. We can get any value of the list or tuple
 by indexing its position, just keep in mind that indexing in Python
-begins in 0 and not in 1 like in R.
+begins in 0 and not in 1 like in R. 
 
 \pyrex[input=py, output=py, caption=Lists and tuples in Python]{chapter03/1darray5}
 
@@ -362,7 +375,7 @@ high-performance calculations, and therefore, such a structure is
 avalable from the \pkg{numpy} (\emph{num}bers in \emph{py}thon)
 package: the numpy array (\refex{1darray7}).
 
-\pyrex[input=py, output=py, caption=Numpy arrays behave more like R vectors]{chapter03/1darray7}
+\pyrex[input=py, output=py, caption={Numpy arrays behave more like R vectors. However, you have to import (and potentially install) an additional package, \pkg{numpy}, for this (see \refsec{installing})}]{chapter03/1darray7}
 
 
 
@@ -409,6 +422,11 @@ dicts. Think of our phone book example: rather than storing just a
 phone number as value, we could store another dict with the keys
 'office phone', 'mobile phone', etc. This is very often done, and you
 will come across many examples dealing with such data structures.
+You have one restriction, though: the keys in a dictionary (as opposed
+to the values) are not allowed to be mutable. After all, imagine that
+you could use a list as a key in a dictionary, and if at the same time,
+some other pointer to that very same list could just change it, this
+would lead to a quite confusing situation.
 
 
 
