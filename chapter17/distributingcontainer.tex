@@ -5,7 +5,7 @@ groups. Some maybe interesting in building on and further developing
 your code. Some may not care about your code at all and just want your
 software to run. And many others will be somewhere in between.
 
-\emph{Only} publishing your source code \refsec{publishingsource} may
+\emph{Only} publishing your source code (\refsec{publishingsource}) may
 be a burden for those who want your code to ``just run'' once your
 code becomes more complex and has more dependencies. Imagine a
 scenario where your software requires a specific version of
@@ -21,4 +21,78 @@ software. To the outside, none of that is visible -- just a network
 port to connect to, or a command line to interact with, depending on
 your choices.
 
-\todo[inline]{ADD EXAMPLE}
+Software that is containerized using docker is distributed as a
+so-called \emph{docker image}. You can build such an image yourself,
+but it can also be distributed by pushing it to a so-called registry,
+such as the \pkg{Docker Hub}. If you publish your software this
+way, the end user has to do nothing else then installing Docker and
+running the command |docker run nameofyourimage| - if will be even
+downloaded automatically if necessary. There are also GUI versions
+of Docker available, which lowers the threshold for the some end user
+groups even more.
+
+Let's illustrate the typical workflow with a toy example. Imagine
+you wrote the following script, |myscript.py|:
+
+\texttt{
+import numpy as np
+
+from random import randint
+
+a = randint(0,10)
+
+print(f"exp({a}) = {np.exp(a)}")
+}
+
+You think that this is an awesome program (after all, it calculates
+$e$ to the power of a random integer!), and others should be able
+to use it. And you don't want to bother them with setting up Python,
+installing numpy, and then running the script. In fact, they do
+not even need to \emph{know} that it's a Python program. You
+could have written it as well in R, or any other langauge -- for
+the user, that will make no difference at all.
+
+What would a docker image that runs this code need to contain? Not
+much: First some basic operating system (usually, a tiny Linux distribution),
+Python, numpy, and the script itself.
+
+To create such a Docker image, you create a file named |Dockerfile|
+in the same directory as your script with the following content:
+
+\texttt{
+FROM python:3
+
+ADD myscript.py /
+
+RUN pip install numpy
+
+CMD [ "python", "./myscript.py" ] }
+
+
+The first line tells Docker to build your new image by starting
+from an existing image that already contains an operating system
+and Python3. You could also start from scratch here, but this
+makes your life much easier. The next line adds your script to the
+image, and then we run |pip install numpy| within the image.
+The last line just specifies which command with which parameters
+needs to be executed when the image is run -- in our case
+|python ./myscript.py|.
+
+To create the image, you run |docker build -t dockertest .| (if
+you want to name the image ``dockertest''. After that, you can run
+it using |docker run dockertest| -- and, if you want to, publish it.
+
+Easy, right?
+
+But when does it make sense to use Docker? Not in our toy example,
+of course. While the original code is only a couple of bytes, it now
+got bloated to hundreds of megabytes. But there are plenty of
+scenario's where this makes a lot of sense.
+
+\begin{itemize}
+\item To ``abstract away'' the inner workings of your code. Rather than giving potentially complicated instructions how to run your code, which dependencies to install, etc., you can just provide users with the Docker image, in which everyting is already taken care of.
+\item To ensure that users get the same results. Through it doesn't form a huge problem on a daily bases for most computational scientists, different versions of different libraries on different systems may ocassionally produce slightly different results. The container ensures that the code is run using the same software setup.
+\item To avoid interfering with existing installations. Already our toy example had a dependency, numpy, but often, dependecies can be more complex and a program we write may need very specific libraries, or even some other software beyond Python or R libraries. Distributing the source code alone means forcing the user to also install these; and there are many good reasons why people may be reluctant to do so. It may be incompatible with other software on their computer, there may be security concerns, or it just may be too much work. But if it runs inside of the docker container, many of these problems disappear.
+\end{itemize}
+
+In short, the Docker image is rarely the \emph{only} way in which you distribute your source code. But already adding a Dockerfile to your github repository so that users can build a Docker container can offer another and maybe better way of running your software to your audience.
