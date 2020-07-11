@@ -1,54 +1,43 @@
 \section{Simple control structures: loops and conditions}	
 \label{sec:controlstructures}
 
-\subsection{Loops}
-Having a clear understanding of what an object is allows us to
-comprehend how object-orientated languages such as R and Python work,
-but now we need to get some literacy of how to write code and interact
-with the computer using these programs. Learning a programming
+Having a clear understanding of objects and datatypes is a fist step
+towards comprehending how object-orientated languages such as R and Python work,
+but now we need to get some literacy of how to write code and \emph{interact}
+with the computer and the objects we created. Learning a programming
 language is just like learning any new language.  Imagine you want to
 speak Italian or you want to learn how to play the piano. First thing
 will be to learn some words or musical notes, and to get familiarized
-with some examples or basic structures. This is what we have done so
-far in the last sections and chapters by providing real examples of
-computational analysis of communication and explaining you the main
-types of objects you will have to deal with in R and Python. In the
-case of Italian or piano, you would have to learn next some grammar:
-How to form sentences in different times or how play some accords and
-reproduce patterns, respectively. And this is exactly how we should
-now move on to acquiring computational literacy; by learning some
+with some examples or basic structures -- just as we did in \refchap{fundata}. In the
+case of Italian or piano, you would then have to learn next some grammar:
+How to form sentences, how play some chords; or, more generally,
+how to reproduce patterns. And this is exactly how we 
+now move on to acquiring computational literacy: by learning some
 rules to make the computer do exactly what you want.
 
 Remember that you can interact with R and Python directly on their
-consoles just by typing any given command on the shell. However, when
-you begin to use several of these commands and combine them with a
-specific syntax you will need to put all these instructions into a
-script that can run partially or entirely. Scripts are very useful as
-the syntax of our code becomes more complex and you move to many
-levels of \emph{indentation} (logical empty spaces -- 2 in R and 4 in
-Pyhton -- depicting blocks and sub-blocks on your code structure) that
-can result messy on a shell. Thus, to learn how to create functions
-and simple control structures you should create and save documents
-(i.e. .r or .py) that we call scripts.
+consoles just by typing any given command. However, when
+you begin to use several of these commands and combine them
+you will need to put all these instructions into a
+script that you can then run partially or entirely. Recall \refchap{installing},
+where we showed how IDEs such as RStudio or Spyder offer both a
+console for directly typing single commands and a larger window
+for writing longer scripts.
 
-And this is the way computer programs work: you give them some
-\emph{statements} (directly or from a script) to which they
-react. Statements are just written instructions that are executed by
-the console.  We call a sequence of these statements a \emph{computer
-  program}. In the previous section, when we created objects or
-\emph{variables} (i.e. |a = 100|) we already dealt
-with the basic statement, which is called \emph{assignment
-  statement}. But the statements can be more complex.
-%and include many internal components, such as \emph{assignment statement}, which are
-%representations of values that combine variables, constants and
-%functions (i.e.  x+1 AND z\textless100). There are some specific
-%expressions (such as \emph{lists of comprehension} in Python) that we
-%will discuss later, but for now you can notice that by using
-%statements, expressions and variables you have the basics for computer
-%programming.
+Both R and Python are \emph{interpreted} languages (as opposed to
+\emph{compiled} languages), which means that interacting with
+them is very straightforward: You provide your computer with some
+\emph{statements} (directly or from a script), and your computer
+reacts. We call a sequence of these statements a \emph{computer program}.
+When we created objects by writing, for instance,
+|a = 100|,  we already dealt with a very basic statement, the\emph{assignment statement}. But of course the statements can be more complex.
 
-Fortunately, we have great syntactic tools to write code. Both, R and
-Python have \emph{loops} and \emph{conditional statements}, which will
+In particular, we may want to say more about how and when
+statements needs to be executed. Maybe we want to repeat
+the calculation of a value for each item on a list, or maybe
+we want to do this only if some condition is fulfilled.
+
+Both, R and Python have such \emph{loops} and \emph{conditional statements}, which will
 make your coding journey much easier and with more sophisticated
 results because you can control the way your statements are
 executed. By controlling the flow of instructions you can deal with a
@@ -56,14 +45,30 @@ lot of challenges in computer programming such as iterating over
 unlimited cases or executing part of your code as a function of new
 inputs.
 
-Firstly, loops are sequences that are executed once, indefinitely or
+In your script, you usually indicate such loops and conditions
+visually by using \emph{indentation}. Logical empty spaces -- two in R and four in
+Pyhton -- depict blocks and sub-blocks on your code structure.
+As you will see in the next section, in R, using indention
+is optional, and curly brackets will indicate the beginning (|\{|)
+and end )|\}| of a code block; whereas in Python, indention
+is mandatory and tells your interpreter where the block
+starts and ends.
+
+
+
+
+
+\subsection{Loops}
+
+Loops can be used to repeat a block of statements.
+They are are executed once, indefinitely, or
 until a certain condition is reached. This means that you can operate
 over a set of objects as many times as you want just by giving one
 instruction. The most common types of loops are \emph{for},
-\emph{while} and \emph{repeat} (do-while). Let’s understand this
-concept by explaining the for-loops. Imagine you have a list of
-headlines as an object either on R or Python and you want simple code
-to print out the length of each message. Of course you can go headline
+\emph{while} and \emph{repeat} (do-while), but we will be mostly
+concerned with so-called for-loops. Imagine you have a list of
+headlines as an object and you want a simple script
+to print the length of each message. Of course you can go headline
 by headline using the indexing, but you will get bored or will not
 have time enough if you have thousands of cases. Thus, the idea is to
 operate a loop in the list so you can get all the results, from the
@@ -71,21 +76,24 @@ first until the last element, with just one instruction.  The syntax
 of the for-loop in R is:
 
 \begin{verbatim}
-for (val in sequence)
-{
-statement
-}
+for (val in sequence) {
+    statement1
+    statement2
+    statement3
+  }
 \end{verbatim}
 
 In Python, the syntax of the for-loop is:
 
 \begin{verbatim}
 for var in iterable:
-    statement(s)
+    statement1
+    statement2
+    statement3
 \end{verbatim}
 
 
-\pyrex[caption=for loops let you repeat operations]{chapter03/forloop}
+\pyrex[caption={For loops let you repeat operations.}]{chapter03/forloop}
 
 As \refex{forloop} illustrates, every time you find yourself
 \emph{repeating} something, for instance printing each element from a
@@ -96,6 +104,16 @@ operation writing few lines of code. As we will stress along this
 book, a good practice in coding is to be efficient and harmonious in
 the amount of code we write, which is another justification for using
 loops.
+
+\note{\textbf{Don't repeat yourself!} You may be used to copy-pasting
+  syntax and slightly changing it when working with some statistics
+  program: you run an analysis and then you want to repeat the same
+  analysis with different datasets or different specifications. But
+  this is error-prone and hard to maintain, as it involves a lot of
+  extra work if you want to change something. In many cases where you
+  find yourself pasting multiple versions of the dataset, you can
+  probably better use a for loop instead.}
+
 
 Another way to iterate in Python is using list comprehensions  (not available natively in R), which are a stylish way to create list of elements automatically even with conditional clauses. This is the syntax:
 
@@ -109,7 +127,7 @@ of each headline. As this example illustrates, list comprehensions
 allow you to essentially write a whole for-loop in one
 line. Therefore, list comprehensions are very popular in Python.
 
-\codex[caption=List comprehensions are very popular in Python]{chapter03/listcomprehensions.py}
+\pyrex[input=py,output=py,caption=List comprehensions are very popular in Python]{chapter03/listcomprehensions}
 
 
 
