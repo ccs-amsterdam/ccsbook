@@ -1,3 +1,6 @@
 pandas
 scipy
 nagisa
+gensim
+scikit-learn
+nltk

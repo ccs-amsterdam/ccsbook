@@ -45,7 +45,7 @@ As a running example in this section, we will use a collection of tweets from U.
 As you can see, this data set contains a lot of non-textual features such as hyperlinks and hash tags as well as regular punctuation and stop words.
 Before we can start analysing this data, we need to decide on and perform multiple cleaning steps such as detailed below. 
 
-\pyrex[caption=Top words used in Trump Tweets,format=png,output=py]{ch_dtm/trumptweets}
+\pyrex[caption=Top words used in Trump Tweets,format=table,output=py]{ch_dtm/trumptweets}
 
 Please note that although tweets are perhaps overused as a source of scientific information,
 we use them here as an example since they nicely exemplify issues around non-textual elements such as hyperlinks.
@@ -58,7 +58,7 @@ Words such as `a' and `the' are often called stop words, i.e. words that do not 
 Both \quanteda\ and \sklearn\ include built-in lists of stop words, making it very easy to remove the most common words.
 \refex{stopwords} shows the result of specifying `english' stop words to be removed for both packages.
 
-\pyrex[caption=Simple stop word removal,format=png]{ch_dtm/stopwords}
+\pyrex[caption=Simple stop word removal,format=png,output=r]{ch_dtm/stopwords}
 
 
 
@@ -103,6 +103,7 @@ see the package documentation for the \pkg{stopwords} package in Python (part of
 
 \subsection{Removing punctuation and noise}
 
+
 Next to stop words, text often contains punctuation and other things that can be considered `noise' for most research questions.
 For example, it could contain emoticons or emoji, twitter hashtags or at-mentions, or html tags or other annotations.
 
@@ -120,24 +121,50 @@ Similarly, if you want to remove a term that would be split by the tokenization 
 if can be better to remove them before the tokenization occurs.
 
 \refex{noise} shows how we can use regular expressions to remove noise in Python and R.
-First, we use the expression \verb#https?://\\S*|&\\w+;# to remove hyperlinks and HTML escapes from the untokenized texts.
+To more clearly show the results of each step, it shows the result of each processing step on a single tweet that exemplifies many of the problems described above.
+To better understand the tokenization process, we print the tokens in that tweet separated by a vertical bar (\verb+|+). 
+As a first cleaning step, we will use a regular expression to remove hyperlinks and HTML entities like \verb|&amp;| from the untokenized texts.
+Since both hyperlinks and HTML entities are split over multiple tokens, it would be hard to remove them after tokenization.
+
+\begin{ccsexample}
+\doublecodex{ch_dtm/noise1}
+\codex[caption=Output]{ch_dtm/noise1.r.out}
+\doublecodex{ch_dtm/noise2}
+\codex[caption=Output]{ch_dtm/noise2.r.out}
+\doublecodex{ch_dtm/noise3}
+\codex[caption=Output]{ch_dtm/noise3.r.out}
+\caption{Cleaning a single tweet at the text and token level}\label{ex:noise}
+\end{ccsexample}
+
 Regular expressions are explained fully in \refsec{regex}, so I will keep the explanation short:
-The \verb#|# splits the pattern in two parts, i.e. it will match if it finds either of the subpatterns.
+The bar \verb#|# splits the pattern in two parts, i.e. it will match if it finds either of the subpatterns.
 The first pattern looks for the literal text \verb#http#, followed by an optional \verb#s# and the sequence \verb#://#.
 Then, it takes all non-whitespace characters it finds, i.e. the patter ends at the next whitespace or end of the text.
 The second pattern looks for an ampersand (\verb#&#) followed by one or more letters (\verb#\\w+#), follwed by a semicolon (\verb#;#).
 This matches HTML escapes like \verb#&amp;# for an ampersand.
 
-After this, the texts are tokenized and all hashtags and at-mentions are removed.
-In python, this is done by using list expressions (\verb#[process(item) for item in list]#): first for tokenizing each document; and a nested list expression for filtering each token in each document.
-In R this is not needed as both the \fn{tokens} and \fn{tokens\_keep} functions are \concept{vectorized}, that is, they directly run over all the texts.
+In the next step, we process the tokenized text to remove every token that is either a stopword or does not start with a letter. 
+In python, this is done by using a list expression (\verb#[process(item) for item in list]#) to process and  first for tokenizing each document; and a nested list expression for filtering each token in each document.
+In R this is not needed as the \fn{tokens\_*} functions are \concept{vectorized}, that is, they directly run over all the tokens.
 
-As a final example, \refex{bla} repeats all these steps in a single block, but rather than removing hashtags it keeps only the hash tags.
-It also showcases some of the built-in arguments in \quanteda\ for 
-for common use cases such as removing
-punctuation, numbers, and twitter-punctuation (at-mentions and hashtags).
-You can do these steps yourself using regular expressions in a very flexible way, but as the final part of example \refex{bla}
-shows, it is a lot easier to just use these options on the \fn{dfm} function.
+Comparing R and Python, we see that the different tokenization functions mean that \verb|#trump| is removed in R (since it is a token that does not start with a letter),
+but in Python the tokenization splits the \verb|#| from the name and the resulting token \verb|trump| is kept.
+If we would have used a different tokenizer for Python (e.g. the \cls{WhitespaceTokenizer}) this would have been different again. 
+This underscores the importance of inspecting and understanding the results of the specific tokenizer used,
+and to make sure that the later steps match these tokenization choices.
+Concretely, with the \cls{TreebankWordtokenizer} we would have had to also remove hashtags at the text level rather than the token level. 
+
+\pyrex[caption=Cleaning the whole corpus and making a tag cloud,output=r,format=png]{ch_dtm/tagcloud}
+
+As a final example, \refex{tagcloud} shows how to filter tokens for the whole corpus, but rather than removing hashtags it keeps only the hash tags to produce a tag cloud. 
+In R, this is mostly a pipeline of \quanteda\ functions to create the corpus, tokenize, keep only hashtags, and create a dfm.
+To spice up the output we use the \pkg{RColorBrewer} package to set random colors for the tags.
+In Python, you can see that we now have a nested list comprehension, where outer loop iterates over the texts and the inner loop iterates over the tokens in each text.
+Next, we make a \verb|do_nothing| function for the vectorizer since the results are already tokenized.
+Note that we need to disable lowercasing as otherwise it will try to call \verb|.lower()| on the token lists. 
+
+
+
  
 
 \subsection{Trimming a DTM}
@@ -150,14 +177,15 @@ In many cases, this can be a result of the selection strategy. If we select all 
 It can also be that some words are used as standard phrases, for example `fellow Americans' in state of the union speeches.
 If every president in the corpus uses those terms, they are no longer informative about differences between presidents.
 
+\pyrex[caption=Trimming a Document-Term Matrix]{ch_dtm/trimming}
+
 \refex{trimming} shows how you can use the \concept{relative document frequency} to trim a DTM in python and R.
 We keep only words with a document frequency of between 1\% and 75\%.
 
 Although these are reasonable numbers it can depend on the corpus and the research question, so it can be a good idea to check which words are dropped.
-\refex{docfreq} shows how you can make a table of all word frequencies in the corpus, and filter for excluded words.
-If you see words that are seemingly relevant to your research question in the top of this list,
-if can be a good idea to tweak the selection criteria. 
-
+%\refex{docfreq} shows how you can make a table of all word frequencies in the corpus, and filter for excluded words.
+%If you see words that are seemingly relevant to your research question in the top of this list,
+%if can be a good idea to tweak the selection criteria. 
 Note that dropping words that occur almost never should normally not influence the results that much, since those words do not occur anyway.
 However, trimming a DTM to e.g. at least 1\% document frequency often radically reduces the number of words (columns) in the DTM.
 Since many algorithms have to assign weights or parameters to each word, this can provide a significant improvement in computing speed or memory use. 
@@ -172,6 +200,9 @@ This stands for \emph{term frequency - inverse document frequency} and weights e
 $tfidf(t,d)=tf(t,d)\cdot idf(t)=f_{t,d}\cdot -\log \frac{n_t}{N}$
 
 Where $f_{t,d}$ is the frequency of term $t$ in document $d$, $N$ is the total number of documents, and $n_t$ is the number of documents in which term $t$ occurs. In other words, the term frequency is weighted by the negative log of the fraction of documents in which that term occurs. Since $\log(1)$ is zero, terms that occur in every document are disregarded, and in general the less frequent a term is, the higher the weight will be. 
+
+
+\pyrex[caption=Tf-Idf weighting,output=r,format=table]{ch_dtm/tfidf}
 
 Tf-idf weighting is a fairly common technique and can improve the results of subsequent analyses such as supervised machine learning.
 As such, it is no surprise that it is easy to apply this in both python and R, as shown in \refex{tfidf}.

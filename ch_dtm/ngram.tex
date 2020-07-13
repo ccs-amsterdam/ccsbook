@@ -66,10 +66,49 @@ Another advantage is that a model can also give a result for words it never saw 
 Finally, since words with similar meanings should have similar vectors,
 a model fit on embedding vectors gets a `head start' since the vectors for words like `great' and `fantastic' will already be relative close to each other, while all columns in a normal DTM are treated independently.
 
+\newcommand{\fnglove}{\footnote{The full embedding models can be downloaded from https://nlp.stanford.edu/projects/glove/. To make the file easier to download, we took only the 10,000 most frequent words of the smallest embeddings file (the 50 dimension version of the 6B tokens model). For serious applications you probably want to download the larger files, in our experience the 300 dimension version usually gives good results. Note that the files on that site are in a slightly different format which lacks the initial header line, so if you want to use other vectors for the examples here you can convert them with the \fn{glove2word2vec} function in the \pkg{gensim} package. For R, you can also simply omit the \verb|skip=1| argument as apart from the header line the formats are identical}}
+
 The assumption that words with similar meanings have similar vectors can also be used directly to extract synonyms.
 This can be very useful, for example for (semi-)automatically expanding a dictionary for a concept.
 \refex{embedding} shows how to download and use pre-trained embedding vectors to extract synonyms.
-Moreover, it shows how you can also extract analogies, as X stands to Y as Z stands to ...@
+First, we download a very small subset of the pre-trained Glove embedding vectors\fnglove,
+wrapping the download call in a condition to only download it when needed.
+
+Then, for python, we use the excellent support from the \pkg{gensim} package to load the embeddings into a \cls{KeyedVectors} object.
+Although not needed for the rest of the example, we create a pandas DataFrame from the internal embedding values so the internal structure becomes clear: each row is a word, and the columns (in this case 50) are the different (semantic) dimensions that characterize that word according to the embeddings model.
+This data frame is sorted on the first dimension, which shows that negative values on that dimension are related to various sports.
+Next, we switch back to the \cls{KeyedVectors} object to get the most similar words to the word \emph{fraud}, which is apparently related to similar words like \emph{bribery} and \emph{corruption} but also to words like \emph{charges} and \emph{alleged}.
+These similarities are a good way to (semi-)automatically expand a dictionary: start from a small list of words,
+find all words that are similar to those words, and if needed manually curate that list.
+Finally, we use the embeddings to solve the `analogies' that famously showcase the geometric nature of these vectors:
+if you take the vector for \emph{king}, subtract the vector for \emph{man} and add that for \emph{woman},
+the closest word to the resulting vector is \emph{queen}.
+Amusingly, it turns out that soccer is a female form of football, probably showing the American cultural origin of the source material.
+
+For R, there was less support from existing packages so we decided to use the opportunity to show both the conceptual simplicity of embeddings vectors and the power of matrix manipulation in R.
+Thus, we directly read in the word vector file which has a head line and then on each line a word followed by its 50 values.
+This is converted to a matrix with the rownames showing the word,
+which we normalize to (Euclidean) length of one for each vector for easier processing. 
+To determine similarity, we take the cosine distance between the vector representing a word with all other words in the matrix.
+As you might remember from algebra, the cosine distance is the dot product between the vectors normalized to have length one
+(just like Pearson's product-moment correlation is the dot product between the vectors normalized to z-scores per dimension).
+Thus, we can simply multiply the normalized target vector with the normalized matrix to get the similarity scores.
+These are then sorted, renamed, and the top values are taken using the basic functions from \refchap{tidyverse}.
+Finally, analogies are solved by simply adding and subtracting the vectors as explained above, and then listing the closest words to the resulting vector
+(excluding the words in the analogy itself). 
+
+\begin{ccsexample}
+\doublecodex{ch_dtm/embeddings0}
+\doublecodex{ch_dtm/embeddings1}
+\codexoutputtable{ch_dtm/embeddings1.r}
+\doublecodex{ch_dtm/embeddings2}
+\codexoutputtable{ch_dtm/embeddings2.r}
+\doublecodex{ch_dtm/embeddings3}
+\codex[caption=Output]{ch_dtm/embeddings3.r.out}
+\caption{Using word embeddings for finding similar and analogous words}
+\end{ccsexample}
+
+
 
 
 
