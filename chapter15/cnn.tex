@@ -62,19 +62,23 @@ Now, let's train a MLP to build an image classifier to recognize fashion items u
 \label{fig:fashion}
 \end{figure}
 
-You can use \pkg{Keras} to load the Fashion MNIST. In \refex{fashion} load the complete data set and create the necessary objects for modeling (\texttt{X\_train\_full}, \texttt{y\_train\_full}, \texttt{X\_test}, \texttt{y\_test}). In addition we extract 5,000 records from the training set to create a validation test (\texttt{X\_valid}, \texttt{y\_valid}) and rescale all the input features from 0-255 to 0-1 by dividing them by 255 in order to apply Gradient Decent. Then, we will obtain three sets with 28x28 arrays (55,000 in the training, 10,000 in the test and 5,000 in the validation).
-
+You can use \pkg{Keras} to load the Fashion MNIST. In \refex{fashion} we load the complete data set and create the necessary objects for modeling (\texttt{X\_train\_full}, \texttt{y\_train\_full}, \texttt{X\_test}, \texttt{y\_test}). In addition we rescaled all the input features from 0-255 to 0-1 by dividing them by 255 in order to apply Gradient Decent. Then, we will obtain three sets with 28x28 arrays: 60,000 in the training, and 10,000 in the test. We could also generate here a validation set (e.g. \texttt{X\_valid} and \texttt{y\_valid}) with a given amount of records extracted from the training set (e.g. 5,000), but as you will later \pkg{Keras} allows us to automatically generate the validation set as a proportion of the training set (e.g. 0,1, which would be 6,000 records in our example) when fitting the model.
 
 \pyrex[output=both,caption=Loading Fashion MNIST dataset and preparing training\, test and validation sets]{chapter15/fashion}
 
+The next step is to design the architecture of our model. There three ways to create the models in \pkg{Keras} (\textit{sequential}, \textit{functional} or \textit{subclassing}, but the are thousands (infinite?) ways to configure a deep neural network. In the case of this MLP, we have to include first an input layer with the \texttt{input\_shape} equal to the image dimension (28x28 for 784 neurons), which is a parameter that you will easy change in other exercises (just remember that all the inputs should always have the same shape before feeding the network!). At the top of the MLP you will  need a output layer with 10 neurons (the number of posssible outcomes in out multi-class classification task) and a \textit{softmax} activation function for the final probabilities for each class.
 
-\pyrex[output=both,caption=XXX]{chapter15/mlp}
+In \refex{mlp} we use the \textit{sequential} model to design our MLP layer by layer including the above-mentioned input and output layers. In the middle, there are many options for the configuration of the \textit{hidden} layers: number of layers, number of neurons, activation functions, etc. As we know that each hidden layer will help to model different patterns of the image, it would be fair to include at least two of them with different numbers of neurons (significantly reducing this number in the second one) and transmit its information using the \textit{relu} activation function. What we actually do is to create an object called \texttt{model} which saves the proposed architecture. We can use the method \fn{summary} to obtain a clear representation of the created neural network and the number of parameter of the model (266,610 in this case!).
 
-\pyrex[output=both,caption=XXX]{chapter15/model}
+\pyrex[output=both,caption=Creating the architecture of the MLP with \pkg{Keras}]{chapter15/mlp}
 
-\pyrex[output=both,caption=XXX]{chapter15/predict}
+The next steps will be to \fn{compile}, \fn{fit} and \fn{evaluate} the model, similarly to what you have already done in previous exercises of this book. In \refex{model} we first include the parameters (loss, optimizer and metrics) of the compilation step and fit the model, which might take some minutes (or even hours depending on your dataset, the architecture of you DNN and, of course, your computer). When fitting you have to separate your training set into phases or \textit{epochs} (we chose here 5 epochs, but you can increase it) and the proportion of the training set that will become the validation set (in this case 0.1). In addition, you can use the parameter \texttt{verbose} to choose weather to see the progress (1 for progress bar and 2 for one line per epoch) or not (0 for silent) of the training process. By using the method \fn{evaluate}you can then obtain the final loss and accuracy, which in this case is 0.84 (but you can reach out 0.88 if you fit it with 25 epochs!).
 
+\pyrex[output=both,caption=Compiling\, fitting and evaluating the model for the MLP]{chapter15/model}
 
+Finally, you can use the model to predict the classes of any new image (using \fn{predict\_classes}. In \refex{predict} we used the model to predict the classes of the first 6 elements of the test set. If you go back to \ref{fig:fashion} you can compare these predictions ('Ankle boot', 'Pullover', 'Trouser', 'Trouser', 'Shirt' and 'Trouser') with the actual first 6 images of the test set, and see how accurate our model was.
+
+\pyrex[output=both,caption=Predicting classes using the MLP]{chapter15/predict}
 
 Using the above-described concepts and code you may try to train a new MLP using color images of ten classes (airplane, automobile, bird, cat, deer, dog, frog, horse, ship and truck) using the CIFAR-10 and CIFAR-100 datasets\footnote{https://www.cs.toronto.edu/~kriz/cifar.html}!
 
