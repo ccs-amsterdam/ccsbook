@@ -36,6 +36,11 @@ which of course has a radically differeny meaning. Moreover, it silently drops a
 including the |'t|, |'s|, and |I|.
 A more reasonable tokenizer is the \cls{TreebankWordTokenizer} included in the \pkg{nltk} package, which contains a number of functions for doing natural language processing in python.
 This tokenizer splits ``haven't'' into |have| and |n't|, which is a reasonable outcome.
+Unfortunately, this tokenizer assumes that text has already been split into sentence,
+and it also includes punctuation as tokens by default.
+For this reason, we introduce a custom tokenizer based on the Treebank tokenizer,
+which splits text into sentences (using \fn{nltk.sent\_tokenize}) and allows for a custom criterion for keeping tokens,
+int this case that the token must contain at least one letter. 
 
 For R, we simply call the \fn{tokens} function from the \quanteda\ package.
 This keeps |haven't| and |John's| as a single word, which is probably less desirable than splitting the words

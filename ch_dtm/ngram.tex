@@ -32,7 +32,30 @@ Although bigrams are the most frequent use case, trigrams (3-grams) and (rarely)
 As you can imagine, this will create even bigger DTMS and worse data scarcity problems,
 so require even more attention paid to feature selection and/or trimming.
 
-\refex{ngram} shows how to create bigrams using R or Python. @...
+
+\pyrex[caption=Generating n-grams]{ch_dtm/ngram}
+
+\refex{ngram} shows how n-grams can be created and used in Python and R.
+In Python, you can pass the \verb|ngram=(n, m)| option to the vectorizer,
+while R has a \verb|tokens_ngrams(n:m)| function.
+Both will post-process the tokens to create all n-grams in the range of n to m.
+In this example, we are asking for unigrams (i.e., the words themselves), bigrams and trigrams of a simple examp[le sentence.
+Both languages produce the same output, with R separating the words with an underscore while python uses a simple space.
+
+\pyrex[caption=Words and bigrams containing 'government',output=r,format=table]{ch_dtm/ngram2}
+
+\refex{ngram2} shows how you can generate n-grams for a whole corpus.
+This this case, we create a DTM of the state of the union matrix with all bigrams included.
+A glance at the frequency table for all words containing \emph{government} shows that,
+besides the word itself and it's plural and possessive forms, the bigrams include compound words (federal and local government),
+phrases with  the government as subject (the government can and must), and nouns for which the government is an adjective
+(government spending and government programs).
+
+You can imagine that including all these words as features will add many possibilities for analysis of the DTM
+which would not be possible in a normal bag-of-words approach.
+The terms local and federal government can be quite important to understand policy positions,
+but for e.g. sentiment analysis a bigram like \emph{not good} would also be insightful
+(but make sure 'not' is not on your stop word list!).   
 
 \subsection{Collocations}
 
@@ -45,7 +68,32 @@ Collocations are important for text analysis since they often have a specific me
 for example because they refer to names such as \emph{New York} or disambiguate a term like \emph{sound} in \emph{sound asleep},
 a \emph{sound proposal}, or \emph{loud sound}.
 
-\refex{colloc} shows how you can automatically extract collocations by looking for word pairs that occur more often than the product of the occurrence of the underlying words. As you can see, ...@
+\refex{colloc} shows how to identify the most `surprising' collocations using R and Python.
+For Python, we use the \pkg{gensim} package which we will also use for topic modeling in \refchap{lda}.
+This package has a \cls{Phrases} class which can score the bigrams in a list of tokens.
+In R, we use the \fn{textstat\_collocations} function from \quanteda.
+These packages each use a different implementation: \pkg{gensim} uses pointwise mutual information, i.e.
+how much information about finding the second word does seeing the first word give you?
+\quanteda\ estimates an interaction parameter in a loglinear model.
+Nonetheless, both methods give very similar results, with Saddam Hussein, the Iron Curtain, Al Qaida, and red tape topping the list for each.
+
+
+\begin{ccsexample}
+\doublecodex{ch_dtm/colloc}
+\codexoutputtable{ch_dtm/colloc.r}
+\doublecodex{ch_dtm/colloc2}
+\codexoutputtable{ch_dtm/colloc2.r}
+\caption{Identifying and applying collocations in the US State of the Union}\label{ex:colloc}
+\end{ccsexample}
+
+
+The next block demonstrates how to use these collocations in further processing.
+In R, we filter the collocations list on $lambda>8$ and use the \fn{tokens\_compound} function to compound bigrams from that list.
+As you can see in the term frequencies filtered on `hussein', the regular terms (apart from the posessive) are removed and the compounded term now has 26 occurrences.
+For python, we use the \cls{PhraseTransformer} class, which is an adaptation of the \cls{Phrases} class to the \sklearn\ methodology.
+After setting a threshold of 0.7, we can use \fn{fit\_transform} to change the tokens.
+The term statistics again show how the individual terms are now replaced by their compound. 
+
 
 \subsection{Word Embeddings}
 
@@ -143,7 +191,44 @@ English has relatively simple conjugations and stemming can produce adequate res
 For morphologically richer languages such as German or French, however, it is strongly advised to use lemmatizing instead of stemming.
 Even for English I would generally advice lemmatization since is so easy nowadays and will yield better results than stemming.
 
-\refex{lemmatizing}
+For \refex{udpipe}, we use the \concept{UDPipe} natural language processing toolkit \citep{udpipe},
+a `Pipeline' that parses text into `Universal Dependencies', a representation of the syntactic structure of the text.
+For R, we can immediately call the \fn{udpipe} function from the package of the same name.
+This parses the given text and returns the result as a data frame with one token (word) per row,
+and the various features in the columns.
+For Python, we need to take some more steps ourselves.
+First, we download the English models if they aren't present.
+Second, we load the model and create a pipeline with all default settings,
+and use that to parse the same sentence.
+Finally, we use the \pkg{conllu} package to read the results into a form that can be turned into a data frame.
+
+In both cases, the resulting tokens clearly show some of the potential advantages of lingusitic processing:
+The lemma column shows that it correctly deals with irregular verbs and plural forms.
+Looking at the upos (universal Part-of-Speech) column, John is recognized as a proper name (PROPN), brought as a verb, and knives as a noun.
+Finally, the \verb|head_token_id| and \verb|dep_rel| columns represent the syntactic information in the sentence:
+`Bought' (token 2) is the root of the sentence, and `John' is the subject (nsubj) while `knives' is the object of the buying.
+
+\pyrex[caption=Using UDPipe to analyse a sentence,format=table,output=r]{ch_dtm/udpipe}
+
+The syntactic relations can be useful if you need to differentiate between who is doing something and whom it was done to.
+For example, one of the authors of this book use syntactic relations to analyse conflict coverage,
+where there is an important difference between attacking and getting attacked \citep{clause}.
+However, in most cases you probably don't need this information and analysing dependency graphs is relatively complex.
+We would advice you to almost always consider lemmatizing and tagging your texts, as lemmatizing is simply so much better than stemming
+(especially for languages other than English), and the Part-of-Speech can be very useful for analysing different aspects of a text. 
+
+If you only need the lemmatizer and tagger, you can speed up processing by setting \verb|udpipe(.., parser='none')| (R) or setting the third argument to Pipeline (the parser) to \verb|Pipeline.NONE| (Python).
+\refex{nouncloud} shows how this can be used to extract only the nouns from the most recent state of the union speeches,
+create a DTM with these nouns, and then visualize them as a word cloud.
+As you can see, these words (such as student, hero, childcare, healthcare, and terrorism), are much more indicative of the topic of a text than the general words used earlier.
+In the next chapter we will show how you can further analyse these data, for example by analysing usage patterns per person or over time, or using an unsupervised topic model to cluster words into topics.
+
+\pyrex[caption=Nouns used in the most recent State of the Union addresses,format=png,output=py]{ch_dtm/nouncloud}
+
+Please note that we use UDPipe here, but nowadays there are a number of good and relatively easy to use linguistic toolkits that can be used.
+Especially \concept{Spacy} \citep{spacy} and \concept{Stanza} \citep{stanza} are also very good and flexible toolkits with support for multiple (human) languages and good integration especially with Python.
+If you want to learn more about natural language processing, the book `Speech and Language Processing' by Jurafsky and Martin is a very good starting point \citep{jurafsky}, with a third edition currently being written.
+
 
 \section{Which preprocessing to use?}
 
