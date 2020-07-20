@@ -1,0 +1,23 @@
+
+\begin{table}
+  \caption{\label{tab:regex}Regular expression syntax}{
+    \begin{tabularx}{\textwidth}{lll}
+      \toprule
+      Goal & Pattern & Example \\
+      \midrule
+      URL & https?:// & https://example.com?a=b \\
+      E-mail address & \ttt{[\textbackslash{}w\textbackslash{}.-]+@[\textbackslash{}w\textbackslash{}.-]+\textbackslash{}.\textbackslash{}w+} & \ttt{me@example.com} \\
+      HTML tags & \ttt{</?\textbackslash{}w[\^{}>]+>} & \ttt{</html>} \\
+      HTML Character escapes & \ttt{\&[\^{};]+;} & \ttt{\&nbsp;} \\
+      US Zip Code (and zip+4) & \ttt{\textbackslash{d}\{5\}(-\textbackslash{d}\{4\})? & 90210, 90210-1234 \\
+      Dutch Postcode & \ttt{\textbackslash{d}\{4\} ?\lbrack{}A-Za-z\rbrack\{2\} & 1015 GK \\
+      U.S. Phone number & \ttt{(\textbackslash{d}\{3\})\textbackslash{d}\{3\}-\textbackslash{d}\{4\}} & (555) 123-4567\\
+      International phone number & 
+      ISO Date and time & \ttt{\textbackslash{d}\{4\}-\textbackslash{d}\{2\}-\textbackslash{d}\{2\}(T| )\textbackslash{d}\{2\}:\textbackslash{d}\{2\}:\textbackslash{d}\{2\} & 2020-07-20T22:15 \\
+      \bottomrule
+      \end{tabularx}}{Please note that some of these patterns are not completely correct, and should not be used for e.g. validation in a financial system.
+        a complete regular expression to match email addresses is over 400 characters long, and a complete HTML tag expression is impossible because they can contain nested escapes within attributes.
+        For a better way to deal with analysing HTML, please see \refchap{scraping}. In the end, patterns like these are fine for a (somewhat) noisy analysis of (often also somewhat noisy) source texts,
+        and it is fine to use such patterns as long as you understand the limitations. }
+\end{table}
+
