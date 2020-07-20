@@ -1,12 +1,54 @@
 \section{Regular expressions}
 \label{sec:regular}
 
-A regular expression or \emph{regex} is a powerful language to locate strings that conform a given pattern. For instance, we can extract usernames or email-addresses from text, or normalize spelling variations and improve the cleaning methods covered in the previous section. Specifically, regular expressions are a sequence of characters that we can use to design a pattern and then use this pattern to \emph{find} strings (identify or extract) and also \emph{replace} those strings by new ones. 
+A \concept{regular expression} or \emph{regex} is a powerful language to locate strings that conform a given pattern. For instance, we can extract usernames or email-addresses from text, or normalize spelling variations and improve the cleaning methods covered in the previous section. Specifically, regular expressions are a sequence of characters that we can use to design a pattern and then use this pattern to \emph{find} strings (identify or extract) and also \emph{replace} those strings by new ones. 
 
-We will show how you can use regexes to preprocess text. The good thing is that regular expression syntax can be similar in R and Python and once you learn how to write a pattern in one language it is easy to do the same in the other.  However they are not identical! Even it is out of the scope of this book, you can trace the specific standards of each language and its different versions. You will come across with some standards of the Portable Operating System Interface (POSIX), such as the Basic Regular Expressions (BRE) or Extended Regular Expressions (ERE), or also with the Perl Compatible Regular Expressions (PCRE).  By default the R function \fn{grep} uses ERE but you can set a parameter (\verb|perl = TRUE|) to work with PCRE, and in the case of Python \fn{re} module regexes match operations similar to PCRE as a default.
+Regular expressions look complicated, and in fact they take some getting used to initially.
+For example, a relatively simple (and not quite correct) expression to match an email address is \verb|[\w\.-]+@[\w\.-]+\.\w\w+|,
+which doesn't look like anything at all unless you know what you are looking for.
+The good news is that regular express syntax is the same in R and Python (and many other languages),
+so once you learn regular expressions you will have acquried a powerful and versatile tool for text processing. 
+
+%We will show how you can use regexes to preprocess text. The good thing is that regular expression syntax can be similar in R and Python and once you learn how to write a pattern in one language it is easy to do the same in the other.  However they are not identical! Even it is out of the scope of this book, you can trace the specific standards of each language and its different versions. You will come across with some standards of the Portable Operating System Interface (POSIX), such as the Basic Regular Expressions (BRE) or Extended Regular Expressions (ERE), or also with the Perl Compatible Regular Expressions (PCRE).  By default the R function \fn{grep} uses ERE but you can set a parameter (\verb|perl = TRUE|) to work with PCRE, and in the case of Python \fn{re} module regexes match operations similar to PCRE as a default.
+
+\note{\textbf{Python: re versus regex}
+  In python, people generally use the \pkg{re} package for regular expressions.
+  In this book we will use the \pkg{regex} package, however.
+  This modules has the same functions and arguments as the \pkg{re} module,
+  but it has better support for unicode, which is very important when dealing with non-western text.
+  However, for almost all examples you can also use the \pkg{re} module if prefered.
+  }
+
+At its core, regular expressions are patters for matching sequences of characters.
+In the simplest case, a regular letter just matches that letter, so the pattern `cat' matches the text `cat'.
+Next, there are various wildcards, or ways to match different letters.
+For example, the period (\verb|.|) matches any character, so \verb|c.t| matches both `cat' and `cot'.
+You can place mulitple letters between square brackets to create a \concept{character class} that matches all the specified letters, so \verb|c[au]t| matches `cat' and `cut', but not `cot'.
+There are also a number of pre-defined classes, such as \verb|\w| which matches `word characters' (letters, digits, and (curiously) underscores).
+
+Finally, for each character or group of characters you can specify how often it should occur.
+For example, \verb|a+| means one or more a's while \verb|a?| means zero or one a, so \verb|lo+l| matches `lol', `lool', etc.,
+and \verb|lo?l| matches `lol' or `ll'.
+This raises the question, of course, of how to look for actual occurrences of a plus, question mark, or period.
+The solution is to \concept{escape} these special symbols by placing a backslash (\verb|\|) before them:
+\verb|a\+| matches the literal text `a+', and \verb|\\w| (with a double backslash) matches the literal text `\bs{w}'. 
+
+Now, we can have another look at the example emails address pattern given above.
+The first part, \verb|[\w\.-]| creates a character class containing word characters, (literal) periods, and dashes.
+Thus, \verb|[\w\.-]+@[\w\.-]+| means one or more letters, digits, underscores, periods, or dashes, followed by an at sign,
+followed by one or more letters, digits, etc.
+Finally, the last part \verb|\.\w\w+| means a literal period, a word character, and one or more word characters.
+In other words, we are looking for a name (possibly contining dashes or periods) before the at sign,
+followed by a domain, followed by a top level domain (like \verb|.com|) of at least two characters.
+
+In essence, thinking in terms of what do you want to match and how often do you want to match that is all there is to regular expressions.
+However, it will take some practice to get comfortable with turning something sensible (such as an email address) into a correct regular expression pattern.
+The next subsection will explain regular expression syntax in more detail, followed by an explanation of grouping,
+and in the final subsection we will see how to use these regular expressions in R and Python to do text cleaning. 
+
+\subsection{Regular expression syntax}
 
 In Table~\ref{tab:regex} you will find some basic regular expression syntax that will work fine in R and Python no matter the specific standard you are using.
-
 
 \newcommand{\bs}[1]{\texttt{\textbackslash#1}}
 
@@ -36,7 +78,7 @@ Match new line	& \bs{n} & \bs{n} \\
   \end{tabularx}}{}
 \end{table}
 
-As you may imagine, control characters (\verb!+ ? . * ^ $ ( ) [ ] { } | \!) do not match themselves, but you can skip this limitation by adding a backslash behind it.
+As explained above, control characters (\verb!+ ? . * ^ $ ( ) [ ] { } | \!) do not match themselves, but you can skip this limitation by adding a backslash behind them to escape them.
 
 Let us now make a simple example to remove again HTML tags using regular expressions. Think of a combination of \verb+.+, \verb+*+ and \verb+?+, and put that rule into a known patter (\verb+<+ ... \verb+>+) of building tags in HTML, and you will get a basic syntax to match all characters with any occurrence (even 0 or 1) within the character \verb+<+ and the character \verb+>+. We already used this rule in the last section with the R package \fn{stringi}, but in \refex{regex} you can see how we deploy a find and replace task with the base R function \fn{gsub} and the method \fn{sub} of Python \fn{re} module.		
 
@@ -51,3 +93,8 @@ You can also use this approach to extract strings of the text based on a pattern
 \pyrex[output=both,caption=Using regular expressions to extract usernames of tweets]{chapter10/regex3}	
 
 There are infinite combinations of regular expression syntaxes and base functions in R and Python that can help you in many tasks to clean your texts from noise. Once you get used to this jargon it will be easy to apply it to different kinds of operations and make your life easier.
+
+\subsection{Using regular expressions}
+
+
+
