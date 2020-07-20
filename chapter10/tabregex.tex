@@ -8,7 +8,7 @@
     \toprule
 \multicolumn{2}{l}{Function}      & Syntax   & Example & Matches    \\
     \midrule
-\multicolumn{2}{l}{\textit{What to match}} \\
+\multicolumn{2}{l}{\textit{Specifier: What to match}} \\
 & All characters except for new lines   & \ttt{.} & \ttt{d.g} & \ttt{d\textbf{i}g}, \ttt{d\textbf{!}g}\\
 & Word characters$^*$
   (letters, digits, \_)         & \bs{w} & \ttt{d\textbackslash{}wg} & \ttt{dig}, \ttt{dog} \\
@@ -24,7 +24,7 @@
 & Beginning or end of word & \bs{b} & \ttt{\textbackslash{}bword\textbackslash{}b} & \ttt{{\color{gray}a} \textbf{word}\color{gray}!} \\
 & Either first or second option  & \ttt{$\cdots$\textbar$\cdots$} & \ttt{cat\textbar{}dog} & \ttt{cat}, \ttt{dog}\\
 
-\multicolumn{2}{l}{\textit{How many to match}} \\
+\multicolumn{2}{l}{\textit{Quantifier: How many to match}} \\
 & Zero or more & \ttt{*} & \ttt{d.*g} & \ttt{dg}, \ttt{drag}, \ttt{d = g} \\
 & Zero or more (non-greedy) & \ttt{*?} & \ttt{d.*?g} & \ttt{\textbf{dog}{\color{gray}g}} \\
 & One or more & \ttt{+}  & \ttt{\textbackslash{}d+\%} & \ttt{1\%}, \ttt{200\%} \\
