@@ -5,15 +5,15 @@
       \toprule
       Goal & Pattern & Example \\
       \midrule
-      URL & https?:// & https://example.com?a=b \\
+      URL & https?:// & \ttt{https://example.com?a=b} \\
       E-mail address & \ttt{[\textbackslash{}w\textbackslash{}.-]+@[\textbackslash{}w\textbackslash{}.-]+\textbackslash{}.\textbackslash{}w+} & \ttt{me@example.com} \\
       HTML tags & \ttt{</?\textbackslash{}w[\^{}>]+>} & \ttt{</html>} \\
       HTML Character escapes & \ttt{\&[\^{};]+;} & \ttt{\&nbsp;} \\
-      US Zip Code (and zip+4) & \ttt{\textbackslash{d}\{5\}(-\textbackslash{d}\{4\})? & 90210, 90210-1234 \\
-      Dutch Postcode & \ttt{\textbackslash{d}\{4\} ?\lbrack{}A-Za-z\rbrack\{2\} & 1015 GK \\
-      U.S. Phone number & \ttt{(\textbackslash{d}\{3\})\textbackslash{d}\{3\}-\textbackslash{d}\{4\}} & (555) 123-4567\\
-      International phone number & 
-      ISO Date and time & \ttt{\textbackslash{d}\{4\}-\textbackslash{d}\{2\}-\textbackslash{d}\{2\}(T| )\textbackslash{d}\{2\}:\textbackslash{d}\{2\}:\textbackslash{d}\{2\} & 2020-07-20T22:15 \\
+      US Zip Code (and zip+4) & \ttt{\textbackslash{d}\{5\}(-\textbackslash{d}\{4\})?} & \ttt{90210, 90210-1234} \\
+      Dutch Postcode & \ttt{\textbackslash{d}\{4\} ?\lbrack{}A-Za-z\rbrack\{2\}} & \ttt{1015 GK} \\
+      U.S. Phone number & \ttt{(\textbackslash{d}\{3\})\textbackslash{d}\{3\}-\textbackslash{d}\{4\}} & \ttt{(555) 123-4567}\\
+      International phone number & \ttt{\textbackslash{}d+[\textbackslash{}d -]{6,}\textbackslash{}d+} & \ttt{+1 555-1234567}\\
+      ISO Date and time & \ttt{\textbackslash{}d\{4\}-\textbackslash{}d\{2\}-\textbackslash{}d\{2\}(T\textbar{} )\textbackslash{}d\{2\}:\textbackslash{}d\{2\}:\textbackslash{}d\{2\}} & \ttt{2020-07-20T22:15} \\
       \bottomrule
       \end{tabularx}}{Please note that some of these patterns are not completely correct, and should not be used for e.g. validation in a financial system.
         a complete regular expression to match email addresses is over 400 characters long, and a complete HTML tag expression is impossible because they can contain nested escapes within attributes.
