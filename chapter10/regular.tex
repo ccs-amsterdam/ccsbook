@@ -85,11 +85,74 @@ Finally, you sometimes need to match a control character  (e.g. \verb!+!, \verb|
 \subsection{Example patterns}
 
 Using the syntax explained in the previous section, we can now make patterns for common tasks in cleaning and analysing text.
-\reftab{regexamples} list a number of useful regular expressions. 
+\reftab{regexample} list a number of regular expressions for common tasks such as finding dates or stripping HTML artefacts.
 
 \input{chapter10/tabregexample}
 
+We start with a number of relatively simple patterns for Zip codes and phone numbers.
+Starting with the simplest example, US Zip codes are simply five consecutive numbers.
+Next, a US phone number can be written down as three groups of numbers separated by parentheses,
+where the first group is made optional for local phone numbers using parentheses to group these numbers so the question mark applies to the whole group. 
+Next, Dutch postal codes are simply 4 numbers followed by 2 letters, and we allow an optional space in between.
+Similarly simple, dates in ISO format are 3 groups of numbers separated by dashes.
+German dates follow a different order, use periods as separator, and allow for single-digit day and month numbers.
+Note that these patterns do not check for the validity of dates.
+A simple addition would be to restrict months to 01-12, e.g. using \verb!(0[1-9]|1[0-2])!.
+However, in general validation is better left to specialized libraries, as properly validitaing the day number would require taking the month (and leap years) into account. 
+
+A slightly more complicated pattern is the one given for international phone numbers.
+They always start with a plus sign and contain at least 8 numbers, but can contain dashes and spaces depending on the country.
+So, after the literal \verb|+| (which we need to escape since \verb|+| is a control character),
+we look for 7 or more numbers, optionally followed by a single dash or space, and end with a single number.
+This allows dashes and spaces at any position except the start and end, but does not allow for e.g. double dashes.
+It also makes sure that there are at least 8 numbers regardless of how many dashses or spaces there are.
+
+The final four examples are patters for common notations found online.  
+For URLs, we look for \ttt{http://} or \ttt{https://} and take everything until the next space or end of the string.
+For email addresses, we define a character class for letters, periods, or dashes and look for it before and after the at-sign.
+Then, there needs to at least one period and a top level domain containing only letters.
+Note that the dash within the character class does not need to be escaped because it is the final character in the class, so it cannot form a range.
+For HTML tags and character escapes, we anchor the start (\verb|<| and \verb|&|) and end (\verb|>| and \verb|;|) and allow any characters except for the ending character in between
+using an inverted character class.
+
+Note that these example patterns would also match if the text is enclosed in a larger text.
+For example, the zip code pattern would happily match the first 5 numbers of a 10-digit number.
+If you want to check that an input value is a valid zip code (or email address, etc.),
+you probably want to check that it only contains that code by surrounding it with start-of-text and end-of-text markers: \verb|^\d{5}$|.
+If you want to extract e.g. zip codes from a longer document, it is often useful to surround them with word boundary markers: \verb|\b\d{5}\b|.
+
+Please note that many of those patterns are not necessarily fully complete and correct, especially the final patterns for online notations.
+For example, email addresses can contain plus signs in the first part, but not in the domain name, while domain names are not allowed to start with a dash -- a completely correct regular expression to match email addresses is over 400 characters long!
+Even worse, a complete HTML tag expression is probably not even possible because as a regular expression as they can contain comments and nested escapes within attributes.
+For a better way to deal with analysing HTML, please see \refchap{scraping}. In the end, patterns like these are fine for a (somewhat) noisy analysis of (often also somewhat noisy) source texts as long as you understand the limitations. 
+        
 \subsection{Using regular expressions in Python and R}
+
+Now that you hopefully have a firm grasp of regular expression syntax,
+it is relatively easy to use these patterns in Python or R (or most other languages).
+\reftab{regexcmd} lists the commands for four of the most common use cases:
+identifying matching texts, removing and replacing all matching text, extracting matched groups, and splitting texts.
+
+\input{chapter10/tabregexcmd}
+
+For R, we again use the functions from the \pkg{stringr} package.
+For python, you can use either the \pkg{re} or \pkg{regex} package,
+which both support the same functions and syntax so you can just import one or the other.
+The \pkg{re} package is more common, but does not support unicode character properties (\verb!\p!).
+
+Finally, a small but important note about \concept{escaping} special characters by placing a backslash (\verb|\|) before them.
+The regular expression patterns are used \emph{within} another language (in this case, Python or R), but these languages have their own
+special characters which are also escaped. In Python, you can create a \concept{raw string} by putting a single \verb|r| before the opening quotation mark:
+\verb|r"\d+"| creates the regular expression pattern \verb|\d|.
+From version 4.0 (released in spring 2020), R has a similar construct: \verb|r"(\d+)"|. In R, the parentheses are part of the string delimiters, but you can use more parentheses within the string without a problem.
+The only think you cannot include in a string is the closing sequence \verb|)"|, but as you are also allowed to use square or curly brackets instead of parentheses and single instead of double quotes to delimit the raw string you can generally avoid this problem:
+to create the pattern \verb!"(cat|dog)"! (i.e. cat or dog enclosed in quotation marks), you can use \verb!r"{"(cat|dog)"}"! or \verb!r'("(cat|dog)")'! (or even more legible: \verb!r'{"(cat|dog)"}'!). 
+
+Unfortunately, in earlier versions of R (and in any case if you don't use raw strings), you need to escape special characters twice:
+first for the regular expression, and then for R. So, the pattern \verb|\d| becomes \verb|"\\d+"|. To match a literal backslash you would use the pattern \verb|\\|,
+which would then be represented in R as \verb|"\\\\"|!
+
+
 
 \pyrex[output=both,caption=Using regular expressions to remove hltm tags]{chapter10/regex}
 

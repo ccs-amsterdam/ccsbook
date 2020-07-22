@@ -61,17 +61,18 @@ The first thing to keep in mind is that once you load any text on R or Python yo
   \caption{\label{tab:stringoperations}Useful strings operations in R and Python to clean noise}{
   \begin{tabularx}{\textwidth}{lllll}
     \toprule
-    String operation      & R (stringr)  & Python & Pandas\\
+    String operation      & R (\pkg{stringr})  & Python  & Pandas\\
+                          & (whole column)  & (single string) & (whole column)\\     
     \midrule
-Count characters in s & str\_length(s)          & len(s)        & s.str.len()  \\
-Extract a substring   & str\_sub(s, n1, n2)     & s[n1:n2] & s.str.slice(n1, n2) \\
-Test if s contains s2 & str\_decect(s, s2)       & s2 in s       & s.str.match(s2) \\
-Strip spaces          & trimws(s)               & s.strip()     & s.str.strip() \\
-Convert to lowercase  & tolower(s)              & s.lower()     & s.str.upper() \\ 
-Convert to uppercase  & toupper(s)              & s.upper()     & s.str.lower() \\ 
-Find s1 and replace by s2 & str\_replace(s, "s1", "s2") & s.replace(s1, s2) & s.str.replace(s1, s2)  \\ 
+Count characters in s & \ttt{str\_length(s)}          & \ttt{len(s)}        & \ttt{s.str.len()}  \\
+Extract a substring   & \ttt{str\_sub(s, n1, n2)}     & \ttt{s[n1:n2]} & \ttt{s.str.slice(n1, n2)} \\
+Test if s contains s2 & \ttt{str\_detect(s, s2)}$^*$       & \ttt{s2 in s}       & \ttt{s.str.match(s2)$^*$} \\
+Strip spaces          & \ttt{trimws(s)}               & \ttt{s.strip()}     & \ttt{s.str.strip()} \\
+Convert to lowercase  & \ttt{tolower(s)}              & \ttt{s.lower()}     & \ttt{s.str.upper()} \\ 
+Convert to uppercase  & \ttt{toupper(s)}              & \ttt{s.upper()}     & \ttt{s.str.lower()} \\ 
+Find s1 and replace by s2 & \ttt{str\_replace(s, s1, s2)}$^*$ & \ttt{s.replace(s1, s2)} & \ttt{s.str.replace(s1, s2)$^*$}  \\ 
     \bottomrule
-  \end{tabularx}}{}
+  \end{tabularx}}{(*) The R functions \ttt{str\_detect} and \ttt{str\_replace} and the Pandas function \ttt{s.str.match} and \ttt{s.str.replace} use \concept{regular expressions} to define what to find and replace. See \refsec{regular} below for more information.}
 \end{table}
 
 %TODO aanpassen

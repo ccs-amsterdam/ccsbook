@@ -1,0 +1,19 @@
+
+\begin{table}
+  \caption{\label{tab:regexample}Regular expression syntax}{
+    \begin{tabularx}{\textwidth}{llll}
+      \toprule
+      Operation & R (\pkg{stringr}) & Python & Pandas \\
+      & (whole column)  & (single string) & (whole column)\\     
+      \midrule
+      Does pattern p occur in text t? & \ttt{str\_detect(t, p)} & \ttt{re.search(p, t)} & \ttt{t.str.contains(p)} \\
+      Does text t start with pattern p? & \ttt{str\_detect(t, "\^{}p")} & \ttt{re.match(p, t)} & \ttt{t.str.match(p)} \\
+      Remove all occurences of p in t & \ttt{str\_remove\_all(t, p)} & \ttt{re.sub(p, "", t)} & \ttt{t.str.replace(p, "")} \\
+      Replace p by r in text t & \ttt{str\_replace\_all(t, p, r)} & \ttt{re.sub(p, r, t)} & \ttt{t.str.replace(p, r)} \\
+      Extract the first match of p in t & \ttt{str\_extract(t, p)} & \ttt{re.search(p, t).group(1)} & \ttt{t.str.extract(p)} \\
+      Extract all matches of p in t & \ttt{str\_extract\_all(t, p)} & \ttt{re.findall(p, t)} & \ttt{t.str.extractall(p)} \\
+      Split t on matches of p & \ttt{str\_split(t, p)} & \ttt{re.split(p, t)} & \ttt{t.str.split(p)} \\
+      \bottomrule
+      \end{tabularx}}{Note: if using unicode character properties (\ttt{\textbackslash{}p}), use the same functions in package \pkg{regex} instead of \pkg{re}}
+\end{table}
+
