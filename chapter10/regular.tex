@@ -126,7 +126,7 @@ For example, email addresses can contain plus signs in the first part, but not i
 Even worse, a complete HTML tag expression is probably not even possible because as a regular expression as they can contain comments and nested escapes within attributes.
 For a better way to deal with analysing HTML, please see \refchap{scraping}. In the end, patterns like these are fine for a (somewhat) noisy analysis of (often also somewhat noisy) source texts as long as you understand the limitations. 
         
-\subsection{Using regular expressions in Python and R}
+\section{Using regular expressions in Python and R}
 
 Now that you hopefully have a firm grasp of regular expression syntax,
 it is relatively easy to use these patterns in Python or R (or most other languages).
@@ -139,6 +139,8 @@ For R, we again use the functions from the \pkg{stringr} package.
 For python, you can use either the \pkg{re} or \pkg{regex} package,
 which both support the same functions and syntax so you can just import one or the other.
 The \pkg{re} package is more common, but does not support unicode character properties (\verb!\p!).
+We also list the corresponding commands for \pandas, which are run on a whole column instead of a single text 
+(but note that \pandas\ does not support unicode character properties.)
 
 Finally, a small but important note about \concept{escaping} special characters by placing a backslash (\verb|\|) before them.
 The regular expression patterns are used \emph{within} another language (in this case, Python or R), but these languages have their own
@@ -152,16 +154,81 @@ Unfortunately, in earlier versions of R (and in any case if you don't use raw st
 first for the regular expression, and then for R. So, the pattern \verb|\d| becomes \verb|"\\d+"|. To match a literal backslash you would use the pattern \verb|\\|,
 which would then be represented in R as \verb|"\\\\"|!
 
+\refex{clean} uses regular expressions to clean a single text, by removing HTML tags and punctuation,
+normalizing whitespace, and also uses string commands for converting to lower case and trimming leading and trailing spaces.
+
+\pyrex[caption=Using regular expressions to clean a text]{chapter10/clean}
+
+Finally, \refex{cleanpandas} shows how you can run the various commands on a whole column of text rather than on individual strings,
+using  a small set of made-up tweets to showcase various operations.
+First, we determine whether a pattern occurs, in this case for detecting hash-tags
+This is very useful for e.g. subsetting a data frame to only rows that contain this pattern.
+Next, we count how many at-mentions are contained in the text, where we require that the character before the mention needs to be either whitespace or the start of the string (\verb|^|), to exclude email addresses and other non-mentions that do contain at signs.
+Then, we extract the (first) url found in the text, if any, using the pattern discussed above.
+Finally, we extract the plain text of the tweet in two chained operations:
+First, we remove every word starting with an at-sign, hash, or http, removing everything up to the next whitespace character.
+Then, we replace everything that is not a letter by a single space. 
 
 
-\pyrex[output=both,caption=Using regular expressions to remove hltm tags]{chapter10/regex}
+\pyrex[output=r,format=table,caption=Using regular expressions on a data frame]{chapter10/cleanpandas}
 
-These regular expression can also help us to normalize our text to avoid misspellings or unify different spellings. Think for example of the word \emph{acknowledge}, which is one of the most common misspelled terms in English with non-existing terms such as \emph{acknowlege} or \emph{aknowledge}. Or you may also think of words with different correct spellings, such as \emph{color} or \emph{favorite} in the US and \emph{colour} or \emph{favourite} in the UK, that you need to unify in order to focus your analysis on the same concept they represent. In \refex{regex2} you will see how to conduct this tasks using \verb+.+, \verb|+|, \verb+?+ and also \verb+|+.
+\subsection{Splitting and Joining strings, and extracting multiple matches}
 
-\pyrex[output=both,caption=Using regular expressions to unify spellings]{chapter10/regex2}
+So far, the operations we used all took a single string object and returned a single value,
+either a cleaned version of the string or e.g. a boolean indicating whether there is a match.
+This is convenient when using data frames, as you can transform a single column into another column.
+There are three common operations, however, that complicate matters:
+You can \emph{split} a string into multiple substrings, or \emph{extract} multiple matches from a string,
+and you can \emph{join} multiple matches together.
 
-You can also use this approach to extract strings of the text based on a pattern. Imagine for example you want to get the Twitter usernames included in the object \texttt{tweets} and you know its structure a priori: they all begin with the character \texttt{@}. \refex{regex3} show you how you can deploy this task using regexes. In the case of R you can first generate a list of words (with \fn{unlist} and \fn{strsplit}) and then apply the regular expression rules (obtain the strings with \texttt{@}) with functions \fn{gsub} and \fn{grep}. In the Python example, we do not initially convert the complete string to a list of words, but use the \fn{compile} method of \fn{re} with the regex syntax and then the function \fn{findall} to get the list of usernames.
+\pyrex[caption=Splitting\, extracting\, and joining a single text]{chapter10/split}
 
-\pyrex[output=both,caption=Using regular expressions to extract usernames of tweets]{chapter10/regex3}	
+\refex{split} shows the 'easier' case of splitting up a single text and joining the result back together.
+We show three different ways to split: using a fixed pattern to split on (in this case, a comma plus space);
+using a regular expression (in this case, any punctuation followed by any space);
+and by matching the items we are interested in (letters) rather than the separator.
+Finally, we join these items together again using \fn{join} (Python) and \fn{str\_c} (R).
 
-There are infinite combinations of regular expression syntaxes and base functions in R and Python that can help you in many tasks to clean your texts from noise. Once you get used to this jargon it will be easy to apply it to different kinds of operations and make your life easier.
+One thing to note in the previous example is the use of the index \verb|[[1]]| to select the first element in a list.
+This is needed because in R, splitting a text actually splits all the given texts, returning a \cls{list} containing all the matches for each input text.
+If there is only a single input text, it still returns a list, so we select the first element of the list.
+
+In many cases, however, you are not working on a single text but rather on a series of texts loaded into a data frame,
+from tweets to news aritcles and open survey questions.
+In the example above, we extracted only the first url from each tweet.
+If we would want to extract e.g. all hash tags from each tweet, we cannot simply add a `tags' column,
+as there can be multiple tags in each tweet.
+Essentially, the problem is that the urls per tweet are now nested in each row,
+creating a non-rectangular data structure.
+
+Although there are multiple ways of dealing with this,
+if you are working with data frames our advice is to normalize the data structure to a long format.
+In the example, that would mean that each tweet is now represented by multiple rows,
+namely one for each hash tag.
+\refex{splitlong} shows how this can be achieved in both R and pandas. 
+One thing to note is that in pandas,
+\verb!t.str.extractall! automatically returns the desired long format,
+but it is essential that the index of the data frame actually contains the identifier (in this case, the tweet (status) id).
+\verb!t.str.split!, however, returns a data frame with a column containing lists,
+similar to how both R functions return a list containing character vectors.
+We can normalize this to a long data frame using \fn{t.explode} (pandas) and \fn{pivot\_longer} (R).
+After this, we can use all regular data frame operations, for example to join and summarize the data.
+
+A final thing to note is that in while you normally use a function like \fn{mean} to summarize the values in a group,
+you can also join strings together as a summarization.
+The only requirement for a summarization function is that it returns a single value for a group of values,
+which of course is exactly what joining a mulitple string together does.
+This is shown in the final line of the example, where we split a tweet into words and then reconstruct the tweet from the individual words.
+
+
+
+
+\begin{ccsexample}
+\doublecodex{chapter10/splitlong1}
+\codexoutputtable{chapter10/splitlong1.r}
+\doublecodex{chapter10/splitlong2}
+\codexoutputtable{chapter10/splitlong2.r}
+\doublecodex{chapter10/splitlong3}
+\codexoutputtable{chapter10/splitlong3.r}
+  \caption{Applying split and extract\_all on text columns'}\label{ex:splitlong}
+\end{ccsexample}

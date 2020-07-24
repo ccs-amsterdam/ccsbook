@@ -28,17 +28,25 @@ When we think about text, we might think sentences or words, but the computer on
 text is represented internally as a string of characters.
 This is reflected of course in the type name, with R calling it a \concept{character} and Python a \concept{string}.
 
-\begin{figure}
-  \includegraphics[width=.5\textwidth]{chapter10/text.pdf}
-  \caption{Internal representation and indices of `This is a text.'}\label{fig:text}
-\end{figure}
+\begin{ccsexample}
+  \begin{center} \includegraphics[width=.6\textwidth]{chapter10/text.pdf}\end{center}
+  
+\doublecodex{chapter10/string}
+\doubleoutput{chapter10/string}
+\doublecodex{chapter10/manystrings}
+\doubleoutput{chapter10/manystrings}
 
-As a simple example, \reffig{text} shows how the text `This is a text.' is represented.
+  \caption{Internal representation and of single and multiple texts.'}\label{ex:text}
+\end{ccsexample}
+
+As a simple example, the figure at the top of \refex{text} shows how the text `This is a text.' is represented.
 This text is split info separate characters, with each character representing a letter (or space, interpunction, emoji or Chinese character).
 These characters are indexed starting from the first one, with (as always) R counting from one, but Python counting from zero.
 
-Another recurring difference between R and Python is that in Python a string object represents a single text, while in R it represents a vector (column) of texts: in R, all objects represent columns rather than individual values. 
-Practically, this means that in Python accessing the first element of a text object (\verb|text[0]|) returns the first character of that text, while in R \verb|text[1]|) will return the first (and possibly only) text in a column.
+In Python, texts are represented as \fn{str} (string) objects, in which we can directly address the individual characters by their position: \ttt{text[0]} is the first character of \ttt{text}, and so on.
+In R, howerver, texts (like all objects) represent columns rather than individual values.
+Thus, \ttt{text[1]} in R is the first text in a series of text.
+To access individual characters in a text, you have to use a function such as \fn{str\_length} and \fn{str\_sub} that will be discussed in more detail below. 
 This also means that in Python, if you have a column (or list) of strings that you need to apply an operation to,
 you either need to use one of Panda's methods shown below or use a \concept{for loop} to iterate over all the strings.
 

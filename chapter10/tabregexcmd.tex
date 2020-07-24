@@ -8,6 +8,7 @@
       \midrule
       Does pattern p occur in text t? & \ttt{str\_detect(t, p)} & \ttt{re.search(p, t)} & \ttt{t.str.contains(p)} \\
       Does text t start with pattern p? & \ttt{str\_detect(t, "\^{}p")} & \ttt{re.match(p, t)} & \ttt{t.str.match(p)} \\
+      Count occurrences of p in t & \ttt{str\_count(t, "\^{}p")} & \ttt{re.match(p, t)} & \ttt{t.str.count(p)} \\
       Remove all occurences of p in t & \ttt{str\_remove\_all(t, p)} & \ttt{re.sub(p, "", t)} & \ttt{t.str.replace(p, "")} \\
       Replace p by r in text t & \ttt{str\_replace\_all(t, p, r)} & \ttt{re.sub(p, r, t)} & \ttt{t.str.replace(p, r)} \\
       Extract the first match of p in t & \ttt{str\_extract(t, p)} & \ttt{re.search(p, t).group(1)} & \ttt{t.str.extract(p)} \\
