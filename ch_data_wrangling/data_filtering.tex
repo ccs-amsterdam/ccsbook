@@ -12,7 +12,7 @@ or we might want to remove certain rows because they are incomplete or incorrect
 
 As an example, FiveThirtyEight published a quiz about American public opinon about guns,
 and were nice enough to also publish the underlying data\footnote{https://projects.fivethirtyeight.com/guns-parkland-polling-quiz/; see https://github.com/fivethirtyeight/data/tree/master/poll-quiz-guns for the underlying data.}.
-\refex{data-filter} gives an example of loadnig and cleaning this data set, starting with the function \fn{read\_csv} (included in both \pkg{tidyverse} and \pkg{pandas}) to load the data directly from the Internet.
+\refex{data-filter} gives an example of loading and cleaning this data set, starting with the function \fn{read\_csv} (included in both \pkg{tidyverse} and \pkg{pandas}) to load the data directly from the Internet.
 This data set contains one poll result per row, with a \emph{Question} column indicating which question was asked,
 and the columns listing how many Americans (adults or registered voters) were in favor of that measure, in total and for Republicans and Democrats.
 Next, the columns \emph{Republican} and \emph{Democratic Support} are renamed to shorten the names and remove the space.

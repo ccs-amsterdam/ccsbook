@@ -23,7 +23,7 @@ but in Python or in R direct assignment you also need to specify the name of the
 In Python, this would be \verb+d.rep - d.dem+, while in R this is \verb+d$rep - d$dem+. 
 
 In many cases, however, you want to use various functions to perform tasks like cleaning and data conversion
-(see \refsec{function} for more explanation of built-in and custom functions).
+(see \refsec{functions} for more explanation of built-in and custom functions).
 For example, to convert a column to numeric you would use the base R function \fn{as.numeric} in R or the \pkg{pandas} function \fn{to\_numeric} in Python.
 Both functions take a column as argument and convert it to a numeric column.
 
@@ -44,7 +44,7 @@ To illustrate these possibilities, \refex{mutate} has code for cleaning a versio
 in which we intentionally introduced two problems: we added some typos to the \emph{rep} column
 and introduced a missing value in the \emph{Support} column.
 To clean this, we perform three steps: First, we remove all non-numeric characters using a regular expression
-(see \refsec{regex} for more information on text handling and regular expressions).
+(see \refsec{regular} for more information on text handling and regular expressions).
 Next, we need to explicitly convert the resulting column into a numeric column so we can later use it in calculations.
 Finally, we replace the missing value by the column mean
 (of course, it is doubtful that that is the best strategy for imputing missing values here,

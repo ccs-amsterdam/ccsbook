@@ -22,7 +22,7 @@ The resulting dataset is reduced both in rows and in columns.
 Each row now represents a group of previuos cases (e.g. school or date),
 and the columns are now only the grouping columns and the computed summary scores.
 
-\refex{data-aggregate} shows the code in R and Python to define groups and compute summary values.
+\refex{aggregate} shows the code in R and Python to define groups and compute summary values.
 First, we group by poll \emph{question}; and for each question, we compute the average and standard deviation.
 The syntax is a little different for R and Python, but the idea is the same:
 first we create a new variable \verb+groups+ that stores the grouping information,
@@ -63,7 +63,7 @@ This can be used to chain multiple commands together, e.g. \verb+data = data %>%
 
 \pyrex[caption=Combining multiple functions,output=r,format=table]{ch_data_wrangling/aggregate2}{
 
-\refex{data-aggregate2} shows the same operation as above, but chained into a single statement.
+\refex{aggregate2} shows the same operation as above, but chained into a single statement.
 
 
 \subsection{Adding summary values}
@@ -80,10 +80,10 @@ mixing individual and group level variables in the same data frame.
 
 \pyrex[caption=Adding summary values to individual cases,output=r,format=table]{ch_data_wrangling/transform}
 
-\refex{data-transform} shows how this can be achieved in Python and R,
+\refex{transform} shows how this can be achieved in Python and R,
 computing the mean support per question and then calculating how each poll deviates from this mean. 
 
-In R, the code is very similar to \refex{data-aggregate2} above, simply
+In R, the code is very similar to \refex{aggregate2} above, simply
 replacing the \pkg{dplyr} function \fn{summary} by the function \fn{mutate} discussed above.
 In this function you can mix summary functions and regular functions, as shown in the example:
 first the mean per group is calculated, followed by the deviation of this mean.
