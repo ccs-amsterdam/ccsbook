@@ -28,33 +28,46 @@ In fact, when we merged these data sets earlier in \refex{merge}, we selected on
 
 \refex{pivot} shows how you can `pivot' the capital data to long format using \fn{pivot\_longer} (R) and \fn{wide\_to\_long} (Pandas). The seccond part of this example then goes on to do this for both data sets, merge them, and partially reproduce Figure~4.4 from \citet{piketty}.
 
-\section{Restructuting `messy' data}
+\section{Restructuring `messy' data}
 
 As a final example, we will look at the data on income and wage shares from Piketty (supplemental tables S8.1 and S8.2).
 We want to visualize the income and wage share going to the top 1\% earners in France and the U.S..
 \reffig{messy} shows a screenshot of this data in Open Office, with the U.S. data having a similar shape.
-In order to perform our visualization, we want a data set containing a single measurement column (percentage share),
-and a row for each year-country-type combination, i.e. one row for wage inequality in 1910 in the U.S..
+For the previous examples, we used a clean csv version of this data, but now we will tackle the additional challenge
+of dealing with the excel file including extra header rows and column names aimed at human consumption rather than easy computing. 
 
 \begin{figure}
-
+  \includegraphics[width=\linewidth]{ch_data_wrangling/messy.png}
+  \caption{Data on top incomes as provided in Piketty (2014; digital appendix)}\label{fig:messy}
 \end{figure}
 
+In order to perform our visualization, we want a data set containing a single measurement column (percentage share),
+and a row for each year-country-type combination, i.e. one row for wage inequality in 1910 in the U.S..
 One of the most important skills in computational social science (and data-driven analysis in general) is
 understanding which series of generally small steps are needed to go from one data format to the other.
 Although there is not a fixed step of steps that are always needed, the steps to get from the raw data visualized in \reffig{messy} to a `tidy' data set are fairly typical:
 
 \begin{enumerate}
-  \item Input: Read the data into data frames, skipping the extra header rows
+  \item Input: Read the data into data frames. In this case, reading from an excel sheet and skipping the extra header rows
   \item Reshape: Pivoting the data into long format
-  \item Normalize: Separate a header like ``Top 1\% income share'' into income type (income, wage) and percentile (10\%, 1\%, etc)
-  \item Mutate: Add a column for the country name
-  \item Merge: Add both data sets together
+  \item Normalize: Normalize names, value types, etc. In this case, also separate a header like ``Top 1\% income share'' into income type (income, wage) and percentile (10\%, 1\%, etc)
   \item Filter: Filter for the desired data
   \item Analyze: Create the visualization
 \end{enumerate}
 
-These steps have been discussed before: reading csv data in \refsec{readdata}; pivot to long data in \refsec{pivot};
+Fortunately, These steps have been discussed before: reading csv data in \refsec{readdata}; pivot to long data in \refsec{pivot};
 add a column in \refsec{calculate}; joining data in \refsec{join}; and visualizing in \refchap{visualize}.
+
+\refex{excel} shows how to perform the first three steps for the U.S. case.
+First, we use the \pkg{readxl} (R) and \pkg{xlrd} (Python) to read a sheet from an excel file into a data frame,
+manually specifying the number of header and footer rows to skip.
+Then, we pivot the columns into a
 The missing step, splitting a header into two columns, is done using \fn{separate} (R) and \fn{split} (Python). 
 
+\begin{ccsexample}
+  \doublecodex{ch_data_wrangling/excel1}
+  \codexoutputtable{ch_data_wrangling/excel1.r}
+  \doublecodex{ch_data_wrangling/excel2}
+  \codexoutputpng{ch_data_wrangling/excel2.py}
+  \caption{Dealing with `messy' data}\label{ex:excel}
+\end{ccsexample}
