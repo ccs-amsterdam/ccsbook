@@ -1,3 +1,5 @@
+jupro>=0.13
+jupyter
 pandas
 scipy
 nagisa
