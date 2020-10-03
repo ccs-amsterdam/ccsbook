@@ -1,0 +1,30 @@
+\section{Using APIs}
+
+The data used in the examples above were gathered using the APIs of Twitter and Open Street Map.
+\refchap{scraping} will go into this in more detail, but it is shown in \refex{funapi} here as well for the sake of completeness
+(and in case you are eager to have fun with those APIs).
+
+Twitter is a popular data source for scientific analysis, mostly because it is relatively open, public, and easy to collect.
+In R, we use \pkg{rtweet}, which will automatically ask you to log in to Twitter in a browser so it can obtain an API key
+(remember that you might have to \verb|install.packages("rtweet")| if you haven't already done so).
+After this, you can use the code in the second part of the example to lookup users and download tweets.
+Note that this will only work if you run RStudio locally: if you use a jupyter notebook (e.g. in colab)
+it will not be able to connect to your browser and you will have to obtain an API key yourself,
+see \refchap{scraping} for more details. 
+
+For the geocoding, we used Open Street Maps since it can be used without an API key.
+In R, you need to install \pkg{tmaptools} and then you can use the \fn{geocode\_OSM} function as shown in \refex{funtmap}.
+If you want to combine the user data with the tweets as in the examples above,
+you can use the code in the last part of the example. 
+Don't worry if you don't understand all of the code in that snippet yet,
+after reading \refchap{datawrangling} it should be clear. 
+
+
+
+\begin{ccsexample}
+  \codex[caption=Accessing Twitter]{chapter02/funrtweet.r}
+  \codex[caption=Geocoding]{chapter02/funtmap.r}
+  \codex[caption=Preparing user data]{chapter02/fungetgeo.r}
+  \caption{Code for querying the twitter and OSM APIs}\label{ex:funapi}
+  
+\end{ccsexample}
