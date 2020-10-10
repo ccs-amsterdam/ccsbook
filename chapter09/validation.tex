@@ -13,7 +13,7 @@ for us: Do we care more about precision or about recall? Are all
 classes equally important to us?  And of course, other factors, such
 as explainability or computational costs may factor into our decision.
  
-But in any event, we need to decide on which metrics to focus.  We can
+But in any event, we need to decide on which metrics to focus on.  We can
 then either manually inspect them and look, for instance, which model
 has the highest \emph{accuracy}, or the best balance of precision and recall,
 or a recall higher than some threshold you are willing to accept.
@@ -92,8 +92,8 @@ chraracteristic), a plot in which (Figure~\ref{fig:roccurve}) we plot
 true positives against false positives at different thresholds.  A
 good model extends until close to the upper left corner, and hence has
 a large area under the curve (AUC).  If we choose a threshold at the
-left end of the curve, we get little false positives (good!), but also
-little true positives (bad!), if we go too far to the right, we get
+left end of the curve, we get few false positives (good!), but also
+few true positives (bad!), if we go too far to the right, we get
 the other extreme. So, how can we find the best spot?
 
 One approach would be to print a table with three columns: the false

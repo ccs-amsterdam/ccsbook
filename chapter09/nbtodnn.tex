@@ -39,7 +39,7 @@ instance, a war swept away a whole generation of males but not
 females), this is not the case for education, political interest,
 media use, and so on.  And in textual data, whether a word $W_1$ is used
 is not independent from the use of word $W_2$ --- after all, both are not
-randomly drawn from a dictionary, but depend on the topic of the text
+randomly drawn from a dictionary, but depends on the topic of the text
 (and other things).  Astonishingly, even though these assumptions are
 regularly violated, the Na\"ive Bayes classifier works reasonably well
 in practice.
@@ -77,7 +77,7 @@ have our label; (3) counting how many cases out of [1] have feature x;
 (4) counting how many cases out of [2] have feature x.  As you can
 imagine, doing this does not take much time to do, which makes the
 Na\"ive Bayes classifier such a fast and efficient choice.  This may
-in particular be true if you have very many features (i.e.,
+in particular be true if you have a lot of features (i.e.,
 high-dimensional data).
 
 Counting whether a feature is present or not, of course, is only
@@ -122,7 +122,7 @@ respectively.
 Regression analysis does not make as strong an assumption about the
 independence of features as the Na\"ive Bayes classifier does.  Sure,
 we have been warned about the dangers of multicollinearity in
-statistics classes, but correlation between features (for which is
+statistics classes, but correlation between features (for which
 multicollinearity is a fancy term) affects the coefficients and their
 $p$ values, but not the predictions of the model as a whole.  To put
 it differently, in regression models, we do not estimate the
@@ -185,7 +185,7 @@ Wait, you might say. Isn't $P$ still continuous, even though it is now
 bounded between 0 and 1? Yes, it is.  Therefore, after having
 estimated the model, we use a threshold value (typically, 0.5) to
 predict the label. If $P>0.5$, we predict that the case is spam/about
-politics/will go viral, if not, we predict its not.
+politics/will go viral, if not, we predict it's not.
 
 A nice side effect of this is that we still can use the probabilities
 in case we are interested in them, for example to figure out for which
@@ -193,7 +193,7 @@ cases we are more sure in our prediction.
 
 Just as with the Na\"ive Bayes classifier, also for logistic
 regression classifiers, Python and R will happily allow us to estimate
-models with multiple nominal outcomes instead of a binary outcome. In \refex{logreg} w	e fit the logistic regression using the \pkg{caret} method \fn{logreg} in R and the \pkg{sklearn} (module linear\_model) function \fn{LogisticRegression} in Python.
+models with multiple nominal outcomes instead of a binary outcome. In \refex{logreg} we fit the logistic regression using the \pkg{caret} method \fn{logreg} in R and the \pkg{sklearn} (module linear\_model) function \fn{LogisticRegression} in Python.
 
 And, of course, you actually can do OLS regression (or more advanced
 regression models) if you want to estimate a continuous outcome.
@@ -220,7 +220,7 @@ probabilities associated with your prediction, but just the label.
 But usually, that's all that you want anyway.
 
 Without going into mathematical detail here (for that, a good source
-would be \citet{kelleher2015fundamentals}, we can say that finding the
+would be \citet{kelleher2015fundamentals}), we can say that finding the
 widest separating margin that we can achieve constructing a plane in a
 graphical space (SVM) versus optimizing a log-likelihood function
 (logistic regression) results in a model that is less sensitive to
@@ -237,7 +237,7 @@ just touches are called the ``support vectors'', hence the name.
 You could imagine that sometimes, we may want to be a bit lenient
 about the margins. If we have thousands of data points, then maybe it
 is okay if one or two of these datapoints are, in fact, within the
-margin of the separating line (or hyperpane). We can control this with
+margin of the separating line (or hyperplane). We can control this with
 a parameter called $C$: For very high values, this is not allowed, but
 the lower the value, the ``softer'' the margin is.  In
 Section~\ref{sec:crossvalidation}, we will show an approach to find
@@ -283,7 +283,7 @@ characters in a tweet, but this does not necessarily need to be the
 case; it might be something we need to estimate.
 
 A step-wise decision, in which we first check one feature (the
-length), before checking another feature, can be modeles as a decision
+length), before checking another feature, can be modeled as a decision
 tree.  Figure~\ref{fig:decisiontree} depicts a (hypothetical) decision
 tree with three \textit{leaves}.
 
@@ -361,7 +361,7 @@ they are frequently used when we expect such relationships (or have no
 idea about how the relationship looks like).  Also, random forests may
 be a good choice if you have very different types of features (some
 nominal, some continuous, etc.) in your model. The same holds true if
-you have a lot (really a lot) features: Methods like SVM would require
+you have a lot (really a lot) of features: Methods like SVM would require
 constructing large matrices in memory, which random forests do not.
 But if the relationships between your features and your labels are
 actually (approximately) linear, then you are probably better off with
@@ -370,7 +370,7 @@ one of the other models we discussed.
 
 \subsection{A glimpse into Deep Learning} 
 
-An extensive treatment of Deep Learning is out of the scope of this
+An extensive treatment of Deep Learning is beyond the scope of this
 book (we recommend \cite{geron2019hands}, instead), but we will give you a brief introduction, so that you can decide whether it is worth diving deeper
 into it.
 
@@ -393,7 +393,7 @@ In tasks such as image recognition or text classification, though,
 this often is too simplistic. For instance, when we want to predict
 whether an image shows a person or not, we do not really believe that
 the color of the pixels in the image (the ``input layer'') can
-directly predict whether it is politician (the ``output layer''). A
+directly predict whether it is a politician (the ``output layer''). A
 more reasonable assumption is that these pixels can predict some more
 abstract concepts (a ``hidden layer'') which then can predict another
 hidden layer or the output layer (Figure~\ref{fig:nn}).
@@ -413,6 +413,6 @@ hidden layer or the output layer (Figure~\ref{fig:nn}).
 \caption{A neural network \label{fig:nn}}
 \end{figure}
 
-These layers are often not interpretable for humans (some even call this approach a ''black box''), which can be problematic in situations where a classification needs to be transparent (for instance, to prevent discrimination). On the other hand can these layers often clearly enhance the accuracy of our predictions, which may be more important than explainability for many applications we are interested in.
+These layers are often not interpretable for humans (some even call this approach a ''black box''), which can be problematic in situations where a classification needs to be transparent (for instance, to prevent discrimination). On the other hand, these layers often clearly enhance the accuracy of our predictions, which may be more important than explainability for many applications we are interested in.
 
 It is up to the researcher to specify the number of layers, the number of neurons per layer, the mathematical functions to connect the neurons, and the general architecture of the network. Often, neural networks with many layers (e.g., ten) are referred to as ``deep networks'' (\emph{deep learning}). We will cover this approach with more detail in section \refsec{supervised} with \emph{recurrent neural networks} for text classification and in [ADD REFERENCE TO CH 15 Introduction to Image and Video Data] with \emph{convolutional neural networks} for image classification.	
