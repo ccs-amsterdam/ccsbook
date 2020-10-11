@@ -57,7 +57,10 @@ that they would somehow be a-theoretical. This is probably fueled by
 clich\'{e}s coied during ``Big Data''-hype in the 2010's, such as the
 infamous saying that in the age of Big Data, correlation is enough,
 but one could not be more wrong: As the work of \cite{Kitchin2014,Kitchin2014data} shows, computational approaches can
-be well situated within existing epistemologies. The computational
+be well situated within existing epistemologies.
+For the field to advance, computational/empirical and theoretical work should be symbiotic with each informing the other
+and with neither superior to the other \cite{margolin19}.
+Thus, the computational
 scientists' toolbox includes both more data-driven and more
 theory-driven techniques; some are more bottom-up and inductive,
 others are more top-down and deductive. What matters here, and what is
@@ -78,12 +81,15 @@ between parts of the pipeline that are just necessary but not
 inherently interesting to us, and parts of the pipeline that answer a
 genuinely interesting question. In this example, the inner workings of
 the Named Entity Recognition step are not genuinly interesting for us
--- we just need to do it to answer our question. We do care about how
-well it works, which biases it has, and so on, but we are indeed not
-evaluating any theory here. We are, however, answering a theoretically
-interesting question when we look at the pipeline as a whole.  Of course, what is genuinely interesting depends on one's discipline: For a
-computational linguist, the workings of the named entity recognition
-may be the interesting part, and our research question just one
+-- we just need to do it to answer our question.
+We do care about how well it works and especially which biases it may have that could affect our substantive outcomes,
+but we are not really evaluating any theory on named entitiy recognition here here.
+We are, however, answering a theoretically
+interesting question when we look at the pipeline as a whole,
+that is, when we apply the tools in order to tackle a social scientific problem. 
+Of course, what is genuinely interesting depends on one's discipline: For a
+computational linguist, the inner workings of the named entity recognition
+may actually be the interesting part, and our research question just one
 possible ``downstream task''.
 
 This distinction is also sometimes referred to as ``building a better
@@ -91,12 +97,13 @@ mouse trap'' vs. ``understanding''. For instace, \cite{Breiman2001}
 remarked: ``My attitude toward new and/or complicated methods is
 pragmatic. Prove that you've got a better mousetrap and I'll buy
 it. But the proof had better be concrete and convincing.''
-(p.~230). In contrast, many social scientists are using statistical
+(p.~230).
+In contrast, many social scientists are using statistical
 models to test theories and to understand social processes: they want
 to specically understand how x relates to y, even if y may be better
 predcited by another (theoretically uninteresting) variable instead.
 
-The book here is to some extend about both building mouse traps and undertanding. When you
+This book here is to some extend about both building mouse traps and understanding. When you
 are building a supervised machine learning classifier to determine the
 topic of each text in a large collection of news articles or
 parliamentary speeches, you are building a (better) mouse trap. But as
@@ -129,7 +136,8 @@ techniques in fields such as journalism studies
 \citep[e.g.,][]{Boumans2016}, media studies \citep[e.g.,][]{Rieder2017}, or
 the text-as-data movement \citep{Grimmer2013}, we see a core of
 techniques that are used all-over again, and that we therefore
-included in our book. In partiuclar, these are techniques for
+included in our book. In partiuclar, besides general data analysis and visualization techniques,
+these are techniques for
 gathering data such as web scraping or the use of API's; techniques
 for dealing with text such as natural language processing and
 different ways to turn text into numbers; supervised and unsupervised
@@ -147,7 +155,7 @@ of communication without learning at least either Python or R, and
 preferrably even both of them.
 There are very few tasks that you cannot do with at least one of them.
 
-Some people have strong believes which language is ``better'' -- we do
+Some people have strong beliefs which language is ``better'' -- we do
 not belong to them. Most techniques that are relevant to us can be
 done in either language, and personal preference is a big factor. R
 started out as a statistical programming environment, and that
@@ -173,7 +181,7 @@ into features and how to choose an appropriate machine learning model,
 but find it of less importance in which language this happens.
 
 Yet, sometimes, there are good reasons to choose one language above
-the other. For instance, many machine learning models in R under the
+the other. For instance, many machine learning models in the popular `caret' package in R under the
 hood create a dense matrix, which severly limits the amount of
 documents and features one can use; also, some complex web scraping
 tasks are maybe easier to realize in Python. On the other hand, R's
@@ -207,7 +215,7 @@ requirement on what you need to know. Also in terms of statistics, it
 has helped if you have heard of terms such as correlation or
 regression analysis, but even if your knoweldge here is rather
 limited, you should be able to follow along. Also here, a bit more
-previous knowledge helps, but you can also aquire it along the way.
+previous knowledge helps, but you can also acquire it along the way.
 
 This also means that you may be able to skip chapters. For instance,
 if you already work with R and/or Python, you may not need our
