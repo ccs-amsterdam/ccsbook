@@ -29,7 +29,7 @@ For example, should `haven't' be seen as a single word, or two?
 
 \pyrex[caption=Differences between tokenizers]{ch_dtm/tokenize}
 
-\refex{tokenize} shows how Python and R deal with the sentence ``I haven't seen John't derring-do''.
+\refex{tokenize} shows how Python and R deal with the sentence ``I haven't seen John's derring-do''.
 For Python, we first use |CountVectorizer.build_tokenizer| to access the built-in tokenizer.
 As you can see in the first line of input, this tokenizes ``haven't'' to |haven|,
 which of course has a radically differeny meaning. Moreover, it silently drops all single-letter words,
@@ -40,7 +40,7 @@ Unfortunately, this tokenizer assumes that text has already been split into sent
 and it also includes punctuation as tokens by default.
 For this reason, we introduce a custom tokenizer based on the Treebank tokenizer,
 which splits text into sentences (using \fn{nltk.sent\_tokenize}) and allows for a custom criterion for keeping tokens,
-int this case that the token must contain at least one letter. 
+in this case that the token must contain at least one letter. 
 
 For R, we simply call the \fn{tokens} function from the \quanteda\ package.
 This keeps |haven't| and |John's| as a single word, which is probably less desirable than splitting the words
@@ -78,7 +78,7 @@ This package contains a tokenizer which is able to tokenize the Japanese text, a
 much like we used the \cls{TreebankWordTokenizer} for English earlier.
 Similarly, with heavily inflected languages such as Hungarian or Arabic,
 it might be better to use preprocessing tools developed specifically for these languages, but treating those is unfortunately
-beyong the scope of this book. 
+beyond the scope of this book. 
 
 
 \subsection{The DTM as a Sparse Matrix}
@@ -97,7 +97,7 @@ Note the difference in the amount of columns (unique terms) due to the differenc
 In \refex{freq} we show how you can look at the contents of the DTM. First, we show the overall term and document frequencies of each word, where we showcase words at different frequencies. Unsurprisingly, the word \emph{the} tops both charts, but further down there are minor differences.
 In all cases, the highly frequent words are mostly functional words like \emph{them} or \emph{first}. More informative words such as \emph{investments} are by their nature used much less often.
 Such term statistics are very useful to check for noise in the data and get a feeling of the kind of language that is used. 
-Second, we take a look at the frequency of these same words in four speeches from Truman to Obamna. All use words like \emph{the} and \emph{first}, but none of them talk about \emph{defrauded} -- which is not surprising, since it was only used once in all the speeches in the corpus.
+Second, we take a look at the frequency of these same words in four speeches from Truman to Obama. All use words like \emph{the} and \emph{first}, but none of them talk about \emph{defrauded} -- which is not surprising, since it was only used once in all the speeches in the corpus.
 
 However, the words that ranked around 1,000 in the top frequency are still used in less than half of the documents.
 Since there are about 17,000 even less frequent words in the corpus, you can imagine that most of the document-term matrix consists of zeroes. 
@@ -116,7 +116,7 @@ which can cause problems even on modern computers and is moreover very inefficie
 With sparsities of often above 99\%, using a sparse matrix representation can easily reduce storage requirements by a hundred times and in the process speed up calculations by reducing the number of entries that need to be inspected.
 Both \quanteda\ and \sklearn\ store DTMs as sparse matrices by default,
 and most analysis tools are able to deal with sparse matrices very efficiently.
-(but see \refsec{sparseml} for problems with machine learning on sparse matrices in R). 
+(but see \refsec{workflow} for problems with machine learning on sparse matrices in R). 
 
 A final note on the difference between python and R in this example.
 The code in R is much simpler and produces nicer results since it also shows the words and the speech names.
@@ -165,7 +165,7 @@ is positive, or contains personal expressions respectively.
 As we will see in the next chapter, the DTM representation can be used for many different text analyses, from dictionaries to supervised and unsupervised machine learning.
 
 Sometimes, however, you need information that is encoded in the order of words.
-For example, in analysing conflict coverage it might be quite important to know who attack whom, not just that attacking took place.
+For example, in analysing conflict coverage it might be quite important to know who attacks whom, not just that attacking took place.
 In the last section of this chapter we will look at some ways to create a richer matrix-representation by using word pairs.
 Although it is beyond the scope of this book,
 you can also use automatic syntactic analysis to take grammatical relations into account as well.
@@ -184,14 +184,14 @@ and simple word frequency is often not that informative: the most frequent words
 
 For example, \refex{wordcloud} shows the word cloud for the state of the union speeches downloaded above.
 In R, this is done using the \quanteda\ function \fn{textplot\_wordcloud}.
-In Python we need to work a little harder, since the only has the counts, not the actual words.
+In Python we need to work a little harder, since it only has the counts, not the actual words.
 So, we sum the DTM columns to get the frequency of each word, and combine that with the feature names (words)
 from the |CountVectorized| object |cv|. Then we can create the WordCloud and give it the frequencies to use.
 Finally, we plot the cloud and remove the axes.
 
 \pyrex[caption=Word Cloud of the US State of the Union corpus,format=png]{ch_dtm/wordcloud}
 
-The results from Python and R look differently at first -- for one think, R is nice and round but Python has more colors!
+The results from Python and R look different at first -- for one thing, R is nice and round but Python has more colors!
 However, if you look at the cloud you can see both are not very meaningful: the largest words are all punctuation or words like
 `a', `and', or `the'.
 You have to look closely to find words like `federal' or `security' that give a hint on what the texts were actually about.

@@ -1,7 +1,7 @@
 \section{Advanced representation of text}
 \label{ngram}
 
-The examples above all created document-term matrices where each column is actually represents a word.
+The examples above all created document-term matrices where each column actually represents a word.
 There is more information in a text, however, than pure word counts.
 The phrases: \emph{the movie was not good, it was in fact quite bad} and \emph{the movie was not bad, in fact it was quite good}
 have exactly the same word frequencies, but are quite different in meaning.
@@ -45,7 +45,7 @@ Both languages produce the same output, with R separating the words with an unde
 \pyrex[caption=Words and bigrams containing 'government',output=r,format=table]{ch_dtm/ngram2}
 
 \refex{ngram2} shows how you can generate n-grams for a whole corpus.
-This this case, we create a DTM of the state of the union matrix with all bigrams included.
+In this case, we create a DTM of the state of the union matrix with all bigrams included.
 A glance at the frequency table for all words containing \emph{government} shows that,
 besides the word itself and it's plural and possessive forms, the bigrams include compound words (federal and local government),
 phrases with  the government as subject (the government can and must), and nouns for which the government is an adjective
@@ -69,8 +69,8 @@ for example because they refer to names such as \emph{New York} or disambiguate 
 a \emph{sound proposal}, or \emph{loud sound}.
 
 \refex{colloc} shows how to identify the most `surprising' collocations using R and Python.
-For Python, we use the \pkg{gensim} package which we will also use for topic modeling in \refchap{lda}.
-This package has a \cls{Phrases} class which can score the bigrams in a list of tokens.
+For Python, we use the \pkg{gensim} package which we will also use for topic modeling in \refsec{unsupervised}.
+This package has a \cls{Phrases} class which can identify the bigrams in a list of tokens.
 In R, we use the \fn{textstat\_collocations} function from \quanteda.
 These packages each use a different implementation: \pkg{gensim} uses pointwise mutual information, i.e.
 how much information about finding the second word does seeing the first word give you?
@@ -90,8 +90,8 @@ Nonetheless, both methods give very similar results, with Saddam Hussein, the Ir
 The next block demonstrates how to use these collocations in further processing.
 In R, we filter the collocations list on $lambda>8$ and use the \fn{tokens\_compound} function to compound bigrams from that list.
 As you can see in the term frequencies filtered on `hussein', the regular terms (apart from the posessive) are removed and the compounded term now has 26 occurrences.
-For python, we use the \cls{PhraseTransformer} class, which is an adaptation of the \cls{Phrases} class to the \sklearn\ methodology.
-After setting a threshold of 0.7, we can use \fn{fit\_transform} to change the tokens.
+For Python, we use the \cls{PhraseTransformer} class, which is an adaptation of the \cls{Phrases} class to the \sklearn\ methodology.
+After setting a standard threshold of 0.7, we can use \fn{fit\_transform} to change the tokens.
 The term statistics again show how the individual terms are now replaced by their compound. 
 
 
@@ -99,7 +99,7 @@ The term statistics again show how the individual terms are now replaced by thei
 
 A recent addition to the text analysis toolbox are \concept{word embeddings}.
 Although it is beyond the scope of this book to give a full explanation of the algorithms behind word embeddings,
-they are relatively easy to use and understand and use at an intuitive level.
+they are relatively easy to understand and use at an intuitive level.
 
 The first core idea behind word embeddings is that the meaning of a word can be expressed using a relatively small \concept{embedding vector}, generally consisting of around 300 numbers which can be interpreted as dimensions of meaning.
 The second core idea is that these embedding vectors can be derived by scanning the context of each word in millions and millions of documents.
@@ -110,9 +110,9 @@ Using embedding vectors instead of word frequencies has the advantages of strong
 instead of (tens of) thousands of columns for each unique word we only need hundreds of columns for the embedding vectors.
 This means that further processing can be more efficient as fewer parameters need to be fit,
 or conversely that more complicated models can be used without blowing up the parameter space.
-Another advantage is that a model can also give a result for words it never saw before, as these words mosty likely will have an embedding vector and so can be fed into the model.
+Another advantage is that a model can also give a result for words it never saw before, as these words most likely will have an embedding vector and so can be fed into the model.
 Finally, since words with similar meanings should have similar vectors,
-a model fit on embedding vectors gets a `head start' since the vectors for words like `great' and `fantastic' will already be relative close to each other, while all columns in a normal DTM are treated independently.
+a model fit on embedding vectors gets a `head start' since the vectors for words like `great' and `fantastic' will already be relatively close to each other, while all columns in a normal DTM are treated independently.
 
 \newcommand{\fnglove}{\footnote{The full embedding models can be downloaded from https://nlp.stanford.edu/projects/glove/. To make the file easier to download, we took only the 10,000 most frequent words of the smallest embeddings file (the 50 dimension version of the 6B tokens model). For serious applications you probably want to download the larger files, in our experience the 300 dimension version usually gives good results. Note that the files on that site are in a slightly different format which lacks the initial header line, so if you want to use other vectors for the examples here you can convert them with the \fn{glove2word2vec} function in the \pkg{gensim} package. For R, you can also simply omit the \verb|skip=1| argument as apart from the header line the formats are identical}}
 
@@ -166,14 +166,14 @@ Finally, analogies are solved by simply adding and subtracting the vectors as ex
 A final technique to be discussed here is the use of linguistic preprocessing steps to enrich and filter a DTM.
 So far, all techniques discussed here are language independent.
 However, there are also many language-specific tools for automatically enriching text developed by computational linguistics communities around the world.
-Two techniques will be discussed here as they are relatively widely available for many language and easy and quick to apply: \concept{Part-of-seech tagging} and \concept{lemmatizing}.
+Two techniques will be discussed here as they are relatively widely available for many languages and easy and quick to apply: \concept{Part-of-speech tagging} and \concept{lemmatizing}.
 
 In \concept{part-of-speech tagging} or POS-tagging, each word is enriched with information on its function in the sentence: verb, noun, determiner etc.
 For most languages, this can be determined with very high accuracy, although sometimes text can be ambiguous:
 in one famous example, the flies in \emph{fruit flies} is generally a noun (fruit flies are a type of fly), but it can also be a verb (if fruit could fly). 
-Althugh there are different sets of POS tags used by different tools, there is broad agreement on the core set of tags listed in \reftab{postags}.
+Although there are different sets of POS tags used by different tools, there is broad agreement on the core set of tags listed in \reftab{postags}.
 
-POS tags are useful since it allows to to e.g. analyse only the nouns if we care about the things that are discussed, or only the verbs if we care about actions that are described.
+POS tags are useful since it allows to e.g. analyse only the \textit{nouns} if we care about the things that are discussed, only the \textit{verbs} if we care about actions that are described, or only the \textit{adjectives} if we care about the characteristics given to a noun.
 Moreover, knowing the POS tag of a word can help disambiguate it.
 For example, like as a verb (I like books) is generally positive, but like as a preposition (a day like no other) has no clear sentiment attached.
 
@@ -189,7 +189,7 @@ Stemming is much less sophisticated than lemmatizing, however, and will trip ove
 (e.g. \emph{are} as a form of to be) and regular word endings that look like conjugations (e.g. \emph{virus} will be stemmed to \emph{viru}).
 English has relatively simple conjugations and stemming can produce adequate results.
 For morphologically richer languages such as German or French, however, it is strongly advised to use lemmatizing instead of stemming.
-Even for English I would generally advice lemmatization since is so easy nowadays and will yield better results than stemming.
+Even for English we would generally advise lemmatization since it is so easy nowadays and will yield better results than stemming.
 
 For \refex{udpipe}, we use the \concept{UDPipe} natural language processing toolkit \citep{udpipe},
 a `Pipeline' that parses text into `Universal Dependencies', a representation of the syntactic structure of the text.
@@ -211,10 +211,10 @@ Finally, the \verb|head_token_id| and \verb|dep_rel| columns represent the synta
 \pyrex[caption=Using UDPipe to analyse a sentence,format=table,output=r]{ch_dtm/udpipe}
 
 The syntactic relations can be useful if you need to differentiate between who is doing something and whom it was done to.
-For example, one of the authors of this book use syntactic relations to analyse conflict coverage,
+For example, one of the authors of this book used syntactic relations to analyse conflict coverage,
 where there is an important difference between attacking and getting attacked \citep{clause}.
 However, in most cases you probably don't need this information and analysing dependency graphs is relatively complex.
-We would advice you to almost always consider lemmatizing and tagging your texts, as lemmatizing is simply so much better than stemming
+We would advise you to almost always consider lemmatizing and tagging your texts, as lemmatizing is simply so much better than stemming
 (especially for languages other than English), and the Part-of-Speech can be very useful for analysing different aspects of a text. 
 
 If you only need the lemmatizer and tagger, you can speed up processing by setting \verb|udpipe(.., parser='none')| (R) or setting the third argument to Pipeline (the parser) to \verb|Pipeline.NONE| (Python).
@@ -232,13 +232,13 @@ If you want to learn more about natural language processing, the book `Speech an
 
 \section{Which preprocessing to use?}
 
-This chapter has showed how to create a DTM and especially introduced a number of different steps that can be used to clean and preprocess the DTM before analysis.
+This chapter has shown how to create a DTM and especially introduced a number of different steps that can be used to clean and preprocess the DTM before analysis.
 All of these steps are used by text analysis practitioners and in the relevant literature.
 However, no study ever uses all of these steps on top of each other.
-This of courses raises the question of how to know which preprocessing steps to use for your research questoin.
+This of courses raises the question of how to know which preprocessing steps to use for your research question.
 
 First, there are a number of things that you should (almost) always do.
-If you data contains noise such as boilerplate language, HTML artefacts, etc., you should generally strip these out before proceedings.
+If your data contains noise such as boilerplate language, HTML artefacts, etc., you should generally strip these out before proceedings.
 Second, text almost always has an abundance of uninformative (stop) words and a very long tail of very rare words.
 Thus, it is almost always a good idea to use a combination of stop word removal, trimming based on document frequency, and/or tf-idf weighting.
 Note that when using a stop word list, you should always manually inspect and/or fine-tune the word list to make sure it matches your domain and research question.
@@ -251,7 +251,7 @@ but for analysing the topic of texts it may be less important.
 Ultimately, however, many of these questions have no good theoretical answer, and the only way to find a good preprocessing `pipeline' for your research question is to try many different
 options and see which works best.
 This might feel like `cheating' from a social science perspective, since it is generally frowned upon to just test many different statistical models and report on what works best.
-There is a difference, however, between substantive statistical modeling where you acutally want to understand the mechanisms,
+There is a difference, however, between substantive statistical modeling where you actually want to understand the mechanisms,
 and technical processing steps where you just want the best possible measurement of an underlying variable (presumably to be used in a subsequent substantive model).
 \citet{mousetrap} uses the analogy of the mouse trap and the human condition: in engineering you want to make the best possible mouse trap, 
 while in social science we want to understand the human condition.
@@ -260,7 +260,7 @@ For the social science model, this is not the case as it is exactly the inner wo
 
 Technical (pre)processing steps such as reviewed in this chapter are primarily engineering devices:
 we don't really care how something like tf-idf works, as long as it produces the best possible measurement of the variables we need for our analysis.
-In other words, it is an engineering challenge, not a social science research questoin.
+In other words, it is an engineering challenge, not a social science research question.
 As a consequence, the key criterion by which to judge these steps is validity, not explainability.
 Thus, it is fine to try out different options, as long as you validate the results properly.
 If you have many different choices to evaluate against some metric such as performance on a subsequent prediction task,

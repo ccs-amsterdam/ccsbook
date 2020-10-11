@@ -14,7 +14,7 @@ essentially a plot of the most frequent words in a  \concept{corpus} (set of doc
   %
   The term \concept{vector} here can be read as just a fancy word for a group of numbers.
   In this meaning, the term is also often used in R, where a column of a dataframe is called a vector,
-  and where functions that can be called on a whole vector at once is called \emph{vectorized}. \\%
+  and where functions that can be called on a whole vector at once are called \emph{vectorized}. \\%
   %
   More generally, however, a vector in geometry is a point (or line from the origin) in an n-dimensional space,
   where n is the length or dimensionality of the vector.
@@ -29,9 +29,9 @@ essentially a plot of the most frequent words in a  \concept{corpus} (set of doc
   }
   
 More formally, a document-term matrix can be seen as a representation of data points about documents:
-each document (row) is represented as a vector containing ane count per word (column).
+each document (row) is represented as a vector containing any count per word (column).
 Although it is a simplification compared to the original text,
-an unfiltered document-term matrix contains a relevant information.
+an unfiltered document-term matrix contains all relevant information.
 For example, if a president uses the word `terrorism' more often than the word `economy', that could be an indication of their policy priorities.
 
 However, there is also a lot of \emph{noise} crowding out this \emph{signal}:
@@ -67,7 +67,7 @@ but as it turns out there is no single well-defined list of stop words,
 and (as always) the best choice depends on your data and your research question.
 
 Linguistically, stop words are generally function words or closed word classes such as determiner or pronoun,
-with closed classes meaning that while you can coin new nouns, you can't simply invent a new determiner or preposition.
+with closed classes meaning that while you can coin new nouns, you can't simply invent a new determiners or prepositions.
 However, there are many different stop word lists around, which make different choices and are compatible with
 different kinds of preprocessing.
 The Python word cloud in \refex{stopwords} shows a nice example of the importance of matching stopwords with the used
@@ -108,14 +108,14 @@ Next to stop words, text often contains punctuation and other things that can be
 For example, it could contain emoticons or emoji, twitter hashtags or at-mentions, or html tags or other annotations.
 
 In both python and R, we can use regular expressions to remove (parts of) words. 
-As explained above in \refsec{regex}, regular expressions are a powerful way to specify (sequences of) characters which are to be kept or removed.
+As explained above in \refsec{regular}, regular expressions are a powerful way to specify (sequences of) characters which are to be kept or removed.
 You can use this, for example, to remove things like punctuation, emoji, or HTML tags.
 This can be done either before or after tokenizing (splitting the text into words):
-in othe words, we can clean the raw texts or the individual words (tokens). 
+in other words, we can clean the raw texts or the individual words (tokens). 
 
 In general, if you only want to keep or remove certain words, it is often easiest to do so after tokenization
 using a regular expression to select the words to keep or remove.
-If you want to remove parts of words (e.g. to remove the leading `\#` in hashtags) if is easiest to do that before tokenization,
+If you want to remove parts of words (e.g. to remove the leading `\#` in hashtags) it is easiest to do that before tokenization,
 that is, as a preprocessing step before the tokenization.
 Similarly, if you want to remove a term that would be split by the tokenization (such as hyperlinks),
 if can be better to remove them before the tokenization occurs.
@@ -136,11 +136,11 @@ Since both hyperlinks and HTML entities are split over multiple tokens, it would
 \caption{Cleaning a single tweet at the text and token level}\label{ex:noise}
 \end{ccsexample}
 
-Regular expressions are explained fully in \refsec{regex}, so I will keep the explanation short:
+Regular expressions are explained fully in \refsec{regular}, so I will keep the explanation short:
 The bar \verb#|# splits the pattern in two parts, i.e. it will match if it finds either of the subpatterns.
 The first pattern looks for the literal text \verb#http#, followed by an optional \verb#s# and the sequence \verb#://#.
-Then, it takes all non-whitespace characters it finds, i.e. the patter ends at the next whitespace or end of the text.
-The second pattern looks for an ampersand (\verb#&#) followed by one or more letters (\verb#\\w+#), follwed by a semicolon (\verb#;#).
+Then, it takes all non-whitespace characters it finds, i.e. the pattern ends at the next whitespace or end of the text.
+The second pattern looks for an ampersand (\verb#&#) followed by one or more letters (\verb#\\w+#), followed by a semicolon (\verb#;#).
 This matches HTML escapes like \verb#&amp;# for an ampersand.
 
 In the next step, we process the tokenized text to remove every token that is either a stopword or does not start with a letter. 
@@ -159,7 +159,7 @@ Concretely, with the \cls{TreebankWordtokenizer} we would have had to also remov
 As a final example, \refex{tagcloud} shows how to filter tokens for the whole corpus, but rather than removing hashtags it keeps only the hash tags to produce a tag cloud. 
 In R, this is mostly a pipeline of \quanteda\ functions to create the corpus, tokenize, keep only hashtags, and create a dfm.
 To spice up the output we use the \pkg{RColorBrewer} package to set random colors for the tags.
-In Python, you can see that we now have a nested list comprehension, where outer loop iterates over the texts and the inner loop iterates over the tokens in each text.
+In Python, you can see that we now have a nested list comprehension, where the outer loop iterates over the texts and the inner loop iterates over the tokens in each text.
 Next, we make a \verb|do_nothing| function for the vectorizer since the results are already tokenized.
 Note that we need to disable lowercasing as otherwise it will try to call \verb|.lower()| on the token lists. 
 
@@ -171,8 +171,8 @@ Note that we need to disable lowercasing as otherwise it will try to call \verb|
 
 The techniques above both drop terms from the DTM based on specific choices or patterns.
 It can also be beneficial to trim a DTM by removing words that occur very infrequently or overly frequently.
-For the former, the reason is that if a word only occurs in a very small percentage of documents if is unlikely to be very informative.
-Overly frequent words, for example occurring in more than half or 75\% of all documents, function basically like stop word for this corpus.
+For the former, the reason is that if a word only occurs in a very small percentage of documents it is unlikely to be very informative.
+Overly frequent words, for example occurring in more than half or 75\% of all documents, function basically like stopwords for this corpus.
 In many cases, this can be a result of the selection strategy. If we select all tweets containing 'Trump', the word Trump itself is no longer informative about their content.
 It can also be that some words are used as standard phrases, for example `fellow Americans' in state of the union speeches.
 If every president in the corpus uses those terms, they are no longer informative about differences between presidents.
@@ -182,7 +182,7 @@ If every president in the corpus uses those terms, they are no longer informativ
 \refex{trimming} shows how you can use the \concept{relative document frequency} to trim a DTM in python and R.
 We keep only words with a document frequency of between 1\% and 75\%.
 
-Although these are reasonable numbers it can depend on the corpus and the research question, so it can be a good idea to check which words are dropped.
+Although these are reasonable numbers every choice depends on the corpus and the research question, so it can be a good idea to check which words are dropped.
 %\refex{docfreq} shows how you can make a table of all word frequencies in the corpus, and filter for excluded words.
 %If you see words that are seemingly relevant to your research question in the top of this list,
 %if can be a good idea to tweak the selection criteria. 
@@ -192,8 +192,8 @@ Since many algorithms have to assign weights or parameters to each word, this ca
 
 \subsection{Weighting a DTM}
 
-The DTMs created above all us the raw frequencies as cell values.
-It can also be useful for weight the words so more informative words have a higher weight than less informative ones.
+The DTMs created above all use the raw frequencies as cell values.
+It can also be useful to weigh the words so more informative words have a higher weight than less informative ones.
 A common technique for this is \concept{tf-idf} weighting.
 This stands for \emph{term frequency - inverse document frequency} and weights each occurrency by its raw frequency (term frequency) corrected for how often it occurs in all documents (inverse document frequency). In a formula, the most common implementation of this weight is given as follows:
 
@@ -210,7 +210,7 @@ This example uses the same data as \refex{sotu} above, so you can compare the re
 As you can see, the TF-IDF weighting in both languages have roughly the same effect:
 very frequent terms such as \emph{the} are made less important compared to less frequent words such as \emph{submit}.
 For example, in the raw frequencies for the 1965 Johnson speech, \emph{the} occurred 355 times compared to \emph{submit} only once.
-In the weighted matrix, the weight for \emph{submit} is only 4 times as low as the weight for \emph{the}.
+In the weighted matrix, the weight for \emph{submit} is 4 times as low as the weight for \emph{the}.
 
 There are two more things to note if you compare the examples from R and Python.
 First, to make the two cases somewhat comparable we have to use two options for R, namely to set the term frequency to proportional (\verb|scheme_tf='prop'|),
