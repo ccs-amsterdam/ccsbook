@@ -22,7 +22,7 @@ occur more often.
 
 As you may already realize, there are a lot of downsides to this
 approach. Most notably, our bag-of-words approach does not allow us to
-allow for negation: ``not good'' will be counted as
+account for negation: ``not good'' will be counted as
 positive. Relatedly, we cannot handle modifiers such as ``very
 good''. Also, all words are either positive or negative, while
 ``great'' should be more positive than ``good''. More advanced
@@ -36,7 +36,7 @@ when analyzing news content \citep[e.g.][]{Gonzalez-Bailon2015,
   Boukes2019}. They are problematic when accuracy on the sentence
 level is imporant, but may be satisfactory with longer texts for
 comparatively easy tasks such as movie review classification
-\citep{Reagon2017}, where there is clear ground truth data and the
+\citep{Reagan2017}, where there is clear ground truth data and the
 genre convention implies that the whole text is evaluative and
 evaluates one object (the film).
 
@@ -49,10 +49,7 @@ fora. Dictionary approaches are simple to understand and
 straightforward, which can be a good argument for using them when it
 is important that the method is no black-box but fully transparent
 even for a layperson. Especially when the dictionary is already
-existing or easy to create, it is also a very cheap method. This goes
-at the expense, though, of their limitation to measuring easy to
-operationalize concepts. To put it bluntly: it's great for measuring
-the visibility of parties or organizations in the news, but it's not
+existing or easy to create, it is also a very cheap method. However, this goes at the expense of their limitation to only performing well when measuring easy to operationalize concepts. To put it bluntly: it's great for measuring the visibility of parties or organizations in the news, but it's not
 good for measuring frames.
 
 What gave dictionary approaches a bit of a bad name is that many

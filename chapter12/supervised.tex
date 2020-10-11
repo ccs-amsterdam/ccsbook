@@ -19,7 +19,7 @@ meanings.
 For instance, coding how often gun control is mentioned in political
 speeches fits these criteria. There are only so many ways to talk
 about it, and it is rather unlikely that speeches about other topics
-contain a phrase like ``gun control''. Similarily, if we want to find
+contain a phrase like ``gun control''. Similarly, if we want to find
 references to Angela Merkel, Donald Trump, or any other well-known
 politician, we can just directly search for their names -- even though
 problems arise when people have very common surnames and are referred
@@ -49,8 +49,8 @@ humans to decide to which class a text belongs, but (2) it is very
 hard for humans to come op with a list of words (or rules) on which
 their judgement is based.
 
-Such a situation is the perfect use case for supervised machine
-learing: After all, it won't take us much time to annotate, say, 1000
+Such a situation is perfect for applying supervised machine
+learning: After all, it won't take us much time to annotate, say, 1000
 articles based on whether they are about the economy or not (probably
 this takes less time than thoroughly finetuning a list of words to in-
 or exclude); and the difficult part, deciding on the exact rules
@@ -157,18 +157,18 @@ datastructure that we can use. One way of doing so is shown in
 Let us now train our first classifier. We choose a Na\"ive Bayes
 classifier with a simple count vectorizer (\refex{imdbbaseline}).  In
 the Python example, pay attention to the fitting of the vectorizer: we
-fit on the training data \emph{and} transorm the training data with
+fit on the training data \emph{and} transform the training data with
 it, but we only transform the test data \emph{without re-fitting the
   vectorizer}. Fitting, here, includes the decision which words to
 include (by definition, words that are not present in the training
 data are not included; but we could also choose additional
-constraints, such as exluding very rare or very common words), but
+constraints, such as excluding very rare or very common words), but
 also assigning an (internally used) identifier (variable name) to each
 word. If we would fit the classifier again, these would not be
 compatible any more. In R, the same is achieved in a slightly
 different way: Two term-document matrices are created independently,
 before they are matched in such a way that only the features that are
-presen t in the training matrix are retained in the test matrix.
+present in the training matrix are retained in the test matrix.
 
 
 \note{A word that is not present in the training data, but is present
@@ -221,23 +221,23 @@ instance, need to apply the same changes to multiple copies of the
 code.  A more elegant approach is outlined in
 \refex{basiccomparisons}: We define a function that gives us a short
 summary of only the output we are interested in, and then use a
-for-loop to iterate over all configurations we want to evaluate, fits
-them and calls the function we defined before. In fact, with 23 lines
+for-loop to iterate over all configurations we want to evaluate, fit
+them and call the function we defined before. In fact, with 23 lines
 of code, we manage to compare four different models, while we already
-needed 15 lines (in \refex{imdbbaselne}) to evaluate only one model.
+needed 15 lines (in \refex{imdbbaseline}) to evaluate only one model.
 
 
 \pyrex[input=py, output=py, caption={An example of a custom function to give a brief overview of the performance of four simple vectorizer-classifier combinations.}]{chapter12/basiccomparisons}
 
 
 The output of this little example gives us already quite a bit of
-insight of how to tackle our specific classification tasks: First, we
+insight into how to tackle our specific classification tasks: First, we
 see that a $tf\cdot idf$ classifier seems to be slightly but
 consistently superior to a count classifier (this is often, but not
 always the case). Second, we see that the logistic regression performs
-better than the Na\"ive Bayes classifier (also this is often, but not
+better than the Na\"ive Bayes classifier (again, this is often, but not
 always, the case). In particular, in our case, the logistic regression
-improved on the exessive misclassifcation of positive reviews as
+improved on the excessive misclassifcation of positive reviews as
 negative, and achieves a very balanced performance.
 
 There may be instances where one nevertheless may want to use a Count
@@ -274,10 +274,7 @@ whether we want to use only unigrams (single words) or also bigrams
   SECTIONS]). For the Logistic Regression, it may be the
 regularization hyperparameter C, which applies a penalty for too
 complex models.  We can simply put all values for these parameters
-that we want to consider in a dictionary, with as key a string with
-the step of the pipeline followed by two underscores and the name of
-the hyperparameter, and a list of all values we want to consider as
-corresponding value.
+that we want to consider in a dictionary, with a logical key (e.g. a string with the step of the pipeline followed by two underscores and the name of the hyperparameter) and a list of all values we want to consider as corresponding value.
 
 The gridsearch procedure will then estimate all combinations of all
 values, using cross-validation (see Section~\ref{sec:validation}). In
@@ -318,8 +315,8 @@ We need to keep in mind, though, that with this dataset, we chose one
 of the easiest sentiment analysis tasks: a set of long, rather formal
 texts (compared to informal short social media messages), that
 evaluate exactly one entity (one film), and that are not ambigous at
-all. Many applications that communications scientists are interested
-in are much less straight-forward. Therefore, how tempting it may be
+all. Many applications that communication scientists are interested
+in are much less straight-forward. Therefore, however tempting it may be
 to use an off-the-shelf package, doing so requires a thorough test
 based on at least some human-annotated data.
 
@@ -340,7 +337,7 @@ your classifier with others.
 
 Therefore, it makes sense to save both our classifier and our
 vectorizer to a file, so that we can reload them later
-(\refex{reuse}). Keep in mind that you need not to re-use \emph{both}
+(\refex{reuse}). Keep in mind that you do not need to re-use \emph{both}
 -- after all, the feature matrix (e.g., which features (=words) are
 included, and in which column which feature is) will be different when
 fitting a new vectorizer. Therefore, as you see, you do not do any fitting any more, and only use the |.transform()| method of the (already fitted) vectorizer and the |.predict()| method of the (already fitted) classifier.
@@ -357,7 +354,7 @@ using eli5 -- a model that aims to ``\emph{e}xplain [the model]
 \emph{l}ike \emph{I}'m \emph{5} years old''. Here, we re-use the
 |pipe| we constructed earlier to provide both the vectorizer and the
 classifier to the eli5 -- if we would have only provided the
-classifier, than the feature names would have been internal
+classifier, then the feature names would have been internal
 identifiers (which are meaningless to us) rather than human-readable
 words.
 
