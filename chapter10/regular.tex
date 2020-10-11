@@ -46,7 +46,8 @@ Finally, the last part \verb|\.\w\w+| means a literal period, a word character, 
 In other words, we are looking for a name (possibly contining dashes or periods) before the at sign,
 followed by a domain, followed by a top level domain (like \verb|.com|) of at least two characters.
 
-In essence, thinking in terms of what do you want to match and how often do you want to match that is all there is to regular expressions.
+In essence, thinking in terms of what you want to match and how often
+you want to match it is all there is to regular expressions.
 However, it will take some practice to get comfortable with turning something sensible (such as an email address) into a correct regular expression pattern.
 The next subsection will explain regular expression syntax in more detail, followed by an explanation of grouping,
 and in the final subsection we will see how to use these regular expressions in R and Python to do text cleaning. 
@@ -77,9 +78,9 @@ Third, as will be discussed below in \refsec{regextract}, you can use groups to 
 
 The other important construct are \concept{character classes}, formed using square brackets \verb|[]|.
 Within a character class, you can specify a number of different characters that you want to match, using a dash (\verb|-|) to indicate a range.
-You can add as many characters as you want: \verb|[A-F0-9]| matches digits and capital letters A though F.
-You can also invert this selection using an initial caret: \verb|[^a-z]| matches everything except for lowercase lating letters.
-Finally, you sometimes need to match a control character  (e.g. \verb!+!, \verb|?|, \verb|\|). Since those characters have a special meaning within a regular expressing, they cannot be use directly. The solution is to add a backslash (\verb|\|) behind them to \concept{escape} them:
+You can add as many characters as you want: \verb|[A-F0-9]| matches digits and capital letters A through F.
+You can also invert this selection using an initial caret: \verb|[^a-z]| matches everything except for lowercase Latin letters.
+Finally, you sometimes need to match a control character  (e.g. \verb!+!, \verb|?|, \verb|\|). Since those characters have a special meaning within a regular expressing, they cannot be used directly. The solution is to add a backslash (\verb|\|) behind them to \concept{escape} them:
 \verb|.| matches any character, but \verb|\.| matches an actual period. \verb|\\| matches an actual backslash.
 
 \subsection{Example patterns}
@@ -110,7 +111,7 @@ It also makes sure that there are at least 8 numbers regardless of how many dash
 The final four examples are patters for common notations found online.  
 For URLs, we look for \ttt{http://} or \ttt{https://} and take everything until the next space or end of the string.
 For email addresses, we define a character class for letters, periods, or dashes and look for it before and after the at-sign.
-Then, there needs to at least one period and a top level domain containing only letters.
+Then, there needs to be at least one period and a top level domain containing only letters.
 Note that the dash within the character class does not need to be escaped because it is the final character in the class, so it cannot form a range.
 For HTML tags and character escapes, we anchor the start (\verb|<| and \verb|&|) and end (\verb|>| and \verb|;|) and allow any characters except for the ending character in between
 using an inverted character class.
@@ -130,7 +131,7 @@ For a better way to deal with analysing HTML, please see \refchap{scraping}. In 
 
 Now that you hopefully have a firm grasp of regular expression syntax,
 it is relatively easy to use these patterns in Python or R (or most other languages).
-\reftab{regexcmd} lists the commands for four of the most common use cases:
+\reftab{regexample} lists the commands for four of the most common use cases:
 identifying matching texts, removing and replacing all matching text, extracting matched groups, and splitting texts.
 
 \input{chapter10/tabregexcmd}

@@ -1,14 +1,14 @@
 When dealing with textual data, an important step is to normalize the data. Such preprocessing ensures that noise is removed, and reduces the amount of data to deal with. In \refsec{encodings} we explained how to read data from different formats, such as txt, csv or json that can include textual data, and we also mentioned some of the challenges when reading text (i.e. encoding/decoding from/to Unicode). In this section we cover typical cleaning steps such as lowercasing and removing punctuation, HTML tags and boilerplate.
  
-As a computational communication scientist you will come across with many sources of text that range from electronic versions of newspapers in HTML to parliamentary speeches in PDF. Moreover, most of the contents in their original shape will include data that will not be of interest for the analysis but, instead,  will produce noise that might negatively affect the quality of the research. You have to decide which parts of the raw text should be considered for analysis and determine the shape of these contents in order to have a good input in the analytical process. 
+As a computational communication scientist you will come across many sources of text that range from electronic versions of newspapers in HTML to parliamentary speeches in PDF. Moreover, most of the contents in their original shape will include data that will not be of interest for the analysis but, instead,  will produce noise that might negatively affect the quality of the research. You have to decide which parts of the raw text should be considered for analysis and determine the shape of these contents in order to have a good input in the analytical process. 
 
 As the difference between useful information and noise is determined by your research question, 
-there is not fixed list of steps to take that can guide you in this preprocessing stage,
-It is highly likely that you will have to test different combination of steps and assess what are the best options.
+there is not a fixed list of steps to take that can guide you in this preprocessing stage.
+It is highly likely that you will have to test different combinations of steps and assess what are the best options.
 For example, in some cases keeping capital letters within a chat conversation or a news comment might be valuable to detect the tone of the message, but in more formal speeches transforming the whole text to lowercases would help to normalize the content.
-However, it is true that there some typical challenges to reduce the noise from the text.
+However, it is true that there are some typical challenges to reducing the noise from the text.
 
-This chapter and the next will show you how to clean and manipulate text to transfor the raw strings of letters into useful data.
+This chapter and the next will show you how to clean and manipulate text to transform the raw strings of letters into useful data.
 This chapter focuses on dealing with the text as characters and especially shows you how to use \concept{regular expressions} to search and replace textual content.
 The next chapter will focus on text as words and shows how you can represent text in a suitable format for further computational analysis. 
 
@@ -21,8 +21,7 @@ The next chapter will focus on text as words and shows how you can represent tex
   and we can just work with the characters.
   Especially if you are not working with English text, it is very important to make sure you understand unicode and encodings
   and check that the texts you work with are decoded properly.
-  Please see \refsec{unicode} for more information on how this works and how to make sure that you 
-  }
+  Please see \refsec{encodings} for more information on how this works}
 
 When we think about text, we might think sentences or words, but the computer only `thinks' about letters:
 text is represented internally as a string of characters.
@@ -63,7 +62,7 @@ you either need to use one of Panda's methods shown below or use a \concept{for 
   So, to give one example, the function \fn{str\_detect} is more or less the same as \fn{stringi::str\_detect} and \fn{base::grepl}. 
 }
     
-The first thing to keep in mind is that once you load any text on R or Python you usually store this content as a \emph{character} or \emph{string} object (or you may also think of \emph{lists} or \emph{dictionaries}, but they will have strings inside anyway), which means that basic operations and conditions of this data type apply, such as indexing or slicing to access individual characters or substrings (see \refsec{datatypes}). In fact, base strings operations are very powerful to clean your text and eliminate a big amount of noise of it.  Table~\ref{tab:stringoperations} summarises some useful operations on strings in R and Python that will help you in this stage.   
+The first thing to keep in mind is that once you load any text on R or Python you usually store this content as a \emph{character} or \emph{string} object (or you may also think of \emph{lists} or \emph{dictionaries}, but they will have strings inside anyway), which means that basic operations and conditions of this data type apply, such as indexing or slicing to access individual characters or substrings (see \refsec{datatypes}). In fact, base strings operations are very powerful to clean your text and eliminate a big amount of noise.  Table~\ref{tab:stringoperations} summarises some useful operations on strings in R and Python that will help you in this stage.   
 
 \begin{table}
   \caption{\label{tab:stringoperations}Useful strings operations in R and Python to clean noise}{
