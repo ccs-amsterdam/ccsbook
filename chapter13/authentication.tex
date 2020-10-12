@@ -42,7 +42,7 @@ access token with associated access token secret. The first pair
 authenticates you as a user, the second pair authenticates the
 specific ``app'' (i.e., your script). Once authenticated, your
 script can then interact with the API. While it is possible to
-directy work with OAuth HTTP requests using \pkg{requests\_oauthlib}
+directly work with OAuth HTTP requests using \pkg{requests\_oauthlib}
 (Python) or \pkg{httr} (R), chances are relatively low that you
 have to do so, unless you plan on really developing your own app
 or even your own API: For all popular API's, so-called wrappers,
@@ -50,7 +50,7 @@ packages that provide a simpler interface to the API, are available
 on pypi and CRAN. Still, all of these require to have at least
 a consumer key and a consumer secret. The access token sometimes
 is generated via a web interface where you manage your account
-(e.g., in the case of Twitter), or can be aquired by your script
+(e.g., in the case of Twitter), or can be acquired by your script
 itself, which then will redirect the user to a website in which
 they are asked to authenticate the app. The nice thing about this
 is that it only needs to happen once: Once your app is authenticated,
@@ -68,7 +68,7 @@ One approach can be the use of a web testing framework like Selenium
 (see \refsec{selenium}): You let your script literally open a browser
 and, for instance, fill in your login information.
 
-However, the sometimes, that's not necessary and we can still use simpler
+However, sometimes that's not necessary and we can still use simpler
 and more efficent webscraping without invoking a browser. As we have already
 seen in \refsec{parsehtml}, when making an HTTP request, we can transmit
 additional information, such as the so-called user-agent string. In a
@@ -87,7 +87,7 @@ we found out that clicking ``Accept'' on the cookie wall landing page
 caused a cookie with the name |cpc| and the value |10| to be set. We
 therefore then proceeded as followed. Also, during the first visit,
 a couple of other cookies seemed to be set, the functionality of which
-we did not care. In \refex{cookiewall}, we therefore start a \emph{session}
+we did not care about. In \refex{cookiewall}, we therefore start a \emph{session}
 and try to download the page. We know that this will only show us the
 cookie wall -- but it will also generate the necessary cookies. We then
 store these cookies, and add the cookie that we want to be set (|cpc=10|)

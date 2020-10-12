@@ -7,7 +7,7 @@ researchers has arrived in an ``post-API age'' \citep{Freelon2018}, as
 API access for researchers has become increasingly restricted.
 
 If data cannot be collected using an API (or a similar service, such
-as RSS feeds), we need to restort to web scraping. Before you start a
+as RSS feeds), we need to resort to web scraping. Before you start a
 web scraping project, make sure to ask the appropriate instances for
 ethical and legal advice (see also \refsec{ethicallegalpractical}).
 
@@ -110,7 +110,7 @@ draw the code as a tree. In our example, this would look like this:
 
 Additionally, tags can have \emph{attributes}. For instance, the
 makers of a page with customer reviews may use attributes to specify
-to specify what a section contains. For instance, they may write
+what a section contains. For instance, they may write
 \texttt{<div class="reviewtext"> ... </div>}  to mark the text of a review (where
 |...| is the text), and \texttt{<div class="ratings"> ...</div>} to mark the
 scores a product received. This enables them to format them nicely
@@ -151,7 +151,7 @@ If we translate this verbal explanation into a so-called XPATH, it reads:
  file (\texttt{slides.pdf}).
 
 If we leave away the \texttt{[1]} after \texttt{p}, we retrieve a list
-of all the three texts within the second div -- which makes it ease
+of all the three texts within the second div -- which makes it easy
 to, for instance, retrieve all reviews from a web page instead of only
 one specific review. An asterisk |*| can be used to indicate an
 arbitrary number.
@@ -161,7 +161,7 @@ needs to have a specific value. For instance, we could modify our
 example such that it does not take the second |div| element, but the
 |div| element where the attribute |class| has the value |ratings|:
 
-|/html/body/div[@class="restaurant"]/p[1]|
+|/html/body/div[@class="ratings"]/p[1]|
 
 Additionally, we can use two |//| to ``leave out'' part of the tree
 and indicate that arbitray steps may be taken here. For instance, one
@@ -200,7 +200,7 @@ Notably, you may want to parse links. In HTML, links use a specific tag, |a|. Th
 
 
 
-\begin{feature}\textbf{Pretending to be a specific browser.}  When \pkg{lxml}, \pkg{rvest}, or your web browser download a HTML page, they send a so-called HTTP request. This request contains the URL, but also some meta-data, such as a so-called user-agent string. This string specifies the name and version of the browser. Some sites may block specific user agents (such as, for instance, the ones \pkg{lxml} pr \pkg{rvest} use); and sometimes, they deliver different content for different browser. By using a more powerful module for downloading the HTML code (such as \pkg{requests} or \pkg{httr}) before parsing it, you can specify your own user-agent string and thus pretend to be a specific browser. If you do a web search, you will quickly find long lists with popular strings. In \refex{htmlparse1useragent}, we rewrote \refex{htmlparse1} such that a custom user-agent can be specified. 
+\begin{feature}\textbf{Pretending to be a specific browser.}  When \pkg{lxml}, \pkg{rvest}, or your web browser download a HTML page, they send a so-called HTTP request. This request contains the URL, but also some meta-data, such as a so-called user-agent string. This string specifies the name and version of the browser. Some sites may block specific user agents (such as, for instance, the ones \pkg{lxml} or \pkg{rvest} use); and sometimes, they deliver different content for different browsers. By using a more powerful module for downloading the HTML code (such as \pkg{requests} or \pkg{httr}) before parsing it, you can specify your own user-agent string and thus pretend to be a specific browser. If you do a web search, you will quickly find long lists with popular strings. In \refex{htmlparse1useragent}, we rewrote \refex{htmlparse1} such that a custom user-agent can be specified. 
 \end{feature}
 
 \pyrex[output=py,caption={Specifying a user agent to pretend to be a
@@ -253,7 +253,7 @@ the correct links on a page that we have been parsing -- that's why we
 \emph{crawl} through the website.
 
 Writing a good crawler can take some time, and they will look very
-differently for different pages. The best advise is to build them up
+differently for different pages. The best advice is to build them up
 step-by-step. Carefully inspect the website you are interested in.
 Take a sheet of paper, draw its structure, and try to find out which
 pages you need to parse, and how you can get from one page to the next.
@@ -354,7 +354,7 @@ use the following checklist to find
 \begin{enumerate}
 \item Does using a different user-agent string (see above) solve the issue?
 \item Is the issue due to some cookie that needs to be accepted or you need to log in (see below)?
-\item Is a differnet page delivered for different browsers, devices, display settings, etc.?
+\item Is a different page delivered for different browsers, devices, display settings, etc.?
 \end{enumerate}
 
 If all of this does not help, or if you already know for sure that the

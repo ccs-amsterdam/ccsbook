@@ -28,7 +28,7 @@ a compromise most people can live with.
 Other social media platforms have closed their APIs or tightened the
 restrictions a lot, making it impossible to study many pressing
 research questions. Therefore, some have even called researchers to
-neglecthese TOS, because ``in some circumstances the benefits to
+neglect these TOS, because ``in some circumstances the benefits to
 society from breaching the terms of service outweigh the detriments to
 the platform itself'' \citep[p.~1561]{Bruns2019}. Others acknowledge
 the problem, but doubt that this is a good solution
@@ -46,9 +46,9 @@ strategies to minimize potential problems.
 
 \paragraph{Be nice} Of course, you could send hundreds of requests per minute (or second) to a website and try to download everything that they have ever published. However, this causes unnecessary load on their servers (and you probably would get blocked). If, on the other hand, you carefully think about what you really need to download, and include a lot of waiting times (for instance, using \fn{sys.sleep} (R) or \fn{time.sleep} (Python) so that your script essentially does the same what could be done by hiring a couple of student assistants to copy-paste the data manually, then problems are much less likely to arise.
 
-\paragraph{Collaborate} Another way to minimize traffic and server load is to collaborate more. A concerted effort with multiple researcher may to less duplicate data and in the end probably an even better, re-usable dataset.
+\paragraph{Collaborate} Another way to minimize traffic and server load is to collaborate more. A concerted effort with multiple researchers may lead to less duplicate data and in the end probably an even better, re-usable dataset.
 
-\paragraph{Be extra careful with personal data} Both from an ethical and a legal point of view, the situation changes drastically as soon as personal data are involved. Especially since the GDPR regulations took effect in the European Union, collecting and processing such data requires a lot of additional precaution and is usually subject to explicit consent. It is clearly infeasible to ask every Twitter user to ask for consent to process their tweet and doing so is probably covered by research exceptions, the general advise is to store as little personal data as possible and as absolutely needed. Most likely, you need to have a data management plan in place, and should get appropriate legal advise from your department. Therefore, think carefully whether you really need, for instance, the user names of the authors of reviews you are going to scrape, or whether the text alone suffices.
+\paragraph{Be extra careful with personal data} Both from an ethical and a legal point of view, the situation changes drastically as soon as personal data are involved. Especially since the GDPR regulations took effect in the European Union, collecting and processing such data requires a lot of additional precaution and is usually subject to explicit consent. It is clearly infeasible to ask every Twitter user to ask for consent to process their tweet and doing so is probably covered by research exceptions, the general advice is to store as little personal data as possible and as absolutely needed. Most likely, you need to have a data management plan in place, and should get appropriate legal advise from your department. Therefore, think carefully whether you really need, for instance, the user names of the authors of reviews you are going to scrape, or whether the text alone suffices.
 
 Once all ethical and legal concerns are sorted out and you made sure that you wrote a scraper in such a way that it does not cause unncessary traffic and load on the servers from which you are scraping, and after doing some test runs, it is time to think about how to actually run it on a larger scale. You may already have figured that you probably do not want to run your scraper from a Jupyter Notebook that is constantly open in your browser on your personal laptop. Also here, we would like to offer some suggestions.
 
