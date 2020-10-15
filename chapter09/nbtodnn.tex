@@ -1,4 +1,4 @@
-\section{From Na\"{i}ve Bayes to Deep Neural Networks}
+\section{Classical Machine Learning: From Na\"{i}ve Bayes to Neural Networks}
 \label{sec:nb2dnn}
 To do supervised machine learning, we can use several models, all of
 which have different advantages and disadvantages, and are more useful
@@ -368,15 +368,20 @@ actually (approximately) linear, then you are probably better off with
 one of the other models we discussed.
 
 
-\subsection{A glimpse into Deep Learning} 
+\subsection{Neural Networks} \label{sec:neural}
 
-An extensive treatment of Deep Learning is beyond the scope of this
-book (we recommend \cite{geron2019hands}, instead), but we will give you a brief introduction, so that you can decide whether it is worth diving deeper
-into it.
+A final machine learning algorithm that we will discuss here are neural networks.
+Inspired by the neurons in human brains (and that of other animals),
+neural networks consist of connections between neurons that are activated if the
+total input is above a certain threshold.
 
-In all of the models we discussed so far (which are also referred to
-as ''classical'' or ''shallow'' machine learning), we assume a direct relationship between the features and the labels. Grapically, we could depict this as direct arrows from all features to the output we want to predict
-(Figure~\ref{fig:classicalml}).
+\reffig{perceptron} shows the simplest type of neural network, sometimes called a \concept{perceptron}.
+This neural network consists only of a series of input neurons (representing the features or independent variables)
+which are directly connected with the output neuron or neurons (representing the output class(es)).
+Each of the connections between neurons has a weight, which can be positive or negative.
+For each output neuron, the weighted sum of inputs is calculated and a function is applied to determine the result.
+An example output function is the sigmoid function which transforms the output to a value between zero and one,
+in which case the resulting model is essentially a form of logistic regression.
 
 \begin{figure}
   \centering
@@ -386,17 +391,29 @@ as ''classical'' or ''shallow'' machine learning), we assume a direct relationsh
         \inputlayer[count=3, bias=true, title=Input\\layer, text=\x]
         \outputlayer[count=1, title=Output\\layer, text=\y] \linklayers
  \end{neuralnetwork}
-\caption{Schematic representation of a typical classical machine learning model \label{fig:classicalml}}
+\caption{Schematic representation of a typical classical machine learning model \label{fig:perceptron}}
 \end{figure}
 
-In tasks such as image recognition or text classification, though,
-this often is too simplistic. For instance, when we want to predict
-whether an image shows a person or not, we do not really believe that
-the color of the pixels in the image (the ``input layer'') can
-directly predict whether it is a politician (the ``output layer''). A
-more reasonable assumption is that these pixels can predict some more
-abstract concepts (a ``hidden layer'') which then can predict another
-hidden layer or the output layer (Figure~\ref{fig:nn}).
+If we consider a neural network for sentiment analysis of tweets,
+the input neurons could be the frequencies of words such as `great' or `terrible',
+and we would assume that the weight of the first would be positive while the second would be negative.
+Such a network cannot take combinations into account, however:
+the result of `not great' will simply be the addition of the results of `not' and `great'.
+
+To overcome this limitation, it is possible to add a \concept{hidden layer} of latent variables
+between the input and output layer, such as shown in \reffig{hiddenlayers}.
+This allows for combinations of neurons, with for example both `not' and `great' loading onto a hidden neuron,
+which can then override the direct effect of `great'.
+An algorithm called \concept{backpropagation} can be used to iteratively approximate the optimal values for the model.
+This algorithm starts from a random state and optimizes the second layer while keeping the first constant,
+then optimizing the first layer, and repeating until it converges. 
+
+Although such hidden layers, which can easily contain thousands of neurons, are hard to interpret substantively,
+they can substantially improve the performance of the model.
+In fact, the Universal Approximation theorem states that every decision function can be approximated to infinite precision
+with a single (but possibly very large) hidden layer \citet{goldberg17}.
+Of course, since training data is always limited there is a practical limit to how deep or wide the network can be,
+but this shows the big difference that a hidden layer can make in the range of regularities that can be `captured' in the model. 
 
 \begin{figure}
   \centering
@@ -410,9 +427,10 @@ hidden layer or the output layer (Figure~\ref{fig:nn}).
         \hiddenlayer[count=3, bias=false, title=Hidden\\layer 2, text=\hsecond] \linklayers
         \outputlayer[count=1, title=Output\\layer, text=\y] \linklayers
  \end{neuralnetwork}
-\caption{A neural network \label{fig:nn}}
+\caption{A neural network \label{fig:hiddenlayers}}
 \end{figure}
 
-These layers are often not interpretable for humans (some even call this approach a ''black box''), which can be problematic in situations where a classification needs to be transparent (for instance, to prevent discrimination). On the other hand, these layers often clearly enhance the accuracy of our predictions, which may be more important than explainability for many applications we are interested in.
+Neural networks with and without hidden layers can be easily trained in either Python or R,
+as shown in \refex{neuralnetwork}.
+%% TODO: insert example
 
-It is up to the researcher to specify the number of layers, the number of neurons per layer, the mathematical functions to connect the neurons, and the general architecture of the network. Often, neural networks with many layers (e.g., ten) are referred to as ``deep networks'' (\emph{deep learning}). We will cover this approach with more detail in section \refsec{supervised} with \emph{recurrent neural networks} for text classification and in [ADD REFERENCE TO CH 15 Introduction to Image and Video Data] with \emph{convolutional neural networks} for image classification.	
