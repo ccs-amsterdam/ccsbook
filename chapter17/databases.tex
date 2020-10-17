@@ -5,7 +5,7 @@
 In this book, we have so far stored our data in files. In fact, before
 covering the wide range of methods for computational analysis, we
 discussed some basics of file handling
-(\refchap{filetodata}. Probably, you did not experience any major
+(\refchap{filetodata}). Probably, you did not experience any major
 trouble here (apart from ocassional struggles with non-standard
 encodings, or confusion about the delimiters in a csv file). On the
 other hand, the examples we used were still modest in size: usually,
@@ -13,8 +13,7 @@ you were dealing with a handful of csv files; the maximum you had to
 deal with where the 50,000 text files from the IMDB movie review
 dataset.
 
-In particular, you were able to load these datasets into memory. In
-particular, when loading your data into a dataframe, you copied all
+In particular, when loading your data into a dataframe, you copied all
 the data from your disk into memory\footnote{In fact, this is
   sometimes a reason to avoid dataframes: for instance, it is possible
   to use a generator that reads data line-by-line from a file and
@@ -31,17 +30,17 @@ Imagine you do some web scraping (\refchap{scraping}) that goes beyond
 a few thousand texts. Maybe you want to visit relevant news sites on a
 regular basis (say, once an hour) and retrieve everything that's
 new. How do you store your data then? You could append everything to a
-huge csv file -- but this file would quickly grow so large that you
+huge csv file, but this file would quickly grow so large that you
 cannot load it into memory any more. Besides, you may run the risk of
 corrupting the file if something goes wrong in one of your attempts to
-extend the file. Or you date could write each article to a new, separate file.
+extend the file. Or you could also write each article to a new, separate file.
 That's maybe more failsafe, but you would need to design a good way
 to organize the data. In particular, devising a method to search
 and find relevant files would be a whole project in itself.
 
-Luckily, you can outsorce all these problems to a database that you can
+Luckily, you can outsource all these problems to a database that you can
 install on your own computer or possibly on a server (in that case, make
-sure that it is proberly secured!). In your example, your scraper, which
+sure that it is properly secured!). In the example, the scraper, which
 is running once an hour, just sends the scraped data to the database
 instead of to a file, and the database will take care of storing it.
 Once you want to retrieve a subset of your articles for analysis,
@@ -56,7 +55,7 @@ relational databases (or SQL-databases) and noSQL-databases. Strictly
 speaking, SQL (``structured query language'') is a query language for
 databases, but it is so widespread that it is used almost synonymously
 for relational databases. Even though they have been around for
-already 50 years \cite{Codd1970}, relational databases still are very
+already 50 years (\cite{Codd1970}), relational databases still are very
 powerful and very widely used.  They consist of multiple tables that
 are linked by shared columns (keys). For instance, you could imagine a
 table with the orders placed in a webshop that has a column
@@ -64,7 +63,7 @@ table with the orders placed in a webshop that has a column
 information, and for each |customer-id|. Using filter and join
 operations (\refchap{datawrangling}), one can then easily retrieve
 information on where the order has to be shipped. A big advantage of
-such a relational database is that, if a customer placed 100 orders,
+such a relational database is that, if a customer places 100 orders,
 we do not need to store their address 100 times, but only once, which
 is not only more efficient in terms of storage, but also prevents
 inconsistencies in the data.
@@ -92,9 +91,9 @@ Despite all of these differences, both SQL and noSQL databases can play
 the same role in the computational analysis of communication. They both
 help you to focus on data collection and data analysis without needing
 to device an ingenious way to store your data. They both allow for much
-more efficient searching and filtering then you could design on your own.
+more efficient searching and filtering than you could design on your own.
 All of this becomes especially interesting when your dataset grows too
-large to fit in memory, but also when your data are continously changed,
+large to fit in memory, but also when your data are continuously changed,
 for instance because new data are added while scraping.
 
 
@@ -115,7 +114,7 @@ in which databases to choose by offering some guiding questions.
 \paragraph{How is your data structured?} Ask yourself: Can I organize my data
 in a set of relational tables? For instance, think of television
 viewing data: There may be a table that gives information on when the
-television set was switched on and witch channel was watched and by
+television set was switched on and which channel was watched and by
 which user id. A second table can be used to associate personal
 characteristics such as age and gender with the user id. And a third
 table may be used to map the time stamps to details about a specific
@@ -129,7 +128,7 @@ change over time, or if it is very messy, then you may need a more
 flexible, noSQL approach, for instance using \pkg{MongoDB} or
 \pkg{ElasticSearch}.
 
-\paragraph{How important is full-text search for you?} SQL databases can handle numeric datatypes as well as text datatypes, but they are usually not optimized for the latter. They handle short strings (such as usernames, addresses, and so on) just fine, but if you are interested in full-text search, they are not the right tool for the job. This is in particular true if you want to be able to do fuzzy searches where, for instance, also documents containing the plural of a word that you searched for as singular are found. Databases of, for instance, news articles, transcripts of speeches, or other documents are much better accessible in a database such as \pkg{ElasticSearch}.
+\paragraph{How important is full-text search for you?} SQL databases can handle numeric datatypes as well as text datatypes, but they are usually not optimized for the latter. They handle short strings (such as usernames, addresses, and so on) just fine, but if you are interested in full-text search, they are not the right tool for the job. This is in particular true if you want to be able to do fuzzy searches where, for instance, also documents containing the plural of a word that you searched for as singular are found. Databases of, for instance, news articles, tweets, transcripts of speeches, or other documents are much better accessible in a database such as \pkg{ElasticSearch}.
 
 
 \paragraph{How flexible does it need to be?} In relational databases, it is relatively hard to change the structure afterwards. In contrast, a noSQL database has no problem whatsoever with adding a new document that contains keys that did not exist before. There is no assumption that all documents contain the same keys. Therefore, if it is hard to tell in advance which ``columns'' or ``keys'' may represent your data best, you should stay clear of SQL databases. In particular, if you think of gradually extending your data and use it on a long timeline for re-use, potentially even by multiple teams, the flexibility of a noSQL database may be a game changer.
@@ -149,7 +148,7 @@ beyond the scope of this book.
 
 Luckily, there is a compromise between storing your data in files
 that you need to manage yourself and setting up a database server,
-locally or remotely. The libray \pkg{sqlite} offers a self-contained
+locally or remotely. The library \pkg{SQlite} offers a self-contained
 database engine -- essentially, it allows you to store a whole
 database in one file and interact with it using the SQL query language.
 Both R and Python offer multiple ways of directly interacting with
@@ -163,9 +162,7 @@ fails halfway.
 
 \pyrex[input=both, output=py, format=table, caption={\pkg{SQLite} offers you database functionality without setting up a database server such as \pkg{mysql}}]{chapter17/sqlite}
 
-Of course, SQLite cannot give you the same performance that a ``real''
-mysql (or similar) installation would could offer. Therefore, if your
-project grows bigger, or if you have a lot of read- or
+Of course, \pkg{SQlite} cannot give you the same performance that a ``real'' mysql (or similar) installation could offer. Therefore, if your project grows bigger, or if you have a lot of read- or
 write-operations per second, then you may want to switch at one
 point. But as you can see in \refex{sqlite}, Python and R do not
 really care about the backend: all you need to do is to change the

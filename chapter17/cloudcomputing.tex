@@ -21,46 +21,47 @@ However, once you scale up your project, problems may arise (see \cite{Trilling2
 
 This is the point where you need to start moving your project to some
 remote server instead. Broadly speaking, we can consider three
-scenario's:
+scenarios:
 \begin{enumerate}
-\item A dedicated server. You (or your university) could buy a
-  dedicated, physical server to run computational social science
-  analyses. On the bright side, this gives you full control, but it is
-  also not very flexible: after all, you make a larger investment
-  once, and if it turns out that you need more (or less) ressources,
-  then it's too late.
-\item A virtual machine on a cloud computing platform. For most
-  practical purposes, you can do the same as in the first options,
-  with as crucial difference that you rent the ressources. If you need
-  more, you just rent more; and when you are done, you just stop the
-  machine.
 \item A cloud service that just lets you run code. Here, you can just
   submit your code and have it run. You do not have full control, you
   cannot set up your own system, but you also do not have to do any
   administration.
+\item A dedicated server. You (or your university) could buy a
+  dedicated, physical server to run computational social science
+  analyses. On the bright side, this gives you full control, but it is
+  also not very flexible: after all, you make a larger investment
+  once, and if it turns out that you need more (or less) resources,
+  then it's too late.
+\item A virtual machine on a cloud computing platform. For most
+  practical purposes, you can do the same as in the previous option,
+  with a crucial difference that you rent the resources. If you need
+  more, you just rent more; and when you are done, you just stop the
+  machine.
+\item A set of machines to run complex tasks using parallel computing. With large amounts of information (think about image or video data) and sophisticated modelling (such as deep learning) you may need to distribute the computation among different computers at the same time.
 \end{enumerate}
 
-An example for the last option is Google Colab, which we already used
+An example for the first option is Google Colab, which we already used
 (\refchap{fundata}). While it makes it easy to share and run notebooks,
 the free tier we used so far does not necessarily solve any of the
 scalability issues discussed. However, Google Colab also has a paid Pro
-version, in which additional hardware (such as GPUs or extra memory)
+version, in which additional hardware (such as GPUs, TPUs or extra memory)
 that you may not have on your own computer can be used. This makes
 it an attractive solution for enabling projects (e.g., involving
-ressource-intensive neural networks) that otherwise would not be possible.
+resource-intensive neural networks) that otherwise would not be possible.
 
 However, this is often not enough. For instance, you may want to run
 a database (\refsec{databases}) or define a so-called \pkg{cron} job,
 which runs a specific script (e.g., a web scraper) at defined intervals.
-Here, options 1 and 2 come into play -- most realisticly for most
-beginners, option 2.
+Here, options 2 and 3 come into play -- most realistically for most
+beginners, option 3.
 
 There are different providers for setting up VMs in the cloud, the
 most well-known probably being Amazon Web Services (AWS) and
 Microsoft Azure. Some universities or (national) research infrastructure
-providers provide high-performance comuting in the cloud as well.
-While the specific way how to set up an own virtual machine on
-such an infrastructure varies, the processses are roughly similar:
+providers provide high-performance computing in the cloud as well.
+While the specific way of how to set up an own virtual machine on
+such an infrastructure varies, the processes are roughly similar:
 You select the technical specifications such as the number of CPU
 cores and the amount of memory you need, attach some storage, and
 select a disk image with an operating system, virtually always some
@@ -106,6 +107,12 @@ it at set intervals.
 You may want to have some extra luxury, though. Popular things to
 set up are databases (\refsec{databases}) and \pkg{JupyterHub}, which
 allows users such as your colleagues to connect through their
-web broser with your server and run their own Jupyter Notebooks
-on the machine. Do not forget to proberly encrypt all connections,
+web browser with your server and run their own Jupyter Notebooks
+on the machine. Do not forget to properly encrypt all connections,
 for instance using \pkg{letsencrypt}.
+
+Finally, option 4 must be selected when the scale of your data and the complexity of the tasks can not be deployed in a single server or virtual machine. For example, building a classification model by training a complex and deep convolutional neural network with millions of images and update this model constantly may require the use of different computers at the same time. Actually, in modern computers with multiple cores or processors you normally run paralleling computing within a single machine. But when working at scale you will probably need to set a infrastructure of different computers such as that of a \textit{grid} or a \textit{cluster}. 
+
+Cloud services (e.g. AWS, Microsoft Azure, etc.) or scientific infrastructures (e.g. Supercomputers) offer the possibility to set these architectures remotely. For instance, in a computer cluster you can configure a group of virtual computers, where one will act as a \textit{master} and the others as \textit{slaves}. With this logic the master can distribute the storage and analysis of data among the slaves and then resume the results: see for example the \textit{MapReduce} or the \textit{Resilient Distributed Dataset} (RDD) approaches used by the open-source softwares \textit{Apache Hadoop} and \textit{Apache Spark} respectively. 
+
+These architectures for parallel processing will significantly increase your computation capacity for big data problems but the initial implementation will consume time and (most of the time) money, which is the reason why you must think in advance if there is a simpler solution (such as single but powerful single machine) before implementing a more complex infrastructure in your analysis.

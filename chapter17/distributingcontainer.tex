@@ -1,7 +1,7 @@
 \section{Distributing your software as container}
 \label{sec:container}
 When publishing your software, you can think of multiple user
-groups. Some maybe interesting in building on and further developing
+groups. Some may be interested in building on and further developing
 your code. Some may not care about your code at all and just want your
 software to run. And many others will be somewhere in between.
 
@@ -25,10 +25,10 @@ Software that is containerized using docker is distributed as a
 so-called \emph{docker image}. You can build such an image yourself,
 but it can also be distributed by pushing it to a so-called registry,
 such as the \pkg{Docker Hub}. If you publish your software this
-way, the end user has to do nothing else then installing Docker and
-running the command |docker run nameofyourimage| - if will be even
+way, the end user has to do nothing else than installing Docker and
+running the command |docker run nameofyourimage| - it will be even
 downloaded automatically if necessary. There are also GUI versions
-of Docker available, which lowers the threshold for the some end user
+of Docker available, which lowers the threshold for some end user
 groups even more.
 
 Let's illustrate the typical workflow with a toy example. Imagine
@@ -87,12 +87,12 @@ Easy, right?
 But when does it make sense to use Docker? Not in our toy example,
 of course. While the original code is only a couple of bytes, it now
 got bloated to hundreds of megabytes. But there are plenty of
-scenario's where this makes a lot of sense.
+scenarios where this makes a lot of sense.
 
 \begin{itemize}
-\item To ``abstract away'' the inner workings of your code. Rather than giving potentially complicated instructions how to run your code, which dependencies to install, etc., you can just provide users with the Docker image, in which everyting is already taken care of.
-\item To ensure that users get the same results. Through it doesn't form a huge problem on a daily bases for most computational scientists, different versions of different libraries on different systems may ocassionally produce slightly different results. The container ensures that the code is run using the same software setup.
-\item To avoid interfering with existing installations. Already our toy example had a dependency, numpy, but often, dependecies can be more complex and a program we write may need very specific libraries, or even some other software beyond Python or R libraries. Distributing the source code alone means forcing the user to also install these; and there are many good reasons why people may be reluctant to do so. It may be incompatible with other software on their computer, there may be security concerns, or it just may be too much work. But if it runs inside of the docker container, many of these problems disappear.
+\item To ``abstract away'' the inner workings of your code. Rather than giving potentially complicated instructions how to run your code, which dependencies to install, etc., you can just provide users with the Docker image, in which everything is already taken care of.
+\item To ensure that users get the same results. Though it doesn't form a huge problem on a daily bases for most computational scientists, different versions of different libraries on different systems may occasionally produce slightly different results. The container ensures that the code is run using the same software setup.
+\item To avoid interfering with existing installations. Already our toy example had a dependency, \pkg{numpy}, but often, dependecies can be more complex and a program we write may need very specific libraries, or even some other software beyond Python or R libraries. Distributing the source code alone means forcing the user to also install these; and there are many good reasons why people may be reluctant to do so. It may be incompatible with other software on their computer, there may be security concerns, or it just may be too much work. But if it runs inside of the docker container, many of these problems disappear.
 \end{itemize}
 
 In short, the Docker image is rarely the \emph{only} way in which you distribute your source code. But already adding a Dockerfile to your github repository so that users can build a Docker container can offer another and maybe better way of running your software to your audience.
