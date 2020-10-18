@@ -2,9 +2,8 @@
 \label{chap:image}
 
 \begin{abstract}{Abstract}
- 
 Digitally collected data often does not only contain texts, but also audio, images and videos. Instead of using only textual features as we did in previous chapters, we could as well use, for instance, pixel values
-to analyse images. Without going into detail, in this chapter we will show how to store, represent and convert multimedia data in order to use it as an input in our computational analysis. We will then focus on image analysis using machine learning classification techniques based on deep learning, and will explain how to build (or fine-tune) a Convolutional Neural Network (CNN) by ourselves. We will discuss how to obtain text from images (OCR) and audio (speech-to-text), which allows to apply text analytics to  multimedia data. Finally we will see how to use a commercial service (Amazon Rekognition) to conduct this image classification. 
+to analyse images. First, we will see how to use existing libraries, commercial services or API's to conduct multimedia analysis (i.e. optical character recognition, speech-to-text or object recognition). Then we will show how to store, represent and convert multimedia data in order to use it as an input in our computational analysis.  We will focus on image analysis using machine learning classification techniques based on deep learning, and will explain how to build (or fine-tune) a Convolutional Neural Network (CNN) by ourselves. 
 \end{abstract}
 
 \keywords{Image, Audio, Video, Multimedia, Image Classification, Deep Learning}
@@ -15,9 +14,10 @@ to analyse images. Without going into detail, in this chapter we will show how t
 \end{objectives}
 
 \begin{feature}
-This chapter uses \pkg{PIL} (Python) and \pkg{imagemagic} (generic) to convert pictures as inputs; and \pkg{Tensorflow} and \pkg{keras} (both in Python and R) to build and fine-tune CNNs. We will use \pkg{tesseract} (generic) and  Google 'Cloud Speech' API (\pkg{googleLanguageR} and \pkg{google-cloud-language} in Python) to convert into text images or audio files, respectively.
+This chapter uses \pkg{tesseract} (generic) and  Google 'Cloud Speech' API (\pkg{googleLanguageR} and \pkg{google-cloud-language} in Python) to convert into text images or audio files, respectively. We will use \pkg{PIL} (Python) and \pkg{imagemagic} (generic) to convert pictures as inputs; and \pkg{Tensorflow} and \pkg{keras} (both in Python and R) to build and fine-tune CNNs. 
 \end{feature}
 
+\input{chapter15/beyond}
+\input{chapter15/apivision}
 \input{chapter15/storing}
 \input{chapter15/cnn}
-\input{chapter15/apivision}

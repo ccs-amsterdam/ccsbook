@@ -1,6 +1,8 @@
 \section{Validation and best practices}
 \label{sec:validation}
 \subsection{Finding a balance between precision and recall}
+\label{sec:balance}
+
 In the previous sections, we have learned how to fit different models:
 Na\"ive Bayes, logistic regressions, support vector machines, and
 random forests.  We have also had a first look at confusion matrices,
@@ -109,6 +111,8 @@ value with the maximum distance between TPR and FPR, and use that one.
 
 
 \subsection{Train, validate, test}
+\label{sec:train}
+
 By now, we have established which measures we can use to decide which
 model to use. For all of them, we have assumed that we split our
 labeled dataset into two: a training dataset and a test dataset. The
