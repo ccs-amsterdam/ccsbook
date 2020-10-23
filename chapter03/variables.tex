@@ -16,12 +16,12 @@ Python\footnote{If you have not installed the require software yet and
   platforms for RStudio (https://rstudio.cloud/) and Python
   (https://www.python.org/shell/).}.  In both languages, you write a
 \emph{script} or \emph{program} containing the commands for the
-computer to do data processing or other tasks.  Before we move on to
-data processing, it is important to take a quick look at how data is
-actually stored and at the basics of programming.
+computer to do data processing or other tasks.  But before we get to
+some real programming and exciting data analyses, we need to understand
+how data can be represented and stored.
 
-All data is stored in memory as \emph{objects}, and each object
-has a name.  You create these objects by
+No matter whether you use R or Python, both store your data in memory as \emph{objects}.
+Each of these objects has a name, and you create them by
 assigning a value to a name. For example, the command \texttt{x = 10}
 creates a new object\fnarrow, named \texttt{x}, and stores the value 10
 in it.  This object is now stored in memory and can be used in later
@@ -38,18 +38,18 @@ commands.
   actual object or value and its name.}
 
 Objects can be simple values such as the number 10, but they can also
-be pieces of text, whole data frames (tables), or analysis results.  The
-computer keeps track of the \emph{type}, or \emph{class}, of each
+be pieces of text, whole data frames (tables), or analysis results.
+We call this distinction the \emph{type} or \emph{class} of an
 object.  You can inspect the type of an object with the \code{type}
-(Python) or \code{class} function, as shown in example \refex{objecttype}. 
+(Python) or \code{class} (R) function, as shown in example \refex{objecttype}. 
 
 Let' create an object that we call |a| (an arbitray name, you can use
 whatever you want) an assign a value, 100, to it (see \refex{var1}).
 
 \pyrex[output=both,caption=Determining the type of an object]{chapter03/var1}
 
-As you can see, R calls the number `numeric', while Python reports it
-as being `int', short for integer or whole number.  Although they use
+As you can see, R reports the type of the number as `numeric', while Python reports it
+as `int', short for integer or whole number.  Although they use
 different names, both languages offer very similar data types.
 \reftab{types} provides an overview of the data types we will
 encounter most frequently in this book.  As you can see,
@@ -89,9 +89,10 @@ including |a| as an argument of \fn{class}, and the very same
 between R and Python, here, is that the relevant Python function is
 called \fn{type} instead of \fn{class}.
 
-This is the way we work in object-orientated programming and if you
-compare to other languages you will realize that is a very simple
-syntax indeed. Once created, you can now perform multiple operations
+%This is the way we work in object-orientated programming and if you
+%compare to other languages you will realize that is a very simple
+%syntax indeed.
+Once created, you can now perform multiple operations
 with |a| and other values or new variables. For example, you
 could transform |a| by multiplying |a| by 2, create a new
 variable |b| of value 50 and then create another new object
@@ -107,19 +108,21 @@ variable |b| of value 50 and then create another new object
 When working with numbers, we distinguish between integers (whole
 numbers) and floating point numbers (numbers with a decimal point,
 called `numeric' in R). Both Python and R automatically determine the
-correct datatype when creating an object, but differ in their default
+correct data type when creating an object, but differ in their default
 behavior when storing a number that can be represented as an int: R
 will store it as float anyway and you need to force it to do
 otherwise, for Python it is the other way round
 (\refex{var3}). We can also convert between types later on,
 even though converting a float to an int might not be a too good idea,
-as you truncate your data. So why not just always use a float? First,
+as you truncate your data.
+
+So why not just always use a float? First,
 floating point operations usually take more time than integer operations.
 Second, because floating point numbers are stored as a combination of
 a coefficient and an exponent (to the base of 2), many integers (or,
 in fact, many decimal fractions) can only approximately be stored
 as a floating point number. Except for specific domains (such
-as finance), these inaccuracies are often not of practical importance.
+as finance), these inaccuracies are often not of much practical importance.
 But it explains why calculating |6*6/10| in Python returns 3.6, while
 |6*0.6| or |6*(6/10)| returns 3.5999999999999996. Therefore, if
 a value can logically only be a whole number (anything that is
@@ -142,19 +145,28 @@ integer.
 \subsection{Storing text}
 
 As a computational analyst of communication you will usually work with
-text objects or strings of characters, which are called character
-vector objects in R. You can create them just by adding single or double quotes to the value of the variable (keep in mind to begin and finish the string either with single or with double quotes, and not to use the indistinctly). Just think of a tweet or a Facebook post that you want to load into your workspace for natural
-language processing analysis.
+text objects or strings of characters. Commonly known as simply ``strings'',
+such text objects are also referred to as ``character vector objects'' in R.
+You can create them just by adding single or double quotes around the value of the variable (keep in mind to begin and finish the string either with single or with double quotes, and not to mix their use). Every time you want to analyse a social-media message, or any other text, you will be dealing with such strings. 
 
 \pyrex[caption=Strings and bytes]{chapter03/var4}
 
-There are several ways of how textual characters can be stored as
-bytes. You probably will not encounter this too often, but sometimes
-we have to process raw bytes. Quite confusingly, bytes are also often
+It is not too difficult to imagine how a computer internally
+handles \emph{integers}: After all, even though the number may be displayed
+as a decimal number to us, it can be trivially converted and stored
+as a binary number (effectively, a series of zeros and ones)
+--- we do not have to care about that, as there
+is only one way of doing so. But when we think about text, it is not
+immediately obvious how a string should be stored as a sequence of
+zeros and ones.
+Indeed, here are several ways of how textual characters can be stored as
+bytes, and it is important to be aware of this.
+Although you probably will not encounter this too often, sometimes
+we even have to process raw bytes. Quite confusingly, bytes are also often
 displayed as letters, but they are different: To begin with, a byte
 only has $2^8=256$ possible values, while there are more than one
 million possible characters that can form one character in a (Unicode)
-string may need a low-level approach in which we care about the exact
+string. Sometimes, we  may need a low-level approach in which we care about the exact
 bytes underlying a string. You can read more about this in
 \refsec{encodings}.  \refex{var4} shows how to create strings and raw
 (byte) strings. In your daily work, you will almost never want to
@@ -182,9 +194,7 @@ create thousands of objects called tweet0001, tweet0002, \ldots
 tweet9999 -- we'd rather have one list called tweets that contains all
 of them. You will encounter several names for such combined data
 structures: lists, vectors, one-dimensional arrays, series, and maybe
-even more. Because the typical usage differs a bit between R and
-Python, we will discuss them one by one, starting with R.
-
+even more. 
 
 \begin{table}[ht]
 \label{tab:vector_objects}
