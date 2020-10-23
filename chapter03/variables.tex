@@ -35,7 +35,10 @@ commands.
   column of data, rather than to the name of, for instance, the object
   containing the whole data frame (or table).  For that
   reason, we will use the word \emph{object} to refer to both the
-  actual object or value and its name.}
+  actual object or value and its name. (If you want some extra food
+  for thought and want to challenge your brain
+  a bit, you can try to see the relationship between the idea of a pointer and
+  the discussion about mutable and immutable objects below.)}
 
 Objects can be simple values such as the number 10, but they can also
 be pieces of text, whole data frames (tables), or analysis results.
@@ -196,52 +199,47 @@ of them. You will encounter several names for such combined data
 structures: lists, vectors, one-dimensional arrays, series, and maybe
 even more. 
 
-\begin{table}[ht]
-\label{tab:vector_objects}
-\caption{Classes of vector objects in R\label{table:nonlin}}{%
-\centering
-\begin{tabular}{c c c p{2cm}}
-\hline\hline
-Data type & Example & Code \\ [0.5ex]
-\hline
-Numeric&1, 2.5, 100, 2500.38& a = 100 \\
-Integer&20L, 100L&d = 20L \\
+%\begin{table}[ht]
+%\label{tab:vector_objects}
+%\caption{Classes of vector objects in R\label{table:nonlin}}{%
+%\centering
+%\begin{tabular}{c c c p{2cm}}
+%\hline\hline
+%Data type & Example & Code \\ [0.5ex]
+%\hline
+%Numeric&1, 2.5, 100, 2500.38& a = 100 \\
+%Integer&20L, 100L&d = 20L \\
 %Complex& 100+50x, 8*3i &e = 100+50x \\
-Character&   \parbox[t]{4cm}{\centering 'a', "I am happy learning R!!!", "200", 'R', "FALSE"} & tweet  = "I am happy learning R!!!" \\
-Raw& \parbox[t]{4cm}{\centering "Any text" stored as:  41 6e 79 20 74 65 78 74} & raw\_string  = charToRaw("Any text") \\
-Logical& TRUE, FALSE & logical\_operator  = TRUE  \\ [1ex]
-\hline
-\end{tabular}}{}
-\end{table}
+%Character&   \parbox[t]{4cm}{\centering 'a', "I am happy learning R!!!", "200", 'R', "FALSE"} & tweet  = "I am happy learning R!!!" \\
+%Raw& \parbox[t]{4cm}{\centering "Any text" stored as:  41 6e 79 20 74 65 78 74} & raw\_string  = charToRaw("Any text") \\
+%Logical& TRUE, FALSE & logical\_operator  = TRUE  \\ [1ex]
+%\hline
+%\end{tabular}}{}
+%\end{table}
 
 
-Table~\ref{tab:vector_objects} summarizes vector objects available in
-R. By bringing together a set of same-class vector objects we can
-create a vector. A vector is a basic structure of R and holds
-different elements of the same type (numeric, integer, complex,
-character, logical, raw) in a one-dimensional array. You will use
-vectors very often to run computation and we can easily create them
-using the \fn{c} function. For example, we can create a numeric vector
-with the scores of a class of 10 students or a character vector of
-three countries (\refex{1darray1}).
+%Table~\ref{tab:vector_objects} summarizes vector objects available in R.
 
-\pyrex[caption=Vectors in R, output=r, input=r]{chapter03/1darray1}
+The core idea is always the same: we take multiple objects
+(be it numbers, strings, or anything else) and then create one object that combines all of them (\refex{1darray1}).
 
-As you see, the data types will correspond to only one class, either
-numeric or character, since vectors contain only one class. If we
-create the vector with two different data types, R will recognize one
-class forcing some elements to be transformed into the dominant
-class. For example, if you re-build the vector of scores (a new set of
-values will be loaded into the workspace) with a new student who has
-been graded with the letter \emph{b} instead of a number, your vector
-will become a character vector. If you print it, you will see that the
-values are now displayed surrounded by |"|.
+\pyrex[caption=One-dimensional arrays (such as vectors in R or lists in Python) can contain multiple values, output=both, input=both]{chapter03/1darray1}
 
-%Beyond the class (which is a powerful function because you can create new classes your self), you can also get the R internal type of the object (storage mode), using the typeof() function:
-%\begin{exampler}
-%typeof(scores)
-%\end{exampler}
+%|tweets = ["this is some tweet", "yet another tweet", "and a third one"]| (Python) or
+%|tweets  = c("this is some tweet", "yet another tweet", "and a third one")| (R).
 
+As you see, we now have one name (such as |scores|) to refer to all of scores.
+The Python object in \refex{1darray1} is called a \emph{list}, the R object a \emph{vector}.
+There are even more of such combined data types, which have slightly different
+properties that can be important to know about: First, whether you can mix different
+types (say, integers and strings); second, what happens if you change the array.
+
+We will discuss both points below and show how this relates to different
+specific types of arrays in Python and R which you can choose from. But first,
+we will show how to work with such lists and vectors.
+
+
+\paragraph{Operations on vectors and lists}
 Having a vector means that you can operate with it in many ways. One of the
 basic operations is \emph{indexing}, which is a technique that you will use with
 other data types (list, arrays, matrices, data frames) and in other
@@ -249,47 +247,46 @@ languages such as Python.  Indexing helps you to locate any given
 element or group of elements within a vector using its or their
 positions. In R all positions begin in the number 1 (you will see that
 in Python and other languages they will begin on 0) and you can index
-using the square brackets [] over the vector (\refex{1darray2}).
+using the square brackets [] over the vector. In \refex{1darray2}, we
+start with an array of scores that are abusively stored as string,
+retrieve some of these values, and finally convert them to integers.
 
 \pyrex[input=r, output=r, caption=Slicing vectors and converting data types]{chapter03/1darray2}
 
-In the first case, we asked for the score of the 11th student ("b");
+In the first case, we asked for the score of the 5th student ("9");
 in the second we asked for the 1st and 10th position ("8" "5"); and
-finally for all the elements between the 1st and 10th position ("8"
-"8" "7" "6" "9" "4" "9" "2" "8" "5"). We can directly indicate a range
+finally for all the elements between the 1st and 4th position ("8"
+"8" "7" "6"). We can directly indicate a range
 by using a |:|. After the colon, we provide the index of
 the last element (in R), while Python stops just \emph{before} the index
 \footnote{This is related to the
 reason why Python starts counting with zero. If you are intetested
 in this, have a look at \url{https://www.cs.utexas.edu/users/EWD/transcriptions/EWD08xx/EWD831.html}}
 If we want to pass multiple single index values instead of a range,
-we need to create a vector of these indices by using |c()| (\refex{1darray2}). 
+we need to create a vector of these indices by using |c()| (\refex{1darray2}).
+Take a moment to compare the different ways of indexing between Python
+and R in \refex{1darray2}!
 
-As the vector |scores2| was forced to be a string, all the elements --
-even those that could be represented as numeric -- are now
-characters. Indexing is very useful to access elements and also to
-create new objects from a part of another one. Imagine you want to
-create a new numeric vector by \emph{slicing} the vector scores with
-just the numeric values and change its class using the function
-as.numeric (\refex{1darray2}).
 
-And voilà, we have a new object called scores3 with the original
-values of the vector scores and of the class numeric.
-% \emph{double} (double precision floating point numbers, which is equivalent to the class numeric).
 
-\pyrex[input=r, output=r, caption=Some more vector operations]{chapter03/1darray3}
+Indexing is very useful to access elements and also to
+create new objects from a part of another one. The last line of our
+example shows how to create a new array with just the first four
+entries of |scores| and store them all as numbers. To do so, we
+use \emph{slicing} to get the first four scores and then either change its class using the function
+as.numeric (in R) or convert the elements to integers one-by-one (Python)  (\refex{1darray2}).
+
+
+\pyrex[input=both, output=none, caption=Some more operations on one-dimensional arrays]{chapter03/1darray3}
 
 We can do many other things like adding a value to an existing vector
 or creating a vector from scratch by using a
-function. \refex{1darray3} illustrates how to include the new numeric
-score of 7 (imagine we translate the grade \emph{b} to the number 7)
-to our vector by two procedures, or how to remove an element from your
-vector. For example, for dropping the 11th student's score recently included you
-just index negatively the value of the vector: |[-11]|.
+function. \refex{1darray3} illustrates how to add new values to an array
+or how to remove values. 
 
 Rather than just typing over a lot of values by hand, we often might
 wish to create a vector from an operator or a function, without typing
-each value. Using the operator ':', we can create numeric vectors with
+each value. Using the operator \fn{:} (R) or the function \fn{range} (Python), we can create numeric vectors with
 a range of numbers, from 1 to 20 or from -5 to 5 (\refex{1darray3}).
 You can also use a function to create more complex vectors. For
 example the function \fn{seq} will help you to generate regular sequences
@@ -299,8 +296,145 @@ create a numeric vector than begins in point 0 and finishes in point
 step of 0.2. Let's create that vector and check the amount of created
 elements by using the function \fn{length} (\refex{1darray3}).
 
-A similar R object is the factor, which might be very useful when
-working with categorical data. When dealing with factors, you can
+
+
+
+
+
+
+
+\paragraph{Can we mix different types?}
+There is a reason that the basic datatypes (numeric, character, etc.) we described above are called
+``vector objects'' in R: The vector is a very important structure in
+R and consists of these objects. A vector can be easily created with the
+\fn{c} function and can only combine elements of the same type (numeric, integer, complex,
+character, logical, raw).
+
+Because the data types within a vector correspond to only one class,
+when we create a vector with the scores of a class of 10 students, or a character vector of
+three countries, as we do in \refex{1darray1}), R's \fn{class} function will display
+``numeric'' or ``character'', and not ``vector'', as one may assume.
+
+If we try to
+create a vector with two different data types, R will 
+force some elements to be transformed, so that all elements belong to the same
+class. For example, if you re-build the vector of scores with a new student who has
+been graded with the letter \emph{b} instead of a number (\refex{1darray1b}, your vector
+will become a character vector. If you print it, you will see that the
+values are now displayed surrounded by |"|.
+
+
+\pyrex[caption=R enforces that all elements of a vector have the same data type, output=r, input=r]{chapter03/1darray1b}
+
+
+In contrast to a vector, a \emph{list} is much less restricted: A list does not care
+whether you mix numbers and text. In Python, such lists are the most common type for creating
+a one-dimensional collection of basic data types, and because they
+can contain very different objects, running the \fn{type} function on them
+does not return anything about the objects inside the list, but simply states that we
+are dealing with a list (\refex{1darray1}).
+In fact, lists can even contain other lists, or any other object for
+that matter. 
+Also in R, you can create lists, even though they are much less popular in R than
+they are in Python. R lists are created in a similar way as vectors, except that we have to add the word |list|
+before declaring the values. Let's build a list with four different
+kind of elements, a numeric object, a character object, a square root
+function (\fn{sqrt}) and a numeric vector (\refex{1darray4}). In fact, you
+can use any of the elements in the list through indexing -- even the
+function \fn{sqrt} that you stored in there to get the square root of
+16!
+
+\pyrex[input=r, output=r, caption=Lists can store multiple data types]{chapter03/1darray4}
+
+Python users often like that lists give  a lot of flexibility, as they happily accept
+entries of very different types. But also Python users sometimes may want a stricter
+structure like R's vector. This may be especially interesting for
+high-performance calculations, and therefore, such a structure is
+avalable from the \pkg{numpy} (\emph{num}bers in \emph{py}thon)
+package: the numpy array (\refex{1darray7}).
+
+\pyrex[input=py, output=py, caption={Numpy arrays behave more like R vectors. However, you have to import (and potentially install) an additional package, \pkg{numpy}, for this (see \refsec{installing})}]{chapter03/1darray7}
+
+
+
+\paragraph{Mutable versus immutable objects}
+
+A difference between several object types is what happens when you try to change them.
+Imagine that we assigned the name |a| to a value, say 42.
+There are two possibilities that could happen when we later say that |a|,
+instead, should be 65. \emph{Either} a new object is created and the name |a|
+now points to that new object instead; or the object itself is changed.
+The first behavior is called \emph{immutable}, then second \emph{mutable}.
+R objects in principle are \emph{immutable}, and so are many types
+in Python (e.g., int, float, bool, string). But Python lists are \emph{mutable}.
+
+\note{While most of the time, you will not care about mutable or
+  immutable objects, the fact that Python lists (and, later, data frames) are
+  mutable can be really crucial if you. \refex{mutable} illustrates
+  what happens if you create a new object referring to a mutable
+  object, which -- in contrast to what you may think -- does not
+  create a copy of the object itself. Rather, we now get two names for
+  the same object.}
+
+\pyrex[input=py, output=py, caption={The (for many unexpected) behavior of mutable objects}]{chapter03/mutable}
+
+
+Why is this important for you? First, because it may cause some
+unexpected behavior (see box above); second, it means that you can
+choose between creating a mutable lists and her immutable sister, the \emph{tuple}.
+We build a Python list object using square brackets |[]|. If we use
+parentheses |()| instead, we create a tuple.
+There is not much of a difference between lists and tuples, except that tyuples are immutable, which means that
+they are constant or unchangeable and you can not freely change their
+values.
+
+In \refex{1darray5}, we create a list and a tuple, and get their sizes with the native function |len|
+. We have created two sequences of six objects
+(three integers and three strings) that represent common numeric and
+categorical values for sentiment analysis. The first sequence is a
+list and the second a tuple. We can get any value of the list or tuple
+by indexing its position, just keep in mind that indexing in Python
+begins in 0 and not in 1 like in R. 
+
+\pyrex[input=py, output=py, caption=Lists and tuples in Python]{chapter03/1darray5}
+
+
+Imagine now that you decide that the value `neutral' should be
+substituted by the value `informative' in the created sequences. You
+can update them by just assigning a new value to an item that is
+identified by its index.  The list will be correctly updated, but the
+code you run to change the tuple will give you an error (with some
+message such as: "'tuple' object does not support item
+assignment"). Thus, tuples are immutable and are worth for certain
+types of operations because they give stability to a particular
+computation. Notice that we can include any object into lists or
+tuples.
+
+
+We also have another Python object called a \emph{set}. A set is a mutable
+collection of \emph{unique} elements (you cannot repeat a value) with
+no order. As it is not properly ordered, you cannot run any indexing
+or slicing operation on it. The immutable version of sets are called
+frozensets.
+
+\pyrex[input=py, output=py, caption={Unordered collections with only unique values: sets}]{chapter03/1darray6}
+
+
+
+
+
+
+%Beyond the class (which is a powerful function because you can create new classes your self), you can also get the R internal type of the object (storage mode), using the typeof() function:
+%\begin{exampler}
+%typeof(scores)
+%\end{exampler}
+
+
+\paragraph{Factors}
+
+Finally, a data structure very similar to a vector is the \fn{factor}.
+R users are very likely tp encounter factors, which can be very useful when
+working with categorical data. With factors, you can
 store the values of a vector with their corresponding labels, which in
 turn will produce levels. If you create a factor, it will
 automatically read the labels from the values of the vector, but you
@@ -316,86 +450,10 @@ values to connect with those labels.
 
 \pyrex[input=r, output=none, caption=Factors can also store labels]{chapter03/1darray6}
 
-
-
-While vectors are probably the most common one-dimensional data
-structure in R, there are other ones. In particular, we have
-\emph{lists}. A list is similar to vectors but may contain different
-type of elements, functions and even other lists. We create lists in a
-similar way to vectors, except that we have to add the word |list|
-before declaring the values. Let's build a list with four different
-kind of elements, a numeric object, a character object, a square root
-function (\fn{sqrt}) and a numeric vector (\refex{1darray4}). In fact, you
-can use any of the elements in the list through indexing -- even the
-function \fn{sqrt} that you stored in there to get the square root of
-16!
-
-\pyrex[input=r, output=r, caption=Lists can store multiple data types]{chapter03/1darray4}
-
-
-
-In Python, such lists are, in fact, the most common type for creating
-a one-dimensional collection of basic data types. 
-
-Python lists are mutable sequences of different types of elements. In other
-words, they are ordered collections of objects with no fixed size. We
-build this Python object using square brackets [], instead of
-parentheses (), as we did in R. Pay attention to this detail because
-in Python we will create tuples if you use the parentheses. Tuples are
-similar to lists, except that they are immutable (which means that
-they are constant or unchangeable and you can not freely change their
-values, just as numbers or strings).  We can now create our first list
-and tuple, and get their sizes with the native function len
-(\refex{1darray5}). We have created two sequences of six objects
-(three integers and three strings) that represent common numeric and
-categorical values for sentiment analysis. The first sequence is a
-list and the second a tuple. We can get any value of the list or tuple
-by indexing its position, just keep in mind that indexing in Python
-begins in 0 and not in 1 like in R. 
-
-\pyrex[input=py, output=py, caption=Lists and tuples in Python]{chapter03/1darray5}
-
-Imagine now that you decide that the value `neutral' should be
-substituted by the value `informative' in the created sequences. You
-can update them by just assigning a new value to an item that is
-identified by its index.  The list will be correctly updated, but the
-code you run to change the tuple will give you an error (with some
-message such as: "'tuple' object does not support item
-assignment"). Thus, tuples are immutable and are worth for certain
-types of operations because they give stability to a particular
-computation. Notice that we can include any object into lists or
-tuples.
-
-
-\note{While most of the time, you will not care about mutable or
-  immutable objects, the fact that lists (and, later, data frames) are
-  mutable can be really crucial if you. \refex{mutable} illustrates
-  what happens if you create a new object referring to a mutable
-  object, which -- in contrast to what you may think -- does not
-  create a copy of the object itself. Rather, we now get two names for
-  the same object.}
-
-\pyrex[input=py, output=py, caption={The (for many unexpected) behavior of mutable objects}]{chapter03/mutable}
-
-
-
-We also have another Python object called sets. A set is a mutable
-collection of \emph{unique} elements (you cannot repeat a value) with
-no order. As it is not properly ordered, you cannot run any indexing
-or slicing operation on it. The immutable version of sets are called
-frozensets.
-
-\pyrex[input=py, output=py, caption={Unordered collections with only unique values: sets}]{chapter03/1darray6}
-
-
-While lists give you a lot of flexibility -- e.g., they happily accept
-entries of very different types --, you sometimes may want a stricter
-structure like R's vector. This may be especially interesting for
-high-performance calculations, and therefore, such a structure is
-avalable from the \pkg{numpy} (\emph{num}bers in \emph{py}thon)
-package: the numpy array (\refex{1darray7}).
-
-\pyrex[input=py, output=py, caption={Numpy arrays behave more like R vectors. However, you have to import (and potentially install) an additional package, \pkg{numpy}, for this (see \refsec{installing})}]{chapter03/1darray7}
+Python does not natively support factors. The \pkg{pandas} library,
+which we will use later throught this book, introduces a datatype called
+\fn{Categorical} that serves the same purpose, but it is much less
+used than factors are in R.
 
 
 
