@@ -5,7 +5,28 @@ The implementation of computational image classification can help to answer many
 
 There are many other excellent examples of how you can adopt image classification tasks to answer specific research questions in social sciences such as those of \citet{horiuchi2012should} who detected the smiles in politicians to estimate the effects of facial appearance on election outcomes; or the work by \citet{peng2018same} who used automate recognition of facial traits in two American politicians to confirm the bias of media portrayals.
 
-In this section, we will learn how to conduct computational image classification which is probably the most extended supervised machine learning application in the field of automatic analysis of images in communication and social sciences. We will firstly discuss how to apply a \textit{shallow} algorithm and then a deep-learning approach, given a labelled data set. 	
+In this section, we will learn how to conduct computational image classification which is probably the most extended computer vision application in communication and social sciences (see Table~\ref{tab:visionlingo} for some lingo). We will firstly discuss how to apply a \textit{shallow} algorithm and then a deep-learning approach, given a labelled data set. 	
+
+\begin{table}
+\caption{Some computer vision concepts used in computational analysis of communication \label{tab:visionlingo}}{
+  \centering
+\begin{tabularx}{\textwidth}{XX}
+\toprule
+Computer vision lingo  & Definition \\ \midrule
+Bitmap         & Format to store digital images using a rectangular grid of points of colors. Also called "raster image".\\
+Pixel                 & Stands for "picture element" and is the smallest point of a bitmap image  \\
+Color model                   & Mathematical representation of colors in a picture. The standard in computer vision is RGB, but there are others such as RYB, RGBA or CMYK.  \\
+Vector graphic        & Format to store digital images using lines and curves formed by points. \\
+Data augmentation            & Technique to increase the training set of images by creating new ones base on the modification of some of the originals (cropping, rotating, etc.) \\
+Image classification  & Machine learning task to predict a class of an image based of a model. State-of-the-art image classification is conducted with Convolutional Neural Networks (CNN). Related tasks are object detection and image segmentation \\
+Activation function            & Parameter of a CNN that defines the output of a layer given the inputs of the previous layer. Some usual activation functions in image classification are sigmoid, softmax or RELU. \\
+Loss function           & Parameter of a CNN which accounts for the difference between the prediction and the target variable (confidence in the prediction) and one common in image classification is the cross entropy loss. \\
+Optimization           & Parameter of a CNN that updates weights and biases in order to reduce the error and some common optimizers in image classification are Stochastic Gradient Descent and ADAM \\
+Transfer learning             & Using trained layers of other CNN architectures to fine tune a new model investing less resources (e.g. training data) \\
+\bottomrule
+\end{tabularx}}{}
+\end{table}
+
 
 Technically, in an image classification task we train a model with examples (e.g. a corpus of pictures with labels) in order to predict the category of any given new sample. It is the same logic used in supervised text classification  explained in Section~\ref{sec:supervised} but using images instead of texts. For example, if we show many pictures of cats and many of houses the algorithm would learn the constant features in each and will tell you with some degree of confidence if a new picture contains either a cat or a house. It is the same with letters, numbers, objects or faces, and you can apply either binary or multi-class classification. Just think when your vehicle registration plate is recognized by a camera or when your face is automatically labelled in pictures posted in Facebook.
 
