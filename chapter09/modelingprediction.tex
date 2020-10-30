@@ -2,7 +2,7 @@
 \label{sec:prediction}
 Machine learning, many people joke, is nothing else than a fancy name
 for statistics.  And, in fact, there is some truth to this: If you say
-``logistic regression'', this will sound familiar to both
+``logistic regression,'' this will sound familiar to both
 statisticians and machine learning practitioners.  Hence, it does not
 make much sense to distinguish between statistics on the one hand and
 machine learning on the other hand.
@@ -10,7 +10,7 @@ machine learning on the other hand.
 Still, there are some differences between traditional statistical
 approaches that you may have learned about in your statistics classes
 and the machine learning approach, even if they use some of the same
-mathematical tools. One may say that that the focus is a different
+mathematical tools. One may say that  the focus is a different
 one, and the objective we want to achieve may differ.
 
 Let us illustrate this with an example.
@@ -66,7 +66,7 @@ This could be as simple as shown in \refex{olspredict}.
 \pyrex[output=py, caption=Using the OLS model we estimated before to predict the dependent variable for new data where the dependent variable is unknown.]{chapter09/olspredict}
 
 In doing so, we shift our attention from the interpretation of coefficients to the prediction of the dependent variable for new, unknown cases. We do not
-care about the coefficents per se, we just need them for our prediction.
+care about the actual values of the coefficents, we just need them for our prediction.
 In fact, in many machine learning models, we will have so many of them that
 we do not even bother to report them.
 
@@ -82,5 +82,5 @@ cases (in this case, people) as input and returns a prediction.
 Using such a simple OLS regression approach for prediction, as we did in our example, can come with a couple of problems, though. One problem is that in some cases, such predictions can be unlogical. For instance, even though we know that the output should be something between 0 and 7 (as that is the number of days in a week), our model will happily predict that once a man reaches the age of 105 (rare, but not impossible), he will read a newspaper on 7.185 out of 7 days. Similarly, a one year old girl will even have a negative amount of newspaper reading. A second problem relates to the models' inherent assumptions. For instance, in our example it is quite an assumption to make that the relationships between these variables are linear – we will therefore discuss multiple models that do not make such assumptions later in this chapter. And, finally, in many cases, we are actually not interested in getting an accurate prediction of a continuous number (a \textit{regression} task), but rather in predicting a category. We may want to predict whether a tweet goes viral or not, whether a user comment is likely to contain offensive language or not, whether an article is more likely to be about politics, sports, economy, or lifestyle. In machine learning terms, these tasks are known as \textit{classification}.
 
 In the next section, we will outline key terms and concepts in machine
-learning. After that, we will then discuss specific models that you
+learning. After that, we will discuss specific models that you
 can use for different use applications.

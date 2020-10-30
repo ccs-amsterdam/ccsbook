@@ -97,15 +97,15 @@ fit (train) a classifier (\refex{nb}), before we assess how well it
 predicts our training data (\refex{classificationreport}).
 
 In section~\ref{sec:validation}, we discuss in more detail how to
-evaluate different classifiers, but we will already look at some
+evaluate different classifiers, but let's have a sneak preview at the most used 
 measures of how well our classifier performs.
 
-First, the confusion matrix tells us how many non-users were indeed
-classified as non users (55), and how many (wrongly) as users
-(106).\footnote{These are the values from the Python example, the R
+First, the confusion matrix from \refex{classificationreport} tells us how many non-users were indeed
+classified as non users (59), and how many (wrongly) as users
+(102).\footnote{These are the values from the Python example, the R
   example slightly differs, amongst other things due to different
-  sampling.} That doesn't look very good; but on the other hand, 212
-of the true users were correctly classified as such, and only 40 were
+  sampling.} That doesn't look very good; but on the other hand, 210
+of the true users were correctly classified as such, and only 42 were
 not.
 
 More formally, we can express this using precision and recall. When we
@@ -255,7 +255,7 @@ straight line separating them. But a RBF kernel can transfer them into
 a linearly separable space. The aforementioned online visualizations
 can be very instructive here.
 
-\refex{svm} shows how we implement standard SVM to our data using the \pkg{caret} method \fn{svmLinear3} in R and the \pkg{sklearn} (module svm) function \fn{SVC} in Python. You can notice in the code that feature data is standardized or normalized (with Mean = 0 and Standard Deviation = 1) before to model training in order to have all the features measured at the same scale, as required by SMV.
+\refex{svm} shows how we implement standard SVM to our data using the \pkg{caret} method \fn{svmLinear3} in R and the \pkg{sklearn} (module svm) function \fn{SVC} in Python. You can notice in the code that feature data is standardized or normalized (with Mean = 0 and Standard Deviation = 1) before model training in order to have all the features measured at the same scale, as required by SMV.
 
 \pyrex[output=none, caption=A simple Support Vector Machine classifier]{chapter09/svm}
 

@@ -15,7 +15,7 @@ for us: Do we care more about precision or about recall? Are all
 classes equally important to us?  And of course, other factors, such
 as explainability or computational costs may factor into our decision.
  
-But in any event, we need to decide on which metrics to focus on.  We can
+But in any event, we need to decide which metrics to focus on.  We can
 then either manually inspect them and look, for instance, which model
 has the highest \emph{accuracy}, or the best balance of precision and recall,
 or a recall higher than some threshold you are willing to accept.
@@ -23,26 +23,26 @@ or a recall higher than some threshold you are willing to accept.
 If we build a classifier to distinguish spam messages from legitimate
 messages, we could ask the following questions:
 \begin{description}
-\item[precision] Which percentage of what our classifier predicts to be
+\item[Precision] Which percentage of what our classifier predicts to be
   spam really is spam?
-\item[recall]{What percentage of all spam messages has our classifier
+\item[Recall]{What percentage of all spam messages has our classifier
   found?}
-\item[accuracy]{In which percentage of all cases was our classifier
+\item[Accuracy]{In which percentage of all cases was our classifier
   right?}
 \end{description}
 
 We furthermore have:
 \begin{description}
-\item[f1-score]{The harmonic mean of precision and recall: $F_1 = 2
+\item[F1-score]{The harmonic mean of precision and recall: $F_1 = 2
   \cdot \frac{precison \cdot recall}{precison + recall}$}
 \item[AUC]{The AUC (Area under Curve) is the area under the curve that
-  one gets when plotting the True Positive Pate (TPR) against the
+  one gets when plotting the True Positive Rate (TPR) against the
   False Positive Rate (FPR) at various threshold settings. A perfect
   model will receive a value of 1.0, while random guessing between two
   equally probable classes will result in a value of 0.5}
-\item[micro- and macroaverage]{Especially when we have more than two
+\item[Micro- and macroaverage]{Especially when we have more than two
   classes, we can calculate the average of measures such as precision,
-  recall, or f1-score. We can do so based on the sperately calculated
+  recall, or f1-score. We can do so based on the separately calculated
   measures (macro), or based on the underlying values (TP, FP, etc.)
   (micro), which has different implications in the interpretation --
   especially if the classes have very different sizes.}
@@ -51,7 +51,7 @@ We furthermore have:
 
 So, which one to choose?  If we really do not want to be annoyed by
 any spam in our inbox, we need a high recall (we want to find all spam
-messages). If, instead, we do not want to be sure that we do not
+messages). If, instead, we want to be sure that we do not
 accidentally throw away legitimate messages, we need a high
 precision (we want to be sure that all spam really is spam).
 
@@ -64,7 +64,7 @@ still get a very high accuracy, simply because there are so many
 legitimate messages. In other words, the accuracy is not a good measure when working with highly unbalanced classes.
 
 Often, it is therefore a better idea to look at the harmonic mean of
-precision and recall, the f1-score, if you want to find a model that
+precision and recall, the F1-score, if you want to find a model that
 gives you a good compromise between precision and recall.
 
 
@@ -190,15 +190,15 @@ repeated, etc. A very good example are the hyperparameters of support
 vector machines (see above): It is hard to know how soft our margins
 should be (the $C$), and we may also be unsure about the right kernel
 (\refex{gridsearch2}), or in the case of a polinomial kernel, how many
-degrees we want to consider).
+degrees we want to consider.
 
-Using the help function (e.g., \fn{RandomForestClassifier} in Python
-or the documentation of the modules you are using, you can look up
+Using the help function (e.g., \fn{RandomForestClassifier} in Python),
+you can look up
 which hyperparameters you can specify. For a random forest classifier,
 for instance, this includes the number of estimators in the model, the
 criterion, and whether or not to use
-bootstrapping. \refex{gridsearch}, \refex{gridsearch2}, and
-\refex{gridsearch3} illustrates how you can automatically assess which
+bootstrapping. \refex{gridsearch}, \ref{ex:gridsearch2}, and
+\ref{ex:gridsearch3} illustrate how you can automatically assess which
 values you should choose.
 
 \pyrex[input=py, output=py,caption=A simple gridsearch in Python]{chapter09/gridsearch}

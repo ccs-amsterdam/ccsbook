@@ -5,7 +5,7 @@
 The goal of Supervised Machine Learning can be summarized in one sentence:
 Estimate a model based on some data, and then use the model to predict the
 expected outcome for some new cases, for which we do not know the outcome yet.
-Which is exactly what we have done in the introductory example in Section~\ref{sec:prediction}.
+This is exactly what we have done in the introductory example in Section~\ref{sec:prediction}.
 
 But when do we need it?
 
@@ -102,20 +102,20 @@ these data, and therefore one would expect it to perform pretty well.
 In particular, it may be that the classifier is very good in
 predicting its own training data, but fails at predicting other data,
 because it overgeneralizes some idiosyncrasy in the data, a phenomenon
-known as overfitting (see Figure ~\ref{fig:roccurve}).
+known as overfitting (see Figure ~\ref{fig:overfit}).
 
 \begin{figure} 
 \centering
 \includegraphics[width=\linewidth]{figures/ch09_overfitting}
 \caption{Underfitting and overfitting. Example adapted from https://scikit-learn.org/stable/auto\_examples/model\_selection/plot\_underfitting\_overfitting.html}
-\label{fig:roccurve}
+\label{fig:overfit}
 \end{figure}
 
 Instead, we use the features of the \emph{test dataset} (stored in the objects  \texttt{X\_test} and \texttt{y\_test})  as input for
 our classifier, and evaluate in how far the predicted labels match the
 actual labels.  Remember: the classifier has at no point in time seen
 the actual labels.  Therefore, we can in fact calculate how often the
-prediction is right\footnote{We assume here that the manual annotation
+prediction is right.\footnote{We assume here that the manual annotation
   is always right; an assumption that one may, of course,
   challenge. However, in the absence of any better proxy for reality,
   we assume that this manual annotation is the so-called \emph{gold
@@ -124,7 +124,7 @@ prediction is right\footnote{We assume here that the manual annotation
 
 \pyrex[output=py, caption=Calculating precision and recall]{chapter09/classificationreport}
 
-As shown in \refex{classificationreport}, we can create a \emph{confusion matrix} (generated with \pkg{caret} function \fn{confusionMatrix} in R and \pkg{sklearn} function \fn{confusion\_matrix} in Python), and then estimate two measures: \emph{precision} and \emph{recall} (using base R calculations in R and \pkg{sklearn} function \fn{classification\_report} in Python). In a binary classification, the \emph{confusion matrix} is a useful table in which each column usually represents the number of cases in a predicted class, and each row the number of cases in the real or actual class. With this matrix (see Figure ~\ref{fig:}) we can then estimate the number of \emph{true positives} (TP) (correct prediction), \emph{false positives} (FP) (incorrect prediction), \emph{true negatives} (TN) (correct prediction) and \emph{false negatives} (FN) (incorrect prediction).
+As shown in \refex{classificationreport}, we can create a \emph{confusion matrix} (generated with \pkg{caret} function \fn{confusionMatrix} in R and \pkg{sklearn} function \fn{confusion\_matrix} in Python), and then estimate two measures: \emph{precision} and \emph{recall} (using base R calculations in R and \pkg{sklearn} function \fn{classification\_report} in Python). In a binary classification, the \emph{confusion matrix} is a useful table in which each column usually represents the number of cases in a predicted class, and each row the number of cases in the real or actual class. With this matrix (see \reffig{matrix}) we can then estimate the number of \emph{true positives} (TP) (correct prediction), \emph{false positives} (FP) (incorrect prediction), \emph{true negatives} (TN) (correct prediction) and \emph{false negatives} (FN) (incorrect prediction).
 
 
 \begin{figure} 
@@ -134,7 +134,7 @@ As shown in \refex{classificationreport}, we can create a \emph{confusion matrix
 \label{fig:matrix}
 \end{figure}
 
-For a better understanding of these concepts, imagine now that we build a sentiment classifier, that predicts -- based on the
+For a better understanding of these concepts, imagine that we build a sentiment classifier, that predicts -- based on the
 text of a movie review -- whether it is a positive review or a
 negative review. Let us assume that the goal of training this classifier is to build an app that recommends the user only good movies. There are two things
 that we want to achieve: We want to find as many positive films as possible (recall), but we also want that the selection we found
