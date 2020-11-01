@@ -22,11 +22,11 @@ essentially a plot of the most frequent words in a  \concept{corpus} (set of doc
   the dimensionality of the space is the number of unique words (columns) in the document-term matrix,
   and each document is a point in that n-dimensional space.\\%
   %
-  In that interpretation, various geometric distances between documents can be calculated an indicator for how similar
+  In that interpretation, various geometric distances between documents can be calculated as an indicator for how similar
   two documents are. Techniques that reduce the number of columns in the matrix (such as clustering or topic modeling)
   can then be seen as dimensionality reduction techniques since they turn the DTM into a matrix with lower dimensionality
   (while hopefully retaining as much of the relevant information as possible).
-  }
+  }\vspace{1em}
   
 More formally, a document-term matrix can be seen as a representation of data points about documents:
 each document (row) is represented as a vector containing any count per word (column).
@@ -107,7 +107,7 @@ see the package documentation for the \pkg{stopwords} package in Python (part of
 Next to stop words, text often contains punctuation and other things that can be considered `noise' for most research questions.
 For example, it could contain emoticons or emoji, twitter hashtags or at-mentions, or html tags or other annotations.
 
-In both python and R, we can use regular expressions to remove (parts of) words. 
+In both Python and R, we can use regular expressions to remove (parts of) words. 
 As explained above in \refsec{regular}, regular expressions are a powerful way to specify (sequences of) characters which are to be kept or removed.
 You can use this, for example, to remove things like punctuation, emoji, or HTML tags.
 This can be done either before or after tokenizing (splitting the text into words):
@@ -136,7 +136,7 @@ Since both hyperlinks and HTML entities are split over multiple tokens, it would
 \caption{Cleaning a single tweet at the text and token level}\label{ex:noise}
 \end{ccsexample}
 
-Regular expressions are explained fully in \refsec{regular}, so I will keep the explanation short:
+Regular expressions are explained fully in \refsec{regular}, so we will keep the explanation short:
 The bar \verb#|# splits the pattern in two parts, i.e. it will match if it finds either of the subpatterns.
 The first pattern looks for the literal text \verb#http#, followed by an optional \verb#s# and the sequence \verb#://#.
 Then, it takes all non-whitespace characters it finds, i.e. the pattern ends at the next whitespace or end of the text.
@@ -144,7 +144,7 @@ The second pattern looks for an ampersand (\verb#&#) followed by one or more let
 This matches HTML escapes like \verb#&amp;# for an ampersand.
 
 In the next step, we process the tokenized text to remove every token that is either a stopword or does not start with a letter. 
-In python, this is done by using a list expression (\verb#[process(item) for item in list]#) to process and  first for tokenizing each document; and a nested list expression for filtering each token in each document.
+In Python, this is done by using a list expression (\verb#[process(item) for item in list]#) for tokenizing each document; and a nested list expression for filtering each token in each document.
 In R this is not needed as the \fn{tokens\_*} functions are \concept{vectorized}, that is, they directly run over all the tokens.
 
 Comparing R and Python, we see that the different tokenization functions mean that \verb|#trump| is removed in R (since it is a token that does not start with a letter),
@@ -179,7 +179,7 @@ If every president in the corpus uses those terms, they are no longer informativ
 
 \pyrex[caption=Trimming a Document-Term Matrix]{ch_dtm/trimming}
 
-\refex{trimming} shows how you can use the \concept{relative document frequency} to trim a DTM in python and R.
+\refex{trimming} shows how you can use the \concept{relative document frequency} to trim a DTM in Python and R.
 We keep only words with a document frequency of between 1\% and 75\%.
 
 Although these are reasonable numbers every choice depends on the corpus and the research question, so it can be a good idea to check which words are dropped.
@@ -205,7 +205,7 @@ Where $f_{t,d}$ is the frequency of term $t$ in document $d$, $N$ is the total n
 \pyrex[caption=Tf-Idf weighting,output=r,format=table]{ch_dtm/tfidf}
 
 Tf-idf weighting is a fairly common technique and can improve the results of subsequent analyses such as supervised machine learning.
-As such, it is no surprise that it is easy to apply this in both python and R, as shown in \refex{tfidf}.
+As such, it is no surprise that it is easy to apply this in both Python and R, as shown in \refex{tfidf}.
 This example uses the same data as \refex{sotu} above, so you can compare the resulting weighted values with the results reported there.
 As you can see, the TF-IDF weighting in both languages have roughly the same effect:
 very frequent terms such as \emph{the} are made less important compared to less frequent words such as \emph{submit}.

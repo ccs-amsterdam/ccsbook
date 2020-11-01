@@ -29,7 +29,7 @@ Moreover, there is a bigger \concept{data scarcity problem}, as each of those pa
 making it more difficult to find sufficient examples of each to generalize over.
 
 Although bigrams are the most frequent use case, trigrams (3-grams) and (rarely) higher-order n-grams can also be used.
-As you can imagine, this will create even bigger DTMS and worse data scarcity problems,
+As you can imagine, this will create even bigger DTMs and worse data scarcity problems,
 so require even more attention paid to feature selection and/or trimming.
 
 
@@ -39,7 +39,7 @@ so require even more attention paid to feature selection and/or trimming.
 In Python, you can pass the \verb|ngram=(n, m)| option to the vectorizer,
 while R has a \verb|tokens_ngrams(n:m)| function.
 Both will post-process the tokens to create all n-grams in the range of n to m.
-In this example, we are asking for unigrams (i.e., the words themselves), bigrams and trigrams of a simple examp[le sentence.
+In this example, we are asking for unigrams (i.e., the words themselves), bigrams and trigrams of a simple example sentence.
 Both languages produce the same output, with R separating the words with an underscore while python uses a simple space.
 
 \pyrex[caption=Words and bigrams containing 'government',output=r,format=table]{ch_dtm/ngram2}
@@ -62,7 +62,7 @@ but for e.g. sentiment analysis a bigram like \emph{not good} would also be insi
 A special case of n-grams are collocations.
 In the strict corpus linguistic sense of the word, collocations are pairs of words that occur more frequently than expected
 based on their underlying occurence.
-For example, the prhase \emph{crystal clear} presumably occurs much more often than would be expected by chance given
+For example, the phrase \emph{crystal clear} presumably occurs much more often than would be expected by chance given
 how often \emph{crystal} and \emph{clear} occur separately.
 Collocations are important for text analysis since they often have a specific meaning,
 for example because they refer to names such as \emph{New York} or disambiguate a term like \emph{sound} in \emph{sound asleep},
@@ -74,7 +74,7 @@ This package has a \cls{Phrases} class which can identify the bigrams in a list 
 In R, we use the \fn{textstat\_collocations} function from \quanteda.
 These packages each use a different implementation: \pkg{gensim} uses pointwise mutual information, i.e.
 how much information about finding the second word does seeing the first word give you?
-\quanteda\ estimates an interaction parameter in a loglinear model.
+Quanteda estimates an interaction parameter in a loglinear model.
 Nonetheless, both methods give very similar results, with Saddam Hussein, the Iron Curtain, Al Qaida, and red tape topping the list for each.
 
 
@@ -141,7 +141,7 @@ To determine similarity, we take the cosine distance between the vector represen
 As you might remember from algebra, the cosine distance is the dot product between the vectors normalized to have length one
 (just like Pearson's product-moment correlation is the dot product between the vectors normalized to z-scores per dimension).
 Thus, we can simply multiply the normalized target vector with the normalized matrix to get the similarity scores.
-These are then sorted, renamed, and the top values are taken using the basic functions from \refchap{tidyverse}.
+These are then sorted, renamed, and the top values are taken using the basic functions from \refchap{datawrangling}.
 Finally, analogies are solved by simply adding and subtracting the vectors as explained above, and then listing the closest words to the resulting vector
 (excluding the words in the analogy itself). 
 
@@ -153,7 +153,7 @@ Finally, analogies are solved by simply adding and subtracting the vectors as ex
 \codexoutputtable{ch_dtm/embeddings2.r}
 \doublecodex{ch_dtm/embeddings3}
 \codex[caption=Output]{ch_dtm/embeddings3.r.out}
-\caption{Using word embeddings for finding similar and analogous words}
+\caption{Using word embeddings for finding similar and analogous words}\label{ex:embedding}
 \end{ccsexample}
 
 
@@ -173,7 +173,9 @@ For most languages, this can be determined with very high accuracy, although som
 in one famous example, the flies in \emph{fruit flies} is generally a noun (fruit flies are a type of fly), but it can also be a verb (if fruit could fly). 
 Although there are different sets of POS tags used by different tools, there is broad agreement on the core set of tags listed in \reftab{postags}.
 
-POS tags are useful since it allows to e.g. analyse only the \textit{nouns} if we care about the things that are discussed, only the \textit{verbs} if we care about actions that are described, or only the \textit{adjectives} if we care about the characteristics given to a noun.
+%TODO: Add tabel with pos tags and reference to jurafsky
+
+POS tags are useful since they allow us for example t analyse only the \textit{nouns} if we care about the things that are discussed, only the \textit{verbs} if we care about actions that are described, or only the \textit{adjectives} if we care about the characteristics given to a noun.
 Moreover, knowing the POS tag of a word can help disambiguate it.
 For example, like as a verb (I like books) is generally positive, but like as a preposition (a day like no other) has no clear sentiment attached.
 
@@ -264,4 +266,4 @@ In other words, it is an engineering challenge, not a social science research qu
 As a consequence, the key criterion by which to judge these steps is validity, not explainability.
 Thus, it is fine to try out different options, as long as you validate the results properly.
 If you have many different choices to evaluate against some metric such as performance on a subsequent prediction task,
-using split-half or crossvalidation techinques discussed in chapter \refchap{ml} are also relevant here to avoid biasing the evaluation.
+using split-half or crossvalidation techinques discussed in chapter \refchap{introsml} are also relevant here to avoid biasing the evaluation.

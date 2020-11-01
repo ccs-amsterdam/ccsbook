@@ -15,7 +15,8 @@ In the columns you see the document frequencies of each term: the word ``bird'' 
 but the word ``with'' occurs only in the first line (text1) and not in the second (text2).
 
 In R, you can use the \fn{dfm} function from the \pkg{quanteda} package.
-This function can take a vector or column of texts and transforms it directly into a DTM.
+This function can take a vector or column of texts and transforms it directly into a DTM
+(which quanteda actually calls a document-\emph{feature} matrix, hence the function name \fn{dfm}).
 In Python, you achieve the same by creating an object of the \cls{CountVectorizer} class, which has a \fn{fit\_transform} function.
 
 
@@ -27,6 +28,8 @@ This seems trivial, as English (and most western) text generally uses spaces to 
 However, even for English there are a number of edge cases. 
 For example, should `haven't' be seen as a single word, or two?
 
+%TODO: move different tokenizers to box
+
 \pyrex[caption=Differences between tokenizers]{ch_dtm/tokenize}
 
 \refex{tokenize} shows how Python and R deal with the sentence ``I haven't seen John's derring-do''.
@@ -34,7 +37,7 @@ For Python, we first use |CountVectorizer.build_tokenizer| to access the built-i
 As you can see in the first line of input, this tokenizes ``haven't'' to |haven|,
 which of course has a radically differeny meaning. Moreover, it silently drops all single-letter words,
 including the |'t|, |'s|, and |I|.
-A more reasonable tokenizer is the \cls{TreebankWordTokenizer} included in the \pkg{nltk} package, which contains a number of functions for doing natural language processing in python.
+A more reasonable tokenizer is the \cls{TreebankWordTokenizer} included in the \pkg{nltk} package, which contains a number of functions for doing natural language processing in Python.
 This tokenizer splits ``haven't'' into |have| and |n't|, which is a reasonable outcome.
 Unfortunately, this tokenizer assumes that text has already been split into sentence,
 and it also includes punctuation as tokens by default.
@@ -77,7 +80,7 @@ For python the best bet is to use a custom package for tokenizing Japanese, such
 This package contains a tokenizer which is able to tokenize the Japanese text, and we could use this in the \cls{CountVectorizer}
 much like we used the \cls{TreebankWordTokenizer} for English earlier.
 Similarly, with heavily inflected languages such as Hungarian or Arabic,
-it might be better to use preprocessing tools developed specifically for these languages, but treating those is unfortunately
+it might be better to use preprocessing tools developed specifically for these languages, but treating those is 
 beyond the scope of this book. 
 
 
@@ -86,15 +89,21 @@ beyond the scope of this book.
 \pyrex[caption=Example document-term matrix]{ch_dtm/sotu}
 
 \refex{sotu} shows a more realistic example.
-It downloads all US 'State of the Union' speeches and creates a document-term matrix from them.
-Since the matrix is now easily too large to print, both python and R simply list the size of the matrix.
-R lists $85$ documents (rows) and $17,999$ features (columns), and Python reports that it's size is $85\times22219$.
+It downloads all US `State of the Union' speeches and creates a document-term matrix from them.
+Since the matrix is now easily too large to print, both Python and R simply list the size of the matrix.
+R lists $85$ documents (rows) and $17,999$ features (columns), and Python reports that it's size is $85\times17,185$.
 Note the difference in the amount of columns (unique terms) due to the differences in tokenization as discussed above. 
 
-\pyrex[caption=A look inside the DTM]{ch_dtm/freq}
-\pyrex[caption=A look inside the DTM]{ch_dtm/freq2}
+\begin{ccsexample}
+  \doublecodex{ch_dtm/freq}
+    \doubleoutput{ch_dtm/freq}
+    \doublecodex{ch_dtm/freq2}
+      \doubleoutput{ch_dtm/freq}
+  \caption{A look inside the DTM}\label{ex:freq}
+\end{ccsexample}
 
-In \refex{freq} we show how you can look at the contents of the DTM. First, we show the overall term and document frequencies of each word, where we showcase words at different frequencies. Unsurprisingly, the word \emph{the} tops both charts, but further down there are minor differences.
+
+In \refex{freq} we show how you can look at the content of the DTM. First, we show the overall term and document frequencies of each word, where we showcase words at different frequencies. Unsurprisingly, the word \emph{the} tops both charts, but further down there are minor differences.
 In all cases, the highly frequent words are mostly functional words like \emph{them} or \emph{first}. More informative words such as \emph{investments} are by their nature used much less often.
 Such term statistics are very useful to check for noise in the data and get a feeling of the kind of language that is used. 
 Second, we take a look at the frequency of these same words in four speeches from Truman to Obama. All use words like \emph{the} and \emph{first}, but none of them talk about \emph{defrauded} -- which is not surprising, since it was only used once in all the speeches in the corpus.
@@ -102,7 +111,7 @@ Second, we take a look at the frequency of these same words in four speeches fro
 However, the words that ranked around 1,000 in the top frequency are still used in less than half of the documents.
 Since there are about 17,000 even less frequent words in the corpus, you can imagine that most of the document-term matrix consists of zeroes. 
 The output also noted this \concept{sparsity} in the first output above.
-In fact, R reports that the dtm is $91\%$ sparse, meaning that percentage of all entries is zero.
+In fact, R reports that the dtm is $91\%$ sparse, meaning 91\% percent of all entries is zero.
 Python reports a similar figure, namely that there are only just under 150 thousand non-zero entries
 out of a possible $8\times22219$, which boils down to a 92\% sparse matrix.
 
@@ -118,23 +127,23 @@ Both \quanteda\ and \sklearn\ store DTMs as sparse matrices by default,
 and most analysis tools are able to deal with sparse matrices very efficiently.
 (but see \refsec{workflow} for problems with machine learning on sparse matrices in R). 
 
-A final note on the difference between python and R in this example.
+A final note on the difference between Python and R in this example.
 The code in R is much simpler and produces nicer results since it also shows the words and the speech names.
-In python, we wrote our own helper function to create the frequency statistics which is built into the R \quanteda\ package.
+In Python, we wrote our own helper function to create the frequency statistics which is built into the R \quanteda\ package.
 These differences between Python and R reflect a pattern that is true in many (but not all) cases:
-In python libraries such as \numpy\ and \sklearn\ are setup to maximize performance,
+In Python libraries such as \numpy\ and \sklearn\ are setup to maximize performance,
 while in R a library such as \quanteda\ or \tidyverse\ is more geared towards ease of use.
-For that reason, the DTM in python does not `remember' the actual words, it uses the index of each word,
+For that reason, the DTM in Python does not `remember' the actual words, it uses the index of each word,
 so it consumes less memory if you don't need to use the actual words in e.g. a machine learning setup.
 R, on the other hand, stores the words and also the document IDs and metadata in the DFM object.
 This is easier to use if you need to look up a word or document, but it consumes (slightly) more memory. 
 
 
-\begin{feature}
-  \textbf{R: Why is it a document-feature matrix?}
-The package \pkg{quanteda} uses the term document-feature matrix because the columns can also contain
-other information instead of terms, such as word pairs, and these are collectively called \emph{features} of the text.
-\end{feature}
+%\begin{feature}
+%  \textbf{R: Why is it a document-feature matrix?}
+%The package \pkg{quanteda} uses the term document-feature matrix because the columns can also contain
+%other information instead of terms, such as word pairs, and these are collectively called \emph{features} of the text.
+%\end{feature}
 
 \begin{feature}
 \noindent\textbf{Python: Why fit\_transform?}
