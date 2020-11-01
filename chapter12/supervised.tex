@@ -3,11 +3,12 @@
 
 For many applications, there are good reasons to use the dictionary
 approach presented in the previous section. First, it is intuitively
-understandable also for lay people, and results can -- in principle --
+understandable and results can -- in principle --
 even be varified by hand, which can be an advantage when transparency
 or communicatibility is of high importance. Second, it is very easy to
 use.
 
+%TODO hoort deze beschrijving niet bij 12.1? (of 12.0, of een aparte sectie `choosing a method')?
 Dictionary approaches excel under three conditions: First, the
 variable we want to code is \emph{manifest and concrete} rather than
 \emph{latent and abstract}: names of actors, specific physical
@@ -31,13 +32,13 @@ article is about the economy or not. This is really easy to do for
 humans: there may be some edge cases, but in general, people rarely
 need longer than a second to grasp whether an article is about the
 economy rather than about sports, culture, etc. Yet, many of these
-article won't directy state that they are about the economy by
+articles won't directy state that they are about the economy by
 explicitly using the word ``economy''.
 
 We may think of extending our dictionary not only with |economi.*| (a
 regular expression that includes economists, economic, and so on), but
 also come up with other words like ``stock exchange'', ``market'',
-``company'' -- but wait. Here, we run into a problem that we also
+``company.'' Unfortunately, we will quickly run into a problem that we also
 faced when we dicussed the precision-recall tradeoff in
 Section~\ref{sec:validation}: The more terms we add to our
 dictionary, the more false positives we will get: articles about
@@ -84,7 +85,7 @@ detail. Classical sentiment analysis is done with a dictionary
 approach: you take a list of positive words, a list of negative words,
 and count what occurs more. Addtionally, one may attach a weight to
 each word, such that ``perfect'' gets a higher weight than ``good'',
-for instance.  An obvious drawbacks include that these pure
+for instance.  An obvious drawbacks is that these pure
 bag-of-words approaches cannot cope with negation (``not good'') and
 intensifiers ``very good''), which is why extensions have been
 developed that take these (and other features, such as punctuation)
@@ -192,11 +193,12 @@ is concerningly low.
 
 \todo[inline]{\url{https://github.com/quanteda/quanteda.textmodels} seems to be under heavy development right now. In the CRAN version of quanteda, there is only a NB classifier present. Let's wait for a moment to check which textmodels will be available via quanteda and then incorporate them here.}
 
+%TODO: Beter uitleggen (+ref ch 11)
 Let us start by comparing two simple classifiers we know (Na\"ive
 Bayes and Logistic Regression, see Section~\ref{sec:nb2dnn} and two
 vectorizers that transform our texts into two numerical
 representations that we know: word counts and $tf\cdot idf$ scores
-[ADD REF TO CHAPTER 11].
+(see \refchap{dtm}).
 
 We can also tune some things in the vectorizer, such as filtering out
 stopwords, or specifying a minimum number (or proportion) of documents
@@ -205,17 +207,16 @@ number (or proportion) of documents in which it is allowed to
 occur. For instance, it could make sense to say that a word that
 occurs in less than $n=5$ documents is probably a spelling mistake or
 so unusual that it just unnecessarily bloats our feature matrix; and
-on the other hand, a word that is so common that it occurs in moret
+on the other hand, a word that is so common that it occurs in more
 than 50\% of all documents is so common that it does not help us to
 distinguish between different classes.
 
 We can try all of these things out by hand by just re-running the code
 from \refex{imdbbaseline} and only changing the line in which the
 vectorizer is specified and the line in which the classifier is
-specified. There's nothing wrong with that, but it's a bit cumbersome
-and not too elegant if we want to do this for more than two or three
-sections. Especially in the Python world, copy-pasting essentially the
-same code is considered bad style, as it makes your code unnecessary
+specified.
+However, copy-pasting essentially the
+same code is generally not a good idea, as it makes your code unnecessary
 long and increases the likelihood of errors creeping in when you, for
 instance, need to apply the same changes to multiple copies of the
 code.  A more elegant approach is outlined in
@@ -227,6 +228,7 @@ of code, we manage to compare four different models, while we already
 needed 15 lines (in \refex{imdbbaseline}) to evaluate only one model.
 
 
+%TODO R-code?
 \pyrex[input=py, output=py, caption={An example of a custom function to give a brief overview of the performance of four simple vectorizer-classifier combinations.}]{chapter12/basiccomparisons}
 
 
@@ -258,8 +260,8 @@ Section~\ref{sec:crossvalidation}), etc. However, our workflow now
 consists of \emph{two} steps: fitting/transforming our input data
 using a vectorizer, and fitting a classifier. To make things easier,
 in scikit-learn, both steps can be combined into a so-called
-pipe. \refex{chapter12/basicpipe} shows how the loop in
-\refex{chapter12/basiccomparisons} can be re-written using pipes (the
+pipe. \refex{basicpipe} shows how the loop in
+\refex{basiccomparisons} can be re-written using pipes (the
 result stays the same).
 
 \pyrex[input=py, output=none, caption={Instead of fitting vectorizer and classifier separately, they can be combined in a pipeline.}]{chapter12/basicpipe}
@@ -273,7 +275,7 @@ whether we want to use only unigrams (single words) or also bigrams
 (combinations of two words, see section [ADD REFERENCE TO APPROPRIATE
   SECTIONS]). For the Logistic Regression, it may be the
 regularization hyperparameter C, which applies a penalty for too
-complex models.  We can simply put all values for these parameters
+complex models.  We can  put all values for these parameters
 that we want to consider in a dictionary, with a logical key (e.g. a string with the step of the pipeline followed by two underscores and the name of the hyperparameter) and a list of all values we want to consider as corresponding value.
 
 The gridsearch procedure will then estimate all combinations of all
