@@ -10,7 +10,7 @@ As a next step, we can decide to filter out certain rows.
 For example, we might want to use only a subset of the data,
 or we might want to remove certain rows because they are incomplete or incorrect.
 
-As an example, FiveThirtyEight published a quiz about American public opinon about guns,
+As an example, FiveThirtyEight published a quiz about American public opinion about guns,
 and were nice enough to also publish the underlying data\footnote{https://projects.fivethirtyeight.com/guns-parkland-polling-quiz/; see https://github.com/fivethirtyeight/data/tree/master/poll-quiz-guns for the underlying data.}.
 \refex{data-filter} gives an example of loading and cleaning this data set, starting with the function \fn{read\_csv} (included in both \pkg{tidyverse} and \pkg{pandas}) to load the data directly from the Internet.
 This data set contains one poll result per row, with a \emph{Question} column indicating which question was asked,
@@ -31,7 +31,7 @@ This means that the original \texttt{d} is overwritten.
   keeps that column and \texttt{column2},and drops all other columns.
   }
   
-In line 6, we filter the data set to list only the polls on whether teachers should be armed
+We then filter the data set to list only the polls on whether teachers should be armed
 (you can understand this is close to our heart).
 This is done by comparing the value of the \emph{Question} column to the value \texttt{'arm-teachers'}.
 This comparison is done with a double equals sign (\verb+==+).

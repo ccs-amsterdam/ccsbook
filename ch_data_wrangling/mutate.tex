@@ -17,7 +17,7 @@ returning a new copy of the data frame rather than changing the original data fr
 In R, this is done using the \pkg{tidyverse} function \fn{mutate}, which is the recommended way to compute values.
 The Python equivalent, \pkg{pandas} function \fn{assign}, is used more rarely as it does not offer many advantages over direct assignment.
 
-In either case, you can use arithmetic: e.g. \verb|rep - dem| for computes the difference between these columns.
+In either case, you can use arithmetic: e.g. \verb|rep - dem| to compute the difference between these columns.
 This works directly in R \fn{mutate},
 but in Python or in R direct assignment you also need to specify the name of the dataframe.
 In Python, this would be \verb+d.rep - d.dem+, while in R this is \verb+d$rep - d$dem+. 
@@ -56,7 +56,7 @@ Finally, lines 20-26 show how you can define and apply a custom function to comb
 This can be quite useful if you use the same cleaning steps in multiple places,
 since it reduces the repetition of code and hence the possibility of introducing bugs or inconsistencies. 
 
-Note that all these versions work fine and produces the same result.
+Note that all these versions work fine and produce the same result.
 In the end, it is up to the researcher to determine which feels most natural in the circumstances.
 As noted above, in R we would generally prefer \fn{mutate} over direct assignment,
 mostly because it fits nicely into the \pkg{tidyverse} workflow and you do not need to repeat the data frame name.

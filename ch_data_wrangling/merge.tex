@@ -46,9 +46,9 @@ In these cases, it is possible to explicitly specify which columns to join on (u
 However, we would generally recommend preprocessing the data first and select and/or rename columns such that the only shared columns are the key columns.
 The reason for that is that if columns in different data frames mean the same thing (i.e. \emph{respID} and \emph{Respondent}), they should generally have the same name to avoid confusion.
 In the case of `accidentally' shared column names, such as the country names in the current example,
-if is also better to rename them so it is obvious which is which in the resulting data set:
+it is also better to rename them so it is obvious which is which in the resulting data set:
 if shared columns are not used in the join, by default they get `.x' and `.y' appended to their name, which is not very meaningful.
-Even if the key column is the only shared column, however, it can still be good to explicitly select that column to make it clear to the reader (or the future you) what is happening. 
+Even if the key column is the only shared column, however, it can still be good to explicitly select that column to make it clear to the reader (or for yourself in the future) what is happening. 
 
 \begin{ccsexample}
 \doublecodex{ch_data_wrangling/capital_1}
@@ -94,11 +94,11 @@ to which you want to add metadata or extra information about your respondents.
 If this data is not available for all respondents, you can use a left join to add the information
 where it is available, and simply leave the other respondents with missing values.
 
-A similar use case is if you have a list of news items, and a separate list of items that were coded
-or found with some search term. Using a left join you keep all news items, and add the coding where it is available.
+A similar use case is when you have a list of news items, and a separate list of items that were coded
+or found with some search term. Using a left join will let you keep all news items, and add the coding where it is available.
 Especially if items that had zero hits of a search term are excluded from the search results,
 you might use a left join followed by a calculation to replace missing values by zeroes to indicate that the counts for
-items aren't actaully missing, but were zero. 
+items aren't actually missing, but were zero. 
 
 Of course, you could also use a right join to achieve the same effect.
 It is more natural, however, to work from your primary data set and add the secondary data,
