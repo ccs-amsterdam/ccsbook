@@ -105,7 +105,7 @@ observation.
 
 Using the function \fn{fviz\_cluster} of the library \pkg{factoextra} in R, or the \pkg{pyplot} function \fn{scatter} in Python, you can get a visualization of the clusters. In \refex{kmeans2} you can clearly identify that the clusters correspond to Nordic countries (more support to foreigners, more education and age), Central and Southern European countries (middle support, lower education and age), and Eastern European countries (less support, lower education and age)\footnote{We can re-run this cluster analysis using k-medoids or partitioning around medoids (PAM) and get similar results (the three medoids are: Slovakia, Belgic and Denmark), both in data and visualization. In R you must install the package \pkg{cluster} than contains the function \fn{pam}, and in Python the package \pkg{scikit-learn-extra} with the function \fn{Kmedoids}.} .
 
-\pyrex[output=py,format=png,caption=Visualization of clusters]{chapter08/kmeans2}
+\pyrex[output=r,format=png,caption=Visualization of clusters]{chapter08/kmeans2}
 
 
 \subsection{Hierarchical clustering}
@@ -134,7 +134,7 @@ If you re-run the hierarchical clustering for 3 clusters (\refex{hc3}) and visua
 
 \pyrex[output=py,caption=Re-run hierarchical clustering with 3 clusters]{chapter08/hc3}
 
-\pyrex[output=py,format=png,caption=Re-run hierarchical clustering with 3 clusters]{chapter08/vishc3}
+\pyrex[output=r,format=png,caption=Re-run hierarchical clustering with 3 clusters]{chapter08/vishc3}
 
 
 \subsection{Principal component analysis and singular value decomposition}
@@ -180,7 +180,7 @@ Let us now conduct a PCA over the Eurobarometer data.  In \refex{pca} we will re
 
 \pyrex[output=py,caption=Principal component analysis (PCA) of a dataframe with 30 records and 4 variables]{chapter08/pca}
 
-The generated object with the PCA contains different elements (in R "sdev",     "rotation", "center",  "scale" and   "x") or attributes in Python (components\_, explained\_variance\_, explained\_variance\_ratio, singular\_values\_, mean\_, n\_components\_, n\_features\_, n\_samples\_ and noise\_variance\_). In the resulting object we can see the values of 4 principal components of each country, and the values of the loadings, technically called \textit{eigenvalues}, for the variables in each principal component. In our example we can notice that support to refugees and migrants are more represented on PC1, while age and educational level on PC2. If we plot the first two principal components (using base function \fn{biplot} in R and and ad hoc function created with \pkg{matplotlib} in Python) we can clearly see how the variables are associated with either PC1 or with PC2 (we might also want to plot any pair of the four components!). But we can also get a picture of how countries are grouped based only in this two new variables.
+The generated object with the PCA contains different elements (in R "sdev",     "rotation", "center",  "scale" and   "x") or attributes in Python (components\_, explained\_variance\_, explained\_variance\_ratio, singular\_values\_, mean\_, n\_components\_, n\_features\_, n\_samples\_ and noise\_variance\_). In the resulting object we can see the values of 4 principal components of each country, and the values of the loadings, technically called \textit{eigenvalues}, for the variables in each principal component. In our example we can notice that support to refugees and migrants are more represented on PC1, while age and educational level on PC2. If we plot the first two principal components using base function \fn{biplot} in R and and the library \pkg{bioinfokit} in Python (\refex{plot_pca}), we can clearly see how the variables are associated with either PC1 or with PC2 (we might also want to plot any pair of the four components!). But we can also get a picture of how countries are grouped based only in this two new variables.
 
 \pyrex[output=py,format=png,caption=Plot PC1 and PC2]{chapter08/plot_pca}
 
