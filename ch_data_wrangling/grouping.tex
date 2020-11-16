@@ -13,7 +13,7 @@ by specifying which column identifies these groups.
 In the previous examples, this would be the school name or the date of each article.
 It is also possible to group by multiple columns, for example to compute the average per day per news source.
 
-The next step is to specify one or more summary (or \emph{aggregate}) functions to be computed over the desired value columns.
+The next step is to specify one or more summary (or \emph{aggregation}) functions to be computed over the desired value columns.
 These functions compute a summary value, like the mean, sum, or standard deviation, over all the values belonging to each group.
 In the example, to compute average test scores per school we would apply the average (or mean) function to the test score value column.
 In general, you can use multiple functions (e.g.  mean and variance) and multiple columns (e.g. mean test score and mean parental income).
@@ -30,7 +30,7 @@ and then we create the aggregate statistics.
 In this example, we do not store the result of the computation, but print it on the screen.
 To store the results, simply assign it to a new object as normal.
 
-\pyrex[caption=Aggregation,output=r,format=table]{ch_data_wrangling/aggregate}
+\pyrex[caption={Aggregation. Note that in the Python example, we can specify often-used functions such as \texttt{"mean"} simply as a string, but instead, we could also pass functions directly, such as numpy's \texttt{np.mean}},output=r,format=table]{ch_data_wrangling/aggregate}
 
 In R, you use the \pkg{dplyr} function \fn{group\_by}  to define the groups,
 and then call the function \fn{summarize~} to compute summary values by specifying
@@ -44,24 +44,23 @@ and the values contain the summary functions to apply, so \verb+{'value': [funct
 
 \subsection{Combining multiple operations}
 
-In the examples above, each line of code (often called a \emph{statement}) contained a single operation, generally a function call.
+In the examples above, each line of code (often called a \emph{statement}) contained a single operation, generally a call to a function or method (see \refsec{functions}).
 The general shape of each line in R was \verb+data = function(data, arguments)+, that is, the data is provided as the first argument to the function.
-In Python, you specify the object on which to call the function with a period,
+In Python, we often used methods that ``belong to'' objects such as data frames or columns. Here, we therefore specify the object itself follwed by a period and its method that is to be called,
 i.e. \verb+object.function(arguments)+.
 
 Although there is nothing wrong with limiting each line to a single operation, both languages allow multiple operations to be chained together.
 Especially for grouping and summarizing, it can make sense to link these operations together as they can be thought of as a single `data wrangling' step.
 
-In Python, this can be achieved by adding the second \verb+.function()+ directly to the end of the first statement.
-Essentially, this calls the second function on the result of the first function: \verb+data = data.function1(arguments).function2(arguments)+.
-
-In R, the data is of course included in the function arguments, so an alternative method is needed to chain function calls.
+In Python, this can be achieved by adding the second \verb+.method()+ directly to the end of the first statement.
+Essentially, this calls the second method on the result of the first method: \verb+data = datamethod1(arguments).method2(arguments)+.
+In R, the data needs of course to be included in the function arguments. BUt we can also chain thesefunction calls.
 This is done using the \emph{pipe operator} (\verb+%>%+) from the (cutely named) \pkg{magrittr} package.
 The pipe operator inserts the result of the first function as the first argument of the second function.
 More technically, \verb+f1(d) %>% f2()+ is equivalent to \verb+f2(f1(d))+.
 This can be used to chain multiple commands together, e.g. \verb+data = data %>% function1(arguments) %>% function2(arguments)+.
 
-\pyrex[caption=Combining multiple functions,output=r,format=table]{ch_data_wrangling/aggregate2}{
+\pyrex[caption=Combining multiple functions or methods,output=r,format=table]{ch_data_wrangling/aggregate2}{
 
 \refex{aggregate2} shows the same operation as above, but chained into a single statement.
 

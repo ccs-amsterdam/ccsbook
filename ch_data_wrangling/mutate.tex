@@ -20,7 +20,7 @@ The Python equivalent, \pkg{pandas} function \fn{assign}, is used more rarely as
 In either case, you can use arithmetic: e.g. \verb|rep - dem| to compute the difference between these columns.
 This works directly in R \fn{mutate},
 but in Python or in R direct assignment you also need to specify the name of the dataframe.
-In Python, this would be \verb+d.rep - d.dem+, while in R this is \verb+d$rep - d$dem+. 
+In Python, this would be \verb+d["rep"] - d["dem"]+ \footnote{You can also write \texttt{d.rep - d.dem}, which is shorter, but does not work if your column names contain, for instance, spaces.}, while in R this is \verb+d$rep - d$dem+. 
 
 In many cases, however, you want to use various functions to perform tasks like cleaning and data conversion
 (see \refsec{functions} for more explanation of built-in and custom functions).
@@ -28,19 +28,19 @@ For example, to convert a column to numeric you would use the base R function \f
 Both functions take a column as argument and convert it to a numeric column.
 
 Almost all R functions work on whole columns like that.
-In Python, however, many functions work on individual values rather than columns.
-To apply a function on each element of a column, you can use \verb+df.col.apply(my_function)+
-(where \texttt{df} and \texttt{col} are the names of your dataframe and column). 
-There are more built-in functions that you can call on a column, for example \verb+df.col.fillna+ replaces
-missing values, and \verb+df.col.str.replace+ does a find and replace.
-Note that these functions (like most functions in \pkg{pandas}) work on whole columns,
-so there is no need to \verb+apply+ them. 
-
-%TODO should we give or point to some overview of possible functions?
+In Python, however, many \emph{functions} work on individual values rather than columns.
+To apply a function on each element of a column \verb+col+, you can use \verb+df.col.apply(my_function)+
+(where \texttt{df} and \texttt{col} are the names of your dataframe and column).
+In contast, pandas columns have multiple useful \emph{methods} that -- because they are methods
+of that column -- apply to the whole column\footnote{See \refsec{functions} for a refresher on methods and functions}.
+For example, the method \verb+df.col.fillna+ replaces
+missing values in the column \verb+col+, and \verb+df.col.str.replace+ does a find and replace.
+Unlike functions that expect individual values rather than columns as an input, there is no need to explicitly \verb+apply+ such a method. 
+As always, you can use tab completion (pressing the TAB key after writing \texttt{df.col.}) to get a menu that includes all availbale methods.
 
 \pyrex[output=r,format=table,caption=Mutate]{ch_data_wrangling/mutate}
 
-To illustrate these possibilities, \refex{mutate} has code for cleaning a version of the Guns Polls
+To illustrate some of the many possibilities, \refex{mutate} has code for cleaning a version of the Guns Polls
 in which we intentionally introduced two problems: we added some typos to the \emph{rep} column
 and introduced a missing value in the \emph{Support} column.
 To clean this, we perform three steps: First, we remove all non-numeric characters using a regular expression

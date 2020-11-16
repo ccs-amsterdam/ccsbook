@@ -1,4 +1,5 @@
 \section{Merging data}
+\label{sec:join}
 
 In many cases, we need to combine data from different sources or data files.
 For example, we might have election poll results in one file and socio-economic data per area in another.
@@ -27,7 +28,7 @@ As shown in \refex{piketty}, he released separate files for public and private c
 If we would want to analyse the relationship between these (for example to recreate Figure 3.6 on page 128 of that book),
 we first need to combine them into a single data frame.
 
-To combine these data frames, we use the \pkg{pandas} function \fn{merge} in Python or the \pkg{dplyr} method \fn{full\_join} in R.
+To combine these data frames, we use the \pkg{pandas} data frame method \fn{merge} in Python or the \pkg{dplyr} method \fn{full\_join} in R.
 Both methods join the data frames on one or more \emph{key} columns.
 The key column(s) identify the units in both data frames, so in this case the \emph{Year} column.
 Often, the key column is some sort of identifier, like a respondent or location ID.
@@ -47,7 +48,7 @@ However, we would generally recommend preprocessing the data first and select an
 The reason for that is that if columns in different data frames mean the same thing (i.e. \emph{respID} and \emph{Respondent}), they should generally have the same name to avoid confusion.
 In the case of `accidentally' shared column names, such as the country names in the current example,
 it is also better to rename them so it is obvious which is which in the resulting data set:
-if shared columns are not used in the join, by default they get `.x' and `.y' appended to their name, which is not very meaningful.
+if shared columns are not used in the join, by default they get `.x' and `.y' (R) or `\_x' and `\_y' (Python) OA appended to their name, which is not very meaningful.
 Even if the key column is the only shared column, however, it can still be good to explicitly select that column to make it clear to the reader (or for yourself in the future) what is happening. 
 
 \begin{ccsexample}
@@ -68,12 +69,16 @@ This is then used to compute the correlation between private and public capital,
 which shows that there is a weak but (just) significant negative correlation ($\rho=-.32, p=.04$)%
 \footnote{Of course, the fact that this is time series data means that the independence assumption of regular correlation is violated badly, so this should be interpreted as a descriptive statistic, e.g. in the years with high private capital there is low public capital and the other way around}.
 
+\note{Next to \fn{merge}, pandas dataframes also have a method called \fn{join}. It is a simplified version for joining on indices (i.e., the row labels). If you have two data frames in which corresponding rows have the same row number, you can simply write \texttt{df1.join(df2}. In short: both methods do the same, but merge provides more options, and join is easier if you want to join on the indices.}
+
+
+
 \subsection{Inner and Outer joins}
 
 In the example above, both data sets had exactly one entry for each unit (year), making it the most straightforward case.
 If either (or both) of the data sets are missing units, however, you need to specify how to deal with this.
 
-\reftab{joins} list the 4 possible ways of joining, keeping all rows (\emph{outer join}), only rows present in both (\emph{inner join}), or all rows from one of the sets and matching rows from the other (\emph{left} or \emph{right join}).
+\reftab{joins} list the 4 possible ways of joining, keeping all rows (\emph{outer join}), only rows present in both (\emph{inner join}), or all rows from one of the sets and matching rows from the other (\emph{left} or \emph{right join}). Left and right here literally refer to the order in which you type the dataframe names. Figure~\ref{fig:joinvenn} gives an overview. 
 In all cases except inner joins, this can create units where information from one of the data sets is missing.
 This will be lead to missing values (|NA|/|NaN|) being inserted in the columns of the data sets with missing units.
 
@@ -94,6 +99,15 @@ to which you want to add metadata or extra information about your respondents.
 If this data is not available for all respondents, you can use a left join to add the information
 where it is available, and simply leave the other respondents with missing values.
 
+%\input{ch_data_wrangling/figjoins}
+\begin{figure}
+    \centering
+    \includegraphics{figures/ch07_figjoins}
+    \caption{The solid area indicades whether the cases in the resulting datasets need to appear in one, both, or any of the datasets.}
+    \label{fig:joinvenn}
+\end{figure}
+
+
 A similar use case is when you have a list of news items, and a separate list of items that were coded
 or found with some search term. Using a left join will let you keep all news items, and add the coding where it is available.
 Especially if items that had zero hits of a search term are excluded from the search results,
@@ -113,7 +127,6 @@ Of course, you will have to carefully think about how to deal with the resulting
 The sections above discuss merging two data sets at the same level of analysis,
 i.e. with rows representing the same units (repondents, items, years) in both sets.
 It is also possible, however, to join a more aggregate (high level) set with a more detailed data set.
-
 For example, you might have respondents that are part of a school or organizational unit.
 It can be desirable to join the respondent level information with the school level information,
 for example to then explore differences between schools or do multilevel modelling.
@@ -128,7 +141,7 @@ Democratic primary.
 Conversely, the \texttt{counties} data set shows a large number of facts about these counties,
 such as population, change in population, gender and education distribution, etc. 
 
-\pyrex[caption=2016 Primary results and county-level metadata]{ch_data_wrangling/primary}
+\pyrex[caption={2016 Primary results and county-level metadata. Note that to avoid duplicate output, we display the counties data in the Python example and the results data in the R example.}]{ch_data_wrangling/primary}
 
 Suppose we hypothesize that Hillary would do relatively well in areas with more black voters.
 We would then need to combine the county level data about ethnic composition with the country $\times$ candidate
