@@ -38,25 +38,71 @@ this book.
   have an object called a) and hit the TAB key. This will open a
   drop-down menu to choose from.}
 
-
 We will illustrate how to create simple functions in R and Python, so you
 will have a better understating of how they work. Imagine you want to
 create two functions: one that computes the 60\% of any given number
 and another that estimates this percentage only if the given argument
-is above the threshold of 5. The structure of a function in R is:
+is above the threshold of 5.
+The general structure of a function in R and python is:
 
+\noindent\rule{\textwidth}{.5pt}\vspace{-1em}
+
+\noindent\begin{minipage}[t]{.5\textwidth}
+  Function definition in R:
 \begin{verbatim}
-function_name <- function(arg_1, arg_2, ...) {
-   Function body 
+f = function(par1, par2=0) {
+   ... statements ... 
+   return_value
 }
+result = f(arg1, arg2)
+result = f(arg1, par2=arg2)
+result = f(arg1, par2=arg2)
+result = f(arg1)
 \end{verbatim}
-
-In Python it is:
-
+\end{minipage}
+\begin{minipage}[t]{.45\textwidth}
+  Function definition in Python:
 \begin{verbatim}
-def function_name(arg_1, arg_2, ...):
-  statement
+def f(par1, par2=0):
+    ... statements ...
+    return return_value   
+
+result = f(arg1, arg2)
+result = f(par1=arg1, par2=arg2)
+result = f(arg1, par2=arg2)
+result = f(arg1)
 \end{verbatim}
+\end{minipage}
+\vspace{.5em}
+
+\noindent\rule{\textwidth}{.5pt}
+
+In both cases, this defines a function called \verb|f|,
+with two \concept{arguments}, \verb|arg_1| and \verb|arg_2|.
+When you call the function, you specify the values for these parameters (the arguments) between brackets after the function name.
+You can then store the result of the function as an object as normal.
+
+As you can see in the syntax above, you have some choices when specifying the arguments.
+First, you can specify them \emph{by name} or \emph{by position}.
+If you include the name (\verb|f(param1=arg1)|) you explicitly bind that argument to that parameter.
+If you don't include the name (\verb|f(arg1, arg2)|) the first argument matches the first paramters and so on.
+Note that you can mix and match these choices, specifying some parameters by name and others by position.
+
+Second, some functions have \concept{optional parameters}, for which they provide a default value.
+In this case, \verb|par2| is optional, with default value \verb|0|.
+This means that if you don't specify the parameter it will use the default value instead.
+Usually, the mandatory parameters are the main objects used by the function to do its work,
+while the optional parameters are additional options or settings.
+It is recommended to generally specify these options by name when you call a function,
+as that increases the readability of the code.
+Whether to specify the mandatory arguments by name depends on the function:
+if it's obvious what the argument does, you can specify it by position,
+but in doubt it's often better to specify them by name. 
+
+Finally, note that in python you explicitly indicate the result value of the function with
+\verb|return value|.
+In R, the value of the last expression is automatically returned,
+although you can also explicitly call \verb|return(value)|. 
 
 \refex{functions} shows how to write our function and how to use it.
 \pyrex[caption=Writing functions,output=py]{chapter03/functions}

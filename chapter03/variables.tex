@@ -147,41 +147,55 @@ text objects or strings of characters. Commonly simply known as ``strings'',
 such text objects are also referred to as ``character vector objects'' in R.
 You can create them just by adding single or double quotes around the value of the variable (keep in mind to begin and finish the string either with single or with double quotes, and not to mix their use). Every time you want to analyse a social-media message, or any other text, you will be dealing with such strings. 
 
-\pyrex[caption=Strings and bytes]{chapter03/var4}
+\begin{ccsexample}
+  \doublecodex{chapter03/var4}
+  \doubleoutput{chapter03/var4}
+  \doublecodex{chapter03/var4b}
+  \doubleoutput{chapter03/var4b}
+  \caption{Strings and bytes}\label{ex:var4}
+ \end{ccsexample}
 
+As you see in \refex{var4}, you can create a string by enclosing a text in quotation
+marks. You can use either double or single quotation marks, but you
+need to use the same mark to begin and end the string. This can be
+useful if you want to use quotation marks within a string, then you can
+use the other type to denote the beginning and end of the string.
+If you need to use a single single quotation mark within a single-quoted string,
+you can \concept{escape} the quotation mark by prepending it with a backslash (\verb|\'|),
+and similarly for double-quoted strings.
+To include an actual backslash in a text, you also escape it with a backslash,
+so you end up with a double backslash (\verb|\\|). 
+
+The Python example also shows a concept introduced in Python 3.6 (introduced in December 2016):
+the f-string.  These are strings that are prefixed with the letter \texttt{f} and are \emph{formatted} strings. This means that these strings will automatically insert a value were curly brackets indicate you wish to do so. This means that you can write: \texttt{print(f'The value of i is \{i\}'} to print ``The value of i is 5'', given that i is 5.
+In R, the \pkg{glue} package allows you to use a f-string-like syntax as well: \texttt{print(glue("The value of i is \{i\}"))}.
+
+Although this will be explained in more detail in \refsec{unicode},
+it is good to introduce how computers store text in memory or files. 
 It is not too difficult to imagine how a computer internally
 handles \emph{integers}: After all, even though the number may be displayed
 as a decimal number to us, it can be trivially converted and stored
 as a binary number (effectively, a series of zeros and ones)
 --- we do not have to care about that, as there
-is only one way of doing so. But when we think about text, it is not
+is only one way of doing so.
+But when we think about text, it is not
 immediately obvious how a string should be stored as a sequence of
-zeros and ones.
-Indeed, here are several ways of how textual characters can be stored as
-bytes, and it is important to be aware of this.
-Although you will not encounter this too often, sometimes
-we even have to process raw bytes. Quite confusingly, bytes are also often
-displayed as letters, but they are different: To begin with, a byte
-only has $2^8=256$ possible values, while there are more than one
-million possible characters that can form one character in a
-string, especially in the case of so-called Unicode strings, which may contain letters
-from scripts from all around the world or also emojis.
-You can read more about this in
-\refsec{encodings}.  Because we ocasionally need a low-level approach in which we care about the exact
-bytes underlying a string,  \refex{var4} shows how to create both normal strings and raw
-(byte) strings. Nowadays, you seldom have to 
-create raw byte strings.  Historically, that was different. For instance,
-in Python 2, strings by default were considered raw byte strings
-Still, data from some legacy software or data you retrieve from 
-some online sources may still come in as raw bytes (see \refchap{scraping}).
+zeros and ones, especially given the huge variety of writing systems used for different languages. 
 
-As you see in \refex{var4}, a string is denoted by quotation
-marks. You can use either double or single quotation marks, but you
-need to use the same mark to begin and end the string. This can be
-useful if you want to use quotation marks within a string, then you can
-use the other type to denote the beginning and end of the string.
+Indeed, here are several ways of how textual characters can be stored as bytes,
+which are called \concept{encodings}. 
+The process of moving from bytes (numbers) to characters is called decoding,
+and the reverse process is called encoding. 
+Ideally, this is not something you should need to think of,
+and indeed strings (or character vectors) already represent decoded text.
+This means that often when you read from or write data to a file,
+you need to specify the encoding (usally UTF-8). 
+However, both python and R also allow you to work with the raw data
+(e.g. before decoding) in the form of \concept{bytes} (Python) or \concept{raw} (R) data,
+which is sometimes necessary if there are encoding problems.
+This is shown briefly in the bottom part of \refex{var4}.
+Note that while R shows the underlying hexadecimal byte values of the raw data (so 54 is \verb|T|, 68 is \verb|h| and so on) and python displays the bytes as text characters, in both cases the underlying data type is the same: raw (non-decoded) bytes.
 
-\note{Since Python 3.6, there is a new type of string, the f-string. These are strings that are prefixed with the letter \texttt{f} and are \emph{formatted} strings. This means that these strings will automatically insert a value were curly brackets indicate you wish to do so. This means that you can write: \texttt{print(f'The value of i is \{i\}'} to print ``The value of i is 5'', given that i is 5. In a similar fashion, you can prevent Python from interpreting special characters by prefixing the string with the letter \texttt{r}, which can be useful when writing regular expressions (\refsec{regular}). In R, the \pkg{glue} package allows you to use a f-string-like syntax as well.}
 
 
 \subsection{Combining multiple values: lists, vectors, and friends}
@@ -192,37 +206,12 @@ multiple of these objects. For example, we do not want to manually
 create thousands of objects called tweet0001, tweet0002, \ldots
 tweet9999 -- we'd rather have one list called tweets that contains all
 of them. You will encounter several names for such combined data
-structures: lists, vectors, one-dimensional arrays, series, and some
+structures: lists, vectors, arrays, series, and some
 more. 
 The core idea is always the same: we take multiple objects
 (be it numbers, strings, or anything else) and then create one object that combines all of them (\refex{1darray1}).
 
-%\begin{table}[ht]
-%\label{tab:vector_objects}
-%\caption{Classes of vector objects in R\label{table:nonlin}}{%
-%\centering
-%\begin{tabular}{c c c p{2cm}}
-%\hline\hline
-%Data type & Example & Code \\ [0.5ex]
-%\hline
-%Numeric&1, 2.5, 100, 2500.38& a = 100 \\
-%Integer&20L, 100L&d = 20L \\
-%Complex& 100+50x, 8*3i &e = 100+50x \\
-%Character&   \parbox[t]{4cm}{\centering 'a', "I am happy learning R!!!", "200", 'R', "FALSE"} & tweet  = "I am happy learning R!!!" \\
-%Raw& \parbox[t]{4cm}{\centering "Any text" stored as:  41 6e 79 20 74 65 78 74} & raw\_string  = charToRaw("Any text") \\
-%Logical& TRUE, FALSE & logical\_operator  = TRUE  \\ [1ex]
-%\hline
-%\end{tabular}}{}
-%\end{table}
-
-
-%Table~\ref{tab:vector_objects} summarizes vector objects available in R.
-
-
-\pyrex[caption=One-dimensional arrays (such as vectors in R or lists in Python) can contain multiple values, output=both, input=both]{chapter03/1darray1}
-
-%|tweets = ["this is some tweet", "yet another tweet", "and a third one"]| (Python) or
-%|tweets  = c("this is some tweet", "yet another tweet", "and a third one")| (R).
+\pyrex[caption=Collections arrays (such as vectors in R or lists in Python) can contain multiple values]{chapter03/1darray1}
 
 As you see, we now have one name (such as |scores|) to refer to all of scores.
 The Python object in \refex{1darray1} is called a \emph{list}, the R object a \emph{vector}.
@@ -308,16 +297,18 @@ values are now displayed surrounded by |"|.
 \pyrex[caption=R enforces that all elements of a vector have the same data type, output=r, input=r]{chapter03/1darray1b}
 
 
-In contrast to a vector, a \emph{list} is much less restricted: A list does not care
+In contrast to a vector, a \concept{list} is much less restricted: A list does not care
 whether you mix numbers and text. In Python, such lists are the most common type for creating
 a one-dimensional array. Because they
 can contain very different objects, running the \fn{type} function on them
 does not return anything about the objects inside the list, but simply states that we
 are dealing with a list (\refex{1darray1}).
 In fact, lists can even contain other lists, or any other object for
-that matter. 
-Also in R, you can create lists, even though they are much less popular in R than
-they are in Python. R lists are created in a similar way as vectors, except that we have to add the word |list|
+that matter.
+
+In R you can also uses lists, even though they are much less popular in R than
+they are in Python because vectors are better if all objects are of the same type.
+R lists are created in a similar way as vectors, except that we have to add the word |list|
 before declaring the values. Let's build a list with four different
 kind of elements, a numeric object, a character object, a square root
 function (\fn{sqrt}) and a numeric vector (\refex{1darray4}). In fact, you
@@ -332,71 +323,52 @@ entries of very different types. But also Python users sometimes may want a stri
 structure like R's vector. This may be especially interesting for
 high-performance calculations, and therefore, such a structure is
 avalable from the \pkg{numpy} (\emph{num}bers in \emph{py}thon)
-package: the numpy array (\refex{1darray7}).
+package: the numpy array.
+This will be discussed in more detail when we deal with data frames in \refchap{filetodata}.
 
-\pyrex[input=py, output=py, caption={Numpy arrays behave more like R vectors. However, you have to import (and potentially install) an additional package, \pkg{numpy}, for this (see \refsec{installing})}]{chapter03/1darray7}
+%\pyrex[input=py, output=py, caption={Numpy arrays behave more like R vectors. However, you have to import (and potentially install) an additional package, \pkg{numpy}, for this (see \refsec{installing})}]{chapter03/1darray7}
 
+\begin{feature}\textbf{Object references and mutable objects}
+  A subtle difference between Python and R is how they deal with copying objects.
+  Suppose we define $x$ containing the numbers $1,2,3$ (\verb|x=[1,2,3]| in Python or \verb|x=c(1,2,3}| in R)
+  and then define an object y to equal x (\verb|y=x|).
+  In R, both objects are kept separate, so changing $x$ does not affect $y$,
+  which is probably what you expect.
+  In Python, however, we now have two variables (names) that both point to or \concept{reference} the same object,
+  and if we change $x$ we also change $y$ and vice versa, which can be quite unexpected.
+  Note that if you really want to copy an object in Python, you can run \verb|x.copy()|.
+  See \refex{mutable} for an example.
 
+  Note that this is only important for \concept{mutable} objects, that is,
+  objects that can be changed.
+  For example, lists in Python and R and vectors in R are mutable because you can replace or append members.
+  Strings and numbers, on the other hand, are immutable:
+  you cannot change a number or string, a statement such as \verb|x=x*2| creates a new object containing the value of \verb|x*2| and stores it under the name \verb|x|.
 
-\paragraph{Mutable versus immutable objects}
+\end{feature}
+  
+\pyrex[caption={The (unexpected) behavior of mutable objects}]{chapter03/mutable}
 
-Another difference between lists and vectors is less obvious than
-the question whether they can contain different data types, is what happens when you try to change them.
-Let's take a step back first and think about what happens when assigning values
-and names.
-Imagine we assigned the name |a| to a value, say 42.
-There are two possibilities that could happen when we later on say that |a|,
-instead, should be 65. \emph{Either} a new object is created and the name |a|
-now points to that new object instead; or the object itself is changed.
-The first behavior is called \emph{immutable}, then second \emph{mutable}.
-R objects in principle are \emph{immutable}, and so are many types
-in Python (e.g., int, float, bool, string). But Python lists are \emph{mutable}.
+\paragraph{Sets and Tuples}
+The \fn{vector} (R) and \fn{list} (Python) are the most frequently used collections
+for storing multiple objects. 
+In Python there are two more collection types you are likely to encounter.
+First, \concept{tuples} are very similar to lists, but they cannot be changed after creating them
+(they are \concept{immutable}).
+You can create a tuple by replacing the square brackets by regular parentheses:
+\verb|x=(1,2,3)|. 
 
-\note{While most of the time, you will not care about mutable or
-  immutable objects, the fact that Python lists (and, later, data frames) are
-  mutable can be really crucial if you. \refex{mutable} illustrates
-  what happens if you create a new object referring to a mutable
-  object, which -- in contrast to what you may think -- does not
-  create a copy of the object itself. Rather, we now get two names for
-  the same object.}
-
-\pyrex[input=py, output=py, caption={The (for many unexpected) behavior of mutable objects}]{chapter03/mutable}
-
-Why is this important for you? First, because it may cause some
-unexpected behavior (see box above); second, it means that you can
-choose between creating a mutable list and her immutable sister, the \emph{tuple}.
-As you know by now, we build a Python list object using square brackets |[]|. If we use
-parentheses |()| instead, we create a tuple. It's as simple as that.
-There is not much of a difference between lists and tuples, except that tyuples are immutable, which means that
-they are constant or unchangeable and you can not freely change their
-values.
-
-In \refex{1darray5}, we create a list and a tuple, and get their sizes with the native function \fn{len}.
-We have created two sequences of six objects
-(three integers and three strings) that represent common numeric and
-categorical values for sentiment analysis. The first sequence is a
-list and the second a tuple. We can get any value of the list or tuple
-by indexing its position, just keep in mind that indexing in Python
-begins in 0 and not in 1 like in R. 
-
-\pyrex[input=py, output=py, caption=Lists and tuples in Python]{chapter03/1darray5}
-
-Imagine now that you decide that the value `neutral' should be
-substituted by the value `informative' in the created sequences. You
-can update them by just assigning a new value to an item that is
-identified by its index.  The list will be correctly updated, but the
-code you run to change the tuple will give you an error (with some
-message such as: "'tuple' object does not support item
-assignment"). The immutability of tuples can be of advantage if you
-want to make sure that a value is not accidentily changed.
-
-We also have another Python object called a \emph{set}. A set is a mutable
-collection of \emph{unique} elements (you cannot repeat a value) with
+Second, in Python there is an object type called a \concept{set}.
+A set is a mutable collection of \emph{unique} elements (you cannot repeat a value) with
 no order. As it is not properly ordered, you cannot run any indexing
-or slicing operation on it. The immutable version of sets are called
-frozensets.
+or slicing operation on it.
+Although R does not have an explicit set type,
+it does have functions for the various set operations,
+the most useful of which is probably the function \fn{unique} which removes all duplicate values in a vector.
+\refex{sets} shows a number of set operations in Python and R,
+which can be very useful for e.g. finding all elements that occur in two lists.
 
-\pyrex[input=py, output=py, caption={Unordered collections with only unique values: sets}]{chapter03/1darray6}
+\pyrex[input=py, output=py, caption={Sets}]{chapter03/sets}
 
 
 %Beyond the class (which is a powerful function because you can create new classes your self), you can also get the R internal type of the object (storage mode), using the typeof() function:
@@ -405,40 +377,37 @@ frozensets.
 %\end{exampler}
 
 
-\paragraph{Factors}
+%% \paragraph{Factors}
 
-Finally, a data structure similar to a vector is the \fn{factor}.
-R users are very likely tp encounter factors, which can be very useful when
-working with categorical data. Factors
-store the values of a vector with corresponding labels.%, which in
-turn will produce levels.
-If you create a factor, it will
-automatically read the labels from the values of the vector, but you
-may manually change those levels. Let's have a look at
-\refex{1darray6}.  The first line will create again a vector of scores
-of ten students. Then we automatically convert the vector into a
-factor (reading the very same values as labels) and finally we create
-the labels (``fail" or ``pass") for each of the possible grades.  The
-factor-type object factor\_scores\_2 will be probably more useful to
-deal with a bigger amount of students. While we have only two levels
-(which can be identified with the function \fn{nlevels}), we can have many
-values to connect with those labels.
+%% Finally, a data structure similar to a vector is the \fn{factor}.
+%% R users are very likely tp encounter factors, which can be very useful when
+%% working with categorical data. Factors
+%% store the values of a vector with corresponding labels.%, which in
+%% turn will produce levels.
+%% If you create a factor, it will
+%% automatically read the labels from the values of the vector, but you
+%% may manually change those levels. Let's have a look at
+%% \refex{1darray6}.  The first line will create again a vector of scores
+%% of ten students. Then we automatically convert the vector into a
+%% factor (reading the very same values as labels) and finally we create
+%% the labels (``fail" or ``pass") for each of the possible grades.  The
+%% factor-type object factor\_scores\_2 will be probably more useful to
+%% deal with a bigger amount of students. While we have only two levels
+%% (which can be identified with the function \fn{nlevels}), we can have many
+%% values to connect with those labels.
 
-\pyrex[input=r, output=none, caption=Factors can also store labels]{chapter03/1darray6}
+%% \pyrex[input=r, output=none, caption=Factors can also store labels]{chapter03/1darray6}
 
-Python does not natively support factors. The \pkg{pandas} library,
-which we will use later throught this book, introduces a datatype called
-\fn{Categorical} that serves the same purpose, but it is much less
-used than factors are in R.
+%% Python does not natively support factors. The \pkg{pandas} library,
+%% which we will use later throught this book, introduces a datatype called
+%% \fn{Categorical} that serves the same purpose, but it is much less
+%% used than factors are in R.
 
 
 
 \subsection{Dictionaries}
-Almost all data structures in R have a similar equivalent in Python
-and vice versa. There is one exception, though: \emph{dictionaries}. A
-dictionary, also known as associative array or hash table, is a very
-popular data structure in Python, but does not exist in R.
 
+Python \emph{dictionaries} are a very powerful and versatile data type.
 Dictionaries contain unordered and mutable collections of objects that
 contain certain information in another object. Python generates this
 data type in form of |{key : value}| pairs in order
@@ -454,7 +423,13 @@ retrieve structured information. We can create them using the curly
 brackets {} and including each key-value pair as an element of the
 collection (\refex{dict}).
 
-\pyrex[input=py, output=py, caption=Dictionaries store key-value pairs]{chapter03/dict}
+In R, the closest you can get to a python dictionary is to use lists with named elements.
+This allows you to assign and retrieve values by key,
+however the key is restricted to names, while in python most objects can be used as keys.
+You create a named list with \verb|d = list(name=value)| and access individual elements with either
+\verb|d$name| or \verb|d[["name"]]|. 
+
+\pyrex[caption=Key-value pairs in Python dictionaries and R named lists]{chapter03/dict}
 
 A good analogy for a dictionary is a telephone book (imagine a paper
 one, but it actually often holds true for digital phone books as
@@ -506,22 +481,27 @@ FALSE, respectively, to illustrate how it changes the values of the
 matrix, even when the shape (2x3) remains identical. As you may
 imagine, we can operate with matrices, such as adding up two of them.
 
-A powerful data type are the arrays (very much like the \pkg{numpy}
-arrays described above), which might be similar to matrices but
-without the restriction of the two-dimensional rectangular space. This
-means that you create your own dimensions, indicating (in order) the
-number of rows, columns and matrices of the array. Your will need
-vectors as inputs and dimensions as parameters. For example,
-three-dimensional arrays are fundamental when writing pixel values and
-coding images. 
+%% A powerful data type are the arrays (very much like the \pkg{numpy}
+%% arrays described above), which might be similar to matrices but
+%% without the restriction of the two-dimensional rectangular space. This
+%% means that you create your own dimensions, indicating (in order) the
+%% number of rows, columns and matrices of the array. Your will need
+%% vectors as inputs and dimensions as parameters. For example,
+%% three-dimensional arrays are fundamental when writing pixel values and
+%% coding images. 
 
 
-\subsection{Making life easier: dataframes}
+\subsection{Making life easier: data frames}
 
-Dataframes are friendly data structures that look very much like
+So far, we have discussed the general built-in collections that you find in most programming languages
+such as the list and array.
+However, in data science and statistics you are very likely to encounter a specific collection type that we haven't discussed yet: the \concept{Data frame}.
+These structures are discussed in detail in \refchap{filetodata},
+but for completeness we will also introduce them briefly here. 
+
+Data frames are user-friendly data structures that look very much like
 what you find in SPSS, Stata, or Excel. They will help you in a wide
-range of statistical analysis (though in more advanced exercises such
-in machine learning you will not be able to use them any more!).  A
+range of statistical analysis.  A
 data frame is a tabular data object that includes rows (usually the
 instances or cases) and columns (the variables). In a three-column data frame,
 the first variable can be \emph{numeric}, the second \emph{character}
