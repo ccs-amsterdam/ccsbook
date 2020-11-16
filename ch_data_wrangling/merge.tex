@@ -78,9 +78,17 @@ which shows that there is a weak but (just) significant negative correlation ($\
 In the example above, both data sets had exactly one entry for each unit (year), making it the most straightforward case.
 If either (or both) of the data sets are missing units, however, you need to specify how to deal with this.
 
-\reftab{joins} list the 4 possible ways of joining, keeping all rows (\emph{outer join}), only rows present in both (\emph{inner join}), or all rows from one of the sets and matching rows from the other (\emph{left} or \emph{right join}). Left and right here literally refer to the order in which you type the dataframe names. Figure~\ref{fig:joinvenn} gives an overview. 
+\reftab{joins} list the 4 possible ways of joining, keeping all rows (\emph{outer join}), only rows present in both (\emph{inner join}), or all rows from one of the sets and matching rows from the other (\emph{left} or \emph{right join}). Left and right here literally refer to the order in which you type the dataframe names. Figure~\ref{fig:joinvenn} and Table~\ref{tab:joins} give an overview. 
 In all cases except inner joins, this can create units where information from one of the data sets is missing.
 This will be lead to missing values (|NA|/|NaN|) being inserted in the columns of the data sets with missing units.
+
+%\input{ch_data_wrangling/figjoins}
+\begin{figure}
+    \centering
+    \includegraphics{figures/ch07_figjoins}
+    \caption{The solid area indicades whether the cases in the resulting datasets need to appear in one, both, or any of the datasets.}
+    \label{fig:joinvenn}
+\end{figure}
 
 \input{ch_data_wrangling/tabjoins}
 
@@ -98,14 +106,6 @@ For example, you might have your main survey results in a data set,
 to which you want to add metadata or extra information about your respondents.
 If this data is not available for all respondents, you can use a left join to add the information
 where it is available, and simply leave the other respondents with missing values.
-
-%\input{ch_data_wrangling/figjoins}
-\begin{figure}
-    \centering
-    \includegraphics{figures/ch07_figjoins}
-    \caption{The solid area indicades whether the cases in the resulting datasets need to appear in one, both, or any of the datasets.}
-    \label{fig:joinvenn}
-\end{figure}
 
 
 A similar use case is when you have a list of news items, and a separate list of items that were coded
