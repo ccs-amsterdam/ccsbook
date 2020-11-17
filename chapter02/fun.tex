@@ -38,7 +38,7 @@ See \refchap{datawrangling} for an in-depth explanation of the aggregation comma
 
 \pyrex[caption=Barplot of tweets over time,input=r,output=r,format=png]{chapter02/funtime}
 
-\subsection{Analysing textual data}
+\section{Fun with textual data}
 
 \paragraph{Corpus Analysis} Next, we can analyse which hash tags are most frequently used in this data set.
 \refex{funcloud} does this by creating a \concept{document-term matrix} using the package \pkg{quanteda} (in R)
@@ -73,7 +73,7 @@ Please see \refsec{lda} for more information about fitting, interpreting, and va
 
 \pyrex[caption=Topic Model of the COVID tags,input=r,output=r,format=table]{chapter02/funlda}
 
-\subsection{Visualizing Geographic information}
+\section{Fun with Visualizing Geographic information}
 For the final set of examples, we will use the location information contained in the twitter data.
 This information is based on what twitter users enter into their profile, and as such it is incomplete and noisya
 with many users giving a nonsensical location such as `Ethereally here' or not filling in any location at all.
@@ -107,7 +107,7 @@ or compare spanish tweets from different locations.
 
 \pyrex[caption=Corpus comparison: North American tweets vs. the rest,input=r,output=r,format=png]{chapter02/funcompare}
 
-\subsection{Network Analysis}
+\section{Fun with Networks}
 
 Twitter, of course, is a social network as well as a microblogging service:
 users are connected to other users because they follow each other and retweet and like each others' tweets.
