@@ -106,8 +106,7 @@ use the corresponding threshold value.
 The second approach (also knwon as Yoden's J) is to find the threshold
 value with the maximum distance between TPR and FPR, and use that one.
 
-\todo[inline]{integrate code from https://github.com/damian0604/bdaca/blob/master/rm-course-2/week10/Determining\%20the\%20cutoff-point\%20in\%20logistic\%20regression.ipynb. But first look up how much space we actually have...}
-
+\pyrex[input=py, output=py,caption={Choosing a differnet cutoff point for predictions with logistic regression. In this case, we make a tradeoff and maximize the difference between false positive rate and true positive rate to improve the precision for the the second categegory by .12 at the expense of reducing the precision for the first category by .8.}]{chapter09/cutoffpoint}
 
 
 \subsection{Train, validate, test}
