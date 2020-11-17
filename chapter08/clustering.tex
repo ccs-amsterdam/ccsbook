@@ -49,9 +49,9 @@ datasets.
 
 $k$-means cluster analysis is a method that takes any number of observations (cases) and group them into a given number of clusters based on the proximity of each observation to the mean of the formed cluster (centroid).  Mathematically, we measure this proximity as the distance of any given point to its cluster center, and can be expressed as
 
-$$J = \sum_{n=1}^{N} \sum_{k=1}^{K} r_{nk} ||x_n - \mu_k||^2$$
+$$J = \sum_{n=1}^{N} \sum_{k=1}^{K} r_{nk} \|x_n - \mu_k\|^2$$
 
-where $ ||x_n - \mu_k||$ is the distance between the data point $x_n$ and the center of the cluster $\mu_k$.
+where $\|x_n - \mu_k\|$ is the distance between the data point $x_n$ and the center of the cluster $\mu_k$.
 
 Instead of taking the mean, some variations of this algorithm take the median (k-medians) or a representative observation, also called medoid (k-medoids or partitioning around medoids, PAM) as a way to optimize the initial method.
 
