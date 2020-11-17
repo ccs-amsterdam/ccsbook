@@ -16,14 +16,19 @@ simple control structures such as loops and conditions.
 \item Use functions and methods
 \end{objectives}
 
+\newpage
 \begin{feature}
-In this chapter, you will learn the
-basics of programming that are needed for computational analysis of
-communications: datatypes such as strings and integers, lists and
-dictionaries, vectors and factors; control structures such as for
-loops and if statements; functions and methods that you can apply to
-your data.
-
+  \textbf{Packages used in this chapter}\\
+  This chapter focuses on the built-in capabilities of Python and R,
+  so does not rely on many packages.
+  For R, only \pkg{glue} is used (which allows nice text formatting).
+  For Python, we only use the packages \pkg{numpy} and \pkg{pandas}
+  for data frame support.
+  If needed, you can install these packages with the code below
+  (see \refsec{installing} for more details):
+  \doublecodex{chapter03/chapter03install}
+  \noindent After installing, you need to import (activate) the packages every session:
+  \doublecodex{chapter03/chapter03libraries}
 \end{feature}
 
 \input{chapter03/variables}
