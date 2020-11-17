@@ -16,8 +16,7 @@ Below we will show how you can download tweets and location data yourself, but t
 we can get down to business immediately we will start from this cached version. 
 
 \begin{ccsexample}
-  \codex[caption=R Code]{chapter02/tweets.r}
-  \codex[caption=Python Code]{chapter02/tweets.py}
+  \doublecodex{chapter02/tweets}
 \codex[caption=Output]{chapter02/tweetsb.r.out}
 \caption{Retrieving cached tweets about COVID}\label{ex:funtweets}
 \end{ccsexample}
@@ -132,11 +131,9 @@ See \refchap{network} for more information on network analysis,
 and \refchap{datawrangling} for the summarization commands used to create the edge list.
 
 \begin{ccsexample}
-  \codex[caption=R Code]{chapter02/fungraph.r}
-  \codex[caption=Python Code]{chapter02/fungraph.py}
+  \doublecodex{chapter02/fungraph}
   \codexoutputtable{chapter02/fungraph.r}
-  \codex[caption=R Code]{chapter02/fungraphb.r}
-  \codex[caption=Python Code]{chapter02/fungraphb.py}
+  \doublecodex{chapter02/fungraphb}
   \codexoutputpng{chapter02/fungraphb.r}
 \caption{Retweet nework in the COVID tweets}\label{ex:fungraph}
 \end{ccsexample}
@@ -150,4 +147,4 @@ Then, we adapt the earlier code for plotting the map by adding a line for each n
 As you can see, users in the main regions (US, EU, India) mostly interact with each other,
 with almost all regions also interacting with the US.
 
-\pyrex[caption=Reply Network of Tweets,input=r,output=r,format=png]{chapter02/fungeonet}
+\pyrex[caption=Reply Network of Tweets,output=r,format=png]{chapter02/fungeonet}
