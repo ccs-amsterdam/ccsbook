@@ -19,7 +19,7 @@ After installing Python or R, you can execute code in these languages, but you a
 \concept{Integrated Development Environment (IDE)} to develop your data analysis scripts. 
 For R we recommend RStudio, which is free to install and is currently the most popular environment for working with R.
 For Python we recommend starting with JupyterLab, which is a web-based environment for writing and running python code.
-All of these tools are available and well documented for Windows, Mac OS, and Linux. 
+All of these tools are available and well documented for Windows, MacOS, and Linux. 
 After explaining how to install R and Python, there is a very important section on installing packages.
 If you plan to only use either R or Python (for now), feel free to skip the part about the other language.
 
@@ -205,24 +205,23 @@ We will install and run python and Jupyter notebook using a \concept{terminal} o
 This is a tool that is installed on all computers that allows you to give commands to the computer directly.
 First, create a project folder for this book using the file explorer / finder.
 Then, on Windows you can shift + Right click that folder and select ``Open command Window here''.
-%TODO: Hoe werkt dit op mac?
+On MacOS, after navigating to the folder you just created, you click on "Finder" in the menu at the top of the screen, then on "Services", then on "New Terminal at Folder"
 In both cases, this should open a new window (usually black or grey) that allows you to type commands.
 
-Note that on most computers, python is already installed by default.
+Note that on most computers, Python is already installed by default.
+%Note that on many computers, especially on MacOS and Ubuntu, python is already installed by default.
 You can check this by typing the following the command in your terminal:
 
 \begin{verbatim}
 python3 --version
 \end{verbatim}
 
-On some versions of Windows, you may need to type
+On some versions of Windows, you may need to use \verb|py| instead of \verb|python3|:
 \begin{verbatim}
 py --version
 \end{verbatim}
 
-instead.
-
-Which will probably say something like \verb|Python 3.8.5|.
+In either case, the output of this command should be something like \verb|Python 3.8.5|.
 If \verb|python --version| also returns this version, you are free to use either command
 (but on older systems \verb|python| can still refer to Python 2, so make sure that you are using Python 3 for this book!).
 
