@@ -1,4 +1,4 @@
-\section{Re-using codeL How not to re-invent the wheel}
+\section{Re-using code: How not to re-invent the wheel}
 \label{sec:code}
 
 Just as any human language, also programming languages consist of a vocabulary, syntax rules, and expression. Using the proper words and grammar, you can build from scratch any idea your imagination allows you. That's a wonderful thing! But, let's be honest: The language itself, the expressions, ideas, and all the abstract constructs seldom come originally from you. In fact, that's great as well: Otherwise, you'd have to deeply think of every element before talking and expressing any thought. Instead, you use pre-existing rules, ideas, perceptions and many different narratives to create your own messages to interact with the world. It's the same with coding: You never start from scratch.
@@ -11,7 +11,7 @@ There is almost no project in which computational scientists, data analysts, or 
 The more common a task is, the greater the chance that you do not have to re-invent the wheel.
 Of course, you have to give credit where credit is due, but it is not uncommon to paste code snippets from others into your own code and adapt them. This is especially true for standard operations, for which there are only so-many ways to do achieve the desired result.
 
-There are different ways to re-use earlier code. One is to copy and adapt raw lines of code written by someone else or by yourself in the past. In fact, there many online repositories where you can find previous code, such as Github, BitBucket, GitLab, SourceForge, OSON or SubVersion, from where anyone can pull documented code examples (see \refsec{practices}). When conducting computational analyses, you will spend a significant part of your time in some these repositories trying understand what others have done and figuring out how can use it your own work.
+There are different ways to re-use earlier code. One is to copy and adapt raw lines of code written by someone else or by yourself in the past. In fact, there many online repositories such as Github or BitBucket that contain many programs and well-documented code examples (see \refsec{practices}). When conducting computational analyses, you will spend a significant part of your time in some such repositories trying understand what others have done and figuring out how can use it your own work.
 
 Another way is to build or import functions that summarizes many lines of code into a simpler command, as we explained in \refsec{functions}. The functions are indeed powerful strategies to re-use the code since you do not have to write over and over again complex lines of code that have to be used in different moments. Packages are probably the most elegant approach to recycle the work made by other colleagues. In \refsec{installing} you already learnt how to install a package and you did probably noticed how easy it is to bring many pre-build functionalities onto your workspace. You can also write and publish your own package in the future to help your colleagues to write less code and to be more efficient in their daily job (see also \refsec{publishingsource})!
 
@@ -38,7 +38,17 @@ to care about the internal workings and can ``abstract away'' and outsorce the p
 hand, the users of your code now have one more dependency to install before they can
 use your code.
 
-In the case of package selection, you will probably feel that the decision-making process is challenging and that it is too risky to spend time selecting and learning a package that would later not be useful. And you are right to think so: even if you have to  \textit{flirt} with many libraries and even become a \textit{early adopter}, you will finally pay attention to what your community is using at the very moment in order to take a decision of to invest your time. 
+In the case of package selection, we understand it can be quite overwhelming,
+with so many different packages from different contributors.
+In fact, sometimes the same task, such as topic modeling,
+can be done using multiple different topics.
+So, how to find and choose the best package?
+Besides resources like this book, the most important guide is probably the community around you:
+using packages that a lot of other people also use mean that the package is probably well maintained and documented,
+and that there is a community to ask for help if needed.
+Since all packages are free to download and install, however, you can also shop around and see what the various packages do.
+When comparing different packages, it is always good to check their documentation and their github page:
+packages that are well documented and that are updated frequently are often a good choice.
 
 Just to mention an example, the authors of this book had several intensive discussions of which packages to mention and use in the proposed exercises, an issue that became complex given the variety of topics addressed in the handbook. In the case of text analysis, a library such as \fn{NLTK} for Python was incredibly popular among computational analysts until few years ago becoming a package of reference in the field, but it has -- at least for some applications -- been overpassed by friendly and sophisticated new packages for natural language processing like \fn{SpaCy}. So, which should we have included in this book? The one which is well-known (with excellent documentation by the way) and still used by thousands of practitioners and students around the world?, or the one which is penetrating the market because of its easiness and advantages? Moreover, by choosing the second option, are we sure a more trendy package is going to be stable in time or is it going to be crossed out by a different one in just few months?  
 
