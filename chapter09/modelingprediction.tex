@@ -32,7 +32,7 @@ ordinary least square regression (OLS), we would estimate $y=\beta_0 +
 In a typical social-science paper, we would then interpret the coefficients
 that we estimated, and say something like: When $x_1$ increases by one unit,
 $y$ increases by $\beta_1$.
-We sometimes call this ``the effect of $x_1$ on $y$ (even though, of course,
+We sometimes call this ``the effect of $x_1$ on $y$'' (even though, of course,
 it depends on the study design weather the relationship can really be interpreted
 as a causal effect).
 Additionally, we might look at the explained variance $R^2$, to assess how good the model fits our data. In \refex{ols} we use this regression approach to model the relationship of \emph{age} and \emph{gender} over the number of days per week a person reads a \emph{newspaper}. We fit the linear model using the \pkg{stats} function \fn{lm} in R and the \pkg{statsmodels} (module formula.api) function \fn{ols} in Python.
@@ -41,7 +41,6 @@ Additionally, we might look at the explained variance $R^2$, to assess how good 
 
 Most traditional social-scientific analyses stop after reporting and
 interpreting the coefficients of \emph{age} ($\beta = 0.0676$) and \emph{gender} ($\beta = -0.0896$), as well as the total explained variance (19\%) of such a model for our dependent variable \emph{newspaper}.
-
 But we can go a step further. Given that we have already estimated our
 regression equation, why not use it to do some \textit{prediction}?
 
@@ -74,12 +73,12 @@ As you see, this implies that we proceed in two steps: First, we use some data
 to estimate our model. Second, we use that model to make predictions.
 
 We used an OLS regression for our first example, because it is very
-straightforward to interpret, and most of our readers will be familiar
+straightforward to interpret and most of our readers will be familiar
 with it.  However, a model can take the form of \emph{any} function,
 as long as it takes some characteristics (or ``features'') of the
 cases (in this case, people) as input and returns a prediction.
 
-Using such a simple OLS regression approach for prediction, as we did in our example, can come with a couple of problems, though. One problem is that in some cases, such predictions can be unlogical. For instance, even though we know that the output should be something between 0 and 7 (as that is the number of days in a week), our model will happily predict that once a man reaches the age of 105 (rare, but not impossible), he will read a newspaper on 7.185 out of 7 days. Similarly, a one year old girl will even have a negative amount of newspaper reading. A second problem relates to the models' inherent assumptions. For instance, in our example it is quite an assumption to make that the relationships between these variables are linear – we will therefore discuss multiple models that do not make such assumptions later in this chapter. And, finally, in many cases, we are actually not interested in getting an accurate prediction of a continuous number (a \textit{regression} task), but rather in predicting a category. We may want to predict whether a tweet goes viral or not, whether a user comment is likely to contain offensive language or not, whether an article is more likely to be about politics, sports, economy, or lifestyle. In machine learning terms, these tasks are known as \textit{classification}.
+Using such a simple OLS regression approach for prediction, as we did in our example, can come with a couple of problems, though. One problem is that in some cases, such predictions do not make much sense. For instance, even though we know that the output should be something between 0 and 7 (as that is the number of days in a week), our model will happily predict that once a man reaches the age of 105 (rare, but not impossible), he will read a newspaper on 7.185 out of 7 days. Similarly, a one year old girl will even have a negative amount of newspaper reading. A second problem relates to the models' inherent assumptions. For instance, in our example it is quite an assumption to make that the relationships between these variables are linear – we will therefore discuss multiple models that do not make such assumptions later in this chapter. And, finally, in many cases, we are actually not interested in getting an accurate prediction of a continuous number (a \textit{regression} task), but rather in predicting a category. We may want to predict whether a tweet goes viral or not, whether a user comment is likely to contain offensive language or not, whether an article is more likely to be about politics, sports, economy, or lifestyle. In machine learning terms, these tasks are known as \textit{classification}.
 
 In the next section, we will outline key terms and concepts in machine
 learning. After that, we will discuss specific models that you

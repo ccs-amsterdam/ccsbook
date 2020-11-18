@@ -62,7 +62,6 @@ measure can be misleading: after all, even if your classifier finds
 almost none of the spam messages (it has a recall close to zero), you
 still get a very high accuracy, simply because there are so many
 legitimate messages. In other words, the accuracy is not a good measure when working with highly unbalanced classes.
-
 Often, it is therefore a better idea to look at the harmonic mean of
 precision and recall, the F1-score, if you want to find a model that
 gives you a good compromise between precision and recall.
@@ -70,7 +69,6 @@ gives you a good compromise between precision and recall.
 
 In fact, we can even fine-tune our models in such a way that they are
 geared towards either a better precision or a better recall.
-
 As an example, let us take a logistic regression model. It predicts a
 class label (such as ``spam'' versus ``legitimate''), but it can also
 return the assigned probabilities. For a specific message, we can thus
@@ -181,7 +179,6 @@ between the runs.
 Very often, cross-validation is used when we want to compare many
 different model specifications, for example to find optimal
 hyperparameters.
-
 Hyperparameters are parameters of the model that are not estimated
 from the data. These depend on the model, but could for example be the
 estimation method to use, the number of times a bootstrap should be
@@ -191,7 +188,7 @@ should be (the $C$), and we may also be unsure about the right kernel
 (\refex{gridsearch2}), or in the case of a polinomial kernel, how many
 degrees we want to consider.
 
-Using the help function (e.g., \fn{RandomForestClassifier} in Python),
+Using the help function (e.g., \fn{RandomForestClassifier?} in Python),
 you can look up
 which hyperparameters you can specify. For a random forest classifier,
 for instance, this includes the number of estimators in the model, the

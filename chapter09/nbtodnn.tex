@@ -34,7 +34,7 @@ is stupid, but that it makes very far-reaching assumptions about the
 data (hence, it is na\"ive). Specifically, it assumes that all
 features are independent from each other.  Of course, that is hardly
 ever the case -- for instance, in a survey data set, while age and
-gender indeed are fully independent from each other (unless, for
+gender indeed are independent from each other (unless, for
 instance, a war swept away a whole generation of males but not
 females), this is not the case for education, political interest,
 media use, and so on.  And in textual data, whether a word $W_1$ is used
@@ -96,7 +96,7 @@ not), split our data into a training and a test dataset (here, we use
 fit (train) a classifier (\refex{nb}), before we assess how well it
 predicts our training data (\refex{classificationreport}).
 
-In section~\ref{sec:validation}, we discuss in more detail how to
+In \refsec{validation}, we discuss in more detail how to
 evaluate different classifiers, but let's have a sneak preview at the most used 
 measures of how well our classifier performs.
 
@@ -185,7 +185,7 @@ $$P = \frac{1}{1 + e^{-(\beta_o + \beta_1 x_1 + \beta_2 x_2 = \ldots + \beta_n x
 
 Wait, you might say. Isn't $P$ still continuous, even though it is now
 bounded between 0 and 1? Yes, it is.  Therefore, after having
-estimated the model, we use a threshold value (typically, 0.5) to
+estimated the model, we use a threshold value (typically, 0.5, but we will discuss in \refsec{balance} how to select different ones) to
 predict the label. If $P>0.5$, we predict that the case is spam/about
 politics/will go viral, if not, we predict it's not.
 
@@ -255,7 +255,7 @@ straight line separating them. But a RBF kernel can transfer them into
 a linearly separable space. The aforementioned online visualizations
 can be very instructive here.
 
-\refex{svm} shows how we implement standard SVM to our data using the \pkg{caret} method \fn{svmLinear3} in R and the \pkg{sklearn} (module svm) function \fn{SVC} in Python. You can notice in the code that feature data is standardized or normalized (with Mean = 0 and Standard Deviation = 1) before model training in order to have all the features measured at the same scale, as required by SMV.
+\refex{svm} shows how we implement standard SVM to our data using the \pkg{caret} method \fn{svmLinear3} in R and the \pkg{sklearn} (module svm) function \fn{SVC} in Python. You can notice in the code that feature data is standardized or normalized (with $m = 0$ and ${std} = 1$) before model training in order to have all the features measured at the same scale, as required by SMV.
 
 \pyrex[output=none, caption=A simple Support Vector Machine classifier]{chapter09/svm}
 
@@ -346,7 +346,7 @@ fit the training data very well, but may not generalize well enough to
 slightly different (test) data.
 
 Because of these drawbacks, decision trees are seldom used in
-real-life classification tasks.  Instead, one uses the ensemble model so-called random forests.  Drawing random samples from the data, we estimate multiple
+real-life classification tasks.  Instead, one uses an \empg{ensemble} model: so-called random forests.  Drawing random samples from the data, we estimate multiple
 decision trees -- hence, a forest.  To arrive at a final prediction,
 we then can let the trees ``vote'' on which label we should
 predict. This procedure is called ``majority voting'', but there are
