@@ -26,19 +26,24 @@ Another way to show distributions is using bloxplots, which are powerful represe
 
 After having inspected distributions of single variables, you may want to check how two variables are related. We are going to discuss two ways of doing so: plotting data over time, and scatterplots to illustrate the relationship between two continous variables.
 
-The Eurobarometer collects data during 15 days (in the example from November 5 to 19, 2017) and you may wonder if the level of support to refugees or even to general migrants changes over the time. This is actually a simple time series and you can use a graph line to represent it. Firstly you must use a numerical variable for the level of support (\emph{support\_refugees\_n}, which ranges from 1 to 4, being 4 the maximum support) and group it by day in order to get the average for each day. In the case of R, you can plot the two series using the base function \fn{plot}, or you can use the \pkg{ggplot2} function \fn{geom\_line}. In the case of Python you can use the \pkg{matplotlib} function \fn{plot} or the \pkg{seaborn} function \fn{lineplot}.\refex{line} and \refex{line2} show to get these graph lines for the average support of refugees and migrants by day.
+The Eurobarometer collects data during 15 days (in the example from November 5 to 19, 2017) and you may wonder if the level of support to refugees or even to general migrants changes over the time. This is actually a simple time series and you can use a graph line to represent it. Firstly you must use a numerical variable for the level of support (\emph{support\_refugees\_n}, which ranges from 1 to 4, being 4 the maximum support) and group it by day in order to get the average for each day. In the case of R, you can plot the two series using the base function \fn{plot}, or you can use the \pkg{ggplot2} function \fn{geom\_line}. In the case of Python you can use the \pkg{matplotlib} function \fn{plot} or the \pkg{seaborn} function \fn{lineplot}.\refex{line} and \refex{line2} show to create a graph for the average support of refugees by day.
 
 \pyrex[output=py,format=png,caption=Graph line of average support of refugees by day]{chapter08/line}
 
-\pyrex[output=py,format=png,caption=Graph line of average support of migrants by day]{chapter08/line2}
+%\pyrex[output=py,format=png,caption=Graph line of average support of migrants by day]{chapter08/line2}
 
-You can combine multiple graphs for a better communication of your initial results, giving the reader a broader and more comparative perspective (\refex{combine}). 
+To also plot the support for migratns, you can combine multiple subgraphs in a single plot,
+giving the reader a broader and more comparative perspective (\refex{combine2}).
+In R, the \fn{geom\_line} also takes a color aesthetic, but this requires the data to be in long format.
+So, we first reshape the data and also change the factor labels to get a better legend (see \refsec{pivot}).
+In python, you can plot the two lines as separate figures figures and add the \pkg{pyplot} function \fn{show} to display an integrated figure.
 
-\pyrex[output=py,format=png,caption=Combining two graphs]{chapter08/combine}
+\pyrex[output=py,format=png,caption=Plotting multiple lines in one graph]{chapter08/combine2}
 
-In the case of R, there are two ways of doing this. If you are plotting with base R, you can use the base functions \fn{par} or \fn{layout}, in which you indicate where (row and columns) your figures must appear. If you are plotting with \pkg{ggplot2}, you can use the library \pkg{gridExtra} to generate this simple panel, or you can even integrate the two graphs into one by adding a new \fn{geom\_line} to the initial one, as shown in \refex{combine2}. In the case of Python you can use the \pkg{matplotlib} function \fn{subplots} that allows you to configure multiple plots in a single one, or you can just plot the two figures and add the \pkg{pyplot} function \fn{show} to display an integrated figure, as shown in the example.  In the resulting combined graphs you can easily compare the trend of both variables and communicate that even when the support to refugees is higher than the support to migrants, both variables have the same behaviour over time.
+Alternatively, you can create multiple subplots, one for each group that you want to show (\refex{combine}).
+In \pkg{ggplot} (R), you can use the \fn{facet\_grid} function to automatically create subplots that each show one of the groups. In the case of Python you can use the \pkg{matplotlib} function \fn{subplots} that allows you to configure multiple plots in a single one.
 
-\pyrex[output=py,format=png,caption=Integrating the two graphs into one]{chapter08/combine2}
+\pyrex[output=py,format=png,caption=Creating subfigures)]{chapter08/combine}
 
 Now if you want to explore the possible correlation between the average support to refugees (\texttt{mean\_support\_refugees\_by\_day}) and the average support to migrants by year (\texttt{mean\_support\_migrants\_by\_day}), you might need a scatterplot, which is a better figure to visualize the type and strength of this relationship \pkg{scatter}. 
 
@@ -70,7 +75,7 @@ In the first resulting figure proposed in \refex{heatmap}, the lighter the blue 
 
 \pyrex[output=py,format=png,caption=Heatmap of country\, gender and support of refugees]{chapter08/heatmap}
 
-As you have noticed, one of the goals of EDA is exploring the variance of our variables, which includes some uncertainty about their behaviour. We will introduce you to two basic plots to visually communicate this uncertainty. Firstly, ribbons and area plots can help us to clearly identify a predefined interval of a variable in order to interpret its variance over some cases. Let us mark this interval in 0.15 points in the above-mentioned plots of the average support to refugees or migrants by day, and we can see that the lines tend to converge more in the very last day and are more separated by the day 4. This simple representation can be conducted in R using the \pkg{ggplot2} function \fn{geom\_ribbon} and in Python using the parameter \texttt{ci} of the \pkg{seaborn} function \fn{linepot}.  
+As you have noticed, one of the goals of EDA is exploring the variance of our variables, which includes some uncertainty about their behaviour. We will introduce you to two basic plots to visually communicate this uncertainty. Firstly, ribbons and area plots can help us to clearly identify a predefined interval of a variable in order to interpret its variance over some cases. Let us mark this interval in 0.15 points in the above-mentioned plots of the average support to refugees or migrants by day, and we can see that the lines tend to converge more in the very last day and are more separated by the day 4. This simple representation can be conducted in R using the \pkg{ggplot2} function \fn{geom\_ribbon} and in Python using the parameter \texttt{ci} of the \pkg{seaborn} function \fn{lineplot}.  
 
 \pyrex[output=py,format=png,caption=Add ribbons to the graph lines of support to refugees and migrants]{chapter08/ribbons}
 
