@@ -16,8 +16,18 @@ reshape data.
 \item Reshape and merge data frames
 \end{objectives}
 
+\newpage
 \begin{feature}
-  This chapter uses functions from the package \pkg{tidyverse} (including: \pkg{ggplot2}, \pkg{dplyr}, \pkg{tidyr}, \pkg{pusss}, \pkg{tibble}, \pkg{stringr} and \pkg{forcats}) in R and the package \pkg{pandas} in Python. In this chapter we read the data directly from the Internet page of this book, but instead of a URL you can also use a local file name.
+  \textbf{Packages used in this chapter}\\
+  This chapter uses the \pkg{readxl} package for reading excel files and various parts of the \pkg{tidyverse} including \pkg{ggplot2}, \pkg{dplyr}, and \pkg{tidyr} (which are installed automatically when you install tidyverse). In Python we rely mostly on the \pkg{pandas} package, but we also use \pkg{scipy} package for statistics and the \pkg{xlrd} for reading excel files. You can install these packages with the code below if needed  
+  (see \refsec{installing} for more details):
+  
+\doublecodex{ch_data_wrangling/chapter07install}
+
+\noindent After installing, you need to import (activate) the packages every session:
+
+\doublecodex{ch_data_wrangling/chapter07library}
+  
 \end{feature}
 
 \input{ch_data_wrangling/data_filtering}
