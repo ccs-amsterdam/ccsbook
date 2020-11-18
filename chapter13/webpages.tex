@@ -71,12 +71,12 @@ example:
 <html>
 <body>
 <h1>This is a title</h1>
-<div>
-<p> Some text with one <a href=bla.html>link </a> </p>
-<img src = plaatje.jpg>an image </img>
+<div id="main">
+<p> Some text with one <a href="test.html">link </a> </p>
+<img src = "plaatje.jpg">an image </img>
 </div>
-<div>
-<p> Some more text </p>
+<div id="body">
+<p class="lead"> Some more text </p>
 <p> Even more... </p>
 <p> And more. </p>
 </div>
@@ -90,19 +90,20 @@ specific tag (although it might help, for instance, to realize that
 \texttt{p} a paragraph and \texttt{div} some kind of section).
 
 What is important, though, is to realize that each tag is opened and
-closed (with \texttt{/}). Because tags can be nested, we can actually
+closed (e.g. \ttt{<p>} is closed by \ttt{</p>}).
+Because tags can be nested, we can actually
 draw the code as a tree. In our example, this would look like this:
 
 \dirtree{%
 .1 html.
 .2 body.
 .3 h1.
-.3 div.
+.3 div\#main.
 .4 p.
 .5 a.
 .4 img.
 .3 div.
-.4 p.
+.4 p.lead.
 .4 p.
 .4 p.
 }
@@ -111,67 +112,58 @@ draw the code as a tree. In our example, this would look like this:
 Additionally, tags can have \emph{attributes}. For instance, the
 makers of a page with customer reviews may use attributes to specify
 what a section contains. For instance, they may write
-\texttt{<div class="reviewtext"> ... </div>}  to mark the text of a review (where
-|...| is the text), and \texttt{<div class="ratings"> ...</div>} to mark the
-scores a product received. This enables them to format them nicely
-using a technique called Cascading Style Sheets (CSS). We can exploit
+\texttt{<p class="lead"> ... </div>}  to mark the lead paragraph of an article,
+and \texttt{<a href=test.html"> ...</a>} specifies the target of a hyperlink.
+Especially important here are the \ttt{id} and \ttt{class} attributes,
+which are often used by webpages to control the formatting.
+\ttt{id} (indicated with the hash sign \ttt{\#} above) gives a unique ID to a single element,
+while \ttt{class} (indicated with a period) assigns a class label to one or more elements.
+This enables web sites to speficy their layout and formatting using a technique called Cascading Style Sheets (CSS).
+For example, the web page could set the lead paragraph to be bold.
+The nice thing is that we can exploit
 this information to tell our parser where to find the elements we
-are interested in. Note that |class| is just one possible attribute
-attribute; you may encounter others.
+are interested in.
 
-We can use so-called CSS selectors to select the elements we are
-interested in.  For instance, to select all elements that have an
-attribute \texttt{class} with the value \texttt{ratings}, we can just
-write: \texttt{.ratings} (with a dot).  And to select all \texttt{h1}
-tags, we can just write: \texttt{h1} (without a dot).
-For an overview of all possible CSS selectors, see
-\url{https://www.w3schools.com/cssref/css_selectors.asp}.
+\input{chapter13/csstable}
 
-Sometimes, you cannot express the elements you need using CSS
-selectors. For instance, there may be many elements using the same
-selectors, and you are only interested in a specific one. In these
-cases, you may want to use the XPATH syntax tp specify your elements
-of interested.
+\paragraph{CSS Selectors} The easiest way to specify our parser to look for a specific element is to use a \concept{CSS Selector},
+which might be familiar to you if you have created web pages.
+For example, to find the lead paragraph(s) we specify \ttt{p.lead}.
+To find the node with \ttt{id="body"}, we can specify \ttt{\#body}.
+You can also use this to specify relations between nodes. For example,
+to find all paragraphs withing the body element we would write \ttt{\#body p}.
 
-As we have seen above, we can represent the HTML code of a web page as
-a tree (also referred to as the Document Object Model (DOM), or a DOM
-tree). We can then describe each location in the page by describing
-how to walk through the tree to arrive at the correct position.  For
-instance, to describe where to find ``Even more text'' in our example
-above, we could say: start at |html|, go to |body|, go to the second |div|,
-and take the first |p| element.
+\reftab{cssselect} gives an overview of the possibilities of CSS Select.
+In general, a CSS selector is a set of node specifiers (like \ttt{h1}, \ttt{.lead} or \ttt{div\#body}),
+optionally with relation specifiers between them.
+So, \ttt{\#body p} finds a \ttt{p} anywhere inside the \ttt{id=body} element,
+while \ttt{\#body > p} requires the \ttt{p} to be directly contained inside the body
+(with no other nodes in between).
 
-If we translate this verbal explanation into a so-called XPATH, it reads:
-|/html/body/div[2]/p[1]|
+\paragraph{XPath}
+An alternative to CSS Selectors is \concept{XPath}.
+Where CSS Selectors are directly based on HTML and CSS styling,
+XPath is a general way to describe nodes in XML (and HTML) documents.
+The general form of XPath is similar to CSS Select:
+a sequence of node descriptors (such as \ttt{h1} or \ttt{*[@id='body']}).
+Contrary to CSS Select, you always have to specify the relationship, where
+\ttt{//} means any direct or indirect descendant and \ttt{/} means a direct child.
+If the relationship is not a child or decendant relationship (but for example a sibling or parent),
+you specify the \concept[XPath axis]{axis} with e.g. \ttt{//a/parent::p} meaning an \ttt{a} anywhere in the document (\ttt{//a}) which has a direct parent (\ttt{/parent::}) that is a \ttt{p}. 
 
- You can compare the syntax of an XPATH with the path of a given file
- (\texttt{/home/tim/Desktop/slides.pdf}), where the leftmost element
- is the "highest" level, and where after each \texttt{/}, it indicates
- to which lower level one has to turn before finally arriving at the
- file (\texttt{slides.pdf}).
+A second difference with CSS Selectors is that the \emph{class} and \emph{id} attributes are not given special treatment,
+but can be used with the general \ttt{[@attribute='value']} pattern.
+Thus, to get the lead paragraph you would specify \ttt{//p[@class='lead']}.
+The big advantage of this is that you can specify any attribute (including e.g. \ttt{href=} or \ttt{data=}),
+while in CSS Selectors you only have access to the \emph{class} and \emph{id}. 
 
-If we leave away the \texttt{[1]} after \texttt{p}, we retrieve a list
-of all the three texts within the second div -- which makes it easy
-to, for instance, retrieve all reviews from a web page instead of only
-one specific review. An asterisk |*| can be used to indicate an
-arbitrary number.
-
-Within an XPATH, we can also specify that some specific attribute
-needs to have a specific value. For instance, we could modify our
-example such that it does not take the second |div| element, but the
-|div| element where the attribute |class| has the value |ratings|:
-
-|/html/body/div[@class="ratings"]/p[1]|
-
-Additionally, we can use two |//| to ``leave out'' part of the tree
-and indicate that arbitray steps may be taken here. For instance, one
-could say: \texttt{//div[@class="restaurant"]//a}, which means that
-you do not care \emph{how} to get from the root to the |div| of class
-|restaurant|, and that you want all |a| tags below this tag, even if
-several steps need to be taken in between. In this context, one also
-talks about ``parents'' and ``children'': the |a| elements are
-children (or grandchildren) of the |div| element.
-
+The advantage of XPath is that it is a very powerful tool. 
+Everything that you can describe with a CSS Selector can also be described with an XPath pattern,
+but there are some thing that CSS Selectors cannot describe,
+such as parents and attributes other thatn class and id.
+On the other hand, CSS Selectors can be a bit harder to write, read, and debug.
+You can chooose to use either tool, and you can even mix and match them in a single script,
+but our general recommendation is to use CSS Selectors unless you need to use the specific abilities of XPath. 
 
 \refex{htmlparse1} shows how to use XPATHs and CSS selectors to parse
 a HTML page. To fully understand it, open

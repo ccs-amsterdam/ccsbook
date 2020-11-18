@@ -1,7 +1,6 @@
 \section{Using web APIs: from open resources to Twitter}
 \label{sec:apis}
 
-
 Let's assume we want to retrieve data from some online service. This
 could be some social media platform, but also a government website,
 some \emph{open data} platform or initiative, or sometimes a
@@ -77,10 +76,7 @@ is called |q|, and which other parameters can be specified.
   space, for instance, is represented by \texttt{\%20}
 \end{feature}
 
-
-
-\pyrex[output=py,caption={Retrieving JSON data from the Google Books API. In the Python example, we have more control over what to print exactly, as the JSON object translates neatly into native Python dictionaries.}]{chapter13/googleapi1}
-
+\pyrex[output=py,caption={Retrieving JSON data from the Google Books API. }]{chapter13/googleapi1}
 
 The data our request returns are nested data, and hence, they do not
 really ``fit'' in a tabular dataframe. We could keep the data as they
@@ -92,7 +88,11 @@ problematic when the items have a widely varying structure. If that
 is the case, we probably would want to write a loop to iterate
 over the different items and extract the information we care about.
 
-\pyrex[output=none,caption=Transorming the data into a dataframe]{chapter13/googleapi2}
+\begin{ccsexample}
+  \doublecodex{chapter13/googleapi2}
+  \codexoutputtable{chapter13/googleapi2table.r}
+  \caption{Transorming the data into a dataframe}\label{ex:googleapi2}
+\end{ccsexample}
 
 You may have realized that you did not get \emph{all} results.
 This protects you from accidentally downloading a huge dataset (you
@@ -111,7 +111,11 @@ around with APIs, make sure you do not cause unnecessary traffic,
 but limit the number of calls that are made (see also \refsec{ethicallegalpractical}).
 
 
-\pyrex[output=none,caption={Full script including pagination. Because of the size of the table, the output is not shown.}]{chapter13/googleapi3}
+\begin{ccsexample}
+  \doublecodex{chapter13/googleapi3}
+  \codexoutputtable{chapter13/googleapi3table.r}
+  \caption{Full script including pagination.}\label{ex:googleapi3}
+\end{ccsexample}
 
 
 
