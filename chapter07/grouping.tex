@@ -30,7 +30,7 @@ and then we create the aggregate statistics.
 In this example, we do not store the result of the computation, but print it on the screen.
 To store the results, simply assign it to a new object as normal.
 
-\pyrex[caption={Aggregation. Note that in the Python example, we can specify often-used functions such as \texttt{"mean"} simply as a string, but instead, we could also pass functions directly, such as numpy's \texttt{np.mean}},output=r,format=table]{ch_data_wrangling/aggregate}
+\pyrex[caption={Aggregation. Note that in the Python example, we can specify often-used functions such as \texttt{"mean"} simply as a string, but instead, we could also pass functions directly, such as numpy's \texttt{np.mean}},output=r,format=table]{chapter07/aggregate}
 
 In R, you use the \pkg{dplyr} function \fn{group\_by}  to define the groups,
 and then call the function \fn{summarize~} to compute summary values by specifying
@@ -60,7 +60,7 @@ The pipe operator inserts the result of the first function as the first argument
 More technically, \verb+f1(d) %>% f2()+ is equivalent to \verb+f2(f1(d))+.
 This can be used to chain multiple commands together, e.g. \verb+data = data %>% function1(arguments) %>% function2(arguments)+.
 
-\pyrex[caption=Combining multiple functions or methods,output=r,format=table]{ch_data_wrangling/aggregate2}{
+\pyrex[caption=Combining multiple functions or methods,output=r,format=table]{chapter07/aggregate2}{
 
 \refex{aggregate2} shows the same operation as above, but chained into a single statement.
 
@@ -77,7 +77,7 @@ all students in the same school have the same school average.
 So, these values will be repeated for these rows, essentially
 mixing individual and group level variables in the same data frame.
 
-\pyrex[caption=Adding summary values to individual cases,output=r,format=table]{ch_data_wrangling/transform}
+\pyrex[caption=Adding summary values to individual cases,output=r,format=table]{chapter07/transform}
 
 \refex{transform} shows how this can be achieved in Python and R,
 computing the mean support per question and then calculating how each poll deviates from this mean. 

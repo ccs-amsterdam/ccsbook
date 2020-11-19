@@ -9,13 +9,13 @@ This process is often called merging or joining data.
 
 \subsection{Equal units of analysis}
 
-%\pyrex[caption=Private and Pulic Capital data (source: Piketty 2014)]{ch_data_wrangling/piketty}
+%\pyrex[caption=Private and Pulic Capital data (source: Piketty 2014)]{chapter07/piketty}
 
 \begin{ccsexample}
-  \doublecodex{ch_data_wrangling/piketty_1}
-  \codexoutputtable{ch_data_wrangling/piketty_1.r}
-  \doublecodex{ch_data_wrangling/piketty_2}
-  \codexoutputtable{ch_data_wrangling/piketty_2.r}
+  \doublecodex{chapter07/piketty_1}
+  \codexoutputtable{chapter07/piketty_1.r}
+  \doublecodex{chapter07/piketty_2}
+  \codexoutputtable{chapter07/piketty_2.r}
 \caption{Private and Pulic Capital data (source: Piketty 2014)}\label{ex:piketty}
 \end{ccsexample}
 
@@ -52,15 +52,15 @@ if shared columns are not used in the join, by default they get `.x' and `.y' (R
 Even if the key column is the only shared column, however, it can still be good to explicitly select that column to make it clear to the reader (or for yourself in the future) what is happening. 
 
 \begin{ccsexample}
-\doublecodex{ch_data_wrangling/capital_1}
-\codexoutputtable{ch_data_wrangling/capital_1.r}
-\doublecodex{ch_data_wrangling/capital_2}
-\doubleoutput{ch_data_wrangling/capital_2}
+\doublecodex{chapter07/capital_1}
+\codexoutputtable{chapter07/capital_1.r}
+\doublecodex{chapter07/capital_2}
+\doubleoutput{chapter07/capital_2}
 \caption{Merging private and public data for France}\label{ex:merge}
 \end{ccsexample}
 
 
-%\pyrex[caption=Merging private and public data for France]{ch_data_wrangling/capital}
+%\pyrex[caption=Merging private and public data for France]{chapter07/capital}
 
 This is shown in \refex{merge}.
 The first two lines select only the \emph{Year} and \emph{France} columns, and rename the \emph{France} column to indicate whether it is the private or public data.
@@ -82,7 +82,7 @@ If either (or both) of the data sets are missing units, however, you need to spe
 In all cases except inner joins, this can create units where information from one of the data sets is missing.
 This will be lead to missing values (|NA|/|NaN|) being inserted in the columns of the data sets with missing units.
 
-%\input{ch_data_wrangling/figjoins}
+%\input{chapter07/figjoins}
 \begin{figure}
     \centering
     \includegraphics{figures/ch07_figjoins}
@@ -90,7 +90,7 @@ This will be lead to missing values (|NA|/|NaN|) being inserted in the columns o
     \label{fig:joinvenn}
 \end{figure}
 
-\input{ch_data_wrangling/tabjoins}
+\input{chapter07/tabjoins}
 
 In most cases, you will either use inner join or left join.
 Inner join is useful when information should be complete,
@@ -141,7 +141,7 @@ Democratic primary.
 Conversely, the \texttt{counties} data set shows a large number of facts about these counties,
 such as population, change in population, gender and education distribution, etc. 
 
-\pyrex[caption={2016 Primary results and county-level metadata. Note that to avoid duplicate output, we display the counties data in the Python example and the results data in the R example.}]{ch_data_wrangling/primary}
+\pyrex[caption={2016 Primary results and county-level metadata. Note that to avoid duplicate output, we display the counties data in the Python example and the results data in the R example.}]{chapter07/primary}
 
 Suppose we hypothesize that Hillary would do relatively well in areas with more black voters.
 We would then need to combine the county level data about ethnic composition with the country $\times$ candidate
@@ -152,7 +152,7 @@ First, both data sets are cleaned to only contain the relevant data:
 for the \texttt{results} data set only the Democrat rows are kept, and only the \emph{fips} (county code), \emph{candidate}, \emph{votes}, and \emph{fraction} columns.
 For the \texttt{counties} data set, all rows are kept but only the \emph{county code}, \emph{name}, and \emph{Race\_white\_pct} columns are kept.
 
-\pyrex[caption=Joining data at the result and the county level]{ch_data_wrangling/nested}
+\pyrex[caption=Joining data at the result and the county level]{chapter07/nested}
 
 In the next step, both sets are joined using an inner join from the results data set.
 Note that we could also have used a left join here, but with an inner join it will be immediately
