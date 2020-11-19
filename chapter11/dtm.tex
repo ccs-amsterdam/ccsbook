@@ -7,7 +7,7 @@ The Document-term matrix (DTM, also called the term-document matrix or TDM) is a
 This represents a \concept{corpus} (or set of documents) as a matrix or table, where each row represents a document, each column represents a term (word),
 and the numbers in each cell show how often that word occurs in that document.
 
-\pyrex[caption=Example document-term matrix,output=r,format=table]{ch_dtm/dtm}
+\pyrex[caption=Example document-term matrix,output=r,format=table]{chapter11/dtm}
 
 As an example, \refex{dtm} shows a DTM made from two lines from the famous poem by Mary Angelou.
 The resulting matrix has two rows, one for each line; and 11 columns, one for each unique term (word).
@@ -28,9 +28,7 @@ This seems trivial, as English (and most western) text generally uses spaces to 
 However, even for English there are a number of edge cases. 
 For example, should `haven't' be seen as a single word, or two?
 
-%TODO: move different tokenizers to box
-
-\pyrex[caption=Differences between tokenizers]{ch_dtm/tokenize}
+\pyrex[caption=Differences between tokenizers]{chapter11/tokenize}
 
 \refex{tokenize} shows how Python and R deal with the sentence ``I haven't seen John's derring-do''.
 For Python, we first use |CountVectorizer.build_tokenizer| to access the built-in tokenizer.
@@ -49,20 +47,50 @@ For R, we simply call the \fn{tokens} function from the \quanteda\ package.
 This keeps |haven't| and |John's| as a single word, which is probably less desirable than splitting the words
 but at least better than outputting the word |haven|.
 
-As this simple example shows, even a relatively simple sentence is tokenized differently by the three tokenizers considered here.
+As this simple example shows, even a relatively simple sentence is tokenized differently by the tokenizers considered here (and see the box on tokenization in Python).
 Depending on the research question, these differences might or might not be important.
 However, it is always a good idea to check the output of this (and other) preprocessing steps so you understand
 what information is kept or discarded.
 
+\begin{figure}
+\begin{feature}\textbf{Tokenization in Python}\\
+  As you could see in the example, the built-in tokenizer in \sklearn\ is not actually very good.
+  For example, \emph{haven't} is tokenized to \emph{haven}, which is an entirely different word.
+  Fortunately, there are other tokenizers in the \pkg{nltk.tokenize} package that do better.
+
+  For example, the \fn{TreebankTokenizer} uses the tokenization rules for the Penn Treebank
+  to tokenize, which produces better results:
+
+  \codex[caption=The nltk.tokenize.TreebankTokenizer]{chapter11/tokenizealt.py}
+  
+  Another example is the \fn{WhitespaceTokenizer}, which simply uses whitespace to tokenize,
+  which can be useful if your input has already been tokenized,
+  and is used in \refex{tagcloud} below for tweets to conserve hash tags.
+
+  \codex[caption=The nltk.tokenize.WhitespaceTokenizer]{chapter11/tokenizealt1.py}
+
+  You can also write your own tokenizer if needed.
+  For example, the \fn{TreebankTokenizer} assumes that text has already been split into sentences
+  (which is why the period is attached to the word \emph{derring-do.}).
+  The code below shows how we can make our own tokenizer class,
+  which uses \fn{nltk.sent\_tokenize} to first split the text into sentences,
+  and then uses the \fn{TreebankTokenizer} to tokenize each sentence,
+  keeping only tokens that include at least one letter character.
+  Although a bit more complicated, this approach can give you maximum flexibility.
+
+  \codex[caption=Writing a custom Tokenizer]{chapter11/tokenizealt2.py}
+\end{feature}
+\end{figure}
+
 % Listings won't work with the japanese output, so I manually created png. Sorry!
 \begin{ccsexample}
-  \doublecodex{ch_dtm/haiku}
+  \doublecodex{chapter11/haiku}
   \begin{tcbraster}[raster columns=2,raster equal height=rows,raster valign=top]
   \begin{tcolorbox}[title=Python Output]
-      \includegraphics[width=\linewidth]{{ch_dtm/haiku.py}.png}
+      \includegraphics[width=\linewidth]{{chapter11/haiku.py}.png}
   \end{tcolorbox}%
   \begin{tcolorbox}[title=R Output]
-      \includegraphics[width=\linewidth]{{ch_dtm/haiku.r}.png}
+      \includegraphics[width=\linewidth]{{chapter11/haiku.r}.png}
   \end{tcolorbox}%
 \end{tcbraster}
   \caption{Tokenization of Japanese verse}\label{ex:haiku}
@@ -86,7 +114,7 @@ beyond the scope of this book.
 
 \subsection{The DTM as a Sparse Matrix}
 
-\pyrex[caption=Example document-term matrix]{ch_dtm/sotu}
+\pyrex[caption=Example document-term matrix]{chapter11/sotu}
 
 \refex{sotu} shows a more realistic example.
 It downloads all US `State of the Union' speeches and creates a document-term matrix from them.
@@ -95,10 +123,10 @@ R lists $85$ documents (rows) and $17,999$ features (columns), and Python report
 Note the difference in the amount of columns (unique terms) due to the differences in tokenization as discussed above. 
 
 \begin{ccsexample}
-  \doublecodex{ch_dtm/freq}
-    \doubleoutput{ch_dtm/freq}
-    \doublecodex{ch_dtm/freq2}
-      \doubleoutput{ch_dtm/freq}
+  \doublecodex{chapter11/freq}
+    \doubleoutput{chapter11/freq}
+    \doublecodex{chapter11/freq2}
+      \doubleoutput{chapter11/freq}
   \caption{A look inside the DTM}\label{ex:freq}
 \end{ccsexample}
 
@@ -198,7 +226,7 @@ So, we sum the DTM columns to get the frequency of each word, and combine that w
 from the |CountVectorized| object |cv|. Then we can create the WordCloud and give it the frequencies to use.
 Finally, we plot the cloud and remove the axes.
 
-\pyrex[caption=Word Cloud of the US State of the Union corpus,format=png]{ch_dtm/wordcloud}
+\pyrex[caption=Word Cloud of the US State of the Union corpus,format=png]{chapter11/wordcloud}
 
 The results from Python and R look different at first -- for one thing, R is nice and round but Python has more colors!
 However, if you look at the cloud you can see both are not very meaningful: the largest words are all punctuation or words like

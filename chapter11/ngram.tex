@@ -33,7 +33,7 @@ As you can imagine, this will create even bigger DTMs and worse data scarcity pr
 so require even more attention paid to feature selection and/or trimming.
 
 
-\pyrex[caption=Generating n-grams]{ch_dtm/ngram}
+\pyrex[caption=Generating n-grams]{chapter11/ngram}
 
 \refex{ngram} shows how n-grams can be created and used in Python and R.
 In Python, you can pass the \verb|ngram=(n, m)| option to the vectorizer,
@@ -42,7 +42,7 @@ Both will post-process the tokens to create all n-grams in the range of n to m.
 In this example, we are asking for unigrams (i.e., the words themselves), bigrams and trigrams of a simple example sentence.
 Both languages produce the same output, with R separating the words with an underscore while python uses a simple space.
 
-\pyrex[caption=Words and bigrams containing 'government',output=r,format=table]{ch_dtm/ngram2}
+\pyrex[caption=Words and bigrams containing 'government',output=r,format=table]{chapter11/ngram2}
 
 \refex{ngram2} shows how you can generate n-grams for a whole corpus.
 In this case, we create a DTM of the state of the union matrix with all bigrams included.
@@ -79,10 +79,10 @@ Nonetheless, both methods give very similar results, with Saddam Hussein, the Ir
 
 
 \begin{ccsexample}
-\doublecodex{ch_dtm/colloc}
-\codexoutputtable{ch_dtm/colloc.r}
-\doublecodex{ch_dtm/colloc2}
-\codexoutputtable{ch_dtm/colloc2.r}
+\doublecodex{chapter11/colloc}
+\codexoutputtable{chapter11/colloc.r}
+\doublecodex{chapter11/colloc2}
+\codexoutputtable{chapter11/colloc2.r}
 \caption{Identifying and applying collocations in the US State of the Union}\label{ex:colloc}
 \end{ccsexample}
 
@@ -146,13 +146,13 @@ Finally, analogies are solved by simply adding and subtracting the vectors as ex
 (excluding the words in the analogy itself). 
 
 \begin{ccsexample}
-\doublecodex{ch_dtm/embeddings0}
-\doublecodex{ch_dtm/embeddings1}
-\codexoutputtable{ch_dtm/embeddings1.r}
-\doublecodex{ch_dtm/embeddings2}
-\codexoutputtable{ch_dtm/embeddings2.r}
-\doublecodex{ch_dtm/embeddings3}
-\codex[caption=Output]{ch_dtm/embeddings3.r.out}
+\doublecodex{chapter11/embeddings0}
+\doublecodex{chapter11/embeddings1}
+\codexoutputtable{chapter11/embeddings1.r}
+\doublecodex{chapter11/embeddings2}
+\codexoutputtable{chapter11/embeddings2.r}
+\doublecodex{chapter11/embeddings3}
+\codex[caption=Output]{chapter11/embeddings3.r.out}
 \caption{Using word embeddings for finding similar and analogous words}\label{ex:embedding}
 \end{ccsexample}
 
@@ -173,7 +173,7 @@ For most languages, this can be determined with very high accuracy, although som
 in one famous example, the flies in \emph{fruit flies} is generally a noun (fruit flies are a type of fly), but it can also be a verb (if fruit could fly). 
 Although there are different sets of POS tags used by different tools, there is broad agreement on the core set of tags listed in \reftab{postags}.
 
-%TODO: Add tabel with pos tags and reference to jurafsky
+\input{chapter11/tabpostags}
 
 POS tags are useful since they allow us for example to analyse only the \textit{nouns} if we care about the things that are discussed, only the \textit{verbs} if we care about actions that are described, or only the \textit{adjectives} if we care about the characteristics given to a noun.
 Moreover, knowing the POS tag of a word can help disambiguate it.
@@ -210,7 +210,7 @@ Looking at the upos (universal Part-of-Speech) column, John is recognized as a p
 Finally, the \verb|head_token_id| and \verb|dep_rel| columns represent the syntactic information in the sentence:
 `Bought' (token 2) is the root of the sentence, and `John' is the subject (nsubj) while `knives' is the object of the buying.
 
-\pyrex[caption=Using UDPipe to analyse a sentence,format=table,output=r]{ch_dtm/udpipe}
+\pyrex[caption=Using UDPipe to analyse a sentence,format=table,output=r]{chapter11/udpipe}
 
 The syntactic relations can be useful if you need to differentiate between who is doing something and whom it was done to.
 For example, one of the authors of this book used syntactic relations to analyse conflict coverage,
@@ -225,11 +225,35 @@ create a DTM with these nouns, and then visualize them as a word cloud.
 As you can see, these words (such as student, hero, childcare, healthcare, and terrorism), are much more indicative of the topic of a text than the general words used earlier.
 In the next chapter we will show how you can further analyse these data, for example by analysing usage patterns per person or over time, or using an unsupervised topic model to cluster words into topics.
 
-\pyrex[caption=Nouns used in the most recent State of the Union addresses,format=png,output=py]{ch_dtm/nouncloud}
+\pyrex[caption=Nouns used in the most recent State of the Union addresses,format=png,output=py]{chapter11/nouncloud}
 
-Please note that we use UDPipe here, but nowadays there are a number of good and relatively easy to use linguistic toolkits that can be used.
-Especially \concept{Spacy} \citep{spacy} and \concept{Stanza} \citep{stanza} are also very good and flexible toolkits with support for multiple (human) languages and good integration especially with Python.
-If you want to learn more about natural language processing, the book `Speech and Language Processing' by Jurafsky and Martin is a very good starting point \citep{jurafsky}, with a third edition currently being written.
+As an alternative to UDPipe, you can also use Spacy,
+which is another free and popular natural language toolkit.
+It is written in Python, but the \pkg{spacyr} package offers an easy way to use it from R.
+For R users, installation of \pkg{spacyr} on MacOS is easy,
+but note that on Windows there are some additional steps, see
+\url{https://cran.r-project.org/web/packages/spacyr/readme/README.html} for more details.
+
+\refex{spacy} shows how you can use Spacy to analyse the proverb `all roads lead to Rome' in Spanish.
+In the first block, the Spanish language model is downloaded (this is only needed once).
+The second block loads the language model and parses the sentence.
+You can see that the output is quite similar to UDPipe, but one additional feature is the inclusion of
+Named Entity Recognition:
+Spacy can automatically identify persons, locations, organizations and other entities.
+In this example, it identifies `Rome' as a location. 
+This can be very useful to extract e.g. all persons from a newspaper corpus automatically.
+Note that in R, you can use the \pkg{quanteda} function \fn{as.tokens} to directly use the Spacy output in quanteda.
+
+\begin{ccsexample}
+  \doublecodex{chapter11/spacymodel}
+  \doublecodex{chapter11/spacy}
+  \codexoutputtable{chapter11/spacy.r}
+  \caption{Using Spacy to analyse a Spanish sentence}\label{ex:spacy}
+\end{ccsexample}
+
+As you can see, nowadays there are a number of good and relatively easy to use linguistic toolkits that can be used.
+Especially \concept{Stanza} \citep{stanza} is also very good and flexible toolkits with support for multiple (human) languages and good integration especially with Python.
+If you want to learn more about natural language processing, the book `Speech and Language Processing' by Jurafsky and Martin is a very good starting point \citep{jurafsky}\footnote{See \url{https://web.stanford.edu/~jurafsky/slp3/} for their draft of a new edition, which is (at the time of writing) free to download}
 
 
 \section{Which preprocessing to use?}

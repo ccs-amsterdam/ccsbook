@@ -45,7 +45,7 @@ As a running example in this section, we will use a collection of tweets from U.
 As you can see, this data set contains a lot of non-textual features such as hyperlinks and hash tags as well as regular punctuation and stop words.
 Before we can start analysing this data, we need to decide on and perform multiple cleaning steps such as detailed below. 
 
-\pyrex[caption=Top words used in Trump Tweets,format=table,output=py]{ch_dtm/trumptweets}
+\pyrex[caption=Top words used in Trump Tweets,format=table,output=py]{chapter11/trumptweets}
 
 Please note that although tweets are perhaps overused as a source of scientific information,
 we use them here as an example since they nicely exemplify issues around non-textual elements such as hyperlinks.
@@ -58,7 +58,7 @@ Words such as `a' and `the' are often called stop words, i.e. words that do not 
 Both \quanteda\ and \sklearn\ include built-in lists of stop words, making it very easy to remove the most common words.
 \refex{stopwords} shows the result of specifying `english' stop words to be removed for both packages.
 
-\pyrex[caption=Simple stop word removal,format=png,output=r]{ch_dtm/stopwords}
+\pyrex[caption=Simple stop word removal,format=png,output=r]{chapter11/stopwords}
 
 
 
@@ -97,7 +97,7 @@ For more details on which lists are available and what choices these lists make,
 see the package documentation for the \pkg{stopwords} package in Python (part of NLTK) and R (part of quanteda)
 
 
-\pyrex[caption=Inspecting and Customizing stop word lists]{ch_dtm/stopwords2}
+\pyrex[caption=Inspecting and Customizing stop word lists]{chapter11/stopwords2}
 
 %J. Nothman, H. Qin and R. Yurchak (2018). “Stop Word Lists in Free Open-source Software Packages”. In Proc. Workshop for NLP Open Source Software.
 
@@ -127,12 +127,12 @@ As a first cleaning step, we will use a regular expression to remove hyperlinks 
 Since both hyperlinks and HTML entities are split over multiple tokens, it would be hard to remove them after tokenization.
 
 \begin{ccsexample}
-\doublecodex{ch_dtm/noise1}
-\codex[caption=Output]{ch_dtm/noise1.r.out}
-\doublecodex{ch_dtm/noise2}
-\codex[caption=Output]{ch_dtm/noise2.r.out}
-\doublecodex{ch_dtm/noise3}
-\codex[caption=Output]{ch_dtm/noise3.r.out}
+\doublecodex{chapter11/noise1}
+\codex[caption=Output]{chapter11/noise1.r.out}
+\doublecodex{chapter11/noise2}
+\codex[caption=Output]{chapter11/noise2.r.out}
+\doublecodex{chapter11/noise3}
+\codex[caption=Output]{chapter11/noise3.r.out}
 \caption{Cleaning a single tweet at the text and token level}\label{ex:noise}
 \end{ccsexample}
 
@@ -154,7 +154,7 @@ This underscores the importance of inspecting and understanding the results of t
 and to make sure that the later steps match these tokenization choices.
 Concretely, with the \cls{TreebankWordtokenizer} we would have had to also remove hashtags at the text level rather than the token level. 
 
-\pyrex[caption=Cleaning the whole corpus and making a tag cloud,output=r,format=png]{ch_dtm/tagcloud}
+\pyrex[caption=Cleaning the whole corpus and making a tag cloud,output=r,format=png]{chapter11/tagcloud}
 
 As a final example, \refex{tagcloud} shows how to filter tokens for the whole corpus, but rather than removing hashtags it keeps only the hash tags to produce a tag cloud. 
 In R, this is mostly a pipeline of \quanteda\ functions to create the corpus, tokenize, keep only hashtags, and create a dfm.
@@ -177,7 +177,7 @@ In many cases, this can be a result of the selection strategy. If we select all 
 It can also be that some words are used as standard phrases, for example `fellow Americans' in state of the union speeches.
 If every president in the corpus uses those terms, they are no longer informative about differences between presidents.
 
-\pyrex[caption=Trimming a Document-Term Matrix]{ch_dtm/trimming}
+\pyrex[caption=Trimming a Document-Term Matrix]{chapter11/trimming}
 
 \refex{trimming} shows how you can use the \concept{relative document frequency} to trim a DTM in Python and R.
 We keep only words with a document frequency of between 1\% and 75\%.
@@ -202,7 +202,7 @@ $tf\cdot idf(t,d)=tf(t,d)\cdot idf(t)=f_{t,d}\cdot -\log \frac{n_t}{N}$
 Where $f_{t,d}$ is the frequency of term $t$ in document $d$, $N$ is the total number of documents, and $n_t$ is the number of documents in which term $t$ occurs. In other words, the term frequency is weighted by the negative log of the fraction of documents in which that term occurs. Since $\log(1)$ is zero, terms that occur in every document are disregarded, and in general the less frequent a term is, the higher the weight will be. 
 
 
-\pyrex[caption=Tf$\cdot$Idf weighting,output=r,format=table]{ch_dtm/tfidf}
+\pyrex[caption=Tf$\cdot$Idf weighting,output=r,format=table]{chapter11/tfidf}
 
 tf$\cdot$idf weighting is a fairly common technique and can improve the results of subsequent analyses such as supervised machine learning.
 As such, it is no surprise that it is easy to apply this in both Python and R, as shown in \refex{tfidf}.

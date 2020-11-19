@@ -15,6 +15,20 @@
 \item Understand and use more advanced representations such as n-grams and embeddings
 \end{objectives}
 
-\input{ch_dtm/dtm}
-\input{ch_dtm/dtmselect}
-\input{ch_dtm/ngram}
+
+\newpage
+\begin{feature}
+  This chapter introduces the packages \pkg{quanteda} (R) and \pkg{sklearn} and \pkg{nltk} (Python) for converting text into a document-term matrix. It also introduces the \pkg{udpipe} package for natural language processing. 
+You can install these packages with the code below if needed  (see \refsec{installing} for more details):
+
+\doublecodex{chapter11/chapter11install}
+
+\noindent After installing, you need to import (activate) the packages every session:
+
+\doublecodex{chapter11/chapter11library}
+
+\end{feature}
+
+\input{chapter11/dtm}
+\input{chapter11/dtmselect}
+\input{chapter11/ngram}
