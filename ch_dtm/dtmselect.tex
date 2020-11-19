@@ -16,11 +16,11 @@ essentially a plot of the most frequent words in a  \concept{corpus} (set of doc
   In this meaning, the term is also often used in R, where a column of a dataframe is called a vector,
   and where functions that can be called on a whole vector at once are called \emph{vectorized}. \\%
   %
-  More generally, however, a vector in geometry is a point (or line from the origin) in an n-dimensional space,
+  More generally, however, a vector in geometry is a point (or line from the origin) in an $n$-dimensional space,
   where n is the length or dimensionality of the vector.
   This is also a very useful interpretation for vectors in text analysis:
   the dimensionality of the space is the number of unique words (columns) in the document-term matrix,
-  and each document is a point in that n-dimensional space.\\%
+  and each document is a point in that $n$-dimensional space.\\%
   %
   In that interpretation, various geometric distances between documents can be calculated as an indicator for how similar
   two documents are. Techniques that reduce the number of columns in the matrix (such as clustering or topic modeling)
@@ -144,7 +144,7 @@ The second pattern looks for an ampersand (\verb#&#) followed by one or more let
 This matches HTML escapes like \verb#&amp;# for an ampersand.
 
 In the next step, we process the tokenized text to remove every token that is either a stopword or does not start with a letter. 
-In Python, this is done by using a list expression (\verb#[process(item) for item in list]#) for tokenizing each document; and a nested list expression for filtering each token in each document.
+In Python, this is done by using a list comprehension (\verb#[process(item) for item in list]#) for tokenizing each document; and a nested list comprehension for filtering each token in each document.
 In R this is not needed as the \fn{tokens\_*} functions are \concept{vectorized}, that is, they directly run over all the tokens.
 
 Comparing R and Python, we see that the different tokenization functions mean that \verb|#trump| is removed in R (since it is a token that does not start with a letter),
@@ -194,20 +194,20 @@ Since many algorithms have to assign weights or parameters to each word, this ca
 
 The DTMs created above all use the raw frequencies as cell values.
 It can also be useful to weigh the words so more informative words have a higher weight than less informative ones.
-A common technique for this is \concept{tf-idf} weighting.
+A common technique for this is \concept{tf$\cdot$idf} weighting.
 This stands for \emph{term frequency - inverse document frequency} and weights each occurrency by its raw frequency (term frequency) corrected for how often it occurs in all documents (inverse document frequency). In a formula, the most common implementation of this weight is given as follows:
 
-$tfidf(t,d)=tf(t,d)\cdot idf(t)=f_{t,d}\cdot -\log \frac{n_t}{N}$
+$tf\cdot idf(t,d)=tf(t,d)\cdot idf(t)=f_{t,d}\cdot -\log \frac{n_t}{N}$
 
 Where $f_{t,d}$ is the frequency of term $t$ in document $d$, $N$ is the total number of documents, and $n_t$ is the number of documents in which term $t$ occurs. In other words, the term frequency is weighted by the negative log of the fraction of documents in which that term occurs. Since $\log(1)$ is zero, terms that occur in every document are disregarded, and in general the less frequent a term is, the higher the weight will be. 
 
 
-\pyrex[caption=Tf-Idf weighting,output=r,format=table]{ch_dtm/tfidf}
+\pyrex[caption=Tf$\Cdot$Idf weighting,output=r,format=table]{ch_dtm/tfidf}
 
-Tf-idf weighting is a fairly common technique and can improve the results of subsequent analyses such as supervised machine learning.
+tf$\cdot$idf weighting is a fairly common technique and can improve the results of subsequent analyses such as supervised machine learning.
 As such, it is no surprise that it is easy to apply this in both Python and R, as shown in \refex{tfidf}.
 This example uses the same data as \refex{sotu} above, so you can compare the resulting weighted values with the results reported there.
-As you can see, the TF-IDF weighting in both languages have roughly the same effect:
+As you can see, the tf$\cdot$idf weighting in both languages have roughly the same effect:
 very frequent terms such as \emph{the} are made less important compared to less frequent words such as \emph{submit}.
 For example, in the raw frequencies for the 1965 Johnson speech, \emph{the} occurred 355 times compared to \emph{submit} only once.
 In the weighted matrix, the weight for \emph{submit} is 4 times as low as the weight for \emph{the}.
@@ -220,7 +220,7 @@ and the other counts would be greater than one since they would only be weighted
 
 Even with those options the results are still different (in details if not in proportions),
 mainly because R normalizes the frequencies before weighting, while Python normalizes after the weighting.
-Moreover, Python by default uses L2 normalizatoin, meaning that the length of the document vectors will be one,
+Moreover, Python by default uses L2 normalization, meaning that the length of the document vectors will be one,
 while R uses L1 normalization, that is, the row sums are one (before weighting).
 Both R and Python have various parameters to control these choices which are explained in their respective help pages.
 However, although the differences in absolute values look large, the relative effect of making more frequent terms less important is the same,

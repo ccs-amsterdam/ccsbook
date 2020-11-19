@@ -122,7 +122,7 @@ This can be very useful, for example for (semi-)automatically expanding a dictio
 First, we download a very small subset of the pre-trained Glove embedding vectors\fnglove,
 wrapping the download call in a condition to only download it when needed.
 
-Then, for python, we use the excellent support from the \pkg{gensim} package to load the embeddings into a \cls{KeyedVectors} object.
+Then, for Python, we use the excellent support from the \pkg{gensim} package to load the embeddings into a \cls{KeyedVectors} object.
 Although not needed for the rest of the example, we create a pandas DataFrame from the internal embedding values so the internal structure becomes clear: each row is a word, and the columns (in this case 50) are the different (semantic) dimensions that characterize that word according to the embeddings model.
 This data frame is sorted on the first dimension, which shows that negative values on that dimension are related to various sports.
 Next, we switch back to the \cls{KeyedVectors} object to get the most similar words to the word \emph{fraud}, which is apparently related to similar words like \emph{bribery} and \emph{corruption} but also to words like \emph{charges} and \emph{alleged}.
@@ -175,7 +175,7 @@ Although there are different sets of POS tags used by different tools, there is 
 
 %TODO: Add tabel with pos tags and reference to jurafsky
 
-POS tags are useful since they allow us for example t analyse only the \textit{nouns} if we care about the things that are discussed, only the \textit{verbs} if we care about actions that are described, or only the \textit{adjectives} if we care about the characteristics given to a noun.
+POS tags are useful since they allow us for example to analyse only the \textit{nouns} if we care about the things that are discussed, only the \textit{verbs} if we care about actions that are described, or only the \textit{adjectives} if we care about the characteristics given to a noun.
 Moreover, knowing the POS tag of a word can help disambiguate it.
 For example, like as a verb (I like books) is generally positive, but like as a preposition (a day like no other) has no clear sentiment attached.
 
