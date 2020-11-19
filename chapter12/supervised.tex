@@ -345,7 +345,9 @@ vectorizer to a file, so that we can reload them later
 -- after all, the columns of your feature matrix will be different (and hence, completely useless for the classifier) when
 fitting a new vectorizer. Therefore, as you see, you do not do any fitting any more, and only use the |.transform()| method of the (already fitted) vectorizer and the |.predict()| method of the (already fitted) classifier.
 
-\pyrex[output=py, caption=Saving and loading a vectorizer and a classifier]{chapter12/reuse}
+In R, you have no vectorizer you could save -- but because in contrast to Python, both your DTM and your classifier include the feature names, it suffices to save the classifier only (using \verb+saveRDS(myclassifier, "myclassifier.rds")+) and using on a new DTM later on. You do need to remember, though, how you constructed the DTM (e.g., which preprocessing steps you took), to make sure that the features are comparable.
+
+\pyrex[output=py, input=py, caption=Saving and loading a vectorizer and a classifier]{chapter12/reuse}
 
 
 
