@@ -1,6 +1,40 @@
 \chapter{ Automatic analysis of text}
 \label{chap:text}
 
+
+
+\begin{abstract}{Abstract}
+  In this chapter, we discuss different approaches to the automatic analysis of text; or automated content analysis. We combine techniques from earlier chapters, such as transforming texts into a matrix of term frequencies and machine learning. In particular, we describe three different approaches (dictionary-based analyses, supervised machine learning, unsupervised machine learning). The chapter provides guidance on how to conduct such analyses, and also on how to decide which of the approaches is most suitable for which types of questions.
+\end{abstract}
+
+\keywords{dictionary approaches, supervised machine learning, unsupervised machine learning, topic models, automated content analysis}
+
+\begin{objectives}
+\item Understand different approaches to automatic analysis of text
+\item Be able to decide on whether to use a dictionary approach, supervised machine learning, or unsupervised machine learning
+\item Be able to use these techniques
+\end{objectives}
+
+
+\newpage
+\begin{feature}
+
+  ADD PACKAGES THAT ARE USED
+\end{feature}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 In earlier chapters, you learned about both supervised and unsupervised machine learning as well about dealing with texts.
 This chapter brings together these elements and discusses how to combine them to automatically analyze large corpora of texts. We begin with a very simple top-down approach in Section~\ref{sec:dictionary}, in which we count occurrences of words from an \emph{a priori} defined list of words. In Section~\ref{sec:supervised}, we still use pre-defined categories that we want to code, but let the machine ``learn'' the rules of the coding itself. Finally, in Section~\ref{sec:unsupervised}, we employ a bottom-up approach in which we do not use any \emph{a priori} defined lists or coding schemes, but inductively extract topics from our data.
 

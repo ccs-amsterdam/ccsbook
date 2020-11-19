@@ -1,5 +1,5 @@
 \section{Advanced representation of text}
-\label{ngram}
+\label{sec:ngram}
 
 The examples above all created document-term matrices where each column actually represents a word.
 There is more information in a text, however, than pure word counts.
@@ -16,7 +16,6 @@ This is often called \concept{feature engineering}, as we are using our domain e
 If we are using other columns than words it is also technically more correct to use the name \concept{Document-feature matrix}, as \quanteda\ does, but we will stick to the most common name here and simply continue using the name DTM.
 
 \subsection{N-grams}
-
 The first feature we will discuss are n-grams.
 The simplest case is a bigram (or 2-gram), where each feature is a pair of adjacent words.
 The example used above, \emph{the movie was not bad}, will yield the following bigrams: \emph{the-movie}, \emph{movie-was}, \emph{was-not}, and \emph{not-bad}.
@@ -96,7 +95,7 @@ The term statistics again show how the individual terms are now replaced by thei
 
 
 \subsection{Word Embeddings}
-
+\label{sec:wordembeddings}
 A recent addition to the text analysis toolbox are \concept{word embeddings}.
 Although it is beyond the scope of this book to give a full explanation of the algorithms behind word embeddings,
 they are relatively easy to understand and use at an intuitive level.

@@ -15,8 +15,6 @@ straightforward: you count how often each positive word occurs in a
 text, you do the same for the negative words, and then determine which
 occur more often.
 
-\todo[inline]{The example now shows two very differnet approaches. We probably could find a NLTK function or sth to make the python-example more R-like ... but on the other hand, it seems (but maybe that's me (Damian)) more flexible and extensible to build this up as a for loop, especially if you eventually want to support multi-word expressions or regex or so. TO BE DECIDED...}
-
 
 \pyrex[input=both, output=none, caption={Different approaches to a simple dictionary-based sentiment analysis: counting and summing all words using a for-loop over all reviews (Python) versus constructing a term-document matrix and looking up the words in there (R). Note that both approaches would be possible in either language.}]{chapter12/sentsimple}
 
@@ -45,7 +43,7 @@ Still, there are many use cases where dictionary approaches work very
 well. Because your list of words can contain anything, not just
 positive or negative words. Dictionary approaches have been used, for
 instance, to measure the use of racist words or swearwords in online
-fora. Dictionary approaches are simple to understand and
+fora \citep[e.g.,][[]{Tulkens2016}. Dictionary approaches are simple to understand and
 straightforward, which can be a good argument for using them when it
 is important that the method is no black-box but fully transparent
 even without technical knowledge. Especially when the dictionary is already

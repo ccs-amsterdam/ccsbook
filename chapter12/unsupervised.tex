@@ -1,4 +1,4 @@
-\section{Unsupervised text analysis: topic modeling [?]}
+\section{Unsupervised text analysis: topic modeling}
 \label{sec:unsupervised}
 
 In \refsec{clustering}, we discussed how clustering techniques can be used to find patterns in data,
@@ -12,9 +12,9 @@ Moreover, assuming the regularities capture interesting information and the devi
 uninteresting noise, these clusters of cases or variables can actually be substantively informative.
 
 Since a document-term matrix (DTM) is `just' a matrix, you can also apply these clustering techniques to the DTM
-to find groups of words or documents.
-This is exactly what you do in topic modeling:
-you cluster the words and documents into `topics', consisting of words and documents that co-vary.
+to find groups of words or documents. You can therefore use any of the techniques we described in \refchap{eda}, and in particular clustering techniques such as $k$-means clustering (see  \refsec{clustering}) to group documents that use similar words together. 
+
+It can be very instructive to do this, and we encourage you to play around with such techniques. However, in recent years, a set of models called \concept{topic models} have become especially popular for the unsupervised analysis of texts. Very much what like what you would do with other unsupervised techniques, also in topic modeling, you group words and documents into `topics', consisting of words and documents that co-vary.
 If you see the word `agriculture' in a news article, there is a good chance you might find words such as `farm' or `cattle',
 and there is a lower chance you will find a word like `soldier'.
 In other words, the words `agriculture' and `farm' generally occur in the same kind of documents, so they can be said to be part of the same topic.
@@ -24,14 +24,14 @@ and if you know what topic a document is on (e.g. an agricultural topic), you ar
 Thus, we can formulate the goal of topic modeling as: given a corpus, find a set of N topics, consisting of specific words and/or documents, that minimize the mistakes we would make if we try to reconstruct the corpus from the topics.
 This is similar to regression where we try to find a line that minimizes the prediction error.
 
-In early research on document clustering, a technique called Latent Semantic Analysis (LSA) essentially used a factor analysis technique called Singular Value Decomposition on the DTM.
+In early research on document clustering, a technique called Latent Semantic Analysis (LSA) essentially used a factor analysis technique called Singular Value Decomposition (see \refsec{pcasvd} on the DTM.
 This has yielded promising results in information retrieval (i.e. document search) and studying human memory and language use.
 However, it has a number of drawbacks including factor loadings that can be difficult to interpret substantively and no good way of dealing with words that can have multiple meanings \citep{lsa}.
 
 \subsection{Latent Dirichlet Allocation (LDA)}
 
 The most widely used technique for topic modeling is Latent Dirichlet Allocation (LDA).
-Although the goal of LDA is the same as for other clustering techniques, it starts from the other end with what is called a \concept{generative model}.
+Although the goal of LDA is the same as for clustering techniques, it starts from the other end with what is called a \concept{generative model}.
 A generative model is a (simplified) formal model of how the data is assumed to have been generated.
 For example, if we would have a standard regression model predicting income based on age and education level,
 the implicit generative model is that to determine someone's income, you take their age and education level,
@@ -103,14 +103,14 @@ After enough iterations, this converges to a solution.
   A low alpha means that each die is unfair in the sense of having a strong preference for some number(s), as if these numbers are weighed down. You can then draw a die that prefers ones, or a die that prefers sixes.
   For topic models this means that each document tends to have one or two dominant topics.
   Finally, alpha can be symmetric (meaning dice are unfair, but randomly, so in the end each topic has the same chance)
-  or assymetric (they are still unfair, and now also favour some topics more than others).
+  or asymetric (they are still unfair, and now also favour some topics more than others).
   This would correspond to some topics being more likely to occur in all documents.
   
   In our experience, most documents actually do have one or two dominant topics,
   and some topics are actually more prevalent across many documents then others
   -- especially if you consider that procedural words and boilerplate also need to be fit into a topic unless they are filtered out beforehand.
   Thus, we would generally recommend a relatively low and asymmetric alpha,
-  and in fact Gensim by default uses an algorithm to find an alpha that corresponds to this recommendation.
+  and in fact Gensim provides algorithm to find, based on the data, an alpha that corresponds to this recommendation.
   In R, we would recommend picking a lower alpha than the default value, probably around $\alpha=5/K$,
   and optionally try using an asymmetric alpha if you find some words that occur across multiple topics. 
 
@@ -144,7 +144,7 @@ For Python, this is done using the \fn{Sparse2Corpus} helper function while in R
 Then, we fit the model, asking for 10 topics to be identified in these paragraphs.
 There are three things to note in this line.
 First, we specify a \concept{random seed} of 123 to make sure the analysis is replicable.
-Second, we specify an `assymetric' of \verb|1/1:10|, meaning the first topic has alpha 1, the second 0.5, etc.
+Second, we specify an `asymmetric' of \verb|1/1:10|, meaning the first topic has alpha 1, the second 0.5, etc.
 -- see the note on hyperparameters for more information. 
 Third, for Python we also need to specify the vocabulary names since these are not included in the DTM.
 
@@ -231,7 +231,8 @@ you should use regular gold standard techniques for validation:
 code a sufficiently large random sample of documents with your predefined categories,
 and test whether the LDA topics match those categories.
 In general, however, in such cases it is a better idea to use a dictionary or supervised analysis technique
-as topic models often do not exactly capture our categories.
+as topic models often do not exactly capture our categories. After all, unsupervised techniques mainly
+excel in bottom-up and explorative analyses.
 
 
 \subsection{Beyond LDA}

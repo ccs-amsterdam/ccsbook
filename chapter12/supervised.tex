@@ -30,7 +30,7 @@ Sadly, most interesting concepts are more complex to code. Take a
 seemingly straightforward problem: distinguishing whether a news
 article is about the economy or not. This is really easy to do for
 humans: there may be some edge cases, but in general, people rarely
-need longer than a second to grasp whether an article is about the
+need longer than a few seconds to grasp whether an article is about the
 economy rather than about sports, culture, etc. Yet, many of these
 articles won't directy state that they are about the economy by
 explicitly using the word ``economy''.
@@ -42,7 +42,7 @@ also come up with other words like ``stock exchange'', ``market'',
 faced when we dicussed the precision-recall tradeoff in
 Section~\ref{sec:validation}: The more terms we add to our
 dictionary, the more false positives we will get: articles about
-geographical space called ``market'', about some celebrity being seen
+the geographical space called ``market'', about some celebrity being seen
 in ``company'' of someone else, and so on.
 
 From this example, we can conclude that often (1) it is easy for
@@ -70,14 +70,14 @@ Let us recap the building blocks that we need. In
 Chapter~\ref{chap:introsml}, you learned how to use different
 classifiers, how to evaluate them, and how to choose the best
 settings. However, in these examples, we used numerical data as
-features; now, we have text.  In Chapter [INSERT REF TO CHAPTER
-  10/PROCESSING TEXT], you learned how to turn text into numerical
+features; now, we have text.  In \refchap{dtm},
+you learned how to turn text into numerical
 features. And that's all we need to get started!
 
 Typical examples for supervised machine learning in the analysis of
 communication include the classification of topics
 \citep[e.g.,][]{Scharkow2011}, frames \citep[e.g.,][]{Burscher2014},
-user characteristics such as gender or ideology \todo{add references},
+user characteristics such as gender or ideology,
 or sentiment.
 
 Let us consider the case of sentiment analysis more in
@@ -99,7 +99,7 @@ questionable how well they work in practice. After all, ``sentiment''
 is not exactly a clear, manifest concept for which we can enumerate a
 list of words. It has been shown that results obtained with multiple
 of these packages correlate very poorly with each other and with human
-annotations \todo{add reference paper wouter}.
+annotations \citep{Boukes2019,Chan2021}.
 
 Consequently, it has been suggested that it is better to use
 supervised machine learning to automatically code the sentiment of
@@ -175,7 +175,7 @@ present in the training matrix are retained in the test matrix.
 \note{A word that is not present in the training data, but is present
   in the test data, is thus ignored. If you want to use the
   information such out-of-vocabulary words can entail (e.g., they may
-  be synonyms), you need to use a word embedding approach}
+  be synonyms), you need to use a word embedding approach (see \refsec{wordembeddings})}
 
 We do not necessarily expect this first model to be the best
 classifier we could come up with, but it provides us with a reasonable
@@ -191,11 +191,13 @@ is concerningly low.
 
 \subsection{Finding the best classifier}
 
-\todo[inline]{\url{https://github.com/quanteda/quanteda.textmodels} seems to be under heavy development right now. In the CRAN version of quanteda, there is only a NB classifier present. Let's wait for a moment to check which textmodels will be available via quanteda and then incorporate them here.}
+%\todo[inline]{\url{https://github.com/quanteda/quanteda.textmodels} seems to be under heavy development right now. In the CRAN version of quanteda, there is only a NB classifier present. Let's wait for a moment to check which textmodels will be available via quanteda and then incorporate them here.}
+% As of 2020-11-10, still only logreg, svm, nb -- better, but much less than scikit lean
+
 
 %TODO: Beter uitleggen (+ref ch 11)
 Let us start by comparing two simple classifiers we know (Na\"ive
-Bayes and Logistic Regression, see Section~\ref{sec:nb2dnn} and two
+Bayes and Logistic Regression (see Section~\ref{sec:nb2dnn}) and two
 vectorizers that transform our texts into two numerical
 representations that we know: word counts and $tf\cdot idf$ scores
 (see \refchap{dtm}).
@@ -272,17 +274,17 @@ gridsearch. \refex{gridsearchlogreg} gives you an example.  With
 possible hyperparameters that we may want to tune. For instance, these
 could be the minimum and maximum frequency for words to be included or
 whether we want to use only unigrams (single words) or also bigrams
-(combinations of two words, see section [ADD REFERENCE TO APPROPRIATE
-  SECTIONS]). For the Logistic Regression, it may be the
+(combinations of two words, see \refsec{ngram}.
+For the Logistic Regression, it may be the
 regularization hyperparameter C, which applies a penalty for too
 complex models.  We can  put all values for these parameters
-that we want to consider in a dictionary, with a logical key (e.g. a string with the step of the pipeline followed by two underscores and the name of the hyperparameter) and a list of all values we want to consider as corresponding value.
+that we want to consider in a dictionary, with a descriptive key (i.e., a string with the step of the pipeline followed by two underscores and the name of the hyperparameter) and a list of all values we want to consider as corresponding value.
 
 The gridsearch procedure will then estimate all combinations of all
 values, using cross-validation (see Section~\ref{sec:validation}). In
 our example, we have $2 \cdot 2 \cdot 2 \cdot 2 \cdot 3 = 24$
 different models, and $24$ models $\cdot 5$ folds $= 120$ models to
-estimate. Hence, it can take you some time to run the code.
+estimate. Hence, it may take you some time to run the code.
 
 \pyrex[input=py, output=py, caption={A gridsearch to find the best hyperparameters for a pipeline consisting of a vectorizer and a classifier. Note that we can tune any parameter that either the vectorizer or the classifier accepts as an input, not only the four hyperparameters we chose in this example.}]{chapter12/gridsearchlogreg}
 
@@ -299,7 +301,7 @@ scores (more specifically, a positivity score, a negativity score, a
 neutrality score, and a compound measure that combines them), without
 any need to have training data. However, as \refex{vader} shows, such
 a method is clearly inferior to a supervised machine learning
-approach. While in almost all cases (except $n=11$), Vader was able to
+approach. While in almost all cases (except for $n=11$ cases), Vader was able to
 make a choice (getting scores of 0 is a notorious problem in very
 short texts), precision and recall are clearly worse than even the
 simple baseline model we started with, and much worse than those of
@@ -339,9 +341,8 @@ your classifier with others.
 
 Therefore, it makes sense to save both our classifier and our
 vectorizer to a file, so that we can reload them later
-(\refex{reuse}). Keep in mind that you do not need to re-use \emph{both}
--- after all, the feature matrix (e.g., which features (=words) are
-included, and in which column which feature is) will be different when
+(\refex{reuse}). Keep in mind that you have to re-use \emph{both}
+-- after all, the columns of your feature matrix will be different (and hence, completely useless for the classifier) when
 fitting a new vectorizer. Therefore, as you see, you do not do any fitting any more, and only use the |.transform()| method of the (already fitted) vectorizer and the |.predict()| method of the (already fitted) classifier.
 
 \pyrex[output=py, caption=Saving and loading a vectorizer and a classifier]{chapter12/reuse}
@@ -352,7 +353,7 @@ Another thing that we might want to do is to get a better idea of the
 features that the model uses to arrive at its prediction; in our
 example, what actually characterizes the best and the worst
 reviews. \refex{eli5} shows how this can be done in one line of code
-using eli5 -- a model that aims to ``\emph{e}xplain [the model]
+using \pkg{eli5} -- a package that aims to ``\emph{e}xplain [the model]
 \emph{l}ike \emph{I}'m \emph{5} years old''. Here, we re-use the
 |pipe| we constructed earlier to provide both the vectorizer and the
 classifier to the eli5 -- if we would have only provided the
@@ -367,7 +368,7 @@ prediction for a specific document, by using different shades of green
 and red to explain how much different features contributed to the
 classification, and in which direction (\refex{eli5b}).
 
-\pyrex[output=py, format=html, caption=Using ELI5 to explain a prediction]{chapter12/eli5b}
+\pyrex[output=py, input=py, format=html, caption=Using ELI5 to explain a prediction]{chapter12/eli5b}
 
 
 \todo[inline]{Include an example of RNN to text classification}
