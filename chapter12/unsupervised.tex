@@ -110,7 +110,7 @@ After enough iterations, this converges to a solution.
   and some topics are actually more prevalent across many documents then others
   -- especially if you consider that procedural words and boilerplate also need to be fit into a topic unless they are filtered out beforehand.
   Thus, we would generally recommend a relatively low and asymmetric alpha,
-  and in fact Gensim provides algorithm to find, based on the data, an alpha that corresponds to this recommendation.
+  and in fact Gensim provides algorithm to find, based on the data, an alpha that corresponds to this recommendation (by specifying \texttt{alpha='auto'}).
   In R, we would recommend picking a lower alpha than the default value, probably around $\alpha=5/K$,
   and optionally try using an asymmetric alpha if you find some words that occur across multiple topics. 
 
@@ -144,8 +144,10 @@ For Python, this is done using the \fn{Sparse2Corpus} helper function while in R
 Then, we fit the model, asking for 10 topics to be identified in these paragraphs.
 There are three things to note in this line.
 First, we specify a \concept{random seed} of 123 to make sure the analysis is replicable.
-Second, we specify an `asymmetric' of \verb|1/1:10|, meaning the first topic has alpha 1, the second 0.5, etc.
--- see the note on hyperparameters for more information. 
+Second, we specify an `asymmetric' of \verb|1/1:10|, meaning the first topic has alpha 1, the second 0.5, etc (in R).
+In Python, instead  of using the default of \verb|alpha='symmetric'|, we set  \verb|alpha='asymmetric'|, which uses the formula
+$\frac{1}{topic\_index + \sqrt{num\_topics}}$ to determine the priors. At the cost of a longer estimation time, we can even
+specify \verb|alpha='auto'|, which will learn an asymetric prior from the data. For more background, see the note on hyperparameters for more information. 
 Third, for Python we also need to specify the vocabulary names since these are not included in the DTM.
 
 The final line generates a data frame of top words per topic for first inspection
