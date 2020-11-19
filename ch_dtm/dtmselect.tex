@@ -202,7 +202,7 @@ $tf\cdot idf(t,d)=tf(t,d)\cdot idf(t)=f_{t,d}\cdot -\log \frac{n_t}{N}$
 Where $f_{t,d}$ is the frequency of term $t$ in document $d$, $N$ is the total number of documents, and $n_t$ is the number of documents in which term $t$ occurs. In other words, the term frequency is weighted by the negative log of the fraction of documents in which that term occurs. Since $\log(1)$ is zero, terms that occur in every document are disregarded, and in general the less frequent a term is, the higher the weight will be. 
 
 
-\pyrex[caption=Tf$\cdot$Idf weighting,output=r,format=table]{ch_dtm/tfidf}
+\pyrex[caption=Tf$\Cdot$Idf weighting,output=r,format=table]{ch_dtm/tfidf}
 
 tf$\cdot$idf weighting is a fairly common technique and can improve the results of subsequent analyses such as supervised machine learning.
 As such, it is no surprise that it is easy to apply this in both Python and R, as shown in \refex{tfidf}.
