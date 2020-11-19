@@ -136,3 +136,6 @@ main.ind
 .Rhistory
 DOITDB
 .Rproj.user
+
+*.udpipe
+glove.*.txt
