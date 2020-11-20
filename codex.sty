@@ -121,9 +121,13 @@
       \def\codex@tmp{Output}%
       \else
       \def\codex@tmp{Output: #1}%
-    \fi  
-\begin{tcolorbox}[title=\codex@tmp]
-    \includegraphics[width=\linewidth]{{snippets/#2}.png}
+      \fi
+\codexpng{\codex@tmp}{\linewidth}{#2}%
+} 
+
+\newcommand{\codexpng}[3]{%
+\begin{tcolorbox}[title=#1]
+    \centering\includegraphics[width=#2]{{snippets/#3}.png}
 \end{tcolorbox}%
 } 
 

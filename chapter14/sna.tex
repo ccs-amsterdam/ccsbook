@@ -11,11 +11,21 @@ The first idea that comes into our minds when analysing a graph is to understand
 
 One specific type of path is the one in which the initial node is the same than the final node. This closed path is called a \texttt{circuit}. To understand this concept let us recover the inducted subgraph of Democrat politicians (\texttt{g3}) in which we only have three nodes. If you plot this graph, as we do in \refex{circuit}, you can clearly visualize how a circuit works. 
 
-\pyrex[output=both,format=png,caption=Visualization of a circuit]{chapter14/circuit}
+\begin{ccsexample}
+  \doublecodex{chapter14/circuit}
+  \codexpng{A circuit of three nodes}{.5\linewidth}{chapter14/circuit.r}
+  \caption{Visualization of a circuit}
+  \label{ex:circuit}
+\end{ccsexample}
 
 In SNA it is extremely important to be able to describe the possible paths since they help us to estimate the reachability of the vertices. For instance, if we go back to our original graph of American politicians on Facebook (\texttt{g1}) visualized in \refex{visgraph}, we can see that Sanders is reachable from McCain because there is a path between them (McCain - Trump - Clinton - Sanders).  Moreover, we observe that this social network is fully \texttt{connected} because you can reach any given node from any other node in the graph. But it might not always be that way. Imagine that we remove the friendship of Clinton and Trump by deleting that specific edge. As you can observe in \refex{component}, when we create and visualize the graph \texttt{g6} without this edge we can see that the network is not longer fully connected and it has two \texttt{components}. Technically speaking, we would say for example that the subgraph of Republicans is a connected component of the network of American politicians, given that this connected subgraph is part of the bigger graph while not connected to it.
 
-\pyrex[output=both,format=png,caption=Visualization of a connected component]{chapter14/component}
+\begin{ccsexample}
+  \doublecodex{chapter14/component}
+  \codexpng{Connected components}{.5\linewidth}{chapter14/component.r}
+  \caption{Visualization of connected components}
+  \label{ex:component}
+\end{ccsexample}
 
 When analysing paths and reachability you may be interested in knowing the distances in your graph. One common question is what is the average path length of a social network, or in other words, what is the average of the shortest distance between each pair of vertices in the graph. This \texttt{mean distance} can tell you a lot about how close the nodes in the network are: the shorter the distance the closer the nodes are. Moreover, you can estimate the specific distance (shortest path) between two specific nodes.  As shown in \refex{distance} we can estimate the average path length (1.7) in our imaginary Facebook network of American politicians using the functions \fn{mean\_distance} in \pkg{igraph} and \fn{average\_shortest\_path\_length} in \pkg{networkx}. In this example we also estimate the specific distance in the network between Obama and McCain (3) using the function \fn{distances} in \pkg{igraph} and estimating the length (\fn{len}) of the shortest path (first result of \fn{shortest\_simple\_paths} minus 1) in \pkg{networkx}.
 
@@ -50,11 +60,16 @@ There are three other types of centrality measures. \texttt{Closeness} centralit
 
 As shown in \refex{centrality2}, we can obtain these three measures from undirected graphs using the functions \fn{closeness}, \fn{eigen\_centrality} and \fn{betweenness} in \pkg{igraph}, and \fn{closeness\_centrality}, \fn{eigenvector\_centrality} and \fn{betweenness\_centrality} in \pkg{networkx}. If we take a look to the centrality measures for every politician of the imaginary Facebook network we see that Clinton seems to be a very important and central node of the graph, just coinciding with the above-mentioned findings based on the degree. It is not a rule that we obtain the very same trend in each of the centrality measures but it is likely that they have similar results although they are looking for different dimensions of the same construct.
 
-\pyrex[output=both,caption={Estimations of density, transitivity, diameter and reciprocity}]{chapter14/centrality2}
+\pyrex[output=py,caption={Estimations of density, transitivity, diameter and reciprocity}]{chapter14/centrality2}
 
 We can use these centrality measures in many ways. For example, you can take the degree centrality as a parameter of the node size and labelling when plotting the network. This may be of great utility since the reader can visually identify the most important nodes of the network while minimizing the visual impact of those that are less central. In \refex{plotsize} we decided to specify the size of the nodes (parameters \verb|vertex.size| in \pkg{igraph} and \verb|node_size| in \pkg{networkx}) with the degree centrality of each of the American politicians in the Twitter network (directed graph) contained in \texttt{g2}. We also used the degree centrality to filter the labels in the graph, and then included only those that overpassed a threshold of 0.5 (parameters \verb|vertex.label| in \pkg{igraph} and \verb|labels| in \pkg{networkx}). These two simple parameters of the plot give you a fair image of the potential of the centrality measures to describe and understand your social network.
 
-\pyrex[output=both,format=png,caption=Using the degree centrality to change the size and labels of the nodes]{chapter14/plotsize}
+\begin{ccsexample}
+  \doublecodex{chapter14/plotsize}
+  \codexpng{Network Plot}{.5\linewidth}{chapter14/plotsize.r}
+  \caption{Using the degree centrality to change the size and labels of the nodes}
+  \label{ex:plotsize}
+\end{ccsexample}
 
 \subsection{Clustering and community detection}
 
@@ -68,11 +83,18 @@ A first step to get involved with subgroups within a network is to find the avai
 
 Now, in order to properly detect communities we will apply some common algorithms to obtain the most likely subgroups in a social network. The first of these models is the so called \texttt{edge-between} or Girvan-Newman algorithm \citep{newman2004finding}. This algorithm is based on divisive hierarchical clustering (explained in Section~\ref{sec:unsupervised}) by breaking down the graph into pieces and iteratively removing edges from the original one. Specifically,  the Girvan-Newman approach uses the betweenness centrality measure to remove the most central edge at each iteration. You can easily visualize this splitting process in a dendrogram, as we do in \refex{girvan}, where we estimated \texttt{cluster1} to detect possible communities in the Facebook network. We used the functions \fn{cluster\_edge\_betweenness} in \pkg{igraph} and \fn{girvan\_newman} in \pkg{networkx}.
 
-\pyrex[output=r,format=png,caption=Dendrogram to visualize clustering with Girvan-Newman]{chapter14/girvan}
+\begin{ccsexample}
+  \doublecodex{chapter14/girvan}
+  \codexpng{Dendogram}{.5\linewidth}{chapter14/girvan.r}
+  \caption{Dendrogram to visualize clustering with Girvan-Newman}
+  \label{ex:girvan}
+\end{ccsexample}
+
+
 
 When you look at the figure you will notice that the final leaves correspond to the nodes (the politicians) and then you have different partition levels (1 to 4), which in fact are different cluster possibilities. In edge-betweenness clustering, the big question is which partition level to choose, or in other words, which of the community division is better. The concept of \texttt{modularity} arises as a good measure (-1 to 1) to evaluate how good the division is (technically it's measured as the fraction of edges that fall within any given groups, let's say group 1 and group 2, minus the expected number of edges within those groups distributed at random). Thus, we can choose which of the four proposed divisions is the best based on the highest value of their modularities: The higher the modularity the more dense the connections \textit{within} the community and the more sparse the connections \textit{across} communities. In the case of \fn{cluster\_edge\_betweenness} in \pkg{igraph} it automatically estimates that the best division (on modularity) is the first one with two communities.
 
-\pyrex[output=both,caption={Community detection with Girvan-Newman}]{chapter14/girvan2}
+\pyrex[output=py,caption={Community detection with Girvan-Newman}]{chapter14/girvan2}
 
 With community detection algorithms we can then estimate the length (number of suggested clusters), membership (to which cluster belongs each node) and modularity (how good is the clustering). In the case of \pkg{igraph} in R we apply the functions \fn{length} (base), \fn{membership} and \fn{modularity} over the produced clustering object (i.e. \texttt{cluster1}). In the case of \pkg{networkx} in Python we first have to specify that we want to use the first component of the divisions (out of 4) using the function \fn{next}. Then, we can apply the functions \fn{len} (base) and \fn{modularity} to get the descriptors, and print the fist division (stored as \texttt{communities1}) to obtain the membership.
 
@@ -80,7 +102,7 @@ We can estimate the communities for our network using many other more clustering
 
 In \refex{clustalgo} we use \fn{cluster\_louvain}, \fn{cluster\_fast\_greedy} and \fn{cluster\_label\_prop} in \pkg{igrapgh} (R) and \fn{best\_partition}, \fn{greedy\_modularity\_communities} and \fn{asyn\_lpa\_communities} in \pkg{networkx} (Python). You can notice  that the results are quite similar\footnote{This similarity is because our example network is extremely small. In larger networks, the results might not be that similar.}  and it is pretty clear that there are two communities in the Facebook network: Democrats and Republicans!
 
-\pyrex[output=both,caption={Community detection with Louvain\, Propagating Label and Greedy Optimization}]{chapter14/clustalgo}
+\pyrex[output=py,caption={Community detection with Louvain\, Propagating Label and Greedy Optimization}]{chapter14/clustalgo}
 
 We can plot each of those clusters for better visualization of the communities. In \refex{plotcluster} we generate the plots with the Greedy Optimization algorithm in R and the Louvain algorithm in Python, and we get two identical results.
 

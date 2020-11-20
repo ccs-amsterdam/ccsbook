@@ -16,7 +16,13 @@ Now, let us show you how to create and visualize network structures in R and Pyt
 
 In both cases we generated a graph object \texttt{g1} which contains the structure of the network and different attributes (such as \verb|number_of_nodes()| in \pkg{networkx}). You can add\/remove nodes and edges to\/from this initial graph, or even modify the names of the vertices. One of the most useful functions is the visualization of the network (\fn{plot} in \pkg{igraph} and \fn{draw} or \fn{draw\_networkx} in \pkg{networkx}). \refex{visgraph} shows a basic visualization of the imaginary network of friendships of five American politicians in Facebook.
 
-\pyrex[output=both,format=png,caption=Visualization of a simple graph]{chapter14/visgraph}
+
+\begin{ccsexample}
+  \doublecodex{chapter14/visgraph}
+  \codexpng{Undirected graph}{.5\linewidth}{chapter14/visgraph.r}
+  \caption{Visualization of a simple graph}
+  \label{ex:visgraph}
+\end{ccsexample}
 
 Using network terminology, either nodes or edges can be \textit{adjacent} or not. In the figure we can say that nodes representing Donald Trump and John McCain are adjacent because they are connected by an edge that depicts their friendship. Moreover, the edges representing the friendships between John McCain and Donald Trump, and Hillary Clinton and Donald Trump, are also adjacent because they share one node (Donald Trump).
 
@@ -26,15 +32,32 @@ Now you you know more relevant terminology and the set up of a graph, you might 
 
 In the new graph the edges represent the action of following a user in Twitter. The first declared edge indicates that Hillary Clinton follows Donald Trump, but does not indicate the opposite. In order to provide the directed graph with more \textit{arrows} we included in \texttt{g2} two new edges (Barack Obama following Hillary Clinton, and Clinton following Bernie Sanders), so we can have a couple of reciprocal relationships besides the unidirectional ones. You can visualize the directed graph in \refex{visdirected} and see how the edges now contain useful arrows.
 
-\pyrex[output=both,format=png,caption=Visualization of a directed graph]{chapter14/visdirected}
+\begin{ccsexample}
+  \doublecodex{chapter14/visdirected}
+  \codexpng{Directed graph}{.5\linewidth}{chapter14/visdirected.r}
+  \caption{Visualization of a directed graph}
+  \label{ex:visdirected}
+\end{ccsexample}
+
 
 The edges and nodes of our graph can also have weights, features or attributes. When the edges have specific values that depict a feature of every pair of nodes (i.e. the distance between two cities) we say that we have a \textit{weighted graph}. This type of graphs is extremely useful for creating a more accurate representation of a network. For example, in our hypothetical network of American politicians in Twitter (\texttt{g2}) we can assign weights to the edges by including the number of likes that each politician has given to the followed user. This value  can serve as a measure of the distance between the nodes (i.e. the higher the number of likes the shorter the social distance). In \refex{weighted} we include the weights for each edge: Clinton has given 5 likes to Trumps' tweets, Sanders 20 to Clinton's messages, and so on. In the plot you can see how the sizes of the lines between the nodes change as a function of the weights.
 
-\pyrex[output=both,format=png,caption=Visualization of a weighted graph]{chapter14/weighted}
+\begin{ccsexample}
+  \doublecodex{chapter14/weighted}
+  \codexpng{Weighted graph}{.5\linewidth}{chapter14/weighted.r}
+  \caption{Visualization of a weighted graph}
+  \label{ex:weighted}
+\end{ccsexample}
+
 
 You can include more properties of the components of your graph. Imagine you want to use the number of followers of each politician to determine the size of the nodes, or the gender of the user to establish a color. In \refex{weighted2} we added the variable \emph{followers} to each of the nodes and asked the packages to plot the network using this value as the size parameter (in fact we multiplied the values by 0.001 to make it realistic on the screen, but you could also normalize these values when needed). We also included the variable \emph{party} that was later recoded in a new one called \emph{color} in order to represent Republicans with red and Democrats with blue.  You may need to add other features to the nodes or edges, but with this example you have an overview of what you can do.
 
-\pyrex[output=both,format=png,caption=Visualization of a weighted graph]{chapter14/weighted2}
+\begin{ccsexample}
+  \doublecodex{chapter14/weighted2}
+  \codexpng{Weighted graph including vertex sizes}{.5\linewidth}{chapter14/weighted2.r}
+  \caption{Visualization of a weighted graph including vertex sizes}
+  \label{ex:weighted2}
+\end{ccsexample}
 
 We can  mention a third type of graphs: the \textit{induced subgraphs}, which are in fact subsets of nodes and edges of a bigger graph. We can represent these subsets as G' = V', E'. In \refex{subgraph} we extract two induced subgraphs from our original network of American politicians on Facebook (\texttt{g1}): the first (\texttt{g3}) is built with the edges that contain only Democrat nodes, and the second (\texttt{g4}) with edges formed by Republican nodes. There is also a special case of induced subgraph, called \textit{clique}, which is an independent or complete subset of an undirected graph (each node of the clique must be connected to the rest of the nodes of the subgraph).
 
