@@ -19,9 +19,9 @@ The next chapter will focus on text as words and shows how you can represent tex
   The unicode standard determines how these bytes should be interpreted or `decoded'.
   This chapter assumes that raw text (the bytes in a file) is already `decoded' into characters (or unicode code points),
   and we can just work with the characters.
-  Especially if you are not working with English text, it is very important to make sure you understand unicode and encodings
+  Especially if you are not working with English text, it is very important to make sure you understand Unicode and encodings
   and check that the texts you work with are decoded properly.
-  Please see \refsec{encodings} for more information on how this works}
+  Please see \refsec{encodings} for more information on how this works.}
 
 When we think about text, we might think sentences or words, but the computer only `thinks' about letters:
 text is represented internally as a string of characters.
@@ -43,7 +43,7 @@ This text is split info separate characters, with each character representing a 
 These characters are indexed starting from the first one, with (as always) R counting from one, but Python counting from zero.
 
 In Python, texts are represented as \fn{str} (string) objects, in which we can directly address the individual characters by their position: \ttt{text[0]} is the first character of \ttt{text}, and so on.
-In R, howerver, texts (like all objects) represent columns rather than individual values.
+In R, howerver, texts (like all objects) represent columns (or vectors) rather than individual values.
 Thus, \ttt{text[1]} in R is the first text in a series of text.
 To access individual characters in a text, you have to use a function such as \fn{str\_length} and \fn{str\_sub} that will be discussed in more detail below. 
 This also means that in Python, if you have a column (or list) of strings that you need to apply an operation to,
@@ -62,7 +62,7 @@ you either need to use one of Panda's methods shown below or use a \concept{for 
   So, to give one example, the function \fn{str\_detect} is more or less the same as \fn{stringi::str\_detect} and \fn{base::grepl}. 
 }
     
-The first thing to keep in mind is that once you load any text on R or Python you usually store this content as a \emph{character} or \emph{string} object (or you may also think of \emph{lists} or \emph{dictionaries}, but they will have strings inside anyway), which means that basic operations and conditions of this data type apply, such as indexing or slicing to access individual characters or substrings (see \refsec{datatypes}). In fact, base strings operations are very powerful to clean your text and eliminate a big amount of noise.  Table~\ref{tab:stringoperations} summarises some useful operations on strings in R and Python that will help you in this stage.   
+The first thing to keep in mind is that once you load any text on R or Python you usually store this content as a \emph{character} or \emph{string} object (you may also often use \emph{lists} or \emph{dictionaries}, but they will have strings inside then), which means that basic operations and conditions of this data type apply, such as indexing or slicing to access individual characters or substrings (see \refsec{datatypes}). In fact, base strings operations are very powerful to clean your text and eliminate a big amount of noise.  Table~\ref{tab:stringoperations} summarises some useful operations on strings in R and Python that will help you in this stage.   
 
 \begin{table}
   \caption{\label{tab:stringoperations}Useful strings operations in R and Python to clean noise}{
@@ -82,7 +82,27 @@ Find s1 and replace by s2 & \ttt{str\_replace(s, s1, s2)}$^*$ & \ttt{s.replace(s
   \end{tabularx}}{(*) The R functions \ttt{str\_detect} and \ttt{str\_replace} and the Pandas function \ttt{s.str.match} and \ttt{s.str.replace} use \concept{regular expressions} to define what to find and replace. See \refsec{regular} below for more information.}
 \end{table}
 
-%TODO replace 10.2 by an actual clean with base using stupid .replace(<b>, '') etc. and change explanation here
-Let us apply some of these functions/methods to a simple Wikipedia text that contains HTML tags or boilerplate, punctuation and natural upper/lower case letters. Using base function \fn{gsub} in R and \fn{replace} in Python we can remove strings containing specific expressions such as \texttt{<p>} or \texttt{</b>} and include an empty space instead. We can use this same method to eliminate punctuation taking as a reference a pre-defined list of signs (\texttt{:punct:} in base R or the object \texttt{punctuation} from the library \pkg{string} in Python). In the case of converting letters from upper to lower case, we use the base R function \fn{tolower} and the string method \fn{lower} in Python. To remove unnecessary double spaces we apply the base R function \fn{trimws} and method \fn{join} in Python. \refex{clean} shows how to conduct this cleaning process.
+Let us apply some of these functions/methods to a simple Wikipedia
+text that contains HTML tags or boilerplate and natural upper/lower
+case letters.
+Using the \pkg{stringr} function \fn{str\_replace\_all} in R
+and \fn{replace} in Python we can do a find-and-replace and replace substrings
+by others (in our case, replace \texttt{<b>} with a space, for instance).
+To remove unnecessary double spaces we apply the \fn{str\_squish} method provided by \pkg{stringr} and in Python,
+we first chunk our string into a list of words by using the \fn{split} string method, before we use the \fn{join} method
+to join them again with now a single space.
+In the case of converting letters from upper to lower case, we use the base R function \fn{tolower} and the string
+method \fn{lower} in Python.
+Finally, the base R function \fn{trimws} and the
+Python string method \fn{strip} remove the white space from the beginning
+and end of the string.
 
-\pyrex[output=both,caption=Cleaning text with base functions]{chapter10/clean}
+\refex{clean} shows how to conduct this cleaning process.
+
+While you can get quite far with these techniques, there are more advanced and flexible approaches possible.
+For instance, you probably do not want to list \emph{all possible} HTML tags in separate \fn{replace} methods or \fn{str\_replace\_all} functions. In the next section, we therefore show how to use so-called \concept{regular expressions} to formulate such generalizable patterns.
+
+\pyrex[output=both,caption=Some basic text cleaning approaches]{chapter10/clean}
+
+\note{\textbf{To regex or not to regex in Python} You may wonder why we introduce basic string methods like \fn{replace} or the \fn{split}-then-\fn{join} trick, if everything can be done with regular expressions anyway. There are a couple of reasons for still using these methods: First, they are easy and don't have any dependencies. If you just want to replace a single thing, then you don't need to import any additional module. Second, regular expressions are considerably slower than string methods -- in most cases, you won't notice, but if you do a lot of replacements (think in thousands per new article, for a million of news articles), then this may matter. Third, you can use the \fn{join} trick also for other things like punctuation removal -- in this case, by generating a list of all characters in a string called \verb|text| provided they are no punctuation characters, and then joining them directly to each other:
+\verb|from string import punctuation; "".join([l for l in text if l not in punctuation])|}
