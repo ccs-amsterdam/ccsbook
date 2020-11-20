@@ -139,3 +139,5 @@ DOITDB
 
 *.udpipe
 glove.*.txt
+
+chapter12/reviewdata.*

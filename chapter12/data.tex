@@ -1,0 +1,40 @@
+\section{Obtaining Review Data}
+
+For the sections on dictionary and supervised approaches we will use a dataset of movie reviews
+from the IMDB database \citet{aclimdb}.
+This dataset is published as a compressed set of folders, with separate folders for the train and test datasets and subfolders for positive and negative reviews.
+There are lots of other review data sets posted, for example for Amazon review data (\url{https://jmcauley.ucsd.edu/data/amazon/}). Another nice 
+
+The IMDB data set we will use is a relatively large file and it requires bit of processing,
+so it is smart to \emph{cache} the data rather than downloading and processing it every time you need it.
+This is done in \refex{reviewdata}, which also serves a nice example of how to download and process files.
+Both R and Python follow the same basic pattern.
+First, we check whether the cached file exists, and if it does we read the data from that file.
+For R, we use the standard \concept{RDS} format, while for python we use a compressed \concept{pickle} file.
+The format of the data is also slightly different, following the convention for each language:
+In R we use the data frame returned by \fn{readtext},
+which can read files from a folder or zip archive and return a data frame containing one text per row.
+In Python, we have separate lists for the train and test data sets and for the full texts and labels:
+\ttt{X\_train} are the training texts and \ttt{y\_train} are the corresponding labels.
+
+\begin{ccsexample}
+  \doublecodex{chapter12/reviewdata}
+  \codexoutputtable{chapter12/reviewdatatable.r}
+  \caption{Downloading and caching IMDB review data}\label{ex:reviewdata}
+\end{ccsexample}
+
+If the cached data file does not exist yet,
+the file is downloaded from the Internet.
+In R, we then extract the file and call \fn{readtext} on the resulting folder.
+This automatically creates columns for the subfolders, so in this case for the dataset and label.
+After this, we remove the download file and the extracted folder,
+clean up the \ttt{reviewdata}, and save it to the \ttt{reviewdata.rds} file.
+In Python, we can extract files from the downloaded file directly,
+so we do not need to explictly extract it.
+We loop over all files in the archive, and use a regular expression to
+select only text files and extract the label and data set name
+(see \refsec{regular} for more information about regular expressions).
+Then, we extract the text from the archive, and add the text and the label to the appropriate list.
+Finally, the data is saved as a compressed pickle file,
+so the next time we run this cell it does not need to download the file again. 
+

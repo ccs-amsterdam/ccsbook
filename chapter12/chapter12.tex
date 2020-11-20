@@ -18,8 +18,17 @@
 
 \newpage
 \begin{feature}
+  \textbf{Packages used in this chapter}\\
+  This chapter uses the basic text and data handling that were described in \refchap{dtm} (\pkg{tidyverse}, \pkg{readtext}, and \pkg{quanteda} for R, \pkg{pandas} and \pkg{nltk}for Python).
+  For supervised text analysis, we use \pkg{quanteda.textmodels} (R) and \pkg{sklearn} (Python).
+  For topic models we use \pkg{topicmodels} (R) and \pkg{gensim}.
+  You can install these packages with the code below if needed  (see \refsec{installing} for more details):
 
-  ADD PACKAGES THAT ARE USED
+\doublecodex{chapter12/chapter12install}
+
+\noindent After installing, you need to import (activate) the packages every session:
+
+\doublecodex{chapter12/chapter12library}
 \end{feature}
 
 
@@ -39,6 +48,7 @@ In earlier chapters, you learned about both supervised and unsupervised machine 
 This chapter brings together these elements and discusses how to combine them to automatically analyze large corpora of texts. We begin with a very simple top-down approach in Section~\ref{sec:dictionary}, in which we count occurrences of words from an \emph{a priori} defined list of words. In Section~\ref{sec:supervised}, we still use pre-defined categories that we want to code, but let the machine ``learn'' the rules of the coding itself. Finally, in Section~\ref{sec:unsupervised}, we employ a bottom-up approach in which we do not use any \emph{a priori} defined lists or coding schemes, but inductively extract topics from our data.
 
 
+\input{chapter12/data}
 \input{chapter12/dictionary}
 
 \input{chapter12/supervised}
