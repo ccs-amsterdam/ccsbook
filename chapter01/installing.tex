@@ -236,8 +236,10 @@ You can check that pip is installed correctly by typing the following command on
 pip3 --version
 \end{verbatim}
 
-Which should report something like \texttt{pip 20.0.2 from /usr/lib/python3/dist-packages/pip (python 3.8)}.
-Again, if \verb|pip| reports the same version feel free to use it instead of pip3. 
+Which should report something like \texttt{pip 20.0.2 from ... (python 3.8)}.
+Again, if \verb|pip| reports the same version you can also use it instead of pip3.
+On some systems \verb|pip3| will not work, so use \verb|pip| in that case
+(but make sure to check that it points to Python 3).
 
 \paragraph{Installing Jupyter Notebook}
 Next, we will install Jupyter Notebook, which you can use to run all the examples in this book
