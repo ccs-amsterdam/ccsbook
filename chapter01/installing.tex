@@ -268,18 +268,13 @@ jupyter notebook
 
 This will print some useful information, including the URL at which you can access the notebook.
 However, it should also directly open this in a browser (e.g. Chrome) so you can directly start working. 
-In your browser you should see a juypter screen similar to \reffig{jupyter}.
+In your browser you should see a juypter screen similar to the middle window in \reffig{jupyter}.
 Create a new notebook by clicking on the \emph{New} button in the top right and selecting Python 3.
-This should open a window similar to \reffig{jupyter2}.
+This should open a window similar to the bottom window in \reffig{jupyter}.
 
-%TODO Add screeshots for jupyter
 \begin{figure}
-  \fbox{Jupyter notebook}
-  \caption{Jupyter Notebook main screen}\label{fig:jupyter}
-\end{figure}
-\begin{figure}
-  \fbox{Hello world on Juypter}
-  \caption{My First Notebook}\label{fig:jupyter2}
+  \includegraphics[width=\textwidth]{figures/jupyter.png}
+  \caption{Jupyter Notebook}\label{fig:jupyter}
 \end{figure}
 
 In jupyter, code is entered into cells.
@@ -290,7 +285,7 @@ Note that you can create more cells using the plus icon or with the insert menu.
 You can also set the cell type via the Cell menu: select code for analysis scripts (which is the default),
 or Markdown for text fragments, which can be used to explain the code and/or interpret the results.
 
-\section{Installing Third-Part Packages}
+\section{Installing Third-Party Packages}
 
 The \fn{print} function used above is included automatically when you start R or Python.
 Many functions, however, are included in separate \concept{packages}, which are
@@ -302,38 +297,36 @@ Throughout this book, we will be using such third-party packages for a variety o
 For example, we will use the R package \pkg{tidyverse} and the Python packages \pkg{pandas} for data wrangling.
 
 To install these packages on your computer, run the following commands:
+(Note: if you are using Anaconda, replace \ttt{pip3 install} by \ttt{conda install})  
 
-
-\noindent\rule{\textwidth}{.5pt}\vspace{-1em}
-
-\noindent\begin{minipage}[t]{.5\textwidth}
-Installing a package in R
-\begin{verbatim}
-install.packages("tidyverse")
-\end{verbatim}
-\end{minipage}
-\begin{minipage}[t]{.45\textwidth}
-  Installing a package in Jupyer Notebook:
-\begin{verbatim}
-!pip3 install pandas
-\end{verbatim}
-\end{minipage}
-\vspace{.5em}
-
-\noindent\rule{\textwidth}{.5pt}
+\begin{tcbraster}[raster columns=2,raster equal height=rows,raster valign=top]
+   \codex[caption=Installing a package from Jupyer]{chapter01/ch01install.py}
+   \codex[caption=Installing a package in R]{chapter01/ch01install.r}
+\end{tcbraster}
 
 \newcommand{\fnrepo}{\footnote{Similar to the App Store or Play Store, both R and Python have a centralized repository for third party packages.  For R, this is the Comprehensive R Archive Network (CRAN) encountered earlier,
     while for Python this is the Python Package Index (PyPI) accessed by \verb|pip|.  Normally, all packages in these repositories are open source and safe to install.}}
 
 These commands will automatically fetch the package from the right repository\fnrepo and install them on your computer. This can take a while, especially for large packages such as tidyverse.
 Fortunately, this only needs to be done once.
-
-Every time you use a package, you also need to \emph{activate} it using the \fn{import} (Python) or  \fn{library} (R) command.
-So, almost every chapter in this book starts with a code block to import all the packages used for that chapter.
-If that includes packages you have not yet installed, you can use the code above to install the packages.
+Every time time you use a package, you also need to \emph{activate} it using the \fn{import} (Python) or  \fn{library} (R) command.
 
 In general, whenever you get an error \texttt{No module named 'pandas'} (Python) or \texttt{there is no package called ‘tidyverse’},
 you can just install the package with that name using the code listed above.
 If you get an error such as \texttt{name 'pandas' is not defined} (Python) or \texttt{object 'ggplot' not found} (R),
 it is quite possible you forgot to activate the package that includes that function. 
 
+
+\begin{feature}
+\textbf{Packages used in each chapter}\\
+Some packages, like the \pkg{tidyverse} (R) and \pkg{pandas} (Python) packages for data handling are used in almost every chapter.
+Many chapters also introduce specific packages such as \pkg{igraph}/\pkg{networkx} for network analysis in \refchap{network}.
+To make it easy to keep track of the packages needed for each chapter,
+every chapter that includes code in this book starts with a note like this that gives an overview of the main packages introduced in that chapter.
+It also includes the code needed to install these packages, which of course is only needed if you didn't install these packages before.
+Note again that if you are using Anaconda for Python,
+your should replace \ttt{!pip3 install} by \ttt{!conda install} in that code.
+
+These note also includes a code block to import all the packages used for that chapter,
+which you need to run every time you use examples from that chapter.
+\end{feature}
