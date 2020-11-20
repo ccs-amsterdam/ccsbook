@@ -6,57 +6,18 @@ approach presented in the previous section. First, it is intuitively
 understandable and results can -- in principle --
 even be varified by hand, which can be an advantage when transparency
 or communicatibility is of high importance. Second, it is very easy to
-use.
-
-%TODO hoort deze beschrijving niet bij 12.1? (of 12.0, of een aparte sectie `choosing a method')?
-Dictionary approaches excel under three conditions: First, the
-variable we want to code is \emph{manifest and concrete} rather than
-\emph{latent and abstract}: names of actors, specific physical
-objects, specific phrases, etc., rather than feelings, frames, or
-topics. Second, all synonyms to be included must be known
-beforehand. And third, the dictionary entries must not have multiple
-meanings.
-
-For instance, coding how often gun control is mentioned in political
-speeches fits these criteria. There are only so many ways to talk
-about it, and it is rather unlikely that speeches about other topics
-contain a phrase like ``gun control''. Similarly, if we want to find
-references to Angela Merkel, Donald Trump, or any other well-known
-politician, we can just directly search for their names -- even though
-problems arise when people have very common surnames and are referred
-to by their surnames only.
-
-Sadly, most interesting concepts are more complex to code. Take a
-seemingly straightforward problem: distinguishing whether a news
-article is about the economy or not. This is really easy to do for
-humans: there may be some edge cases, but in general, people rarely
-need longer than a few seconds to grasp whether an article is about the
-economy rather than about sports, culture, etc. Yet, many of these
-articles won't directy state that they are about the economy by
-explicitly using the word ``economy''.
-
-We may think of extending our dictionary not only with |economi.*| (a
-regular expression that includes economists, economic, and so on), but
-also come up with other words like ``stock exchange'', ``market'',
-``company.'' Unfortunately, we will quickly run into a problem that we also
-faced when we dicussed the precision-recall tradeoff in
-Section~\ref{sec:validation}: The more terms we add to our
-dictionary, the more false positives we will get: articles about
-the geographical space called ``market'', about some celebrity being seen
-in ``company'' of someone else, and so on.
-
-From this example, we can conclude that often (1) it is easy for
-humans to decide to which class a text belongs, but (2) it is very
-hard for humans to come op with a list of words (or rules) on which
-their judgement is based.
-
-Such a situation is perfect for applying supervised machine
-learning: After all, it won't take us much time to annotate, say, 1000
-articles based on whether they are about the economy or not (probably
-this takes less time than thoroughly finetuning a list of words to in-
-or exclude); and the difficult part, deciding on the exact rules
-underlying the decision to classify an article as economic is done by
-the computer in seconds.
+use. But as we have discussed in \refsec{deciding}, dictionary approaches
+in general perform less well the more abstract, non-manifest, or
+complex a concept becomes. In the next section, we will make the case
+that topics, but also sentiment, in fact, are quite a complex concepts
+that are often hard to capture with dictionaries (or at least, crafting
+a custom dictionary would be  difficult). For instance, while ``positive''
+and ``negative'' seem straightforward categories at first sight,
+the more we think about it, the more apparent it becomes how context-
+dependent it actually is: in a dataset about the economy and stock
+market returns, ``increasing'' may indicate something positive,
+in a dataset about unemployment rates the same word would be something
+negative. 
 
 
 \subsection{Putting together a workflow}
