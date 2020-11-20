@@ -82,7 +82,7 @@ Find s1 and replace by s2 & \ttt{str\_replace(s, s1, s2)}$^*$ & \ttt{s.replace(s
   \end{tabularx}}{(*) The R functions \ttt{str\_detect} and \ttt{str\_replace} and the Pandas function \ttt{s.str.match} and \ttt{s.str.replace} use \concept{regular expressions} to define what to find and replace. See \refsec{regular} below for more information.}
 \end{table}
 
-%TODO aanpassen
+%TODO replace 10.2 by an actual clean with base using stupid .replace(<b>, '') etc. and change explanation here
 Let us apply some of these functions/methods to a simple Wikipedia text that contains HTML tags or boilerplate, punctuation and natural upper/lower case letters. Using base function \fn{gsub} in R and \fn{replace} in Python we can remove strings containing specific expressions such as \texttt{<p>} or \texttt{</b>} and include an empty space instead. We can use this same method to eliminate punctuation taking as a reference a pre-defined list of signs (\texttt{:punct:} in base R or the object \texttt{punctuation} from the library \pkg{string} in Python). In the case of converting letters from upper to lower case, we use the base R function \fn{tolower} and the string method \fn{lower} in Python. To remove unnecessary double spaces we apply the base R function \fn{trimws} and method \fn{join} in Python. \refex{clean} shows how to conduct this cleaning process.
 
 \pyrex[output=both,caption=Cleaning text with base functions]{chapter10/clean}
