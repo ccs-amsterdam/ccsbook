@@ -20,7 +20,7 @@ Then, the URL column is dropped using the \pkg{tidyverse} function \fn{select} i
 Notice that the result of these operations is assigned to the same object \texttt{d}.
 This means that the original \texttt{d} is overwritten.
 
-\note{[R] In R, the \pkg{tidyverse} function \fn{select} is quite versatile.
+\note{In R, the \pkg{tidyverse} function \fn{select} is quite versatile.
   You can specify multiple columns using \verb|select(d, column1, column2)| 
   or by specifying a range of columns: \verb|select(d, column1:column3)|.
   Both commands keep only the specified columns. 
@@ -43,7 +43,7 @@ in Python we \emph{index} the data frame using square brackets on the \pkg{panda
 Note that we chose to assign the result of this filtering to \texttt{d2},
 so after this operation we have the original full data set \texttt{d} as well as the subset \texttt{d2} at our disposal.
 In general, it is your choice whether you overwrite the data by assigning to the same object,
-or create a copy by assigning to a new name.
+or create a copy by assigning to a new name\footnote{Keep in mind that in Python, \ttt{df2=df1} does \emph{not} create a copy of a data frame, but a pointer to the same memory location (see the discussion on mutable objects in \refsec{datatypes}). This may often not be of practical importance, but if you really need to be sure that a copy is created, use \ttt{df2=df1.copy()}.}.
 If you will later need to work with a different subset, it is smart to keep the original so you can subset it again later.
 On the other hand, if all your analyses will be on the subset, you might as well overwrite the original.
 We can always re-download it from the internet (or reload it from our harddisk) if it turns out we needed the original anyway. 

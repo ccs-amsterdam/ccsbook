@@ -40,29 +40,29 @@ In Python, the grouping step is quite similar.
 In the summarization step, however, you specify which summaries to compute in a dictionary%
 \footnote{See \refsec{datatypes} for more information on working with dictionaries}.
 The keys of the dictionary lists the value columns to compute summaries of,
-and the values contain the summary functions to apply, so \verb+{'value': [function]}+.
+and the values contain the summary functions to apply, so  \verb+{'value': function} or \verb+{'value': [list of functions]}+.
 
 \subsection{Combining multiple operations}
 
 In the examples above, each line of code (often called a \emph{statement}) contained a single operation, generally a call to a function or method (see \refsec{functions}).
 The general shape of each line in R was \verb+data = function(data, arguments)+, that is, the data is provided as the first argument to the function.
 In Python, we often used methods that ``belong to'' objects such as data frames or columns. Here, we therefore specify the object itself follwed by a period and its method that is to be called,
-i.e. \verb+object.function(arguments)+.
+i.e. \verb+object = object.method(arguments)+.
 
 Although there is nothing wrong with limiting each line to a single operation, both languages allow multiple operations to be chained together.
 Especially for grouping and summarizing, it can make sense to link these operations together as they can be thought of as a single `data wrangling' step.
 
 In Python, this can be achieved by adding the second \verb+.method()+ directly to the end of the first statement.
 Essentially, this calls the second method on the result of the first method: \verb+data = datamethod1(arguments).method2(arguments)+.
-In R, the data needs of course to be included in the function arguments. BUt we can also chain thesefunction calls.
+In R, the data needs of course to be included in the function arguments. But we can also chain thesefunction calls.
 This is done using the \emph{pipe operator} (\verb+%>%+) from the (cutely named) \pkg{magrittr} package.
 The pipe operator inserts the result of the first function as the first argument of the second function.
 More technically, \verb+f1(d) %>% f2()+ is equivalent to \verb+f2(f1(d))+.
 This can be used to chain multiple commands together, e.g. \verb+data = data %>% function1(arguments) %>% function2(arguments)+.
 
-\pyrex[caption=Combining multiple functions or methods,output=r,format=table]{chapter07/aggregate2}{
+\pyrex[caption={Combining multiple functions or methods. The result is identical to \refex{aggregate}},output=none,format=table]{chapter07/aggregate2}{
 
-\refex{aggregate2} shows the same operation as above, but chained into a single statement.
+\refex{aggregate2} shows the same operation as in \refex{aggregate}, but chained into a single statement.
 
 
 \subsection{Adding summary values}

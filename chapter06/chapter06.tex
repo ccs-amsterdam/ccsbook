@@ -46,7 +46,7 @@ Of course, there are some situations when dataframes are \emph{not} a good choic
 \begin{itemize}
 \item Your data is one-dimensional. Think, for example, of ressources like a list of stopwords, or a list of texts without any meta-information.
 \item Your data do not have a tabular structure. Think, for example, of deeply nested data, or of very messy data.
-\item Your data is so large that you cannot (or do not want to) load it into memory. For instance, if you want to process the text of all articles on the wikipedia, you probably want to process them one-by-one instead of loading all articles at the same time.
+\item Your data are so large that you cannot (or do not want to) load it into memory. For instance, if you want to process the text of all articles on Wikipedia, you probably want to process them one-by-one instead of loading all articles at the same time.
 \end{itemize}
 
 %\subsection{Basic operations on data frames}
@@ -86,23 +86,23 @@ But how do we -- toy examples like those in \refex{createdataframe} aside -- get
 
 \subsection{The role of files}
 
-In statistical software like SPSS or Stata, or in all typical office applications, you \emph{open} a file, do some work on it, and then \emph{save} the changes to the same file once you are done. You basically ``work on that file''.
+In statistical software like SPSS or Stata, or in all typical office applications for that matter, you \emph{open} a file, do some work on it, and then \emph{save} the changes to the same file once you are done. You basically ``work on that file''.
 
 That's not how your typical workflow in R or Python looks like. Here, you work on one or multiple data frames (or some other data structures). That means that you might start by \emph{reading} the contents of some file into a data frame, but once that is done, there is no link between the dataframe and that file any more. Once your work is done, you can save your dataframe to a file, of course, but it is a good practice not to overwrite your input file, so that you can always go back to where you started. A typical workflow would rather look like this:
 \begin{enumerate}
-\item Read raw data from file "myrawdata.csv" into data frame "df"
+\item Read raw data from file \ttt{myrawdata.csv} into data frame \ttt{df}"
 \item Do some operations and analyses on df
-\item Save df to file "myfinaldata.csv"
+\item Save df to file \ttt{myfinaldata.csv}
 \end{enumerate}
 Note that the last step is not even necessary, but may be handy if running the script takes very long, or if you want to re-distribute the resulting file.
 
-The format in which we read files into a data frame and the format to which we save our final data frame also by no means needs to be identical. We can, for example, read data created by someone else in Stata's proprietary .dta format into a dataframe and later save it to a .csv table.
+The format in which we read files into a data frame and the format to which we save our final data frame also by no means needs to be identical. We can, for example, read data created by someone else in Stata's proprietary \ttt{.dta} format into a dataframe and later save it to a .csv table.
 
 While we sometimes do not have the choice in which format we get our input data, we have a range of options regarding our output data. We usually prefer formats that are \emph{open} and \emph{interoperable} for this, which ensures that they can be used by as many people as possible, also in the future, and that they are not tied to any specific (proprietary) product.
 
-The most common file formats that are relevant to us are listed in Table~\ref{tab:fileformats}. txt files are particularly useful for long texts (think of one file containing one newspaper article or even a whole book), but they are bad for storing associated meta data. csv files are the default choice for tabular data, and json files allow us to store nested data in a dictionary-like format (see above). 
+The most common file formats that are relevant to us are listed in Table~\ref{tab:fileformats}. \ttt{txt} files are particularly useful for long texts (think of one file containing one newspaper article or even a whole book), but they are bad for storing associated meta data. \ttt{csv} files are the default choice for tabular data, and \ttt{json} files allow us to store nested data in a dictionary-like format (see above). 
 
-For the sake of completeness, we also listed the native Python and R formats pickle, RDS, and RDA. Because their lack of interoperability, they are not very suitable for long-term storage or for sharing data, but they can have a place in a workflow as an intermediate step to solve the issue that none of the other formats are able of storing all properties of a dataframe (e.g., the csv file cannot store whether a given column in an R dataframe is to be understood as containing strings such as 'man', 'woman', 'non-binary' or a factor with the three levels man, woman, non-binary). If it is of importance to store an object (such as a dataframe) exactly as-it-is, we can use these formats. 
+For the sake of completeness, we also listed the native Python and R formats pickle, RDS, and RDA. Because their lack of interoperability, they are not very suitable for long-term storage or for sharing data, but they can have a place in a workflow as an intermediate step to solve the issue that none of the other formats are able of storing all properties of a dataframe (e.g., the csv file cannot store whether a given column in an R dataframe is to be understood as containing strings such as 'man', 'woman', 'non-binary' or a factor with the three levels man, woman, non-binary). If it is of importance to store an object (such as a dataframe) exactly as-it-is, we can use these formats. One of the rare instances where we use these formats is in \refex{reuse}, where we store machine learning models for later reuse.
 
 \begin{table}[]
 \caption{Basics of data frame handling \label{tab:fileformats}}{%
@@ -120,20 +120,18 @@ RDS/RDA & R objects             & yes & no \\ \bottomrule
 
 \subsection{Encodings and dialects}
 \label{sec:encodings}
-txt files, csv files, and json files are all files that are based on text. Unlike binary file formats, you can read them in any text editor. Try it yourself to understand what is going on under the hood. 
+\ttt{txt} files, \ttt{csv} files, and \ttt{json} files are all files that are based on text. Unlike binary file formats, you can read them in any text editor. Try it yourself to understand what is going on under the hood. 
 
 Download a csv file (such as \url{http://cssbook.net/d/gun-polls.csv})
 and open it in a text editor of your choice. Some people swear that their preferred editor is the best (google to learn about the vi vs. emacs war for some entertainment), but if you have no strong feeling, then Notepad++, Atom, or Sublime may be good choices that you may want to look into.
 
 As you will see (Figure~\ref{fig:csv-in-editor}), a csv file internally just looks like a bunch of text in which each line represents a row and in which the columns are separated by a comma (hence the name comma seperated values (csv)).
-
 Looking at the data in a text editor is a very good way to find out what happens if reading your files into a data frame does not work as expected - which can happen more frequently than you would expect.
 
 Mostly due to historical reasons, not every text based file (which, as we have seen, includes csv files) is internally stored in the same way.
+For a long time, it was common to \emph{encode} in such a way that one character mapped to one byte. That was easy from a programming perspective (after all, the n-th character of a text can directly be read from and written to the n-th byte of a file) and also storage-efficient. But given that a byte consists of 8 bits, that means that there are only 256 possible characters. All letters in the alphabet in uppercase, again in lowercase, numbers, punctuation, some control characters -- and you are out of characters. Due to this limitation, there were different encodings or codepages for different languages that told a program which value should be interpreted as which character.
 
-For a long time, it was common to \emph{encode} in such a way that one character mapped to one byte. That was easy from a programming perspective (after all, the n-th character of a text can directly be read from and written to the n-th byte of a file) and also storage-efficient. But given that a byte consists of 8 bits, that means that there are only 256 possible characters. All letters in the alphabet in uppercase, again in lower case, numbers, punctuation, some control characters - and you are out of characters. Due to this limitation, there were different encodings or codepages for different languages that told a program which value should be interpreted as which character.
-
-We all know the phenomenon of garbled special characters, like German umlauts or Scandinavian characters like ø, å, or œ being displayed as something completely different. In these cases, a different encoding was used for saving them than for reading them.
+We all know the phenomenon of garbled special characters, like German umlauts or Scandinavian characters like ø, å, or œ being displayed as something completely different. This happens when files are read with a different encoding than the encoding that was used for creating them.
 
 In principle, this issue has been solved due to the advent of Unicode. Unicode allows to handle all characters from all scripts, including emoticons, Korean and Chinese characters, and so on. The most popular encoding for Unicode characters is called UTF-8, and it has been around for decades. 
 
@@ -149,7 +147,7 @@ To avoid any data loss, it is advisable to make sure that your whole workflow us
 
 As we will show in the practical code examples below, you can also force Python and R to use a specific encoding, which can come in handy if your data arrives in a legacy encoding.
 
-Related to the different encodings a file can have, but less problematical, are different conventions of how a \emph{line ending} is denoted. Windows-based programs have been using a Carriage Return followed by a Line Feed (denoted as \texttt{\textbackslash r\textbackslash n}), very old versions of MacOS used a Carriage Return only (\texttt{\textbackslash r}), and newer versions of MacOS as well as Linux use a Line Feed only (\texttt{\textbackslash n}). In our field, the Linux (or Unix) style line endings have become most dominant, and Python 3 even automatically converts Windows style line endings to Unix style line endings when reading a file - even on Windows itself.
+Related to the different encodings a file can have, but less problematical, are different conventions of how a \emph{line ending} is denoted. Windows-based programs have been using a Carriage Return followed by a Line Feed (denoted as \texttt{\textbackslash r\textbackslash n}), very old versions of MacOS used a Carriage Return only (\texttt{\textbackslash r}), and newer versions of MacOS as well as Linux use a Line Feed only (\texttt{\textbackslash n}). In our field, the Linux (or Unix) style line endings have become most dominant, and Python 3 even automatically converts Windows style line endings to Unix style line endings when reading a file -- even on Windows itself.
 
 A third difference is the use of so-called \emph{byte-order markers} (BOM). In essence, a BOM is an additional byte added to the beginning of a text file to indicate that it is a utf-encoded file and to indicate in which order the bytes are to be read (the so-called endianness). While informative, this can cause trouble if your program does not expect that byte to be there. In that case, you might either want to remove it or explicitly specify the encoding as such (e.g., 'utf-8-bom' instead of 'utf-8' in the examples below).
 
@@ -159,7 +157,7 @@ In short, the most standard form in which you probably want to encode your data 
 
 In the case of reading and writing csv files, we thus need to know the encoding, and potentially also the line ending conventions and the presence of a byte-order marker. However, there are also some additional variations that we need to consider. There is no definite definition of how a csv file needs to look like, but there are multiple dialects that are widely used. They mainly differ in to aspects: the delimiter that is chosen, and the quoting an/or escaping of values.
 
-First, even though csv stands for comma separated values, one could use other characters instead of a comma to separate the columns. In fact, because many countries use a comma instead of a dot to as a decimal separator (\$10.30 vs 10,30€), in many countries a semicolon (';')is used instead of a comma as column delimiter. To avoid the possible confusion, others use a tab character (\texttt{\textbackslash t}) to seperate columns. Sometimes, these files are then called a tab-seperated file, and instead of .csv, they may have an ending such as .tsv, .tab, or even .txt. However, this does not change the way how you can read them - but what you need to know is whether your columns are seperated by \texttt{,}, \texttt{;}, or \texttt{\textbackslash t}. 
+First, even though csv stands for comma separated values, one could use other characters instead of a comma to separate the columns. In fact, because many countries use a comma instead of a dot to as a decimal separator (\$10.30 vs 10,30€), in many countries a semicolon (';')is used instead of a comma as column delimiter. To avoid the possible confusion, others use a tab character (\texttt{\textbackslash t}) to seperate columns. Sometimes, these files are then called a tab-seperated file, and instead of .csv, they may have a file extension such as \ttt{.tsv}, \ttt{.tab}, or even \ttt{.txt}. However, this does not change the way how you can read them - but what you need to know is whether your columns are seperated by \texttt{,}, \texttt{;}, or \texttt{\textbackslash t}. 
 
 Second, there may be different ways of how to deal with strings as values in a csv file. For instance, it may be that a specific value contains the same character that is also used as a delimiter. These cases are usually resolved by either putting all strings into quotes, putting only strings that contain such ambiguities in quotes, or by prepending the ambigous character with a specific escape character. Most likely, all of this is just handled automatically under the hood, but in case of problems, you might want to look into this and check out the documentation of the packages you are using on how to specify which strategy is to be used.
 
@@ -194,7 +192,7 @@ If you are too lazy to create this list yourself, you could also
 download one from \url{http://cssbook.net/d/stopwords.txt} and save it
 in the same directory as your Python or R script.
 
-Then, you can read this file into a vector or list  (see \refex{stopwords}).
+Then, you can read this file into a vector or list  (see \refex{readingstopwords}).
 
 \pyrex[output=none, caption=Reading files without dataframes]{chapter06/stopwords}
 
@@ -251,8 +249,8 @@ of the data are already known. Hence, such toy datasets are often
 even included in R and Python packages. Some of them are really
 well-known in teaching (e.g., the iris dataset containing measurements
 of some flowers; or the titanic dataset containing statistics on
-survival rates of passengers on the Titanic). Many of these are included
-in packages like \pkg{scikit-learn} or \pkg{seaborn} -- have a look at their documentation.
+survival rates of passengers on the Titanic; or the MPG dataset on car fuel consumption). Many of these are included
+in packages like \pkg{scikit-learn}, \pkg{seaborn}, or \pkg{ggplot2}-- have a look at their documentation.
 
 For instance, the 20 Newsgroups dataset contains $18,846$ posts from
 newsgroups plus the groups where they were posted
@@ -262,15 +260,16 @@ supervised machine learning. Another interesting resource are
 collections of political speeches, such as the state-of-the-union
 speeches from the US, which are available in multiple packages
 (\refex{sotudata}).
+Other interesting datasets with large collections of textual data may
+be the Financial News dataset compiled by \cite{Chen2017} or the
+political news dataset compiled by \cite{Horne2018}.
+
 
 \pyrex[output=py, input=both,caption={In Python, \pkg{scikit-learn} has a convenience function to automatically download the 20 newsgroup dataset and automatically clean it up. In R, you can download the raw version (there are multiple copies floating around on the internet) and perform the cleaning yourself.}]{chapter06/20newsgroups}
 
 \pyrex[output=r, input=both, format=table, caption={A collection of US state-of-the-union speeches is available in multiple packages in various forms.}]{chapter06/sotudata}
 
 
-Other interesting datasets with large collections of textual data may
-be the Financial News dataset compiled by \cite{Chen2017} or the
-political news dataset compiled by \cite{Horne2018}.
 
 There are also some more generic ressources that you may want to consider for finding
 more datasets to play around with. On  \url{https://datasetsearch.research.google.com},

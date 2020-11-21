@@ -43,12 +43,12 @@ but which contain actual data that should not be used as key.
 For example, in the Piketty data shown above the key column is called \emph{Year} in both frames,
 but they also share the columns for the countries which are data columns.
 
-In these cases, it is possible to explicitly specify which columns to join on (using the \verb+on=+ (Python) / \verb+by=+ argument).
+In these cases, it is possible to explicitly specify which columns to join on (using the \verb+on=+ (Python) / \verb+by=+ (R) argument).
 However, we would generally recommend preprocessing the data first and select and/or rename columns such that the only shared columns are the key columns.
 The reason for that is that if columns in different data frames mean the same thing (i.e. \emph{respID} and \emph{Respondent}), they should generally have the same name to avoid confusion.
 In the case of `accidentally' shared column names, such as the country names in the current example,
 it is also better to rename them so it is obvious which is which in the resulting data set:
-if shared columns are not used in the join, by default they get `.x' and `.y' (R) or `\_x' and `\_y' (Python) OA appended to their name, which is not very meaningful.
+if shared columns are not used in the join, by default they get `.x' and `.y' (R) or `\_x' and `\_y' (Python) appended to their name, which is not very meaningful.
 Even if the key column is the only shared column, however, it can still be good to explicitly select that column to make it clear to the reader (or for yourself in the future) what is happening. 
 
 \begin{ccsexample}
@@ -69,16 +69,16 @@ This is then used to compute the correlation between private and public capital,
 which shows that there is a weak but (just) significant negative correlation ($\rho=-.32, p=.04$)%
 \footnote{Of course, the fact that this is time series data means that the independence assumption of regular correlation is violated badly, so this should be interpreted as a descriptive statistic, e.g. in the years with high private capital there is low public capital and the other way around}.
 
-\note{Next to \fn{merge}, pandas dataframes also have a method called \fn{join}. It is a simplified version for joining on indices (i.e., the row labels). If you have two data frames in which corresponding rows have the same row number, you can simply write \texttt{df1.join(df2}. In short: both methods do the same, but merge provides more options, and join is easier if you want to join on the indices.}
+\note{Next to \fn{merge}, pandas dataframes also have a method called \fn{join}. It is a simplified version for joining on indices (i.e., the row labels). If you have two data frames in which corresponding rows have the same row number, you can simply write \texttt{df1.join(df2)}. In short: both methods do the same, but merge provides more options, and join is easier if you want to join on the indices.}
 
 
 
 \subsection{Inner and Outer joins}
 
 In the example above, both data sets had exactly one entry for each unit (year), making it the most straightforward case.
-If either (or both) of the data sets are missing units, however, you need to specify how to deal with this.
+If either (or both) of the data sets have missing units, however, you need to specify how to deal with this.
 
-\reftab{joins} list the 4 possible ways of joining, keeping all rows (\emph{outer join}), only rows present in both (\emph{inner join}), or all rows from one of the sets and matching rows from the other (\emph{left} or \emph{right join}). Left and right here literally refer to the order in which you type the dataframe names. Figure~\ref{fig:joinvenn} and Table~\ref{tab:joins} give an overview. 
+\reftab{joins} list the four possible ways of joining, keeping all rows (\emph{outer join}), only rows present in both (\emph{inner join}), or all rows from one of the sets and matching rows from the other (\emph{left} or \emph{right join}). Left and right here literally refer to the order in which you type the dataframe names. Figure~\ref{fig:joinvenn} and Table~\ref{tab:joins} give an overview. 
 In all cases except inner joins, this can create units where information from one of the data sets is missing.
 This will be lead to missing values (|NA|/|NaN|) being inserted in the columns of the data sets with missing units.
 
@@ -163,7 +163,7 @@ As a puzzle, can you use the dataset filtering commands discussed above to find 
 Note also that the county level data contains units that are not used, particularly the national and state level statistics.
 These, and the results that do not correspond to counties, are automatically filtered out by using an inner join.
 
-Finally, we can create a scatter plot or correlation analysis of the relation between ethnic composition and electoral success (see how to create the scatter plot in section \refsec{visualization}).
+Finally, we can create a scatter plot or correlation analysis of the relation between ethnic composition and electoral success (see how to create the scatter plot in \refsec{visualization}).
 In this case, it turns out that Hillary Clinton did indeed do much better in counties with a high percentage of black residents.
 Note that we cannot take this to mean there is a direct causal relation, there could be any number of underlying factors, including the date of the election which is very important in primary races.
 Statistically, since observations within a state are not independent, we should really control for the state-level vote here.
