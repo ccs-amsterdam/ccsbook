@@ -3,28 +3,27 @@
 
 R and Python are the most popular programming languages that data
 scientists and computational scholars have adopted to conduct their
-work (see \refchap{introduction}). While many develop a preference
+work. While many develop a preference
 for the one or the other language, chances are good that you
 will ultimately switch back and forth between them, depending on
 the specific task at hand and the project you are involved in.
 
 Before you can start with analysing data and communication in Python or R,
-you need to install these languages on your computer.
-Both Python and R are open source and completely free to download and use.
+you need to install interpreters for these languages (i.e., programs that can read code in these languages and execute it) on your computer.
+Interpreters for both Python and R are open source and completely free to download and use.
 Although there are various web-based services on which you can run code for both languages
 (such as google Colab or RStudio Cloud),
-it is generally better to install them on your own computer.
+it is generally better to install an interpeter on your own computer.
 
 After installing Python or R, you can execute code in these languages, but you also want a nice
 \concept{Integrated Development Environment (IDE)} to develop your data analysis scripts. 
 For R we recommend RStudio, which is free to install and is currently the most popular environment for working with R.
-For Python we recommend starting with JupyterLab, which is a web-based environment for writing and running python code.
+For Python we recommend starting with JupyterLab or JupyterNotebook, which is a web-based environment for writing and running python code.
 All of these tools are available and well documented for Windows, MacOS, and Linux. 
 After explaining how to install R and Python, there is a very important section on installing packages.
 If you plan to only use either R or Python (for now), feel free to skip the part about the other language.
 
-Note that If you are writing longer Python programs you probably want to install a desktop IDE (Integrated Development Environment)
-as well.
+If you are writing longer Python programs (as opposed to, for instance, short data analysis scripts) you probably want to install a full-blown IDE (Integrated Development Environment) as well.
 We recommend PyCharm\footnote{\url{https://www.jetbrains.com/pycharm/}} for this, which has a free version that has everything you need, and the premium version is also free for students and academic or open source developers.
 See their website for download and installation instructions.
 
@@ -54,8 +53,8 @@ See their website for download and installation instructions.
   it). On the con side, next to that it is huge and also installs many
   things you don not need, you essentially get a non-standard
   installation, in which programs and packages are stored in different
-  locations than you (or your computer) may expect. As many computers
-  actually already \emph{have} Python installed (even though you may
+  locations than you (or your computer) may expect. Nowadays, almost all computers
+  actually already \emph{have} some version of Python installed (even though you may
   not know it), you also end up in a possibly confusing situation
   where it may be unclear which version you are actually running, or
   for which version you installed a package.
@@ -130,7 +129,7 @@ and executed.
 So, the results of your commands (and any error messages) will be shown in this console view
 
 Contrary to most traditional programming languages,
-the easiest way to run R is line by line.
+the easiest way to run R code is line by line.
 You can simply place your cursor on the first line,
 and repeatedly press control+Enter, which executes a line and then places the cursor on the next line.
 You can also select multiple lines (or part of a line) to execute those commands together,
@@ -166,7 +165,7 @@ packages you may have installed maybe some more.  In
 \emph{environment} you can manage your workspace (the set of elements
 you need to deploy for data analysis) and have a list of the objects
 you have uploaded to it. You may also import datasets with this tool.
-n \emph{history} you will
+In the \emph{history} tab you
 have an inventory of code executions, which you can save to a file, or
 move directly to console or to an R document.
 
@@ -180,8 +179,7 @@ reproduce what you have been doing. If you only have a snapshot of
 your workspace, you know state in which you arrived, but cannot
 necessarily reproduce (or change) how you got there.
 
-I In the bottom right pane
-there are five additional useful tabs.
+In the bottom right pane there are five additional useful tabs.
 In \emph{files} you can explore
 your computer and manage all the files you may use for the project,
 including importing datasets. In \emph{plots}, \emph{help} and
@@ -193,19 +191,19 @@ even from a file saved on your computer with a friendly interface.
 
 \subsection{Installing Python and Jupyter Notebook}
 
-As explained in \refchap{introduction}, Python is an object-orientated programming language
+Python is an object-orientated programming language
 and it is probably the favourite language of computational and data
 scientists in all disciplines around the world.
-
 There are different releases of Python, but the biggest difference used to be between Python 2 and Python 3.
 Fortunately, you will probably never need to install or use Python 2, and in fact it is no longer supported since January 2020.
 Thus, you can just use any recent Python 3 version for this book.
+When browsing through questions on online fora such as Stackoverflow or reading other people's code on Github (we will talk about that in \refchap{worldcode}), you still may come across legacy code in Python 2. Such code usually does not run directly in a Python 3 interpreter, but in most cases, only minor adaptions are necessary to make it work.
 
-We will install and run python and Jupyter notebook using a \concept{terminal} or command line interface.
+We will install and run Python and Jupyter Notebook using a \concept{terminal} or command line interface.
 This is a tool that is installed on all computers that allows you to give commands to the computer directly.
-First, create a project folder for this book using the file explorer / finder.
+First, create a project folder for this book using the File Explorer / Finder.
 Then, on Windows you can shift + Right click that folder and select ``Open command Window here''.
-On MacOS, after navigating to the folder you just created, you click on "Finder" in the menu at the top of the screen, then on "Services", then on "New Terminal at Folder"
+On MacOS, after navigating to the folder you just created, you click on ``Finder'' in the menu at the top of the screen, then on ``Services'', then on ``New Terminal at Folder''
 In both cases, this should open a new window (usually black or grey) that allows you to type commands.
 
 Note that on most computers, Python is already installed by default.
@@ -248,11 +246,11 @@ Jupyer Notebooks (which are also included in IDE JupyterLab if you installed tha
 are run as a web application
 that allows you to create documents that contain code and inline text fragments.
  One of the nicest things of
-the Jupyter Notebook is that the code is inserted in fields that you
+the Jupyter Notebook is that the code is inserted in fields (so-called ``cells'') that you
 can run one by one, getting its respective output, which added to the
 designed narrative text will make your script more clean and
-reproducible. You can also add formatted text blocks to explain to the
-reader what you are doing. In \refsec{practices}, we will address
+reproducible. You can also add formatted text blocks (using a simple formatting language called \concept{Markdown})
+to explain to the reader what you are doing. In \refsec{practices}, we will address
 notebooks again as a good practice for a computational scientist.
 
 You can install jupyter notebook directly using pip using the following command
@@ -287,14 +285,14 @@ Note that you can create more cells using the plus icon or with the insert menu.
 You can also set the cell type via the Cell menu: select code for analysis scripts (which is the default),
 or Markdown for text fragments, which can be used to explain the code and/or interpret the results.
 
-\section{Installing third-party Packages}
+\section{Installing third-party packages}
 
 The \fn{print} function used above is included automatically when you start R or Python.
-Many functions, however, are included in separate \concept{packages}, which are
+Many functions, however, are included in separate \concept{packages} (also known as \concepts{libraries} or \concept{modules}), which are
 generally collections of commands for a certain task or activity.
 
 Although both R and Python come pre-installed with many useful \concept{packages},
-one of the great things of both langauges is that they have a very active community that continuously develops, improves, and publishes new packages.
+one of the great things of both languages is that they have a very active community that continuously develops, improves, and publishes new packages.
 Throughout this book, we will be using such third-party packages for a variety of tasks, from data wrangling and visualization to text analysis.
 For example, we will use the R package \pkg{tidyverse} and the Python packages \pkg{pandas} for data wrangling.
 
@@ -327,7 +325,7 @@ To make it easy to keep track of the packages needed for each chapter,
 every chapter that includes code in this book starts with a note like this that gives an overview of the main packages introduced in that chapter.
 It also includes the code needed to install these packages, which of course is only needed if you didn't install these packages before.
 Note again that if you are using Anaconda for Python,
-your should replace \ttt{!pip3 install} by \ttt{!conda install} in that code.
+your should replace \ttt{!pip3 install} by \ttt{!conda install} in that code. On some systems, you may need to use \ttt{!pip install} instead of \ttt{!pip3 install}.
 
 These note also includes a code block to import all the packages used for that chapter,
 which you need to run every time you use examples from that chapter.
