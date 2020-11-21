@@ -15,7 +15,7 @@ function takes some input (the \emph{arguments} supplied between
 brackets) and returns some output.  Methods and functions are very
 similar concepts. The difference between them is that the functions
 are defined independently from the object, while methods are created
-based on a class, meaning that they are associated to an object. For
+based on a class, meaning that they are associated with an object. For
 example, in Python, each string has an associated method \fn{lower},
 so that writing |'HELLO'.lower()| will return 'hello'. In R, in
 contrast, one uses a function, |tolower('HELLO')|. For now, it is not
@@ -26,7 +26,7 @@ to dive into the concept of \fn{class}es, which is beyond the scope of
 this book.
 
 \begin{feature}
-  A central concept of object-oriented programming that we do not cover in this book are \fn{class}es. You can think of them as a blueprint for creating an object, and sometimes, this will shine through. For instance, if we write \texttt{c = Counter()} in Python, we create a new object \texttt{c}. This object is an \emph{instance} of the \emph{class} Counter (which we need to import from the package \pkg{collections} first). A counter is a class that allows you to count things, such as the most common words in a list of strings. You could say that you created your own counter, c, based on a template, the class Counter. In R, there are even different types of classes, called S3, S4, and reference. However, you are less likely to get exposed to them in your daily work.
+  A central concept of object-oriented programming that we do not cover in this book are \concept{class}es. You can think of them as a blueprint for creating an object, and sometimes, this will shine through. For instance, if we write \texttt{c = Counter()} in Python, we create a new object \texttt{c}. This object is an \emph{instance} of the \emph{class} Counter (which we need to import from the package \pkg{collections} first). A counter is a class that allows you to count things, such as the most common words in a list of strings. You could say that you created your own counter, c, based on a template, the class Counter. In R, there are even different types of classes, called S3, S4, and reference. However, you are less likely to get exposed to them in your daily work.
   \end{feature}
 
 
@@ -34,7 +34,7 @@ this book.
 \note{Because methods are associated with an object, you have a very
   useful trick at your disposal to find out which methods (and other
   properties of an object) there are: TAB completion. In Jupyter, just
-  type the name of an object followed by a dot (e.g., \texttt{a.\textbar} in case you
+  type the name of an object followed by a dot (e.g., \texttt{a.<TAB>} in case you
   have an object called a) and hit the TAB key. This will open a
   drop-down menu to choose from.}
 
@@ -43,7 +43,7 @@ will have a better understating of how they work. Imagine you want to
 create two functions: one that computes the 60\% of any given number
 and another that estimates this percentage only if the given argument
 is above the threshold of 5.
-The general structure of a function in R and python is:
+The general structure of a function in R and Python is:
 
 \noindent\rule{\textwidth}{.5pt}\vspace{-1em}
 
@@ -99,7 +99,7 @@ Whether to specify the mandatory arguments by name depends on the function:
 if it's obvious what the argument does, you can specify it by position,
 but in doubt it's often better to specify them by name. 
 
-Finally, note that in python you explicitly indicate the result value of the function with
+Finally, note that in Python you explicitly indicate the result value of the function with
 \verb|return value|.
 In R, the value of the last expression is automatically returned,
 although you can also explicitly call \verb|return(value)|. 

@@ -33,7 +33,7 @@ object.
 
 \note{A small note on terminology: In programming, a distinction is
   often made between an object (such as the number 10) and the
-  variable in which it is store (such as \texttt{x}). The latter is also called a ``pointer''.
+  variable in which it is stored (such as \texttt{x}). The latter is also called a ``pointer''.
   However, this distinction is not very relevant for most of our
   purposes. Morever, in statistics, the word variable often refers to a
   column of data, rather than to the name of, for instance, the object
@@ -47,7 +47,7 @@ object.
 Let' create an object that we call |a| (an arbitray name, you can use
 whatever you want), assign the value 100 to it, and use the \fn{class}
 function (R) or \fn{type} function (Python) to check what kind of
-object we created (see \refex{var1}).
+object we created (\refex{var1}).
 As you can see, R reports the type of the number as `numeric', while Python reports it
 as `int', short for integer or whole number.  Although they use
 different names, both languages offer very similar data types.
@@ -63,7 +63,7 @@ different names, both languages offer very similar data types.
   relevant here).}
 
 \begin{table}
-  \caption{\label{tab:types}Most used data types in python and R}{
+  \caption{\label{tab:types}Most used basic data types in Python and R}{
   \begin{tabularx}{\textwidth}{lllll}
     \toprule
     \multicolumn{2}{c}{Python} & \multicolumn{2}{c}{R}& Description \\
@@ -168,7 +168,7 @@ so you end up with a double backslash (\verb|\\|).
 
 The Python example also shows a concept introduced in Python 3.6 (introduced in December 2016):
 the f-string.  These are strings that are prefixed with the letter \texttt{f} and are \emph{formatted} strings. This means that these strings will automatically insert a value were curly brackets indicate you wish to do so. This means that you can write: \texttt{print(f'The value of i is \{i\}'} to print ``The value of i is 5'', given that i is 5.
-In R, the \pkg{glue} package allows you to use a f-string-like syntax as well: \texttt{print(glue("The value of i is \{i\}"))}.
+In R, the \pkg{glue} package allows you to use a f-string-like syntax as well: \texttt{glue("The value of i is \{i\}")}.
 
 Although this will be explained in more detail in \refsec{unicode},
 it is good to introduce how computers store text in memory or files. 
@@ -176,13 +176,12 @@ It is not too difficult to imagine how a computer internally
 handles \emph{integers}: After all, even though the number may be displayed
 as a decimal number to us, it can be trivially converted and stored
 as a binary number (effectively, a series of zeros and ones)
---- we do not have to care about that, as there
-is only one way of doing so.
+--- we do not have to care about that.
 But when we think about text, it is not
 immediately obvious how a string should be stored as a sequence of
 zeros and ones, especially given the huge variety of writing systems used for different languages. 
 
-Indeed, here are several ways of how textual characters can be stored as bytes,
+Indeed, there are several ways of how textual characters can be stored as bytes,
 which are called \concept{encodings}. 
 The process of moving from bytes (numbers) to characters is called decoding,
 and the reverse process is called encoding. 
@@ -203,7 +202,7 @@ Note that while R shows the underlying hexadecimal byte values of the raw data (
 Until now, we have focused on the basic, inital datatypes or ``vector
 objects'', as they are called in R.  Often, however, we want to group
 multiple of these objects. For example, we do not want to manually
-create thousands of objects called tweet0001, tweet0002, \ldots
+create thousands of objects called tweet0001, tweet0002, \ldots,
 tweet9999 -- we'd rather have one list called tweets that contains all
 of them. You will encounter several names for such combined data
 structures: lists, vectors, arrays, series, and some
@@ -330,7 +329,7 @@ This will be discussed in more detail when we deal with data frames in \refchap{
 
 \begin{feature}\textbf{Object references and mutable objects}
   A subtle difference between Python and R is how they deal with copying objects.
-  Suppose we define $x$ containing the numbers $1,2,3$ (\verb|x=[1,2,3]| in Python or \verb|x=c(1,2,3}| in R)
+  Suppose we define $x$ containing the numbers $1,2,3$ (\verb|x=[1,2,3]| in Python or \verb|x=c(1,2,3)| in R)
   and then define an object y to equal x (\verb|y=x|).
   In R, both objects are kept separate, so changing $x$ does not affect $y$,
   which is probably what you expect.
@@ -368,7 +367,7 @@ the most useful of which is probably the function \fn{unique} which removes all 
 \refex{sets} shows a number of set operations in Python and R,
 which can be very useful for e.g. finding all elements that occur in two lists.
 
-\pyrex[input=py, output=py, caption={Sets}]{chapter03/sets}
+\pyrex[input=both, output=both, caption={Sets}]{chapter03/sets}
 
 
 %Beyond the class (which is a powerful function because you can create new classes your self), you can also get the R internal type of the object (storage mode), using the typeof() function:
@@ -437,7 +436,7 @@ well): The names are the keys, and the associated phone numbers the
 values. If you know someone's name (the key), it is \emph{very easy}
 to look up the corresponding values: even in a phone book of thousands
 of pages, it takes you maybe 10 or 20 seconds to look up the name
-(key). But if you know someones phone number (the value) instead and
+(key). But if you know someone's phone number (the value) instead and
 want to look up the name, that's very inefficient: you need to read
 the whole phone book until you find the number.
 
@@ -456,14 +455,14 @@ would lead to a quite confusing situation.
 
 
 
-\subsection{From 1D to 2D (and higher): matrices and n-dimensional arrays}
+\subsection{From 1D to 2D (and higher): matrices and $n$-dimensional arrays}
 
 Matrices are two-dimensional rectangular data sets that include values
 in rows and columns. This is the kind of data you will have to deal
 with in many analyses shown in this book, such as those related to
 machine learning. Often, we can generalize to higher dimensions.
 
-\pyrex[caption=Working with two- or n-dimensional arrays, output=both]{chapter03/2darray}
+\pyrex[caption=Working with two- or $n$-dimensional arrays, output=both]{chapter03/2darray}
 
 In Python, the easiest representation is to simply construct a list of
 lists. This is, in fact, often done, but has the disadvantage that

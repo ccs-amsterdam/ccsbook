@@ -2,12 +2,12 @@
 \label{sec:controlstructures}
 
 \begin{feature}\textbf{Control structures in Python and R}
-  This section and the next explains the working of control structures
+  This section and the next explain the working of control structures
   such as loops, conditions, and functions.
   These exist (and are very useful) in both Python and R.
   In R, however, you do not need them as much because most functions
   can work on whole columns in one go, while in Python you often run things
-  on each row of a column.
+  on each row of a column and sometimes do not use dataframes at all.
   Thus, if you are primarily interested in using R you could consider skipping
   the remainder of this chapter for now and returning later when you are ready to learn more.
   If you are learning Python, we strongly recommend continuing this chapter as
@@ -52,7 +52,7 @@ statements needs to be executed. Maybe we want to repeat
 the calculation of a value for each item on a list, or maybe
 we want to do this only if some condition is fulfilled.
 
-Both, R and Python have such \emph{loops} and \emph{conditional statements}, which will
+Both R and Python have such \emph{loops} and \emph{conditional statements}, which will
 make your coding journey much easier and with more sophisticated
 results because you can control the way your statements are
 executed. By controlling the flow of instructions you can deal with a
@@ -80,7 +80,7 @@ They are are executed once, indefinitely, or
 until a certain condition is reached. This means that you can operate
 over a set of objects as many times as you want just by giving one
 instruction. The most common types of loops are \emph{for},
-\emph{while} and \emph{repeat} (do-while), but we will be mostly
+\emph{while}, and \emph{repeat} (do-while), but we will be mostly
 concerned with so-called for-loops. Imagine you have a list of
 headlines as an object and you want a simple script
 to print the length of each message. Of course you can go headline
@@ -121,7 +121,7 @@ As \refex{forloop} illustrates, every time you find yourself
 \emph{repeating} something, for instance printing each element from a
 list, you can get the same results easier by \emph{iterating} or
 \emph{looping} over the elements of the list, in this case.  Notice
-that you have same results, but with the loop you can automatize your
+that you get the same results, but with the loop you can automatize your
 operation writing few lines of code. As we will stress along this
 book, a good practice in coding is to be efficient and harmonious in
 the amount of code we write, which is another justification for using
@@ -161,7 +161,7 @@ machine to do this or that, depending on a given circumstance. These
 statements use logic operators to test \emph{if} your condition is met
 (True) or not (False) and execute an instruction accordingly. Both in
 R and Python, we use the clauses \emph{if}, \emph{else if}
-(\emph{elif} in Python) and \emph{else} to write the syntax of the
+(\emph{elif} in Python), and \emph{else} to write the syntax of the
 conditional statements. Let's begin showing you the basic structure of
 the conditional statement:
 
@@ -205,7 +205,6 @@ Imagine you want to print the headlines of \refex{forloop} only if the text is l
 We could also make it a bit more complicated: First check whether the length is smaller than 40, then check whether it is exactly 44 (|elif| / |else if|), and finally specify what to do if none of the conditions was met (|else|).
 
 In \refex{if2}, we will print the headline if it is shorter than 40 characters, print the string ``What a surprise!'' if it is exactly 44 characers, and print ``NaN'' in all other cases. 
+Notice that we have included the clause \emph{elif} in the structure (in R it is noted \emph{else if}). \emph{elif} is just another clause which statement must be executed only if an earlier condition was not satisfied. However, the reasoning behind the logic operators remains the same.
 
 \pyrex[caption=A more complex conditional control structure, output=py]{chapter03/if2}
-
-Notice that we have included the clause \emph{elif} in the structure (in R it is noted \emph{else if}). \emph{elif} is just another clause which statement must be executed only if an earlier condition was not satisfied. However, the reasoning behind the logic operators remains the same.
