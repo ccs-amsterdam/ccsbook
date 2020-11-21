@@ -141,3 +141,9 @@ DOITDB
 glove.*.txt
 
 chapter12/reviewdata.*
+chapter06/mynewcsvfile.csv
+chapter06/newstopwords.txt
+chapter06/test.json
+chapter12/aclImdb
+chapter12/sentiment.csv
+chapter13/reviews.json
