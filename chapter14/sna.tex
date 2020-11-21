@@ -60,7 +60,7 @@ There are three other types of centrality measures. \texttt{Closeness} centralit
 
 As shown in \refex{centrality2}, we can obtain these three measures from undirected graphs using the functions \fn{closeness}, \fn{eigen\_centrality} and \fn{betweenness} in \pkg{igraph}, and \fn{closeness\_centrality}, \fn{eigenvector\_centrality} and \fn{betweenness\_centrality} in \pkg{networkx}. If we take a look to the centrality measures for every politician of the imaginary Facebook network we see that Clinton seems to be a very important and central node of the graph, just coinciding with the above-mentioned findings based on the degree. It is not a rule that we obtain the very same trend in each of the centrality measures but it is likely that they have similar results although they are looking for different dimensions of the same construct.
 
-\pyrex[output=py,caption={Estimations of density, transitivity, diameter and reciprocity}]{chapter14/centrality2}
+\pyrex[output=py,caption={Estimations of closeness, eigenvector and betweenness centralities}]{chapter14/centrality2}
 
 We can use these centrality measures in many ways. For example, you can take the degree centrality as a parameter of the node size and labelling when plotting the network. This may be of great utility since the reader can visually identify the most important nodes of the network while minimizing the visual impact of those that are less central. In \refex{plotsize} we decided to specify the size of the nodes (parameters \verb|vertex.size| in \pkg{igraph} and \verb|node_size| in \pkg{networkx}) with the degree centrality of each of the American politicians in the Twitter network (directed graph) contained in \texttt{g2}. We also used the degree centrality to filter the labels in the graph, and then included only those that overpassed a threshold of 0.5 (parameters \verb|vertex.label| in \pkg{igraph} and \verb|labels| in \pkg{networkx}). These two simple parameters of the plot give you a fair image of the potential of the centrality measures to describe and understand your social network.
 
@@ -118,7 +118,4 @@ Using the Twitter API (see \refsec{apis}), we retrieved the names of the first 1
 
 When we visualize the clusters in the network (\refex{friends2}) using the degree centrality for the size of the node, we can locate the five politicians in the center of of the clusters (depicted with different colors). More interesting, we can see that even when some users follow two of the political leaders, they are just assigned to one of the cluster. This the case of the node joining Garzón and Sánchez who is assigned to the Sánchez's cluster, or the node joining Garzón and Rajoy who is assigned to Rajoy's cluster. In the plot you can also see two more interesting facts. First, we can see triangle that groups Sánchez, Garzón and Iglesias, which are leaders of the left-wings parties in Spain. Second, some pair of politicians (such as Iglesias-Garzón or Sánchez-Rivera) share more friends than the other possible pairs. 
 
-\pyrex[output=py,format=png,caption=Visualizing the network of Spanish politicians and their followers in Twitter and plotting its clusters]{chapter14/friends2}
-
-
-
+\pyrex[output=both,format=png,caption=Visualizing the network of Spanish politicians and their followers in Twitter and plotting its clusters]{chapter14/friends2}
