@@ -24,7 +24,7 @@ and if you know what topic a document is on (e.g. an agricultural topic), you ar
 Thus, we can formulate the goal of topic modeling as: given a corpus, find a set of N topics, consisting of specific words and/or documents, that minimize the mistakes we would make if we try to reconstruct the corpus from the topics.
 This is similar to regression where we try to find a line that minimizes the prediction error.
 
-In early research on document clustering, a technique called Latent Semantic Analysis (LSA) essentially used a factor analysis technique called Singular Value Decomposition (see \refsec{pcasvd} on the DTM.
+In early research on document clustering, a technique called Latent Semantic Analysis (LSA) essentially used a factor analysis technique called Singular Value Decomposition (see \refsec{pcasvd}) on the DTM.
 This has yielded promising results in information retrieval (i.e. document search) and studying human memory and language use.
 However, it has a number of drawbacks including factor loadings that can be difficult to interpret substantively and no good way of dealing with words that can have multiple meanings \citep{lsa}.
 
@@ -110,7 +110,7 @@ After enough iterations, this converges to a solution.
   and some topics are actually more prevalent across many documents then others
   -- especially if you consider that procedural words and boilerplate also need to be fit into a topic unless they are filtered out beforehand.
   Thus, we would generally recommend a relatively low and asymmetric alpha,
-  and in fact Gensim provides algorithm to find, based on the data, an alpha that corresponds to this recommendation (by specifying \texttt{alpha='auto'}).
+  and in fact \pkg{gensim} provides algorithm to find, based on the data, an alpha that corresponds to this recommendation (by specifying \texttt{alpha='auto'}).
   In R, we would recommend picking a lower alpha than the default value, probably around $\alpha=5/K$,
   and optionally try using an asymmetric alpha if you find some words that occur across multiple topics. 
 
@@ -234,7 +234,7 @@ code a sufficiently large random sample of documents with your predefined catego
 and test whether the LDA topics match those categories.
 In general, however, in such cases it is a better idea to use a dictionary or supervised analysis technique
 as topic models often do not exactly capture our categories. After all, unsupervised techniques mainly
-excel in bottom-up and explorative analyses.
+excel in bottom-up and explorative analyses (\refsec{deciding}).
 
 
 \subsection{Beyond LDA}

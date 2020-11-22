@@ -318,12 +318,12 @@ reviews. \refex{eli5} shows how this can be done in one line of code
 using \pkg{eli5} -- a package that aims to ``\emph{e}xplain [the model]
 \emph{l}ike \emph{I}'m \emph{5} years old''. Here, we re-use the
 |pipe| we constructed earlier to provide both the vectorizer and the
-classifier to the eli5 -- if we would have only provided the
+classifier to \pkg{eli5} -- if we would have only provided the
 classifier, then the feature names would have been internal
 identifiers (which are meaningless to us) rather than human-readable
 words.
 
-\pyrex[output=py, format=html, caption=Using ELI5 to get the most predictive features]{chapter12/eli5}
+\pyrex[output=py, input=py,format=html, caption=Using ELI5 to get the most predictive features]{chapter12/eli5}
 
 We can also use eli5 to explain how the classifier arrived at a
 prediction for a specific document, by using different shades of green
