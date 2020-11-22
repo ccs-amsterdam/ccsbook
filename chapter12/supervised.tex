@@ -332,6 +332,37 @@ classification, and in which direction (\refex{eli5b}).
 
 \pyrex[output=py, input=py, format=html, caption=Using ELI5 to explain a prediction]{chapter12/eli5b}
 
+\subsection{Deep Learning}
 
-\todo[inline]{Include an example of RNN to text classification}
+Deep learning models were introduced in \refsec{deeplearning} as a (relatively) new class of models in
+supervised machine learning.
+Using the Python \pkg{keras} package you can define various model architectures such as Convolutional or Recurrent Neural Networks.
+Although it is beyond the scope of this chapter to give a detailed treatment of building and training deep learning models, in this section we do give an example of using create a Convolutional Neural Network using pre-trained word embeddings.
+We would urge anyone who is interested in machine learning for text analysis to continue studying deep learnings, probably starting with the excellent book by \citet{goldberg2017}.
 
+Impressively, in R you can now also use the \pkg{keras} package to train deep learning models, as shown in the examply.
+Similar to how \pkg{spacyr} works (\refsec{nlp}), the R package actually installs and calls Python behind the screens using the \pkg{reticulate} package.
+Although the resulting models are relatively similar, it is less easy to build and debug the models in R,
+if only because most of the documentation and community examples are writting in Python.
+Thus in the end, we probably recommend people who want to dive into deep learning to choose Python rather than R.
+
+\pyrex[caption={Dutch Sentiment Data (Van Atteveldt et al., 2020)},output=r,format=table]{chapter12/rnndata}
+
+\pyrex[output=py,caption=Deep Learning: Definining a Recursive Neural Network]{chapter12/rnnmodel} 
+
+\pyrex[caption=Deep Learning: Training and Testing the model]{chapter12/rnn} 
+
+
+First, \refex{rnndata} loads a dataset described by \citet{vanatteveldt20}, which consists of Dutch economic news headlines with a sentiment value.
+Next, in \refex{rnnmodel} a model is defined consisting of several layers,
+corresponding roughly to \reffig{cnn}. 
+First, an \emph{embedding} layer transfors the textual input into a semantic vectors for each word.
+Next, the \emph{convolutional} layer defines features (filters) over windows of vectors,
+which are then pooled in the \emph{max-pooling} layer.
+This results in a vector of detected features for each document,
+which are then used in a regular (hidden) \emph{dense} layer followed by an output layer.
+
+Finally, in \refex{rnn} we train the model on 4,000 documents and test it against the remaining documents.
+The Python model, which uses pre-trained word embeddings (the \texttt{w2v\_320d} file downloaded at the top),
+achieves a mediocre accuracy of about 56\% (probably due to the low number of training sentences).
+The R model, which trains the embedding layer as part of the model, performs more poorly at 45\% as this model is even more dependent on large training data to properly estimate the embedding layer. 
