@@ -28,7 +28,7 @@ At its core, regular expressions are patters for matching sequences of character
 In the simplest case, a regular letter just matches that letter, so the pattern `cat' matches the text `cat'.
 Next, there are various wildcards, or ways to match different letters.
 For example, the period (\verb|.|) matches any character, so \verb|c.t| matches both `cat' and `cot'.
-You can place mulitple letters between square brackets to create a \concept{character class} that matches all the specified letters, so \verb|c[au]t| matches `cat' and `cut', but not `cot'.
+You can place multiple letters between square brackets to create a \concept{character class} that matches all the specified letters, so \verb|c[au]t| matches `cat' and `cut', but not `cot'.
 There are also a number of pre-defined classes, such as \verb|\w| which matches `word characters' (letters, digits, and (curiously) underscores).
 
 Finally, for each character or group of characters you can specify how often it should occur.
@@ -59,13 +59,13 @@ and in the final subsection we will see how to use these regular expressions in 
 \input{chapter10/tabregex}
 
 In \reftab{regex} you will find an overview of the most important parts of regular expression syntax.\fnregexnote
-The first part shows a number of common specifiers for determining what to match, e.g. letters, digits, etc.,
+ The first part shows a number of common specifiers for determining what to match, e.g. letters, digits, etc.,
 followed by the quantifiers available to determine how often something should be matched.
 These quantifiers always follow a specifier, i.e. you first say what you're looking for, and then how many of those you need.
-Note that by default quantifiers are greedy, meaning they match as many characters as possible.
+Note that by default quantifiers are \concept{greedy}, meaning they match as many characters as possible.
 For example, \verb|<.*>| will match everything between angle brackets, but if you have something like `<p>a paragraph</p>'
 it will happily match everything from the first opening bracket to the last closing bracket.
-By appending a question mark (\verb|?|) to the quantifier, it becomes non-greedy.
+By appending a question mark (\verb|?|) to the quantifier, it becomes \concept{non-greedy}.
 so, \verb|<.*?>| will match the individual `<p>' and `</p>' substrings. 
 
 The third section discusses other constructs.
@@ -162,7 +162,7 @@ normalizing whitespace, and also uses string commands for converting to lower ca
 
 Finally, \refex{cleanpandas} shows how you can run the various commands on a whole column of text rather than on individual strings,
 using  a small set of made-up tweets to showcase various operations.
-First, we determine whether a pattern occurs, in this case for detecting hash-tags
+First, we determine whether a pattern occurs, in this case for detecting hashtags.
 This is very useful for e.g. subsetting a data frame to only rows that contain this pattern.
 Next, we count how many at-mentions are contained in the text, where we require that the character before the mention needs to be either whitespace or the start of the string (\verb|^|), to exclude email addresses and other non-mentions that do contain at signs.
 Then, we extract the (first) url found in the text, if any, using the pattern discussed above.
@@ -173,7 +173,7 @@ Then, we replace everything that is not a letter by a single space.
 
 \pyrex[output=r,format=table,caption=Using regular expressions on a data frame]{chapter10/cleanpandas}
 
-\subsection{Splitting and Joining strings, and extracting multiple matches}
+\subsection{Splitting and joining strings, and extracting multiple matches}
 
 So far, the operations we used all took a single string object and returned a single value,
 either a cleaned version of the string or e.g. a boolean indicating whether there is a match.

@@ -17,7 +17,7 @@ The next chapter will focus on text as words and shows how you can represent tex
 \note{\textbf{Important: Unicode and Encodings}
   Technically speaking, text is represented as bytes (numbers) rather than characters.
   The unicode standard determines how these bytes should be interpreted or `decoded'.
-  This chapter assumes that raw text (the bytes in a file) is already `decoded' into characters (or unicode code points),
+  This chapter assumes that the bytes in a file are already `decoded' into characters (or unicode code points),
   and we can just work with the characters.
   Especially if you are not working with English text, it is very important to make sure you understand Unicode and encodings
   and check that the texts you work with are decoded properly.
@@ -25,7 +25,7 @@ The next chapter will focus on text as words and shows how you can represent tex
 
 When we think about text, we might think sentences or words, but the computer only `thinks' about letters:
 text is represented internally as a string of characters.
-This is reflected of course in the type name, with R calling it a \concept{character vector} and Python a \concept{string}.
+This is reflected of course in the type name, with R calling it a \concept{character} vector and Python a \concept{string}.
 
 \begin{ccsexample}
   \begin{center} \includegraphics[width=.6\textwidth]{chapter10/text.pdf}\end{center}
@@ -39,7 +39,7 @@ This is reflected of course in the type name, with R calling it a \concept{chara
 \end{ccsexample}
 
 As a simple example, the figure at the top of \refex{text} shows how the text `This is a text.' is represented.
-This text is split info separate characters, with each character representing a letter (or space, interpunction, emoji or Chinese character).
+This text is split info separate characters, with each character representing a letter (or space, interpunction, emoji, or Chinese character).
 These characters are indexed starting from the first one, with (as always) R counting from one, but Python counting from zero.
 
 In Python, texts are represented as \fn{str} (string) objects, in which we can directly address the individual characters by their position: \ttt{text[0]} is the first character of \ttt{text}, and so on.
@@ -47,11 +47,11 @@ In R, howerver, texts (like all objects) represent columns (or vectors) rather t
 Thus, \ttt{text[1]} in R is the first text in a series of text.
 To access individual characters in a text, you have to use a function such as \fn{str\_length} and \fn{str\_sub} that will be discussed in more detail below. 
 This also means that in Python, if you have a column (or list) of strings that you need to apply an operation to,
-you either need to use one of Panda's methods shown below or use a \concept{for loop} to iterate over all the strings.
+you either need to use one of Panda's methods shown below or use a \concept{for loop} or \concept{list comprehension} to iterate over all the strings.
 
 \subsection{Methods for dealing with text}
 
-\note{\textbf{R: Stringi, stringr, and base string operations}
+\note{\textbf{Stringi, stringr, and base string operations in R}
   As is so often the case, R has multiple packages that partially replicate functionality for basic text handling.
   In this book we will mainly use the \pkg{stringr} package, which is part of \tidyverse.
   This is not because that package is necessarily better or easier than the alternative \pkg{stringi} package
@@ -88,7 +88,7 @@ case letters.
 Using the \pkg{stringr} function \fn{str\_replace\_all} in R
 and \fn{replace} in Python we can do a find-and-replace and replace substrings
 by others (in our case, replace \texttt{<b>} with a space, for instance).
-To remove unnecessary double spaces we apply the \fn{str\_squish} method provided by \pkg{stringr} and in Python,
+To remove unnecessary double spaces we apply the \fn{str\_squish} function provided by \pkg{stringr} and in Python,
 we first chunk our string into a list of words by using the \fn{split} string method, before we use the \fn{join} method
 to join them again with now a single space.
 In the case of converting letters from upper to lower case, we use the base R function \fn{tolower} and the string
@@ -96,7 +96,6 @@ method \fn{lower} in Python.
 Finally, the base R function \fn{trimws} and the
 Python string method \fn{strip} remove the white space from the beginning
 and end of the string.
-
 \refex{clean} shows how to conduct this cleaning process.
 
 While you can get quite far with these techniques, there are more advanced and flexible approaches possible.
@@ -104,5 +103,5 @@ For instance, you probably do not want to list \emph{all possible} HTML tags in 
 
 \pyrex[output=both,caption=Some basic text cleaning approaches]{chapter10/clean}
 
-\note{\textbf{To regex or not to regex in Python} You may wonder why we introduce basic string methods like \fn{replace} or the \fn{split}-then-\fn{join} trick, if everything can be done with regular expressions anyway. There are a couple of reasons for still using these methods: First, they are easy and don't have any dependencies. If you just want to replace a single thing, then you don't need to import any additional module. Second, regular expressions are considerably slower than string methods -- in most cases, you won't notice, but if you do a lot of replacements (think in thousands per new article, for a million of news articles), then this may matter. Third, you can use the \fn{join} trick also for other things like punctuation removal -- in this case, by generating a list of all characters in a string called \verb|text| provided they are no punctuation characters, and then joining them directly to each other:
-\verb|from string import punctuation; "".join([l for l in text if l not in punctuation])|}
+\note{\textbf{To regex or not to regex in Python} You may wonder why we introduce basic string methods like \fn{replace} or the \fn{split}-then-\fn{join} trick, if everything can be done with regular expressions anyway. There are a couple of reasons for still using these methods: First, they are easy and don't have any dependencies. If you just want to replace a single thing, then you don't need to import any additional module. Second, regular expressions are considerably slower than string methods -- in most cases, you won't notice, but if you do a lot of replacements (think in thousands per news article, for a million of articles), then this may matter. Third, you can use the \fn{join} trick also for other things like punctuation removal -- in this case, by generating a list of all characters in a string called \verb|text| provided they are no punctuation characters, and then joining them directly to each other:
+\verb|from string import punctuation; "".join([c for c in text if c not in punctuation])|}
