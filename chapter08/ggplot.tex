@@ -1,0 +1,27 @@
+\begin{figure}
+  \vspace{-1em}
+\begin{feature}
+\footnotesize  \paragraph{\footnotesize\ R: GGPlot syntax}
+
+One of the nicest features of using R for data exploration is the \pkg{ggplot2} package for data visualization. This is a package that brings a unified method for visualizing that that has very reasonable defaults but can be customized in every way if desired. The syntax, however, can look a little strange at first. 
+Let’s consider the command from \refex{bar}:
+\begin{verbatim}
+ggplot (data=d2) + geom_bar(mapping=aes(x= support_refugees), fill="blue")
+\end{verbatim}
+What you can see here is that every ggplot is composed of multiple sub-commands that are added together with the plus sign. At a minimum, every ggplot needs two sub-command: \fn{ggplot}, which initiates the plot and can be seen as an empty canvas, and one or more \fn{geom} commands which add \concept[ggplot geom]{geometries} to the plot, for example bars, lines, or points. Moreover, each geometry needs a \emph{data} source, and an \concept[ggplot aesthetic mapping]{aesthetic mapping} which tells ggplot how to map columns in the data (in this case the |support_refugees| column) to graphical (aesthetic) elements of the plot, in this case the x position of each bar. Graphical elements can also be set to a constant value rather than mapped to a column, in which case the argument is placed outside the \fn{aes} function, as in the |fill=”blue”| above.
+
+Each aesthetic mapping is assigned a \concept[ggplot scale]{scale}. This scale is initialized with a sensible default which depends on the data type. For example, the colour of the lines in  \refex{combine2} are mapped to the |group| column. Since that is a nominal value (character column), ggplot automatically assigns colors to each group, in this case blue and red.  In \refex{heatmap}, on the other hand, the fill color is mapped to the |score| column, which is numerical (interval) data, to which ggplot by default assigns a color range of white to blue.
+
+Almost every aspect of ggplot can be customized by adding more subcommands. For example, you can specify the title and axis labels by adding |+ labs(title="Title", x="Axis Label")| to the plot, and you can completely alter the look of the graph by applying a theme. For example, the \pkg{ggthemes} package defines an Economist theme, so by simply adding |+ theme_economist()| to your plot you get the characteristic layout of plots from that magazine.
+You can also customize the way scales are mapped using the various \fn{scale\_variable\_mapping} functions. For example, \refex{map2} uses |scale_fill_viridis_c(option = "B")| to use use the \emph{viridis} scale for the \emph{fill} easthetic, specifying that scale B should be used. Similar commands can be used to e.g. change the colours of colour ranges, the size of points, etc.
+
+Because all geometries start with |geom_|, all scales start with |scale_|, all themes start with |theme_|, etc., you can use the RStudio autocompletion to browse through the complete list of options: simply type |geom_|, press tab or control+space, and you get a list of the options with a short description, and you can press F1 to get help on each option. The help for every geometry also lists all aesthetic elements that can or must be supplies.
+
+\newcommand{\fnviza}{\footnote{Freely available at \url{https://socviz.co/}}}
+\newcommand{\fnvizb}{\footnote{\url{https://www.r-graph-gallery.com/}}}
+\newcommand{\fnvizc}{\footnote{\url{https://www.data-to-viz.com/}}}
+
+Besides the built-in help, there are a number of great (online) resources to learn more. Specifically, we recommend the book \emph{Data Visualization} by \citet{healy2018data}\fnviza, the 
+Data Visualization: A practical introduction (Kieran Healy). Another great resource is the R Graph Gallery\fnvizb, which has an enormous list of many possible visualizations, all with R code included and most of them based on ggplot. Finally, we recommand the Data-to-Viz\fnvizc website, which allows you to explore a number of graph types depending on your data, lists the do's and don'ts for each graph, and links to the Graph Gallery for concrete examples.
+\end{feature}
+\end{figure}

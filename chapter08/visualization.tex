@@ -2,13 +2,14 @@
 \label{sec:visualization}
 
 
-Data visualization is a powerful technique for both understanding data yourself and communicating the story of your data to others. Based on \pkg{ggplot2} in R and \pkg{matplotlib} and \pkg{seaborn} in Python, this section covers histograms, line and bar graphs, scatterplots and heatmaps. It touches on combining multiple graphs, communicating uncertainty with boxplots and ribbons, and plotting geospatial data.  In fact, visualizing data is an important stage in both EDA and advanced analytics, and we can use graphs to obtain important insights about our data. For example, if we want to visualize the age and the support of refugees of European citizens, we can plot a histogram and a bar graph, respectively. 
+Data visualization is a powerful technique for both understanding data yourself and communicating the story of your data to others. Based on \pkg{ggplot2} in R and \pkg{matplotlib} and \pkg{seaborn} in Python, this section covers histograms, line and bar graphs, scatterplots and heatmaps. It touches on combining multiple graphs, communicating uncertainty with boxplots and ribbons, and plotting geospatial data.  In fact, visualizing data is an important stage in both EDA and advanced analytics, and we can use graphs to obtain important insights about our data. For example, if we want to visualize the age and the support for refugees of European citizens, we can plot a histogram and a bar graph, respectively. 
 
+\input{chapter08/ggplot}
 
 \subsection{Plotting frequencies and distributions}
 In the case of nominal data, the most straightforward way to visualize them is to simply count the frequency of value and then plot them as a bar chart. For instance, when we depict the support to help refugees (\refex{bar}) you can quickly get that the option ``tend to agree'' is the most frequently voiced answer.
 
-\pyrex[output=py,format=png,caption=Barplot of support of refugees]{chapter08/bar}
+\pyrex[output=py,format=png,caption=Barplot of support for refugees]{chapter08/bar}
 
 If we have continous variables, however, having such a bar chart would lead to too many bars: we may loose oversight (and creating the graph may be resource-intensive). Instead, we want to group the data into \emph{bins}, like age groups.
 Hence, a histogram is used to examine the distribution of a continuous variable (\pkg{ggplot2} function geom\_histogram in R and \pkg{pandas} function \fn{hist} in Python) and a graph bar to inspect the distribution of a categorical one (\pkg{ggplot2} function geom\_bar() in R and \pkg{matplotlib} function \fn{plot} in Python). In \refex{hist} you can easily notice the shape of the distribution of the variable age, with many values close to the average and a slightly bigger tail to the right (not that far from the normal distribution!).  
@@ -26,11 +27,11 @@ Another way to show distributions is using bloxplots, which are powerful represe
 
 After having inspected distributions of single variables, you may want to check how two variables are related. We are going to discuss two ways of doing so: plotting data over time, and scatterplots to illustrate the relationship between two continous variables.
 
-The Eurobarometer collects data during 15 days (in the example from November 5 to 19, 2017) and you may wonder if the level of support to refugees or even to general migrants changes over the time. This is actually a simple time series and you can use a graph line to represent it. Firstly you must use a numerical variable for the level of support (\emph{support\_refugees\_n}, which ranges from 1 to 4, being 4 the maximum support) and group it by day in order to get the average for each day. In the case of R, you can plot the two series using the base function \fn{plot}, or you can use the \pkg{ggplot2} function \fn{geom\_line}. In the case of Python you can use the \pkg{matplotlib} function \fn{plot} or the \pkg{seaborn} function \fn{lineplot}. To start, \refex{line} shows how to create a graph for the average support of refugees by day.
+The Eurobarometer collects data during 15 days (in the example from November 5 to 19, 2017) and you may wonder if the level of support to refugees or even to general migrants changes over the time. This is actually a simple time series and you can use a graph line to represent it. Firstly you must use a numerical variable for the level of support (\emph{support\_refugees\_n}, which ranges from 1 to 4, being 4 the maximum support) and group it by day in order to get the average for each day. In the case of R, you can plot the two series using the base function \fn{plot}, or you can use the \pkg{ggplot2} function \fn{geom\_line}. In the case of Python you can use the \pkg{matplotlib} function \fn{plot} or the \pkg{seaborn} function \fn{lineplot}. To start, \refex{line} shows how to create a graph for the average support for refugees by day.
 
-\pyrex[output=py,format=png,caption=Graph line of average support of refugees by day]{chapter08/line}
+\pyrex[output=py,format=png,caption=Graph line of average support for refugees by day]{chapter08/line}
 
-%\pyrex[output=py,format=png,caption=Graph line of average support of migrants by day]{chapter08/line2}
+%\pyrex[output=py,format=png,caption=Graph line of average support for migrants by day]{chapter08/line2}
 
 To also plot the support for migrants, you can combine multiple subgraphs in a single plot,
 giving the reader a broader and more comparative perspective (\refex{combine2}).
@@ -45,9 +46,9 @@ In \pkg{ggplot} (R), you can use the \fn{facet\_grid} function to automatically 
 
 \pyrex[output=py,format=png,caption=Creating subfigures)]{chapter08/combine}
 
-Now if you want to explore the possible correlation between the average support to refugees (\texttt{mean\_support\_refugees\_by\_day}) and the average support to migrants by year (\texttt{mean\_support\_migrants\_by\_day}), you might need a scatterplot, which is a better figure to visualize the type and strength of this relationship \pkg{scatter}. 
+Now if you want to explore the possible correlation between the average support for refugees (\texttt{mean\_support\_refugees\_by\_day}) and the average support to migrants by year (\texttt{mean\_support\_migrants\_by\_day}), you might need a scatterplot, which is a better figure to visualize the type and strength of this relationship \pkg{scatter}. 
 
-\pyrex[output=py,format=png,caption=Scatterplot of average support of refugees and migrants by year]{chapter08/scatter}
+\pyrex[output=py,format=png,caption=Scatterplot of average support for refugees and migrants by year]{chapter08/scatter}
 
 A scatterplot uses dots to depict the values of two variables in a Cartesian plane (with coordinates for the axes X and Y). You can easily plot this figure in R using the \pkg{ggplot2} function \fn{geom\_point} (and \fn{geom\_smooth} to display a regression line!), or in Python using \pkg{seaborn} function \fn{scatterplot} (\fn{lmplot} for including the regression line as shown in \pkg{scatter2}). 
 
@@ -67,13 +68,13 @@ You can estimate this correlation coefficient with \pkg{pandas} function \fn{cor
 
 \pyrex[output=both,caption=Pearson correlation coefficient]{chapter08/corr}
 
-Another useful representation is the heatmap. This figure can help you plot a continuous variable using a colour scale and shows its relation with another two variables.  This means that you represent your data as colours, which might be useful for understanding patterns. For example, we may wonder what is the level of support of refugees given the nationality and the gender of the individual. For this visualization, it is necessary to create a proper dataframe (\refex{pivot}) to plot the heatmap, in which each number of your continuous variable \emph{\_refugees\_n} is included in a table where each axis (x= gender, y=country) represents the categorical variables. This pivoted table stored in an object called \texttt{pivot\_data} can be generated using some of the already explained commands.
+Another useful representation is the heatmap. This figure can help you plot a continuous variable using a colour scale and shows its relation with another two variables.  This means that you represent your data as colours, which might be useful for understanding patterns. For example, we may wonder what is the level of support for refugees given the nationality and the gender of the individual. For this visualization, it is necessary to create a proper dataframe (\refex{pivot}) to plot the heatmap, in which each number of your continuous variable \emph{\_refugees\_n} is included in a table where each axis (x= gender, y=country) represents the categorical variables. This pivoted table stored in an object called \texttt{pivot\_data} can be generated using some of the already explained commands.
 
 \pyrex[output=none,caption=Create a dataframe to plot the heatmap]{chapter08/pivot}  
 
 In the first resulting figure proposed in \refex{heatmap}, the lighter the blue the greater the support in each combination of country x gender. You can see that level of support is similar in countries such as Slovenia or Spain, and is different in Czech Republic or Austria. It also seems that women have a higher level of support. For this default heatmap we can use the \pkg{ggplot2} function \fn{geom\_tile} in R and \pkg{seaborn} function \fn{heatmap} in Python.  To personalize the scale colours (i.e. a scale of blues) we can use the \pkg{ggplot2} function \fn{scale\_fill\_gradient} in R or the parameter \texttt{cmap} of the \pkg{seaborn} function \fn{heatmap} in Python. 
 
-\pyrex[output=py,format=png,caption=Heatmap of country\, gender and support of refugees]{chapter08/heatmap}
+\pyrex[output=py,format=png,caption=Heatmap of country\, gender and support for refugees]{chapter08/heatmap}
 
 As you have noticed, one of the goals of EDA is exploring the variance of our variables, which includes some uncertainty about their behaviour. We will introduce you to two basic plots to visually communicate this uncertainty. Firstly, ribbons and area plots can help us to clearly identify a predefined interval of a variable in order to interpret its variance over some cases. Let us mark this interval in 0.15 points in the above-mentioned plots of the average support to refugees or migrants by day, and we can see that the lines tend to converge more in the very last day and are more separated by the day 4. This simple representation can be conducted in R using the \pkg{ggplot2} function \fn{geom\_ribbon} and in Python using the parameter \texttt{ci} of the \pkg{seaborn} function \fn{lineplot}.  
 
@@ -96,7 +97,7 @@ Finally, we plot it using the \pkg{ggplot2} function \fn{geom\_polygon} in R and
 
 \pyrex[output=none,caption=Select EU countries and joint the map with Eurobarometer data]{chapter08/countries}
 
-\pyrex[output=r,format=png,caption=Map of Europe with the average level of support of refugees by country]{chapter08/map2}
+\pyrex[output=r,format=png,caption=Map of Europe with the average level of support for refugees by country]{chapter08/map2}
 
 
 \subsection{Other possibilities}
