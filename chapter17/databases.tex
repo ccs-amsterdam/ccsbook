@@ -9,7 +9,7 @@ discussed some basics of file handling
 trouble here (apart from ocassional struggles with non-standard
 encodings, or confusion about the delimiters in a csv file). On the
 other hand, the examples we used were still modest in size: usually,
-you were dealing with a handful of csv files; the maximum you had to
+you were dealing with a handful of csv files; except from huge image classification datasets, the maximum you had to
 deal with where the 50,000 text files from the IMDB movie review
 dataset.
 
@@ -19,7 +19,6 @@ the data from your disk into memory\footnote{In fact, this is
   to use a generator that reads data line-by-line from a file and
   yields them to \pkg{scikit-learn}. In this way, only \emph{one} row
   of data is in your memory at the same time (see \refsec{functions}).}
-
 But what if we want to scale up our analyes a bit
 \cite[see][]{Trilling2018b}? Maybe we want to build up a larger
 datacollection, maybe even share it with multiple team members, search
@@ -55,13 +54,13 @@ relational databases (or SQL-databases) and noSQL-databases. Strictly
 speaking, SQL (``structured query language'') is a query language for
 databases, but it is so widespread that it is used almost synonymously
 for relational databases. Even though they have been around for
-already 50 years (\cite{Codd1970}), relational databases still are very
+already 50 years \citep{Codd1970}, relational databases still are very
 powerful and very widely used.  They consist of multiple tables that
 are linked by shared columns (keys). For instance, you could imagine a
 table with the orders placed in a webshop that has a column
 |customer-id|, and a different table with addresses, billing
 information, and for each |customer-id|. Using filter and join
-operations (\refchap{datawrangling}), one can then easily retrieve
+operations (like in \refchap{datawrangling}, but then on the database directly), one can then easily retrieve
 information on where the order has to be shipped. A big advantage of
 such a relational database is that, if a customer places 100 orders,
 we do not need to store their address 100 times, but only once, which
@@ -163,10 +162,10 @@ fails halfway.
 \pyrex[input=both, output=py, format=table, caption={\pkg{SQLite} offers you database functionality without setting up a database server such as \pkg{mysql}}]{chapter17/sqlite}
 
 Of course, \pkg{SQlite} cannot give you the same performance that a ``real'' mysql (or similar) installation could offer. Therefore, if your project grows bigger, or if you have a lot of read- or
-write-operations per second, then you may want to switch at one
+write-operations per second, then you may have to switch at one
 point. But as you can see in \refex{sqlite}, Python and R do not
 really care about the backend: all you need to do is to change the
 connection |conn| such that it points to your new database instead of
-to the mysql database.
+the sqlite file.
 
 
