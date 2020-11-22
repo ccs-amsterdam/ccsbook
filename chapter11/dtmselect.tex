@@ -163,6 +163,7 @@ In Python, you can see that we now have a nested list comprehension, where the o
 Next, we make a \verb|do_nothing| function for the vectorizer since the results are already tokenized.
 Note that we need to disable lowercasing as otherwise it will try to call \verb|.lower()| on the token lists. 
 
+\note{\textbf{\fn{lambda} functions in Python.} Sometimes, we need to define a function that is very simple and that we need only once. An example for such a throwaway function is \ttt{do\_nothing} in \refex{tagcloud}. Instead of defining a reusable function with the \fn{def} keyword and then to call it by its name when we need it later, we can therefore also directly define an unnamed function when we need it with the \fn{lambda} keyword. The syntax is simple: \ttt{lambda argument: returnvalue}. A function that maps a value onto itself can therefore be written as \ttt{lambda x: x}. In \refex{tagcloud}, instead of defining a named function, we could therefore also simply write \ttt{cv = CountVectorizer(tokenizer=lambda x: x, lowercase=False)}. The advantages are that it saves you two lines of code here and that you don't clutter your environment with functions you do not intend to re-use anyway. The disadvantage is that it may be less clear what is happening, at least for people not familiar with lambda functions.}
 
 
  
@@ -195,7 +196,7 @@ Since many algorithms have to assign weights or parameters to each word, this ca
 The DTMs created above all use the raw frequencies as cell values.
 It can also be useful to weigh the words so more informative words have a higher weight than less informative ones.
 A common technique for this is \concept{tf$\cdot$idf} weighting.
-This stands for \emph{term frequency - inverse document frequency} and weights each occurrency by its raw frequency (term frequency) corrected for how often it occurs in all documents (inverse document frequency). In a formula, the most common implementation of this weight is given as follows:
+This stands for \emph{term frequency $\cdot$ inverse document frequency} and weights each occurrency by its raw frequency (term frequency) corrected for how often it occurs in all documents (inverse document frequency). In a formula, the most common implementation of this weight is given as follows:
 
 $tf\cdot idf(t,d)=tf(t,d)\cdot idf(t)=f_{t,d}\cdot -\log \frac{n_t}{N}$
 

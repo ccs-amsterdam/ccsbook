@@ -1,10 +1,9 @@
 \section{The bag of words and the term-document matrix}
 \label{sec:dtm}
 
-Before you can analyse text using the computer, the text must be represented in a way that is understandable for the computer.
-
-The Document-term matrix (DTM, also called the term-document matrix or TDM) is a common numerical representation of text.
-This represents a \concept{corpus} (or set of documents) as a matrix or table, where each row represents a document, each column represents a term (word),
+Before you can conduct any computational analysis of text, you need to solve a problem: computations are usually done on numerical data -- but you have text. Hence, you must find a way to \emph{represent} the text by numbers.
+The Document-term matrix (DTM, also called the term-document matrix or TDM) is such a common numerical representation of text.
+It represents a \concept{corpus} (or set of documents) as a matrix or table, where each row represents a document, each column represents a term (word),
 and the numbers in each cell show how often that word occurs in that document.
 
 \pyrex[caption=Example document-term matrix,output=r,format=table]{chapter11/dtm}
@@ -35,13 +34,13 @@ For Python, we first use |CountVectorizer.build_tokenizer| to access the built-i
 As you can see in the first line of input, this tokenizes ``haven't'' to |haven|,
 which of course has a radically differeny meaning. Moreover, it silently drops all single-letter words,
 including the |'t|, |'s|, and |I|.
-A more reasonable tokenizer is the \cls{TreebankWordTokenizer} included in the \pkg{nltk} package, which contains a number of functions for doing natural language processing in Python.
-This tokenizer splits ``haven't'' into |have| and |n't|, which is a reasonable outcome.
+
+In the box ``Tokenizing in Python'' below, we therefore discuss some alternatives. For instance, the \cls{TreebankWordTokenizer} included in the \pkg{nltk} package is a more reasonable tokenizer and 
+splits ``haven't'' into |have| and |n't|, which is a reasonable outcome.
 Unfortunately, this tokenizer assumes that text has already been split into sentence,
 and it also includes punctuation as tokens by default.
-For this reason, we introduce a custom tokenizer based on the Treebank tokenizer,
-which splits text into sentences (using \fn{nltk.sent\_tokenize}) and allows for a custom criterion for keeping tokens,
-in this case that the token must contain at least one letter. 
+To circumvent this, we can introduce a custom tokenizer based on the Treebank tokenizer,
+which splits text into sentences (using \fn{nltk.sent\_tokenize}) -- see the box for more details.
 
 For R, we simply call the \fn{tokens} function from the \quanteda\ package.
 This keeps |haven't| and |John's| as a single word, which is probably less desirable than splitting the words
@@ -101,7 +100,7 @@ what information is kept or discarded.
 Note that for languages such as Chinese, Japanese, and Korean, which do not use spaces to delimit words, the story is more difficult.
 Although a full treatment is beyond the scope of this book, \refex{haiku} shows a small example of tokenizing Japanese text,
 in this case the famous haiku ``the sound of water'' by Bash\={o}.
-The default tokenizer in quanteda actually does a good job, in contrast to the default python tokenizer
+The default tokenizer in quanteda actually does a good job, in contrast to the default Python tokenizer
 that simply keeps the whole string as one word
 (which makes sense since this tokenizer only looks for whitespace or punctuation).
 For python the best bet is to use a custom package for tokenizing Japanese, such as the \pkg{nagisa} package.
@@ -146,7 +145,7 @@ out of a possible $8\times22219$, which boils down to a 92\% sparse matrix.
 Note that to display the matrix we turned it from a \concept{sparse matrix} representation into a \concept{dense matrix}.
 Briefly put, in a dense matrix, all entries are stored as a long list of numbers, including all the zeroes.
 In a sparse matrix,  only the non-zero entries and their location are stored. 
-This conversion (using the function \verb|as.matrix| and \verb|todense| respectively), however, was only performed after selecting a small subset of the data.
+This conversion (using the function \verb|as.matrix| and the method \verb|todense| respectively), however, was only performed after selecting a small subset of the data.
 In general,  it is very inefficient to store and work with the matrix in a \concept[dense matrix]{dense} format.
 For a reasonably large corpus with tens of thousands of documents and different words, this can quickly run billions of numbers,
 which can cause problems even on modern computers and is moreover very inefficient.
@@ -203,7 +202,7 @@ As we will see in the next chapter, the DTM representation can be used for many 
 
 Sometimes, however, you need information that is encoded in the order of words.
 For example, in analysing conflict coverage it might be quite important to know who attacks whom, not just that attacking took place.
-In the last section of this chapter we will look at some ways to create a richer matrix-representation by using word pairs.
+In the \refsec{ngram} we will look at some ways to create a richer matrix-representation by using word pairs.
 Although it is beyond the scope of this book,
 you can also use automatic syntactic analysis to take grammatical relations into account as well.
 As is always the case with automatic analyses, it is important to understand what information the computer is looking at,
@@ -215,7 +214,7 @@ One of the most famous text visualizations is without doubt the word cloud.
 Essentially, a word cloud is an image where each word is displayed in a size that is representative of its frequency.
 Depending on preference, word position and colour can be random, depending on word frequency, or in a decorative shape.
 
-Word Clouds are often criticised since they are (sometimes) pretty but mostly not very informational.
+Word Clouds are often criticised since they are (sometimes) pretty but mostly not very informative.
 The core reason for that is that only a single aspect of the words is visualized (frequency),
 and simple word frequency is often not that informative: the most frequent words are generally uninformative `stop words' like ``the'' and ``I''.
 
