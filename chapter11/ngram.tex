@@ -265,7 +265,7 @@ This of courses raises the question of how to know which preprocessing steps to 
 First, there are a number of things that you should (almost) always do.
 If your data contains noise such as boilerplate language, HTML artefacts, etc., you should generally strip these out before proceedings.
 Second, text almost always has an abundance of uninformative (stop) words and a very long tail of very rare words.
-Thus, it is almost always a good idea to use a combination of stop word removal, trimming based on document frequency, and/or tf\$cdot$idf weighting.
+Thus, it is almost always a good idea to use a combination of stop word removal, trimming based on document frequency, and/or tf$cdot$idf weighting.
 Note that when using a stop word list, you should always manually inspect and/or fine-tune the word list to make sure it matches your domain and research question.
 
 The other steps such as n-grams, collocations, and tagging and lemmatization are more optional but can be quite important depending on the specific research.
@@ -284,7 +284,7 @@ For the mouse trap, it is OK if it is a black box of which we don't understand h
 For the social science model, this is not the case as it is exactly the inner workings we are interested in.
 
 Technical (pre)processing steps such as reviewed in this chapter are primarily engineering devices:
-we don't really care how something like tf\$cdot$idf works, as long as it produces the best possible measurement of the variables we need for our analysis.
+we don't really care how something like tf$cdot$idf works, as long as it produces the best possible measurement of the variables we need for our analysis.
 In other words, it is an engineering challenge, not a social science research question.
 As a consequence, the key criterion by which to judge these steps is validity, not explainability.
 Thus, it is fine to try out different options, as long as you validate the results properly.
