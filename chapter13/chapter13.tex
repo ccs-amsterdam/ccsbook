@@ -1,7 +1,7 @@
 \chapter{Scraping online data}
 \label{chap:scraping}
 
-\begin{abstract}
+\begin{abstract}{Abstract}
 In this chapter, you learn how to retrieve your data from online sources. We first discuss the use of application programming interfaces, so-called APIs, which allow you to retrieve data from social media platforms, but also government data or other forms of open data, in a machine-readable format. We then discuss how to do web scraping in a narrower sense to retrieve data from websites that do not offer an API. We also discuss how to deal with authentication mechanisms, cookies, and the like, as well as ethical, legal, and practical considerations.
 \end{abstract}
 
@@ -14,9 +14,22 @@ In this chapter, you learn how to retrieve your data from online sources. We fir
 \item Assess basics of legal, ethical, and practical constraints
 \end{objectives}
 
+
+\newpage
 \begin{feature}
-This chapter explains data retrieval using APIs and web scraping packages such as requests, lxml, selenium, and rvest.
+  \textbf{Packages used in this chapter}\\
+  This chapter uses in particular \pkg{httr} (R) and \pkg{requests} (Python) to retrieve data, \pkg{json} (Python) and \pkg{jsonlite} (R) to handle JSON responses, and \pkg{lxml} and \pkg{selenium} for web scraping.
+
+You can install these and some additional packages (e.g., for geocoding) with the code below if needed  (see \refsec{installing} for more details):
+
+\doublecodex{chapter13/chapter13install}
+
+\noindent After installing, you need to import (activate) the packages every session:
+
+\doublecodex{chapter13/chapter13library}
 \end{feature}
+
+
 
 
 \input{chapter13/apis}

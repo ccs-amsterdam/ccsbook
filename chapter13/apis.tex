@@ -15,7 +15,6 @@ the author of some item on a web page, what the numbers ``2006'' and
 ``2008'' mean, and on. But it is not trivial to think of a way to
 explain to a computer program how to identify variables like
 \texttt{author}, \texttt{title}, or \texttt{year} on a web page.
-
 We will learn how to do exactly that in \refsec{webpages}. Writing
 such a \emph{parser} is often necesarry, but it is also error-prone
 and some kind of a detour, as we are trying to bring some information
@@ -26,7 +25,6 @@ Luckily, however, many online services do not only have web interfaces
 optimized for human reading, but also offer another possibility to
 access the data they provide: an API (Application Programming
 Interface).
-
 The vast amount of contempory web APIs works like this: you send a
 \emph{request} to some URL, and you get back a JSON object. As you
 learned in \refsec{reading}, JSON is a nested data structure, very
@@ -127,7 +125,6 @@ of a loop.
 
 However, many APIs have restrictions regarding who can use them,
 how many requests can be made, and so on.
-
 For instance, you may need to limit the number of requests per minute
 by calling a \fn{sleep} function within your loop to delay the
 execution of the next call. Or, you may need to authenticate
