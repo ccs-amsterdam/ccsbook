@@ -36,7 +36,7 @@ To also plot the support for migrants, you can combine multiple subgraphs in a s
 giving the reader a broader and more comparative perspective (\refex{combine2}).
 In R, the \fn{geom\_line} also takes a color aesthetic, but this requires the data to be in long format.
 So, we first reshape the data and also change the factor labels to get a better legend (see \refsec{pivot}).
-In python, you can plot the two lines as separate figures figures and add the \pkg{pyplot} function \fn{show} to display an integrated figure.
+In Python, you can plot the two lines as separate figures figures and add the \pkg{pyplot} function \fn{show} to display an integrated figure.
 
 \pyrex[output=py,format=png,caption=Plotting multiple lines in one graph]{chapter08/combine2}
 
@@ -55,7 +55,7 @@ A scatterplot uses dots to depict the values of two variables in a Cartesian pla
 
 Looking at the dispersion of points in the provided example you can infer that there might be a positive correlation between the two variables, or in other words, the more the average support to refugees the more the average support to migrants over time.
 
-We can check and measure the existence of this correlation by computing the Pearson correlation coefficient or Pearson's \emph{r}, which is the most known estimator for a correlation problem. As you probably remember from your statistics class, a correlation refers to a relationship between two continuous variables and is usually applied to measure linear relationships (though it also exists nonlinear correlations). Specifically, Pearson's $r$  measures the linear correlation between two variables (\emph{X} and \emph{Y}) producing a value between -1 and +1, where 0 depicts the absence of correlation and values near to 1 a strong correlation. The signs (+ or -) represent the direction of the relationship (being positive if two variables variate in the same direction, and negative if they variate in the opposite direction). The correlation corefficient is usually represented with \emph{r} or the Greek letter $\rho$ and mathematically expressed as:
+We can check and measure the existence of this correlation by computing the Pearson correlation coefficient or Pearson's \emph{r}, which is the most known estimator for a correlation problem. As you probably remember from your statistics class, a correlation refers to a relationship between two continuous variables and is usually applied to measure linear relationships (although there are also exists nonlinear correlation coefficients, such as Spearman's $\rho$). Specifically, Pearson's $r$  measures the linear correlation between two variables (\emph{X} and \emph{Y}) producing a value between -1 and +1, where 0 depicts the absence of correlation and values near to 1 a strong correlation. The signs (+ or -) represent the direction of the relationship (being positive if two variables variate in the same direction, and negative if they variate in the opposite direction). The correlation corefficient is usually represented with \emph{r} or the Greek letter $\rho$ and mathematically expressed as:
 
 $$
   r =
@@ -89,14 +89,12 @@ Plotting geospatial data is a more powerful tool to compare countries or other r
 Using the very same data of our example, we might want to plot in a map the level of support to refugees of European citizens by country. Firstly, we should create a dataframe with the average level of support to refugees by country (\texttt{supports\_country}). Secondly, we must install any exiting library that provides you with accurate geospatial information. In the case of R, we recommend the package \pkg{maps} which contains the function \fn{map\_data} that helps you generate an object with geospatial information of specific areas, countries or regions, that can be easily read and plot by \pkg{ggplot2}. Even if not explained in this book, we also recommend \pkg{ggmap} in R (\cite{kahle2013ggmap}). When working with Python we recommend \pkg{geopandas} that works very well with \pkg{pandas} and \pkg{matplotlib} (it will also need some additional packages such as \pkg{descartes}).  
 
 In \refex{map} we illustrate how to plot a world map (from existing geographical information).
+We then save a partial map into the object \texttt{some\_eu\_maps} containing the European countries that participate in the survey. After we merge \texttt{supports\_country} and \texttt{some\_eu\_maps} (by region) and get a complete dataframe called \texttt{support\_map} with coordinates for each country (\refex{countries}).  
+Finally, we plot it using the \pkg{ggplot2} function \fn{geom\_polygon} in R and the \pkg{geopandas} method \fn{plot} in Python (\refex{map2}). Voilà a nice and comprehensible representation of our data with a scale of colours!
 
 \pyrex[output=py,format=png,caption=Simple world map]{chapter08/map}
 
-We then save a partial map into the object \texttt{some\_eu\_maps} containing the European countries that participate in the survey. After we merge \texttt{supports\_country} and \texttt{some\_eu\_maps} (by region) and get a complete dataframe called \texttt{support\_map} with coordinates for each country (\refex{countries}).  
-
 \pyrex[output=none,caption=Select EU countries and joint the map with Eurobarometer data]{chapter08/countries}
-
-Finally, we plot it using the \pkg{ggplot2} function \fn{geom\_polygon} in R and the \pkg{geopandas} method \fn{plot} in Python (\refex{map2}). Voilà a nice and comprehensible representation of our data with a scale of colours!
 
 \pyrex[output=r,format=png,caption=Map of Europe with the average level of support of refugees by country]{chapter08/map2}
 

@@ -2,7 +2,7 @@
 \label{sec:clustering}
 
 So far, we have reviewed traditional statistical exploratory and
-visualization techniques that any social scientist must manage. A more
+visualization techniques that any social scientist should be able to apply. A more
 computational next step in your EDA wirkflow is using machine learning
 (ML) to let our computer ``learn'' about our data and in turn give us
 more initial insights.  ML is a branch of artificial intelligence that
@@ -53,14 +53,14 @@ $$J = \sum_{n=1}^{N} \sum_{k=1}^{K} r_{nk} \|x_n - \mu_k\|^2$$
 
 where $\|x_n - \mu_k\|$ is the distance between the data point $x_n$ and the center of the cluster $\mu_k$.
 
-Instead of taking the mean, some variations of this algorithm take the median (k-medians) or a representative observation, also called medoid (k-medoids or partitioning around medoids, PAM) as a way to optimize the initial method.
+Instead of taking the mean, some variations of this algorithm take the median ($k$-medians) or a representative observation, also called medoid ($k$-medoids or partitioning around medoids, PAM) as a way to optimize the initial method.
 
 Because $k$-means clustering calculates \emph{distances} between cases,
 these distances need to be meaningful -- which is only the cases if
 the scales on which the variables are measured are comparable. If all
 your variables are measured on the same (continous) scale with the
 same endpoints, you may be fine. In most cases, you need to normalize
-your data by transforming them into, for instance, z-scores, or a
+your data by transforming them into, for instance, z-scores\footnote{A z-transformation means rescaling data to a mean of 0 and a standard deviation of 1}, or a
 scale from 0 to 1.
 
 Hence, the first thing we do in our example, is to prepare a proper
@@ -79,7 +79,7 @@ model multiple times with different $k$s.
 
 The simplest method to obtain the optimal number of clusters is to
 estimating the variability within the groups for different runs. This
-means that wWe must run $k$-means for different number of clusters
+means that we must run $k$-means for different number of clusters
 (i.e. 1 to 15 clusters) and then choose the number of clusters that
 decreases the variability maintaining the highest number of
 clusters. When you generate and plot a vector with the variability ,
@@ -110,7 +110,7 @@ Using the function \fn{fviz\_cluster} of the library \pkg{factoextra} in R, or t
 
 \subsection{Hierarchical clustering}
 
-Another method to conduct a cluster analysis is hierarchical clustering, which builds a hierarchy of clusters that we can visualize in a dendogram.  This algorithm has two versions: a bottom-up approach (observations begin in their own clusters), also called \textit{agglomerative}, and a top-down approach (all observations begin in one cluster), also called \textit{divisive}. We will follow the bottom-up approach in this chapter and when you will look at the dendogram you will realize how this strategy repeatedly combines the two \textit{nearest} clusters at the bottom into a larger one in the top. The distance between clusters is initially estimated for every pair observation points and then put every point in its own cluster in order to get the closest pair of points and iteratively compute the distance between each new cluster and the previous ones. This is the internal rule of the algorithm and we must choose a specific linkage method (complete, single, average or centroid or Ward's linkage). Ward's linkage is a good default choice: It inimizes the variance of the clusters being merged. In doing so, tends to produce roughly evenly sized cluster and is less sensitive to noise and outliers than some of the other methods. 
+Another method to conduct a cluster analysis is hierarchical clustering, which builds a hierarchy of clusters that we can visualize in a dendogram.  This algorithm has two versions: a bottom-up approach (observations begin in their own clusters), also called \textit{agglomerative}, and a top-down approach (all observations begin in one cluster), also called \textit{divisive}. We will follow the bottom-up approach in this chapter and when you will look at the dendogram you will realize how this strategy repeatedly combines the two \textit{nearest} clusters at the bottom into a larger one in the top. The distance between clusters is initially estimated for every pair observation points and then put every point in its own cluster in order to get the closest pair of points and iteratively compute the distance between each new cluster and the previous ones. This is the internal rule of the algorithm and we must choose a specific linkage method (complete, single, average or centroid, or Ward's linkage). Ward's linkage is a good default choice: It minimizes the variance of the clusters being merged. In doing so, tends to produce roughly evenly sized cluster and is less sensitive to noise and outliers than some of the other methods. 
 In \refex{hc} we will use the function \fn{hcut} of the package \pkg{factoextra} in R and \pkg{scikit-learn} function \fn{AgglomerativeClustering} in Python, to compute the hierarchical clustering. 
 
 A big advantage of hierarchical clustering is that, once estimated,
@@ -140,7 +140,7 @@ If you re-run the hierarchical clustering for 3 clusters (\refex{hc3}) and visua
 \label{sec:pcasvd}
 Cluster analyses are in principle used to group similar
 cases. Sometimes, we want to group similar variables instead.  A
-well-known method for this is principal component analysis (PCA). This
+well-known method for this is principal component analysis (PCA)\footnote{If your had to learn statistics using SPSS, you have almost certainly already conducted a PCA. Quite counter-intuitively, the default analysis that is run when clicking on the ``Factor'' menu in SPSS, is a PCA.}. This
 unsupervised method is useful to reduce the dimensionality of your
 data by creating new uncorrelated variables or \textit{components}
 that describe the original dataset. PCA uses linear transformations to
@@ -169,13 +169,13 @@ elements of a vector and the output will be a square matrix with
 identical number of rows and columns, corresponding to the total
 number of dimensions of original dataset. Specifically, we can
 calculate the covariance matrix of the variables \emph{X} and \emph{y}
-with the next formula
+with the formula
 
 $$cov_{x,y}=\frac{\sum_{i=1}^{N}(x_{i}-\bar{x})(y_{i}-\bar{y})}{N-1}$$
 
 Secondly, using the covariance matrix the algorithm computes the eigenvectors and their corresponding eigenvalues, and then drop the eigenvectors with the lowest eigenvalues. With this reduced matrix it transforms the original values to the new subspace in order to obtain the principal components that will synthesize the original dataset.
 
-Let us now conduct a PCA over the Eurobarometer data.  In \refex{pca} we will re-use the sub dataframe \emph{d3} containing the means of 4 variables (support to refugees, support to migrants, age and educational level) for each of the 30 European countries (30 x 4). The question is if we can have a new dataframe containing less than 4 variables but that explain most of the variance, or in other words, that represent well our original dataset with less dimensions. As long as our features are usually measured in different scales, it is normally suggested to center (to mean 0) and scale (to standard deviation 1) the data. You may also know this transformation as ``calculating $z$-scores''. We can perform the PCA in R using the base function \fn{prcomp} and in Python using the function \fn{PCA} of the module \texttt{decomposition} of \pkg{scikit-learn}. 
+Let us now conduct a PCA over the Eurobarometer data.  In \refex{pca} we will re-use the sub dataframe \emph{d3} containing the means of 4 variables (support to refugees, support to migrants, age and educational level) for each of the 30 European countries (30 x 4). The question is if we can have a new dataframe containing less than 4 variables but that explain most of the variance, or in other words, that represents our original dataset well enough, but with less dimensions. As long as our features are usually measured in different scales, it is normally suggested to center (to mean 0) and scale (to standard deviation 1) the data. You may also know this transformation as ``calculating $z$-scores''. We can perform the PCA in R using the base function \fn{prcomp} and in Python using the function \fn{PCA} of the module \texttt{decomposition} of \pkg{scikit-learn}. 
 
 \pyrex[output=py,caption=Principal component analysis (PCA) of a dataframe with 30 records and 4 variables]{chapter08/pca}
 
