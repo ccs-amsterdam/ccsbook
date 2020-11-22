@@ -62,8 +62,12 @@ Convolutional Neural Networks are one way in which deep learning can overcome th
 Essentially, the model internalizes the feature learning as a first part or `layer' of the model,
 using a specialized network to summarize the raw input values into document (or image) lewvel features. 
 
+% https://docs.google.com/drawings/d/1EySRM13hQoTcmEG1-J8b1Vz3CsNbW3aYsPt6J3ioD0o/edit
+% pdfcrop -bbox "35 180 450 525" ch09_cnn.pdf ch09_cnn_cropped.pdf
+
+
 \begin{figure}
-  \includegraphics[width=\linewidth]{figures/ch09_cnn.png}
+  \centering\includegraphics[width=.8\linewidth]{figures/ch09_cnn_cropped.pdf}
   \caption{Simplified example of a Convolutional Network applied to text analysis}
   \label{fig:cnn}
   \end{figure}
@@ -81,7 +85,7 @@ This means that the model can find the features in the word windows that are mos
 
 Of course, this is a highly simplified example, but it shows how local dependencies can be detected automatically using the convolutional network, as long as the interesting features are found within the specified word window.
 Other architectures, such as the Long Short Term Memory mentioned above, can be used to also find non-local dependencies, but a full discussion of different architectures is well beyond the scope of this book.
-\refchap{dtm} will give a more detailed example of deep learning for text analysis, where an embedding layer is combined with a convolutional network to build a sentiment analysis model. %TODO: CHECK AND CHANGE REFERENCE FOR TEXT ANALYSIS DEEP LEARNING MODEL.
+\refchap{dtm} will give a more detailed example of deep learning for text analysis, where an embedding layer is combined with a convolutional network to build a sentiment analysis model. 
 Similarly, \refchap{image} will show how a similar technique can be used to extract features from small areas of images which are then used in automatic image classification.
 This involves creating a two dimensional window over pixels rather than a unidimensional window over words, and often multiple convolutional layers are chained to detect features in increasingly large areas of the image.
 The underlying technique of convolutional netoworks, however, is the same in both cases.
