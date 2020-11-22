@@ -6,7 +6,6 @@ for statistics.  And, in fact, there is some truth to this: If you say
 statisticians and machine learning practitioners.  Hence, it does not
 make much sense to distinguish between statistics on the one hand and
 machine learning on the other hand.
-
 Still, there are some differences between traditional statistical
 approaches that you may have learned about in your statistics classes
 and the machine learning approach, even if they use some of the same
@@ -25,7 +24,7 @@ A straightforward question to ask is how far the
 sociodemographic characteristics of the respondents explain their
 media use.  Social scientists would typically approach this question
 by running a regression analysis.  Such an analysis tells us how some
-independent variables $x_1, x_2 \ldots x_n$ can explain $y$.  In an
+independent variables $x_1, x_2, \ldots, x_n$ can explain $y$.  In an
 ordinary least square regression (OLS), we would estimate $y=\beta_0 +
 \beta_1 x_1 + \beta_2 x_2 + \ldots + \beta_n x_n$.
 
@@ -35,12 +34,12 @@ $y$ increases by $\beta_1$.
 We sometimes call this ``the effect of $x_1$ on $y$'' (even though, of course,
 it depends on the study design weather the relationship can really be interpreted
 as a causal effect).
-Additionally, we might look at the explained variance $R^2$, to assess how good the model fits our data. In \refex{ols} we use this regression approach to model the relationship of \emph{age} and \emph{gender} over the number of days per week a person reads a \emph{newspaper}. We fit the linear model using the \pkg{stats} function \fn{lm} in R and the \pkg{statsmodels} (module formula.api) function \fn{ols} in Python.
+Additionally, we might look at the explained variance $R^2$, to assess how good the model fits our data. In \refex{ols} we use this regression approach to model the relationship of \emph{age} and \emph{gender} over the number of days per week a person reads a \emph{newspaper}. We fit the linear model using the \pkg{stats} function \fn{lm} in R and the \pkg{statsmodels} function \fn{ols} (imported from the module statsmodels.formula.api) in Python.
 
 \pyrex[output=py, caption=Obtaining a model through estimating an OLS regression]{chapter09/ols}
 
 Most traditional social-scientific analyses stop after reporting and
-interpreting the coefficients of \emph{age} ($\beta = 0.0676$) and \emph{gender} ($\beta = -0.0896$), as well as the total explained variance (19\%) of such a model for our dependent variable \emph{newspaper}.
+interpreting the coefficients of \emph{age} ($\beta = 0.0676$) and \emph{gender} ($\beta = -0.0896$), as well as their standard errors, confidence intervals, p-values, and the total explained variance (19\%).
 But we can go a step further. Given that we have already estimated our
 regression equation, why not use it to do some \textit{prediction}?
 

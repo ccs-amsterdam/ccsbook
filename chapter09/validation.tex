@@ -83,7 +83,7 @@ expense of a lower recall.
 \begin{figure} 
 \centering
 \includegraphics[width=0.4\linewidth]{figures/ch09_roccurve}
-\caption{A ROC curve.}
+\caption{A (pretty good) ROC curve.}
 \label{fig:roccurve}
 \end{figure}
 
@@ -96,15 +96,20 @@ left end of the curve, we get few false positives (good!), but also
 few true positives (bad!), if we go too far to the right, we get
 the other extreme. So, how can we find the best spot?
 
-One approach would be to print a table with three columns: the false
+\refex{cutoffpoint} provides two approaches. One approach is to print a table with three columns: the false
 positive rate, the true positive rate, and the threshold value. You
 then decide which FPR-TPR combination is most appealing to you, and
-use the corresponding threshold value.
-
+use the corresponding threshold value. Having calculated the TPR and FPR anyway, we can
+also additionally plot them as ROC curve (\refex{roccurve}), which may help
+us interpreting the table.
 The second approach (also knwon as Yoden's J) is to find the threshold
 value with the maximum distance between TPR and FPR, and use that one.
 
 \pyrex[input=py, output=py,caption={Choosing a differnet cutoff point for predictions with logistic regression. In this case, we make a tradeoff and maximize the difference between false positive rate and true positive rate to improve the precision for the the second categegory by .12 at the expense of reducing the precision for the first category by .8.}]{chapter09/cutoffpoint}
+
+
+\pyrex[input=py, output=py,format=png,caption={The ROC curve of a (not very impressive) classifier and its area under the curve (AUC)}]{chapter09/roccurve}
+
 
 
 \subsection{Train, validate, test}

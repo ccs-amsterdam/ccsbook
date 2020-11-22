@@ -13,8 +13,19 @@
 \item Be able to evaluate the performance of a predictive model
 \end{objectives}
 
+\newpage
 \begin{feature}
-Using \pkg{caret} in R and \pkg{statsmodels} and \pkg{scikit-learn} in Python, you learn how to conduct inductive, bottom-up analyses and visualizations of your data.
+
+ %TODO FIX
+In this chapter, we use the Python package \pkg{statsmodels} for classical statistical modeling, before we move on to use a dedicated machine learning package, \pkg{scikit-learn}. In R, we use base R for statistical modeling, \pkg{rsample} for splitting our dataset, and \pkg{caret} for machine learning. Caret, however, requires additional packages for the actual machine learning models. We will use \pkg{naivebayes}, \pkg{LiblineaR}, and \pkg{randomforest}. You can install them as follows (see \refsec{installing} for more details):
+
+\doublecodex{chapter09/chapter09install}
+
+\noindent After installing, you need to import (activate) the packages every session:
+
+\doublecodex{chapter09/chapter09library}
+
+Note that in Python, we could also simply write \ttt{import sklearn} once instad of all the \ttt{from sklearn import ...} lines. But our approach saves a lot of typing later on, as we can simply write (\ttt{classification\_report}) instead of \ttt{sklearn.metrics.classification\_report}, for instance.
 \end{feature}
 
 
@@ -26,19 +37,18 @@ machine learning.  We will outline how machine learning relates to
 traditional statistical approaches that you already might now (and as
 you will see, there is a lot of overlap), present different types of
 models, and discuss how to validate them.
-
-In a later chapter (Chapter~\ref{chap:text}), we will 
+Later in this book (\refsec{supervised}), we will 
 specifically apply the knowledge you gained from this chapter to the
 analysis of textual data, arguably one of the most interesting tasks
 in the computational analysis of communication.
 
-In this chapter, we mostly focus on \emph{supervised} machine learning (SML) 
+In this chapter, we focus on \emph{supervised} machine learning (SML) 
 -- a form of machine learning, where we aim to predict a variable
 that, for at least a part of our data, is known. SML is usually applied to \textit{classification} and \textit{regression}  problems. To illustrate the
 idea, imagine that you are interested in predicting the gender based
 on Twitter biographies. You determine the gender for some of the
 biographies yourself and hand these examples over to the computer. The
-computer ``learns'' this \textit{classification} from your examples, and can then be used to predict the gender for other twitter biographies for which you do not
+computer ``learns'' this \textit{classification} from your examples, and can then be used to predict the gender for other Twitter biographies for which you do not
 know the gender.
 
 In unsupervised machine learning (UML), in contrast, you do not have such
@@ -49,7 +59,7 @@ Later, in \refsec{unsupervised}, we will discuss topic modeling, an unsupervised
 
 
 Even though both approaches can be combined (for instance, one could
-first reduce the amount of data using PCA, and then predict some
+first reduce the amount of data using PCA or SVD, and then predict some
 outcome), they can be seen as fundamentally different, also from a
 theoretical and conceptual point of view.  Unsupervised machine
 learning is a bottom-up approach and corresponds to an inductive
@@ -61,9 +71,7 @@ topics to predict.
 
 
 \input{chapter09/modelingprediction}
-
 \input{chapter09/principles}
-
 \input{chapter09/nbtodnn}
 \input{chapter09/deeplearning}
 \input{chapter09/validation}

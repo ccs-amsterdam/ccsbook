@@ -3,7 +3,6 @@
 To do supervised machine learning, we can use several models, all of
 which have different advantages and disadvantages, and are more useful
 for some use cases than for others.
-
 We limit ourselves to the most common ones in this chapter. The
 website of scikit-learn (\url{http://www.scikit-learn.org}) gives a
 good overview of more alternatives.
@@ -89,7 +88,7 @@ we do instead, is that we estimate $P(x_i)$ using a distribution, for
 example a Gaussian, Bernoulli, or multinomial distribution. The core
 idea, though, stays the same.
 
-Our examples in \refsec{principles} illustrate how to do train a Na\"ive Bayes classifier.
+Our examples in \refsec{principles} illustrate how to train a Na\"ive Bayes classifier.
 We first create the labels (whether someone uses online news at all or
 not), split our data into a training and a test dataset (here, we use
 80\% for training and 20\% for testing) (\refex{preparedata}), then
@@ -99,8 +98,7 @@ predicts our training data (\refex{classificationreport}).
 In \refsec{validation}, we discuss in more detail how to
 evaluate different classifiers, but let's have a sneak preview at the most used 
 measures of how well our classifier performs.
-
-First, the confusion matrix from \refex{classificationreport} tells us how many non-users were indeed
+The confusion matrix from \refex{classificationreport} tells us how many non-users were indeed
 classified as non users (59), and how many (wrongly) as users
 (102).\footnote{These are the values from the Python example, the R
   example slightly differs, amongst other things due to different
@@ -109,8 +107,8 @@ of the true users were correctly classified as such, and only 42 were
 not.
 
 More formally, we can express this using precision and recall. When we
-are interested in finding true users, we get a precision of .67
-($\frac{212}{212+106}$) and a recall of .84 ($\frac{212}{212+40}$).
+are interested in finding true users, we get a precision of $\frac{212}{212+106} = .67$ 
+ and a recall of $\frac{212}{212+40} = .84$.
 However, if we want to know how good we are in identifying those who
 do \emph{not} use online news, we do -- as we saw in the confusion
 matrix -- considerably worse: precision and recall are .58 and .34,
@@ -132,7 +130,7 @@ probability of a label given a feature, independent of all the other
 features, but are able to ``control for'' their influence.  In theory,
 this should make our models better, and also in practice, this
 regularly is the case. However, ultimately, it is an empirical
-question whether this is the case.
+question which model performs best.
 
 While we started this chapter with an example of an OLS regression to
 estimate a continous outcome (well, by approximation, as for ``days
@@ -148,7 +146,7 @@ $$y = \beta_o + \beta_1 x_1 + \beta_2 x_2 + \ldots + \beta_n x_n$$
 But this gives us a continous outcome, which we do not want. In a
 logistic regression, we therefore use the sigmoid function to map this
 continous outcome to a value between 0 and 1. The sigmoid function is
-defined as $sigmoid(z) = \frac{1}{1 + e^{-z}}$ and depicted in
+defined as $sigmoid(x) = \frac{1}{1 + e^{-x}}$ and depicted in
 Figure~\ref{fig:sigmoid}.
 
 \begin{figure}
@@ -188,7 +186,6 @@ bounded between 0 and 1? Yes, it is.  Therefore, after having
 estimated the model, we use a threshold value (typically, 0.5, but we will discuss in \refsec{balance} how to select different ones) to
 predict the label. If $P>0.5$, we predict that the case is spam/about
 politics/will go viral, if not, we predict it's not.
-
 A nice side effect of this is that we still can use the probabilities
 in case we are interested in them, for example to figure out for which
 cases we are more sure in our prediction.
@@ -229,7 +226,7 @@ graphical space (SVM) versus optimizing a log-likelihood function
 outliers, and tends to be more balanced.
 
 There are a lot of graphical visualizations available, for example in
-the notebooks supplementing \citep{vanderplas2016python}
+the notebooks supplementing \cite{vanderplas2016python}
 (\url{https://jakevdp.github.io/PythonDataScienceHandbook/05.07-support-vector-machines.html}).
 For now, it may suffice to imagine the two-dimensional case: we
 construct a line that separates two groups of dots \emph{with the
@@ -266,7 +263,7 @@ can be very instructive here.
 In the models we discussed so far, we essentially were modeling linear
 relationships. If the value of a feature is twice as high, its
 influence on the outcome will be twice as high as well.  Sure, we can
-(and do, as in the case of the sigmoid function) apply some
+(and do, as in the case of the sigmoid function or the SVM kernel trick) apply some
 transformations, but we have not really considered yet how we can
 model situations in which, for instance, we care about whether the
 value of a feature is above (or below) a specific threshold.  For
@@ -279,7 +276,7 @@ not matter at all whether it is 290 or $10000$ characters long.
 
 Entering this variable into a logistic regression, thus, would not be
 a smart idea.  We could, of course, dichotomize it, but that would
-only partly solve the problem.  In this example, we \emph{know} how to
+only partly solve the problem, as its effect can still be overridden by other variables.  In this example, we \emph{know} how to
 dichotomize it based on our prior knowledge about the number of
 characters in a tweet, but this does not necessarily need to be the
 case; it might be something we need to estimate.
@@ -317,7 +314,6 @@ a tweet or a Facebook post, we could predict 'Facebook post' if its
 length is greater than 280 characters. If not, we check whether it
 includes hashtags, and if so, we predict 'tweet', otherwise, 'Facebook
 post'.
-
 Of course, this simplistic model will be wrong at some times, because
 not all tweets have hashtags, and some Facebook posts actually do
 include hashtags.
@@ -337,7 +333,7 @@ almost all non-linear relationships (be it not necessarily very
 accurately).
 
 However, this comes at large costs.  Formulating a model as a series
-of yes/no questions, as you can imagine, inherently uses a lot of
+of yes/no questions, as you can imagine, inherently loses a lot of
 nuance. More importantly, in such a tree, you cannot ``move up''
 again. In other words, if you make a wrong decision early on in the
 tree (i.e., close to its root node), you cannot correct it any more.
@@ -382,7 +378,7 @@ This neural network consists only of a series of input neurons (representing the
 which are directly connected with the output neuron or neurons (representing the output class(es)).
 Each of the connections between neurons has a weight, which can be positive or negative.
 For each output neuron, the weighted sum of inputs is calculated and a function is applied to determine the result.
-An example output function is the sigmoid function which transforms the output to a value between zero and one,
+An example output function is the sigmoid function (Figure~\ref{fig:sigmoid}) which transforms the output to a value between zero and one,
 in which case the resulting model is essentially a form of logistic regression.
 
 \begin{figure}
@@ -413,7 +409,7 @@ then optimizing the first layer, and repeating until it converges.
 Although such hidden layers, which can easily contain thousands of neurons, are hard to interpret substantively,
 they can substantially improve the performance of the model.
 In fact, the Universal Approximation theorem states that every decision function can be approximated to infinite precision
-with a single (but possibly very large) hidden layer \citet{goldberg17}.
+with a single (but possibly very large) hidden layer \citet{goldberg2017}.
 Of course, since training data is always limited there is a practical limit to how deep or wide the network can be,
 but this shows the big difference that a hidden layer can make in the range of regularities that can be `captured' in the model. 
 

@@ -31,7 +31,7 @@ In all models described so far with the exception of neural networks with hidden
 there was a direct relationship between the input features and the output class.
 This meant that it is important to make sure that the required information the model needs to distinguish the classes
 is directly encoded in the input features.
-In the example used earlier, if `not' and `good' are separate features, a single-layer network (or a naive bayes model)
+In the example used earlier, if `not' and `good' are separate features, a single-layer network (or a Na\"ive Bayes model)
 cannot learn that these words together have a different meaning than the addition of their separate meanings.
 However, similar to regression analysis, where you can create an interaction term or squared term to model a non-linear relationship,
 the researcher can create input features for e.g. word pairs, for example including bigrams (word pars) such as `not\_good`.
@@ -80,8 +80,8 @@ Since the convolutional layer is now connected with the output class, the featur
 This means that the model can find the features in the word windows that are most helpful in predicting the document class, bringing the feature learning into the modelling process.
 
 Of course, this is a highly simplified example, but it shows how local dependencies can be detected automatically using the convolutional network, as long as the interesting features are found within the specified word window.
-Other architectures, such as the Long Short Term Memory mentioned above, can be used to also find non-local dependencies, but a full discussion of different architectures is well beyond the scope of this book. 
-\refchap{dtm} will give a more detailed example of deep learning for text analysis, where an embedding layer is combined with a convolutional network to build a sentiment analysis model.
+Other architectures, such as the Long Short Term Memory mentioned above, can be used to also find non-local dependencies, but a full discussion of different architectures is well beyond the scope of this book.
+\refchap{dtm} will give a more detailed example of deep learning for text analysis, where an embedding layer is combined with a convolutional network to build a sentiment analysis model. %TODO: CHECK AND CHANGE REFERENCE FOR TEXT ANALYSIS DEEP LEARNING MODEL.
 Similarly, \refchap{image} will show how a similar technique can be used to extract features from small areas of images which are then used in automatic image classification.
 This involves creating a two dimensional window over pixels rather than a unidimensional window over words, and often multiple convolutional layers are chained to detect features in increasingly large areas of the image.
 The underlying technique of convolutional netoworks, however, is the same in both cases.
