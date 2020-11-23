@@ -31,20 +31,22 @@ be pieces of text, whole data frames (tables), or analysis results.
 We call this distinction the \emph{type} or \emph{class} of an
 object. 
 
-\note{A small note on terminology: In programming, a distinction is
+\begin{feature}
+\textbf{Objects, pointers, and variables.} In programming, a distinction is
   often made between an object (such as the number 10) and the
   variable in which it is stored (such as \texttt{x}). The latter is also called a ``pointer''.
   However, this distinction is not very relevant for most of our
-  purposes. Morever, in statistics, the word variable often refers to a
+  purposes. Moreover, in statistics, the word variable often refers to a
   column of data, rather than to the name of, for instance, the object
   containing the whole data frame (or table).  For that
   reason, we will use the word \emph{object} to refer to both the
   actual object or value and its name. (If you want some extra food
   for thought and want to challenge your brain
   a bit, you can try to see the relationship between the idea of a pointer and
-  the discussion about mutable and immutable objects below.)}
+  the discussion about mutable and immutable objects below.)
+\end{feature}
 
-Let' create an object that we call |a| (an arbitray name, you can use
+Let's create an object that we call |a| (an arbitray name, you can use
 whatever you want), assign the value 100 to it, and use the \fn{class}
 function (R) or \fn{type} function (Python) to check what kind of
 object we created (\refex{var1}).
@@ -80,7 +82,7 @@ different names, both languages offer very similar data types.
     
 
 
-Let's have a closer look at the code in \refex{var1}.
+Let's have a closer look at the code in \refex{var1} above.
 The first line is a command to create the object \emph{a} and store
 its value 100; and the second is illustrative and will give you the
 class of the created object, in this case ``numeric''. Notice that we
@@ -90,11 +92,12 @@ including |a| as an argument of \fn{class}, and the very same
 between R and Python, here, is that the relevant Python function is
 called \fn{type} instead of \fn{class}.
 
+
 Once created, you can now perform multiple operations
-with |a| and other values or new variables. For example, you
+with |a| and other values or new variables as shown in \refex{var2}. For example, you
 could transform |a| by multiplying |a| by 2, create a new
 variable |b| of value 50 and then create another new object
-|c| with the result of |a + b| (\refex{var2}).
+|c| with the result of |a + b|.
 
 \pyrex[output=both,caption=Some simple operations]{chapter03/var2}
 
@@ -160,14 +163,14 @@ marks. You can use either double or single quotation marks, but you
 need to use the same mark to begin and end the string. This can be
 useful if you want to use quotation marks within a string, then you can
 use the other type to denote the beginning and end of the string.
-If you need to use a single single quotation mark within a single-quoted string,
+If you need to use a single quotation mark within a single-quoted string,
 you can \concept{escape} the quotation mark by prepending it with a backslash (\verb|\'|),
 and similarly for double-quoted strings.
 To include an actual backslash in a text, you also escape it with a backslash,
 so you end up with a double backslash (\verb|\\|). 
 
 The Python example also shows a concept introduced in Python 3.6 (introduced in December 2016):
-the f-string.  These are strings that are prefixed with the letter \texttt{f} and are \emph{formatted} strings. This means that these strings will automatically insert a value were curly brackets indicate you wish to do so. This means that you can write: \texttt{print(f'The value of i is \{i\}'} to print ``The value of i is 5'', given that i is 5.
+the f-string.  These are strings that are prefixed with the letter \texttt{f} and are \emph{formatted} strings. This means that these strings will automatically insert a value were curly brackets indicate you wish to do so. This means that you can write: |print(f"The value of i is {i}")| in order to print ``The value of i is 5'' (given that |i| equals 5).
 In R, the \pkg{glue} package allows you to use a f-string-like syntax as well: \texttt{glue("The value of i is \{i\}")}.
 
 Although this will be explained in more detail in \refsec{unicode},
@@ -273,22 +276,21 @@ a range of numbers.%, from 1 to 20 or from -5 to 5 (\refex{1darray3}).
 
 
 
-\paragraph{Can we mix different types?}
+\paragraph[Can we mix different types?]{Can we mix different types?\eatpunct}
 There is a reason that the basic datatypes (numeric, character, etc.) we described above are called
 ``vector objects'' in R: The vector is a very important structure in
 R and consists of these objects. A vector can be easily created with the
 \fn{c} function and can only combine elements of the same type (numeric, integer, complex,
 character, logical, raw).
 Because the data types within a vector correspond to only one class,
-when we create a vector with the scores of a class of 10 students, or a character vector of
-three countries, as we do in \refex{1darray1}), R's \fn{class} function will display
-``numeric'' or ``character'', and not ``vector'', as one may assume.
+when we create a vector with for example numeric data, the \fn{class} function will display
+``numeric'' and not ``vector''.
 
 If we try to
 create a vector with two different data types, R will 
 force some elements to be transformed, so that all elements belong to the same
 class. For example, if you re-build the vector of scores with a new student who has
-been graded with the letter \emph{b} instead of a number (\refex{1darray1b}, your vector
+been graded with the letter \emph{b} instead of a number (\refex{1darray1b}), your vector
 will become a character vector. If you print it, you will see that the
 values are now displayed surrounded by |"|.
 
@@ -327,7 +329,7 @@ This will be discussed in more detail when we deal with data frames in \refchap{
 
 %\pyrex[input=py, output=py, caption={Numpy arrays behave more like R vectors. However, you have to import (and potentially install) an additional package, \pkg{numpy}, for this (see \refsec{installing})}]{chapter03/1darray7}
 
-\begin{feature}\textbf{Object references and mutable objects}
+\begin{feature}\textbf{Object references and mutable objects.}
   A subtle difference between Python and R is how they deal with copying objects.
   Suppose we define $x$ containing the numbers $1,2,3$ (\verb|x=[1,2,3]| in Python or \verb|x=c(1,2,3)| in R)
   and then define an object y to equal x (\verb|y=x|).
@@ -468,7 +470,7 @@ In Python, the easiest representation is to simply construct a list of
 lists. This is, in fact, often done, but has the disadvantage that
 there are no easy ways to get, for instance, the dimensions (the
 shape) of the table, or to print it in a neat(-er) format. To get all
-that, one can transform the list of list into an |array|, a
+that, one can transform the list of lists into an |array|, a
 datastructure provided by the package \pkg{numpy}.
 
 To create a matrix in R, you have to use the function \fn{matrix} and
@@ -495,7 +497,7 @@ imagine, we can operate with matrices, such as adding up two of them.
 So far, we have discussed the general built-in collections that you find in most programming languages
 such as the list and array.
 However, in data science and statistics you are very likely to encounter a specific collection type that we haven't discussed yet: the \concept{Data frame}.
-These structures are discussed in detail in \refchap{filetodata},
+Data frames are discussed in detail in \refchap{filetodata},
 but for completeness we will also introduce them briefly here. 
 
 Data frames are user-friendly data structures that look very much like

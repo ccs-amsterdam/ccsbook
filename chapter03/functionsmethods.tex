@@ -25,18 +25,20 @@ choice that the developers made, and to fully understand it, you need
 to dive into the concept of \fn{class}es, which is beyond the scope of
 this book.
 
-\begin{feature}
-  A central concept of object-oriented programming that we do not cover in this book are \concept{class}es. You can think of them as a blueprint for creating an object, and sometimes, this will shine through. For instance, if we write \texttt{c = Counter()} in Python, we create a new object \texttt{c}. This object is an \emph{instance} of the \emph{class} Counter (which we need to import from the package \pkg{collections} first). A counter is a class that allows you to count things, such as the most common words in a list of strings. You could say that you created your own counter, c, based on a template, the class Counter. In R, there are even different types of classes, called S3, S4, and reference. However, you are less likely to get exposed to them in your daily work.
-  \end{feature}
+%% \begin{feature}
+%%   \textbf{Classes and Object-Oriented Programming.}
+%%   A central concept of object-oriented programming that we do not cover in this book are \concept{class}es. You can think of them as a blueprint for creating an object, and sometimes, this will shine through. For instance, if we write \texttt{c = Counter()} in Python, we create a new object \texttt{c}. This object is an \emph{instance} of the \emph{class} Counter (which we need to import from the package \pkg{collections} first). A counter is a class that allows you to count things, such as the most common words in a list of strings. You could say that you created your own counter, c, based on a template, the class Counter. In R, there are even different types of classes, called S3, S4, and reference. However, you are less likely to get exposed to them in your daily work.
+%%   \end{feature}
 
 
 
-\note{Because methods are associated with an object, you have a very
+\begin{feature}\textbf{Tab completion.} Because methods are associated with an object, you have a very
   useful trick at your disposal to find out which methods (and other
   properties of an object) there are: TAB completion. In Jupyter, just
   type the name of an object followed by a dot (e.g., \texttt{a.<TAB>} in case you
   have an object called a) and hit the TAB key. This will open a
-  drop-down menu to choose from.}
+  drop-down menu to choose from.
+\end{feature}
 
 We will illustrate how to create simple functions in R and Python, so you
 will have a better understating of how they work. Imagine you want to

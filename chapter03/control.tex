@@ -1,7 +1,7 @@
 \section{Simple control structures: loops and conditions}	
 \label{sec:controlstructures}
 
-\begin{feature}\textbf{Control structures in Python and R}
+\begin{feature}\textbf{Control structures in Python and R.}
   This section and the next explain the working of control structures
   such as loops, conditions, and functions.
   These exist (and are very useful) in both Python and R.
@@ -45,7 +45,7 @@ them is very straightforward: You provide your computer with some
 \emph{statements} (directly or from a script), and your computer
 reacts. We call a sequence of these statements a \emph{computer program}.
 When we created objects by writing, for instance,
-|a = 100|,  we already dealt with a very basic statement, the\emph{assignment statement}. But of course the statements can be more complex.
+|a = 100|,  we already dealt with a very basic statement, the \emph{assignment statement}. But of course the statements can be more complex.
 
 In particular, we may want to say more about how and when
 statements needs to be executed. Maybe we want to repeat
@@ -64,8 +64,8 @@ In your script, you usually indicate such loops and conditions
 visually by using \emph{indentation}. Logical empty spaces -- two in R and four in
 Pyhton -- depict blocks and sub-blocks on your code structure.
 As you will see in the next section, in R, using indention
-is optional, and curly brackets will indicate the beginning (|\{|)
-and end )|\}| of a code block; whereas in Python, indention
+is optional, and curly brackets will indicate the beginning (|{|)
+and end (|}|) of a code block; whereas in Python, indention
 is mandatory and tells your interpreter where the block
 starts and ends.
 
@@ -76,7 +76,7 @@ starts and ends.
 \subsection{Loops}
 \label{sec:loops}
 Loops can be used to repeat a block of statements.
-They are are executed once, indefinitely, or
+They are executed once, indefinitely, or
 until a certain condition is reached. This means that you can operate
 over a set of objects as many times as you want just by giving one
 instruction. The most common types of loops are \emph{for},
@@ -105,7 +105,7 @@ for (val in sequence) {
 \begin{minipage}[t]{.45\textwidth}
   For-loops in Python:
 \begin{verbatim}
-for var in iterable:
+for val in sequence:
     statement1
     statement2
     statement3
@@ -127,14 +127,17 @@ book, a good practice in coding is to be efficient and harmonious in
 the amount of code we write, which is another justification for using
 loops.
 
-\note{\textbf{Don't repeat yourself!} You may be used to copy-pasting
+\begin{feature}
+  \textbf{Don't repeat yourself!}
+  You may be used to copy-pasting
   syntax and slightly changing it when working with some statistics
   program: you run an analysis and then you want to repeat the same
   analysis with different datasets or different specifications. But
   this is error-prone and hard to maintain, as it involves a lot of
   extra work if you want to change something. In many cases where you
   find yourself pasting multiple versions of the dataset, you can
-  probably better use a for loop instead.}
+  probably better use a for loop instead.
+  \end{feature}
 
 
 Another way to iterate in Python is using list comprehensions  (not available natively in R), which are a stylish way to create list of elements automatically even with conditional clauses. This is the syntax:
@@ -156,16 +159,14 @@ line. Therefore, list comprehensions are very popular in Python.
 \subsection{Conditional statements}
 
 Conditional statements will allow you to control the flow and order of
-the statements written on your code. This means you can mandate the
-machine to do this or that, depending on a given circumstance. These
+the commands you give the computer. This means you can tell the
+computer to do this or that, depending on a given circumstance. These
 statements use logic operators to test \emph{if} your condition is met
 (True) or not (False) and execute an instruction accordingly. Both in
 R and Python, we use the clauses \emph{if}, \emph{else if}
 (\emph{elif} in Python), and \emph{else} to write the syntax of the
 conditional statements. Let's begin showing you the basic structure of
 the conditional statement:
-
-
 
 \noindent\rule{\textwidth}{.5pt}\vspace{-1em}
 
@@ -198,7 +199,8 @@ else:
 \noindent\rule{\textwidth}{.5pt}
 
 
-Imagine you want to print the headlines of \refex{forloop} only if the text is less than 40 characters long. We can include the conditional statement in the loop adding the next code to the script:
+Suppose you want to print the headlines of \refex{forloop} only if the text is less than 40 characters long.
+To do this, we can include the conditional statement in the loop, executing the body only if the condition is met (\refex{if1})
 
 \pyrex[caption=A simple conditional control structure, output=py]{chapter03/if1}
 

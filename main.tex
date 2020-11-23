@@ -14,6 +14,10 @@
 \usepackage{url}
 \usepackage{codex}
 
+% to drop the period ending a \paragraph, use \paragraph[title]{title\eatpunct}
+% source: https://tex.stackexchange.com/a/272942
+\newcommand\eatpunct[1]{}
+
 %\usepackage{draftwatermark}
 %\usepackage[export]{adjustbox}% http://ctan.org/pkg/adjustbox
 %\SetWatermarkText{Draft version, please do not distribute (\today)}
