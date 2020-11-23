@@ -21,7 +21,7 @@ the data from your disk into memory\footnote{In fact, this is
   of data is in your memory at the same time (see \refsec{functions}).}
 But what if we want to scale up our analyes a bit
 \cite[see][]{Trilling2018b}? Maybe we want to build up a larger
-datacollection, maybe even share it with multiple team members, search
+data collection, maybe even share it with multiple team members, search
 and filter our data, or collect it over a larger timespan? An
 example may illustrate the problems that can arise.
 
@@ -45,7 +45,7 @@ instead of to a file, and the database will take care of storing it.
 Once you want to retrieve a subset of your articles for analysis,
 you can send a query to the database and read from it. Both Python and
 R offer integration for multiple commonly used databases. It is even
-possible to directly get the results of such a database query in
+possible to directly get the results of such a database query in the
 form of a dataframe.
 
 We can distinguish two main categories of databases
@@ -110,7 +110,8 @@ the risk over oversimplifying matters, we will try to give some guidance
 in which databases to choose by offering some guiding questions.
 
 
-\paragraph{How is your data structured?} Ask yourself: Can I organize my data
+\paragraph[How is your data structured?]{How is your data structured?\eatpunct}
+Ask yourself: Can I organize my data
 in a set of relational tables? For instance, think of television
 viewing data: There may be a table that gives information on when the
 television set was switched on and which channel was watched and by
@@ -127,10 +128,12 @@ change over time, or if it is very messy, then you may need a more
 flexible, noSQL approach, for instance using \pkg{MongoDB} or
 \pkg{ElasticSearch}.
 
-\paragraph{How important is full-text search for you?} SQL databases can handle numeric datatypes as well as text datatypes, but they are usually not optimized for the latter. They handle short strings (such as usernames, addresses, and so on) just fine, but if you are interested in full-text search, they are not the right tool for the job. This is in particular true if you want to be able to do fuzzy searches where, for instance, also documents containing the plural of a word that you searched for as singular are found. Databases of, for instance, news articles, tweets, transcripts of speeches, or other documents are much better accessible in a database such as \pkg{ElasticSearch}.
+\paragraph[How important is full-text search for you?]{How important is full-text search for you?\eatpunct}
+SQL databases can handle numeric datatypes as well as text datatypes, but they are usually not optimized for the latter. They handle short strings (such as usernames, addresses, and so on) just fine, but if you are interested in full-text search, they are not the right tool for the job. This is in particular true if you want to be able to do fuzzy searches where, for instance, also documents containing the plural of a word that you searched for as singular are found. Databases of, for instance, news articles, tweets, transcripts of speeches, or other documents are much better accessible in a database such as \pkg{ElasticSearch}.
 
 
-\paragraph{How flexible does it need to be?} In relational databases, it is relatively hard to change the structure afterwards. In contrast, a noSQL database has no problem whatsoever with adding a new document that contains keys that did not exist before. There is no assumption that all documents contain the same keys. Therefore, if it is hard to tell in advance which ``columns'' or ``keys'' may represent your data best, you should stay clear of SQL databases. In particular, if you think of gradually extending your data and use it on a long timeline for re-use, potentially even by multiple teams, the flexibility of a noSQL database may be a game changer.
+\paragraph[How flexible does it need to be?]{How flexible does it need to be?\eatpunct}
+In relational databases, it is relatively hard to change the structure afterwards. In contrast, a noSQL database has no problem whatsoever with adding a new document that contains keys that did not exist before. There is no assumption that all documents contain the same keys. Therefore, if it is hard to tell in advance which ``columns'' or ``keys'' may represent your data best, you should stay clear of SQL databases. In particular, if you think of gradually extending your data and use it on a long timeline for re-use, potentially even by multiple teams, the flexibility of a noSQL database may be a game changer.
 
 
 
@@ -152,7 +155,7 @@ database engine -- essentially, it allows you to store a whole
 database in one file and interact with it using the SQL query language.
 Both R and Python offer multiple ways of directly interacting with
 sqlite files (\refex{sqlite}). This gives you access to some great
-functionality way: after all, you can issue (almost) any SQL command
+functionality straight away: after all, you can issue (almost) any SQL command
 now, including (and maybe most imporantly) commands for filtering,
 joining, and aggregating data. Or you could consider immediately writing
 each datapoint you get from an API or a webscraper (\refchap{scraping})
