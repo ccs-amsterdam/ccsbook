@@ -105,10 +105,16 @@ us interpreting the table.
 The second approach (also knwon as Yoden's J) is to find the threshold
 value with the maximum distance between TPR and FPR, and use that one.
 
-\pyrex[input=py, output=py,caption={Choosing a differnet cutoff point for predictions with logistic regression. In this case, we make a tradeoff and maximize the difference between false positive rate and true positive rate to improve the precision for the the second categegory by .12 at the expense of reducing the precision for the first category by .8.}]{chapter09/cutoffpoint}
+\begin{ccsexample}
+  \doublecodex{chapter09/cutoffpoint}
+  \doubleoutput{chapter09/cutoffpoint}
+  \doublecodex{chapter09/cutoffpointb}
+  \doubleoutput{chapter09/cutoffpointb}
+  Note: Python and R have slighly different outcomes because the underlying implementation is different, but for this example that may be ignored. 
+  \caption{Choosing a differnet cutoff point for predictions with logistic regression. In this case, we make a tradeoff and maximize the difference between false positive rate and true positive rate to improve the precision for the the second categegory the precision for the first category}\label{ex:cutoffpoint}
+\end{ccsexample}
 
-
-\pyrex[input=py, output=py,format=png,caption={The ROC curve of a (not very impressive) classifier and its area under the curve (AUC)}]{chapter09/roccurve}
+\pyrex[output=py,format=png,caption={The ROC curve of a (not very impressive) classifier and its area under the curve (AUC)}]{chapter09/roccurve}
 
 
 
