@@ -8,7 +8,7 @@ for the one or the other language, chances are good that you
 will ultimately switch back and forth between them, depending on
 the specific task at hand and the project you are involved in.
 
-Before you can start with analysing data and communication in Python or R,
+Before you can start with analyzing data and communication in Python or R,
 you need to install interpreters for these languages (i.e., programs that can read code in these languages and execute it) on your computer.
 Interpreters for both Python and R are open source and completely free to download and use.
 Although there are various web-based services on which you can run code for both languages
@@ -18,7 +18,7 @@ it is generally better to install an interpeter on your own computer.
 After installing Python or R, you can execute code in these languages, but you also want a nice
 \concept{Integrated Development Environment (IDE)} to develop your data analysis scripts. 
 For R we recommend RStudio, which is free to install and is currently the most popular environment for working with R.
-For Python we recommend starting with JupyterLab or JupyterNotebook, which is a web-based environment for writing and running python code.
+For Python we recommend starting with JupyterLab or JupyterNotebook, which is a web-based environment for writing and running Python code.
 All of these tools are available and well documented for Windows, MacOS, and Linux. 
 After explaining how to install R and Python, there is a very important section on installing packages.
 If you plan to only use either R or Python (for now), feel free to skip the part about the other language.
@@ -126,7 +126,7 @@ To try that, type the following into your newly opened script:
 Now, place your cursor on that line and press Run (or control+Enter).
 What happens is that the line is copied to the \emph{Console} in the bottom left corner
 and executed.
-So, the results of your commands (and any error messages) will be shown in this console view
+So, the results of your commands (and any error messages) will be shown in this console view.
 
 Contrary to most traditional programming languages,
 the easiest way to run R code is line by line.
@@ -138,7 +138,7 @@ but in general it is easiest to check that everything goes as planned if you run
 You can also write commands directly in the console and execute them (by pressing enter).
 This can be useful for trying things out or to run things that only need to be run once,
 but in general we would strongly recommend typing all your commands in a script and then executing them.
-That way, the script serves as a log of what commands you have run to analyse your data,
+That way, the script serves as a log of the commands you used to analyze your data,
 so you (or a colleague) can read and understand how you did the analyses. 
 
 \begin{feature}
@@ -147,7 +147,7 @@ so you (or a colleague) can read and understand how you did the analyses.
   In fact, we would recommend you to now create a new empty project for the examples in this book.
   To do this, click on the \emph{Project} button in the top right and select `New Project'.
   Then, select New Directory and New Project and enter a name for this project
-  and a a parent folder for the project if you don't want it in your Documents. 
+  and a parent folder for the project if you don't want it in your Documents. 
   Using a project means that the scripts and data files for your project are all in the same location
   and you don't need to mess around with specifying the locations of files
   (which will probably be different for someone else or on a different computer).
@@ -201,13 +201,12 @@ When browsing through questions on online fora such as Stackoverflow or reading 
 
 We will install and run Python and Jupyter Notebook using a \concept{terminal} or command line interface.
 This is a tool that is installed on all computers that allows you to give commands to the computer directly.
-First, create a project folder for this book using the File Explorer / Finder.
+First, create a project folder for this book using the File Explorer (Windows) or Finder (MacOS).
 Then, on Windows you can shift + Right click that folder and select ``Open command Window here''.
-On MacOS, after navigating to the folder you just created, you click on ``Finder'' in the menu at the top of the screen, then on ``Services'', then on ``New Terminal at Folder''
+On MacOS, after navigating to the folder you just created, you click on ``Finder'' in the menu at the top of the screen, then on ``Services'', then on ``New Terminal at Folder.''
 In both cases, this should open a new window (usually black or grey) that allows you to type commands.
 
 Note that on most computers, Python is already installed by default.
-%Note that on many computers, especially on MacOS and Ubuntu, python is already installed by default.
 You can check this by typing the following the command in your terminal:
 
 \begin{verbatim}
@@ -223,11 +222,11 @@ In either case, the output of this command should be something like \verb|Python
 If \verb|python --version| also returns this version, you are free to use either command
 (but on older systems \verb|python| can still refer to Python 2, so make sure that you are using Python 3 for this book!).
 
-If Python is not installed on your system, go to \url{https://www.python.org/downloads/windows/} or \url{https://www.python.org/downloads/mac-osx/} and download and install the latest stable release (which at the time of writing is \verb|3.9.0|).
+If Python is not installed on your system, go to \url{https://www.python.org/downloads/windows/} or \url{https://www.python.org/downloads/mac-osx/} and download and install the latest stable release (which at the time of writing is \verb|3.9.0|).%
 \footnote{For linux, install python3 and pip using your package manager. For example, on ubuntu you can run \texttt{sudo apt install python3-pip}}
 After installing it, open a terminal again and run the command above to verify that it is installed correctly.
 
-Included in any recent Python install is \concept{pip}, the program that you will use for installing python packages.
+Included in any recent Python install is \concept{pip}, the program that you will use for installing Python packages.
 You can check that pip is installed correctly by typing the following command on your terminal:
 
 \begin{verbatim}
@@ -241,8 +240,8 @@ On some systems \verb|pip3| will not work, so use \verb|pip| in that case
 
 \paragraph{Installing Jupyter Notebook}
 Next, we will install Jupyter Notebook, which you can use to run all the examples in this book
-and is a great environment for developing python data analysis scripts.
-Jupyer Notebooks (which are also included in IDE JupyterLab if you installed that), 
+and is a great environment for developing Python data analysis scripts.
+Jupyter Notebooks (which are also included in IDE JupyterLab if you installed that), 
 are run as a web application
 that allows you to create documents that contain code and inline text fragments.
  One of the nicest things of
@@ -253,14 +252,14 @@ reproducible. You can also add formatted text blocks (using a simple formatting 
 to explain to the reader what you are doing. In \refsec{practices}, we will address
 notebooks again as a good practice for a computational scientist.
 
-You can install jupyter notebook directly using pip using the following command
+You can install Jupyter notebook directly using pip using the following command
 (executed in a terminal):
 
 \begin{verbatim}
 pip3 install jupyter-notebook
 \end{verbatim}
 
-Now, you can run jupyter by executing the following command on the terminal:
+Now, you can run Jupyter by executing the following command on the terminal:
 
 \begin{verbatim}
 jupyter notebook
@@ -268,7 +267,7 @@ jupyter notebook
 
 This will print some useful information, including the URL at which you can access the notebook.
 However, it should also directly open this in a browser (e.g. Chrome) so you can directly start working. 
-In your browser you should see a juypter screen similar to the middle window in \reffig{jupyter}.
+In your browser you should see the Jupyter main screen similar to the middle window in \reffig{jupyter}.
 Create a new notebook by clicking on the \emph{New} button in the top right and selecting Python 3.
 This should open a window similar to the bottom window in \reffig{jupyter}.
 
@@ -277,7 +276,7 @@ This should open a window similar to the bottom window in \reffig{jupyter}.
   \caption{Jupyter Notebook}\label{fig:jupyter}
 \end{figure}
 
-In jupyter, code is entered into cells.
+In Jupyter, code is entered into cells.
 First, type \verb|print("Hello World")| into the empty cell next to the \verb|In [ ]:| prompt.
 Then, click the Run button or press control+Enter. This should execute your command and display
 the text \verb|"Hello World"| in the output area right below the input cell.
@@ -300,14 +299,14 @@ To install these packages on your computer, run the following commands:
 (Note: if you are using Anaconda, replace \ttt{pip3 install} by \ttt{conda install})  
 
 \begin{tcbraster}[raster columns=2,raster equal height=rows,raster valign=top]
-   \codex[caption=Installing a package from Jupyer]{chapter01/ch01install.py}
+   \codex[caption=Installing a package from Jupyter]{chapter01/ch01install.py}
    \codex[caption=Installing a package in R]{chapter01/ch01install.r}
 \end{tcbraster}
 
 \newcommand{\fnrepo}{\footnote{Similar to the App Store or Play Store, both R and Python have a centralized repository for third party packages.  For R, this is the Comprehensive R Archive Network (CRAN) encountered earlier,
     while for Python this is the Python Package Index (PyPI) accessed by \verb|pip|.  Normally, all packages in these repositories are open source and safe to install.}}
 
-These commands will automatically fetch the package from the right repository\fnrepo and install them on your computer. This can take a while, especially for large packages such as tidyverse.
+These commands will automatically fetch the package from the right repository\fnrepo\ and install them on your computer. This can take a while, especially for large packages such as tidyverse.
 Fortunately, this only needs to be done once.
 Every time time you use a package, you also need to \emph{activate} it using the \fn{import} (Python) or  \fn{library} (R) command.
 
@@ -327,6 +326,6 @@ It also includes the code needed to install these packages, which of course is o
 Note again that if you are using Anaconda for Python,
 your should replace \ttt{!pip3 install} by \ttt{!conda install} in that code. On some systems, you may need to use \ttt{!pip install} instead of \ttt{!pip3 install}.
 
-These note also includes a code block to import all the packages used for that chapter,
+These notes also includes a code block to import all the packages used for that chapter,
 which you need to run every time you use examples from that chapter.
 \end{feature}

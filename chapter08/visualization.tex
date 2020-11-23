@@ -68,11 +68,11 @@ You can estimate this correlation coefficient with \pkg{pandas} function \fn{cor
 
 \pyrex[output=both,caption=Pearson correlation coefficient]{chapter08/corr}
 
-Another useful representation is the heatmap. This figure can help you plot a continuous variable using a colour scale and shows its relation with another two variables.  This means that you represent your data as colours, which might be useful for understanding patterns. For example, we may wonder what is the level of support for refugees given the nationality and the gender of the individual. For this visualization, it is necessary to create a proper dataframe (\refex{pivot}) to plot the heatmap, in which each number of your continuous variable \emph{\_refugees\_n} is included in a table where each axis (x= gender, y=country) represents the categorical variables. This pivoted table stored in an object called \texttt{pivot\_data} can be generated using some of the already explained commands.
+Another useful representation is the heatmap. This figure can help you plot a continuous variable using a color scale and shows its relation with another two variables.  This means that you represent your data as colors, which might be useful for understanding patterns. For example, we may wonder what is the level of support for refugees given the nationality and the gender of the individual. For this visualization, it is necessary to create a proper dataframe (\refex{pivot}) to plot the heatmap, in which each number of your continuous variable \emph{\_refugees\_n} is included in a table where each axis (x= gender, y=country) represents the categorical variables. This pivoted table stored in an object called \texttt{pivot\_data} can be generated using some of the already explained commands.
 
 \pyrex[output=none,caption=Create a dataframe to plot the heatmap]{chapter08/pivot}  
 
-In the first resulting figure proposed in \refex{heatmap}, the lighter the blue the greater the support in each combination of country x gender. You can see that level of support is similar in countries such as Slovenia or Spain, and is different in Czech Republic or Austria. It also seems that women have a higher level of support. For this default heatmap we can use the \pkg{ggplot2} function \fn{geom\_tile} in R and \pkg{seaborn} function \fn{heatmap} in Python.  To personalize the scale colours (i.e. a scale of blues) we can use the \pkg{ggplot2} function \fn{scale\_fill\_gradient} in R or the parameter \texttt{cmap} of the \pkg{seaborn} function \fn{heatmap} in Python. 
+In the first resulting figure proposed in \refex{heatmap}, the lighter the blue the greater the support in each combination of country x gender. You can see that level of support is similar in countries such as Slovenia or Spain, and is different in Czech Republic or Austria. It also seems that women have a higher level of support. For this default heatmap we can use the \pkg{ggplot2} function \fn{geom\_tile} in R and \pkg{seaborn} function \fn{heatmap} in Python.  To personalize the scale colors (i.e. a scale of blues) we can use the \pkg{ggplot2} function \fn{scale\_fill\_gradient} in R or the parameter \texttt{cmap} of the \pkg{seaborn} function \fn{heatmap} in Python. 
 
 \pyrex[output=py,format=png,caption=Heatmap of country\, gender and support for refugees]{chapter08/heatmap}
 
@@ -91,7 +91,7 @@ Using the very same data of our example, we might want to plot in a map the leve
 
 In \refex{map} we illustrate how to plot a world map (from existing geographical information).
 We then save a partial map into the object \texttt{some\_eu\_maps} containing the European countries that participate in the survey. After we merge \texttt{supports\_country} and \texttt{some\_eu\_maps} (by region) and get a complete dataframe called \texttt{support\_map} with coordinates for each country (\refex{countries}).  
-Finally, we plot it using the \pkg{ggplot2} function \fn{geom\_polygon} in R and the \pkg{geopandas} method \fn{plot} in Python (\refex{map2}). Voilà a nice and comprehensible representation of our data with a scale of colours!
+Finally, we plot it using the \pkg{ggplot2} function \fn{geom\_polygon} in R and the \pkg{geopandas} method \fn{plot} in Python (\refex{map2}). Voil\`a: a nice and comprehensible representation of our data with a scale of colors!
 
 \pyrex[output=py,format=png,caption=Simple world map]{chapter08/map}
 

@@ -103,7 +103,7 @@ in this case the famous haiku ``the sound of water'' by Bash\={o}.
 The default tokenizer in quanteda actually does a good job, in contrast to the default Python tokenizer
 that simply keeps the whole string as one word
 (which makes sense since this tokenizer only looks for whitespace or punctuation).
-For python the best bet is to use a custom package for tokenizing Japanese, such as the \pkg{nagisa} package.
+For Python the best bet is to use a custom package for tokenizing Japanese, such as the \pkg{nagisa} package.
 This package contains a tokenizer which is able to tokenize the Japanese text, and we could use this in the \cls{CountVectorizer}
 much like we used the \cls{TreebankWordTokenizer} for English earlier.
 Similarly, with heavily inflected languages such as Hungarian or Arabic,
@@ -201,7 +201,7 @@ is positive, or contains personal expressions respectively.
 As we will see in the next chapter, the DTM representation can be used for many different text analyses, from dictionaries to supervised and unsupervised machine learning.
 
 Sometimes, however, you need information that is encoded in the order of words.
-For example, in analysing conflict coverage it might be quite important to know who attacks whom, not just that attacking took place.
+For example, in analyzing conflict coverage it might be quite important to know who attacks whom, not just that attacking took place.
 In the \refsec{ngram} we will look at some ways to create a richer matrix-representation by using word pairs.
 Although it is beyond the scope of this book,
 you can also use automatic syntactic analysis to take grammatical relations into account as well.
@@ -212,7 +212,7 @@ as the computer cannot find patterns in information that it doesn't have.
 
 One of the most famous text visualizations is without doubt the word cloud.
 Essentially, a word cloud is an image where each word is displayed in a size that is representative of its frequency.
-Depending on preference, word position and colour can be random, depending on word frequency, or in a decorative shape.
+Depending on preference, word position and color can be random, depending on word frequency, or in a decorative shape.
 
 Word Clouds are often criticised since they are (sometimes) pretty but mostly not very informative.
 The core reason for that is that only a single aspect of the words is visualized (frequency),

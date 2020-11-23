@@ -6,7 +6,7 @@ For this purpose, we will be using a data set of tweets about the COVID pandemic
 engulfing much of the world at the time this book is written.
 Of course, tweets are probably only representative for what is said on Twitter,
 but the data are (semi-)public and rich, containing text, location, and network characteristics.
-This makes them ideal for exploring the many ways in which we can analyse and visualize information
+This makes them ideal for exploring the many ways in which we can analyze and visualize information
 with Python and R. 
 
 \refex{funtweets} shows how you can read this data set into memory using a single command.
@@ -32,7 +32,7 @@ let's first make a simple visualization of the date at which the tweets are post
 First, the number of tweets per hour is counted with an aggregation command.
 Next, a bar plot is made of this calculated value with some options to make it look relatively clean and professional.
 If you want to play around with this, you can for example try to plot the amount of tweets per language,
-or turn it into a line plot. 
+or create a line plot instead of a bar plot. 
 For more information on visualization, please see \refchap{eda}.
 See \refchap{datawrangling} for an in-depth explanation of the aggregation command. 
 
@@ -40,7 +40,7 @@ See \refchap{datawrangling} for an in-depth explanation of the aggregation comma
 
 \section{Fun with textual data}
 
-\paragraph{Corpus Analysis} Next, we can analyse which hash tags are most frequently used in this data set.
+\paragraph{Corpus Analysis} Next, we can analyze which hash tags are most frequently used in this data set.
 \refex{funcloud} does this by creating a \concept{document-term matrix} using the package \pkg{quanteda} (in R)
 or \sklearn (in Python).
 The code shows a number of steps that are made to create the final results, each of which represent
@@ -57,17 +57,17 @@ and see \refchap{datawrangling} for more information on how to select subsets of
 
 \paragraph{Topic Model}
 Where a word cloud (or tag cloud) shows which words occur most frequently,
-a \concept{topic model} analysis which words co-occur in the same documents.
+a \concept{topic model} analysis shows which words co-occur in the same documents.
 Using the most common topic modeling algorithm, Latent Dirichlet Allocation or LDA,
 \refex{funlda} explores the tweets by automatically clustering the tags selected earlier into 10 \emph{topics}.
 Topic modeling is non-deterministic -- if you run it again you can get slightly different topics,
 and topics are swapped around randomly as the topic numbers have no special meaning.
-Thus, we set the computer's random seed to ensure that if you run it again you get the same results.
+By setting the computer's \concept{random seed} you can ensure that if you run it again you get the same results.
 As you can see, some topics seem easily interpretable (such as topic 6 about economic consequences,
 and topic 7 about masks and prevention), it is always recommended to inspect the clustered documents
 and edge cases in addition to the top words (or tags) as shown here.
-You can play around with this example by e.g. using a different selection of words
-(modifying to code of \refex{funcloud}) or changing the number of topics.
+You can play around with this example, for example by using a different selection of words
+(modifying the code in \refex{funcloud}) or changing the number of topics.
 You can also change (or remove) the random seed and see how running the same model multiple times give different results. 
 See \refsec{unsupervised} for more information about fitting, interpreting, and validating topic models.
 
@@ -75,7 +75,7 @@ See \refsec{unsupervised} for more information about fitting, interpreting, and 
 
 \section{Fun with visualizing geographic information}
 For the final set of examples, we will use the location information contained in the twitter data.
-This information is based on what twitter users enter into their profile, and as such it is incomplete and noisya
+This information is based on what twitter users enter into their profile, and as such it is incomplete and noisy
 with many users giving a nonsensical location such as `Ethereally here' or not filling in any location at all.
 However, if we assume that most users that do enter a proper location (such as Lahore or Florida in the top tweets displayed above),
 we can use it to map where most tweets are coming from.
@@ -103,7 +103,7 @@ and uses that to compute the relative frequency of words in those tweets compare
 Not surprisingly, those tweets are much more about American politics, locations, and institutions.
 The other tweets talk about UK politics but also use a variety of names to refer to the pandemic.
 To play around with this, see if you can isolate e.g. Asian or South American tweets,
-or compare spanish tweets from different locations.
+or compare Spanish tweets from different locations.
 
 \pyrex[caption=Corpus comparison: North American tweets vs. the rest,input=both,output=r,format=png]{chapter02/funcompare}
 
@@ -114,14 +114,14 @@ or compare spanish tweets from different locations.
 Twitter, of course, is a social network as well as a microblogging service:
 users are connected to other users because they follow each other and retweet and like each others' tweets.
 Using the \verb+reply_to_screen_name+ column, we can inspect the retweet network contained in the COVID tweet data set.
-\refex{fungraph} first uses the data summarization commands from \tidyverse\ (R) and \pandas\ (python) to
+\refex{fungraph} first uses the data summarization commands from \tidyverse\ (R) and \pandas\ (Python) to
 create a data frame of connections or \concept{edges} listing how often each user retweets each other user.
 The second code block shows how the \pkg{igraph} package is used to convert this edge list into a graph.
-From this graph, we select only the largest connected component and use a clustering algorihtm to analyse which
+From this graph, we select only the largest connected component and use a clustering algorithm to analyze which
 nodes (users) form cohesive subnetworks.
 Finally, a number of options are used to set the color and size of the edges, nodes, and labels,
 and the resulting network is plotted.
-As you can see, the central node is Donal Trump, who is retweeted by a large number of users,
+As you can see, the central node is Donald Trump, who is retweeted by a large number of users,
 some of which are then retweeted by other users.
 You can play around with different settings for the plot options,
 or try to filter e.g. only tweets from a certain language. 
@@ -139,7 +139,7 @@ and \refchap{datawrangling} for the summarization commands used to create the ed
 \end{ccsexample}
 
 \paragraph{Geographic networks}
-In the final example of this chapter, we will combine the goegraphic and network information to
+In the final example of this chapter, we will combine the geographic and network information to
 show which regions of the world interact with each other.
 For this, in \refex{fungeonet} we join the user information to the edges data frame created above twice:
 once for the sender, once for the replied-to user.

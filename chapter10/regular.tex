@@ -12,7 +12,7 @@ so once you learn regular expressions you will have acquried a powerful and vers
 %We will show how you can use regexes to preprocess text. The good thing is that regular expression syntax can be similar in R and Python and once you learn how to write a pattern in one language it is easy to do the same in the other.  However they are not identical! Even it is out of the scope of this book, you can trace the specific standards of each language and its different versions. You will come across with some standards of the Portable Operating System Interface (POSIX), such as the Basic Regular Expressions (BRE) or Extended Regular Expressions (ERE), or also with the Perl Compatible Regular Expressions (PCRE).  By default the R function \fn{grep} uses ERE but you can set a parameter (\verb|perl = TRUE|) to work with PCRE, and in the case of Python \fn{re} module regexes match operations similar to PCRE as a default.
 
 %% \note{\textbf{Python: re versus regex}
-%%   In python, people generally use the \pkg{re} package for regular expressions.
+%%   In Python, people generally use the \pkg{re} package for regular expressions.
 %%   In this book we will use the \pkg{regex} package, however.
 %%   This modules has the same functions and arguments as the \pkg{re} module,
 %%   but it has better support for unicode, which is very important when dealing with non-western text.
@@ -85,7 +85,7 @@ Finally, you sometimes need to match a control character  (e.g. \verb!+!, \verb|
 
 \subsection{Example patterns}
 
-Using the syntax explained in the previous section, we can now make patterns for common tasks in cleaning and analysing text.
+Using the syntax explained in the previous section, we can now make patterns for common tasks in cleaning and analyzing text.
 \reftab{regexample} list a number of regular expressions for common tasks such as finding dates or stripping HTML artefacts.
 
 \input{chapter10/tabregexample}
@@ -125,7 +125,7 @@ If you want to extract e.g. zip codes from a longer document, it is often useful
 Please note that many of those patterns are not necessarily fully complete and correct, especially the final patterns for online notations.
 For example, email addresses can contain plus signs in the first part, but not in the domain name, while domain names are not allowed to start with a dash -- a completely correct regular expression to match email addresses is over 400 characters long!
 Even worse, a complete HTML tag expression is probably not even possible because as a regular expression as they can contain comments and nested escapes within attributes.
-For a better way to deal with analysing HTML, please see \refchap{scraping}. In the end, patterns like these are fine for a (somewhat) noisy analysis of (often also somewhat noisy) source texts as long as you understand the limitations. 
+For a better way to deal with analyzing HTML, please see \refchap{scraping}. In the end, patterns like these are fine for a (somewhat) noisy analysis of (often also somewhat noisy) source texts as long as you understand the limitations. 
         
 \section{Using regular expressions in Python and R}\label{sec:regextract}
 

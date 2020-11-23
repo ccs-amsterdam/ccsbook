@@ -145,7 +145,7 @@ integer.
 As a computational analyst of communication you will usually work with
 text objects or strings of characters. Commonly simply known as ``strings'',
 such text objects are also referred to as ``character vector objects'' in R.
-You can create them just by adding single or double quotes around the value of the variable (keep in mind to begin and finish the string either with single or with double quotes, and not to mix their use). Every time you want to analyse a social-media message, or any other text, you will be dealing with such strings. 
+You can create them just by adding single or double quotes around the value of the variable (keep in mind to begin and finish the string either with single or with double quotes, and not to mix their use). Every time you want to analyze a social-media message, or any other text, you will be dealing with such strings. 
 
 \begin{ccsexample}
   \doublecodex{chapter03/var4}
@@ -189,11 +189,11 @@ Ideally, this is not something you should need to think of,
 and indeed strings (or character vectors) already represent decoded text.
 This means that often when you read from or write data to a file,
 you need to specify the encoding (usally UTF-8). 
-However, both python and R also allow you to work with the raw data
+However, both Python and R also allow you to work with the raw data
 (e.g. before decoding) in the form of \concept{bytes} (Python) or \concept{raw} (R) data,
 which is sometimes necessary if there are encoding problems.
 This is shown briefly in the bottom part of \refex{var4}.
-Note that while R shows the underlying hexadecimal byte values of the raw data (so 54 is \verb|T|, 68 is \verb|h| and so on) and python displays the bytes as text characters, in both cases the underlying data type is the same: raw (non-decoded) bytes.
+Note that while R shows the underlying hexadecimal byte values of the raw data (so 54 is \verb|T|, 68 is \verb|h| and so on) and Python displays the bytes as text characters, in both cases the underlying data type is the same: raw (non-decoded) bytes.
 
 
 
@@ -422,9 +422,9 @@ retrieve structured information. We can create them using the curly
 brackets {} and including each key-value pair as an element of the
 collection (\refex{dict}).
 
-In R, the closest you can get to a python dictionary is to use lists with named elements.
+In R, the closest you can get to a Python dictionary is to use lists with named elements.
 This allows you to assign and retrieve values by key,
-however the key is restricted to names, while in python most objects can be used as keys.
+however the key is restricted to names, while in Python most objects can be used as keys.
 You create a named list with \verb|d = list(name=value)| and access individual elements with either
 \verb|d$name| or \verb|d[["name"]]|. 
 

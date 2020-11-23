@@ -39,7 +39,7 @@ In Python, you can pass the \verb|ngram=(n, m)| option to the vectorizer,
 while R has a \verb|tokens_ngrams(n:m)| function.
 Both will post-process the tokens to create all n-grams in the range of n to m.
 In this example, we are asking for unigrams (i.e., the words themselves), bigrams and trigrams of a simple example sentence.
-Both languages produce the same output, with R separating the words with an underscore while python uses a simple space.
+Both languages produce the same output, with R separating the words with an underscore while Python uses a simple space.
 
 \pyrex[caption=Words and bigrams containing 'government',output=r,format=table]{chapter11/ngram2}
 
@@ -174,7 +174,7 @@ Although there are different sets of POS tags used by different tools, there is 
 
 \input{chapter11/tabpostags}
 
-POS tags are useful since they allow us for example to analyse only the \textit{nouns} if we care about the things that are discussed, only the \textit{verbs} if we care about actions that are described, or only the \textit{adjectives} if we care about the characteristics given to a noun.
+POS tags are useful since they allow us for example to analyze only the \textit{nouns} if we care about the things that are discussed, only the \textit{verbs} if we care about actions that are described, or only the \textit{adjectives} if we care about the characteristics given to a noun.
 Moreover, knowing the POS tag of a word can help disambiguate it.
 For example, like as a verb (I like books) is generally positive, but like as a preposition (a day like no other) has no clear sentiment attached.
 
@@ -209,20 +209,20 @@ Looking at the upos (universal Part-of-Speech) column, John is recognized as a p
 Finally, the \verb|head_token_id| and \verb|dep_rel| columns represent the syntactic information in the sentence:
 `Bought' (token 2) is the root of the sentence, and `John' is the subject (nsubj) while `knives' is the object of the buying.
 
-\pyrex[caption=Using UDPipe to analyse a sentence,format=table,output=r]{chapter11/udpipe}
+\pyrex[caption=Using UDPipe to analyze a sentence,format=table,output=r]{chapter11/udpipe}
 
 The syntactic relations can be useful if you need to differentiate between who is doing something and whom it was done to.
-For example, one of the authors of this book used syntactic relations to analyse conflict coverage,
+For example, one of the authors of this book used syntactic relations to analyze conflict coverage,
 where there is an important difference between attacking and getting attacked \citep{clause}.
-However, in most cases you probably don't need this information and analysing dependency graphs is relatively complex.
+However, in most cases you probably don't need this information and analyzing dependency graphs is relatively complex.
 We would advise you to almost always consider lemmatizing and tagging your texts, as lemmatizing is simply so much better than stemming
-(especially for languages other than English), and the Part-of-Speech can be very useful for analysing different aspects of a text. 
+(especially for languages other than English), and the Part-of-Speech can be very useful for analyzing different aspects of a text. 
 
 If you only need the lemmatizer and tagger, you can speed up processing by setting \verb|udpipe(.., parser='none')| (R) or setting the third argument to Pipeline (the parser) to \verb|Pipeline.NONE| (Python).
 \refex{nouncloud} shows how this can be used to extract only the nouns from the most recent state of the union speeches,
 create a DTM with these nouns, and then visualize them as a word cloud.
 As you can see, these words (such as student, hero, childcare, healthcare, and terrorism), are much more indicative of the topic of a text than the general words used earlier.
-In the next chapter we will show how you can further analyse these data, for example by analysing usage patterns per person or over time, or using an unsupervised topic model to cluster words into topics.
+In the next chapter we will show how you can further analyze these data, for example by analyzing usage patterns per person or over time, or using an unsupervised topic model to cluster words into topics.
 
 \pyrex[caption=Nouns used in the most recent State of the Union addresses,format=png,output=py]{chapter11/nouncloud}
 
@@ -233,7 +233,7 @@ For R users, installation of \pkg{spacyr} on MacOS is easy,
 but note that on Windows there are some additional steps, see
 \url{https://cran.r-project.org/web/packages/spacyr/readme/README.html} for more details.
 
-\refex{spacy} shows how you can use Spacy to analyse the proverb `all roads lead to Rome' in Spanish.
+\refex{spacy} shows how you can use Spacy to analyze the proverb `all roads lead to Rome' in Spanish.
 In the first block, the Spanish language model is downloaded (this is only needed once).
 The second block loads the language model and parses the sentence.
 You can see that the output is quite similar to UDPipe, but one additional feature is the inclusion of
@@ -247,7 +247,7 @@ Note that in R, you can use the \pkg{quanteda} function \fn{as.tokens} to direct
   \doublecodex{chapter11/spacymodel}
   \doublecodex{chapter11/spacy}
   \codexoutputtable{chapter11/spacy.r}
-  \caption{Using Spacy to analyse a Spanish sentence}\label{ex:spacy}
+  \caption{Using Spacy to analyze a Spanish sentence}\label{ex:spacy}
 \end{ccsexample}
 
 As you can see, nowadays there are a number of good and relatively easy to use linguistic toolkits that can be used.
@@ -271,7 +271,7 @@ Note that when using a stop word list, you should always manually inspect and/or
 The other steps such as n-grams, collocations, and tagging and lemmatization are more optional but can be quite important depending on the specific research.
 For this (and for choosing a specific combination of trimming and weighting), it is always good to know your domain well, look at the results, and think whether you think they make sense.
 Using the example given above, bigrams can make more sense for sentiment analysis (since \emph{not good} is quite different from \emph{good}),
-but for analysing the topic of texts it may be less important.
+but for analyzing the topic of texts it may be less important.
 
 Ultimately, however, many of these questions have no good theoretical answer, and the only way to find a good preprocessing `pipeline' for your research question is to try many different
 options and see which works best.

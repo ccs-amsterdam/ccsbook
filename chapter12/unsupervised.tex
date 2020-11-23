@@ -36,7 +36,7 @@ A generative model is a (simplified) formal model of how the data is assumed to 
 For example, if we would have a standard regression model predicting income based on age and education level,
 the implicit generative model is that to determine someone's income, you take their age and education level,
 multiply them both by their regression parameters, and then add the intercept and some random error.
-Of course, we know that's not actually how most companies determine wages, but it can be a useful starting point to analyse e.g. labour market discrimination.
+Of course, we know that's not actually how most companies determine wages, but it can be a useful starting point to analyze e.g. labour market discrimination.
 
 The generative model behind LDA works as follows.
 Assume that you are a journalist writing a 500 word news item.
@@ -166,14 +166,14 @@ Finally, note that we showed the R results here. As \pkg{gensim} uses a differen
 (and \sklearn\ uses a different tokenizer and stopword list), results will not be identical,
 but should be mostly similar. 
 
-\subsection{Analysing topic model results}
+\subsection{Analyzing topic model results}
 
 \begin{ccsexample}
 \doublecodex{chapter12/ldaresults1}
 \codexoutputtable{chapter12/ldaresults1.r}
 \doublecodex{chapter12/ldaresults2}
 \codex[caption=Output (from R)]{chapter12/ldaresults2.r.out}
-\caption{Analysing and inspecting LDA results}\label{ex:ldaresults}
+\caption{Analyzing and inspecting LDA results}\label{ex:ldaresults}
 \end{ccsexample}
 
 
