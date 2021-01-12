@@ -8,6 +8,7 @@
 \RequirePackage[utf8]{inputenc}
 \DeclareFloatingEnvironment[fileext=ex,placement={!ht},name=Example]{ccsexample}
 
+\newlinechar=`\^^J
 \DeclareUnicodeCharacter{22EF}{\ldots}
 %%%%%%%%%%%%%%%%%%%%%%%%
 %% Code listing style
@@ -51,6 +52,11 @@
 %% Commands
 %%%%%%%%%%%%%%%%%%%%%%%%
 
+%\renewcommand{\thechapter}{\message{CHAPTER \arabic{chapter}}\arabic{chapter}}
+
+%\let\oldchapter\chapter
+%\def\chapter{\oldchapter\message{CHAPTER \thechapter}}
+
 \newcommand{\ccstablehead}[1]{\multicolumn{1}{l}{#1}}
 \newcommand{\ccstablesubhead}[1]{\ccstablehead{\gray\tiny#1}}
 
@@ -80,6 +86,9 @@
 % \codex[caption=]{snippet.ext}
 % single code listing in a tcolor box
 \newcommand{\codex}[2][]{{%
+    \addtocounter{ccsexample}{1}%
+  \message{^^JEXAMPLE \theccsexample: code #2^^J}%
+    \addtocounter{ccsexample}{-1}%
   \setkeys{codex}{caption,#1}%
   \StrCount{#2}{.}[\nbmatch]%
   \StrCut[\nbmatch]{#2}{.}\tmp\myext%
@@ -116,6 +125,9 @@
 }
 
 \newcommand{\codexoutputpng}[2][]{%
+  \addtocounter{ccsexample}{1}%
+  \message{^^JEXAMPLE \theccsexample: figure #2.png^^J}%
+  \addtocounter{ccsexample}{-1}%
   \def\codex@tmp{#1}%
   \ifx\codex@tmp\empty
       \def\codex@tmp{Output}%
@@ -144,6 +156,9 @@
 } 
 
 \newcommand{\codexoutputtable}[2][]{
+  \addtocounter{ccsexample}{1}%
+  \message{^^JEXAMPLE \theccsexample: table snippets/#2.table.tex^^J}%
+  \addtocounter{ccsexample}{-1}%
   \def\codex@tmp{#1}
   \ifx\codex@tmp\empty
       \def\codex@tmp{Output}
