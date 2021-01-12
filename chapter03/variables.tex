@@ -164,10 +164,10 @@ need to use the same mark to begin and end the string. This can be
 useful if you want to use quotation marks within a string, then you can
 use the other type to denote the beginning and end of the string.
 If you need to use a single quotation mark within a single-quoted string,
-you can \concept{escape} the quotation mark by prepending it with a backslash (\verb|\'|),
+you can \concept{escape} the quotation mark by prepending it with a backslash (\texttt{\textbackslash'}),
 and similarly for double-quoted strings.
 To include an actual backslash in a text, you also escape it with a backslash,
-so you end up with a double backslash (\verb|\\|). 
+so you end up with a double backslash (\texttt{\textbackslash\textbackslash}). 
 
 The Python example also shows a concept introduced in Python 3.6 (introduced in December 2016):
 the f-string.  These are strings that are prefixed with the letter \texttt{f} and are \emph{formatted} strings. This means that these strings will automatically insert a value were curly brackets indicate you wish to do so. This means that you can write: |print(f"The value of i is {i}")| in order to print ``The value of i is 5'' (given that |i| equals 5).
@@ -427,8 +427,8 @@ collection (\refex{dict}).
 In R, the closest you can get to a Python dictionary is to use lists with named elements.
 This allows you to assign and retrieve values by key,
 however the key is restricted to names, while in Python most objects can be used as keys.
-You create a named list with \verb|d = list(name=value)| and access individual elements with either
-\verb|d$name| or \verb|d[["name"]]|. 
+You create a named list with \texttt{d = list(name=value)} and access individual elements with either
+\ttt{d\$name} or \texttt{d[["name"]]}. 
 
 \pyrex[caption=Key-value pairs in Python dictionaries and R named lists]{chapter03/dict}
 

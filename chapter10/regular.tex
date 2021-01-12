@@ -119,7 +119,7 @@ using an inverted character class.
 Note that these example patterns would also match if the text is enclosed in a larger text.
 For example, the zip code pattern would happily match the first 5 numbers of a 10-digit number.
 If you want to check that an input value is a valid zip code (or email address, etc.),
-you probably want to check that it only contains that code by surrounding it with start-of-text and end-of-text markers: \verb|^\d{5}$|.
+you probably want to check that it only contains that code by surrounding it with start-of-text and end-of-text markers: \verb|^\d{5}|\ttt{\$}.
 If you want to extract e.g. zip codes from a longer document, it is often useful to surround them with word boundary markers: \verb|\b\d{5}\b|.
 
 Please note that many of those patterns are not necessarily fully complete and correct, especially the final patterns for online notations.

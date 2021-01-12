@@ -10,7 +10,7 @@ a calculation that generally involves other columns.
 In both R and Python, there are two general ways to accomplish this.
 First, you can simply assign to an existing or new column,
 using the column selection notation discussed in \refsec{datatypes}:
-\verb+df["column"] = ...+ in Python, or \verb+df$column = ...+ in R.
+\verb+df["column"] = ...+ in Python, or \ttt{df\$column = ...} in R.
 
 Both Python and R also offer a function that allows multiple columns to be changed,
 returning a new copy of the data frame rather than changing the original data frame.
@@ -20,7 +20,8 @@ The Python equivalent, \pkg{pandas} function \fn{assign}, is used more rarely as
 In either case, you can use arithmetic: e.g. \verb|rep - dem| to compute the difference between these columns.
 This works directly in R \fn{mutate},
 but in Python or in R direct assignment you also need to specify the name of the dataframe.
-In Python, this would be \verb+d["rep"] - d["dem"]+ \footnote{You can also write \texttt{d.rep - d.dem}, which is shorter, but does not work if your column names contain, for instance, spaces.}, while in R this is \verb+d$rep - d$dem+. 
+In Python, this would be \verb+d["rep"] - d["dem"]+ \footnote{You can also write \texttt{d.rep - d.dem}, which is shorter, but does not work if your column names contain, for instance, spaces.},
+while in R this is \ttt{d\$rep - d\$dem}. 
 
 In many cases, however, you want to use various functions to perform tasks like cleaning and data conversion
 (see \refsec{functions} for more explanation of built-in and custom functions).
