@@ -13,7 +13,7 @@ The resulting matrix has two rows, one for each line; and 11 columns, one for ea
 In the columns you see the document frequencies of each term: the word ``bird'' occurs once in each line,
 but the word ``with'' occurs only in the first line (text1) and not in the second (text2).
 
-In R, you can use the \fn{dfm} function from the \pkg{quanteda} package.
+In R, you can use the \fn{dfm} function from the \pkg{quanteda} package \citet{quanteda}.
 This function can take a vector or column of texts and transforms it directly into a DTM
 (which quanteda actually calls a document-\emph{feature} matrix, hence the function name \fn{dfm}).
 In Python, you achieve the same by creating an object of the \cls{CountVectorizer} class, which has a \fn{fit\_transform} function.

@@ -4,16 +4,15 @@
   With topic modeling, the most important researcher choices are the \concept[Number of LDA topics]{number of topics} and the value of \concept[Alpha LDA hyperparameter]{alpha}.
   These choices are called \concept{hyperparameters}, since they determine how the model parameters (e.g. words per topic) are found.
 
-  Similar to supervised topic modeling (see \refsec{hyperparameters}),
-  there is no good theoretical solution to determine the `right' number of topics for a given corpus and research question.
+  There is no good theoretical solution to determine the `right' number of topics for a given corpus and research question.
   Thus, a sensible approach can be to ask the computer to try many models, and see which works best.
-  Unfortunately, and in contrast to supervised learning, because this is an unsupervised (inductive) method,
+  Unfortunately, because this is an unsupervised (inductive) method,
   there is no single metric that determines how good a topic model is.
 
   There are a number of such metrics proposed in the literature, of which we will introduce two.
   \concept{Perplexity} is a score of how well the LDA model can fit (predict) the actual word distribution
   (or in other words: how `perplexed' the model is seeing the corpus).
-  \concept{Coherence} is a measure of how semantically coherent the topics are by checking how often the top token co-occur in documents in each topic \citep{minmo11}.
+  \concept{Coherence} is a measure of how semantically coherent the topics are by checking how often the top token co-occur in documents in each topic \citep{mimno11}.
 
   \refex{ldacoherence} below show how these can be calculated for a range of topic counts, and the same code could be used for trying different values of \emph{alpha}.
   For both measures, lower values are better, and both essentially keep decreasing as you add more topics.
