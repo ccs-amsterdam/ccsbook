@@ -20,9 +20,9 @@
   Finally, we show how to use existing data from packages such as \index{sotu}\emph{sotu} (R) and \index{nltk}\emph{nltk} and \index{scikit-learn}\emph{scikit-learn}\ (Pythn).
   If needed, you can install these packages with the code below
   (see Section~\ref{sec:installing} for more details):
-  \doublecodex{chapter06/chapter06install}
+  \doublecodex{chapter05/chapter05install}
   \noindent After installing, you need to import (activate) the packages every session:
-  \doublecodex{chapter06/chapter06library}
+  \doublecodex{chapter05/chapter05library}
 \end{feature}
 
 
@@ -35,7 +35,7 @@ In most social-scientific applications, however, we do not deal with isolated se
 Such data structures are really useful for nested data:
 For example, if we do not want to store people's age but do want to store their addresses,
 we could store a dict within a dict.
-%\rpyex{chapter06/snippets/listvsdict}{CAPTION}
+%\rpyex{chapter05/snippets/listvsdict}{CAPTION}
 In fact, as we will see later in this chapter, many data that computational social scientists use come in such a format.
 For instance, data about an online product can contain many reviews which in turn have various pieces of information on the review author.
 
@@ -49,7 +49,7 @@ To make our lives easier, we can therefore use a data structure called a data fr
 Data frames can be generated from list-of-list structures, from dictionaries, and many others.
 One way of doing this is shown in Example~\ref{ex:createdataframe}, but very often, you'd rather read data from a file or an online resource directly into a data frame (see Section~\ref{sec:reading}).
 
-\pyrex[output=both, caption=Creating a data frame from other data structures]{chapter06/createdataframe}
+\pyrex[output=both, caption=Creating a data frame from other data structures]{chapter05/createdataframe}
 
 In this book, we use data frames a lot, because they are very convenient for handling tabular data, and because they provide a lot of useful convenience functionality, instead of requiring us to re-invent the wheel all the time. In the next section, we will discuss some of them.
 
@@ -174,7 +174,7 @@ Second, there may be different ways  to deal with strings as values in a csv fil
 
 Let's get practical and try out reading and writing files into a data frame (Example~\ref{ex:readfiles}).
 
-\pyrex[output=none, caption=Reading files into a data frame]{chapter06/readfiles}
+\pyrex[output=none, caption=Reading files into a data frame]{chapter05/readfiles}
 
 Of course, we can read more than just csv files. In the Python
 example, you can use tabcompletion to get an overview of all file
@@ -205,9 +205,9 @@ in the same directory as your Python or R script.
 
 Then, you can read this file into a vector or list  (see Example~\ref{ex:readingstopwords}).
 
-\pyrex[output=none, caption=Reading files without data frames]{chapter06/stopwords}
+\pyrex[output=none, caption=Reading files without data frames]{chapter05/readingstopwords}
 
-\pyrex[output=none, caption={More examples for reading from and writing to files. Because dictionaries do not exist in R and handling non-rectangular data is more uncommon in R, we do not show an example for direct interaction with JSON files without involvement of a data frame in the R example.}]{chapter06/extendedfilehandling}
+\pyrex[output=none, caption={More examples for reading from and writing to files. Because dictionaries do not exist in R and handling non-rectangular data is more uncommon in R, we do not show an example for direct interaction with JSON files without involvement of a data frame in the R example.}]{chapter05/extendedfilehandling}
 
 Example~\ref{ex:extendedfilehandling} provides you with some more elaborate code examples that allows us to dig a bit deeper into the general way of handling files.
 
@@ -276,9 +276,9 @@ be the Financial News dataset compiled by \cite{Chen2017} or the
 political news dataset compiled by \cite{Horne2018}.
 
 
-\pyrex[output=py, input=both,caption={In Python, \index{scikit-learn}\emph{scikit-learn} has a convenience function to automatically download the 20 newsgroup dataset and automatically clean it up. In R, you can download the raw version (there are multiple copies floating around on the internet) and perform the cleaning yourself.}]{chapter06/20newsgroups}
+\pyrex[output=py, input=both,caption={In Python, \index{scikit-learn}\emph{scikit-learn} has a convenience function to automatically download the 20 newsgroup dataset and automatically clean it up. In R, you can download the raw version (there are multiple copies floating around on the internet) and perform the cleaning yourself.}]{chapter05/20newsgroups}
 
-\pyrex[output=r, input=both, format=table, caption={A collection of US state-of-the-union speeches is available in multiple packages in various forms.}]{chapter06/sotudata}
+\pyrex[output=r, input=both, format=table, caption={A collection of US state-of-the-union speeches is available in multiple packages in various forms.}]{chapter05/sotudata}
 
 
 

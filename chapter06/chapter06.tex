@@ -22,11 +22,11 @@ reshape data.
   This chapter uses the \index{readxl}\emph{readxl} package for reading excel files and various parts of the \index{tidyverse}\emph{tidyverse} including \index{ggplot2}\emph{ggplot2}, \index{dplyr}\emph{dplyr}, and \index{tidyr}\emph{tidyr} (which are installed automatically when you install tidyverse). In Python we rely mostly on the \index{pandas}\emph{pandas} package, but we also use \index{scipy}\emph{scipy} package for statistics and the \index{xlrd}\emph{xlrd} for reading excel files. You can install these packages with the code below if needed
   (see Section~\ref{sec:installing} for more details):
 
-\doublecodex{chapter07/chapter07install}
+\doublecodex{chapter06/chapter06install}
 
 \noindent After installing, you need to import (activate) the packages every session:
 
-\doublecodex{chapter07/chapter07library}
+\doublecodex{chapter06/chapter06library}
 
 \end{feature}
 
@@ -82,7 +82,7 @@ If you will later need to work with a different subset, it is smart to keep the 
 On the other hand, if all your analyses will be on the subset, you might as well overwrite the original.
 We can always re-download it from the internet (or reload it from our harddisk) if it turns out we needed the original anyway.
 
-\pyrex[caption=Filtering,output=r,format=table]{chapter07/data-filter}
+\pyrex[caption=Filtering,output=r,format=table]{chapter06/data-filter}
 
 
 
@@ -129,7 +129,7 @@ missing values in the column \verb+col+, and \verb+df.col.str.replace+ does a fi
 Unlike functions that expect individual values rather than columns as an input, there is no need to explicitly \verb+apply+ such a method.
 As always, you can use tab completion (pressing the TAB key after writing \texttt{df.col.}) to get a menu that includes all availbale methods.
 
-\pyrex[output=r,format=table,caption=Mutate]{chapter07/mutate}
+\pyrex[output=r,format=table,caption=Mutate]{chapter06/mutate}
 
 To illustrate some of the many possibilities, \refex{mutate} has code for cleaning a version of the Guns Polls
 in which we intentionally introduced two problems: we added some typos to the \emph{rep} column
@@ -189,7 +189,7 @@ and then we create the aggregate statistics.
 In this example, we do not store the result of the computation, but print it on the screen.
 To store the results, simply assign it to a new object as normal.
 
-\pyrex[caption={Aggregation. Note that in the Python example, we can specify often-used functions such as \texttt{"mean"} simply as a string, but instead, we could also pass functions directly, such as numpy's \texttt{np.mean}},output=r,format=table]{chapter07/aggregate}
+\pyrex[caption={Aggregation. Note that in the Python example, we can specify often-used functions such as \texttt{"mean"} simply as a string, but instead, we could also pass functions directly, such as numpy's \texttt{np.mean}},output=r,format=table]{chapter06/aggregate}
 
 In R, you use the \index{dplyr}\emph{dplyr} function \index{group\_by}\texttt{group\_by}  to define the groups,
 and then call the function \index{summarize~}\texttt{summarize~} to compute summary values by specifying
@@ -219,7 +219,7 @@ The pipe operator inserts the result of the first function as the first argument
 More technically, \verb+f1(d) %>% f2()+ is equivalent to \verb+f2(f1(d))+.
 This can be used to chain multiple commands together, e.g.\ \verb+data = data %>% function1(arguments) %>% function2(arguments)+.
 
-\pyrex[caption={Combining multiple functions or methods. The result is identical to \refex{aggregate}},output=none,format=table]{chapter07/aggregate2}{
+\pyrex[caption={Combining multiple functions or methods. The result is identical to \refex{aggregate}},output=none,format=table]{chapter06/aggregate2}{
 
 \refex{aggregate2} shows the same operation as in Example~\ref{ex:aggregate}, but chained into a single statement.
 
@@ -236,7 +236,7 @@ all students in the same school have the same school average.
 So, these values will be repeated for these rows, essentially
 mixing individual and group level variables in the same data frame.
 
-\pyrex[caption=Adding summary values to individual cases,output=r,format=table]{chapter07/transform}
+\pyrex[caption=Adding summary values to individual cases,output=r,format=table]{chapter06/transform}
 
 Example~\ref{ex:transform} shows how this can be achieved in Python and R,
 computing the mean support per question and then calculating how each poll deviates from this mean.
@@ -265,13 +265,13 @@ This process is often called merging or joining data.
 
 \subsection{Equal Units of Analysis}
 
-%\pyrex[caption=Private and Public Capital data (source: Piketty 2014)]{chapter07/piketty}
+%\pyrex[caption=Private and Public Capital data (source: Piketty 2014)]{chapter06/piketty}
 
 \begin{ccsexample}
-  \doublecodex{chapter07/piketty_1}
-  \codexoutputtable{chapter07/piketty_1.r}
-  \doublecodex{chapter07/piketty_2}
-  \codexoutputtable{chapter07/piketty_2.r}
+  \doublecodex{chapter06/piketty_1}
+  \codexoutputtable{chapter06/piketty_1.r}
+  \doublecodex{chapter06/piketty_2}
+  \codexoutputtable{chapter06/piketty_2.r}
 \caption{Private and Public Capital data (source: Piketty 2014).}\label{ex:piketty}
 \end{ccsexample}
 
@@ -308,15 +308,15 @@ if shared columns are not used in the join, by default they get ``.x'' and ``.y'
 Even if the key column is the only shared column, however, it can still be good to explicitly select that column to make it clear to the reader (or for yourself in the future) what is happening.
 
 \begin{ccsexample}
-\doublecodex{chapter07/capital_1}
-\codexoutputtable{chapter07/capital_1.r}
-\doublecodex{chapter07/capital_2}
-\doubleoutput{chapter07/capital_2}
+\doublecodex{chapter06/capital_1}
+\codexoutputtable{chapter06/capital_1.r}
+\doublecodex{chapter06/capital_2}
+\doubleoutput{chapter06/capital_2}
 \caption{Merging private and public data for France.}\label{ex:merge}
 \end{ccsexample}
 
 
-%\pyrex[caption=Merging private and public data for France]{chapter07/capital}
+%\pyrex[caption=Merging private and public data for France]{chapter06/capital}
 
 This is shown in \refex{merge}.
 The first two lines select only the \emph{Year} and \emph{France} columns, and rename the \emph{France} column to indicate whether it is the private or public data.
@@ -397,7 +397,7 @@ Democratic primary.
 Conversely, the \texttt{counties} dataset shows a large number of facts about these counties,
 such as population, change in population, gender and education distribution, etc.
 
-\pyrex[caption={2016 Primary results and county-level metadata. Note that to avoid duplicate output, we display the counties data in the Python example and the results data in the R example.}]{chapter07/primary}
+\pyrex[caption={2016 Primary results and county-level metadata. Note that to avoid duplicate output, we display the counties data in the Python example and the results data in the R example.}]{chapter06/primary}
 
 Suppose we hypothesize that Hillary would do relatively well in areas with more black voters.
 We would then need to combine the county level data about ethnic composition with the country $\times$ candidate
@@ -408,7 +408,7 @@ First, both datasets are cleaned to only contain the relevant data:
 for the \texttt{results} dataset only the Democrat rows are kept, and only the \emph{fips} (county code), \emph{candidate}, \emph{votes}, and \emph{fraction} columns.
 For the \texttt{counties} dataset, all rows are kept but only the \emph{county code}, \emph{name}, and \emph{Race\_white\_pct} columns are kept.
 
-\pyrex[caption=Joining data at the result and the county level]{chapter07/nested}
+\pyrex[caption=Joining data at the result and the county level]{chapter06/nested}
 
 In the next step, both sets are joined using an inner join from the results dataset.
 Note that we could also have used a left join here, but with an inner join it will be immediately
@@ -450,11 +450,11 @@ This will make it much easier to do further data wrangling or analysis, as you c
 In fact, when we merged these datasets earlier in Example~\ref{ex:merge}, we selected only the measurements for France, essentially turning it into long data.
 
 \begin{ccsexample}
-  \doublecodex{chapter07/merge1}
-  \codexoutputtable{chapter07/merge1.r}
-  \doublecodex{chapter07/merge2}
+  \doublecodex{chapter06/merge1}
+  \codexoutputtable{chapter06/merge1.r}
+  \doublecodex{chapter06/merge2}
   \begin{tcolorbox}[title=Output]
-    \includegraphics[width=.5\linewidth]{{snippets/chapter07/merge2.r}.png}
+    \includegraphics[width=.5\linewidth]{{snippets/chapter06/merge2.r}.png}
   \end{tcolorbox}
   \caption{Converting wide to long data to facilitate merging and visualizing.}\label{ex:merge}
 \end{ccsexample}
@@ -500,11 +500,11 @@ In step 3, we split the header into two columns using \fn{separate} (R) and \fn{
 The missing step, splitting a header into two columns, is done using \index{separate}\texttt{separate} (R) and \index{split}\texttt{split} (Python).
 
 \begin{ccsexample}
-  \doublecodex{chapter07/excel1}
-  \codexoutputtable{chapter07/excel1.r}
-  \doublecodex{chapter07/excel2}
+  \doublecodex{chapter06/excel1}
+  \codexoutputtable{chapter06/excel1.r}
+  \doublecodex{chapter06/excel2}
   \begin{tcolorbox}[title=Output]
-    \includegraphics[width=.5\linewidth]{{snippets/chapter07/excel2.r}.png}
+    \includegraphics[width=.5\linewidth]{{snippets/chapter06/excel2.r}.png}
   \end{tcolorbox}
   \caption{Dealing with ``messy'' data.}\label{ex:excel}
 \end{ccsexample}

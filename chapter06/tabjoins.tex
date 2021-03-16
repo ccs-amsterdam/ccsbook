@@ -1,0 +1,23 @@
+\SaveVerb{py_full}|d1.merge(d2, how='outer')|
+\SaveVerb{py_inner}|d1.merge(d2, how='inner')|
+\SaveVerb{py_left}|d1.merge(d2, how='left')|
+\SaveVerb{py_right}|d1.merge(d2, how='right')|
+\SaveVerb{r_full}|full_join(d1,d2)|
+\SaveVerb{r_inner}|inner_join(d1,d2)|
+\SaveVerb{r_left}|left_join(d1,d2)|
+\SaveVerb{r_right}|right_join(d1,d2)|
+
+
+\begin{table}
+  \caption{Different types of joins between datasets d1 and d2\label{tab:joins}}{%
+  \begin{tabularx}{\linewidth}{lXll}
+    \toprule
+    Type &  Description  & R & Python \\
+    \midrule
+    Outer &  All units from both sets & \UseVerb{r_full} & \UseVerb{py_full} \\
+    Inner & Only units that are in both sets & \UseVerb{r_inner} & \UseVerb{py_inner} \\
+    Left & All units from left-hand set & \UseVerb{r_left} & \UseVerb{py_left} \\
+    Right & All units from right-hand set & \UseVerb{r_right} & \UseVerb{py_right} \\  
+    \bottomrule
+  \end{tabularx}}{}
+\end{table}
