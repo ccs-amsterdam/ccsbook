@@ -1,47 +1,771 @@
-\chapter{ Automatic analysis of text}
-\label{chap:text}
-
-
+\chapter{Scraping online data}
+\label{chap:scraping}
 
 \begin{abstract}{Abstract}
-  In this chapter, we discuss different approaches to the automatic analysis of text; or automated content analysis. We combine techniques from earlier chapters, such as transforming texts into a matrix of term frequencies and machine learning. In particular, we describe three different approaches (dictionary-based analyses, supervised machine learning, unsupervised machine learning). The chapter provides guidance on how to conduct such analyses, and also on how to decide which of the approaches is most suitable for which types of questions.
+In this chapter, you learn how to retrieve your data from online sources. We first discuss the use of application programming interfaces, so-called APIs, which allow you to retrieve data from social media platforms, but also government data or other forms of open data, in a machine-readable format. We then discuss how to do web scraping in a narrower sense to retrieve data from websites that do not offer an API. We also discuss how to deal with authentication mechanisms, cookies, and the like, as well as ethical, legal, and practical considerations.
 \end{abstract}
 
-\keywords{dictionary approaches, supervised machine learning, unsupervised machine learning, topic models, automated content analysis}
+\keywords{web scraping, application programming interface (API), crawling, HTML parsing}
+
 
 \begin{objectives}
-\item Understand different approaches to automatic analysis of text
-\item Be able to decide on whether to use a dictionary approach, supervised machine learning, or unsupervised machine learning
-\item Be able to use these techniques
+\item Be able to use APIs for data retrieval
+\item Be able to write your own web scraper
+\item Assess basics of legal, ethical, and practical constraints
 \end{objectives}
 
 
 \newpage
 \begin{feature}
   \textbf{Packages used in this chapter}\\
-  This chapter uses the basic text and data handling that were described in \refchap{dtm} (\pkg{tidyverse}, \pkg{readtext}, and \pkg{quanteda} for R, \pkg{pandas} and \pkg{nltk}for Python).
-  For supervised text analysis, we use \pkg{quanteda.textmodels} (R) and \pkg{sklearn} (Python).
-  For topic models we use \pkg{topicmodels} (R) and \pkg{gensim}.
-  You can install these packages with the code below if needed  (see \refsec{installing} for more details):
+  This chapter uses in particular \index{httr}\emph{httr} (R) and \index{requests}\emph{requests} (Python) to retrieve data, \index{json}\emph{json} (Python) and \index{jsonlite}\emph{jsonlite} (R) to handle JSON responses, and \index{lxml}\emph{lxml} and \index{Selenium}\emph{Selenium} for web scraping.
 
-\doublecodex{chapter12/chapter12install}
+You can install these and some additional packages (e.g., for geocoding) with the code below if needed  (see Section~\ref{sec:installing} for more details):
+
+\doublecodex{chapter13/chapter13install}
 
 \noindent After installing, you need to import (activate) the packages every session:
 
-\doublecodex{chapter12/chapter12library}
+\doublecodex{chapter13/chapter13library}
 \end{feature}
 
-In earlier chapters, you learned about both supervised and unsupervised machine learning as well about dealing with texts.
-This chapter brings together these elements and discusses how to combine them to automatically analyze large corpora of texts. After presenting guidelines for choosing an appropriate apprach in \refsec{deciding} and downloading an example dataset in \refsec{reviewdataset}, we discuss multiple techniques in detail.
-We begin with a very simple top-down approach in Section~\ref{sec:dictionary}, in which we count occurrences of words from an \emph{a priori} defined list of words. In Section~\ref{sec:supervised}, we still use pre-defined categories that we want to code, but let the machine ``learn'' the rules of the coding itself. Finally, in Section~\ref{sec:unsupervised}, we employ a bottom-up approach in which we do not use any \emph{a priori} defined lists or coding schemes, but inductively extract topics from our data.
 
-\input{chapter12/deciding}
 
-\input{chapter12/data}
 
-\input{chapter12/dictionary}
+%\input{chapter12/apis}
 
-\input{chapter12/supervised}
+\section{Using Web APIs: From Open Resources to Twitter}
+\label{sec:apis}
 
-\input{chapter12/unsupervised}
+Let's assume we want to retrieve data from some online service. This
+could be some social media platform, but could also be a government website,
+some \emph{open data} platform or initiative, or sometimes a
+commercial organization that provides some online service.  Of course,
+we could surf to their website, enter a search query, and somehow save
+the result. This would result in a lot of impracticalities,
+though. Most notably, websites are designed such that they are
+perfectly readable and understandable for humans, but the cues that
+are used often have no ``meaning'' for a computer program. As humans,
+we have no problem understanding which parts of a web page refer to
+the author of some item on a web page, what the numbers ``2006'' and
+``2008'' mean, and on. But it is not trivial to think of a way to
+explain to a computer program how to identify variables like
+\texttt{author}, \texttt{title}, or \texttt{year} on a web page.
+We will learn how to do exactly that in Section~\ref{sec:webpages}. Writing
+such a \emph{parser} is often necessary, but it is also error-prone
+and  a detour, as we are trying to bring some information
+that has been optimized for human reading \emph{back} to a more
+structured data structure.
+
+Luckily, however, many online services  not only have web interfaces
+optimized for human reading, but also offer another possibility to
+access the data they provide: an API (Application Programming
+Interface).
+The vast amount of contemporary web APIs works like this: you send a
+\emph{request} to some URL, and you get back a  JSON object. As you
+learned in Section~\ref{sec:reading}, JSON is a nested data structure, very
+much like a Python dictionary (and, in fact, JSON data are typically 
+represented as a dictionary in Python). In other words: APIs directly
+gives us machine-readable data that we can work with without any need
+to develop a custom parser.
+
+Discussing specific APIs in a book can be a bit tricky, as there is a
+chance that it will be outdated: after all, the API provider may change
+it at any time. We therefore decided not to include a chapter on very
+specific applications such as ``How to use the Twitter API'' or similar --
+given the popularity of such APIs, a quick online search will produce
+enough up-to-date (and out-of-date) tutorials on these. Instead,
+we discuss the generic principles of APIs that should easily translate
+to  examples other than ours.
+
+
+In its  simplest form, using an API is nothing other than visiting
+a specific URL. The first part of the URL specifies the so-called
+API endpoint: the address of the specific API you want to use. This
+address is then followed by a |?| and one or more key-value pairs with an
+equal sign like this: |key=value|. Multiple key-value pairs are
+separated with a \texttt{\&}.
+
+For instance, at the time of the writing of this book, Google offers
+an API endpoint, |https://www.googleapis.com/books/v1/volumes|, to search for books on Google Books.
+If you want to search for books about Python, you can supply a key |q| (which stands for query) with
+the value ``python'' (Example~\ref{ex:googleapi1}). We do not need any specific
+software for this -- we could, in fact, use a web browser as well.
+Popular packages that allow us to do it programatically are \index{httr}\emph{httr}
+in combination with \index{jsonlite}\emph{jsonlite} (R) and \index{requests}\emph{requests} (Python).
+
+But how do we know which parameters (i.e., which key-value pairs) we can use?
+We need to look it up in the documentation of the API we are
+interested in (in this example \url{https://developers.google.com/books/docs/v1/using}).
+There is no other way of knowing that the key to submit a query
+is called |q|, and which other parameters can be specified.
+
+\begin{feature}
+  In our example, we used a simple value to include in the request:
+  the string ``python''.  But what if we want to submit a string that
+  contains, let's say, a space, or a character like |&| or |?| which,
+  as we have seen, have a special meaning in the request? In these
+  cases, you need to ``encode'' your URL using a mechanism called URL
+  encoding or percent encoding. You may have seen this earlier: a
+  space, for instance, is represented by \texttt{\%20}
+\end{feature}
+
+\pyrex[output=py,caption={Retrieving JSON data from the Google Books API. }]{chapter13/googleapi1}
+
+The data our request returns are nested data, and hence, they do not
+really ``fit'' in a tabular data frame. We could keep the data as they
+are (and then, for instance, just extract the key-value pairs that we
+are interested in), but -- for the sake of getting a quick overview --
+let's flatten the data so that they can be represented in a data frame
+(Example~\ref{ex:googleapi2}). This works quite well here, but may be more
+problematic when the items have a widely varying structure. If that
+is the case, we probably would want to write a loop to iterate
+over the different items and extract the information we are interested in.
+
+\begin{ccsexample}
+  \doublecodex{chapter13/googleapi2}
+  \codexoutputtable{chapter13/googleapi2table.r}
+  \caption{Transforming the data into a data frame.}\label{ex:googleapi2}
+\end{ccsexample}
+
+You may have realized that you did not get \emph{all} results.
+This protects you from accidentally downloading a huge dataset (you
+may have underestimated the number of Python books available on the
+market), and saves the provider of the API a lot of bandwith.
+This does not mean that you cannot get more data. In fact, many APIs work
+with \emph{pagination}: you first get the first ``page'' of results,
+then the next, and so on. Sometimes, the API response contains
+a specific key-value pair (sometimes called a ``continuation key'')
+that you can use to get the next results; sometimes, you can just
+say at which result you want to start (say, result number 11) and
+then get the next ``page''. You can then write a loop to retrieve
+as many results as you need (Example~\ref{ex:googleapi3}) -- just make sure
+that you do not get stuck in an eternal loop. When you start playing
+around with APIs, make sure you do not cause unnecessary traffic,
+but limit the number of calls that are made (see also Section~\ref{sec:ethicallegalpractical}).
+
+
+\begin{ccsexample}
+  \doublecodex{chapter13/googleapi3}
+  \codexoutputtable{chapter13/googleapi3table.r}
+  \caption{Full script including pagination.}\label{ex:googleapi3}
+\end{ccsexample}
+
+
+
+Many APIs work very much like the example we discussed, and you
+can adapt the logic above to many APIs once you have read their
+documentation. You would usually start by playing around with
+single requests, and then try to automate the process by means
+of a loop.
+
+However, many APIs have restrictions regarding who can use them,
+how many requests can be made, and so on.
+For instance, you may need to limit the number of requests per minute
+by calling a \index{sleep}\texttt{sleep} function within your loop to delay the
+execution of the next call. Or, you may need to authenticate
+yourself. In the example of the Google Books API, this will
+allow you to request more data (such as whether you own an
+(electronic) copy of the books you retrieved). In this case,
+the documentation outlines that you can simply pass an authentication
+token as a parameter with the URL. However, many APIs use
+more advanced authentication methods such as OAuth (see Section~\ref{sec:authentication}).
+
+Lastly, for many APIs that are very popular with social
+scientists, specific wrapper packages exist (such as, to name just one example, \index{tweepy}\emph{tweepy})
+which are a bit more user-friendly and handle things like authentication,
+respecting rate-limits, etc., for you.
+
+
+%\input{chapter12/webpages}
+
+\section{Retrieving and Parsing Web Pages}
+\label{sec:webpages}
+
+Unfortunately, not all online services we may be interested in offer
+an API -- in fact, it has even been suggested that computational
+researchers have arrived in an ``post-API age'' \citep{Freelon2018}, as
+API access for researchers has become increasingly restricted.
+
+If data cannot be collected using an API (or a similar service, such
+as RSS feeds), we need to resort to web scraping. Before you start a
+web scraping project, make sure to ask the appropriate  authorities for
+ethical and legal advice (see also Section~\ref{sec:ethicallegalpractical}).
+
+Web scraping (sometimes also referred to as harvesting), in essence,
+boils down to automatically downloading web pages aimed at a human
+audience, and extracting meaningful information out of them. One could
+also say that we are reverse-engineering the way the information was
+published on the web. For instance, a news site may always use a
+specific formatting to denote the title of an article -- and we would
+then use this to extract the title. This process is called ``parsing'',
+which in this context is just a fancy term for ``extracting meaningful
+information''.
+
+When scraping data from the web, we can distinguish two different
+tasks: (1) downloading a (possibly large) number of webpages, and (2)
+parsing the content of the webpages. Often, both go hand in
+hand. For instance, the URL of the next page to be downloaded might
+actually be parsed from the content of the current page; or some
+overview page may contain the links and thus has to be parsed first in
+order to download subsequent pages.
+
+We will first discuss how to parse a single HTML page (say, the page
+containing one specific product review, or one specific news article),
+and then describe how to ``scale up'' and repeat the process in a
+loop (to scrape, let's say, all reviews for the product; or all
+articles in a specific time frame).
+
+
+
+
+\subsection{Retrieving and Parsing an HTML Page}
+\label{sec:parsehtml}
+In order to parse an HTML file, you need to have a basic understanding
+of the structure of an HTML file. Open your web browser, visit a
+website of your choice (we suggest to use a simple page, such as
+\url{http://css-book.net/d/restaurants/index.html}), and
+ inspect its underlying HTML code (almost all browsers have a
+function called something like ``view source'', which enables you to
+do so).
+
+You will see that there are some regular patterns in there. For
+example, you may see that each paragraph is enclosed with the tags
+|<p>| and |</p>|. Thinking back to Section~\ref{sec:regular}, you may figure out 
+that you could, for instance, use a regular expression to extract
+the text of the first paragraph. In fact, packages like \index{beautifulsoup}\emph{beautifulsoup}
+under the hood use regular expressions to do exactly that.
+
+But writing your own set of regular expressions to parse an HTML
+page is usually not a good idea (but it can be a last resort when
+everything else fails). Chances are high that you will make
+a mistake or  not handle some edge case correctly; and besides,
+it would be a bit like re-inventing the wheel. Packages like
+\index{rvest}\emph{rvest} (R), \index{beautifulsoup}\emph{beautifulsoup}, and \index{lxml}\emph{lxml} (both Python)
+already do this for you.
+
+In order to use them, though, you need need to have a basic
+understanding of what an HTML page looks like. Here is a simplified
+example:
+
+\begin{lstlisting}
+<html>
+<body>
+<h1>This is a title</h1>
+<div id="main">
+<p> Some text with one <a href="test.html">link </a> </p>
+<img src = "plaatje.jpg">an image </img>
+</div>
+<div id="body">
+<p class="lead"> Some more text </p>
+<p> Even more... </p>
+<p> And more. </p>
+</div>
+</body>
+</html>
+\end{lstlisting}
+
+For now, it is not too important to understand the function of each
+specific tag (although it might help, for instance, to realize that
+\texttt{a} denotes a link, \texttt{h1} a first-level heading,
+\texttt{p} a paragraph and \texttt{div} some kind of section).
+
+What is important, though, is to realize that each tag is opened and
+closed (e.g., \texttt{\small{<p>}} is closed by \texttt{\small{</p>}}).
+Because tags can be nested, we can actually
+draw the code as a tree. In our example, this would look like this:
+
+\dirtree{%
+.1 html.
+.2 body.
+.3 h1.
+.3 div\#main.
+.4 p.
+.5 a.
+.4 img.
+.3 div.
+.4 p.lead.
+.4 p.
+.4 p.
+}
+
+
+Additionally, tags can have \emph{attributes}. For instance, the
+makers of a page with customer reviews may use attributes to specify
+what a section contains. For instance, they may write
+\texttt{<p class="lead"> ... </div>}  to mark the lead paragraph of an article,
+and \texttt{<a href=test.html"> ...</a>} specifies the target of a hyperlink.
+Especially important here are the \texttt{\small{id}} and \texttt{\small{class}} attributes,
+which are often used by webpages to control the formatting.
+\texttt{\small{id}} (indicated with the hash sign \texttt{\small{\#}} above) gives a unique ID to a single element,
+while \texttt{\small{class}} (indicated with a period) assigns a class label to one or more elements.
+This enables web sites to specify their layout and formatting using a technique called Cascading Style Sheets (CSS).
+For example, the web page could set the lead paragraph to be bold.
+The nice thing is that we can exploit
+this information to tell our parser where to find the elements we
+are interested in.
+
+%\input{chapter12/csstable}
+
+
+
+\begin{table}
+  \caption{\label{tab:cssselect}Overview of CSSSelect and XPath syntax}{
+  \begin{tabularx}{\textwidth}{llll}
+\toprule
+\multicolumn{2}{l}{Example}      & CSS Select   & XPath    \\
+\midrule
+\multicolumn{3}{l}{\textit{Basic tree navigation}} \\
+& \texttt{\small{h1}} anywhere in document & \texttt{\small{h1}} & \texttt{\small{//h1}} \\
+& \texttt{\small{h1}} inside a body & \texttt{\small{body h1}} & \texttt{\small{//body//h1}} \\
+& \texttt{\small{h1}} directly inside \texttt{\small{div}} & \texttt{\small{div > h1}} & \texttt{\small{//div/h1}} \\
+& Any node directly inside \texttt{\small{div}} & \texttt{\small{div}} > * & \texttt{\small{//div/*}} \\
+& \texttt{\small{p}} next to a \texttt{\small{h1}} & \texttt{\small{h1 ~ p}} & \texttt{\small{//h1/following-sibling::p}} \\
+& \texttt{\small{p}} next to a \texttt{\small{h1}} & \texttt{\small{h1 + p}} & \texttt{\small{//h1/following-sibling::p[1]}} \\
+\multicolumn{3}{l}{\textit{Node attributes}} \\
+& \texttt{\small{<div id='x1'>}} & \texttt{\small{div\#x1}} & \texttt{\small{//div[@id='x1']}} \\
+& any node with \texttt{\small{id x1}} & \texttt{\small{\#x1}} & \texttt{\small{//*[@id='x1']}} \\
+& \texttt{\small{<div class='row'>}} & \texttt{\small{div.row}} & \texttt{\small{//div[@class='row']}} \\
+& any node with \texttt{\small{class row}} & \texttt{\small{.row}} & \texttt{\small{//*[@class='row']}} \\
+& \texttt{\small{a}} with \texttt{\small{href="\#"}} & (not possible) & \texttt{\small{//a[@href="\#"]}} \\
+\multicolumn{3}{l}{\textit{Advanced tree navigation}} \\
+& \texttt{\small{a}} in a \texttt{\small{div}} with class 'meta' & \texttt{\small{\#main > div.meta a}} & \texttt{\small{//*[@id='main']}} \\
+& $\;\;\;\;$ directly inside the \texttt{\small{main}} element & &$\;\;\;\;$ \texttt{\small{/div[@class='meta']//a}} \\
+& First \texttt{\small{p}} in a \texttt{\small{div}} & \texttt{\small{div p:first-of-type}} & \texttt{\small{//div/p[1]}} \\
+& First child of a \texttt{\small{div}} & \texttt{\small{div :first-child}} & \texttt{\small{//div/*[1]}} \\
+& Second \texttt{\small{p}} in a \texttt{\small{div}} & \texttt{\small{div p:nth-of-type(2)}} & \texttt{\small{//div/p[2]}} \\
+& Second \texttt{\small{p}} in a \texttt{\small{div}} & \texttt{\small{div p:nth-of-type(2)}} & \texttt{\small{//div/p[2]}} \\
+& parent of the \texttt{\small{div}} with id \texttt{\small{x1}} & (not possible) & \texttt{\small{//div[@id='x1']/parent::*}} \\
+\bottomrule
+  \end{tabularx}}{}
+  \end{table}
+
+
+\paragraph{CSS Selectors} The easiest way to specify our parser to look for a specific element is to use a \index{CSS Selector}\emph{CSS Selector},
+which might be familiar to you if you have created web pages.
+For example, to find the lead paragraph(s) we specify \texttt{\small{p.lead}}.
+To find the node with \texttt{\small{id="body"}}, we can specify \texttt{\small{\#body}}.
+You can also use this to specify relations between nodes. For example,
+to find all paragraphs within the body element we would write \texttt{\small{\#body p}}.
+
+Table~\ref{tab:cssselect} gives an overview of the possibilities of CSS Select.
+In general, a CSS selector is a set of node specifiers (like \texttt{\small{h1}}, \texttt{\small{.lead}} or \texttt{\small{div\#body}}),
+optionally with relation specifiers between them.
+So, \texttt{\small{\#body p}} finds a \texttt{\small{p}} anywhere inside the \texttt{\small{id=body}} element,
+while \texttt{\small{\#body > p}} requires the \texttt{\small{p}} to be directly contained inside the body
+(with no other nodes in between).
+
+\paragraph{XPath}
+An alternative to CSS Selectors is \index{XPath}\emph{XPath}.
+Where CSS Selectors are directly based on HTML and CSS styling,
+XPath is a general way to describe nodes in XML (and HTML) documents.
+The general form of XPath is similar to CSS Select:
+a sequence of node descriptors (such as \texttt{\small{h1}} or \texttt{\small{*[@id='body']}}).
+Contrary to CSS Select, you always have to specify the relationship, where
+\texttt{\small{//}} means any direct or indirect descendant and \texttt{\small{/}} means a direct child.
+If the relationship is not a child or descendant relationship (but for example a sibling or parent),
+you specify the \concept[XPath axis]{axis} with e.g. \texttt{\small{//a/parent::p}} meaning an \texttt{\small{a}} anywhere in the document (\texttt{\small{//a}}) which has a direct parent (\texttt{\small{/parent::}}) that is a \texttt{\small{p}}.
+
+A second difference with CSS Selectors is that the \emph{class} and \emph{id} attributes are not given special treatment,
+but can be used with the general \texttt{\small{[@attribute='value']}} pattern.
+Thus, to get the lead paragraph you would specify \texttt{\small{//p[@class='lead']}}.
+The big advantage of this is that you can specify any attribute (including, e.g., \texttt{\small{href=}} or \texttt{\small{data=}}),
+while in CSS Selectors you only have access to the \emph{class} and \emph{id}.
+
+The advantage of XPath is that it is a very powerful tool.
+Everything that you can describe with a CSS Selector can also be described with an XPath pattern,
+but there are some things that CSS Selectors cannot describe,
+such as parents and attributes other than class and id.
+On the other hand, XPath patterns can be a bit harder to write, read, and debug.
+You can choose to use either tool, and you can even mix and match them in a single script,
+but our general recommendation is to use CSS Selectors unless you need to use the specific abilities of XPath.
+
+Example~\ref{ex:htmlparse1} shows how to use XPATHs and CSS selectors to parse
+an HTML page. To fully understand it, open
+\url{http://cssbook.net/d/restaurants/index.html} in a browser and
+look at its source code (all modern browsers have a function ``View
+page source'' or similar), or -- more comfortable -- right-click on an
+element you are interested in (such as a restaurant name) and select
+``Inspect element'' or similar. This will give you a user-friendly
+view of the HTML code.
+
+\pyrex[output=py,caption={Parsing websites using XPATHs or CSS selectors}]{chapter13/htmlparse1}
+
+
+Of course, Example~\ref{ex:htmlparse1} only parses one possible element of interest: the restaurant names. Try to retrieve other elements as well!
+
+\begin{feature}\textbf{Do you care about children?}
+Regardless of whether you use XPATHS or CSS Selectors to specify which part of the page you are interested in, it is often the case that there are other elements within it. Depending on whether you want to also retrieve the text of these elements or not, you have to use different approaches (see Example~\ref{ex:htmlparse2}).
+\end{feature}
+
+\pyrex[output=py,caption={Getting the text of an HTML element versus getting the text of the element and its children}]{chapter13/htmlparse2}
+
+
+Notably, you may want to parse links. In HTML, links use a specific tag, |a|. These tags have an attribute, |href|, which contains the link itself. Example~\ref{ex:htmlparse3} shows how, after selecting the |a| tags, we can access these attributes.
+
+\pyrex[output=py,caption={Parsing link texts and links}]{chapter13/htmlparse3}
+
+
+
+\begin{feature}\textbf{Pretending to be a specific browser.}  When \index{lxml}\emph{lxml}, \index{rvest}\emph{rvest}, or your web browser download an HTML page, they send a so-called HTTP request. This request contains the URL, but also some meta-data, such as a so-called user-agent string. This string specifies the name and version of the browser. Some sites may block specific user agents (such as, for instance, the ones that \index{lxml}\emph{lxml} or \index{rvest}\emph{rvest} use); and sometimes, they deliver different content for different browsers. By using a more powerful module for downloading the HTML code (such as \index{requests}\emph{requests} or \index{httr}\emph{httr}) before parsing it, you can specify your own user-agent string and thus pretend to be a specific browser. If you do a web search, you will quickly find long lists with popular strings. In Example~\ref{ex:htmlparse1useragent}, we rewrote Example~\ref{ex:htmlparse1} such that a custom user-agent can be specified.
+\end{feature}
+
+\pyrex[output=py,caption={Specifying a user agent to pretend to be a
+    specific browser}]{chapter13/htmlparse1useragent}
+
+
+
+
+\subsection{Crawling Websites}
+\label{sec:crawling}
+
+Once we have mastered parsing a single HTML page, it is time to scale
+up. Only rarely are we interested in parsing a single page. In most
+cases, we want to use an HTML page as a starting point, parse it,
+follow a link to some other interesting page, parse it as well, and so
+on. There are some dedicated frameworks for this such as \index{scrapy}\emph{scrapy},
+but in our experience, it may be more of a burden to learn that
+framework than to just implement your crawler yourself.
+
+Staying with the example of a restaurant review website, we might be
+interested retrieving all restaurants from a specific city, and for
+all of these restaurants, all available reviews.
+
+Our approach, thus, could look as follows:
+
+\begin{enumerate}
+	\item Retrieve the overview page.
+	\item Parse the names of the restaurants and the corresponding links.
+	\item Loop over all the links, retrieve the corresponding pages.
+	\item On each of these pages, parse the interesting content (i.e., the reviews, ratings, and so on).
+\end{enumerate}
+
+So, what if there are multiple overview pages (or multiple pages with
+reviews)? Basically, there are two possibilities: the first
+possibility is to look for the link to the next page, parse it,
+download the next page, and so on.  The second possibility exploits
+the fact that often, URLs are very systematic: for instance, the first
+page of restaurants might have a URL such as
+\url{http://myreviewsite.com/amsterdam/restaurants.html?page=1}.  If this
+is the case, we can simply construct a list with all possible URLs
+(Example~\ref{ex:createurls})
+
+\pyrex[output=py,caption={Generating a list of URLs that follow the same pattern.}]{chapter13/createurls}
+
+Afterwards, we would just loop over this list and retrieve all the
+pages (a bit like how we approached Example~\ref{ex:googleapi3} in Section~\ref{sec:apis}).
+
+However, often, things are not as straightforward, and we need to find
+the correct links on a page that we have been parsing -- that's why we
+\emph{crawl} through the website.
+
+Writing a good crawler can take some time, and they will look very
+differently for different pages. The best advice is to build them up
+step-by-step. Carefully inspect the website you are interested in.
+Take a sheet of paper, draw its structure, and try to find out which
+pages you need to parse, and how you can get from one page to the next.
+Also think about how the data that you want to extract should be organized.
+
+We will illustrate this process using our mock-up review website \url{http://cssbook.net/d/restaurants/}.
+First, have a look at the site and try to understand its structure.
+
+You will see that it has an overview page, |index.html|, with the
+names of all restaurants and, per restaurant, a link to a page with reviews.
+Click on these links, and note your observations, such as:
+\begin{itemize}
+\item the pages have different numbers of reviews;
+\item each review consists of an author name, a review text, and a rating;
+\item some, but not all, pages have a link saying ``Get older reviews''
+\item \ldots
+\end{itemize}
+
+If you combine what you just learned about extracting text and links from HTML
+pages with your knowledge about control structures like loops and conditional
+statements (Section~\ref{sec:controlstructures}), you can now write your own crawler.
+
+Writing a scraper is a craft, and there are several ways of achieving your goal.
+You probably want to develop your scraper in steps: first write a function to
+parse the overview page, then a function to parse the review pages, then try
+to combine all elements into one script. Before you read on, try to write
+such a scraper.
+
+To show you one possible solution, we implemented a scraper in Python
+that crawls and parses all reviews for all restaurants
+(Example~\ref{ex:crawling}), which we describe in detail below.
+
+\pyrex[output=py,input=py,caption={Crawling a website}]{chapter13/crawling}
+
+First, we need to get a list of all restaurants and the links to their
+reviews. That's what is done in the function |get_restaurants|. This
+is actually the first thing we do (see line 34--35).
+
+We now want to loop over these links and retrieve the reviews.  We
+decided to use a \emph{generator} (Section~\ref{sec:controlstructures}): instead of writing a
+function that collects \emph{all} reviews in a list first, we let the
+function yield each review immediately -- and immediately append that review
+to a file. This has a big advantage: if our scraper fails (for
+instance, due to a time out, a block, or a programming error), then we
+have already saved the reviews we got so far.
+
+We loop over the links to the restaurants (line 38) and call the
+function |get_reviews| (line 40). Each review it returns (the review
+is a  dict) gets the name of the restaurant as an extra key, and then
+gets written to a file which contains one JSON-object per line (also
+known as a jsonlines-file).
+
+The function |get_reviews| takes a link to a review page as input and
+yields reviews. If we knew all pages with reviews already, then we
+would not need the while loop statement in line 16 and the lines
+28--33. However, as we have seen, some review pages contain a link to
+older reviews. We therefore use a loop that runs forever (that is what
+|while True:| does), \emph{unless} it encounters a |break| statement
+(line 33).  An inspection of the HTML code shows that these links have
+a |span| tag with the attribute |class="backbutton"|. We therefore
+check if such a button exists (line 27), and if so, we get its |href|
+attribute (i.e., the link itself), overwrite the |url| variable with
+it, and then go back to line 16, the beginning of the loop, so that we
+can download and parse this next URL.  This goes on until such a
+link is no longer found.
+
+
+
+\subsection{Dynamic Web Pages}
+\label{sec:selenium}
+
+You may have realized that all our scraping efforts until now
+proceeded in two steps: we retrieved (downloaded) the HTML source of a
+web page and then parsed it. However, modern websites more and more frequently 
+are dynamic rather than static. For example, after being loaded, they
+load additional content, or what is displayed changes based on what
+the user does. Frequently, some JavaScript is run within the user's
+browser to do that. However, we do not have a browser here. The HTML
+code we downloaded may contain some instructions for the browser that
+some code needs to be run, but in the absence of a browser, our Python
+or R script cannot do this.
+
+As a first test to check out whether this is a concern, you can simply
+check whether the HTML code in your browser is the same as that you would
+get if you downloaded it with R or Python.  After having retrieved the
+page (Example~\ref{ex:htmlparse1useragent}), you simply dump it to a file
+(Example~\ref{ex:htmltofile}) and open this file in your browser to verify that
+you indeed downloaded what you intended to download (and not, for
+instance, a login page, a cookie wall, or an error message).
+
+\pyrex[output=none,caption={Dumping the HTML source to a file}]{chapter13/htmltofile}
+
+
+If this test  shows that the data you are interested in is
+indeed not part of the HTML code you can retrieve with R or Python,
+and use the following checklist to find
+
+\begin{enumerate}
+\item Does using a different user-agent string (see above) solve the issue?
+\item Is the issue due to some cookie that needs to be accepted or you need to log in (see below)?
+\item Is a different page delivered for different browsers, devices, display settings, etc.?
+\end{enumerate}
+
+If all of this does not help, or if you already know for sure that the
+content you are interested in is dynamically fetched via JavaScript or
+similar, you can use \index{Selenium}\emph{Selenium} to literally start a browser and
+extract the content you are interested in from there. Selenium has
+been designed for testing web sites and allows you to automate clicks
+etc. in a browser window, and also supports CSS selectors and XPATHS
+to specify parts of the web page.
+
+Using Selenium may require some additional setup on your computer,
+which may depend on your operating system and the software versions you
+are using -- check out the usual online sources for guidance if
+needed.  It is possible to use  Selenium through R using
+\index{Rselenium}\emph{Rselenium}. However, doing so can be quite a hassle and requires,
+ running a separate Selenium server, for instance,  using
+Docker. If you opt to use Selenium for web scraping, your safest bet
+is probably to follow an online tutorial and/or to dive into the
+documentation. To give you a first impression of the general working,
+Example~\ref{ex:selenium} shows you how to (at the time of writing of this
+book) open Firefox, surf to Google, google for Tintin by entering that
+string and pressing the return key, click on the first link containing
+that string, and take a screenshot of the result.
+
+\pyrex[output=none,input=py,caption={Using Selenium to literally open a browser, input text, click on a link, and take a screenshot.}]{chapter13/selenium}
+
+
+\begin{feature}\textbf{Loosing your head}
+If you want to run long-lasting scraping processes using Selenium in
+the background (or on a server without a graphical user interface),
+you may want to look into what is called a ``headless'' browser. For
+instance, Selenium can start Firefox in ``headless'' mode, which means
+that it will run without making any connection to a graphical
+interface. Of course, that also means that you cannot watch Selenium
+scrape, which may make debugging more difficult. You could opt for
+developing your scraper first using a normal browser, and then
+changing it to use a headless browser once everything works.
+\end{feature}
+
+%\input{chapter12/authentication}
+\section{Authentication, Cookies, and Sessions}
+\label{sec:authentication}
+
+\subsection{Authentication and APIs}
+\label{sec:authapi}
+When we introduced APIs in Section~\ref{sec:apis}, we used the example of an
+API where you did not need to authenticate yourself. As we have seen,
+using such an API is as simple as sending an HTTP request to an
+endpoint and getting a response (usually, a JSON object) back. And
+indeed, there are plenty of interesting APIs (think for instance of
+open government APIs) that work this way.
+
+While this has obvious advantages for you, it also has some serious
+downsides from the perspective of the API provider as well as from
+a security and privacy standpoint. The more confidential the data is,
+the more likely it is that the API provider needs to know who you
+are in order to determine which data you are allowed to retrieve;
+and even if the data are not confidential, authentication may be
+used to limit the number of requests that an individual can make
+in a given time frame.
+
+In its most simple form, you just need to provide a unique key that
+identifies you as a user. For instance, Example~\ref{ex:textrazor} shows how
+such a key can be passed along as an HTTP header, essentially as
+additional information next to the URL that you want to retrieve (see
+also Section~\ref{sec:authweb}). The example shows a call to an endpoint
+of a commercial API for natural language processing to inform how
+many requests we have made today.
+
+\pyrex[output=py,input=both, caption={Passing a key as HTTP request header to authenticate at an API endpoint}]{chapter13/textrazor}
+
+As you see, using an API that requires authentication by passing a key
+as an HTTP header is hardly more complicated than using APIs that do
+not require authentication such as outlined in Section~\ref{sec:apis}.
+However, many APIs use more complex protocols for authentication.
+
+The most popular one is called OAuth, and it is used by many APIs
+provided by major players such as Google, Facebook, Twitter, Github,
+LinkedIn, etc. Here, you have a client ID and a client secret
+(sometimes also called consumer key and consumer secret, or API key and API secret) and an
+access token with associated access token secret. The first pair
+authenticates you as a user, the second pair authenticates the
+specific ``app'' (i.e., your script). Once authenticated, your
+script can then interact with the API. While it is possible to
+directly work with OAuth HTTP requests using \index{requests\_oauthlib}\emph{requests\_oauthlib}
+(Python) or \index{httr}\emph{httr} (R), chances are relatively low that you
+have to do so, unless you plan on really developing your own app
+or even your own API: for all popular API's, so-called wrappers,
+packages that provide a simpler interface to the API, are available
+on pypi and CRAN. Still, all of these require to have at least
+a consumer key and a consumer secret. The access token sometimes
+is generated via a web interface where you manage your account
+(e.g., in the case of Twitter), or can be acquired by your script
+itself, which then will redirect the user to a website in which
+they are asked to authenticate the app. The nice thing about this
+is that it only needs to happen once: once your app is authenticated,
+it can keep making requests.
+
+
+
+
+\subsection{Authentication and Webpages}
+\label{sec:authweb}
+In this section, we briefly discuss different approaches for dealing
+with websites where you need to log on, accept something (e.g., a
+so-called cookie wall), or have to otherwise authenticate yourself.
+One approach can be the use of a web testing framework like Selenium
+(see Section~\ref{sec:selenium}): you let your script literally open a browser
+and, for instance, fill in your login information.
+
+However, sometimes that's not necessary and we can still use simpler
+and more efficient webscraping without invoking a browser. As we have already
+seen in Section~\ref{sec:parsehtml}, when making an HTTP request, we can transmit
+additional information, such as the so-called user-agent string. In a
+similar way, we can pass other information, such as cookies.
+
+In the developer tools of your browser (which we already used to determine
+XPATHs and CSS selectors), you can look up which cookies a specific website
+has placed. For instance, you could inspect all cookies \emph{before} you
+logged on (or passed a cookie wall) and again inspect them afterwards to
+determine what has changed. With this kind of reverse-engineering, you
+can find out what cookies you need to manually set.
+
+In Example~\ref{ex:cookiewall}, we illustrate this for a specific page  (at the
+time of writing of our book). Here, by inspecting the cookies in Firefox,
+we found out that clicking ``Accept'' on the cookie wall landing page
+caused a cookie with the name |cpc| and the value |10| to be set.   To set those cookies in our scraper, the easiest way is to retrieve that page first and store the cookies sent by the server. In Example~\ref{ex:cookiewall}, we therefore start a \emph{session}
+and try to download the page. We know that this will only show us the
+cookie wall -- but it will also generate the necessary cookies. We then
+store these cookies, and add the cookie that we want to be set (|cpc=10|)
+to this cookie jar. Now, we have all cookies that we need for future
+requests. They will stay there for the whole session.
+
+If we only want to get a single page, we may not need to start a session
+to remember all the cookies, and we can just directly pass the single
+cookie we care about to a request instead (Example~\ref{ex:cookiewall2}).
+
+
+
+
+\pyrex[output=py,input=py, caption={Explicitly setting a cookie to circumvent a cookie wall}]{chapter13/cookiewall}
+\pyrex[output=none,input=py, caption={Shorter version of Example~\ref{ex:cookiewall} for single requests}]{chapter13/cookiewall2}
+
+
+%\input{chapter12/ethicslegalpractical}
+
+\section{Ethical, Legal, and Practical Considerations}
+\label{sec:ethicallegalpractical}
+Web scraping is a powerful tool, but it needs to be handled
+responsibly. Between the white area of sites that explicitly consented
+to creating a copy of their data (for instance, by using a creative
+commons license) and the black area of an exact copy of copyrighted
+material and redistributing it as it is, there is a large gray area
+where it is less clear what is acceptable and what is not.
+
+There is a tension between legitimate interests of the operators of
+web sites and the producers of content on the one hand, and the
+societal interest of studying online communication on the other
+hand. Which interest prevails may differ on a case-to-case basis. For
+instance, when using APIs as described in Section~\ref{sec:apis}, in most
+cases, you have to consent to the terms of service (TOS) of the API
+provider.
+
+For instance, the Twitter TOS allow you to redistribute the numerical
+tweet ids, but not the tweets themselves, and therefore, it is common
+to share such lists of ids with fellow researchers instead of the
+``real'' Twitter datasets. Of course, this is not optimal from a
+reproducibility point of view: if another researcher has to retrieve
+the tweets again based on their ids, then this is not only cumbersome,
+but most likely also leads to a slightly different dataset, because
+tweets may have been deleted in the meantime. At the same time, it is
+a compromise most people can live with.
+
+Other social media platforms have closed their APIs or tightened the
+restrictions a lot, making it impossible to study many pressing
+research questions. Therefore, some have even called researchers to
+neglect these TOS, because ``in some circumstances the benefits to
+society from breaching the terms of service outweigh the detriments to
+the platform itself'' \citep[p.~1561]{Bruns2019}. Others acknowledge
+the problem, but doubt that this is a good solution
+\citep{Puschmann2019}.
+In general, one needs to distinguish between the act of collecting the
+data and sharing the data. For instance, in many jurisdictions, there
+are legal exemptions for collecting data for scientific purposes, but
+that does not mean that they can be re-distributed as they are
+\citep{VanAtteveldt2019}.
+
+This chapter can by no means replace the consultation of a legal
+expert and/or an ethics board, but we would like to offer some
+strategies to minimize potential problems.
+
+\paragraph{Be nice} Of course, you could send hundreds of requests per minute (or second) to a website and try to download everything that they have ever published. However, this causes unnecessary load on their servers (and you would probably  get blocked). If, on the other hand, you carefully think about what you really need to download, and include a lot of waiting times (for instance, using \index{sys.sleep}\texttt{sys.sleep} (R) or \index{time.sleep}\texttt{time.sleep} (Python) so that your script essentially does the same as could be done by hiring a couple of student assistants to copy-paste the data manually, then problems are much less likely to arise.
+
+\paragraph{Collaborate} Another way to minimize traffic and server load is to collaborate more. A concerted effort with multiple researchers may lead to less duplicate data and in the end probably an even better, re-usable dataset.
+
+\paragraph{Be extra careful with personal data} Both from an ethical and a legal point of view, the situation changes drastically as soon as personal data are involved. Especially since the GDPR regulations took effect in the European Union, collecting and processing such data requires a lot of additional precaution and is usually subject to explicit consent. It is clearly infeasible to ask every Twitter user  for consent to process their tweet and doing so is probably covered by research exceptions, the general advice is to store as little personal data as possible and only what is absolutely needed. Most likely, you need to have a data management plan in place, and should get appropriate  advice from your legal department. Therefore, think carefully whether you really need, for instance, the user names of the authors of reviews you are going to scrape, or whether the text alone suffices.
+
+Once all ethical and legal concerns are sorted out and you have made sure that you have written a scraper in such a way that it does not cause unnecessary traffic and load on the servers from which you are scraping, and after doing some test runs, it is time to think about how to actually run it on a larger scale. You may already have figured that you probably do not want to run your scraper from a Jupyter Notebook that is constantly open in your browser on your personal laptop. Also here, we would like to offer some suggestions.
+
+\paragraph{Consider using a database} Imagine the following scenario: your scraper visits hundreds of websites, collects its results in a list or in a data frame, and after hours of running suddenly crashes -- maybe because some element that you were sure must exist on each page,  exists only on 999 out of 1000 pages, because a connection timed out, or any other error. Your data is lost, you need to start again (not only annoying, but also undesirable from a traffic minimization point of view). A better strategy may be to immediately write the data for each page  to a file. But then, you need to handle a potentially huge number of files later on. A much better approach, especially if you plan to run your scraper repeatedly over a long period of time, is to consider the use of a database in which you dump the results immediately after a page has been scraped (see Section~\ref{sec:databases}).
+
+\paragraph{Run your script from the command line} Store your scraper as a .py or .R script and run it from your terminal (your command line) by typing |python myscript.py| or |R myscript.R| rather than using an IDE such as Spyder or R Studio or a Jupyter Notebook. You may want to have your script print a lot of status information (for instance, which page it is currently scraping), so that you can watch what it is doing. If you want to, you can have your computer run this script in regular intervals (e.g., once an hour). On Linux and MacOS, for instance, you can use a so-called \index{cron}\emph{cron} job to automate this.
+
+\paragraph{Run your script on a server} If your scraper runs for longer than a couple of hours, you may not want to run it on your laptop, especially if your Internet connection is not stable. Instead, you may consider using a server. As we will explain in Section~\ref{sec:cloudcomputing}, it is quite affordable to set up a Linux VM on a cloud computing platform (and next to commercial services, in some countries and institutions there are free services for academics). You can then use tools like \index{nohup}\emph{nohup} or \index{screen}\emph{screen} to run your script on the background, even if you are no longer connected to the server (see Section~\ref{sec:cloudcomputing}).
+
+
 
