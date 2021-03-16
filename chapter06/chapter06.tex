@@ -447,7 +447,7 @@ As a first relatively simple example, consider the datasets containing public an
 This data is ``wide'' in the sense that the measurements for the different countries are contained in the columns.
 To make this data ``long'' we would have to create rows for each country--year combination.
 This will make it much easier to do further data wrangling or analysis, as you can now e.g.\ directly merge the datasets and compute the pooled correlation between these variables.
-In fact, when we merged these datasets earlier in Example~\ref{ex:merge}, we selected only the measurements for France, essentially turning it into long data.
+In fact, when we merged these datasets earlier in Example~\ref{ex:merge2}, we selected only the measurements for France, essentially turning it into long data.
 
 \begin{ccsexample}
   \doublecodex{chapter06/merge1}
@@ -456,7 +456,7 @@ In fact, when we merged these datasets earlier in Example~\ref{ex:merge}, we sel
   \begin{tcolorbox}[title=Output]
     \includegraphics[width=.5\linewidth]{{snippets/chapter06/merge2.r}.png}
   \end{tcolorbox}
-  \caption{Converting wide to long data to facilitate merging and visualizing.}\label{ex:merge}
+  \caption{Converting wide to long data to facilitate merging and visualizing.}\label{ex:merge2}
 \end{ccsexample}
 
 \refex{pivot} shows how you can ``pivot'' the capital data to long format using \index{pivot\_longer}\texttt{pivot\_longer} (R) and \index{melt}\texttt{melt} (Pandas). The second part of this example then goes on to do this for both datasets, merge them, and partially reproduce Figure~4.4 from \citet{piketty}.

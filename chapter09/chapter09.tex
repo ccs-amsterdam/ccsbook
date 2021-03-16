@@ -23,11 +23,11 @@ Many datasets that are relevant for social science consist of textual data, from
   In Python, most functions are built-in, but will show how to use these functions in \index{pandas}\emph{pandas} and also introduce the \index{regex}\emph{regex} alternative to built-in regular expressions.
 You can install these packages with the code below if needed  (see Section~\ref{sec:installing} for more details):
 
-\doublecodex{chapter10/chapter10install}
+\doublecodex{chapter09/chapter09install}
 
 \noindent After installing, you need to import (activate) the packages every session:
 
-\doublecodex{chapter10/chapter10library}
+\doublecodex{chapter09/chapter09library}
 
 \end{feature}
 
@@ -65,10 +65,10 @@ This is reflected of course in the type name, with R calling it a \index{charact
 \begin{ccsexample}
   \begin{center} \includegraphics[width=.6\textwidth]{chapter09/text.pdf}\end{center}
 
-\doublecodex{chapter10/string}
-\doubleoutput{chapter10/string}
-\doublecodex{chapter10/manystrings}
-\doubleoutput{chapter10/manystrings}
+\doublecodex{chapter09/string}
+\doubleoutput{chapter09/string}
+\doublecodex{chapter09/manystrings}
+\doubleoutput{chapter09/manystrings}
 
   \caption{Internal representation and of single and multiple texts.}\label{ex:text}
 \end{ccsexample}
@@ -136,7 +136,7 @@ Example~\ref{ex:clean} shows how to conduct this cleaning process.
 While you can get quite far with these techniques, there are more advanced and flexible approaches possible.
 For instance, you probably do not want to list \emph{all possible} HTML tags in separate \index{replace}\texttt{replace} methods or \index{str\_replace\_all}\texttt{str\_replace\_all} functions. In the next section, we therefore show how to use so-called \index{regular expressions}\emph{regular expressions} to formulate such generalizable patterns.
 
-\pyrex[output=both,caption=Some basic text cleaning approaches]{chapter10/clean}
+\pyrex[output=both,caption=Some basic text cleaning approaches]{chapter09/clean}
 
 \note{\textbf{To regex or not to regex in Python} You may wonder why we introduce basic string methods like \index{replace}\texttt{replace} or the \index{split}\texttt{split}-then-\index{join}\texttt{join} trick, if everything can be done with regular expressions anyway. There are a couple of reasons for still using these methods: first, they are easy and don't have any dependencies. If you just want to replace a single thing, then you don't need to import any additional module. Second, regular expressions are considerably slower than string methods -- in most cases, you won't notice, but if you do a lot of replacements (think in thousands per news article, for a million  articles), then this may matter. Third, you can use the \index{join}\texttt{join} trick also for other things like punctuation removal -- in this case, by generating a list of all characters in a string called \verb|text| provided they are no punctuation characters, and then joining them directly to each other:
 \verb|from string import punctuation; "".join([c for c in text if c not in punctuation])|}
@@ -353,13 +353,13 @@ For a better way to deal with analyzing HTML, please see Chapter~\ref{chap:scrap
 
 Now that you hopefully have a firm grasp of regular expression syntax,
 it is relatively easy to use these patterns in Python or R (or most other languages).
-Table~\ref{tab:regexample} lists the commands for four of the most common use cases:
+Table~\ref{tab:regextract} lists the commands for four of the most common use cases:
 identifying matching texts, removing and replacing all matching text, extracting matched groups, and splitting texts.
 
 %\input{chapter09/tabregexcmd}
 
 \begin{table}
-  \caption{\label{tab:regexample}Regular expression syntax}{
+  \caption{\label{tab:regextract}Regular expression syntax}{
     \begin{tabularx}{\textwidth}{llll}
       \toprule
       Operation & R (\index{stringr}\emph{stringr}) & Python & Pandas \\
@@ -400,7 +400,8 @@ which would then be represented in R as \verb|"\\\\"|!
 Example~\ref{ex:clean} uses regular expressions to clean a single text, by removing HTML tags and punctuation,
 normalizing whitespace, and also uses string commands for converting to lower case and trimming leading and trailing spaces.
 
-\pyrex[caption=Using regular expressions to clean a text]{chapter10/clean}
+%TODO: Duplicate snippet clean
+\pyrex[caption=Using regular expressions to clean a text]{chapter09/clean}
 
 Finally, Example~\ref{ex:cleanpandas} shows how you can run the various commands on a whole column of text rather than on individual strings,
 using  a small set of made-up tweets to showcase various operations.
@@ -413,7 +414,7 @@ first, we remove every word starting with an at-sign, hash, or http, removing ev
 Then, we replace everything that is not a letter by a single space.
 
 
-\pyrex[output=r,format=table,caption=Using regular expressions on a data frame]{chapter10/cleanpandas}
+\pyrex[output=r,format=table,caption=Using regular expressions on a data frame]{chapter09/cleanpandas}
 
 \subsection{Splitting and Joining Strings, and Extracting Multiple Matches}
 
@@ -424,7 +425,7 @@ There are three common operations, however, that complicate matters:
 you can \emph{split} a string into multiple substrings, or \emph{extract} multiple matches from a string,
 and you can \emph{join} multiple matches together.
 
-\pyrex[caption=Splitting\, extracting\, and joining a single text]{chapter10/split}
+\pyrex[caption=Splitting\, extracting\, and joining a single text]{chapter09/split}
 
 Example~\ref{ex:split} shows the ``easier'' case of splitting up a single text and joining the result back together.
 We show three different ways to split: using a fixed pattern to split on (in this case, a comma plus space);
@@ -466,12 +467,12 @@ This is shown in the final line of the example, where we split a tweet into word
 
 
 \begin{ccsexample}
-\doublecodex{chapter10/splitlong1}
-\codexoutputtable{chapter10/splitlong1.r}
-\doublecodex{chapter10/splitlong2}
-\codexoutputtable{chapter10/splitlong2.r}
-\doublecodex{chapter10/splitlong3}
-\codexoutputtable{chapter10/splitlong3.r}
+\doublecodex{chapter09/splitlong1}
+\codexoutputtable{chapter09/splitlong1.r}
+\doublecodex{chapter09/splitlong2}
+\codexoutputtable{chapter09/splitlong2.r}
+\doublecodex{chapter09/splitlong3}
+\codexoutputtable{chapter09/splitlong3.r}
   \caption{Applying split and extract\_all on text columns'}\label{ex:splitlong}
 \end{ccsexample}
 

@@ -19,11 +19,11 @@
  %TODO FIX
 In this chapter, we use the Python package \index{statsmodels}\emph{statsmodels} for classical statistical modeling, before we move on to use a dedicated machine learning package, \index{scikit-learn}\emph{scikit-learn}. In R, we use base R for statistical modeling, \index{rsample}\emph{rsample} for splitting our dataset, \index{caret}\emph{caret} for machine learning, and \index{pROC}\emph{pROC} for determining the Receiver Operating Characteristic (ROC) curve. Note that caret requires additional packages for the actual machine learning models: \index{naivebayes}\emph{naivebayes}, \index{LiblineaR}\emph{LiblineaR}, and \index{randomforest}\emph{randomforest}. You can install them as follows (see Section~\ref{sec:installing} for more details):
 
-\doublecodex{chapter09/chapter09install}
+\doublecodex{chapter08/chapter08install}
 
 \noindent After installing, you need to import (activate) the packages every session:
 
-\doublecodex{chapter09/chapter09library}
+\doublecodex{chapter08/chapter08library}
 
 Note that in Python, we could also simply write \texttt{\small{import sklearn}} once instead of all the \texttt{\small{from sklearn import ...}} lines. But our approach saves a lot of typing later on, as we can simply write (\texttt{\small{classification\_report}}) instead of \texttt{\small{sklearn.metrics.classification\_report}}, for instance.
 \end{feature}
@@ -109,7 +109,7 @@ it depends on the study design whether the relationship can really be interprete
 as a causal effect).
 Additionally, we might look at the explained variance $R^2$, to assess how well the model fits our data. In Example~\ref{ex:ols} we use this regression approach to model the relationship of \emph{age} and \emph{gender} over the number of days per week a person reads a \emph{newspaper}. We fit the linear model using the \index{stats}\emph{stats} function \index{lm}\texttt{lm} in R and the \index{statsmodels}\emph{statsmodels} function \index{ols}\texttt{ols} (imported from the module statsmodels.formula.api) in Python.
 
-\pyrex[output=py, caption=Obtaining a model through estimating an OLS regression]{chapter09/ols}
+\pyrex[output=py, caption=Obtaining a model through estimating an OLS regression]{chapter08/ols}
 
 Most traditional social-scientific analyses stop after reporting and
 interpreting the coefficients of \emph{age} ($\beta = 0.0676$) and \emph{gender} ($\beta = -0.0896$), as well as their standard errors, confidence intervals, p-values, and the total explained variance (19\%).
@@ -134,7 +134,7 @@ $\hat{y}_{woman40} = -0.0896 + 0.0676 \cdot 40 + 0 \cdot 0.1767 = 2.6144$
 This was easy to do by hand, but of course, we could do this automatically for a large and essentially unlimited number of cases.
 This could be as simple as shown in Example~\ref{ex:olspredict}.
 
-\pyrex[output=py, caption=Using the OLS model we estimated before to predict the dependent variable for new data where the dependent variable is unknown.]{chapter09/olspredict}
+\pyrex[output=py, caption=Using the OLS model we estimated before to predict the dependent variable for new data where the dependent variable is unknown.]{chapter08/olspredict}
 
 In doing so, we shift our attention from the interpretation of coefficients to the prediction of the dependent variable for new, unknown cases. We do not
 care about the actual values of the coefficients, we just need them for our prediction.
@@ -238,7 +238,7 @@ a test dataset. We use |y_train| to denote the training labels and
 so-called random-state seed to make sure that the random splitting
 will be the same when re-running the code. We can easily split these datasets using the \index{rsample}\emph{rsample} function \index{initial\_split}\texttt{initial\_split} in R and the \index{sklearn}\emph{sklearn} function \index{train\_test\_split}\texttt{train\_test\_split} in Python.
 
-\pyrex[output=py, caption=Preparing a dataset for supervised machine learning]{chapter09/preparedata}
+\pyrex[output=py, caption=Preparing a dataset for supervised machine learning]{chapter08/preparedata}
 
 We now can \emph{train our classifier} (i.e., estimate our model using the
 training dataset contained in the objects \texttt{X\_train} and \texttt{y\_train}). This can be as straightforward as estimating a
@@ -250,7 +250,7 @@ variables, combining them, or by converting text to numerical word
 frequencies.
 Example~\ref{ex:nb} shows how easy it is to train a classifier using the Na\"ive Bayes algorithm with packages \index{caret}\emph{caret}/\index{naivebayes}\emph{naivebayes} in R and \index{sklearn}\emph{sklearn} in Python (this approach will be better explained in Subsection~\ref{subsec:Na\"ive Bayes}).
 
-\pyrex[output=none, caption=A simple Na\"ive Bayes classifier]{chapter09/nb}
+\pyrex[output=none, caption=A simple Na\"ive Bayes classifier]{chapter08/nb}
 
 But before we can actually use this classifier to do some useful work, we need to test how capable it  is to predict the
 correct labels, given a set of features. One might think that we could
@@ -282,7 +282,7 @@ prediction is right.\footnote{We assume here that the manual annotation
     standard} that reflects the \emph{ground truth} as closely as
   possible, and that it by definition cannot be outperformed. When creating the manual annotations, it is therefore important to safeguard their quality. In particular, one  should calculate and report some reliability measures, such as the \emph{intercoder reliability} which tests the degree of agreement between two or more annotators in order to check if our classes are well defined and the coders are doing their work correctly.}
 
-\pyrex[output=py, caption=Calculating precision and recall]{chapter09/classificationreport}
+\pyrex[output=py, caption=Calculating precision and recall]{chapter08/classificationreport}
 
 As shown in Example~\ref{ex:classificationreport}, we can create a \emph{confusion matrix} (generated with \index{caret}\emph{caret} function \index{confusionMatrix}\texttt{confusionMatrix} in R and \index{sklearn}\emph{sklearn} function \index{confusion\_matrix}\texttt{confusion\_matrix} in Python), and then estimate two measures: \emph{precision} and \emph{recall} (using base R calculations in R and \index{sklearn}\emph{sklearn} function \index{classification\_report}\texttt{classification\_report} in Python). In a binary classification, the \emph{confusion matrix} is a useful table in which each column usually represents the number of cases in a predicted class, and each row the number of cases in the real or actual class. With this matrix (see Figure~\ref{fig:matrix}) we can then estimate the number of \emph{true positives} (TP) (correct prediction), \emph{false positives} (FP) (incorrect prediction), \emph{true negatives} (TN) (correct prediction) and \emph{false negatives} (FN) (incorrect prediction).
 
@@ -392,7 +392,7 @@ conditional probabilities and calculate the percentage of cases
 If we fill this in our formula, we get:
 
 
-$$ P(\rm{label} \mid \rm{features}) = \frac{{P}(x_1 \mid \rm{label}) \cdot {a{P}(x_2 \mid \rm{label})\ \cdot {P}(x_3 \mid \rm{label}) \cdot {P}(\rm{label})}{{P}(x_1) \cdot {P}(x_2) \cdot P(x_3)}$$.
+$$ P(\rm{label} \mid \rm{features}) = \frac{{P}(x_1 \mid \rm{label}} \cdot {a{P}(x_2 \mid \rm{label})\ \cdot {P}(x_3 \mid \rm{label}) \cdot {P}(\rm{label})}{{P}(x_1) \cdot {P}(x_2) \cdot P(x_3)}$$.
 
 Remember that all we need to do to calculate this formula is: (1)
 count how many cases we have in total; (2) count how many cases
@@ -522,7 +522,7 @@ And, of course, you actually can do OLS regression (or more advanced
 regression models) if you want to estimate a continuous outcome.
 
 
-\pyrex[output=none, caption=A simple logistic regression classifier]{chapter09/logreg}
+\pyrex[output=none, caption=A simple logistic regression classifier]{chapter08/logreg}
 
 
 
@@ -578,7 +578,7 @@ can be very instructive here.
 
 Example~\ref{ex:svm} shows how we implement standard SVM to our data using the \index{caret}\emph{caret} method \index{svmLinear3}\texttt{svmLinear3} in R and the \index{sklearn}\emph{sklearn} (module svm) function \index{SVC}\texttt{SVC} in Python. You can see in the code that feature data is standardized or normalized (with $m = 0$ and $\rm{std} = 1$) before model training in order to have all the features measured at the same scale, as required by SMV.
 
-\pyrex[output=none, caption=A simple Support Vector Machine classifier]{chapter09/svm}
+\pyrex[output=none, caption=A simple Support Vector Machine classifier]{chapter08/svm}
 
 
 
@@ -675,7 +675,7 @@ account probability values instead of simple votes.
 
 In Example~\ref{ex:randomforest} we create a random forest classifier with 100 trees using the \index{caret}\emph{caret} method \index{rf}\texttt{rf} in R and the \index{sklearn}\emph{sklearn} (module ensamble) function \index{RandomForestClassifier}\texttt{RandomForestClassifier} in Python.
 
-\pyrex[output=none, caption=A simple Random Forest classifier]{chapter09/randomforest}
+\pyrex[output=none, caption=A simple Random Forest classifier]{chapter08/randomforest}
 
 Because random forests alleviate the problems of decision trees, but
 keep the advantage of being able to model non-linear relationships,
@@ -962,15 +962,15 @@ The second approach (also knwon as Yoden's J) is to find the threshold
 value with the maximum distance between TPR and FPR, and use that one.
 
 \begin{ccsexample}
-  \doublecodex{chapter09/cutoffpoint}
-  \doubleoutput{chapter09/cutoffpoint}
-  \doublecodex{chapter09/cutoffpointb}
-  \doubleoutput{chapter09/cutoffpointb}
+  \doublecodex{chapter08/cutoffpoint}
+  \doubleoutput{chapter08/cutoffpoint}
+  \doublecodex{chapter08/cutoffpointb}
+  \doubleoutput{chapter08/cutoffpointb}
   Note: Python and R have slightly different outcomes because the underlying implementation is different, but for this example that may be ignored.
   \caption{Choosing a different cutoff point for predictions with logistic regression. In this case, we make a trade-off and maximize the difference between false positive rate and true positive rate to improve the precision for the the second category the precision for the first category}\label{ex:cutoffpoint}
 \end{ccsexample}
 
-\pyrex[output=py,format=png,caption={The ROC curve of a (not very impressive) classifier and its area under the curve (AUC)}]{chapter09/roccurve}
+\pyrex[output=py,format=png,caption={The ROC curve of a (not very impressive) classifier and its area under the curve (AUC)}]{chapter08/roccurve}
 
 
 
@@ -1040,7 +1040,7 @@ produce not only worse (lower) means, but also worse (higher) standard
 deviations, even though also here, there are no dramatic changes
 between the runs.
 
-\pyrex[input=both, output=both,caption=Crossvalidation]{chapter09/crossval}
+\pyrex[input=both, output=both,caption=Crossvalidation]{chapter08/crossval}
 
 Very often, cross-validation is used when we want to compare many
 different model specifications, for example to find optimal
@@ -1063,11 +1063,11 @@ bootstrapping. Example~\ref{ex:gridsearch}, \ref{ex:gridsearch2}, and
 \ref{ex:gridsearch3} illustrate how you can automatically assess which
 values you should choose.
 
-\pyrex[input=py, output=py,caption=A simple gridsearch in Python]{chapter09/gridsearch}
+\pyrex[input=py, output=py,caption=A simple gridsearch in Python]{chapter08/gridsearch}
 
-\pyrex[input=py,output=py,caption=A gridsearch in Python using multiple CPUs]{chapter09/gridsearch2}
+\pyrex[input=py,output=py,caption=A gridsearch in Python using multiple CPUs]{chapter08/gridsearch2}
 
-\pyrex[input=r,output=r,caption={A gridsearch in R. Note that in R, not all parameters are ``tunable'' using standard \index{caret}\emph{caret}. Therefore, an exact replication of the grid searches in Example~\ref{ex:gridsearch} and Example~\ref{ex:gridsearch2} would requires either manual comparisons or writing a so-called caret extension.}]{chapter09/gridsearch3}
+\pyrex[input=r,output=r,caption={A gridsearch in R. Note that in R, not all parameters are ``tunable'' using standard \index{caret}\emph{caret}. Therefore, an exact replication of the grid searches in Example~\ref{ex:gridsearch} and Example~\ref{ex:gridsearch2} would requires either manual comparisons or writing a so-called caret extension.}]{chapter08/gridsearch3}
 
 \begin{feature}
     Supervised machine learning is one of the areas where you really

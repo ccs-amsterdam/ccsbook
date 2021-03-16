@@ -21,11 +21,11 @@
   This chapter introduces the packages \index{quanteda}\emph{quanteda} (R) and \index{sklearn}\emph{sklearn} and \index{nltk}\emph{nltk} (Python) for converting text into a document-term matrix. It also introduces the \index{udpipe}\emph{udpipe} package for natural language processing.
 You can install these packages with the code below if needed  (see Section~\ref{sec:installing} for more details):
 
-\doublecodex{chapter11/chapter11install}
+\doublecodex{chapter10/chapter10install}
 
 \noindent After installing, you need to import (activate) the packages every session:
 
-\doublecodex{chapter11/chapter11library}
+\doublecodex{chapter10/chapter10library}
 
 \end{feature}
 
@@ -38,7 +38,7 @@ The document-term matrix (DTM, also called the term-document matrix or TDM) is s
 It represents a \index{corpus}\emph{corpus} (or set of documents) as a matrix or table, where each row represents a document, each column represents a term (word),
 and the numbers in each cell show how often that word occurs in that document.
 
-\pyrex[caption=Example document-term matrix,output=r,format=table]{chapter11/dtm}
+\pyrex[caption=Example document-term matrix,output=r,format=table]{chapter10/dtm}
 
 As an example, Example~\ref{ex:dtm} shows a DTM made from two lines from the famous poem by Mary Angelou.
 The resulting matrix has two rows, one for each line; and 11 columns, one for each unique term (word).
@@ -59,7 +59,7 @@ This seems trivial, as English (and most western) text generally uses spaces to 
 However, even for English there are a number of edge cases.
 For example, should ``haven't'' be seen as a single word, or two?
 
-\pyrex[caption=Differences between tokenizers]{chapter11/tokenize}
+\pyrex[caption=Differences between tokenizers]{chapter10/tokenize}
 
 Example~\ref{ex:tokenize} shows how Python and R deal with the sentence ``I haven't seen John's derring-do''.
 For Python, we first use |CountVectorizer.build_tokenizer| to access the built-in tokenizer.
@@ -92,13 +92,13 @@ what information is kept or discarded.
   For example, the \index{TreebankTokenizer}\texttt{TreebankTokenizer} uses the tokenization rules for the Penn Treebank
   to tokenize, which produces better results:
 
-  \codex[caption=The nltk.tokenize.TreebankTokenizer]{chapter11/tokenizealt.py}
+  \codex[caption=The nltk.tokenize.TreebankTokenizer]{chapter10/tokenizealt.py}
 
   Another example is the \index{WhitespaceTokenizer}\texttt{WhitespaceTokenizer}, which simply uses whitespace to tokenize,
   which can be useful if your input has already been tokenized,
   and is used in Example~\ref{ex:tagcloud} below for tweets to conserve hash tags.
 
-  \codex[caption=The nltk.tokenize.WhitespaceTokenizer]{chapter11/tokenizealt1.py}
+  \codex[caption=The nltk.tokenize.WhitespaceTokenizer]{chapter10/tokenizealt1.py}
 
   You can also write your own tokenizer if needed.
   For example, the \index{TreebankTokenizer}\texttt{TreebankTokenizer} assumes that text has already been split into sentences
@@ -109,13 +109,13 @@ what information is kept or discarded.
   keeping only tokens that include at least one letter character.
   Although a bit more complicated, this approach can give you maximum flexibility.
 
-  \codex[caption=Writing a custom Tokenizer]{chapter11/tokenizealt2.py}
+  \codex[caption=Writing a custom Tokenizer]{chapter10/tokenizealt2.py}
 \end{feature}
 \end{figure}
 
 % Listings won't work with the japanese output, so I manually created png. Sorry!
 \begin{ccsexample}
-  \doublecodex{chapter11/haiku}
+  \doublecodex{chapter10/haiku}
   \begin{tcbraster}[raster columns=2,raster equal height=rows,raster valign=top]
   \begin{tcolorbox}[title=Python Output]
       \includegraphics[width=\linewidth]{{chapter10/haiku.py}.png}
@@ -145,7 +145,7 @@ beyond the scope of this book.
 
 \subsection{The DTM as a Sparse Matrix}
 
-\pyrex[caption=Example document-term matrix]{chapter11/sotu}
+\pyrex[caption=Example document-term matrix]{chapter10/sotu}
 
 Example~\ref{ex:sotu} shows a more realistic example.
 It downloads all US ``State of the Union'' speeches and creates a document-term matrix from them.
@@ -154,10 +154,10 @@ R lists $85$ documents (rows) and $17\,999$ features (columns), and Python repor
 Note the difference in the number of columns (unique terms) due to the differences in tokenization as discussed above.
 
 \begin{ccsexample}
-  \doublecodex{chapter11/freq}
-    \doubleoutput{chapter11/freq}
-    \doublecodex{chapter11/freq2}
-      \doubleoutput{chapter11/freq}
+  \doublecodex{chapter10/freq}
+    \doubleoutput{chapter10/freq}
+    \doublecodex{chapter10/freq2}
+      \doubleoutput{chapter10/freq}
   \caption{A look inside the DTM.}\label{ex:freq}
 \end{ccsexample}
 
@@ -257,7 +257,7 @@ So, we sum the DTM columns to get the frequency of each word, and combine that w
 from the |CountVectorized| object |cv|. Then we can create the word cloud and give it the frequencies to use.
 Finally, we plot the cloud and remove the axes.
 
-\pyrex[caption=Word cloud of the US State of the Union corpus,format=png]{chapter11/wordcloud}
+\pyrex[caption=Word cloud of the US State of the Union corpus,format=png]{chapter10/wordcloud}
 
 The results from Python and R look different at first -- for one thing, R is nice and round but Python has more colors!
 However, if you look at the cloud you can see both are not very meaningful: the largest words are all punctuation or words like
@@ -315,7 +315,7 @@ Example~\ref{ex:trumptweets} shows how to load these tweets into a data frame co
 As you can see, this dataset contains a lot of non-textual features such as hyperlinks and hash tags as well as regular punctuation and stop words.
 Before we can start analyzing this data, we need to decide on and perform multiple cleaning steps such as detailed below.
 
-\pyrex[caption=Top words used in Trump Tweets,format=table,output=py]{chapter11/trumptweets}
+\pyrex[caption=Top words used in Trump Tweets,format=table,output=py]{chapter10/trumptweets}
 
 Please note that although tweets are perhaps overused as a source of scientific information,
 we use them here as an example since they nicely exemplify issues around non-textual elements such as hyperlinks.
@@ -328,7 +328,7 @@ Words such as ``a'' and ``the'' are often called stop words, i.e.\ words that do
 Both \index{quanteda}\emph{quanteda}\ and \sklearn\ include built-in lists of stop words, making it very easy to remove the most common words.
 Example~\ref{ex:stopwords} shows the result of specifying ``English'' stop words to be removed for both packages.
 
-\pyrex[caption=Simple stop word removal,format=png,output=r]{chapter11/stopwords}
+\pyrex[caption=Simple stop word removal,format=png,output=r]{chapter10/stopwords}
 
 
 
@@ -367,7 +367,7 @@ For more details on which lists are available and what choices these lists make,
 see the package documentation for the \index{stopwords}\emph{stopwords} package in Python (part of NLTK) and R (part of quanteda)
 
 
-\pyrex[caption=Inspecting and Customizing stop word lists]{chapter11/stopwords2}
+\pyrex[caption=Inspecting and Customizing stop word lists]{chapter10/stopwords2}
 
 %J. Nothman, H. Qin and R. Yurchak (2018). “Stop Word Lists in Free Open-source Software Packages”. In Proc. Workshop for NLP Open Source Software.
 
@@ -397,12 +397,12 @@ As a first cleaning step, we will use a regular expression to remove hyperlinks 
 Since both hyperlinks and HTML entities are split over multiple tokens, it would be hard to remove them after tokenization.
 
 \begin{ccsexample}
-\doublecodex{chapter11/noise1}
-\codex[caption=Output]{chapter11/noise1.r.out}
-\doublecodex{chapter11/noise2}
-\codex[caption=Output]{chapter11/noise2.r.out}
-\doublecodex{chapter11/noise3}
-\codex[caption=Output]{chapter11/noise3.r.out}
+\doublecodex{chapter10/noise1}
+\codex[caption=Output]{chapter10/noise1.r.out}
+\doublecodex{chapter10/noise2}
+\codex[caption=Output]{chapter10/noise2.r.out}
+\doublecodex{chapter10/noise3}
+\codex[caption=Output]{chapter10/noise3.r.out}
 \caption{Cleaning a single tweet at the text and token level}\label{ex:noise}
 \end{ccsexample}
 
@@ -424,7 +424,7 @@ This underscores the importance of inspecting and understanding the results of t
 and to make sure that subsequent steps match these tokenization choices.
 Concretely, with the \index{TreebankWordtokenizer}\texttt{TreebankWordtokenizer} we would have had to also remove hashtags at the text level rather than the token level.
 
-\pyrex[caption=Cleaning the whole corpus and making a tag cloud,output=r,format=png]{chapter11/tagcloud}
+\pyrex[caption=Cleaning the whole corpus and making a tag cloud,output=r,format=png]{chapter10/tagcloud}
 
 As a final example, Example~\ref{ex:tagcloud} shows how to filter tokens for the whole corpus, but rather than removing hashtags it keeps only the hash tags to produce a tag cloud.
 In R, this is mostly a pipeline of \index{quanteda}\emph{quanteda}\ functions to create the corpus, tokenize, keep only hashtags, and create a dfm.
@@ -448,7 +448,7 @@ In many cases, this can be a result of the selection strategy. If we select all 
 It can also be that some words are used as standard phrases, for example ``fellow Americans'' in state of the union speeches.
 If every president in the corpus uses those terms, they are no longer informative about differences between presidents.
 
-\pyrex[caption=Trimming a Document-Term Matrix]{chapter11/trimming}
+\pyrex[caption=Trimming a Document-Term Matrix]{chapter10/trimming}
 
 Example~\ref{ex:trimming} shows how you can use the \index{relative document frequency}\emph{relative document frequency} to trim a DTM in Python and R.
 We keep only words with a document frequency of between 1\% and 75\%.
@@ -473,7 +473,7 @@ $tf\cdot idf(t,d)=tf(t,d)\cdot idf(t)=f_{t,d}\cdot -\log \frac{n_t}{N}$
 Where $f_{t,d}$ is the frequency of term $t$ in document $d$, $N$ is the total number of documents, and $n_t$ is the number of documents in which term $t$ occurs. In other words, the term frequency is weighted by the negative log of the fraction of documents in which that term occurs. Since $\log(1)$ is zero, terms that occur in every document are disregarded, and in general the less frequent a term is, the higher the weight will be.
 
 
-\pyrex[caption=Tf$\cdot$Idf weighting,output=r,format=table]{chapter11/tfidf}
+\pyrex[caption=Tf$\cdot$Idf weighting,output=r,format=table]{chapter10/tfidf}
 
 tf$\cdot$idf weighting is a fairly common technique and can improve the results of subsequent analyses such as supervised machine learning.
 As such, it is no surprise that it is easy to apply this in both Python and R, as shown in Example~\ref{ex:tfidf}.
@@ -537,7 +537,7 @@ As you can imagine, this will create even bigger DTMs and worse data scarcity pr
 so require even more attention paid to feature selection and/or trimming.
 
 
-\pyrex[caption=Generating n-grams]{chapter11/ngram}
+\pyrex[caption=Generating n-grams]{chapter10/ngram}
 
 Example~\ref{ex:ngram} shows how n-grams can be created and used in Python and R.
 In Python, you can pass the \verb|ngram=(n, m)| option to the vectorizer,
@@ -546,7 +546,7 @@ Both will post-process the tokens to create all n-grams in the range of n to m.
 In this example, we are asking for unigrams (i.e., the words themselves), bigrams and trigrams of a simple example sentence.
 Both languages produce the same output, with R separating the words with an underscore while Python uses a simple space.
 
-\pyrex[caption=Words and bigrams containing ``government'',output=r,format=table]{chapter11/ngram2}
+\pyrex[caption=Words and bigrams containing ``government'',output=r,format=table]{chapter10/ngram2}
 
 Example~\ref{ex:ngram2} shows how you can generate n-grams for a whole corpus.
 In this case, we create a DTM of the state of the union matrix with all bigrams included.
@@ -583,10 +583,10 @@ Nonetheless, both methods give very similar results, with Saddam Hussein, the Ir
 
 
 \begin{ccsexample}
-\doublecodex{chapter11/colloc}
-\codexoutputtable{chapter11/colloc.r}
-\doublecodex{chapter11/colloc2}
-\codexoutputtable{chapter11/colloc2.r}
+\doublecodex{chapter10/colloc}
+\codexoutputtable{chapter10/colloc.r}
+\doublecodex{chapter10/colloc2}
+\codexoutputtable{chapter10/colloc2.r}
 \caption{Identifying and applying collocations in the US State of the Union.}\label{ex:colloc}
 \end{ccsexample}
 
@@ -648,13 +648,13 @@ Finally, analogies are solved by simply adding and subtracting the vectors as ex
 (excluding the words in the analogy itself).
 
 \begin{ccsexample}
-\doublecodex{chapter11/embeddings0}
-\doublecodex{chapter11/embeddings1}
-\codexoutputtable{chapter11/embeddings1.r}
-\doublecodex{chapter11/embeddings2}
-\codexoutputtable{chapter11/embeddings2.r}
-\doublecodex{chapter11/embeddings3}
-\codex[caption=Output]{chapter11/embeddings3.r.out}
+\doublecodex{chapter10/embeddings0}
+\doublecodex{chapter10/embeddings1}
+\codexoutputtable{chapter10/embeddings1.r}
+\doublecodex{chapter10/embeddings2}
+\codexoutputtable{chapter10/embeddings2.r}
+\doublecodex{chapter10/embeddings3}
+\codex[caption=Output]{chapter10/embeddings3.r.out}
 \caption{Using word embeddings for finding similar and analogous words.}\label{ex:embedding}
 \end{ccsexample}
 
@@ -732,7 +732,7 @@ Looking at the upos (universal part-of-speech) column, John is recognized as a p
 Finally, the \verb|head_token_id| and \verb|dep_rel| columns represent the syntactic information in the sentence:
 ``Bought'' (token 2) is the root of the sentence, and ``John'' is the subject (nsubj) while ``knives'' is the object of the buying.
 
-\pyrex[caption=Using UDPipe to analyze a sentence,format=table,output=r.]{chapter11/udpipe}
+\pyrex[caption=Using UDPipe to analyze a sentence,format=table,output=r]{chapter10/udpipe}
 
 The syntactic relations can be useful if you need to differentiate between who is doing something and whom it was done to.
 For example, one of the authors of this book used syntactic relations to analyze conflict coverage,
@@ -747,7 +747,7 @@ create a DTM with these nouns, and then visualize them as a word cloud.
 As you can see, these words (such as student, hero, childcare, healthcare, and terrorism), are much more indicative of the topic of a text than the general words used earlier.
 In the next chapter we will show how you can further analyze these data, for example by analyzing usage patterns per person or over time, or using an unsupervised topic model to cluster words into topics.
 
-\pyrex[caption=Nouns used in the most recent State of the Union addresses,format=png,output=py]{chapter11/nouncloud}
+\pyrex[caption=Nouns used in the most recent State of the Union addresses,format=png,output=py]{chapter10/nouncloud}
 
 As an alternative to UDPipe, you can also use Spacy,
 which is another free and popular natural language toolkit.
@@ -767,9 +767,9 @@ This can be very useful to extract e.g.\ all persons from a newspaper corpus aut
 Note that in R, you can use the \index{quanteda}\emph{quanteda} function \index{as.tokens}\texttt{as.tokens} to directly use the Spacy output in quanteda.
 
 \begin{ccsexample}
-  \doublecodex{chapter11/spacymodel}
-  \doublecodex{chapter11/spacy}
-  \codexoutputtable{chapter11/spacy.r}
+  \doublecodex{chapter10/spacymodel}
+  \doublecodex{chapter10/spacy}
+  \codexoutputtable{chapter10/spacy.r}
   \caption{Using Spacy to analyze a Spanish sentence.}\label{ex:spacy}
 \end{ccsexample}
 

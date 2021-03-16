@@ -20,11 +20,11 @@
 In this chapter we use the R packages \index{tidyverse}\emph{tidyverse}, \index{maps}\emph{maps} and \index{factoextra}\emph{factoextra} for data analysis and visualization. For Python we use \index{pandas}\emph{pandas} and \index{numpy}\emph{numpy} for data analysis and \index{matplotlib}\emph{matplotlib}, \index{seaborn}\emph{seaborn} and \index{geopandas}\emph{geopandas} for visualization. Additionally, in Python we use \index{scikit-learn}\emph{scikit-learn}\ and \index{scipy}\emph{scipy} for cluster analysis. You can install these packages with the code below if needed
   (see Section~\ref{sec:installing} for more details):
 
-\doublecodex{chapter08/chapter08install}
+\doublecodex{chapter07/chapter07install}
 
 \noindent After installing, you need to import (activate) the packages every session:
 
-\doublecodex{chapter08/chapter08library}
+\doublecodex{chapter07/chapter07library}
 
 \end{feature}
 
@@ -74,15 +74,15 @@ For most of the EDA we will use \index{tidyverse}\emph{tidyverse} in R and \inde
 \end{feature}
 
 
-\pyrex[output=both,caption=Load data from Eurobarometer survey and select some variables]{chapter08/load}
+\pyrex[output=both,caption=Load data from Eurobarometer survey and select some variables]{chapter07/load}
 		
 Let us first get the distribution of the categorical variable \textit{gender} by creating tables that include absolute and relative frequencies. The frequency tables (using the \index{dplyr}\texttt{dplyr} functions \index{group\_by}\texttt{group\_by} and \index{summarize}\texttt{summarize} in R, and \index{pandas}\emph{pandas} function \index{value\_counts}\texttt{value\_counts} in Python) reveals that 17\,716 (53.38\%) women and 15\,477 (46.63\%) men answered this survey. We can do the same with the level of support of refugees [\textit{support\_refugees}] (\textit{To what extent do you agree or disagree with the following statement: our country should help refugees}) and obtain that 4\,957 (14.93\%) persons totally agreed with this statement, 12\,695 (38.25\%) tended to agree, 5931 (16.24\%) tended to disagree and 3574 (10.77\%) totally disagreed.
 
 \begin{ccsexample}
-\doublecodex{chapter08/frequency}
-\codexoutputtable[Absolute and relative frequencies of gender:]{chapter08/frequency.r}
-\doublecodex{chapter08/frequency2}
-\codexoutputtable[Absolute and relative frequencies of support of refugees:]{chapter08/frequency2.r}
+\doublecodex{chapter07/frequency}
+\codexoutputtable[Absolute and relative frequencies of gender:]{chapter07/frequency.r}
+\doublecodex{chapter07/frequency2}
+\codexoutputtable[Absolute and relative frequencies of support of refugees:]{chapter07/frequency2.r}
 \caption{Absolute and relative frequencies of support of refugees and gender.}
 \end{ccsexample}
 
@@ -91,12 +91,12 @@ Before diving any further into any \textit{between} variables analysis, you migh
 
 In the case of the variable \textit{support\_refugees} we can count its missing data (6576 cases) with base R function \index{is.na}\texttt{is.na} and the pandas method \index{isna}\texttt{isna}\footnote{If missing values are not correctly declared (e.g.\ using strings or numbers such as 999) we should first transform the initial values into proper missing values using the \index{tidyverse}\emph{tidyverse} function \index{na\_if}\texttt{na\_if} in R and the \index{numpy}\emph{numpy} object \index{nan}\texttt{nan} in Python. We  did this when cleaning the original Eurobarometer dataset for you.}.  Then we may decide to drop all the records that contain these values in our dataset using \index{tydyr}\emph{tydyr} function \index{drop\_na}\texttt{drop\_na} in R and \index{pandas}\emph{pandas} function \index{dropna}\texttt{dropna} in Python to drop the records\footnote{We may also use: dropna(axis='columns') if you want to drop columns instead of rows.}. By doing this we get a cleaner dataset and continue with a more sophisticated EDA with cross-tabulation and summary statistics for the group of cases.	
 
-\pyrex[output=both,caption=Drop missing values]{chapter08/na}
+\pyrex[output=both,caption=Drop missing values]{chapter07/na}
 
 Now let us cross tabulate the \textit{gender} and \textit{support\_refugees} to have an initial idea of what the relationship between these two variables might be. With this purpose we create a contingency table or cross-tabulation to get the frequencies in each combination of categories (using \index{dplyr}\emph{dplyr} functions \index{group\_by}\texttt{group\_by}, \index{summarize}\texttt{summarize} and \index{spread}\texttt{spread} in R, and \index{pandas}\emph{pandas} function \index{crosstab}\texttt{crosstab} in Python). From this table you can easily see that 2178 women totally supported helping refugees and 1524 men totally did not.  Furthermore, other interesting questions about our data might now arise if we compute summary statistics for a group of cases (using again \index{dplyr}\emph{dplyr} functions \index{group\_by}\texttt{group\_by}, \index{summarize}\texttt{summarize} and \index{spread}\texttt{spread}, and base \index{mean}\texttt{mean} in R; and \index{pandas}\emph{pandas} function \index{groupby}\texttt{groupby} and base \index{mean}\texttt{mean} in Python). For example, you might wonder what  the average ages of the women were that totally supported (52.42) or not (53.2) to help  refugees.  This approach will open a huge amount of possible analysis by grouping variables and estimating different statistics beyond the mean, such as count, sum, median, mode, minimum or maximum, among others.
 
 %Check why tables outputs in R are not supported well
-\pyrex[output=both,caption=Cross tabulation of support of refugees and gender, and summary statistics]{chapter08/cross}
+\pyrex[output=both,caption={Cross tabulation of support of refugees and gender, and summary statistics}]{chapter07/cross}
 
 
 %\input{chapter07/visualization}
@@ -140,16 +140,16 @@ Besides the built-in help, there are a number of great (online) resources to lea
 \subsection{Plotting Frequencies and Distributions}
 In the case of nominal data, the most straightforward way to visualize them is to simply count the frequency of value and then plot them as a bar chart. For instance, when we depict the support to help refugees (Example~\ref{ex:bar}) you can quickly get that the option ``tend to agree'' is the most frequently voiced answer.
 
-\pyrex[output=py,format=png,caption=Barplot of support for refugees]{chapter08/bar}
+\pyrex[output=py,format=png,caption=Barplot of support for refugees]{chapter07/bar}
 
 If we have continuous variables, however, having such a bar chart would lead to too many bars: we may lose oversight (and creating the graph may be resource-intensive). Instead, we want to group the data into \emph{bins}, such as age groups.
 Hence, a histogram is used to examine the distribution of a continuous variable (\index{ggplot2}\emph{ggplot2} function geom\_histogram in R and \index{pandas}\emph{pandas} function \index{hist}\texttt{hist} in Python) and a graph bar to inspect the distribution of a categorical one (\index{ggplot2}\emph{ggplot2} function geom\_bar() in R and \index{matplotlib}\emph{matplotlib} function \index{plot}\texttt{plot} in Python). In Example~\ref{ex:hist} you can easily see the shape of the distribution of the variable age, with many values close to the average and a slightly bigger tail to the right (not that far from the normal distribution!).
 
-\pyrex[output=py,format=png,caption=Histogram of Age]{chapter08/hist}
+\pyrex[output=py,format=png,caption=Histogram of Age]{chapter07/hist}
 
 Another way to show distributions is using bloxplots, which are powerful representations of the distribution of our variables through the use of quartiles that are marked with the 25th, 50th (median) and 75th percentiles of any given variable. By examining the lower and upper levels of two or more distributions you can compare their variability and even detect possible outliers. You can generate multiple boxplots to compare the ages of the surveyed citizens by country and quickly see that in terms of age the distributions of Spain and Greece are quite similar, but we can detect some differences between Croatia and the Netherlands. In R we use the base function \index{geom\_boxplot}\texttt{geom\_boxplot}, while in Python we use the \index{seaborn}\emph{seaborn} function \index{boxplot}\texttt{boxplot}.
 
-\pyrex[output=py,format=png,caption=Bloxplots of age by country]{chapter08/boxplots}
+\pyrex[output=py,format=png,caption=Bloxplots of age by country]{chapter07/boxplots}
 
 
 
@@ -160,9 +160,9 @@ After having inspected distributions of single variables, you may want to check 
 
 The Eurobarometer collects data for 15 days (in the example from November 5 to 19, 2017) and you may wonder if the level of support to refugees or even to general migrants changes over the time. This is actually a simple time series and you can use a graph line to represent it. Firstly you must use a numerical variable for the level of support (\emph{support\_refugees\_n}, which ranges from 1 to 4, 4 being the maximum support) and group it by day in order to get the average for each day. In the case of R, you can plot the two series using the base function \index{plot}\texttt{plot}, or you can use the \index{ggplot2}\emph{ggplot2} function \index{geom\_line}\texttt{geom\_line}. In the case of Python you can use the \index{matplotlib}\emph{matplotlib} function \index{plot}\texttt{plot} or the \index{seaborn}\emph{seaborn} function \index{lineplot}\texttt{lineplot}. To start, Example~\ref{ex:line} shows how to create a graph for the average support for refugees by day.
 
-\pyrex[output=py,format=png,caption=Graph line of average support for refugees by day]{chapter08/line}
+\pyrex[output=py,format=png,caption=Graph line of average support for refugees by day]{chapter07/line}
 
-%\pyrex[output=py,format=png,caption=Graph line of average support for migrants by day]{chapter08/line2}
+%\pyrex[output=py,format=png,caption=Graph line of average support for migrants by day]{chapter07/line2}
 
 To also plot the support for migrants, you can combine multiple subgraphs in a single plot,
 giving the reader a broader and more comparative perspective (Example~\ref{ex:combine2}).
@@ -170,20 +170,20 @@ In R, the \index{geom\_line}\texttt{geom\_line} also takes a color aesthetic, bu
 So, we first reshape the data and also change the factor labels to get a better legend (see Section~\ref{sec:pivot}).
 In Python, you can plot the two lines as separate figures  and add the \index{pyplot}\emph{pyplot} function \index{show}\texttt{show} to display an integrated figure.
 
-\pyrex[output=py,format=png,caption=Plotting multiple lines in one graph]{chapter08/combine2}
+\pyrex[output=py,format=png,caption=Plotting multiple lines in one graph]{chapter07/combine2}
 
 Alternatively, you can create multiple subplots, one for each group that you want to show (Example~\ref{ex:combine}).
 In \index{ggplot}\emph{ggplot} (R), you can use the \index{facet\_grid}\texttt{facet\_grid} function to automatically create subplots that each show one of the groups. In the case of Python you can use the \index{matplotlib}\emph{matplotlib} function \index{subplots}\texttt{subplots} that allows you to configure multiple plots in a single one.
 
-\pyrex[output=py,format=png,caption=Creating subfigures)]{chapter08/combine}
+\pyrex[output=py,format=png,caption=Creating subfigures)]{chapter07/combine}
 
 Now if you want to explore the possible correlation between the average support for refugees (\texttt{mean\_support\_refugees\_by\_day}) and the average support to migrants by year (\texttt{mean\_support\_migrants\_by\_day}), you might need a scatterplot, which is a better way to visualize the type and strength of this relationship \index{scatter}\emph{scatter}.
 
-\pyrex[output=py,format=png,caption=Scatterplot of average support for refugees and migrants by year]{chapter08/scatter}
+\pyrex[output=py,format=png,caption=Scatterplot of average support for refugees and migrants by year]{chapter07/scatter}
 
 A scatterplot uses dots to depict the values of two variables in a Cartesian plane (with coordinates for the axes $x$ and $y$). You can easily plot this figure in R using the \index{ggplot2}\emph{ggplot2} function \index{geom\_point}\texttt{geom\_point} (and \index{geom\_smooth}\texttt{geom\_smooth} to display a regression line!), or in Python using \index{seaborn}\emph{seaborn} function \index{scatterplot}\texttt{scatterplot} (\index{lmplot}\texttt{lmplot} to include the regression line as shown in \index{scatter2}\emph{scatter2}).
 
-\pyrex[output=py,format=png,caption=Scatterplot with regression line]{chapter08/scatter2}
+\pyrex[output=py,format=png,caption=Scatterplot with regression line]{chapter07/scatter2}
 
 Looking at the dispersion of points in the provided example you can infer that there might be a positive correlation between the two variables, or in other words, the more the average support to refugees the more the average support to migrants over time.
 
@@ -197,19 +197,19 @@ $$
 
 You can estimate this correlation coefficient with \index{pandas}\emph{pandas} function \index{corr}\texttt{corr} in Python and the base R function \index{cor}\texttt{cor} in R. As shown in Example~\ref{ex:corr} the two variables plotted above are highly correlated with a coefficient of 0.95.
 
-\pyrex[output=both,caption=Pearson correlation coefficient]{chapter08/corr}
+\pyrex[output=both,caption=Pearson correlation coefficient]{chapter07/corr}
 
 Another useful representation is the heatmap. This figure can help you plot a continuous variable using a color scale and shows its relation with another two variables.  This means that you represent your data as colors, which might be useful for understanding patterns. For example, we may wonder what  the level of support for refugees is given the nationality and the gender of the individual. For this visualization, it is necessary to create a proper data frame (Example~\ref{ex:pivot}) to plot the heatmap, in which each number of your continuous variable \emph{\_refugees\_n} is included in a table where each axis (x= gender, y=country) represents the categorical variables. This pivoted table stored in an object called \texttt{pivot\_data} can be generated using some of the already explained commands.
 
-\pyrex[output=none,caption=Create a data frame to plot the heatmap]{chapter08/pivot}
+\pyrex[output=none,caption=Create a data frame to plot the heatmap]{chapter07/pivot}
 
 In the first resulting figure proposed in Example~\ref{ex:heatmap}, the lighter the blue the greater the support in each combination of country $\times$ gender. You can see that level of support is similar in countries such as Slovenia or Spain, and is different in the Czech Republic or Austria. It also seems that women have a higher level of support. For this default heatmap we can use the \index{ggplot2}\emph{ggplot2} function \index{geom\_tile}\texttt{geom\_tile} in R and \index{seaborn}\emph{seaborn} function \index{heatmap}\texttt{heatmap} in Python.  To personalize the scale colors (i.e.\ a scale of blues) we can use the \index{ggplot2}\emph{ggplot2} function \index{scale\_fill\_gradient}\texttt{scale\_fill\_gradient} in R or the parameter \texttt{cmap} of the \index{seaborn}\emph{seaborn} function \index{heatmap}\texttt{heatmap} in Python.
 
-\pyrex[output=py,format=png,caption=Heatmap of country\, gender and support for refugees]{chapter08/heatmap}
+\pyrex[output=py,format=png,caption=Heatmap of country\, gender and support for refugees]{chapter07/heatmap}
 
 As you will notice, one of the goals of EDA is exploring the variance of our variables, which includes some uncertainty about their behavior. We will introduce you to two basic plots to visually communicate this uncertainty. Firstly, ribbons and area plots can help us to clearly identify a predefined interval of a variable in order to interpret its variance over some cases. Let us mark this interval in 0.15 points in the above-mentioned plots of the average support to refugees or migrants by day, and we can see that the lines tend to converge more on the very last day and are more separated by  day four. This simple representation can be conducted in R using the \index{ggplot2}\emph{ggplot2} function \index{geom\_ribbon}\texttt{geom\_ribbon} and in Python using the parameter \texttt{ci} of the \index{seaborn}\emph{seaborn} function \index{lineplot}\texttt{lineplot}.
 
-\pyrex[output=py,format=png,caption=Add ribbons to the graph lines of support to refugees and migrants]{chapter08/ribbons}
+\pyrex[output=py,format=png,caption=Add ribbons to the graph lines of support to refugees and migrants]{chapter07/ribbons}
 
 
 
@@ -225,11 +225,11 @@ In Example~\ref{ex:map} we illustrate how to plot a world map (from existing geo
 We then save a partial map into the object \texttt{some\_eu\_maps} containing the European countries that participated in the survey. After we merge \texttt{supports\_country} and \texttt{some\_eu\_maps} (by region) and get a complete data frame called \texttt{support\_map} with coordinates for each country (Example~\ref{ex:countries}).
 Finally, we plot it using the \index{ggplot2}\emph{ggplot2} function \index{geom\_polygon}\texttt{geom\_polygon} in R and the \index{geopandas}\emph{geopandas} method \index{plot}\texttt{plot} in Python (Example~\ref{ex:map2}). Voil\`a: a nice and comprehensible representation of our data with a scale of colors!
 
-\pyrex[output=py,format=png,caption=Simple world map]{chapter08/map}
+\pyrex[output=py,format=png,caption=Simple world map]{chapter07/map}
 
-\pyrex[output=none,caption=Select EU countries and joint the map with Eurobarometer data]{chapter08/countries}
+\pyrex[output=none,caption=Select EU countries and joint the map with Eurobarometer data]{chapter07/countries}
 
-\pyrex[output=r,format=png,caption=Map of Europe with the average level of support for refugees by country]{chapter08/map2}
+\pyrex[output=r,format=png,caption=Map of Europe with the average level of support for refugees by country]{chapter07/map2}
 
 
 \subsection{Other Possibilities}
@@ -329,7 +329,7 @@ number: just look at the bend (\textit{knee} or \textit{elbow}) and
 you will find the point where it decreases the most and then get the
 optimal number of clusters (three clusters in our example).
 
-\pyrex[output=py,format=png,caption=Getting the optimal number of clusters]{chapter08/elbow}
+\pyrex[output=py,format=png,caption=Getting the optimal number of clusters]{chapter07/elbow}
 
 Now we can estimate our final model (Example~\ref{ex:kmeans}). We generate 25
 initial random centroids (the algorithm will choose the one that
@@ -341,11 +341,11 @@ clustering. You can observe the mean (scaled) for each variable in
 each cluster, as well as the corresponding cluster for each
 observation.
 
-\pyrex[output=py,caption=Using Kmeans to group countries based on the average support of refugees and migrants, age, and educational level]{chapter08/kmeans}
+\pyrex[output=py,caption={Using Kmeans to group countries based on the average support of refugees and migrants, age, and educational level}]{chapter07/kmeans}
 
 Using the function \index{fviz\_cluster}\texttt{fviz\_cluster} of the library \index{factoextra}\emph{factoextra} in R, or the \index{pyplot}\emph{pyplot} function \index{scatter}\texttt{scatter} in Python, you can get a visualization of the clusters. In Example~\ref{ex:kmeans2} you can clearly identify that the clusters correspond to Nordic countries (more support to foreigners, more education and age), Central and Southern European countries (middle support, lower education and age), and Eastern European countries (less support, lower education and age)\footnote{We can re-run this cluster analysis using $k$-medoids or partitioning around medoids (PAM) and get similar results (the three medoids are: Slovakia,  Belgium and Denmark), both in data and visualization. In R you must install the package \index{cluster}\emph{cluster} than contains the function \index{pam}\texttt{pam}, and in Python the package \index{scikit-learn-extra}\emph{scikit-learn-extra} with the function \index{Kmedoids}\texttt{Kmedoids}.} .
 
-\pyrex[output=r,format=png,caption=Visualization of clusters]{chapter08/kmeans2}
+\pyrex[output=r,format=png,caption=Visualization of clusters]{chapter07/kmeans2}
 
 
 \subsection{Hierarchical Clustering}
@@ -363,17 +363,17 @@ four-cluster solution. However, this comes at a big cost: hierarchical
 clustering requires a lot more computing resources and may therefore
 not be feasible for large datasets.
 
-\pyrex[output=py,caption=Using hierarchical clustering to group countries based on the average support of refugees and migrants, age and educational level]{chapter08/hc}
+\pyrex[output=py,caption={Using hierarchical clustering to group countries based on the average support of refugees and migrants, age and educational level}]{chapter07/hc}
 
 We can then plot the dendogram  with base R function \index{plot}\texttt{plot} and \index{scipy}\emph{scipy} (module \texttt{cluster.hierarchy}) function \index{dendogram}\texttt{dendogram} in Python. The summary of the initial model suggest  two clusters (size=2) but by looking at the dendogram you can choose the number of clusters you want to work with by choosing a height (for example four to get three clusters).
 
-\pyrex[output=py,format=png,caption=Dendogram to visualize the hierarchical clustering]{chapter08/dendogram}
+\pyrex[output=py,format=png,caption=Dendogram to visualize the hierarchical clustering]{chapter07/dendogram}
 
 If you re-run the hierarchical clustering for three clusters (Example~\ref{ex:hc3}) and visualize it (Example~\ref{ex:vishc3}) you will get a graph similar to the one produced by $k$-means.
 
-\pyrex[output=py,caption=Re-run hierarchical clustering with three clusters]{chapter08/hc3}
+\pyrex[output=py,caption=Re-run hierarchical clustering with three clusters]{chapter07/hc3}
 
-\pyrex[output=r,format=png,caption=Re-run hierarchical clustering with three clusters]{chapter08/vishc3}
+\pyrex[output=r,format=png,caption=Re-run hierarchical clustering with three clusters]{chapter07/vishc3}
 
 
 \subsection{Principal Component Analysis and Singular Value Decomposition}
@@ -417,25 +417,25 @@ Secondly, using the covariance matrix the algorithm computes the eigenvectors an
 
 Let us now conduct a PCA over the Eurobarometer data.  In Example~\ref{ex:pca} we will re-use the sub-data frame \emph{d3} containing the means of 4 variables (support to refugees, support to migrants, age and educational level) for each of the 30 European countries (30 x 4). The question is  can we have a new data frame containing less than 4 variables but that explains most of the variance, or in other words, that represents our original dataset well enough, but with fewer dimensions? As long as our features are usually measured in different scales, it is normally suggested to center (to mean 0) and scale (to standard deviation 1) the data. You may also know this transformation as ``calculating $z$-scores''. We can perform the PCA in R using the base function \index{prcomp}\texttt{prcomp} and in Python using the function \index{PCA}\texttt{PCA} of the module \texttt{decomposition} of \index{scikit-learn}\emph{scikit-learn}.
 
-\pyrex[output=py,caption=Principal component analysis (PCA) of a data frame with 30 records and 4 variables]{chapter08/pca}
+\pyrex[output=py,caption=Principal component analysis (PCA) of a data frame with 30 records and 4 variables]{chapter07/pca}
 
 The generated object with the PCA contains different elements (in R "sdev",     "rotation", "center",  "scale" and   "x") or attributes in Python (components\_, explained\_variance\_, explained\_variance\_ratio, singular\_values\_, mean\_, n\_components\_, n\_features\_, n\_samples\_ and noise\_variance\_). In the resulting object we can see the values of four principal components of each country, and the values of the loadings, technically called \textit{eigenvalues}, for the variables in each principal component.  In our example we can see that support for refugees and migrants are more represented on PC1, while age and educational level are more represented on PC2. If we plot the first two principal components using base function \index{biplot}\texttt{biplot} in R and and the library \index{bioinfokit}\emph{bioinfokit} in Python (Example~\ref{ex:plot_pca}), we can clearly see how the variables are associated with either PC1 or with PC2 (we might also want to plot any pair of the four components!). But we can also get a picture of how countries are grouped based only in these two new variables.
 
-\pyrex[output=py,format=png,caption=Plot PC1 and PC2]{chapter08/plot_pca}
+\pyrex[output=py,format=png,caption=Plot PC1 and PC2]{chapter07/plot_pca}
 
 So far we are not sure  how many components are enough to accurately represent our data, so we need to know how much variance (which is the square of the standard deviation) is explained by each component. We can get the values (Example~\ref{ex:prop}) and plot  the proportion of explained variance (Example~\ref{ex:prop2}). We get that the first component explains 57.85\% of the variance, the second 27.97\%, the third 10.34\% and the fourth just 3.83\%.
 
-\pyrex[output=py,caption=Proportion of variance explained]{chapter08/prop}
-\pyrex[output=py,format=png,caption=Plot of the proportion of variance explained]{chapter08/prop2}
+\pyrex[output=py,caption=Proportion of variance explained]{chapter07/prop}
+\pyrex[output=py,format=png,caption=Plot of the proportion of variance explained]{chapter07/prop2}
 
 When we estimate (Example~\ref{ex:acum}) and plot (Example~\ref{ex:acum2}) the cumulative explained variance it is easy to identify that with just the two first components we explain 88.82\% of the variance. It might now seem a good deal to reduce our dataset from four to two variables, or let’s say half of the data, but retaining most of the original information.
 
-\pyrex[output=py,caption=Cumulative explained variance]{chapter08/acum}
-\pyrex[output=py,format=png,caption=Plot of the cumulative explained variance]{chapter08/acum2}
+\pyrex[output=py,caption=Cumulative explained variance]{chapter07/acum}
+\pyrex[output=py,format=png,caption=Plot of the cumulative explained variance]{chapter07/acum2}
 
 And what if we want to use this PCA and deploy a clustering (as explained above) with just these two new variables instead of the four original ones?  Just repeat the $k$-means procedure but now using a new smaller data frame selecting PC1 and PC2 from the PCA. After estimating the optimal number of clusters (three again!) we can compute and visualize the clusters, and get a very similar picture to the one obtained in the previous examples, with little differences such as the change of cluster of the Netherlands (more similar now to the Nordic countries!). This last exercise is a good example of how to combine different techniques in EDA.
 
-\pyrex[output=none,caption=Combining PCA to reduce dimensionality and $k$-means to group countries]{chapter08/new}
+\pyrex[output=none,caption=Combining PCA to reduce dimensionality and $k$-means to group countries]{chapter07/new}
 
 When your dataset gets bigger, though, you may actually not use PCA
 but the very much related singular value decomposition, SVD. They are

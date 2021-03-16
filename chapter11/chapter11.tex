@@ -24,11 +24,11 @@
   For topic models we use \index{topicmodels}\emph{topicmodels} (R) and \index{gensim}\emph{gensim}.
   You can install these packages with the code below if needed  (see Section~\ref{sec:installing} for more details):
 
-\doublecodex{chapter12/chapter12install}
+\doublecodex{chapter11/chapter11install}
 
 \noindent After installing, you need to import (activate) the packages every session:
 
-\doublecodex{chapter12/chapter12library}
+\doublecodex{chapter11/chapter11library}
 \end{feature}
 
 In earlier chapters, you learned about both supervised and unsupervised machine learning as well about dealing with texts.
@@ -175,8 +175,8 @@ In Python, we have separate lists for the train and test datasets and for the fu
 \texttt{\small{X\_train}} are the training texts and \texttt{\small{y\_train}} are the corresponding labels.
 
 \begin{ccsexample}
-  \doublecodex{chapter12/reviewdata}
-  \codexoutputtable{chapter12/reviewdatatable.r}
+  \doublecodex{chapter11/reviewdata}
+  \codexoutputtable{chapter11/reviewdata.r}
   \caption{Downloading and caching IMDB review data.}\label{ex:reviewdata}
 \end{ccsexample}
 
@@ -216,7 +216,7 @@ text, you do the same for the negative words, and then determine which
 occur more often.
 
 
-\pyrex[input=both, output=none, caption={Different approaches to a simple dictionary-based sentiment analysis: counting and summing all words using a for-loop over all reviews (Python) versus constructing a term-document matrix and looking up the words in there (R). Note that both approaches would be possible in either language.}]{chapter12/sentsimple}
+\pyrex[input=both, output=none, caption={Different approaches to a simple dictionary-based sentiment analysis: counting and summing all words using a for-loop over all reviews (Python) versus constructing a term-document matrix and looking up the words in there (R). Note that both approaches would be possible in either language.}]{chapter11/sentsimple}
 
 As you may already realize, there are a lot of downsides to this
 approach. Most notably, our bag-of-words approach does not allow us to
@@ -373,7 +373,8 @@ but we need to think of a way of reading the content into a
 data structure that we can use. One way of doing so is shown in
 Example~\ref{ex:readimdb}.
 
-\pyrex[output=none, caption={Reading the ACL IMDB dataset.}]{chapter12/readimdb}
+% TODO: CANT FIND SNIPPET
+%\pyrex[output=none, caption={Reading the ACL IMDB dataset.}]{chapter11/readimdb}
 
 \label{feature:sparse}
 \begin{feature}
@@ -432,7 +433,7 @@ is higher for negative reviews (classifying a positive review as
 negative happens twice as much as the reverse), but none of the values
 is concerningly low.
 
-\pyrex[output=py, caption=Training a Na\"ive Bayes classifier with simple word counts as features]{chapter12/imdbbaseline}
+\pyrex[output=py, caption=Training a Na\"ive Bayes classifier with simple word counts as features]{chapter11/imdbbaseline}
 
 
 
@@ -478,7 +479,7 @@ needed 15 lines (in Example~\ref{ex:imdbbaseline}) to evaluate only one model.
 
 
 %TODO R-code?
-\pyrex[input=py, output=py, caption={An example of a custom function to give a brief overview of the performance of four simple vectorizer-classifier combinations.}]{chapter12/basiccomparisons}
+\pyrex[input=py, output=py, caption={An example of a custom function to give a brief overview of the performance of four simple vectorizer-classifier combinations.}]{chapter11/basiccomparisons}
 
 
 The output of this little example already gives us  quite a bit of
@@ -513,7 +514,7 @@ pipe. Example~\ref{ex:basicpipe} shows how the loop in
 Example~\ref{ex:basiccomparisons} can be re-written using pipes (the
 result stays the same).
 
-\pyrex[input=py, output=none, caption={Instead of fitting vectorizer and classifier separately, they can be combined in a pipeline.}]{chapter12/basicpipe}
+\pyrex[input=py, output=none, caption={Instead of fitting vectorizer and classifier separately, they can be combined in a pipeline.}]{chapter11/basicpipe}
 
 Such a pipeline lends itself very well to performing a
 gridsearch. Example~\ref{ex:gridsearchlogreg} gives you an example.  With
@@ -533,7 +534,7 @@ our example, we have $2 \cdot 2 \cdot 2 \cdot 2 \cdot 3 = 24$
 different models, and $24$ models $\cdot 5$ folds $= 120$ models to
 estimate. Hence, it may take you some time to run the code.
 
-\pyrex[input=py, output=py, caption={A gridsearch to find the best hyperparameters for a pipeline consisting of a vectorizer and a classifier. Note that we can tune any parameter that either the vectorizer or the classifier accepts as an input, not only the four hyperparameters we chose in this example.}]{chapter12/gridsearchlogreg}
+\pyrex[input=py, output=py, caption={A gridsearch to find the best hyperparameters for a pipeline consisting of a vectorizer and a classifier. Note that we can tune any parameter that either the vectorizer or the classifier accepts as an input, not only the four hyperparameters we chose in this example.}]{chapter11/gridsearchlogreg}
 
 We see that we could further improve our model to precision and recall
 values of 0.90, by excluding extremely infrequent and extremely
@@ -560,7 +561,7 @@ package we chose is a particularly bad one (on the contrary, it is
 actually comparatively good), but because of the inherent limitations
 of dictionary-based sentiment analysis.
 
-\pyrex[input=py, output=py, caption={For the sake of comparison, we calculate how an off-the-shelf sentiment analysis package would have performed in this task}]{chapter12/vader}
+\pyrex[input=py, output=py, caption={For the sake of comparison, we calculate how an off-the-shelf sentiment analysis package would have performed in this task}]{chapter11/vader}
 
 We need to keep in mind, though, that with this dataset, we chose one
 of the easiest sentiment analysis tasks: a set of long, rather formal
@@ -594,7 +595,7 @@ fitting a new vectorizer. Therefore, as you see, you do not do any fitting any l
 
 In R, you have no vectorizer you could save -- but because in contrast to Python, both your DTM and your classifier include the feature names, it suffices to save the classifier only (using \verb+saveRDS(myclassifier, "myclassifier.rds")+) and using on a new DTM later on. You do need to remember, though, how you constructed the DTM (e.g., which preprocessing steps you took), to make sure that the features are comparable.
 
-\pyrex[output=py, input=py, caption=Saving and loading a vectorizer and a classifier]{chapter12/reuse}
+\pyrex[output=py, input=py, caption=Saving and loading a vectorizer and a classifier]{chapter11/reuse}
 
 
 
@@ -610,14 +611,14 @@ classifier, then the feature names would have been internal
 identifiers (which are meaningless to us) rather than human-readable
 words.
 
-\pyrex[output=py, input=py,format=html, caption=Using eli5 to get the most predictive features]{chapter12/eli5}
+\pyrex[output=py, input=py,format=html, caption=Using eli5 to get the most predictive features]{chapter11/eli5}
 
 We can also use eli5 to explain how the classifier arrived at a
 prediction for a specific document, by using different shades of green
 and red to explain how much different features contributed to the
 classification, and in which direction (Example~\ref{ex:eli5b}).
 
-\pyrex[output=py, input=py, format=html, caption=Using eli5 to explain a prediction]{chapter12/eli5b}
+\pyrex[output=py, input=py, format=html, caption=Using eli5 to explain a prediction]{chapter11/eli5b}
 
 \subsection{Deep Learning}
 
@@ -633,11 +634,11 @@ Although the resulting models are relatively similar, it is less easy to build a
  because most of the documentation and community examples are written in Python.
 Thus in the end, we probably recommend people who want to dive into deep learning should choose Python rather than R.
 
-\pyrex[caption={Dutch Sentiment Data (Van Atteveldt et al., 2020)},output=r,format=table]{chapter12/rnndata}
+\pyrex[caption={Dutch Sentiment Data (Van Atteveldt et al., 2020)},output=r,format=table]{chapter11/rnndata}
 
-\pyrex[output=py,caption=Deep Learning: Defining a Recursive Neural Network]{chapter12/rnnmodel}
+\pyrex[output=py,caption=Deep Learning: Defining a Recursive Neural Network]{chapter11/rnnmodel}
 
-\pyrex[caption=Deep Learning: Training and Testing the model]{chapter12/rnn}
+\pyrex[caption=Deep Learning: Training and Testing the model]{chapter11/rnn}
 
 
 First, Example~\ref{ex:rnndata} loads a dataset described by \citet{vanatteveldt20}, which consists of Dutch economic news headlines with a sentiment value.
@@ -781,10 +782,10 @@ After enough iterations, this converges to a solution.
 
 
 \begin{ccsexample}
-\doublecodex{chapter12/lda1}
-\codex[caption=Output (from R)]{chapter12/lda1.r.out}
-\doublecodex{chapter12/lda2}
-\codexoutputtable{chapter12/lda2.r}
+\doublecodex{chapter11/lda1}
+\codex[caption=Output (from R)]{chapter11/lda1.r.out}
+\doublecodex{chapter11/lda2}
+\codexoutputtable{chapter11/lda2.r}
 \caption{LDA Topic Model of Obama's State of the Union speeches.}\label{ex:lda}
 \end{ccsexample}
 
@@ -828,10 +829,10 @@ but should be mostly similar.
 \subsection{Analyzing Topic Model Results}
 
 \begin{ccsexample}
-\doublecodex{chapter12/ldaresults1}
-\codexoutputtable{chapter12/ldaresults1.r}
-\doublecodex{chapter12/ldaresults2}
-\codex[caption=Output (from R)]{chapter12/ldaresults2.r.out}
+\doublecodex{chapter11/ldaresults1}
+\codexoutputtable{chapter11/ldaresults1.r}
+\doublecodex{chapter11/ldaresults2}
+\codex[caption=Output (from R)]{chapter11/ldaresults2.r.out}
 \caption{Analyzing and inspecting LDA results.}\label{ex:ldaresults}
 \end{ccsexample}
 
@@ -952,8 +953,8 @@ allowing for a more flexible exploration and analysis of the data.
 \end{feature}
 
 \begin{ccsexample}
-  \doublecodex{chapter12/ldacoherence}
-  \codexoutputtable{chapter12/ldacoherence.r}
+  \doublecodex{chapter11/ldacoherence}
+  \codexoutputpng{chapter11/ldacoherence.r}
   \caption{Computing perplexity and coherence of topic models,output=r,format=png}\label{ex:ldacoherence}
 \end{ccsexample}
 

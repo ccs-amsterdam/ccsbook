@@ -22,11 +22,11 @@ In this chapter, you learn how to retrieve your data from online sources. We fir
 
 You can install these and some additional packages (e.g., for geocoding) with the code below if needed  (see Section~\ref{sec:installing} for more details):
 
-\doublecodex{chapter13/chapter13install}
+\doublecodex{chapter12/chapter12install}
 
 \noindent After installing, you need to import (activate) the packages every session:
 
-\doublecodex{chapter13/chapter13library}
+\doublecodex{chapter12/chapter12library}
 \end{feature}
 
 
@@ -110,7 +110,7 @@ is called |q|, and which other parameters can be specified.
   space, for instance, is represented by \texttt{\%20}
 \end{feature}
 
-\pyrex[output=py,caption={Retrieving JSON data from the Google Books API. }]{chapter13/googleapi1}
+\pyrex[output=py,caption={Retrieving JSON data from the Google Books API. }]{chapter12/googleapi1}
 
 The data our request returns are nested data, and hence, they do not
 really ``fit'' in a tabular data frame. We could keep the data as they
@@ -123,8 +123,8 @@ is the case, we probably would want to write a loop to iterate
 over the different items and extract the information we are interested in.
 
 \begin{ccsexample}
-  \doublecodex{chapter13/googleapi2}
-  \codexoutputtable{chapter13/googleapi2table.r}
+  \doublecodex{chapter12/googleapi2}
+  \codexoutputtable{chapter12/googleapi2table.r}
   \caption{Transforming the data into a data frame.}\label{ex:googleapi2}
 \end{ccsexample}
 
@@ -146,8 +146,8 @@ but limit the number of calls that are made (see also Section~\ref{sec:ethicalle
 
 
 \begin{ccsexample}
-  \doublecodex{chapter13/googleapi3}
-  \codexoutputtable{chapter13/googleapi3table.r}
+  \doublecodex{chapter12/googleapi3}
+  \codexoutputtable{chapter12/googleapi3table.r}
   \caption{Full script including pagination.}\label{ex:googleapi3}
 \end{ccsexample}
 
@@ -389,7 +389,7 @@ element you are interested in (such as a restaurant name) and select
 ``Inspect element'' or similar. This will give you a user-friendly
 view of the HTML code.
 
-\pyrex[output=py,caption={Parsing websites using XPATHs or CSS selectors}]{chapter13/htmlparse1}
+\pyrex[output=py,caption={Parsing websites using XPATHs or CSS selectors}]{chapter12/htmlparse1}
 
 
 Of course, Example~\ref{ex:htmlparse1} only parses one possible element of interest: the restaurant names. Try to retrieve other elements as well!
@@ -398,12 +398,12 @@ Of course, Example~\ref{ex:htmlparse1} only parses one possible element of inter
 Regardless of whether you use XPATHS or CSS Selectors to specify which part of the page you are interested in, it is often the case that there are other elements within it. Depending on whether you want to also retrieve the text of these elements or not, you have to use different approaches (see Example~\ref{ex:htmlparse2}).
 \end{feature}
 
-\pyrex[output=py,caption={Getting the text of an HTML element versus getting the text of the element and its children}]{chapter13/htmlparse2}
+\pyrex[output=py,caption={Getting the text of an HTML element versus getting the text of the element and its children}]{chapter12/htmlparse2}
 
 
 Notably, you may want to parse links. In HTML, links use a specific tag, |a|. These tags have an attribute, |href|, which contains the link itself. Example~\ref{ex:htmlparse3} shows how, after selecting the |a| tags, we can access these attributes.
 
-\pyrex[output=py,caption={Parsing link texts and links}]{chapter13/htmlparse3}
+\pyrex[output=py,caption={Parsing link texts and links}]{chapter12/htmlparse3}
 
 
 
@@ -411,7 +411,7 @@ Notably, you may want to parse links. In HTML, links use a specific tag, |a|. Th
 \end{feature}
 
 \pyrex[output=py,caption={Specifying a user agent to pretend to be a
-    specific browser}]{chapter13/htmlparse1useragent}
+    specific browser}]{chapter12/htmlparse1useragent}
 
 
 
@@ -450,7 +450,7 @@ page of restaurants might have a URL such as
 is the case, we can simply construct a list with all possible URLs
 (Example~\ref{ex:createurls})
 
-\pyrex[output=py,caption={Generating a list of URLs that follow the same pattern.}]{chapter13/createurls}
+\pyrex[output=py,caption={Generating a list of URLs that follow the same pattern.}]{chapter12/createurls}
 
 Afterwards, we would just loop over this list and retrieve all the
 pages (a bit like how we approached Example~\ref{ex:googleapi3} in Section~\ref{sec:apis}).
@@ -493,7 +493,7 @@ To show you one possible solution, we implemented a scraper in Python
 that crawls and parses all reviews for all restaurants
 (Example~\ref{ex:crawling}), which we describe in detail below.
 
-\pyrex[output=py,input=py,caption={Crawling a website}]{chapter13/crawling}
+\pyrex[output=py,input=py,caption={Crawling a website}]{chapter12/crawling}
 
 First, we need to get a list of all restaurants and the links to their
 reviews. That's what is done in the function |get_restaurants|. This
@@ -551,7 +551,7 @@ page (Example~\ref{ex:htmlparse1useragent}), you simply dump it to a file
 you indeed downloaded what you intended to download (and not, for
 instance, a login page, a cookie wall, or an error message).
 
-\pyrex[output=none,caption={Dumping the HTML source to a file}]{chapter13/htmltofile}
+\pyrex[output=none,caption={Dumping the HTML source to a file}]{chapter12/htmltofile}
 
 
 If this test  shows that the data you are interested in is
@@ -586,7 +586,7 @@ book) open Firefox, surf to Google, google for Tintin by entering that
 string and pressing the return key, click on the first link containing
 that string, and take a screenshot of the result.
 
-\pyrex[output=none,input=py,caption={Using Selenium to literally open a browser, input text, click on a link, and take a screenshot.}]{chapter13/selenium}
+\pyrex[output=none,input=py,caption={Using Selenium to literally open a browser, input text, click on a link, and take a screenshot.}]{chapter12/selenium}
 
 
 \begin{feature}\textbf{Loosing your head}
@@ -631,7 +631,7 @@ also Section~\ref{sec:authweb}). The example shows a call to an endpoint
 of a commercial API for natural language processing to inform how
 many requests we have made today.
 
-\pyrex[output=py,input=both, caption={Passing a key as HTTP request header to authenticate at an API endpoint}]{chapter13/textrazor}
+\pyrex[output=py,input=both, caption={Passing a key as HTTP request header to authenticate at an API endpoint}]{chapter12/textrazor}
 
 As you see, using an API that requires authentication by passing a key
 as an HTTP header is hardly more complicated than using APIs that do
@@ -702,8 +702,8 @@ cookie we care about to a request instead (Example~\ref{ex:cookiewall2}).
 
 
 
-\pyrex[output=py,input=py, caption={Explicitly setting a cookie to circumvent a cookie wall}]{chapter13/cookiewall}
-\pyrex[output=none,input=py, caption={Shorter version of Example~\ref{ex:cookiewall} for single requests}]{chapter13/cookiewall2}
+\pyrex[output=py,input=py, caption={Explicitly setting a cookie to circumvent a cookie wall}]{chapter12/cookiewall}
+\pyrex[output=none,input=py, caption={Shorter version of Example~\ref{ex:cookiewall} for single requests}]{chapter12/cookiewall2}
 
 
 %\input{chapter12/ethicslegalpractical}
