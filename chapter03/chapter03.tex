@@ -22,21 +22,946 @@ simple control structures such as loops and conditions.
   \textbf{Packages used in this chapter}\\
   This chapter focuses on the built-in capabilities of Python and R,
   so it does not rely on many packages.
-  For R, only \pkg{glue} is used (which allows nice text formatting).
-  For Python, we only use the packages \pkg{numpy} and \pkg{pandas}
+  For R, only \index{glue}\emph{glue} is used (which allows nice text formatting).
+  For Python, we only use the packages \index{numpy}\emph{numpy} and \index{pandas}\emph{pandas}
   for data frame support.
   If needed, you can install these packages with the code below
-  (see \refsec{installing} for more details).
+  (see Section~\ref{sec:installing} for more details).
   \doublecodex{chapter03/chapter03install}
   \noindent After installing, you need to import (activate) the packages every session:
   \doublecodex{chapter03/chapter03libraries}
 \end{feature}
 
-\input{chapter03/variables}
+%\input{chapter03/variables}
 
-\input{chapter03/control}
+\section{About Objects and Data Types}
+\label{sec:datatypes}
 
-\input{chapter03/functionsmethods}
+Now that you have seen what R and Python can do in Chapter~\ref{chap:fundata},
+it is time to take a small step back and learn more about how it all actually works under the hood.
+%\footnote{If you have not installed the require software yet and
+%  still want to follow this chapter, you may use available online
+%  platforms for RStudio (https://rstudio.cloud/) and Python
+%  (https://www.python.org/shell/).}.
+In both languages, you write a
+\emph{script} or \emph{program} containing the commands for the
+computer.  But before we get to
+some real programming and exciting data analyses, we need to understand
+how data can be represented and stored.
+
+No matter whether you use R or Python, both store your data in memory as \emph{objects}.
+Each of these objects has a name, and you create them by
+assigning a value to a name. For example, the command \texttt{x = 10}
+creates a new object\footnote{In both R and Python, the equals
+  sign (\texttt{=}) can be used to assign values. In R, however, the
+  traditional way of doing this is using an arrow (\texttt{\textless-}). In
+  this book we will use the equals sign for assignment in both
+  languages, but remember that for R, \texttt{x = 10} and
+  \texttt{x \textless-10} are essentially the same.}, named \texttt{x}, and stores the value 10
+in it.  This object is now stored in memory and can be used in later
+commands. Objects can be simple values such as the number 10, but they can also
+be pieces of text, whole data frames (tables), or analysis results.
+We call this distinction the \emph{type} or \emph{class} of an
+object. 
+
+\begin{feature}
+\textbf{Objects, pointers, and variables.} In programming, a distinction is
+  often made between an object (such as the number 10) and the
+  variable in which it is stored (such as \texttt{x}). The latter is also called a ``pointer''.
+  However, this distinction is not very relevant for most of our
+  purposes. Moreover, in statistics, the word variable often refers to a
+  column of data, rather than to the name of, for instance, the object
+  containing the whole data frame (or table).  For that
+  reason, we will use the word \emph{object} to refer to both the
+  actual object or value and its name. (If you want some extra food
+  for thought and want to challenge your brain
+  a bit, you can try to see the relationship between the idea of a pointer and
+  the discussion about mutable and immutable objects below.)
+\end{feature}
+
+Let us create an object that we call |a| (an arbitrary name, you can use
+whatever you want), assign the value 100 to it, and use the class\index{class@\texttt{class}}
+function (R) or type\index{type@\texttt{type}} function (Python) to check what kind of
+object we created (Example~\ref{ex:var1}).
+As you can see, R reports the type of the number as ``numeric'', while Python reports it
+as ``int'', short for integer or whole number.  Although they use
+different names, both languages offer very similar data types.
+Table~\ref{tab:types} provides an overview of some common basic data types.
+%As you can see,
+%both Python and R have very similar types for simple data such as
+%numbers, text, and truth values.
+
+\pyrex[output=both,caption=Determining the type of an object]{chapter03/var1}
+
+\newcommand{\fndouble}{In R, double and numeric can generally be used
+  interchangeably (there is a subtle difference, but that is not
+  relevant here).}
+
+\begin{table}
+  \caption{\label{tab:types}Most used basic data types in Python and R}{
+  \begin{tabularx}{\textwidth}{lllll}
+    \toprule
+    \multicolumn{2}{c}{Python} & \multicolumn{2}{c}{R}& Description \\
+    \cmidrule(lr){1-2}    \cmidrule(lr){3-4}\\
+    Name & Example & Name & Example \\
+    \midrule
+    int   & \verb+1+             & integer   & \verb+1L+             & whole numbers \\
+    float & \verb+1.3+           & numeric   & \verb+1.3+           & numbers with decimals \\
+    str   & \verb+"Spam", 'ham'+ & character & \verb+"Spam", 'ham'+ & textual data  \\ 
+    bool  & \verb+True, False+   & logical   & \verb+TRUE, FALSE+   & the truth values \\
+    \bottomrule
+  \end{tabularx}}{}
+\end{table}
+    
+
+
+Let us have a closer look at the code in Example~\ref{ex:var1} above.
+The first line is a command to create the object \emph{a} and store
+its value 100; and the second is illustrative and will give you the
+class of the created object, in this case ``numeric''. Notice that we
+are using two native functions of R, \index{print}\texttt{print} and \index{print}\texttt{print}, and
+including |a| as an argument of \index{class}\texttt{class}, and the very same
+\index{class(a)}\texttt{class(a)} as an argument of \index{print}\texttt{print}. The only difference
+between R and Python, here, is that the relevant Python function is
+called \index{type}\texttt{type} instead of \index{class}\texttt{class}.
+
+
+Once created, you can now perform multiple operations
+with |a| and other values or new variables as shown in Example~\ref{ex:var2}. For example, you
+could transform |a| by multiplying |a| by 2, create a new
+variable |b| of value 50 and then create another new object
+|c| with the result of |a + b|.
+
+\pyrex[output=both,caption=Some simple operations]{chapter03/var2}
+
+
+
+
+\subsection{Storing Single Values: Integers, Floating-Point Numbers, Booleans}
+
+ When working with numbers, we distinguish between integers (whole
+numbers) and floating point numbers (numbers with a decimal point,
+called ``numeric'' in R). Both Python and R automatically determine the
+data type when creating an object, but differ in their default
+behavior when storing a number that can be represented as an int: R
+will store it as a float anyway and you need to force it to do
+otherwise, for Python it is the other way round
+(Example~\ref{ex:var3}). We can also convert between types later on,
+even though converting a float to an int might not be too good an idea,
+as you truncate your data.
+
+So why not just always use a float? First,
+floating point operations usually take more time than integer operations.
+Second, because floating point numbers are stored as a combination of
+a coefficient and an exponent (to the base of 2), many integers (or,
+in fact, many decimal fractions) can only approximately be stored
+as a floating point number. Except for specific domains (such
+as finance), these inaccuracies are often not of much practical importance.
+But it explains why calculating |6*6/10| in Python returns 3.6, while
+|6*0.6| or |6*(6/10)| returns 3.599\,999\,999\,999\,999\,6. Therefore, if
+a value can logically only be a whole number (anything that is
+countable, in fact), it makes sense to restrict it to an integer.
+
+We also have a data type that is even more restricted and can take
+only two values: true or false. It is called ``logical'' (R) or ``bool''
+(Python).  Just notice that boolean values are case sensitive:
+while in R you must capitalize the whole value (|TRUE|, |FALSE|), in
+Python we only capitalize the first letter: |True|, |False|.  As you can
+see in Example~\ref{ex:var3}, such an object behaves exactly as an integer that
+is only allowed to be 0 or 1, and it can easily be converted to an
+integer.
+
+\pyrex[caption={Floating point numbers, integers, and boolean values.}]{chapter03/var3}
+
+
+
+
+\subsection{Storing Text}
+
+As a computational analyst of communication you will usually work with
+text objects or strings of characters. Commonly simply known as ``strings'',
+such text objects are also referred to as ``character vector objects'' in R.
+You can create them just by adding single or double quotes around the value of the variable (keep in mind to begin and finish the string either with single or with double quotes, and not to mix their use). Every time you want to analyze a social-media message, or any other text, you will be dealing with such strings. 
+
+\begin{ccsexample}
+  \doublecodex{chapter03/var4}
+  \doubleoutput{chapter03/var4}
+  \doublecodex{chapter03/var4b}
+  \doubleoutput{chapter03/var4b}
+  \caption{Strings and bytes.}\label{ex:var4}
+ \end{ccsexample}
+
+% NOTE[WvA] This seems to be a dangling comment
+% I have changed them to double quotes, however, please check that I have not inadvertently changed any which genuinely should be single quotes.}
+
+As you see in Example~\ref{ex:var4}, you can create a string by enclosing  text in quotation
+marks. You can use either double or single quotation marks, but you
+need to use the same mark to begin and end the string. This can be
+useful if you want to use quotation marks within a string, then you can
+use the other type to denote the beginning and end of the string.
+If you need to use a single quotation mark within a single-quoted string,
+you can \index{escape}\emph{escape} the quotation mark by prepending it with a backslash (\verb|\'|),
+and similarly for double-quoted strings.
+To include an actual backslash in a text, you also escape it with a backslash,
+so you end up with a double backslash (\verb|\\|). 
+
+The Python example also shows a concept introduced in Python 3.6 (introduced in December 2016):
+the f-string. These are strings that are prefixed with the letter \texttt{f} and are \emph{formatted} strings. This means that these strings will automatically insert a value where curly brackets indicate that you wish to do so. This means that you can write: |print(f"The value of i is {i}")| in order to print ``The value of i is 5'' (given that |i| equals 5).
+In R, the \index{glue}\emph{glue} package allows you to use an f-string-like syntax as well: \texttt{glue("The value of i is \{i\}")}.
+
+Although this will be explained in more detail in Section~\ref{sec:unicode},
+it is good to introduce how computers store text in memory or files. 
+It is not too difficult to imagine how a computer internally
+handles \emph{integers}: after all, even though the number may be displayed
+as a decimal number to us, it can be trivially converted and stored
+as a binary number (effectively, a series of zeros and ones)
+--- we do not have to care about that.
+But when we think about text, it is not
+immediately obvious how a string should be stored as a sequence of
+zeros and ones, especially given the huge variety of writing systems used for different languages. 
+
+Indeed, there are several ways of how textual characters can be stored as bytes,
+which are called \index{encodings}\emph{encodings}. 
+The process of moving from bytes (numbers) to characters is called decoding,
+and the reverse process is called encoding. 
+Ideally, this is not something you should need to think of,
+and indeed strings (or character vectors) already represent decoded text.
+This means that often when you read from or write data to a file,
+you need to specify the encoding (usually UTF-8). 
+However, both Python and R also allow you to work with the raw data
+(e.g.\ before decoding) in the form of \index{bytes}\emph{bytes} (Python) or \index{raw}\emph{raw} (R) data,
+which is sometimes necessary if there are encoding problems.
+This is shown briefly in the bottom part of \index{var4}\emph{var4}.
+Note that while R shows the underlying hexadecimal byte values of the raw data (so 54 is \verb|T|, 68 is \verb|h| and so on) and Python 
+displays the bytes as text characters, in both cases the underlying data type is the same: raw (non-decoded) bytes.
+
+
+
+\subsection{Combining Multiple Values: Lists, Vectors, And Friends}
+
+Until now, we have focused on the basic, initial data types or ``vector
+objects'', as they are called in R.  Often, however, we want to group
+a number of these objects. For example, we do not want to manually
+create thousands of objects called tweet0001, tweet0002, \ldots,
+tweet9999 -- we'd rather have one list called tweets that contains all
+of them. You will encounter several names for such combined data
+structures: lists, vectors, arrays, series, and 
+more. 
+The core idea is always the same: we take multiple objects
+(be it numbers, strings, or anything else) and then create one object that combines all of them (Example~\ref{ex:1darray1}).
+
+\pyrex[caption=Collections arrays (such as vectors in R or lists in Python) can contain multiple values]{chapter03/1darray1}
+
+As you see, we now have one name (such as |scores|) to refer to all of the scores.
+The Python object in Example~\ref{ex:1darray1} is called a \emph{list}, the R object a \emph{vector}.
+There are more  such combined data types, which have slightly different
+properties that can be important to know about: first, whether you can mix different
+types (say, integers and strings); second, what happens if you change the array.
+We will discuss both points below and show how this relates to different
+specific types of arrays in Python and R which you can choose from. But first,
+we will show how to work with them.
+
+
+\paragraph{Operations on vectors and lists}
+One of the most
+basic operations you can perform on all types of one-dimensional arrays
+is \emph{indexing}. It lets you locate any given
+element or group of elements within a vector using its or their
+positions. The first item of a vector in R is called 1, the second 2, and so on;
+in Python, we begin counting with 0.  You can retrieve a specific element
+from a vector or list by simply putting the index between square brackets |[]| (Example~\ref{ex:1darray2}). %In Example~\ref{ex:1darray2}, we
+%start with an array of scores that are abusively stored as string,
+%retrieve some of these values, and finally convert them to integers.
+
+\pyrex[input=both, output=both, caption=Slicing vectors and converting data types]{chapter03/1darray2}
+
+In the first case, we asked for the score of the 5th student ("9");
+in the second we asked for the 1st and 10th position ("8" "5"); and
+finally for all the elements between the 1st and 4th position ("8"
+"8" "7" "6"). We can directly indicate a range
+by using a |:|. After the colon, we provide the index of
+the last element (in R), while Python stops just \emph{before} the index.\footnote{This is related to the
+reason why Python starts counting with zero. If you are interested
+in this, have a look at \url{https://www.cs.utexas.edu/users/EWD/transcriptions/EWD08xx/EWD831.html}}
+If we want to pass multiple single index values instead of a range,
+we need to create a vector of these indices by using |c()| (Example~\ref{ex:1darray2}).
+Take a moment to compare the different ways of indexing between Python
+and R in Example~\ref{ex:1darray2}!
+
+Indexing is very useful to access elements and also to
+create new objects from a part of another one. The last line of our
+example shows how to create a new array with just the first four
+entries of |scores| and store them all as numbers. To do so, we
+use \emph{slicing} to get the first four scores and then either change its class using the function
+as.numeric (in R) or convert the elements to integers one-by-one (Python)  (Example~\ref{ex:1darray2}).
+
+
+\pyrex[input=both, output=none, caption=Some more operations on one-dimensional arrays]{chapter03/1darray3}
+
+We can do many other things like adding or removing values, or creating a vector from scratch by using a
+function (Example~\ref{ex:1darray3}). For instance, rather than just typing  a large number of values by hand, we often might
+wish to create a vector from an operator or a function, without typing
+each value. Using the operator \index{:}\texttt{:} (R) or the functions \index{seq}\texttt{seq} (R) or \index{range}\texttt{range} (Python), we 
+can create numeric vectors with
+a range of numbers.%, from 1 to 20 or from -5 to 5 (Example~\ref{ex:1darray3}).
+%You can also use a function to create more complex vectors. For
+%example the function \fn{seq} will help you to generate regular sequences
+%by providing the number of points of an interval.  Imagine you want to
+%create a numeric vector than begins in point 0 and finishes in point
+%1, including all possible values that separate those two points by a
+%step of 0.2. Let's create that vector and check the amount of created
+%elements by using the function \fn{length} (Example~\ref{ex:1darray3}).
+
+
+
+\paragraph[Can we mix different types?]{Can we mix different types?}
+There is a reason that the basic data types (numeric, character, etc.) we described above are called
+``vector objects'' in R: The vector is a very important structure in
+R and consists of these objects. A vector can be easily created with the
+\index{c}\texttt{c} function and can only combine elements of the same type (numeric, integer, complex,
+character, logical, raw).
+Because the data types within a vector correspond to only one class,
+when we create a vector with for example numeric data, the \index{class}\texttt{class} function will display
+``numeric'' and not ``vector''.
+
+If we try to
+create a vector with two different data types, R will 
+force some elements to be transformed, so that all elements belong to the same
+class. For example, if you re-build the vector of scores with a new student who has
+been graded with the letter \emph{b} instead of a number (Example~\ref{ex:1darray1b}), your vector
+will become a character vector. If you print it, you will see that the
+values are now displayed surrounded by |"|.
+
+
+\pyrex[caption=R enforces that all elements of a vector have the same data type, output=r, input=r]{chapter03/1darray1b}
+
+
+In contrast to a vector, a \index{list}\emph{list} is much less restricted: a list does not care
+whether you mix numbers and text. In Python, such lists are the most common type for creating
+a one-dimensional array. Because they
+can contain very different objects, running the \index{type}\texttt{type} function on them
+does not return anything about the objects inside the list, but simply states that we
+are dealing with a list (Example~\ref{ex:1darray1}).
+In fact, lists can even contain other lists, or any other object for
+that matter.
+
+In R you can also uses lists, even though they are much less popular in R than
+they are in Python because vectors are better if all objects are of the same type.
+R lists are created in a similar way as vectors, except that we have to add the word |list|
+before declaring the values. Let us build a list with four different
+kinds of elements, a numeric object, a character object, a square root
+function (\index{sqrt}\texttt{sqrt}), and a numeric vector (Example~\ref{ex:1darray4}). In fact, you
+can use any of the elements in the list through indexing -- even the
+function \index{sqrt}\texttt{sqrt} that you stored in there to get the square root of
+16!
+
+\pyrex[input=both, output=both, caption=Lists can store very different objects of multiple data types and even functions]{chapter03/1darray4}
+
+Python users often like the fact that lists give  a lot of flexibility, as they happily accept
+entries of very different types. But also Python users sometimes may want a stricter
+structure like R's vector. This may be especially interesting for
+high-performance calculations, and therefore, such a structure is
+available from the \index{numpy}\emph{numpy} (\emph{num}bers in \emph{py}thon)
+package: the numpy array.
+This will be discussed in more detail when we deal with data frames in Chapter~\ref{chap:filetodata}.
+
+%\pyrex[input=py, output=py, caption={Numpy arrays behave more like R vectors. However, you have to import (and potentially install) an additional package, \pkg{numpy}, for this (see \refsec{installing})}]{chapter03/1darray7}
+
+\begin{feature}\textbf{Object references and mutable objects.}
+  A subtle difference between Python and R is how they deal with copying objects.
+  Suppose we define $x$ containing the numbers $1,2,3$ (\verb|x=[1,2,3]| in Python or \verb|x=c(1,2,3)| in R)
+  and then define an object $y$ to equal $x$ (\verb|y=x|).
+  In R, both objects are kept separate, so changing $x$ does not affect $y$,
+  which is probably what you expect.
+  In Python, however, we now have two variables (names) that both point to or \index{reference}\emph{reference} the same object,
+  and if we change $x$ we also change $y$ and vice versa, which can be quite unexpected.
+  Note that if you really want to copy an object in Python, you can run \verb|x.copy()|.
+  See Example~\ref{ex:mutable} for an example.
+
+  Note that this is only important for \index{mutable}\emph{mutable} objects, that is,
+  objects that can be changed.
+  For example, lists in Python and R and vectors in R are mutable because you can replace or append members.
+  Strings and numbers, on the other hand, are immutable:
+  you cannot change a number or string, a statement such as \verb|x=x*2| creates a new object containing the value of \verb|x*2| and stores it under the name \verb|x|.
+
+\end{feature}
+  
+\pyrex[caption={The (unexpected) behavior of mutable objects}]{chapter03/mutable}
+
+\paragraph{Sets and Tuples}
+The \index{vector}\emph{vector} (R) and \index{list}\emph{list} (Python) are the most frequently used collections
+for storing multiple objects. 
+In Python there are two more collection types you are likely to encounter.
+First, \index{tuples}\emph{tuples} are very similar to lists, but they cannot be changed after creating them
+(they are \index{immutable}\emph{immutable}).
+You can create a tuple by replacing the square brackets by regular parentheses:
+\verb|x=(1,2,3)|. 
+
+Second, in Python there is an object type called a \index{set}\emph{set}.
+A set is a mutable collection of \emph{unique} elements (you cannot repeat a value) with
+no order. As it is not properly ordered, you cannot run any indexing
+or slicing operation on it.
+Although R does not have an explicit set type,
+it does have functions for the various set operations,
+the most useful of which is probably the function \index{unique}\texttt{unique} which removes all duplicate values in a vector.
+Example~\ref{ex:sets} shows a number of set operations in Python and R,
+which can be very useful,  e.g.\ finding all elements that occur in two lists.
+
+\pyrex[input=both, output=both, caption={Sets}]{chapter03/sets}
+
+
+%Beyond the class (which is a powerful function because you can create new classes your self), you can also get the R internal type of the object (storage mode), using the typeof() function:
+%\begin{exampler}
+%typeof(scores)
+%\end{exampler}
+
+
+%% \paragraph{Factors}
+
+%% Finally, a data structure similar to a vector is the \fn{factor}.
+%% R users are very likely tp encounter factors, which can be very useful when
+%% working with categorical data. Factors
+%% store the values of a vector with corresponding labels.%, which in
+%% turn will produce levels.
+%% If you create a factor, it will
+%% automatically read the labels from the values of the vector, but you
+%% may manually change those levels. Let's have a look at
+%% Example~\ref{1darray6}.  The first line will create again a vector of scores
+%% of ten students. Then we automatically convert the vector into a
+%% factor (reading the very same values as labels) and finally we create
+%% the labels (``fail" or ``pass") for each of the possible grades.  The
+%% factor-type object factor\_scores\_2 will be probably more useful to
+%% deal with a bigger amount of students. While we have only two levels
+%% (which can be identified with the function \fn{nlevels}), we can have many
+%% values to connect with those labels.
+
+%% \pyrex[input=r, output=none, caption=Factors can also store labels]{chapter03/1darray6}
+
+%% Python does not natively support factors. The \pkg{pandas} library,
+%% which we will use later throught this book, introduces a data type called
+%% \fn{Categorical} that serves the same purpose, but it is much less
+%% used than factors are in R.
+
+
+
+\subsection{Dictionaries}
+
+Python \emph{dictionaries} are a very powerful and versatile data type.
+Dictionaries contain unordered and mutable collections of objects that
+contain certain information in another object. Python generates this
+data type in the form of |{key : value}| pairs in order
+to map any object by its key and not by its relative position in the
+collection. Unlike in a list, in which you index with an integer denoting
+the position in a list, you can index a dictionary using the key.
+For example, in Example~\ref{ex:dict}, we want to get the values of the object ``positive'' in the
+dictionary \emph{sentiments} and of the object ``A'' in the dictionary
+\emph{grades}. You will
+find dictionaries very useful in your journey as a computational
+scientist or practitioner, since they are flexible ways to store and
+retrieve structured information. We can create them using the curly
+brackets \{\} and including each key-value pair as an element of the
+collection (Example~\ref{ex:dict}).
+
+In R, the closest you can get to a Python dictionary is to use lists with named elements.
+This allows you to assign and retrieve values by key,
+however the key is restricted to names, while in Python most objects can be used as keys.
+You create a named list with \verb|d = list(name=value)| and access individual elements with either
+\verb|d$name| or \verb|d[["name"]]|. 
+
+\pyrex[caption=Key-value pairs in Python dictionaries and R named lists]{chapter03/dict}
+
+A good analogy for a dictionary is a telephone book (imagine a paper
+one, but it actually often holds true for digital phone books as
+well): the names are the keys, and the associated phone numbers the
+values. If you know someone's name (the key), it is \emph{very easy}
+to look up the corresponding values: even in a phone book of thousands
+of pages, it takes you maybe 10 or 20 seconds to look up the name
+(key). But if you know someone's phone number (the value) instead and
+want to look up the name, that's very inefficient: you need to read
+the whole phone book until you find the number.
+
+Just as the elements of a list can be of \emph{any} type, and you can
+have lists of lists, you can also nest dictionaries to get dicts of
+dicts. Think of our phone book example: rather than storing just a
+phone number as value, we could store another dict with the keys
+``office phone'', ``mobile phone'', etc. This is very often done, and you
+will come across many examples dealing with such data structures.
+You have one restriction, though: the keys in a dictionary (as opposed
+to the values) are not allowed to be mutable. After all, imagine that
+you could use a list as a key in a dictionary, and if at the same time,
+some other pointer to that very same list could just change it, this
+would lead to a quite confusing situation.
+
+
+
+
+\subsection{From One to More Dimensions: Matrices and $n$-Dimensional Arrays}
+
+ Matrices are two-dimensional rectangular datasets that include values
+in rows and columns. This is the kind of data you will have to deal
+with in many analyses shown in this book, such as those related to
+machine learning. Often, we can generalize to higher dimensions.
+
+\pyrex[caption=Working with two- or $n$-dimensional arrays, output=both]{chapter03/2darray}
+
+In Python, the easiest representation is to simply construct a list of
+lists. This is, in fact, often done, but has the disadvantage that
+there are no easy ways to get, for instance, the dimensions (the
+shape) of the table, or to print it in a neat(er) format. To get all
+that, one can transform the list of lists into an |array|, a
+datastructure provided by the package \index{numpy}\emph{numpy}.
+
+To create a matrix in R, you have to use the function \fn{matrix} and
+create a vector of values with the indication of how many rows and
+columns will be on it. We also have to tell R if the order of the
+values is determined by the row or not. In Example~\ref{ex:2darray}, we create
+two matrices in which we vary the |byrow| argument to be TRUE and
+FALSE, respectively, to illustrate how it changes the values of the
+matrix, even when the shape ($2 \times3$) remains identical. As you may
+imagine, we can operate with matrices, such as adding up two of them.
+
+%% A powerful data type are the arrays (very much like the \pkg{numpy}
+%% arrays described above), which might be similar to matrices but
+%% without the restriction of the two-dimensional rectangular space. This
+%% means that you create your own dimensions, indicating (in order) the
+%% number of rows, columns and matrices of the array. Your will need
+%% vectors as inputs and dimensions as parameters. For example,
+%% three-dimensional arrays are fundamental when writing pixel values and
+%% coding images. 
+
+
+\subsection{Making Life Easier: Data Frames}
+
+So far, we have discussed the general built-in collections that you find in most programming languages
+such as the list and array.
+However, in data science and statistics you are very likely to encounter a specific collection type that we haven't discussed yet: the \concept{Data frame}.
+Data frames are discussed in detail in Chapter~\ref{chap:filetodata},
+but for completeness we will also introduce them briefly here. 
+
+Data frames are user-friendly data structures that look very much like
+what you find in SPSS, Stata, or Excel. They will help you in a wide
+range of statistical analysis.  A
+data frame is a tabular data object that includes rows (usually the
+instances or cases) and columns (the variables). In a three-column data frame,
+the first variable can be \emph{numeric}, the second \emph{character}
+and the third \emph{logical}, but the important thing is that each
+variable is a vector and that all these vectors must be of the same
+length. We create data frames from scratch using the data.frame()
+function.  Let’s generate a simple data frame of three instances (each
+case is an author of this book) and three variables of the types
+numeric (\emph{age}), character (\emph{country} where they obtained their
+master degree) and logic (\emph{living abroad}, whether they currently
+lives out of the country in which they were born) (Example~\ref{ex:dataframe1}).
+Notice that you have the label of the variables at the top of each column and that it creates an automatic numbering for indexing the rows.  
+
+\pyrex[caption=Creating a simple data frame, output=py]{chapter03/dataframe1}
+
+%\input{chapter03/control}
+
+\section{Simple Control Structures: Loops and Conditions}	
+\label{sec:controlstructures}
+
+\begin{feature}\textbf{Control structures in Python and R.}
+  This section and the next explain the working of control structures
+  such as loops, conditions, and functions.
+  These exist (and are very useful) in both Python and R.
+  In R, however, you do not need them as much because most functions
+  can work on whole columns in one go, while in Python you often run things
+  on each row of a column and sometimes do not use data frames at all.
+  Thus, if you are primarily interested in using R you could consider skipping
+  the remainder of this chapter for now and returning later when you are ready to learn more.
+  If you are learning Python, we strongly recommend continuing this chapter as
+  control structures are used in many of the examples in the book.
+  \end{feature}
+  
+
+
+Having a clear understanding of objects and data types is a first step
+towards comprehending how object-orientated languages such as R and Python work,
+but now we need to get some literacy in writing code and \emph{interacting}
+with the computer and the objects we created. Learning a programming
+language is just like learning any new language.  Imagine you want to
+speak Italian or you want to learn how to play the piano. The first thing
+will be to learn some words or musical notes, and to get familiarized
+with some examples or basic structures -- just as we did in Chapter~\ref{chap:fundata}. In the
+case of Italian or the piano, you would then have to learn  some grammar:
+how to form sentences, how play some chords; or, more generally,
+how to reproduce patterns. And this is exactly how we 
+now move on to acquiring computational literacy: by learning some
+rules to make the computer do exactly what you want.
+
+Remember that you can interact with R and Python directly on their
+consoles just by typing any given command. However, when
+you begin to use several of these commands and combine them
+you will need to put all these instructions into a
+script that you can then run partially or entirely. Recall Section~\ref{sec:installing},
+where we showed how IDEs such as RStudio (and Pycharm) offer both a
+console for directly typing single commands and a larger window
+for writing longer scripts.
+
+Both R and Python are \emph{interpreted} languages (as opposed to
+\emph{compiled} languages), which means that interacting with
+them is very straightforward: You provide your computer with some
+\emph{statements} (directly or from a script), and your computer
+reacts. We call a sequence of these statements a \emph{computer program}.
+When we created objects by writing, for instance,
+|a = 100|,  we already dealt with a very basic statement, the \emph{assignment statement}. But of course the statements can be more complex.
+
+In particular, we may want to say more about how and when
+statements need to be executed. Maybe we want to repeat
+the calculation of a value for each item on a list, or maybe
+we want to do this only if some condition is fulfilled.
+
+Both R and Python have such \emph{loops} and \emph{conditional statements}, which will
+make your coding journey much easier and with more sophisticated
+results because you can control the way your statements are
+executed. By controlling the flow of instructions you can deal with a
+lot of challenges in computer programming such as iterating over
+unlimited cases or executing part of your code as a function of new
+inputs.
+
+In your script, you usually indicate such loops and conditions
+visually by using \emph{indentation}. Logical empty spaces -- two in R and four in
+Python -- depict blocks and sub-blocks on your code structure.
+As you will see in the next section, in R, using indention
+is optional, and curly brackets will indicate the beginning (|{|)
+and end (|}|) of a code block; whereas in Python, indention
+is mandatory and tells your interpreter where the block
+starts and ends.
+
+
+
+
+
+\subsection{Loops}
+\label{sec:loops}
+Loops can be used to repeat a block of statements.
+They are executed once, indefinitely, or
+until a certain condition is reached. This means that you can operate
+over a set of objects as many times as you want just by giving one
+instruction. The most common types of loops are \emph{for},
+\emph{while}, and \emph{repeat} (do-while), but we will be mostly
+concerned with so-called for-loops. Imagine you have a list of
+headlines as an object and you want a simple script
+to print the length of each message. Of course you can go headline
+by headline using the indexing, but you will get bored or will not
+have  enough time if you have thousands of cases. Thus, the idea is to
+operate a loop in the list so you can get all the results, from the
+first until the last element, with just one instruction.  The syntax
+of the for-loop is:
+
+\noindent\rule{\textwidth}{.5pt}\vspace{-1em}
+
+\noindent\begin{minipage}[t]{.45\textwidth}
+  For-loops in R:
+\begin{verbatim}
+for (val in sequence) {
+    statement1
+    statement2
+    statement3
+  }
+\end{verbatim}
+\end{minipage}
+\begin{minipage}[t]{.45\textwidth}
+  For-loops in Python:
+\begin{verbatim}
+for val in sequence:
+    statement1
+    statement2
+    statement3
+\end{verbatim}
+\end{minipage}
+\vspace{.5em}
+
+\noindent\rule{\textwidth}{.5pt}
+
+\pyrex[caption={For-loops let you repeat operations.}]{chapter03/forloop}
+
+As Example~\ref{ex:forloop} illustrates, every time you find yourself
+\emph{repeating} something, for instance printing each element from a
+list, you can get the same results easier by \emph{iterating} or
+\emph{looping} over the elements of the list, in this case.  Notice
+that you get the same results, but with the loop you can automate your
+operation writing few lines of code. As we will stress in this
+book, a good practice in coding is to be efficient and harmonious in
+the amount of code we write, which is another justification for using
+loops.
+
+\begin{feature}
+  \textbf{Don't repeat yourself!}
+  You may be used to copy-pasting
+  syntax and slightly changing it when working with some statistics
+  program: you run an analysis and then you want to repeat the same
+  analysis with different datasets or different specifications. But
+  this is error-prone and hard to maintain, as it involves a lot of
+  extra work if you want to change something. In many cases where you
+  find yourself pasting multiple versions of the dataset, you would
+  probably be better using a for-loop instead.
+  \end{feature}
+
+
+Another way to iterate in Python is using list comprehensions  (not available natively in R), which are a stylish way to create list of elements automatically even with conditional clauses. This is the syntax:
+
+\begin{verbatim}
+newlist  = [expression for item in list if conditional]
+\end{verbatim}
+
+In Example~\ref{ex:listcomprehensions} we provide a simple example (without any
+conditional clause) that creates a list with the number of characters
+of each headline. As this example illustrates, list comprehensions
+allow you to essentially write a whole for-loop in one
+line. Therefore, list comprehensions are very popular in Python.
+
+\pyrex[input=py,output=py,caption=List comprehensions are very popular in Python]{chapter03/listcomprehensions}
+
+
+
+\subsection{Conditional Statements}
+
+Conditional statements will allow you to control the flow and order of
+the commands you give the computer. This means you can tell the
+computer to do this or that, depending on a given circumstance. These
+statements use logic operators to test \emph{if} your condition is met
+(True) or not (False) and execute an instruction accordingly. Both in
+R and Python, we use the clauses \emph{if}, \emph{else if}
+(\emph{elif} in Python), and \emph{else} to write the syntax of the
+conditional statements. Let's begin showing you the basic structure of
+the conditional statement:
+
+\noindent\rule{\textwidth}{.5pt}\vspace{-1em}
+
+\noindent\begin{minipage}[t]{.45\textwidth}
+  If-statement in R:
+\begin{verbatim}
+if (condition) {
+    Statement1
+} else if{
+    Statement2
+}
+else {
+    Statement3
+}
+\end{verbatim}
+\end{minipage}
+\begin{minipage}[t]{.45\textwidth}
+  If-statement in Python:
+\begin{verbatim}
+if condition_1:
+    statement_1
+elif condition_2:
+    statement_2
+else:
+    statement_3
+\end{verbatim}
+\end{minipage}
+\vspace{.5em}
+
+\noindent\rule{\textwidth}{.5pt}
+
+
+Suppose you want to print the headlines of Example~\ref{ex:forloop} only if the text is less than 40 characters long.
+To do this, we can include the conditional statement in the loop, executing the body only if the condition is met (Example~\ref{ex:if1})
+
+\pyrex[caption=A simple conditional control structure, output=py]{chapter03/if1}
+
+We could also make it a bit more complicated: first check whether the length is smaller than 40, then check whether it is exactly 44 (|elif| / |else if|), and finally specify what to do if none of the conditions was met (|else|).
+
+In Example~\ref{ex:if2}, we will print the headline if it is shorter than 40 characters, print the string ``What a surprise!'' if it is exactly 44 characters, and print ``NaN'' in all other cases. 
+Notice that we have included the clause \emph{elif} in the structure (in R it is noted \emph{else if}).  \emph{elif} is a combination of \emph{else} and \emph{if}: if the previous condition is not satisfied, this condition is checked and the corresponding code block (or \emph{else} block) is executed. This avoids having to nest the second \emph{if} within the \emph{else}, but otherwise the reasoning behind the control flow statements remains the same.
+
+
+\pyrex[caption=A more complex conditional control structure, output=py]{chapter03/if2}
+
+
+%\input{chapter03/functionsmethods}
+
+\section{Functions and Methods}
+\label{sec:functions}
+
+\emph{Functions} and \emph{methods} are fundamental concepts in
+writing code in object-orientated programming. Both are objects that
+we use to store a set of statements and operations that we can later
+use without writing the whole syntax again. This makes our code
+simpler and more powerful.
+
+We have already used some built-in functions, such as \index{length}\texttt{length} and
+\index{class}\texttt{class} (R) and \index{len}\texttt{len} and \index{type}\texttt{type} (Python) to get the length
+of an object and the class to which it belongs. But, as you will learn
+in this chapter, you can also write your own functions. In essence, a
+function takes some input (the \emph{arguments} supplied between
+brackets) and returns some output.  Methods and functions are very
+similar concepts. The difference between them is that the functions
+are defined independently from the object, while methods are created
+based on a class, meaning that they are associated with an object. For
+example, in Python, each string has an associated method \index{lower}\texttt{lower},
+so that writing |'HELLO'.lower()| will return 'hello'. In R, in
+contrast, one uses a function, |tolower('HELLO')|. For now, it is not
+really important to know why some things are implemented as a method
+and some are implemented as a function; it is partly an arbitrary
+choice that the developers made, and to fully understand it, you need
+to dive into the concept of \index{class}\texttt{class}es, which is beyond the scope of
+this book.
+
+%% \begin{feature}
+%%   \textbf{Classes and Object-Oriented Programming.}
+%%   A central concept of object-oriented programming that we do not cover in this book are \concept{class}es. You can think of them as a blueprint for creating an object, and sometimes, this will shine through. For instance, if we write \texttt{c = Counter()} in Python, we create a new object \texttt{c}. This object is an \emph{instance} of the \emph{class} Counter (which we need to import from the package \pkg{collections} first). A counter is a class that allows you to count things, such as the most common words in a list of strings. You could say that you created your own counter, c, based on a template, the class Counter. In R, there are even different types of classes, called S3, S4, and reference. However, you are less likely to get exposed to them in your daily work.
+%%   \end{feature}
+
+
+
+\begin{feature}\textbf{Tab completion.} Because methods are associated with an object, you have a very
+  useful trick at your disposal to find out which methods (and other
+  properties of an object) there are: TAB completion. In Jupyter, just
+  type the name of an object followed by a dot (e.g., \texttt{a.<TAB>} in case you
+  have an object called a) and hit the TAB key. This will open a
+  drop-down menu to choose from.
+\end{feature}
+
+We will illustrate how to create simple functions in R and Python, so you
+will have a better understanding of how they work. Imagine you want to
+create two functions: one that computes the 60\% of any given number
+and another that estimates this percentage only if the given argument
+is above the threshold of 5.
+The general structure of a function in R and Python is:
+
+\noindent\rule{\textwidth}{.5pt}\vspace{-1em}
+
+\noindent\begin{minipage}[t]{.5\textwidth}
+  Function definition in R:
+\begin{verbatim}
+f = function(par1, par2=0) {
+   ... statements ... 
+   return_value
+}
+result = f(arg1, arg2)
+result = f(arg1, par2=arg2)
+result = f(arg1, par2=arg2)
+result = f(arg1)
+\end{verbatim}
+\end{minipage}
+\begin{minipage}[t]{.45\textwidth}
+  Function definition in Python:
+\begin{verbatim}
+def f(par1, par2=0):
+    ... statements ...
+    return return_value   
+
+result = f(arg1, arg2)
+result = f(par1=arg1, par2=arg2)
+result = f(arg1, par2=arg2)
+result = f(arg1)
+\end{verbatim}
+\end{minipage}
+\vspace{.5em}
+
+\noindent\rule{\textwidth}{.5pt}
+
+In both cases, this defines a function called \verb|f|,
+with two \index{arguments}\emph{arguments}, \verb|arg_1| and \verb|arg_2|.
+When you call the function, you specify the values for these parameters (the arguments) between brackets after the function name.
+You can then store the result of the function as an object as normal.
+
+As you can see in the syntax above, you have some choices when specifying the arguments.
+First, you can specify them \emph{by name} or \emph{by position}.
+If you include the name (\verb|f(param1=arg1)|) you explicitly bind that argument to that parameter.
+If you don't include the name (\verb|f(arg1, arg2)|) the first argument matches the first parameter and so on.
+Note that you can mix and match these choices, specifying some parameters by name and others by position.
+
+Second, some functions have \index{optional parameters}\emph{optional parameters}, for which they provide a default value.
+In this case, \verb|par2| is optional, with default value \verb|0|.
+This means that if you don't specify the parameter it will use the default value instead.
+Usually, the mandatory parameters are the main objects used by the function to do its work,
+while the optional parameters are additional options or settings.
+It is recommended to generally specify these options by name when you call a function,
+as that increases the readability of the code.
+Whether to specify the mandatory arguments by name depends on the function:
+if it's obvious what the argument does, you can specify it by position,
+but if in doubt it's often better to specify them by name. 
+
+Finally, note that in Python you explicitly indicate the result value of the function with
+\verb|return value|.
+In R, the value of the last expression is automatically returned,
+although you can also explicitly call \verb|return(value)|. 
+
+Example~\ref{ex:functions} shows how to write our function and how to use it.
+\pyrex[caption=Writing functions,output=py]{chapter03/functions}
+
+The power of functions, though, lies in scenarios where they are used
+repeatedly.  Imagine that you have a list of 5 (or 5 million!) scores
+and you wish to apply the function |por_60_cond| to all the scores at
+once using a loop. This costs you only two extra lines of code
+(Example~\ref{ex:functions2}).
+
+\pyrex[caption=Functions are particular useful when used repeatedly,output=py]{chapter03/functions2}
+
+
+\begin{feature}
+  A specific type of Python function that you may come across at some point (for instance, in Section~\ref{sec:crawling}) is the \index{generator}\texttt{generator}. 
+  Think of a function that returns a list of multiple values. Often, you do not need all values at once: you may only 
+  need the \emph{next} value at a time. This is especially interesting when calculating the whole list would take a lot of time or a lot 
+  of memory. Rather than waiting for all values to be calculated, you can immediately begin processing the first value before the next arrives; or 
+  you can work with data so large that it do not all fit into your memory at the same time.  You recognize a generator by 
+  the |yield| keyword instead of a |return| keyword (Example~\ref{ex:generators})
+\end{feature}
+
+\pyrex[input=py, output=py, caption={Generators behave like lists in that you can iterate (loop) over them, but each element is only 
+calculated when it is needed. Hence, they do not have a length.}]{chapter03/generators}
+
+
+
+
+
+%Now that you have gone through most types of objects in R and Python, we need to remember that objects 
+are different from classes, as we mentioned at the beginning of this section. A class is a prototype with 
+attributes that helps to build an object when it is created from that class. R has three class systems: S3 class, 
+S4 class and Reference Class.  Imagine that we have some data of a news item that we want to convert to a class using the basic S3 class:
+
+%\begin{exampler}
+%news <- list(headline = "Scientists discover how to cure AIDS", date = 21012030, positive_tone = TRUE)
+%class(news) <- "news_piece"
+%\end{exampler}
+
+%Or using Reference Class:
+
+%\begin{exampler}
+%setRefClass("news_piece")
+%\end{exampler}
+
+%Then you have stored the information of the class news\_piece.  You can do this also with S4 class, which allows you to define the formal structure of the class:
+
+%\begin{exampler}
+%setClass("news_piece", slots=list(headline="character", date="numeric", positive_tone="logical"))
+%\end{exampler}
+
+%Using S4 class definition you can create a new object using the attributes of the created class, which is very useful to maintain consistency:
+
+%\begin{exampler}
+%news2 <- new("news_piece", headline="Thousands of new refugees run from hunger after war begins", date=22012030, positive_tone = FALSE)
+%\end{exampler}
+
+%On the contrary, Python has just a single class. We define the class in a similar way we will define functions (see next section). We use the keyword class and, in some cases, the built-in \_\_init\_\_() function.  Let's create a very single class in Python including a numeric object in the class and later using that class to define a new object:
+
+%\begin{examplepy}
+%class MyWeight:
+%...    	 x = 74
+%weigth = MyWeight()
+%print (weigth.x)
+%\end{examplepy}
+
+%As you see, we created the object \emph{weight} using the properties (x in this case) of the class MyWeight. This procedure is probably of limited use but good to illustrate what a class is in Python. A more interesting approach to create the class is using the \_\_init\_\_() function, which is a special function that assigns values to object properties and is executed when the class is being initiated. In simpler words, this function helps us to assign different values within the class, creating an internal structure that will be used when we create an object based on that class. You can run the next example on your Python console for a better understanding of the concept. Imagine you want to create the same class news\_piece we did in R and then use that class to create an object:
+
+%\begin{examplepy}
+%class news_piece:
+%...     def __init__(self, headline, date, positive_tone):
+%...             self.headline = headline
+%...             self.date = date
+%...             self.positive_tone = positive_tone
+%news2 = news_piece("Thousands of new refugees run from hunger after war begins", 22012030, False)
+%print(news2.headline)
+%\end{examplepy}
+
+%As you see, with the last line of the code we obtain a part of the created object (in this case the headline) based on the structure designed in the class news\_piece.
+
 
 
 So far you have taken your first steps as a programmer, but there are many
@@ -44,7 +969,7 @@ more advanced things to learn that are beyond the scope of this
 book. You can find a lot of literature, online documentation and even
 wonderful Youtube tutorials to keep learning. We can recommend the
 books by \cite{crawley2012r} and \cite{vanderplas2016python} to have
-more insights of R and Python, respectively. In the next chapter, we
-will get deeper into the world of code in order to learn how and why
-to re-use existing code, what to do if you are stuck during your
+more insights into R and Python, respectively. In the next chapter, we
+will go deeper into the world of code in order to learn how and why
+you should re-use existing code, what to do if you are stuck during your
 programming journey and what are the best practices when coding.

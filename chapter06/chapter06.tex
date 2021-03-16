@@ -1,293 +1,511 @@
-\chapter{From file to data frame and back}
-\label{chap:filetodata}
-
+\chapter{Data Wrangling}
+\label{chap:datawrangling}
 
 \begin{abstract}{Abstract}
-  This chapter teaches you basics of file handling, such as different file formats and encodings. It introduces csv files, json files, plain text files, and binary file formats. We discuss different approaches to organizing data in files, and how to write data frames to and read them from these files].  Finally, we provide guidance for retrieving example datasets.
+This chapter shows you how to do ``data wrangling'' in R and Python.
+Data wrangling is the process of transforming raw data into a shape that is suitable for analysis. The sections of this chapter first take you through the normal data wrangling pipeline of
+filtering, changing, grouping, and joining data. Finally, the last section shows how you can
+reshape data.
 \end{abstract}
 
-\keywords{file formats, encodings, reading and writing files, data frames, datasets}
+\keywords{Data wrangling, data cleaning, filtering, merging, reshaping}
 
 \begin{objectives}
-\item Know how to handle different encodings and dialects
-\item Make an informed choice for a file format
-\item Know how to access existing datasets
+\item Filter rows and columns in data frames
+\item Compute new columns and summary statistics for data frames
+\item Reshape and merge data frames
 \end{objectives}
 
+\newpage
 \begin{feature}
   \textbf{Packages used in this chapter}\\
-  This chapter relies mostly on the \pkg{pandas} (Python) and \pkg{tidyverse} (R) functionality to read and write files. Additionally, \pkg{haven} is used to read data from other tools such as SPSS.
-  Finally, we show how to use existing data from packages such as \pkg{sotu} (R) and \pkg{nltk} and \sklearn\ (Pythn).
-  If needed, you can install these packages with the code below
-  (see \refsec{installing} for more details):
-  \doublecodex{chapter06/chapter06install}
-  \noindent After installing, you need to import (activate) the packages every session:
-  \doublecodex{chapter06/chapter06library}
+  This chapter uses the \index{readxl}\emph{readxl} package for reading excel files and various parts of the \index{tidyverse}\emph{tidyverse} including \index{ggplot2}\emph{ggplot2}, \index{dplyr}\emph{dplyr}, and \index{tidyr}\emph{tidyr} (which are installed automatically when you install tidyverse). In Python we rely mostly on the \index{pandas}\emph{pandas} package, but we also use \index{scipy}\emph{scipy} package for statistics and the \index{xlrd}\emph{xlrd} for reading excel files. You can install these packages with the code below if needed
+  (see Section~\ref{sec:installing} for more details):
+
+\doublecodex{chapter06/chapter06install}
+
+\noindent After installing, you need to import (activate) the packages every session:
+
+\doublecodex{chapter06/chapter06library}
+
 \end{feature}
 
+%\input{chapter06/data_filtering}
 
-\section{Why and when do we use data frames?}
-
-In Section~\ref{sec:datatypes}, we introduced basic data types: strings (which contain text), integers (which contain whole numbers, or numbers without anything 'behind the dot'), floats (floating point numbers; numbers with decimals), and bools (Boolean values, True or False). 
-We also learned that a series of multiple values (e.g., multiple integers, multiple strings) can be stored in what we call a vector (R) or a list (Python).
-
-In most social-scientific applications, however, we do not deal with isolated series of values. We rather want to link multiple values to each other. One way to achieve this are dictionaries (see Section~\ref{sec:datatypes}).
-Such data structures are really useful for nested data:
-For example, if we would not want to store people's age but their addresses,
-we could store a dict within a dict.
-%\rpyex{chapter06/snippets/listvsdict}{CAPTION}
-In fact, as we will see later in this chapter, many data that computational social scientists use come in such a format.
-For instance, data about an online product can contain many reviews which in turn have various pieces of information on the review author.
-
-But ultimately, for many social-scientific analyses, a tabular data format is preferred.
-We are used to thinking of observations (cases) as rows with columns containing information or measurements about these observations (e.g., age, gender, days per week of newspaper reading, ...). It also simplifies how we can run many statistical analyses later on.
-
-We could simply construct a list of lists to achieve such a tabular data format.
-In fact, this list-of-lists technique is often used to store tabular data or matrices, and you will probably encounter it in some examples in this book or elsewhere. The list-of-lists approach is very low-level, though: If we wanted to, for instance, insert a column or a row at a specific place, writing the code to do so can be cumbersome. There are also no things like column headers, and no consistency checks: nothing would warn us if one row actually contained more 'columns' than another, which should not be the case in a rectangular table.
-
-To make our lifes easier, we can therefore use a data structure called a data frame. 
-Data frames can be generated from list-of-list structures, from dictionaries, and many others.
-One way of doing so is shown in \refex{createdataframe}, but very often, you'd rather read data from a file or an online resource directly into a dataframe (see Section~\ref{sec:reading}).
-
-\pyrex[output=both, caption=Creating a dataframe from other datastructures]{chapter06/createdataframe}
-
-In this book, we use dataframes a lot, because they are very convenient for handling tabular data, and because they provide a lot of useful convenience functionality, instead of requiring us to re-invent the wheel all the time. In the next section, we will discuss some of them.
-
-Of course, there are some situations when dataframes are \emph{not} a good choice to organize your data:
-\begin{itemize}
-\item Your data is one-dimensional. Think, for example, of resources like a list of stopwords, or a list of texts without any meta-information.
-\item Your data do not have a tabular structure. Think, for example, of deeply nested data, or of very messy data.
-\item Your data are so large that you cannot (or do not want to) load it into memory. For instance, if you want to process the text of all articles on Wikipedia, you probably want to process them one-by-one instead of loading all articles at the same time.
-\end{itemize}
-
-%\subsection{Basic operations on data frames}
-
-%When retrieving data for external sources (Section~\ref{sec:gathering}), we can convert the data we retrieved into a dataframe using the techniques outlined in the previous paragraphs. In many other cases, we will read them directly from files instead (Section~\ref{sec:reading}).
-
-Therefore, you will come across (and we will introduce you to) examples in which we do \emph{not} use data frames to organize our data.
-But in most cases we will, because they make our life easier:
-Once we constructed our data frame, we have a range of handy functions at our disposal, that allow us to select rows or columns, add new rows or columns, apply functions to them, and so on.
-We will discuss these in Chapter~\ref{chap:datawrangling}.
-
-But how do we -- toy examples like those in \refex{createdataframe} aside -- get data into and out of dataframes? 
+\section{Filtering, Selecting, and Renaming}
 
 
+\paragraph{Selecting and renaming columns}
+A first clean up step we often want to do is removing unnecessary columns and renaming columns with unclear or overly long names.
+In particular, it is often convenient to rename columns that contain spaces or non-standard characters, so it is easier to refer to them later.
 
+\paragraph{Selecting rows}
+As a next step, we can decide to filter certain rows.
+For example, we might want to use only a subset of the data,
+or we might want to remove certain rows because they are incomplete or incorrect.
 
-%Table~\ref{tab:dataframecommands} gives an overview of some of them. Many of these commands will come back in subsequent chapters, but we encourage you to already play around a bit with them. That is more fun with a real dataset - and that's why we will load some in the next section.
+As an example, FiveThirtyEight published a quiz about American public opinion about guns,
+and were nice enough to also publish the underlying data\footnote{https://projects.fivethirtyeight.com/guns-parkland-polling-quiz/; see https://github.com/fivethirtyeight/data/tree/master/poll-quiz-guns for the underlying data.}.
+\refex{data-filter} gives an example of loading and cleaning this dataset, starting with the function \index{read\_csv}\texttt{read\_csv} (included in both \index{tidyverse}\emph{tidyverse} and \index{pandas}\emph{pandas}) to load the data directly from the Internet.
+This dataset contains one poll result per row, with a \emph{Question} column indicating which question was asked,
+and the columns listing how many Americans (adults or registered voters) were in favor of that measure, in total and for Republicans and Democrats.
+Next, the columns \emph{Republican} and \emph{Democratic Support} are renamed to shorten the names and remove the space.
+Then, the URL column is dropped using the \index{tidyverse}\emph{tidyverse} function \index{select}\texttt{select} in R or the \index{pandas}\emph{pandas} function \index{drop}\texttt{drop} in Python.
+Notice that the result of these operations is assigned to the same object \texttt{d}.
+This means that the original \texttt{d} is overwritten.
 
+\note{In R, the \index{tidyverse}\emph{tidyverse} function \index{select}\texttt{select} is quite versatile.
+  You can specify multiple columns using \verb|select(d, column1, column2)|
+  or by specifying a range of columns: \verb|select(d, column1:column3)|.
+  Both commands keep only the specified columns.
+  As in the example, you can also specify a negative selection with the minus sign:
+  \verb|select(d, -column1)| drops \texttt{column1}, keeping all other columns.
+  Finally, you can rename columns in the select command as well:
+  \verb|select(d, column1=col1, column2)| renames \texttt{col} to \texttt{column1},
+  keeps that column and \texttt{column2},and drops all other columns.
+  }
 
-%\begin{table}[]
-%\caption{Basics of data frame handling}
-%\label{tab:dataframecommands}
-%\begin{tabularx}{\textwidth}{XXXXX}
-%\toprule
-%                         & pandas data frame                 & R data.frame & R tibble \\ \midrule
-%select rows by index     & df.iloc{[}1, ...... ..            &              &          \\
-%select columns by number & df.iloc...                        &              &          \\
-%select columns by name   & df{[}'mycolumn'{]} or df.mycolumn &              &          \\ \bottomrule
-%\end{tabularx}
-%\end{table}
+We then filter the dataset to list only the polls on whether teachers should be armed
+(you can understand this is close to our heart).
+This is done by comparing the value of the \emph{Question} column to the value \texttt{'arm-teachers'}.
+This comparison is done with a double equals sign (\verb+==+).
+In both Python and R, a single equals sign is used for assignment,
+and a double equal sign is used for comparison.
+A final thing to notice is that while in R we used the \index{dplyr}\emph{dplyr} function (\index{filter}\texttt{filter}) to filter out rows,
+in Python we \emph{index} the data frame using square brackets on the \index{pandas}\emph{pandas} DataFrame attribute \index{loc}\texttt{loc}(ation): \verb+d.loc[]+.
+
+Note that we chose to assign the result of this filtering to \texttt{d2},
+so after this operation we have the original full dataset \texttt{d} as well as the subset \texttt{d2} at our disposal.
+In general, it is your choice whether you overwrite the data by assigning to the same object,
+or create a copy by assigning to a new name\footnote{Keep in mind that in Python, \texttt{\small{df2=df1}} does \emph{not} create a copy of a data frame, but a pointer to the same memory location (see the discussion on mutable objects in Section~\ref{sec:datatypes}). This may often not be of practical importance, but if you really need to be sure that a copy is created, use \texttt{\small{df2=df1.copy()}}.}.
+If you will later need to work with a different subset, it is smart to keep the original so you can subset it again later.
+On the other hand, if all your analyses will be on the subset, you might as well overwrite the original.
+We can always re-download it from the internet (or reload it from our harddisk) if it turns out we needed the original anyway.
+
+\pyrex[caption=Filtering,output=r,format=table]{chapter06/data-filter}
 
 
 
 
-\section{Reading and saving data}
-\label{sec:reading}
+%\input{chapter06/mutate}
 
-\subsection{The role of files}
+\section{Calculating Values}
+\label{sec:calculate}
 
-In statistical software like SPSS or Stata, or in all typical office applications for that matter, you \emph{open} a file, do some work on it, and then \emph{save} the changes to the same file once you are done. You basically ``work on that file''.
+Very often, we need to calculate values for new columns or change the content of existing columns.
+For example, we might wish to calculate the difference between two columns,
+or we may need to clean a column by correcting clerical errors or converting between data types.
 
-That's not how your typical workflow in R or Python looks like. Here, you work on one or multiple data frames (or some other data structures). That means that you might start by \emph{reading} the contents of some file into a data frame, but once that is done, there is no link between the dataframe and that file any more. Once your work is done, you can save your dataframe to a file, of course, but it is a good practice not to overwrite your input file, so that you can always go back to where you started. A typical workflow would rather look like this:
-\begin{enumerate}
-\item Read raw data from file \ttt{myrawdata.csv} into data frame \ttt{df}"
-\item Do some operations and analyses on df
-\item Save df to file \ttt{myfinaldata.csv}
-\end{enumerate}
-Note that the last step is not even necessary, but may be handy if running the script takes very long, or if you want to re-distribute the resulting file.
+In these steps, the general pattern is that a column is assigned a new value based on
+a calculation that generally involves other columns.
+In both R and Python, there are two general ways to accomplish this.
+First, you can simply assign to an existing or new column,
+using the column selection notation discussed in Section~\ref{sec:datatypes}:
+\verb+df["column"] = ...+ in Python, or \verb+df$column = ...+ in R.
 
-The format in which we read files into a data frame and the format to which we save our final data frame also by no means needs to be identical. We can, for example, read data created by someone else in Stata's proprietary \ttt{.dta} format into a dataframe and later save it to a .csv table.
+Both Python and R also offer a function that allows multiple columns to be changed,
+returning a new copy of the data frame rather than changing the original data frame.
+In R, this is done using the \index{tidyverse}\emph{tidyverse} function \index{mutate}\texttt{mutate}, which is the recommended way to compute values.
+The Python equivalent, \index{pandas}\emph{pandas} function \index{assign}\texttt{assign}, is used more rarely as it does not offer many advantages over direct assignment.
 
-While we sometimes do not have the choice in which format we get our input data, we have a range of options regarding our output data. We usually prefer formats that are \emph{open} and \emph{interoperable} for this, which ensures that they can be used by as many people as possible, also in the future, and that they are not tied to any specific (proprietary) product.
+In either case, you can use arithmetic: e.g.\ \verb|rep - dem| to compute the difference between these columns.
+This works directly in R \index{mutate}\texttt{mutate},
+but in Python or in R direct assignment you also need to specify the name of the data frame.
+In Python, this would be \verb+d["rep"] - d["dem"]+ \footnote{You can also write \texttt{d.rep - d.dem}, which is shorter, but does not work if your column names contain, for instance, spaces.}, while in R this is \verb+d$rep - d$dem+.
 
-The most common file formats that are relevant to us are listed in Table~\ref{tab:fileformats}. \ttt{txt} files are particularly useful for long texts (think of one file containing one newspaper article or even a whole book), but they are bad for storing associated meta data. \ttt{csv} files are the default choice for tabular data, and \ttt{json} files allow us to store nested data in a dictionary-like format. 
+In many cases, however, you want to use various functions to perform tasks like cleaning and data conversion
+(see Section~\ref{sec:functions} for more explanation of built-in and custom functions).
+For example, to convert a column to numeric you would use the base R function \index{as.numeric}\texttt{as.numeric} in R or the \index{pandas}\emph{pandas} function \index{to\_numeric}\texttt{to\_numeric} in Python.
+Both functions take a column as argument and convert it to a numeric column.
 
-For the sake of completeness, we also listed the native Python and R formats pickle, RDS, and RDA. Because their lack of interoperability, they are not very suitable for long-term storage or for sharing data, but they can have a place in a workflow as an intermediate step to solve the issue that none of the other formats are able of storing all properties of a dataframe (e.g., the csv file cannot store whether a given column in an R dataframe is to be understood as containing strings such as 'man', 'woman', 'non-binary' or a factor with the three levels man, woman, non-binary). If it is of importance to store an object (such as a dataframe) exactly as-it-is, we can use these formats. One of the rare instances where we use these formats is in \refex{reuse}, where we store machine learning models for later reuse.
+Almost all R functions work on whole columns like that.
+In Python, however, many \emph{functions} work on individual values rather than columns.
+To apply a function on each element of a column \verb+col+, you can use \verb+df.col.apply(my_function)+
+(where \texttt{df} and \texttt{col} are the names of your data frame and column).
+In contast, pandas columns have multiple useful \emph{methods} that -- because they are methods
+of that column -- apply to the whole column\footnote{See Section~\ref{sec:functions} for a refresher on methods and functions}.
+For example, the method \verb+df.col.fillna+ replaces
+missing values in the column \verb+col+, and \verb+df.col.str.replace+ does a find and replace.
+Unlike functions that expect individual values rather than columns as an input, there is no need to explicitly \verb+apply+ such a method.
+As always, you can use tab completion (pressing the TAB key after writing \texttt{df.col.}) to get a menu that includes all availbale methods.
 
-\begin{table}[]
-\caption{Basics of data frame handling \label{tab:fileformats}}{%
-\begin{tabular}{@{}llll@{}}
-\toprule
-        & Used for?             & open   & interoperable?\\ \midrule
-txt     & plain text            &yes & yes            \\
-csv     & tabular data          & yes & yes            \\
-json    & nested data, key-value pairs   & yes & yes             \\ 
-pickle  & Python objects        & yes & no     \\ 
-RDS/RDA & R objects             & yes & no \\ \bottomrule
-\end{tabular}}{}
-\end{table}
+\pyrex[output=r,format=table,caption=Mutate]{chapter06/mutate}
+
+To illustrate some of the many possibilities, \refex{mutate} has code for cleaning a version of the Guns Polls
+in which we intentionally introduced two problems: we added some typos to the \emph{rep} column
+and introduced a missing value in the \emph{Support} column.
+To clean this, we perform three steps: First, we remove all non-numeric characters using a regular expression
+(see Section~\ref{sec:regular} for more information on text handling and regular expressions).
+Next, we need to explicitly convert the resulting column into a numeric column so we can later use it in calculations.
+Finally, we replace the missing value by the column mean
+(of course, it is doubtful that that is the best strategy for imputing missing values here,
+we do it mainly to show how one can deal with missing values technically. You will find some more discussion about missing values in Section~\ref{sec:simpleeda}).
+
+The cleaning process is actually performed twice: lines 5-10 use direct assignment,
+while lines 12-18 use the \index{mutate}\texttt{mutate}/\index{assign}\texttt{assign} function.
+Finally, lines 20-26 show how you can define and apply a custom function to combine the first two cleaning steps.
+This can be quite useful if you use the same cleaning steps in multiple places,
+since it reduces the repetition of code and hence the possibility of introducing bugs or inconsistencies.
+
+Note that all these versions work fine and produce the same result.
+In the end, it is up to the researcher to determine which feels most natural in the circumstances.
+As noted above, in R we would generally prefer \index{mutate}\texttt{mutate} over direct assignment,
+mostly because it fits nicely into the \index{tidyverse}\emph{tidyverse} workflow and you do not need to repeat the data frame name.
+In Python, we would generally prefer the direct assignment, unless it is desired to make a copy of the data
+with the changes made, in which case \index{assign}\texttt{assign} can be more useful.
 
 
-\subsection{Encodings and dialects}
-\label{sec:encodings}
-Plan \ttt{txt} files, \ttt{csv} files, and \ttt{json} files are all files that are based on text. Unlike binary file formats, you can read them in any text editor. Try it yourself to understand what is going on under the hood. 
+%\input{chapter06/grouping}
 
-Download a csv file (such as \url{http://cssbook.net/d/gun-polls.csv})
-and open it in a text editor of your choice. Some people swear that their preferred editor is the best (google to learn about the vi vs. emacs war for some entertainment), but if you have no strong feeling, then Notepad++, Atom, or Sublime may be good choices that you may want to look into.
+\section{Grouping and Aggregating} \label{sec:grouping}
 
-As you will see (Figure~\ref{fig:csv-in-editor}), a csv file internally just looks like a bunch of text in which each line represents a row and in which the columns are separated by a comma (hence the name comma seperated values (csv)).
-Looking at the data in a text editor is a very good way to find out what happens if reading your files into a data frame does not work as expected - which can happen more frequently than you would expect.
+The functions we used to change data above operated on individual rows.
+Sometimes, however, we wish to compute summary statistics of groups of rows.
+This essentially shifts the unit of analysis to a higher level of abstraction.
+For example, we could compute per-school statistics from a data file containing information per student;
+or we could compute the average number of mentions of a politician per day from data file containing information per articles (each date might have multiple articles and each article multiple mentions to politicians!).
 
-Mostly due to historical reasons, not every text based file (which, as we have seen, includes csv files) is internally stored in the same way.
-For a long time, it was common to \emph{encode} in such a way that one character mapped to one byte. That was easy from a programming perspective (after all, the n-th character of a text can directly be read from and written to the n-th byte of a file) and also storage-efficient. But given that a byte consists of 8 bits, that means that there are only 256 possible characters. All letters in the alphabet in uppercase, again in lowercase, numbers, punctuation, some control characters -- and you are out of characters. Due to this limitation, there were different encodings or codepages for different languages that told a program which value should be interpreted as which character.
+In data analysis, this is called \emph{aggregation}.
+In both Python and R, it consists of two steps:
+First, you define which rows are \emph{grouped} together to form a new unit
+by specifying which column identifies these groups.
+In the previous examples, this would be the school name or the date of each article.
+It is also possible to group by multiple columns, for example to compute the average per day per news source.
 
-We all know the phenomenon of garbled special characters, like German umlauts or Scandinavian characters like ø, å, or œ being displayed as something completely different. This happens when files are read with a different encoding than the encoding that was used for creating them.
+The next step is to specify one or more summary (or \emph{aggregation}) functions to be computed over the desired value columns.
+These functions compute a summary value, like the mean, sum, or standard deviation, over all the values belonging to each group.
+In the example, to compute average test scores per school we would apply the average (or mean) function to the test score value column.
+In general, you can use multiple functions (e.g.\  mean and variance) and multiple columns (e.g.\ mean test score and mean parental income).
 
-In principle, this issue has been solved due to the advent of Unicode. Unicode allows to handle all characters from all scripts, including emoticons, Korean and Chinese characters, and so on. The most popular encoding for Unicode characters is called UTF-8, and it has been around for decades. 
+The resulting dataset is reduced both in rows and in columns.
+Each row now represents a group of previuos cases (e.g.\ school or date),
+and the columns are now only the grouping columns and the computed summary scores.
 
-To avoid any data loss, it is advisable to make sure that your whole workflow uses UTF-8 files. By far most modern applications support UTF-8, even though some still by default use a different encoding (e.g., 'Windows-1252') to store data. As Figure~\ref{fig:csv-in-editor} illustrates, you can use a text editor to find out what encoding your data has, and many editors also offer an option to change the encoding. However, you cannot recover what has been lost (e.g., if at one point you saved your data with an encoding that only allows 256 different characters, it follows logically that you cannot recover that information).
+\refex{aggregate} shows the code in R and Python to define groups and compute summary values.
+First, we group by poll \emph{question}; and for each question, we compute the average and standard deviation.
+The syntax is a little different for R and Python, but the idea is the same:
+first we create a new variable \verb+groups+ that stores the grouping information,
+and then we create the aggregate statistics.
+In this example, we do not store the result of the computation, but print it on the screen.
+To store the results, simply assign it to a new object as normal.
+
+\pyrex[caption={Aggregation. Note that in the Python example, we can specify often-used functions such as \texttt{"mean"} simply as a string, but instead, we could also pass functions directly, such as numpy's \texttt{np.mean}},output=r,format=table]{chapter06/aggregate}
+
+In R, you use the \index{dplyr}\emph{dplyr} function \index{group\_by}\texttt{group\_by}  to define the groups,
+and then call the function \index{summarize~}\texttt{summarize~} to compute summary values by specifying
+\verb+name=function(value)+.
+
+In Python, the grouping step is quite similar.
+In the summarization step, however, you specify which summaries to compute in a dictionary%
+\footnote{See Section~\ref{sec:datatypes} for more information on working with dictionaries}.
+The keys of the dictionary lists the value columns to compute summaries of,
+and the values contain the summary functions to apply, so  \verb+{'value': function} or \verb+{'value': [list of functions]}+.
+
+\subsection{Combining Multiple Operations}
+
+In the examples above, each line of code (often called a \emph{statement}) contained a single operation, generally a call to a function or method (see Section~\ref{sec:functions}).
+The general shape of each line in R was \verb+data = function(data, arguments)+, that is, the data is provided as the first argument to the function.
+In Python, we often used methods that ``belong to'' objects such as data frames or columns. Here, we therefore specify the object itself follwed by a period and its method that is to be called,
+i.e.\ \verb+object = object.method(arguments)+.
+
+Although there is nothing wrong with limiting each line to a single operation, both languages allow multiple operations to be chained together.
+Especially for grouping and summarizing, it can make sense to link these operations together as they can be thought of as a single ``data wrangling'' step.
+
+In Python, this can be achieved by adding the second \verb+.method()+ directly to the end of the first statement.
+Essentially, this calls the second method on the result of the first method: \verb+data = datamethod1(arguments).method2(arguments)+.
+In R, the data needs, of course, to be included in the function arguments. But we can also chain these function calls.
+This is done using the \emph{pipe operator} (\verb+%>%+) from the (cutely named) \index{magrittr}\emph{magrittr} package.
+The pipe operator inserts the result of the first function as the first argument of the second function.
+More technically, \verb+f1(d) %>% f2()+ is equivalent to \verb+f2(f1(d))+.
+This can be used to chain multiple commands together, e.g.\ \verb+data = data %>% function1(arguments) %>% function2(arguments)+.
+
+\pyrex[caption={Combining multiple functions or methods. The result is identical to \refex{aggregate}},output=none,format=table]{chapter06/aggregate2}{
+
+\refex{aggregate2} shows the same operation as in Example~\ref{ex:aggregate}, but chained into a single statement.
 
 
+\subsection{Adding Summary Values}
+
+Rather than reducing a data frame to contain only the group-level information,
+it is sometimes desirable to add the summary values to the original data.
+For example, if we add the average score per school to the student-level data,
+we can then determine whether individual students outperform the school average.
+
+Of course, the summary scores are the same for all rows in the same group:
+all students in the same school have the same school average.
+So, these values will be repeated for these rows, essentially
+mixing individual and group level variables in the same data frame.
+
+\pyrex[caption=Adding summary values to individual cases,output=r,format=table]{chapter06/transform}
+
+Example~\ref{ex:transform} shows how this can be achieved in Python and R,
+computing the mean support per question and then calculating how each poll deviates from this mean.
+
+In R, the code is very similar to Example~\ref{ex:aggregate2} above, simply
+replacing the \index{dplyr}\emph{dplyr} function \index{summarize}\texttt{summarize} by the function \index{mutate}\texttt{mutate} discussed above.
+In this function you can mix summary functions and regular functions, as shown in the example:
+first the mean per group is calculated, followed by the deviation of this mean.
+
+The Python code also uses the same syntax used for computing new columns.
+The first line selects the \emph{Support} column on the grouped dataset,
+and then calls the \index{pandas}\emph{pandas} function \index{transform}\texttt{transform} on that column to compute the mean per group,
+adding it as a new column by assigning it to the column name.
+The second line uses the regular assignment syntax to create the deviation based on the support and calculated mean.
+
+
+%\input{chapter06/merge}
+\section{Merging Data}
+\label{sec:join}
+
+In many cases, we need to combine data from different sources or data files.
+For example, we might have election poll results in one file and socio-economic data per area in another.
+To test whether we can explain variance in poll results from factors such as education level,
+we would need to combine the poll results with the economic data.
+This process is often called merging or joining data.
+
+\subsection{Equal Units of Analysis}
+
+%\pyrex[caption=Private and Public Capital data (source: Piketty 2014)]{chapter06/piketty}
+
+\begin{ccsexample}
+  \doublecodex{chapter06/piketty_1}
+  \codexoutputtable{chapter06/piketty_1.r}
+  \doublecodex{chapter06/piketty_2}
+  \codexoutputtable{chapter06/piketty_2.r}
+\caption{Private and Public Capital data (source: Piketty 2014).}\label{ex:piketty}
+\end{ccsexample}
+
+
+The easiest joins are when both datasets have the same unit of analysis,
+i.e.\ the rows represent the same units.
+For example, consider the data on public and private capital ownership published by
+\cite{piketty} alongside his landmark book \emph{Capital in the 21st Century}.
+As shown in \refex{piketty}, he released separate files for public and private capital ownership.
+If we wished to analyze the relationship between these (for example to recreate Figure 3.6 on page 128 of that book),
+we first need to combine them into a single data frame.
+
+To combine these data frames, we use the \index{pandas}\emph{pandas} data frame method \index{merge}\texttt{merge} in Python or the \index{dplyr}\emph{dplyr} method \index{full\_join}\texttt{full\_join} in R.
+Both methods join the data frames on one or more \emph{key} columns.
+The key column(s) identify the units in both data frames, so in this case the \emph{Year} column.
+Often, the key column is some sort of identifier, like a respondent or location ID.
+The resulting data frame will contain the shared key column(s), and all other columns from both joined data frames.
+
+In both Python and R, all columns that occur in both data frames are by default assumed to be the key columns.
+In many cases, this is the desired behavior as both data frame may contain e.g.\ a \emph{Year} or \emph{RepondentID} column.
+Sometimes, however, this is not the case.
+Possibly, the key column is called differently in both data frames, e.g.\ \emph{respID} in one and \emph{Respondent} in the other.
+It is also possible that the two frames contain columns with the same name,
+but which contain actual data that should not be used as key.
+For example, in the Piketty data shown above the key column is called \emph{Year} in both frames,
+but they also share the columns for the countries which are data columns.
+
+In these cases, it is possible to explicitly specify which columns to join on (using the \verb+on=+ (Python) / \verb+by=+ (R) argument).
+However, we would generally recommend preprocessing the data first and select and/or rename columns such that the only shared columns are the key columns.
+The reason for that is that if columns in different data frames mean the same thing (i.e.\ \emph{respID} and \emph{Respondent}), they should generally have the same name to avoid confusion.
+In the case of ``accidentally'' shared column names, such as the country names in the current example,
+it is also better to rename them so it is obvious which is which in the resulting dataset:
+if shared columns are not used in the join, by default they get ``.x'' and ``.y'' (R) or ``\_x'' and ``\_y'' (Python) appended to their name, which is not very meaningful.
+Even if the key column is the only shared column, however, it can still be good to explicitly select that column to make it clear to the reader (or for yourself in the future) what is happening.
+
+\begin{ccsexample}
+\doublecodex{chapter06/capital_1}
+\codexoutputtable{chapter06/capital_1.r}
+\doublecodex{chapter06/capital_2}
+\doubleoutput{chapter06/capital_2}
+\caption{Merging private and public data for France.}\label{ex:merge}
+\end{ccsexample}
+
+
+%\pyrex[caption=Merging private and public data for France]{chapter06/capital}
+
+This is shown in \refex{merge}.
+The first two lines select only the \emph{Year} and \emph{France} columns, and rename the \emph{France} column to indicate whether it is the private or public data.
+Lines 3 and 5 do the actual join, with and without the explicit selection of key column, respectively.
+This is then used to compute the correlation between private and public capital,
+which shows that there is a weak but (just) significant negative correlation ($\rho=-.32, p=.04$)%
+\footnote{Of course, the fact that this is time series data means that the independence assumption of regular correlation is violated badly, so this should be interpreted as a descriptive statistic, e.g.\ in the years with high private capital there is low public capital and the other way around.}.
+
+\note{Next to \index{merge}\texttt{merge}, pandas data frames also have a method called \index{join}\texttt{join}. It is a simplified version for joining on indices (i.e., the row labels). If you have two data frames in which corresponding rows have the same row number, you can simply write \texttt{df1.join(df2)}. In short: both methods do the same, but merge provides more options, and join is easier if you want to join on the indices.}
+
+
+
+\subsection{Inner and Outer Joins}
+
+In the example above, both datasets had exactly one entry for each unit (year), making it the most straightforward case.
+If either (or both) of the datasets have missing units, however, you need to specify how to deal with this.
+
+Table~\ref{tab:joins} list the four possible ways of joining, keeping all rows (\emph{outer join}), only rows present in both (\emph{inner join}), or all rows from one of the sets and matching rows from the other (\emph{left} or \emph{right join}). Left and right here literally refer to the order in which you type the data frame names. Figure~\ref{fig:joinvenn} and Table~\ref{tab:joins} give an overview.
+In all cases except inner joins, this can create units where information from one of the datasets is missing.
+This will be lead to missing values (|NA|/|NaN|) being inserted in the columns of the datasets with missing units.
+
+%\input{chapter06/figjoins}
 \begin{figure}
-\centering
-\includegraphics[width=0.9\linewidth]{figures/ch6_csv-in-editor}
-\caption{A csv file opened in a text editor, illustrating that the columns are separated by commas, and showing the encoding and the line endings.}
-\label{fig:csv-in-editor}
+    \centering
+    \includegraphics{figures/ch07_figjoins}
+    \caption{The solid area indicates whether the cases in the resulting datasets need to appear in one, both, or any of the datasets.}
+    \label{fig:joinvenn}
 \end{figure}
 
-As we will show in the practical code examples below, you can also force Python and R to use a specific encoding, which can come in handy if your data arrives in a legacy encoding.
+\input{chapter06/tabjoins}
 
-Related to the different encodings a file can have, but less problematical, are different conventions of how a \emph{line ending} is denoted. Windows-based programs have been using a Carriage Return followed by a Line Feed (denoted as \texttt{\textbackslash r\textbackslash n}), very old versions of MacOS used a Carriage Return only (\texttt{\textbackslash r}), and newer versions of MacOS as well as Linux use a Line Feed only (\texttt{\textbackslash n}). In our field, the Linux (or Unix) style line endings have become most dominant, and Python 3 even automatically converts Windows style line endings to Unix style line endings when reading a file -- even on Windows itself.
+In most cases, you will either use inner join or left join.
+Inner join is useful when information should be complete,
+or where you are only interested in units with information in both datasets.
+In general, when joining sets with the same units, it is smart to check the number of rows before and after the operation.
+If it decreases, this shows that there are units where information is missing in either set.
+If it increases, it shows that apparently the sets are not at the same level of analysis,
+or there are duplicate units in the data.
+In either case, an unexpected change in the number of rows is a good indicator that something is wrong.
 
-A third difference is the use of so-called \emph{byte-order markers} (BOM). In essence, a BOM is an additional byte added to the beginning of a text file to indicate that it is a UTF-encoded file and to indicate in which order the bytes are to be read (the so-called endianness). While informative, this can cause trouble if your program does not expect that byte to be there. In that case, you might either want to remove it or explicitly specify the encoding as such (e.g., 'utf-8-bom' instead of 'utf-8' in the examples below).
-
-
-In short, the most standard form in which you probably want to encode your data is in UTF-8 with Linux-style line endings without the use of a byte-order marker.
-
-
-In the case of reading and writing csv files, we thus need to know the encoding, and potentially also the line ending conventions and the presence of a byte-order marker. However, there are also some additional variations that we need to consider. There is no single definition of how a csv file needs to look like, and there are multiple dialects that are widely used. They mainly differ in two aspects: the delimiter that is chosen, and the quoting an/or escaping of values.
-
-First, even though csv stands for comma separated values, one could use other characters instead of a comma to separate the columns. In fact, because many countries use a comma instead of a dot to as a decimal separator (\$10.30 vs 10,30€), in these countries a semicolon (';') is used instead of a comma as  column delimiter. To avoid the possible confusion, others use a tab character (\texttt{\textbackslash t}) to seperate columns. Sometimes, these files are then called a tab-seperated file, and instead of .csv, they may have a file extension such as \ttt{.tsv}, \ttt{.tab}, or even \ttt{.txt}. However, this does not change the way how you can read them - but what you need to know is whether your columns are seperated by \texttt{,}, \texttt{;}, or \texttt{\textbackslash t}. 
-
-Second, there may be different ways of how to deal with strings as values in a csv file. For instance, it may be that a specific value contains the same character that is also used as a delimiter. These cases are usually resolved by either putting all strings into quotes, putting only strings that contain such ambiguities in quotes, or by prepending the ambigous character with a specific escape character. Most likely, all of this is just handled automatically under the hood, but in case of problems, you might want to look into this and check out the documentation of the packages you are using on how to specify which strategy is to be used.
-
-Let's get practical and try out reading and writing files into a data frame (\refex{readfiles}).
-
-\pyrex[output=none, caption=Reading files into a dataframe]{chapter06/readfiles}
-
-Of course, we can read more than just csv files. In the Python
-example, you can use tabcompletion to get an overview of all file
-formats Python supports: Type |pd.read| and then press the TAB key to
-get a list of all supported files. For instance, you could to
-|pd.read_excel('test.xlsx')|, |df3 = pd.read_stata('test.dta')|, or
-|df4 = pd.read_json('test.json')| Similarily, for R, you can hit TAB
-after typing |haven::| to get an overview over functions such as
-|read_spss|.
-
-\subsection{File handling beyond data frames}
-Dataframes are a very useful data structure for organizing and analyzing data, and will come back in many examples in this book.
-However, not all things that we might want to read from a file needs to go into a dataframe.
-Imagine if we have a list of words that we later want to remove from some texts (so-called stopwords, see \refchap{protext}).
-We could make a list (or vector) of such words directly in our code. 
-But if we have more than a couple of such words, it is easier and more readable to keep them in an external file. We could create a file \texttt{stopwords.txt} in a text editor with one of such words per line:
-
-\begin{lstlisting}
-and
-or
-a
-an
-\end{lstlisting}
-
-If you are too lazy to create this list yourself, you could also
-download one from \url{http://cssbook.net/d/stopwords.txt} and save it
-in the same directory as your Python or R script.
-
-Then, you can read this file into a vector or list  (see \refex{readingstopwords}).
-
-\pyrex[output=none, caption=Reading files without dataframes]{chapter06/stopwords}
-
-\pyrex[output=none, caption={More examples for reading from and writing to files. Because dictionaries do not exist in R and handling non-rectangular data is more uncommon in R, we do not show an example for direct interaction with JSON files without involvement of a dataframe in the R example.}]{chapter06/extendedfilehandling}
-
-\refex{extendedfilehandling} provides you with some more elaborate code examples that allows us to dig a bit deeper into the general way of handling files.
-
-In the Python example,  we can open a file and assign a handle to it that allows us to refer to it (the name of the handle is arbitrary, let's just call it \texttt{f} here.
-Then, we can use a for loop to iterate over all lines in the file and add it to a list
-
-The \texttt{mode = 'r'} specifies that we want to read from the file. \texttt{mode = 'w'} would open the file for writing, create it if necessary, and immediately deletes all content that may have been in there if the file already existed (!).
-Note that the \texttt{.strip()} is necessary to remove the line ending itself, and also possible whitespace at the beginning or end of a line.
-If we want to save our stopwords, we can do this in a similar way: We first open the file (this time, for writing), and then use the file handle's methods to write to it.
-We are not limited to plain text files, here. For instance, we can use the same approach to read json files into a python dict or to store a python dict into a json file.
-
-We could also combine this with a for loop that goes over all files in a dictionary.
-Imagine we have a folder full of positive movie reviews, and another one full of negative movie reviews that we want to use to train a machine learning classifier (see Section~\ref{sec:supervised}).
-Let's further assume that all these reviews are saved as \texttt{.txt} files.
-We can iterate over all of them, as shown in \refex{reviewdata}. If you want to read text files into a dataframe in R, the \pkg{readtext} package may be interesting for you.
+Left joins are useful when you are adding extra information to a ``primary'' dataset.
+For example, you might have your main survey results in a dataset,
+to which you want to add metadata or extra information about your respondents.
+If this data is not available for all respondents, you can use a left join to add the information
+where it is available, and simply leave the other respondents with missing values.
 
 
-\section{Data from online sources}
-\label{sec:gathering}
+A similar use case is when you have a list of news items, and a separate list of items that were coded
+or found with some search term. Using a left join will let you keep all news items, and add the coding where it is available.
+Especially if items that had zero hits of a search term are excluded from the search results,
+you might use a left join followed by a calculation to replace missing values by zeros to indicate that the counts for
+items aren't actually missing, but were zero.
 
-Many data that are interesting to those analyzing communication are
-nowadays gathered online.  In Chapter~\ref{chap:scraping}, you will
-learn how to use APIs to retrieve data from web services, and how to
-write your own web scraper to automatically download large quanties of
-web pages and extract relevant information. For instance, you might
-want to retrieve customer reviews from a website or articles from news
-sites.
+Of course, you could also use a right join to achieve the same effect.
+It is more natural, however, to work from your primary dataset and add the secondary data,
+so you will generally use left joins rather than right joins.
 
-In this section, however, we will focus on how to re-use existing
-datasets that others have made available online. For instance, the
-open science movement has led to more and more datasets being shared
-openly using repositories such as Dataverse, Figshare, or
-others. Re-using existing data can be very good for several reasons:
-First, to confirm (or not) the conclusions drawn by others; second, to
-not waste resources by re-collecting very similar or even identical
-data all over again; and third, because gathering a large,
-high-quality dataset might just not be feasible with your means. This
-is especially true when you need annotated (i.e., hand-coded) data for
-supervised machine learning purposes (Chapter~\ref{chap:introsml}).
+Outer (or full) joins can be useful when you are adding information from e.g.\ multiple survey waves,
+and you want to include any respondent that answered any of the waves.
+Of course, you will have to carefully think about how to deal with the resulting missing values in the substantive analysis.
 
-We can distinguish between two types of existing online datasets:
-datasets that are inherently interesting, and so-called toy datasets.
+\subsection{Nested Data}
 
-Toy datasets may include made-up data, but often, these data are
-real. However, they are not analyzed to gain scientific insights (any
-more), as they may be too small, outdated, or already analyzed
-all-over again. These provide a great way, though, to learn and
-explore new techniques: After all, the results and the characteristics
-of the data are already known. Hence, such toy datasets are often
-even included in R and Python packages. Some of them are really
-well-known in teaching (e.g., the iris dataset containing measurements
-of some flowers; or the titanic dataset containing statistics on
-survival rates of passengers on the Titanic; or the MPG dataset on car fuel consumption). Many of these are included
-in packages like \pkg{scikit-learn}, \pkg{seaborn}, or \pkg{ggplot2}-- have a look at their documentation.
+The sections above discuss merging two datasets at the same level of analysis,
+i.e.\ with rows representing the same units (respondents, items, years) in both sets.
+It is also possible, however, to join a more aggregate (high level) set with a more detailed dataset.
+For example, you might have respondents that are part of a school or organizational unit.
+It can be desirable to join the respondent level information with the school level information,
+for example to then explore differences between schools or do multilevel modeling.
 
-For instance, the 20 Newsgroups dataset contains $18,846$ posts from
-newsgroups plus the groups where they were posted
-(\refex{20newsgroups}). This can be an interesting resource for
-exercising with natural language processing, unsupervised, and
-supervised machine learning. Another interesting resource are
-collections of political speeches, such as the state-of-the-union
-speeches from the US, which are available in multiple packages
-(\refex{sotudata}).
-Other interesting datasets with large collections of textual data may
-be the Financial News dataset compiled by \cite{Chen2017} or the
-political news dataset compiled by \cite{Horne2018}.
+For this use the same commands as for equal joins.
+In the resulting merged dataset, information from the group level will be duplicated for all individuals in that group.
 
+For example, take the two datasets shown in Example~\ref{ex:primary}.
+The \texttt{results} dataset shows how many votes each US 2016 presidential primary candidate received in each county:
+Bernie Sanders got 544 votes in Autauga County in the US state of Alabama, which was 18.2\% of all votes cast in the
+Democratic primary.
+Conversely, the \texttt{counties} dataset shows a large number of facts about these counties,
+such as population, change in population, gender and education distribution, etc.
 
-\pyrex[output=py, input=both,caption={In Python, \pkg{scikit-learn} has a convenience function to automatically download the 20 newsgroup dataset and automatically clean it up. In R, you can download the raw version (there are multiple copies floating around on the internet) and perform the cleaning yourself.}]{chapter06/20newsgroups}
+\pyrex[caption={2016 Primary results and county-level metadata. Note that to avoid duplicate output, we display the counties data in the Python example and the results data in the R example.}]{chapter06/primary}
 
-\pyrex[output=r, input=both, format=table, caption={A collection of US state-of-the-union speeches is available in multiple packages in various forms.}]{chapter06/sotudata}
+Suppose we hypothesize that Hillary would do relatively well in areas with more black voters.
+We would then need to combine the county level data about ethnic composition with the country $\times$ candidate
+level data on vote outcomes.
 
+This is achieved in Example~\ref{ex:nested} in two steps.
+First, both datasets are cleaned to only contain the relevant data:
+for the \texttt{results} dataset only the Democrat rows are kept, and only the \emph{fips} (county code), \emph{candidate}, \emph{votes}, and \emph{fraction} columns.
+For the \texttt{counties} dataset, all rows are kept but only the \emph{county code}, \emph{name}, and \emph{Race\_white\_pct} columns are kept.
 
+\pyrex[caption=Joining data at the result and the county level]{chapter06/nested}
 
-There are also some more generic ressources that you may want to consider for finding
-more datasets to play around with. On  \url{https://datasetsearch.research.google.com},
-you can search for datasets of all kinds, both really interesting ones and toy datasets.
-Another great research is \url{https://kaggle.com}, a site that hosts data
-science competitions.
+In the next step, both sets are joined using an inner join from the results dataset.
+Note that we could also have used a left join here, but with an inner join it will be immediately
+obvious if county level data is missing, as the number of rows will then decrease.
+In fact, in this case the number of rows does decrease, because some results do not have corresponding county data.
+As a puzzle, can you use the dataset filtering commands discussed above to find out which results these are?
 
+Note also that the county level data contains units that are not used, particularly the national and state level statistics.
+These, and the results that do not correspond to counties, are automatically filtered out by using an inner join.
 
+Finally, we can create a scatter plot or correlation analysis of the relation between ethnic composition and electoral success (see how to create the scatter plot in Section~\ref{sec:visualization}).
+In this case, it turns out that Hillary Clinton did indeed do much better in counties with a high percentage of black residents.
+Note that we cannot take this to mean there is a direct causal relation, there could be any number of underlying factors, including the date of the election which is very important in primary races.
+Statistically, since observations within a state are not independent, we should really control for the state-level vote here.
+For example, we could use a partial correlation, but we would still be violating the independence assumption of the errors,
+so it would be better to take a more sophisticated (e.g.\ multilevel) modeling approach.
+This, however, is well beyond the scope of this chapter.
 
+%\input{chapter06/tidy}
+
+\section{Reshaping Data: Wide To Long And Long To Wide}\label{sec:pivot}
+
+Data that you find or create does not always have the shape that you need it to be  for your analysis.
+In many cases, for further data wrangling or for analyses you want each observation to be in its own row.
+However, many data sources list multiple observations in columns.
+For example, data from panel surveys asking the same question every week will often have one row per respondent,
+and one column for each weekly measurement.
+For a time-series analysis, however, each row should be a single measurement,
+i.e.\ the unit of analysis is a respondent per week.
+
+Generally, data with multiple observations of the same unit is called \index{wide data}\emph{wide data} (as there are many columns),
+while a dataset with one row for each observation is called \index{long data}\emph{long data} (as there are many rows).
+In most cases, long data is easiest to work with, and in fact in \index{tidyverse}\emph{tidyverse}\ jargon such data is called \index[tidy data]{tidy}\emph{tidy}.
+
+As a first relatively simple example, consider the datasets containing public and private capital.
+This data is ``wide'' in the sense that the measurements for the different countries are contained in the columns.
+To make this data ``long'' we would have to create rows for each country--year combination.
+This will make it much easier to do further data wrangling or analysis, as you can now e.g.\ directly merge the datasets and compute the pooled correlation between these variables.
+In fact, when we merged these datasets earlier in Example~\ref{ex:merge2}, we selected only the measurements for France, essentially turning it into long data.
+
+\begin{ccsexample}
+  \doublecodex{chapter06/merge1}
+  \codexoutputtable{chapter06/merge1.r}
+  \doublecodex{chapter06/merge2}
+  \begin{tcolorbox}[title=Output]
+    \includegraphics[width=.5\linewidth]{{snippets/chapter06/merge2.r}.png}
+  \end{tcolorbox}
+  \caption{Converting wide to long data to facilitate merging and visualizing.}\label{ex:merge2}
+\end{ccsexample}
+
+\refex{pivot} shows how you can ``pivot'' the capital data to long format using \index{pivot\_longer}\texttt{pivot\_longer} (R) and \index{melt}\texttt{melt} (Pandas). The second part of this example then goes on to do this for both datasets, merge them, and partially reproduce Figure~4.4 from \citet{piketty}.
+
+\section{Restructuring Messy Data}
+
+As a final example, we will look at the data on income and wage shares from Piketty (supplemental tables S8.1 and S8.2).
+We want to visualize the income and wage share going to the top 1\% earners in France and the US.
+\reffig{messy} shows a screen shot of this data in Libre Office, with the US data having a similar shape.
+For the previous examples, we used a clean csv version of this data, but now we will tackle the additional challenge
+of dealing with the excel file including extra header rows and column names aimed at human consumption rather than easy computing.
+
+\begin{figure}
+  \includegraphics[width=\linewidth]{chapter06/messy.png}
+  \caption{Data on top incomes as provided in Piketty (2014; digital appendix).}\label{fig:messy}
+\end{figure}
+
+In order to perform our visualization, we want a dataset containing a single measurement column (percentage share),
+and a row for each year--country--type combination, i.e.\ one row for wage inequality in 1910 in the US.
+One of the most important skills in computational social science (and data-driven analysis in general) is
+understanding which series of generally small steps are needed to go from one data format to the other.
+Although there is not a fixed set of steps that are always needed, the steps to get from the raw data visualized in Figure~\ref{fig:messy} to a ``tidy'' dataset are fairly typical:
+
+\begin{enumerate}
+  \item Input:  read the data into data frames. In this case, reading from an excel sheet and skipping the extra header rows
+  \item Reshape: pivoting the data into long format
+  \item Normalize: normalize names, value types, etc. In this case, also separate a header like ``Top 1\% income share'' into income type (income, wage) and percentile (10\%, 1\%, etc)
+  \item Filter: filter for the desired data
+  \item Analyze: create the visualization
+\end{enumerate}
+
+Fortunately, these steps have been discussed before: reading csv data in Section~\ref{sec:reading}; pivot to long data in Section~\ref{sec:pivot};
+add a column in Section~\ref{sec:calculate}; joining data in Section~\ref{sec:join}; and visualizing in Section~\ref{sec:visualization}.
+
+Example~\ref{ex:excel} shows how to perform the first three steps for the US case.
+First, we use the \index{readxl}\emph{readxl} (R) and \index{xlrd}\emph{xlrd} (Python) to read a sheet from an excel file into a data frame,
+manually specifying the number of header and footer rows to skip.
+ Then, we pivot the columns into a  long format.
+In step 3, we split the header into two columns using \fn{separate} (R) and \fn{split} (Python). Finally, steps 4 and 5 take the desired subset and create a line plot. 
+
+The missing step, splitting a header into two columns, is done using \index{separate}\texttt{separate} (R) and \index{split}\texttt{split} (Python).
+
+\begin{ccsexample}
+  \doublecodex{chapter06/excel1}
+  \codexoutputtable{chapter06/excel1.r}
+  \doublecodex{chapter06/excel2}
+  \begin{tcolorbox}[title=Output]
+    \includegraphics[width=.5\linewidth]{{snippets/chapter06/excel2.r}.png}
+  \end{tcolorbox}
+  \caption{Dealing with ``messy'' data.}\label{ex:excel}
+\end{ccsexample}
 
