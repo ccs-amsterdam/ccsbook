@@ -197,6 +197,83 @@ the reader to choose.
 
 %\input{chapter01/howtouse}
 
+\section{How to use this book}
+\label{sec:howtouse}
+
+This book differs from more technically oriented books on the one hand
+and more conceptual books on the other hand. We do cover the technical
+background that is necessary to understand what is going on, but we
+keep both computer science concepts and mathematical concepts to a
+minimum. For instance, if we had written a more technical book about
+Programming in Python, we would have introduced rather early and in
+detail to concepts such as classes, inheritence, and instances of
+classes. Instead, we decided to give such information only as
+additional background where necessary and focus, rather pragmatically,
+on the application of techniques for the computational analysis of
+communication. Vice versa, if we had written a more conceptual book on
+new methods in our field, we would have given more emphasis to
+epistemological aspects, and had skipped the programming examples,
+which are now at the core of this book.
+
+We do not expect much prior knowledge from the readers of this
+book. Sure, some affinity with computers helps, but there is no strict
+requirement on what you need to know. Also in terms of statistics, it
+helps if you have heard of concepts such as correlation or
+regression analysis, but even if your knoweldge here is rather
+limited, you should be able to follow along.
+%Again, a bit of
+%previous knowledge helps, but you can also acquire it along the way.
+
+This also means that you may be able to skip chapters. For instance,
+if you already work with R and/or Python, you may not need our
+detailed instructions at the beginning. Still, the book follows a
+logical order in which chapters build on previous ones. For instance,
+when explaining supervised machine learning on textual data, we expect
+you to be familiar with previous chapters that deal with machine
+learning in general, or with the handling of textual data.
+
+This book is designed in such a way that it can be used as a text book
+for introductory courses on the computational analysis of
+communications. Often, such courses will be on the gradutate level,
+but it is equally possible to use this book in an undergraduate
+course; maybe skipping some parts that may go too deep. All code
+examples are not only printed in this book, but also available
+online. Students as well as social-scientists who want to brush up
+their skillset should therefore also be able to use this book for
+self-study, without a formal course around it. Lastly, this book can
+also be a reference for readers asking themselves: ``How do I 
+do this again?''. In particular, if the main language you work in is
+R, you can look up how to do similar things in Python and vice versa.
+
+\begin{feature}\textbf{Code examples}
+Regardless of the context in which you use this book, one thing is for sure:
+The only way to learn computational analysis methods is by practicing and playing around.
+For this reason, the code examples are probably the most important part of the book.
+Where possible, the examples use real world data that is freely available on the Internet.
+To make sure that the examples still work in five years' time,
+we generally provide a copy of this data on the book website,
+but we also provide a link to the original source.
+%TODO do we provide a link?
+
+One thing to note is that to avoid unnessecary repetition
+the examples are sometimes designed to continue on earlier
+snipets from that chapter.
+So, if you seem to be missing a data set, or if some package is not imported yet,
+make sure you run all the code examples from that chapter.
+
+Note that although it is possible to copy-paste the code from the website accompaying this book\footnote{https://cssbook.net},
+we would actually recommend typing the examples yourself.
+That way, you are more conscious about the commands you are using and you are adding them to your `muscle memory'.
+
+Finally, realize that the code examples in this book are just examples.
+There's often more ways to do something, and our way is not necessarily the only good (let alone the best) way.
+So, after you get an example to work, spend some time to play around with it:
+try different options, maybe try it on your own data, or try to achieve the same result in a different way.
+The most important thing to remember is: you can't break anything!
+So just go ahead, have fun, and if nothing works anymore you can always start over from the code example from the book. 
+\end{feature}
+
+
 
 \section{Installing R and Python}
 \label{sec:installing}
