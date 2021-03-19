@@ -56,7 +56,7 @@ In this book, we use data frames a lot, because they are very convenient for han
 Of course, there are some situations when data frames are \emph{not} a good choice to organize your data:
 \begin{itemize}
 \item Your data is one-dimensional. Think, for example, of resources like a list of stopwords, or a list of texts without any meta-information.
-\item Your data do not have a tabular structure. Think, for example, of deeply nested data, or of very messy data.
+\item Your data do not have a tabular structure. Think, for example, of deeply nested data, network data or of very messy data.
 \item Your data are so large that you cannot (or do not want to) load it into memory. For instance, if you want to process the text of all articles on Wikipedia, you probably want to process them one-by-one instead of loading all articles at the same time.
 \end{itemize}
 
@@ -101,7 +101,7 @@ In statistical software like SPSS or Stata, or in all typical office application
 
 That's not how your typical workflow in R or Python looks. Here, you work on one or multiple data frames (or some other data structures). That means that you might start by \emph{reading} the contents of some file into a data frame, but once that is done, there is no link between the data frame and that file any more. Once your work is done, you can save your data frame to a file, of course, but it is a good practice not to overwrite your input file, so that you can always go back to where you started. A typical workflow would  look like this:
 \begin{enumerate}
-\item Read raw data from file \texttt{\small{myrawdata.csv}} into data frame \texttt{\small{df}}"
+\item Read raw data from file \texttt{\small{myrawdata.csv}} into data frame \texttt{\small{df}}
 \item Do some operations and analyses on df
 \item Save df to file \texttt{\small{myfinaldata.csv}}
 \end{enumerate}
@@ -211,8 +211,8 @@ Then, you can read this file into a vector or list  (see Example~\ref{ex:reading
 
 Example~\ref{ex:extendedfilehandling} provides you with some more elaborate code examples that allows us to dig a bit deeper into the general way of handling files.
 
-In the Python example,  we can open a file and assign a handle to it that allows us to refer to it (the name of the handle is arbitrary, let's just call it \texttt{f} here.
-Then, we can use a for loop to iterate over all lines in the file and add it to a list
+In the Python example,  we can open a file and assign a handle to it that allows us to refer to it (the name of the handle is arbitrary, let's just call it \texttt{f} here).
+Then, we can use a for loop to iterate over all lines in the file and add it to a list.
 
 The \texttt{mode = 'r'} specifies that we want to read from the file. \texttt{mode = 'w'} would open the file for writing, create it if necessary, and immediately deletes all content that may have been in there if the file already existed (!).
 Note that the \texttt{.strip()} is necessary to remove the line ending itself, and also possible whitespace at the beginning or end of a line.
@@ -260,7 +260,7 @@ of the data are already known. Hence, such toy datasets are often
 even included in R and Python packages. Some of them are really
 well-known in teaching (e.g., the iris dataset containing measurements
 of some flowers; or the titanic dataset containing statistics on
-survival rates of passengers on the Titanic; or the MPG dataset on car fuel consumption). Many of these are included
+survival rates of passengers on the Titanic; MINIST for image classification; or the MPG dataset on car fuel consumption). Many of these are included
 in packages like \index{scikit-learn}\emph{scikit-learn}, \index{seaborn}\emph{seaborn}, or \index{ggplot2}\emph{ggplot2}-- have a look at their documentation.
 
 For instance, the 20 Newsgroups dataset contains $18\,846$ posts from
