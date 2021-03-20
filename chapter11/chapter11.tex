@@ -7,7 +7,7 @@
   In this chapter, we discuss different approaches to the automatic analysis of text; or automated content analysis. We combine techniques from earlier chapters, such as transforming texts into a matrix of term frequencies and machine learning. In particular, we describe three different approaches (dictionary-based analyses, supervised machine learning, unsupervised machine learning). The chapter provides guidance on how to conduct such analyses, and also on how to decide which of the approaches is most suitable for which types of question.
 \end{abstract}
 
-\keywords{dictionary approaches, supervised machine learning, unsupervised machine learning, topic models, automated content analysis}
+\keywords{dictionary approaches, supervised machine learning, unsupervised machine learning, topic models, automated content analysis, sentiment analysis}
 
 \begin{objectives}
 \item Understand different approaches to automatic analysis of text
@@ -32,7 +32,7 @@
 \end{feature}
 
 In earlier chapters, you learned about both supervised and unsupervised machine learning as well about dealing with texts.
-This chapter brings together these elements and discusses how to combine them to automatically analyze large corpora of texts. After presenting guidelines for choosing an appropriate apprach in Section~\ref{sec:deciding} and downloading an example dataset in Section~\ref{sec:reviewdataset}, we discuss multiple techniques in detail.
+This chapter brings together these elements and discusses how to combine them to automatically analyze large corpora of texts. After presenting guidelines for choosing an appropriate approach in Section~\ref{sec:deciding} and downloading an example dataset in Section~\ref{sec:reviewdataset}, we discuss multiple techniques in detail.
 We begin with a very simple top-down approach in Section~\ref{sec:dictionary}, in which we count occurrences of words from an \emph{a priori} defined list of words. In Section~\ref{sec:supervised}, we still use pre-defined categories that we want to code, but let the machine ``learn'' the rules of the coding itself. Finally, in Section~\ref{sec:unsupervised}, we employ a bottom-up approach in which we do not use any \emph{a priori} defined lists or coding schemes, but inductively extract topics from our data.
 
 %\input{chapter11/deciding}
@@ -117,7 +117,7 @@ in ``company'' of someone else, and so on.
 
 From this example, we can conclude that often (1) it is easy for
 humans to decide to which class a text belongs, but (2) it is very
-hard for humans to come op with a list of words (or rules) on which
+hard for humans to come up with a list of words (or rules) on which
 their judgment is based.  Such a situation is perfect for applying
 supervised machine learning: after all, it won't take us much time to
 annotate, say, 1000 articles based on whether they are about the
@@ -335,7 +335,7 @@ and count which occur more frequently. Additionally, one may attach a weight to
 each word, such that ``perfect'' gets a higher weight than ``good'',
 for instance.  An obvious drawback is that these pure
 bag-of-words approaches cannot cope with negation (``not good'') and
-intensifiers ``very good''), which is why extensions have been
+intensifiers (``very good''), which is why extensions have been
 developed that take these (and other features, such as punctuation)
 into account \citep{Thelwall2012,Hutto2014,DeSmedt2012}.
 % come back to this in crowddcoding-chapter: \citep{Haselmayer2016}
@@ -522,7 +522,7 @@ gridsearch. Example~\ref{ex:gridsearchlogreg} gives you an example.  With
 possible hyperparameters that we may want to tune. For instance, these
 could be the minimum and maximum frequency for words to be included or
 whether we want to use only unigrams (single words) or also bigrams
-(combinations of two words, see Section~\ref{sec:ngram}.
+(combinations of two words, see Section~\ref{sec:ngram}).
 For the Logistic Regression, it may be the
 regularization hyperparameter C, which applies a penalty for too
 complex models.  We can  put all values for these parameters
