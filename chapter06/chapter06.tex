@@ -205,7 +205,7 @@ and the values contain the summary functions to apply, so  \verb+{'value': funct
 
 In the examples above, each line of code (often called a \emph{statement}) contained a single operation, generally a call to a function or method (see Section~\ref{sec:functions}).
 The general shape of each line in R was \verb+data = function(data, arguments)+, that is, the data is provided as the first argument to the function.
-In Python, we often used methods that ``belong to'' objects such as data frames or columns. Here, we therefore specify the object itself follwed by a period and its method that is to be called,
+In Python, we often used methods that ``belong to'' objects such as data frames or columns. Here, we therefore specify the object itself followed by a period and its method that is to be called,
 i.e.\ \verb+object = object.method(arguments)+.
 
 Although there is nothing wrong with limiting each line to a single operation, both languages allow multiple operations to be chained together.
@@ -459,7 +459,7 @@ In fact, when we merged these datasets earlier in Example~\ref{ex:merge2}, we se
   \caption{Converting wide to long data to facilitate merging and visualizing.}\label{ex:merge2}
 \end{ccsexample}
 
-\refex{pivot} shows how you can ``pivot'' the capital data to long format using \index{pivot\_longer}\texttt{pivot\_longer} (R) and \index{melt}\texttt{melt} (Pandas). The second part of this example then goes on to do this for both datasets, merge them, and partially reproduce Figure~4.4 from \citet{piketty}.
+\refex{merge2} shows how you can ``pivot'' the capital data to long format using \index{pivot\_longer}\texttt{pivot\_longer} (R) and \index{melt}\texttt{melt} (Pandas). The second part of this example then goes on to do this for both datasets, merge them, and partially reproduce Figure~4.4 from \citet{piketty}.
 
 \section{Restructuring Messy Data}
 
