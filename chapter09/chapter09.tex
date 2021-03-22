@@ -397,11 +397,14 @@ Unfortunately, in earlier versions of R (and in any case if you don't use raw st
 first for the regular expression, and then for R. So, the pattern \verb|\d| becomes \verb|"\\d+"|. To match a literal backslash you would use the pattern \verb|\\|,
 which would then be represented in R as \verb|"\\\\"|!
 
-Example~\ref{ex:clean} uses regular expressions to clean a single text, by removing HTML tags and punctuation,
-normalizing whitespace, and also uses string commands for converting to lower case and trimming leading and trailing spaces.
+Example~\ref{ex:reclean} cleans the same text as Example~\ref{ex:clean} above, this time using regular expressions.
+First, it uses \verb|<[^>+]>| to match all HTML tags: an angular opening bracket, followed by anything except for a closing angular bracket (\verb|[^>]|), repeated one or more times (\verb|+|),
+finally folloewd by a closing bracket.
+Next, it replaces one or more whitespace characters (\verb|\s+|) by a single space.
+Finally, it uses a vertical bar to select either space at the start of the string (\verb|^\s+|), or at the end  (\verb|\s+$|), and removes it. 
+As you can see, you can express a lot of patterns using regular expressions in this way, making for more generic (but sometimes less readable) clean-up code. 
 
-%TODO: Duplicate snippet clean
-\pyrex[caption=Using regular expressions to clean a text]{chapter09/clean}
+\pyrex[caption=Using regular expressions to clean a text]{chapter09/reclean}
 
 Finally, Example~\ref{ex:cleanpandas} shows how you can run the various commands on a whole column of text rather than on individual strings,
 using  a small set of made-up tweets to showcase various operations.
