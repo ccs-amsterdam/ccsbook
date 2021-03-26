@@ -375,7 +375,7 @@ probability of A, given B. Or: the probability of A if B is the
 case/present/true.  Applied to our problem, this means that we are
 interested in estimating the probability of an item having a label,
 given a set of features:
-$$ P(label \mid features) = \frac{P(features \mid label) \cdot P(\rm{label})}{P(features)} $$.
+$$ P(\rm{label} \mid \rm{features}) = \frac{P(\rm{features} \mid \rm{label}) \cdot P(\rm{label})}{P(\rm{features})} $$.
 
 P(label) can be easily calculated: it's just the fraction of all
 cases with the label we are interested in.  Because we assume that our
@@ -392,7 +392,7 @@ conditional probabilities and calculate the percentage of cases
 If we fill this in our formula, we get:
 
 
-$$ P(\rm{label} \mid \rm{features}) = \frac{{P}(x_1 \mid \rm{label}} \cdot {a{P}(x_2 \mid \rm{label})\ \cdot {P}(x_3 \mid \rm{label}) \cdot {P}(\rm{label})}{{P}(x_1) \cdot {P}(x_2) \cdot P(x_3)}$$.
+$$ P(\rm{label} \mid \rm{features}) = \frac{P(x_1 \mid label) \cdot P(x_2 \mid \rm{label})\ \cdot P(x_3 \mid label) \cdot P(label)}{P(x_1) \cdot P(x_2) \cdot P(x_3)}$$.
 
 Remember that all we need to do to calculate this formula is: (1)
 count how many cases we have in total; (2) count how many cases
