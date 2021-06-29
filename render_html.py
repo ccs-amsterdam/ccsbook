@@ -1,5 +1,6 @@
 import logging
 from pathlib import Path
+import argparse
 
 from jinja2 import Template
 
@@ -10,16 +11,20 @@ from texhtml.util import read_tex, get_template
 
 logging.basicConfig(level=logging.DEBUG, format='[%(asctime)s %(name)-12s %(levelname)-5s] %(message)s')
 
-base = Path("/home/wva/ccsbook/")
+parser = argparse.ArgumentParser(description='Process some integers.')
+parser.add_argument('chapters', type=int, nargs='*')
+args = parser.parse_args()
+
+base = Path.cwd()
 toc = TOC(base)
 template = get_template('chapter.html')
 unknown_nodes = set()
-for i, chapter in enumerate(toc.chapters):
-    #if (i+1) != 3:
-    #    continue
+for chapnr, chapter in enumerate(toc.chapters, start=1):
+    if args.chapters and chapnr not in args.chapters:
+        continue
     outf = f"/tmp/{chapter.fn}"
-    print(f"{i+1}: {chapter.texfile} -> {outf}")
-    parser = Parser(base, i+1, toc)
+    print(f"{chapter.nr}: {chapter.texfile} -> {outf}")
+    parser = Parser(base, chapnr, toc)
     try:
         for node in read_tex(base, chapter.texfile):
             try:
@@ -27,6 +32,9 @@ for i, chapter in enumerate(toc.chapters):
             except UnknownNode as e:
                 unknown_nodes.add(str(e))
                 continue
+            except:
+                print(parser.buffer)
+                raise
 
         content = parser.get_html()
 
