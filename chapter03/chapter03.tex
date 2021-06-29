@@ -32,17 +32,13 @@ simple control structures such as loops and conditions.
   \doublecodex{chapter03/chapter03libraries}
 \end{feature}
 
-%\input{chapter03/variables}
 
 \section{About Objects and Data Types}
 \label{sec:datatypes}
 
 Now that you have seen what R and Python can do in Chapter~\ref{chap:fundata},
 it is time to take a small step back and learn more about how it all actually works under the hood.
-%\footnote{If you have not installed the require software yet and
-%  still want to follow this chapter, you may use available online
-%  platforms for RStudio (https://rstudio.cloud/) and Python
-%  (https://www.python.org/shell/).}.
+
 In both languages, you write a
 \emph{script} or \emph{program} containing the commands for the
 computer.  But before we get to
@@ -87,9 +83,6 @@ As you can see, R reports the type of the number as ``numeric'', while Python re
 as ``int'', short for integer or whole number.  Although they use
 different names, both languages offer very similar data types.
 Table~\ref{tab:types} provides an overview of some common basic data types.
-%As you can see,
-%both Python and R have very similar types for simple data such as
-%numbers, text, and truth values.
 
 \pyrex[output=both,caption=Determining the type of an object]{chapter03/var1}
 
@@ -191,9 +184,6 @@ You can create them just by adding single or double quotes around the value of t
   \caption{Strings and bytes.}\label{ex:var4}
  \end{ccsexample}
 
-% NOTE[WvA] This seems to be a dangling comment
-% I have changed them to double quotes, however, please check that I have not inadvertently changed any which genuinely should be single quotes.}
-
 As you see in Example~\ref{ex:var4}, you can create a string by enclosing  text in quotation
 marks. You can use either double or single quotation marks, but you
 need to use the same mark to begin and end the string. This can be
@@ -270,9 +260,6 @@ element or group of elements within a vector using its or their
 positions. The first item of a vector in R is called 1, the second 2, and so on;
 in Python, we begin counting with 0.  You can retrieve a specific element
 from a vector or list by simply putting the index between square brackets |[]| (Example~\ref{ex:1darray2}). 
-%In Example~\ref{ex:1darray2}, we
-%start with an array of scores that are abusively stored as string,
-%retrieve some of these values, and finally convert them to integers.
 
 \pyrex[input=both, output=both, caption=Slicing vectors and converting data types]{chapter03/1darray2}
 
@@ -305,15 +292,6 @@ wish to create a vector from an operator or a function, without typing
 each value. Using the operator \index{:}\texttt{:} (R) or the functions \index{seq}\texttt{seq} (R) or \index{range}\texttt{range} (Python), we 
 can create numeric vectors with
 a range of numbers.
-%, from 1 to 20 or from -5 to 5 (Example~\ref{ex:1darray3}).
-%You can also use a function to create more complex vectors. For
-%example the function \fn{seq} will help you to generate regular sequences
-%by providing the number of points of an interval.  Imagine you want to
-%create a numeric vector than begins in point 0 and finishes in point
-%1, including all possible values that separate those two points by a
-%step of 0.2. Let's create that vector and check the amount of created
-%elements by using the function \fn{length} (Example~\ref{ex:1darray3}).
-
 
 
 \paragraph[Can we mix different types?]{Can we mix different types?}
@@ -367,7 +345,6 @@ available from the \index{numpy}\emph{numpy} (\emph{num}bers in \emph{py}thon)
 package: the numpy array.
 This will be discussed in more detail when we deal with data frames in Chapter~\ref{chap:filetodata}.
 
-%\pyrex[input=py, output=py, caption={Numpy arrays behave more like R vectors. However, you have to import (and potentially install) an additional package, \pkg{numpy}, for this (see \refsec{installing})}]{chapter03/1darray7}
 
 \begin{feature}\textbf{Object references and mutable objects.}
   A subtle difference between Python and R is how they deal with copying objects.
@@ -410,41 +387,6 @@ Example~\ref{ex:sets} shows a number of set operations in Python and R,
 which can be very useful,  e.g.\ finding all elements that occur in two lists.
 
 \pyrex[input=both, output=both, caption={Sets}]{chapter03/sets}
-
-
-%Beyond the class (which is a powerful function because you can create new classes your self), you can also get the R internal type of the object (storage mode), using the typeof() function:
-%\begin{exampler}
-%typeof(scores)
-%\end{exampler}
-
-
-%% \paragraph{Factors}
-
-%% Finally, a data structure similar to a vector is the \fn{factor}.
-%% R users are very likely tp encounter factors, which can be very useful when
-%% working with categorical data. Factors
-%% store the values of a vector with corresponding labels.%, which in
-%% turn will produce levels.
-%% If you create a factor, it will
-%% automatically read the labels from the values of the vector, but you
-%% may manually change those levels. Let's have a look at
-%% Example~\ref{1darray6}.  The first line will create again a vector of scores
-%% of ten students. Then we automatically convert the vector into a
-%% factor (reading the very same values as labels) and finally we create
-%% the labels (``fail" or ``pass") for each of the possible grades.  The
-%% factor-type object factor\_scores\_2 will be probably more useful to
-%% deal with a bigger amount of students. While we have only two levels
-%% (which can be identified with the function \fn{nlevels}), we can have many
-%% values to connect with those labels.
-
-%% \pyrex[input=r, output=none, caption=Factors can also store labels]{chapter03/1darray6}
-
-%% Python does not natively support factors. The \pkg{pandas} library,
-%% which we will use later throught this book, introduces a data type called
-%% \fn{Categorical} that serves the same purpose, but it is much less
-%% used than factors are in R.
-
-
 
 \subsection{Dictionaries}
 
@@ -522,15 +464,6 @@ FALSE, respectively, to illustrate how it changes the values of the
 matrix, even when the shape ($2 \times3$) remains identical. As you may
 imagine, we can operate with matrices, such as adding up two of them.
 
-%% A powerful data type are the arrays (very much like the \pkg{numpy}
-%% arrays described above), which might be similar to matrices but
-%% without the restriction of the two-dimensional rectangular space. This
-%% means that you create your own dimensions, indicating (in order) the
-%% number of rows, columns and matrices of the array. Your will need
-%% vectors as inputs and dimensions as parameters. For example,
-%% three-dimensional arrays are fundamental when writing pixel values and
-%% coding images. 
-
 
 \subsection{Making Life Easier: Data Frames}
 
@@ -557,8 +490,6 @@ lives out of the country in which they were born) (Example~\ref{ex:dataframe1}).
 Notice that you have the label of the variables at the top of each column and that it creates an automatic numbering for indexing the rows.  
 
 \pyrex[caption=Creating a simple data frame, output=py]{chapter03/dataframe1}
-
-%\input{chapter03/control}
 
 \section{Simple Control Structures: Loops and Conditions}	
 \label{sec:controlstructures}
@@ -774,9 +705,6 @@ Notice that we have included the clause \emph{elif} in the structure (in R it is
 
 \pyrex[caption=A more complex conditional control structure, output=py]{chapter03/if2}
 
-
-%\input{chapter03/functionsmethods}
-
 \section{Functions and Methods}
 \label{sec:functions}
 
@@ -803,12 +731,6 @@ and some are implemented as a function; it is partly an arbitrary
 choice that the developers made, and to fully understand it, you need
 to dive into the concept of \index{class}\texttt{class}es, which is beyond the scope of
 this book.
-
-%% \begin{feature}
-%%   \textbf{Classes and Object-Oriented Programming.}
-%%   A central concept of object-oriented programming that we do not cover in this book are \concept{class}es. You can think of them as a blueprint for creating an object, and sometimes, this will shine through. For instance, if we write \texttt{c = Counter()} in Python, we create a new object \texttt{c}. This object is an \emph{instance} of the \emph{class} Counter (which we need to import from the package \pkg{collections} first). A counter is a class that allows you to count things, such as the most common words in a list of strings. You could say that you created your own counter, c, based on a template, the class Counter. In R, there are even different types of classes, called S3, S4, and reference. However, you are less likely to get exposed to them in your daily work.
-%%   \end{feature}
-
 
 
 \begin{feature}\textbf{Tab completion.} Because methods are associated with an object, you have a very
@@ -908,59 +830,6 @@ once using a loop. This costs you only two extra lines of code
 
 \pyrex[input=py, output=py, caption={Generators behave like lists in that you can iterate (loop) over them, but each element is only 
 calculated when it is needed. Hence, they do not have a length.}]{chapter03/generators}
-
-
-
-
-
-%Now that you have gone through most types of objects in R and Python, we need to remember that objects are different from classes, as we mentioned at the beginning of this section. A class is a prototype with attributes that helps to build an object when it is created from that class. R has three class systems: S3 class,  S4 class and Reference Class.  Imagine that we have some data of a news item that we want to convert to a class using the basic S3 class:
-
-%\begin{exampler}
-%news <- list(headline = "Scientists discover how to cure AIDS", date = 21012030, positive_tone = TRUE)
-%class(news) <- "news_piece"
-%\end{exampler}
-
-%Or using Reference Class:
-
-%\begin{exampler}
-%setRefClass("news_piece")
-%\end{exampler}
-
-%Then you have stored the information of the class news\_piece.  You can do this also with S4 class, which allows you to define the formal structure of the class:
-
-%\begin{exampler}
-%setClass("news_piece", slots=list(headline="character", date="numeric", positive_tone="logical"))
-%\end{exampler}
-
-%Using S4 class definition you can create a new object using the attributes of the created class, which is very useful to maintain consistency:
-
-%\begin{exampler}
-%news2 <- new("news_piece", headline="Thousands of new refugees run from hunger after war begins", date=22012030, positive_tone = FALSE)
-%\end{exampler}
-
-%On the contrary, Python has just a single class. We define the class in a similar way we will define functions (see next section). We use the keyword class and, in some cases, the built-in \_\_init\_\_() function.  Let's create a very single class in Python including a numeric object in the class and later using that class to define a new object:
-
-%\begin{examplepy}
-%class MyWeight:
-%...    	 x = 74
-%weigth = MyWeight()
-%print (weigth.x)
-%\end{examplepy}
-
-%As you see, we created the object \emph{weight} using the properties (x in this case) of the class MyWeight. This procedure is probably of limited use but good to illustrate what a class is in Python. A more interesting approach to create the class is using the \_\_init\_\_() function, which is a special function that assigns values to object properties and is executed when the class is being initiated. In simpler words, this function helps us to assign different values within the class, creating an internal structure that will be used when we create an object based on that class. You can run the next example on your Python console for a better understanding of the concept. Imagine you want to create the same class news\_piece we did in R and then use that class to create an object:
-
-%\begin{examplepy}
-%class news_piece:
-%...     def __init__(self, headline, date, positive_tone):
-%...             self.headline = headline
-%...             self.date = date
-%...             self.positive_tone = positive_tone
-%news2 = news_piece("Thousands of new refugees run from hunger after war begins", 22012030, False)
-%print(news2.headline)
-%\end{examplepy}
-
-%As you see, with the last line of the code we obtain a part of the created object (in this case the headline) based on the structure designed in the class news\_piece.
-
 
 
 So far you have taken your first steps as a programmer, but there are many
