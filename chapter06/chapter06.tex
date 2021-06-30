@@ -30,8 +30,6 @@ reshape data.
 
 \end{feature}
 
-%\input{chapter06/data_filtering}
-
 \section{Filtering, Selecting, and Renaming}
 
 
@@ -83,11 +81,6 @@ On the other hand, if all your analyses will be on the subset, you might as well
 We can always re-download it from the internet (or reload it from our harddisk) if it turns out we needed the original anyway.
 
 \pyrex[caption=Filtering,output=r,format=table]{chapter06/data-filter}
-
-
-
-
-%\input{chapter06/mutate}
 
 \section{Calculating Values}
 \label{sec:calculate}
@@ -153,9 +146,6 @@ As noted above, in R we would generally prefer \index{mutate}\texttt{mutate} ove
 mostly because it fits nicely into the \index{tidyverse}\emph{tidyverse} workflow and you do not need to repeat the data frame name.
 In Python, we would generally prefer the direct assignment, unless it is desired to make a copy of the data
 with the changes made, in which case \index{assign}\texttt{assign} can be more useful.
-
-
-%\input{chapter06/grouping}
 
 \section{Grouping and Aggregating} \label{sec:grouping}
 
@@ -252,8 +242,6 @@ and then calls the \index{pandas}\emph{pandas} function \index{transform}\texttt
 adding it as a new column by assigning it to the column name.
 The second line uses the regular assignment syntax to create the deviation based on the support and calculated mean.
 
-
-%\input{chapter06/merge}
 \section{Merging Data}
 \label{sec:join}
 
@@ -264,8 +252,6 @@ we would need to combine the poll results with the economic data.
 This process is often called merging or joining data.
 
 \subsection{Equal Units of Analysis}
-
-%\pyrex[caption=Private and Public Capital data (source: Piketty 2014)]{chapter06/piketty}
 
 \begin{ccsexample}
   \doublecodex{chapter06/piketty_1}
@@ -315,9 +301,6 @@ Even if the key column is the only shared column, however, it can still be good 
 \caption{Merging private and public data for France.}\label{ex:merge}
 \end{ccsexample}
 
-
-%\pyrex[caption=Merging private and public data for France]{chapter06/capital}
-
 This is shown in \refex{merge}.
 The first two lines select only the \emph{Year} and \emph{France} columns, and rename the \emph{France} column to indicate whether it is the private or public data.
 Lines 3 and 5 do the actual join, with and without the explicit selection of key column, respectively.
@@ -338,7 +321,6 @@ Table~\ref{tab:joins} list the four possible ways of joining, keeping all rows (
 In all cases except inner joins, this can create units where information from one of the datasets is missing.
 This will be lead to missing values (|NA|/|NaN|) being inserted in the columns of the datasets with missing units.
 
-%\input{chapter06/figjoins}
 \begin{figure}
     \centering
     \includegraphics{figures/ch07_figjoins}
@@ -427,7 +409,6 @@ For example, we could use a partial correlation, but we would still be violating
 so it would be better to take a more sophisticated (e.g.\ multilevel) modeling approach.
 This, however, is well beyond the scope of this chapter.
 
-%\input{chapter06/tidy}
 
 \section{Reshaping Data: Wide To Long And Long To Wide}\label{sec:pivot}
 
