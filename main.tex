@@ -45,7 +45,13 @@
         
 \usepackage[colorinlistoftodos]{todonotes}
 
-%\includeonly{chapter16/chapter16}
+% To include a specific chapter, create an includeonly file containing: \newcommand{\whichchapter}{01}
+% on command line, this should work:
+% $ CHAPTER=07; echo "\newcommand{\whichchapter}{${CHAPTER}}" > includeonly.tex && pdflatex main.tex
+\IfFileExists{includeonly.tex}{
+  \input{includeonly}
+  \includeonly{chapter\whichchapter/chapter\whichchapter}
+}{}
 
 \fvset{fontsize=\footnotesize}
 \begin{document}
