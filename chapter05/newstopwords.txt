@@ -1,0 +1,7 @@
+and
+or
+a
+an
+the
+somenewstopword
+andanotherone
