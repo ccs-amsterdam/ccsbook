@@ -14,6 +14,7 @@ for f in sys.argv[1:]:
             nerr += 1
         if "http:" in line:
             print(f"[NO HTTPS    ] {f}:{i}")
+            nerr += 1
 
 print(f"** {nerr} problems in {len(files)} files")
 
