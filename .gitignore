@@ -152,3 +152,5 @@ chapter17/.distributingcontainer.tex.swp
 
 chapter11/reviewdata.pickle.bz2
 chapter11/w2v_320d
+chapter11/myvectorizer.pkl
+chapter11/myclassifier.pkl
