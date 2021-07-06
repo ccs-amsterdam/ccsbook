@@ -149,3 +149,6 @@ chapter12/sentiment.csv
 chapter13/reviews.json
 chapter12/w2v_320d
 chapter17/.distributingcontainer.tex.swp
+
+chapter11/reviewdata.pickle.bz2
+chapter11/w2v_320d
