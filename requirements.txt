@@ -8,3 +8,4 @@ scikit-learn
 nltk
 ufal.udpipe
 conllu
+tensorflow
