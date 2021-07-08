@@ -155,3 +155,4 @@ chapter11/w2v_320d
 chapter11/myvectorizer.pkl
 chapter11/myclassifier.pkl
 chapter11/w2v_320d_trimmed
+chapter11/reviewdata.rds
