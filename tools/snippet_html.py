@@ -58,8 +58,11 @@ def check(snippet):
         line = line.rstrip("\n")
         if len(line) > 50:
             yield i+1, "TOO LONG"
-        if "'" in line:
+        if "'" in line and '"' not in line:
             yield i+1, "QUOTE   "
+            print()
+            print(line)
+            print()
         if "http:" in line:
             yield i+1, "NO HTTPS"
 
