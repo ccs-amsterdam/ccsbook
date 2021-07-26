@@ -1,25 +1,37 @@
+
 import base64
 import logging
 import re
+import shutil
 from pathlib import Path
 
+from TexSoup import TexSoup
 from texhtml.toc import TOC
 from texhtml.util import optarg, arg, args, next_sibling
 
+from tools.texhtml.util import optargs, clean_text, thumbnail
+
+
 class CodexCell:
-    def __init__(self, type, caption, content):
+    def __init__(self, parser, type, caption, content):
+        self.parser = parser
         self.type = type
         self.caption = caption
         self.content = content
 
-    def to_html(self) -> str:
+    def to_html(self, neighbour=None) -> str:
         if self.type == "input":
+            if neighbour and neighbour.type == "input":
+                if len(self.content) < len(neighbour.content):
+                    self.content += [''] * (len(neighbour.content) - len(self.content))
             return self._code_block(self.caption, self.content)
         elif self.type == "plain":
             content = self.content.replace("<", "&lt;").replace(">", "&gt;")
             return f"<pre>{content}</pre>"
         elif self.type == "png":
-            return f"<img src='data:image/png;base64, {self.content}' />"
+            return self.parser.img_html(self.content)
+
+            #return f"<img src='data:image/png;base64, {self.content}' />"
         elif self.type == "table":
             return f"<div class='table-wrapper'>{self.content}</div>"
         return ""
@@ -32,10 +44,10 @@ class CodexCell:
 
 def codex_row(row):
     if len(row) == 2:
-        result = [f"<div class='code-double row'>\n<div class='col-md-6'>",
-                   row[0].to_html(),
+        result = [f"<div class='code-double row'>\n<div class='col-xxl-5 col-xl-6 col-md-12'>",
+                   row[0].to_html(row[1]),
                    "</div>\n<div class='col-md-6'>",
-                   row[1].to_html(),
+                   row[1].to_html(row[0]),
                    "</div></div>",
                 ]
     elif len(row) == 1:
@@ -72,42 +84,53 @@ class UnknownNode(Exception):
     pass
 
 class Parser:
-    def __init__(self, base: Path, chapter: int,  toc: TOC):
+    def __init__(self, nodes, base: Path, chapter: int,  toc: TOC, bibliography: dict, out_folder: Path):
+        self.nodes = nodes
         self._base = base
         self._toc = toc
         self._chapter = chapter
-        self._in_verb = False # Is the preceding command a \verb?
-        self.buffer = []
+        self._bibliography = bibliography
+        self._out_folder = out_folder
+        self._img_folder = self._out_folder / "img"
+        self._img_folder.mkdir(parents=True, exist_ok=True)
+        self.unknown_nodes = set()
+        self.n_notes = 0
 
     def _o(self, text):
         self.buffer.append(text)
 
-    def parse(self, node):
-        if hasattr(self, node.name):
+    def parse(self):
+        buffer = []
+        while self.nodes:
+            x = self.parse_next()
+            if x:
+                buffer.append(x)
+        return "".join(buffer)
+
+    def parse_next(self):
+        node = self.nodes.pop(0)
+        if node.name == "text":
+            return self.text(node.text)
+        elif node.name == "$":
+            return self.math(node)
+        elif hasattr(self, node.name):
             result = getattr(self, node.name)(node)
-            if result:
-                self._o(result)
+            return result
         else:
-            raise UnknownNode(node.name)
+            self.unknown_nodes.add(node.name)
 
     def get_html(self):
+        if self.in_verb:
+            raise Exception("Still in verb")
         return "\n".join(self.buffer)
 
-    def text(self, node):
-        if not node.text:
-            return
-        text = "".join(node.text)
-        if self._in_verb:
-            vchr = text[0]
-            if vchr not in "+|":
-                raise ValueError(f"Unexpected verbatim input: {text}")
-            to = text.find(vchr, 1)
-            if to == -1:
-                raise ValueError(f"Unexpected verbatim input: {text}")
-            self._o(f"<span class='verbatim'>{text[1:to]}</span>")
-            self._in_verb = False
-            text = text[(to+1):]
-        self._o(text.replace("\n\n", "</p>\n\n<p>").replace("\\\\", "<br/>"))
+    def text(self, texts = None):
+        if not texts:
+            texts = []
+        while self.nodes and self.nodes[0].name == "text":
+            texts += self.nodes.pop(0).text
+        text = "".join(texts)
+        return clean_text(text)
 
     # Structure
     def subsection(self, node):
@@ -118,6 +141,46 @@ class Parser:
 
     def paragraph(self, node):
         return f"<b>{args(node)[0]}</b>"
+
+    def math(self, node):
+        text = "".join(node.text)
+        return f"<code>{text}</code>"
+
+    def url(self, node):
+        text = "".join(node.text)
+        return build_url(text)
+
+    def cite(self, node):
+        return self.citep(node)
+    def citep(self, node):
+        opt = optargs(node)
+        if len(opt) == 1:
+            pre, post = "", opt[0] + " "
+        elif len(opt) == 2:
+            pre, post = opt[0] + " ", opt[1] + " "
+        else:
+            pre, post = "", ""
+        inner = self.citet(node)
+        return f"({pre}{inner}{post})"
+    def citet(self, node):
+        refs = []
+        for item in arg(node).split(","):
+            short, entries = self._bibliography[item]
+            entry = " ".join(entries)
+            html = f'<span class="cite" title="{entry}">{short}</span>'
+            refs.append(html)
+        return ';'.join(refs)
+
+
+    def footnote(self, node):
+        nodes = TexSoup(node.text).all
+        parser = Parser(nodes, self._base, self._chapter, self._toc, self._bibliography, self._out_folder)
+        inner = parser.parse()
+        if inner.startswith("http") and " " not in inner:
+            inner = build_url(inner)
+        self.n_notes += 1
+        return f'<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note {self.n_notes}" data-bs-content="{inner}">[{self.n_notes}]</a>'
+
 
     def section(self, node):
         self._thesection += 1
@@ -156,8 +219,18 @@ class Parser:
 
     def verb(self, node):
         # This is not parsed correctly by texsoup, so workaround
-        self._in_verb = True
-        return ""
+        text = "".join(self.nodes.pop(0).text)
+        verb_char = text[0]
+        text = text[1:]
+        if verb_char not in "+|":
+            raise ValueError(f"Unexpected verbatim input: {text}")
+        to = text.find(verb_char)
+        while to == -1:
+            text += "".join(self.nodes.pop(0).text)
+            to = text.find(verb_char)
+        verb_text, text = text[:to], text[(to+1):]
+        text = self.text([text])
+        return f"<code>{verb_text}</code>\n\n{text}"
 
     def newpage(self, node):
         return
@@ -196,10 +269,8 @@ class Parser:
         return f"<div class='objectives'><div class='caption'>Chapter objectives:</div><ul>{items}</ul></div>"
 
     def feature(self, node):
-        parser = Parser(self._base, self._chapter, self._toc)
-        for child in node.all:
-            parser.parse(child)
-        inner = "\n".join(x for x in parser.buffer if x)
+        parser = Parser(list(node.all), self._base, self._chapter, self._toc, self._bibliography, self._out_folder)
+        inner = parser.parse()
         return f"<div class='feature'>{inner}</div>"
 
     def keywords(self, node):
@@ -228,8 +299,16 @@ class Parser:
     def reftab(self, node):
         return self._ref("Table", f"tab:{arg(node)}")
     def reffig(self, node):
-        return self._ref("Figure", f"tab:{arg(node)}")
+        return self._ref("Figure", f"fig:{arg(node)}")
 
+    def ref(self, node):
+        return self._ref("", f"{arg(node)}")
+
+
+    def label(self, node):
+        return  # (handled via TOC)
+    def index(self, node):
+        return  # (not needed)
 
     # Code snippets
     def _code_input(self, fn, caption):
@@ -237,17 +316,18 @@ class Parser:
         code = snippet_file.open().read()
         lines = [x.replace("<", "&lt;").replace(">", "&gt;")
                  for x in code.split("\n")]
-        return CodexCell("input", caption, lines)
+        return CodexCell(self, "input", caption, lines)
 
     def _code_output(self, fn, caption, format):
         suffix = dict(plain=".out", png=".png", table=".table.html")[format]
         out_file = self._base / "snippets" / f"{fn}{suffix}"
         if format == "png":
-            png = out_file.open("rb").read()
-            result = base64.b64encode(png).decode('ascii')
+            #png = out_file.open("rb").read()
+            #result = base64.b64encode(png).decode('ascii')
+            result = out_file
         else:
             result = out_file.open().read()
-        return CodexCell(format, caption, result)
+        return CodexCell(self, format, caption, result)
 
     def pyrex(self, node):
         fn = arg(node)
@@ -314,4 +394,33 @@ class Parser:
         r = self._code_input(f"{fn}.r", "R code")
         return f"<div class='code-example'>{codex_row([py, r])}</div>"
 
+    # Figures
+    def figure(self, node):
+        nodes = {n.name: n for n in node.all}
+        caption = "".join(nodes['caption'].text)
+        ref = "".join(nodes['label'].text)
+        nr = self._toc.labels[ref]
+        img = Path(arg(nodes['includegraphics']))
+        outf = self._img_folder / img.name
+        shutil.copy(self._base / img, outf)
+        thumb = thumbnail(outf)
+        return f'''
+        <div class='figure'>
+        <h4><small class='text-muted'><a class='anchor' href='#{ref}' name='{ref}'>Fig. {nr}</a></small> {caption}</h3>
+        {self.img_html(img)}  
+        </div>
+        '''
 
+    def img_html(self, img: Path):
+        outf = self._img_folder / img.name
+        shutil.copy(self._base / img, outf)
+        thumb = thumbnail(outf)
+        return f"""<a href='img/{img.name}' title='Click to open full-size image'>
+        <img src='img/{thumb.name}' />   
+        </a> """
+
+
+def build_url(link, text=None):
+    if text is None:
+        text = link.replace("https://", "").replace("http://", "")
+    return f"<a href='{link}'>{text}</a>"

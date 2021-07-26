@@ -7,42 +7,32 @@ from jinja2 import Template
 from texhtml.parser import Parser, UnknownNode
 from texhtml.toc import TOC
 from texhtml.util import read_tex, get_template
-
+from tools.readbbl import read_bbl
 
 logging.basicConfig(level=logging.DEBUG, format='[%(asctime)s %(name)-12s %(levelname)-5s] %(message)s')
 
-parser = argparse.ArgumentParser(description='Process some integers.')
+parser = argparse.ArgumentParser(description='Convert CCS book latex into HTML')
 parser.add_argument('chapters', type=int, nargs='*')
 args = parser.parse_args()
 
+bibliography = read_bbl("main.bbl")
+
 base = Path.cwd()
+out = Path("/tmp/book")
 toc = TOC(base)
 template = get_template('chapter.html')
-unknown_nodes = set()
 for chapnr, chapter in enumerate(toc.chapters, start=1):
     if args.chapters and chapnr not in args.chapters:
         continue
-    outf = f"/tmp/{chapter.fn}"
+    outf = out / chapter.fn
     print(f"{chapter.nr}: {chapter.texfile} -> {outf}")
-    parser = Parser(base, chapnr, toc)
-    try:
-        for node in read_tex(base, chapter.texfile):
-            try:
-                parser.parse(node)
-            except UnknownNode as e:
-                unknown_nodes.add(str(e))
-                continue
-            except:
-                print(parser.buffer)
-                raise
+    nodes = list(read_tex(base, chapter.texfile))
+    parser = Parser(nodes, base, chapnr, toc, bibliography, out)
+    content = parser.parse()
 
-        content = parser.get_html()
+    current_chapter = chapter.fn
+    html = template.render(**locals())
+    open(outf, "w").write(html)
 
-        current_chapter = chapter.fn
-        html = template.render(**locals())
-        open(outf, "w").write(html)
-    except:
-        logging.exception(f"Error on parsing {chapter.texfile}")
-
-if unknown_nodes:
-    logging.warning(f"Unknown nodes: {unknown_nodes}")
+    if parser.unknown_nodes:
+         logging.warning(f"Chapter {chapter.nr} Unknown nodes: {parser.unknown_nodes}")

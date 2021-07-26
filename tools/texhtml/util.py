@@ -2,6 +2,7 @@ import logging
 from pathlib import Path
 import re
 
+from PIL import Image
 from TexSoup import TexSoup
 from TexSoup.data import BraceGroup, BracketGroup
 from jinja2 import Environment, PackageLoader, select_autoescape
@@ -11,6 +12,10 @@ def read_tex(base: Path, fn: str):
     tex = open(base / fn).read()
     # Remove comments
     tex = re.sub(r"^\%.*$", "", tex, flags=re.MULTILINE)
+    # drop hard spaces
+    tex = tex.replace("\ ", " ")
+    # change \'{a} into \'a
+    tex = re.sub(r"\\'\{(\w+)\}", "\\'\\1", tex)
     root = TexSoup(tex)
     for node in root.all:
         if getattr(node, "name", None) == "input":
@@ -37,6 +42,9 @@ def optarg(node, default=None):
     else:
         return default
 
+def optargs(node):
+    return [str(x).strip("[]") for x in node.args if isinstance(x, BracketGroup)]
+
 def next_sibling(node):
     # The texsoup API doesn't really collaborate on this one...
     children = node.parent.children
@@ -50,3 +58,45 @@ def get_template(name):
         autoescape=select_autoescape(['html', 'xml'])
     )
     return env.get_template(name)
+
+SUBS = {
+    "\n\n": "</p>\n\n<p>",
+    "\\\\": "<br/>",
+    "~": "&nbsp;",
+    "\\&": "&amp;",
+    '``': '&ldquo;',
+    "''": '&rdquo;',
+    "\\#": '#',
+}
+
+ACCENTS = {
+    "\\'a": "á",
+    "\\'i": "í",
+    "\\'\\i": "í",
+    "\\'u": "ú",
+    "\\'e": "é",
+    "\\'o": "ó",
+    '\\"a': "ä",
+    '\\"i': "ï",
+    '\\"u': "ü",
+    '\\"e': "ë",
+    '\\"o': "ö",
+}
+
+def clean_text(text: str) -> str:
+    for k,v in SUBS.items():
+        text = text.replace(k, v)
+    for k,v in ACCENTS.items():
+        text = text.replace(k, v).replace(k.upper(), v.upper())
+    if "\\" in text:
+        raise Exception(f"Unknown accent: {repr(text)}")
+    return text
+
+
+def thumbnail(img: Path, size=640) -> Path:
+    outf = img.parent / f"{img.stem}_thumb{img.suffix}"
+    if not outf.exists():
+        im = Image.open(img)
+        im.thumbnail((size, size))
+        im.save(outf)
+    return outf
