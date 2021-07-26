@@ -86,9 +86,10 @@ Table~\ref{tab:types} provides an overview of some common basic data types.
 
 \pyrex[output=both,caption=Determining the type of an object]{chapter03/var1}
 
-\newcommand{\fndouble}{In R, double and numeric can generally be used
-  interchangeably (there is a subtle difference, but that is not
-  relevant here).}
+% [WvA] I don't think this command is used anywhere?
+%\newcommand{\fndouble}{In R, double and numeric can generally be used
+%  interchangeably (there is a subtle difference, but that is not
+%  relevant here).}
 
 \begin{table}
   \caption{\label{tab:types}Most used basic data types in Python and R}{
@@ -100,7 +101,7 @@ Table~\ref{tab:types} provides an overview of some common basic data types.
     \midrule
     int   & \verb+1+             & integer   & \verb+1L+             & whole numbers \\
     float & \verb+1.3+           & numeric   & \verb+1.3+           & numbers with decimals \\
-    str   & \verb+"Spam", 'ham'+ & character & \verb+"Spam", 'ham'+ & textual data  \\ 
+    str   & \verb+"Spam", 'ham'+ & character & \verb+"Spam", 'ham'+ & textual data  \\
     bool  & \verb+True, False+   & logical   & \verb+TRUE, FALSE+   & the truth values \\
     \bottomrule
   \end{tabularx}}{}
@@ -410,7 +411,7 @@ In R, the closest you can get to a Python dictionary is to use lists with named 
 This allows you to assign and retrieve values by key,
 however the key is restricted to names, while in Python most objects can be used as keys.
 You create a named list with \verb|d = list(name=value)| and access individual elements with either
-\verb|d$name| or \verb|d[["name"]]|. 
+\verb|d$name| or \verb|d[["name"]]|.
 
 \pyrex[caption=Key-value pairs in Python dictionaries and R named lists]{chapter03/dict}
 
@@ -812,7 +813,7 @@ Example~\ref{ex:functions} shows how to write our function and how to use it.
 
 The power of functions, though, lies in scenarios where they are used
 repeatedly.  Imagine that you have a list of 5 (or 5 million!) scores
-and you wish to apply the function |por_60_cond| to all the scores at
+and you wish to apply the function \verb|por_60_cond| to all the scores at
 once using a loop. This costs you only two extra lines of code
 (Example~\ref{ex:functions2}).
 

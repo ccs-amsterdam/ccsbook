@@ -10,12 +10,15 @@ from jinja2 import Environment, PackageLoader, select_autoescape
 def read_tex(base: Path, fn: str):
     logging.info(f"Parsing {base / fn}")
     tex = open(base / fn).read()
+    # Workarounds to deal (mostly) with imperfect texsoup parsing
     # Remove comments
     tex = re.sub(r"^\%.*$", "", tex, flags=re.MULTILINE)
-    # drop hard spaces
-    tex = tex.replace("\ ", " ")
+    # drop hard spaces and \, spaces
+    tex = tex.replace("\\ ", " ").replace("\\,", "")
     # change \'{a} into \'a
     tex = re.sub(r"\\'\{(\w+)\}", "\\'\\1", tex)
+    # change d$name into d__DOLLAR__name
+    tex = tex.replace("d$name", "d__DOLLAR__name")
     root = TexSoup(tex)
     for node in root.all:
         if getattr(node, "name", None) == "input":
@@ -67,6 +70,10 @@ SUBS = {
     '``': '&ldquo;',
     "''": '&rdquo;',
     "\\#": '#',
+    "\\{": "{",
+    "\\}": "}",
+    "\\%": "%",
+    "__DOLLAR__": "$",
 }
 
 ACCENTS = {

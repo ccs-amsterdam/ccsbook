@@ -6,6 +6,7 @@ import shutil
 from pathlib import Path
 
 from TexSoup import TexSoup
+from TexSoup.utils import Token
 from texhtml.toc import TOC
 from texhtml.util import optarg, arg, args, next_sibling
 
@@ -83,6 +84,8 @@ def kwargs(node):
 class UnknownNode(Exception):
     pass
 
+NODE = None
+
 class Parser:
     def __init__(self, nodes, base: Path, chapter: int,  toc: TOC, bibliography: dict, out_folder: Path):
         self.nodes = nodes
@@ -90,9 +93,10 @@ class Parser:
         self._toc = toc
         self._chapter = chapter
         self._bibliography = bibliography
-        self._out_folder = out_folder
-        self._img_folder = self._out_folder / "img"
-        self._img_folder.mkdir(parents=True, exist_ok=True)
+        if out_folder is not None:
+            self._out_folder = out_folder
+            self._img_folder = self._out_folder / "img"
+            self._img_folder.mkdir(parents=True, exist_ok=True)
         self.unknown_nodes = set()
         self.n_notes = 0
 
@@ -109,6 +113,8 @@ class Parser:
 
     def parse_next(self):
         node = self.nodes.pop(0)
+        global NODE
+        NODE = node
         if node.name == "text":
             return self.text(node.text)
         elif node.name == "$":
@@ -219,18 +225,9 @@ class Parser:
 
     def verb(self, node):
         # This is not parsed correctly by texsoup, so workaround
-        text = "".join(self.nodes.pop(0).text)
-        verb_char = text[0]
-        text = text[1:]
-        if verb_char not in "+|":
-            raise ValueError(f"Unexpected verbatim input: {text}")
-        to = text.find(verb_char)
-        while to == -1:
-            text += "".join(self.nodes.pop(0).text)
-            to = text.find(verb_char)
-        verb_text, text = text[:to], text[(to+1):]
-        text = self.text([text])
-        return f"<code>{verb_text}</code>\n\n{text}"
+        verb, remainder = inline_verb(self.nodes)
+        text = self.text(remainder)
+        return f"{verb}\n\n{text}"
 
     def newpage(self, node):
         return
@@ -411,6 +408,68 @@ class Parser:
         </div>
         '''
 
+    def table(self, node):
+        nodes = {n.name: n for n in node.all}
+
+        caption, body, notes = args(nodes['caption'])
+        if not (m := re.match(r"\\label\{([^}]+)\}(.*)", caption)):
+            raise Exception(f"Cannot parse table caption: {caption}")
+        ref, caption = m.groups()
+        table = parse(body + "}")
+        nr = self._toc.labels[ref]
+        return f'''
+                <div class='figure'>
+                <h4><small class='text-muted'><a class='anchor' href='#{ref}' name='{ref}'>Table {nr}</a></small> {caption}</h3>
+                {table}  
+                </div>
+                '''
+
+    def tabularx(self, node):
+        nodes = list(node.contents)
+        _width = nodes.pop(0)
+        coldef = nodes.pop(0)
+        head, body = [[""]], [[""]]
+        target = head
+        while nodes:
+            n = nodes.pop(0)
+            if isinstance(n, str):
+                for x in re.split(r"(&|\\\\)", n):
+                    x = x.strip()
+                    if x == "&":
+                        target[-1].append("")
+                    elif x == "\\\\":
+                        target.append([""])
+                    else:
+                        if x and not re.match("\([lr]+\)", x):
+                            target[-1][-1] += x
+            else:
+                if n.name == "verb":
+                    verb, remainder = inline_verb(nodes)
+                    target[-1][-1] += verb
+                    nodes.insert(0, remainder)
+                elif n.name == "midrule":
+                    target = body
+                elif n.name == "multicolumn":
+                    cols, just, text = args(n)
+                    target[-1][-1] += f"<th colspan='{cols}'>{text}</th>"
+        html = ["<table class='table'><thead>"]
+        def td(x, tag):
+            if not x.startswith("<th"):
+                x = f"<{tag}>{x}</{tag}>"
+            return f"    {x}"
+
+        for row in head:
+            if "".join(row).strip():
+                row = row + [''] * (len(coldef) - len(row))
+                html += ["  <tr>"] + [td(cell, "th") for cell in row] + ["  </tr>"]
+        html += ["</thead><tbody>"]
+        for row in body:
+            if "".join(row).strip():
+                row = row + [''] * (len(coldef) - len(row))
+                html += ["  <tr>"] + [td(cell, "td") for cell in row] + ["  </tr>"]
+        html += ["</tbody></table>"]
+        return "\n".join(html)
+
     def img_html(self, img: Path):
         outf = self._img_folder / img.name
         shutil.copy(self._base / img, outf)
@@ -420,7 +479,26 @@ class Parser:
         </a> """
 
 
+def parse(tex: str):
+    nodes = TexSoup(tex).all
+    parser = Parser(nodes, None, None, None, None, None)
+    return parser.parse()
+
 def build_url(link, text=None):
     if text is None:
         text = link.replace("https://", "").replace("http://", "")
     return f"<a href='{link}'>{text}</a>"
+
+def inline_verb(nodelist):
+    text = "".join(nodelist.pop(0).text)
+    verb_char = text[0]
+    text = text[1:]
+    if verb_char not in "+|":
+        raise ValueError(f"Unexpected verbatim input: {text}")
+    to = text.find(verb_char)
+    while to == -1:
+        text += "".join(nodelist.pop(0).text)
+        to = text.find(verb_char)
+    verb_text = text[:to].replace("__DOLLAR__", "$")
+    remainder = text[(to + 1):]
+    return f"<code>{verb_text}</code>", remainder
