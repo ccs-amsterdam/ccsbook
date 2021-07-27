@@ -107,3 +107,6 @@ def thumbnail(img: Path, size=640) -> Path:
         im.thumbnail((size, size))
         im.save(outf)
     return outf
+
+def text(node):
+    return "".join(node.text)

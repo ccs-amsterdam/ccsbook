@@ -10,7 +10,7 @@ from TexSoup.utils import Token
 from texhtml.toc import TOC
 from texhtml.util import optarg, arg, args, next_sibling
 
-from tools.texhtml.util import optargs, clean_text, thumbnail
+from tools.texhtml.util import optargs, clean_text, thumbnail, text
 
 
 class CodexCell:
@@ -216,6 +216,7 @@ class Parser:
 
     def emph(self, node):
         return f"<em>{arg(node)}</em>"
+    textit=emph
 
     def textbf(self, node):
         return f"<b>{arg(node)}</b>"
@@ -242,6 +243,10 @@ class Parser:
     def vspace(self, node):
         pass
     noindent = vspace
+
+    def itemize(self, node):
+        items = "\n".join(f"  <li> {text(c)}" for c in node.children)
+        return f"<ul>\n{items}\n</ul>"
 
     # Concepts
     def _concept(self, name: str):
