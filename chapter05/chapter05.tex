@@ -99,7 +99,14 @@ But how do we -- toy examples like those in Example~\ref{ex:createdataframe} asi
 
 In statistical software like SPSS or Stata, or in all typical office applications for that matter, you \emph{open} a file, do some work on it, and then \emph{save} the changes to the same file once you are done. You basically ``work on that file''.
 
-That's not how your typical workflow in R or Python looks. Here, you work on one or multiple data frames (or some other data structures). That means that you might start by \emph{reading} the contents of some file into a data frame, but once that is done, there is no link between the data frame and that file any more. Once your work is done, you can save your data frame to a file, of course, but it is a good practice not to overwrite your input file, so that you can always go back to where you started. A typical workflow would  look like this:
+That's not how your typical workflow in R or Python looks.
+Here, you work on one or multiple data frames (or some other data structures).
+That means that you might start by \emph{reading} the contents of some file into a data frame,
+but once that is done, there is no link between the data frame and that file any more.
+Once your work is done, you can save your data frame to a file, of course,
+but it is a good practice not to overwrite your input file, so that you can always go back to where you started.
+A typical workflow would look like this:
+
 \begin{enumerate}
 \item Read raw data from file \texttt{\small{myrawdata.csv}} into data frame \texttt{\small{df}}
 \item Do some operations and analyses on df
@@ -116,7 +123,7 @@ The most common file formats that are relevant to us are listed in Table~\ref{ta
 For the sake of completeness, we also listed the native Python and R formats pickle, RDS, and RDA. Because of their lack of interoperability, they are not very suitable for long-term storage or for sharing data, but they can have a place in a workflow as an intermediate step to solve the issue that none of the other formats are able to of storing all properties of a data frame (e.g., the csv file cannot store whether a given column in an R data frame is to be understood as containing strings such as ``man'', ``woman'', ``non-binary'' or a factor with the three levels man, woman, non-binary). If it is important to store an object (such as a data frame) exactly as-it-is, we can use these formats. One of the rare instances where we use these formats is in Example~\ref{ex:reuse}, where we store machine learning models for later reuse.
 
 \begin{table}[]
-\caption{Basics of data frame handling \label{tab:fileformats}}{%
+\caption{\label{tab:fileformats} Basics of data frame handling}{%
 \begin{tabular}{@{}llll@{}}
 \toprule
         & Used for?             & open   & interoperable?\\ \midrule
@@ -151,7 +158,7 @@ To avoid any data loss, it is advisable to make sure that your whole workflow us
 
 \begin{figure}
 \centering
-\includegraphics[width=0.9\linewidth]{figures/ch6_csv-in-editor}
+\includegraphics[width=0.9\linewidth]{figures/ch6_csv-in-editor.png}
 \caption{A csv file opened in a text editor, illustrating that the columns are separated by commas, and showing the encoding and the line endings.}
 \label{fig:csv-in-editor}
 \end{figure}

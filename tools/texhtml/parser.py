@@ -67,6 +67,9 @@ def kwargs(node):
     # TODO: handle braces correctly :(
     result = {}
     argtext = optarg(node)
+    # HACK remove index/emph tags from caption since they mess up processing
+    argtext = re.sub(r"\\index\{([^}]+)}", "", argtext)
+    argtext = re.sub(r"\\(emph)\{([^}]+)}", "\\2", argtext)
     # HACK to parse braces around caption
     if m:=re.search(r"(.*),?caption=\{([^}]+)\}(.*)", argtext):
         result['caption'] = m.group(2)
@@ -77,7 +80,7 @@ def kwargs(node):
                 k, v = arg.split("=")
                 result[k.strip()] = v.strip()
             except:
-                logging.exception(f"Cannot parse {arg} in {argtext}")
+                logging.exception(f"Cannot parse {repr(arg)} in {argtext}")
                 raise
     return result
 
@@ -239,6 +242,7 @@ class Parser:
 
     def verbatim(self, node):
         return f"<pre>{node.text[0]}</pre>"
+    lstlisting=verbatim
 
     def vspace(self, node):
         pass
@@ -247,6 +251,9 @@ class Parser:
     def itemize(self, node):
         items = "\n".join(f"  <li> {text(c)}" for c in node.children)
         return f"<ul>\n{items}\n</ul>"
+    def enumerate(self, node):
+        items = "\n".join(f"  <li> {text(c)}" for c in node.children)
+        return f"<ol>\n{items}\n</ol>"
 
     # Concepts
     def _concept(self, name: str):
