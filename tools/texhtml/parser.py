@@ -1,3 +1,4 @@
+#TODO: pageref in chapter 7
 
 import base64
 import logging
@@ -5,6 +6,7 @@ import re
 import shutil
 from pathlib import Path
 
+import sympy
 from TexSoup import TexSoup
 from TexSoup.utils import Token
 from texhtml.toc import TOC
@@ -103,6 +105,8 @@ class Parser:
             return self.text(node.text)
         elif node.name == "$":
             return self.math(node)
+        elif node.name == "$$":
+            return self.expression(node)
         elif hasattr(self, node.name):
             result = getattr(self, node.name)(node)
             return result
@@ -132,11 +136,18 @@ class Parser:
         return f"<h3><small class='text-muted'><a class='anchor' href='#{label}' name='{label}'>{nr}</a></small> {args(node)[0]}</h3>"
 
     def paragraph(self, node):
-        return f"<b>{args(node)[0]}</b>"
+        t = text(node).replace("\\footnotesize", "")
+        return f"<b>{t}</b>"
 
     def math(self, node):
         text = "".join(node.text)
         return f"<code>{text}</code>"
+
+    def expression(self, node):
+        fn =  f"expr_{id(node)}.png"
+        sympy.preview(str(node), viewer='file', filename=self._img_folder / fn)
+        return f"<div><img src='img/{fn}' /></div>"
+        #print(node.text)
 
     def url(self, node):
         text = "".join(node.text)
@@ -380,6 +391,7 @@ class Parser:
     def ccsexample(self, node):
         rows = []
         caption = arg(node.caption)
+        print("!", caption)
         label = arg(node.label)
         nr = self._toc.labels[label]
         logging.debug(f"Processing ccsexample {nr}:{caption}")
@@ -419,6 +431,9 @@ class Parser:
     # Figures
     def figure(self, node):
         nodes = {n.name: n for n in node.all}
+        if "feature" in nodes:
+            # Not actually a figure, but a 'feature' that was supposed to be floating
+            return self.feature(nodes["feature"])
         caption = "".join(nodes['caption'].text)
         ref = "".join(nodes['label'].text)
         nr = self._toc.labels[ref]

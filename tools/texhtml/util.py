@@ -36,6 +36,8 @@ def arg(node):
     return a
 
 def args(node):
+    if node is None:
+        raise TypeError("?")
     return [str(x).strip("{}") for x in node.args if isinstance(x, BraceGroup)]
 
 def optarg(node, default=None):
@@ -90,6 +92,11 @@ ACCENTS = {
     '\\"u': "ü",
     '\\"e': "ë",
     '\\"o': "ö",
+    '\\`a': "à",
+    '\\`i': "ì",
+    '\\`u': "ù",
+    '\\`e': "è",
+    '\\"o': "ò",
 }
 
 def clean_text(text: str) -> str:

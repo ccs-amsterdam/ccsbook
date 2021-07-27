@@ -83,7 +83,7 @@ Let us first get the distribution of the categorical variable \textit{gender} by
 \codexoutputtable[Absolute and relative frequencies of gender:]{chapter07/frequency.r}
 \doublecodex{chapter07/frequency2}
 \codexoutputtable[Absolute and relative frequencies of support of refugees:]{chapter07/frequency2.r}
-\caption{Absolute and relative frequencies of support of refugees and gender.}
+\caption{Absolute and relative frequencies of support of refugees and gender.}\label{ex:frequency2}
 \end{ccsexample}
 
 
@@ -118,14 +118,34 @@ Let's consider the command from Example~\ref{ex:bar}:
 \begin{verbatim}
 ggplot (data=d2) + geom_bar(mapping=aes(x= support_refugees), fill="blue")
 \end{verbatim}
-What you can see here is that every ggplot is composed of multiple sub-commands that are added together with the plus sign. At a minimum, every ggplot needs two sub-command: \index{ggplot}\texttt{ggplot}, which initiates the plot and can be seen as an empty canvas, and one or more \index{geom}\texttt{geom} commands which add \index[ggplot geom]{geometries}\emph{geometries} to the plot, for example bars, lines, or points. Moreover, each geometry needs a \emph{data} source, and a \index[ggplot aesthetic mapping]{aesthetic mapping}\emph{aesthetic mapping} which tells ggplot how to map columns in the data (in this case the |support_refugees| column) to graphical (aesthetic) elements of the plot, in this case the $x$ position of each bar. Graphical elements can also be set to a constant value rather than mapped to a column, in which case the argument is placed outside the \index{aes}\texttt{aes} function, as in the |fill="blue"| above.
+What you can see here is that every ggplot is composed of multiple sub-commands that are added together with the plus sign.
+At a minimum, every ggplot needs two sub-command: \index{ggplot}\texttt{ggplot},
+which initiates the plot and can be seen as an empty canvas,
+and one or more \index{geom}\texttt{geom} commands which add \index[ggplot geom]{geometries}\emph{geometries} to the plot,
+for example bars, lines, or points.
+Moreover, each geometry needs a \emph{data} source, and a \index[ggplot aesthetic mapping]{aesthetic mapping}\emph{aesthetic mapping}
+which tells ggplot how to map columns in the data (in this case the \verb|support_refugees| column) to graphical (aesthetic) elements of the plot,
+in this case the $x$ position of each bar.
+Graphical elements can also be set to a constant value rather than mapped to a column,
+in which case the argument is placed outside the \index{aes}\texttt{aes} function, as in the \verb|fill="blue"| above.
 
-Each aesthetic mapping is assigned a \index[ggplot scale]{scale}\emph{scale}. This scale is initialized with a sensible default which depends on the data type. For example, the color of the lines in  Example~\ref{ex:combine2} are mapped to the |group| column. Since that is a nominal value (character column), ggplot automatically assigns colors to each group, in this case blue and red.  In Example~\ref{ex:heatmap}, on the other hand, the fill color is mapped to the |score| column, which is numerical (interval) data, to which ggplot by default assigns a color range of white to blue.
+Each aesthetic mapping is assigned a \index[ggplot scale]{scale}\emph{scale}.
+This scale is initialized with a sensible default which depends on the data type.
+For example, the color of the lines in Example~\ref{ex:combine2} are mapped to the \verb|group| column.
+Since that is a nominal value (character column), ggplot automatically assigns colors to each group,
+in this case blue and red.
+In Example~\ref{ex:heatmap}, on the other hand, the fill color is mapped to the \verb|score| column, which is numerical (interval) data, to which ggplot by default assigns a color range of white to blue.
 
-Almost every aspect of ggplot can be customized by adding more subcommands. For example, you can specify the title and axis labels by adding |+ labs(title="Title", x="Axis Label")| to the plot, and you can completely alter the look of the graph by applying a theme. For example, the \index{ggthemes}\emph{ggthemes} package defines an Economist theme, so by simply adding |+ theme_economist()| to your plot you get the characteristic layout of plots from that magazine.
-You can also customize the way scales are mapped using the various \index{scale\_variable\_mapping}\texttt{scale\_variable\_mapping} functions. For example, Example~\ref{ex:map2} uses |scale_fill_viridis_c(option = "B")| to use the \emph{viridis} scale for the \emph{fill} easthetic, specifying that scale B should be used. Similar commands can be used to e.g.\ change the colors of color ranges, the size of points, etc.
+Almost every aspect of ggplot can be customized by adding more subcommands.
+For example, you can specify the title and axis labels by adding \verb|+ labs(title="Title", x="Axis Label")| to the plot,
+and you can completely alter the look of the graph by applying a theme.
+For example, the \index{ggthemes}\emph{ggthemes} package defines an Economist theme, so by simply adding \verb|+ theme_economist()| to your plot you get the characteristic layout of plots from that magazine.
+You can also customize the way scales are mapped using the various \index{scale\_variable\_mapping}\texttt{scale\_variable\_mapping} functions.
+For example, Example~\ref{ex:map2} uses \verb|scale_fill_viridis_c(option = "B")| to use the \emph{viridis} scale for the \emph{fill} easthetic, specifying that scale B should be used. Similar commands can be used to e.g.\ change the colors of color ranges, the size of points, etc.
 
-Because all geometries start with |geom_|, all scales start with |scale_|, all themes start with |theme_|, etc., you can use the RStudio autocompletion to browse through the complete list of options: simply type |geom_|, press tab or control+space, and you get a list of the options with a short description, and you can press F1 to get help on each option. The help for every geometry also lists all aesthetic elements that can or must be supplied.
+Because all geometries start with \verb|geom_|, all scales start with \verb|scale_|, all themes start with \verb|theme_|, etc.,
+you can use the RStudio autocompletion to browse through the complete list of options:
+simply type \verb|geom_|, press tab or control+space, and you get a list of the options with a short description, and you can press F1 to get help on each option. The help for every geometry also lists all aesthetic elements that can or must be supplied.
 
 \newcommand{\fnviza}{\footnote{Freely available at \url{https://socviz.co/}}}
 \newcommand{\fnvizb}{\footnote{\url{https://www.r-graph-gallery.com/}}}
