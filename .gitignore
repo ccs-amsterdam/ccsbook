@@ -156,3 +156,9 @@ chapter11/myvectorizer.pkl
 chapter11/myclassifier.pkl
 chapter11/w2v_320d_trimmed
 chapter11/reviewdata.rds
+
+chapter15/mydb*
+docs/d/glove.6B.zip
+includeonly.tex
+snippet_reformat/
+

@@ -584,32 +584,8 @@ operate a loop in the list so you can get all the results, from the
 first until the last element, with just one instruction.  The syntax
 of the for-loop is:
 
-\noindent\rule{\textwidth}{.5pt}\vspace{-1em}
+\doublecodex{chapter03/forsyntax}
 
-\noindent\begin{minipage}[t]{.45\textwidth}
-  For-loops in R:
-\begin{verbatim}
-for (val in sequence) {
-    statement1
-    statement2
-    statement3
-  }
-\end{verbatim}
-\end{minipage}
-\begin{minipage}[t]{.45\textwidth}
-  For-loops in Python:
-\begin{verbatim}
-for val in sequence:
-    statement1
-    statement2
-    statement3
-\end{verbatim}
-\end{minipage}
-\vspace{.5em}
-
-\noindent\rule{\textwidth}{.5pt}
-
-\pyrex[caption={For-loops let you repeat operations.}]{chapter03/forloop}
 
 As Example~\ref{ex:forloop} illustrates, every time you find yourself
 \emph{repeating} something, for instance printing each element from a
@@ -620,6 +596,8 @@ operation writing few lines of code. As we will stress in this
 book, a good practice in coding is to be efficient and harmonious in
 the amount of code we write, which is another justification for using
 loops.
+
+\pyrex[caption={For-loops let you repeat operations.}]{chapter03/forloop}
 
 \begin{feature}
   \textbf{Don't repeat yourself!}
@@ -662,36 +640,7 @@ R and Python, we use the clauses \emph{if}, \emph{else if}
 conditional statements. Let's begin showing you the basic structure of
 the conditional statement:
 
-\noindent\rule{\textwidth}{.5pt}\vspace{-1em}
-
-\noindent\begin{minipage}[t]{.45\textwidth}
-  If-statement in R:
-\begin{verbatim}
-if (condition) {
-    Statement1
-} else if{
-    Statement2
-}
-else {
-    Statement3
-}
-\end{verbatim}
-\end{minipage}
-\begin{minipage}[t]{.45\textwidth}
-  If-statement in Python:
-\begin{verbatim}
-if condition_1:
-    statement_1
-elif condition_2:
-    statement_2
-else:
-    statement_3
-\end{verbatim}
-\end{minipage}
-\vspace{.5em}
-
-\noindent\rule{\textwidth}{.5pt}
-
+\doublecodex{chapter03/ifsyntax}
 
 Suppose you want to print the headlines of Example~\ref{ex:forloop} only if the text is less than 40 characters long.
 To do this, we can include the conditional statement in the loop, executing the body only if the condition is met (Example~\ref{ex:if1})
@@ -749,37 +698,7 @@ and another that estimates this percentage only if the given argument
 is above the threshold of 5.
 The general structure of a function in R and Python is:
 
-\noindent\rule{\textwidth}{.5pt}\vspace{-1em}
-
-\noindent\begin{minipage}[t]{.5\textwidth}
-  Function definition in R:
-\begin{verbatim}
-f = function(par1, par2=0) {
-   ... statements ... 
-   return_value
-}
-result = f(arg1, arg2)
-result = f(arg1, par2=arg2)
-result = f(arg1, par2=arg2)
-result = f(arg1)
-\end{verbatim}
-\end{minipage}
-\begin{minipage}[t]{.45\textwidth}
-  Function definition in Python:
-\begin{verbatim}
-def f(par1, par2=0):
-    ... statements ...
-    return return_value   
-
-result = f(arg1, arg2)
-result = f(par1=arg1, par2=arg2)
-result = f(arg1, par2=arg2)
-result = f(arg1)
-\end{verbatim}
-\end{minipage}
-\vspace{.5em}
-
-\noindent\rule{\textwidth}{.5pt}
+\doublecodex{chapter03/functionsyntax}
 
 In both cases, this defines a function called \verb|f|,
 with two \index{arguments}\emph{arguments}, \verb|arg_1| and \verb|arg_2|.
