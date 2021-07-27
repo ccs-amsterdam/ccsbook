@@ -18,7 +18,7 @@ def read_tex(base: Path, fn: str):
     # change \'{a} into \'a
     tex = re.sub(r"\\'\{(\w+)\}", "\\'\\1", tex)
     # change d$name into d__DOLLAR__name
-    tex = tex.replace("d$name", "d__DOLLAR__name")
+    tex = tex.replace("d$", "d__DOLLAR__").replace("df$", "df__DOLLAR__")
     root = TexSoup(tex)
     for node in root.all:
         if getattr(node, "name", None) == "input":
@@ -73,6 +73,7 @@ SUBS = {
     "\\{": "{",
     "\\}": "}",
     "\\%": "%",
+    "\\_": "_",
     "__DOLLAR__": "$",
     "\\$": "$",
 }
@@ -96,6 +97,10 @@ def clean_text(text: str) -> str:
         text = text.replace(k, v)
     for k,v in ACCENTS.items():
         text = text.replace(k, v).replace(k.upper(), v.upper())
+    # For some weird reason, \index(x)\emph(x) was not processed in capter 6 :(
+    text = re.sub(r"\\index\{([^}]+)\}", "", text)
+    text = re.sub(r"\\(emph|texttt)\{([^}]+)\}", "\\2", text)
+    text = re.sub(r"\\(verb)\|([^|]+)\|", "\\2", text)
     if "\\" in text:
         raise Exception(f"Unknown accent: {repr(text)}")
     return text

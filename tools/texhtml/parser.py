@@ -63,26 +63,7 @@ def codex_html(caption, nr, label, rows):
     buffer += ["</div>"]
     return "\n".join(buffer)
 
-def kwargs(node):
-    # TODO: handle braces correctly :(
-    result = {}
-    argtext = optarg(node)
-    # HACK remove index/emph tags from caption since they mess up processing
-    argtext = re.sub(r"\\index\{([^}]+)}", "", argtext)
-    argtext = re.sub(r"\\(emph)\{([^}]+)}", "\\2", argtext)
-    # HACK to parse braces around caption
-    if m:=re.search(r"(.*),?caption=\{([^}]+)\}(.*)", argtext):
-        result['caption'] = m.group(2)
-        argtext = f"{m.group(1)}{m.group(3)}"
-    for arg in argtext.split(","):
-        if arg.strip():
-            try:
-                k, v = arg.split("=")
-                result[k.strip()] = v.strip()
-            except:
-                logging.exception(f"Cannot parse {repr(arg)} in {argtext}")
-                raise
-    return result
+
 
 class UnknownNode(Exception):
     pass
@@ -134,10 +115,12 @@ class Parser:
         return "\n".join(self.buffer)
 
     def text(self, texts = None):
+        if texts and not isinstance(texts, list): raise Exception(repr(texts))
         if not texts:
             texts = []
         while self.nodes and self.nodes[0].name == "text":
-            texts += self.nodes.pop(0).text
+            n = self.nodes.pop(0)
+            texts += n.text
         text = "".join(texts)
         return clean_text(text)
 
@@ -230,14 +213,14 @@ class Parser:
     def verb(self, node):
         # This is not parsed correctly by texsoup, so workaround
         verb, remainder = inline_verb(self.nodes)
-        text = self.text(remainder)
+        text = self.text([remainder])
         return f"{verb}\n\n{text}"
 
     def newpage(self, node):
         return
 
     def ttt(self, node):
-        return f"<code>{arg(node)}</code>"
+        return f"<code>{clean_text(arg(node))}</code> "
     texttt = ttt
 
     def verbatim(self, node):
@@ -257,7 +240,7 @@ class Parser:
 
     # Concepts
     def _concept(self, name: str):
-        return f"<span class='concept'>{name}</span> "
+        return f"<code>{name}</code> "
 
     def concept(self, node):
         return self._concept(args(node)[0])
@@ -294,7 +277,9 @@ class Parser:
             nr = self._toc.labels[ref]
             chap = int(nr.split(".")[0])
             file = "" if chap == self._chapter else f"chapter{chap:02d}.html"
-        return f"<a href='{file}#{ref}'>{label} {nr}</a>"
+        if label:
+            label = f"{label} "
+        return f"<a href='{file}#{ref}'>{label}{nr}</a>"
 
     def refex(self, node):
         return self._ref("Example", f"ex:{arg(node)}")
@@ -341,7 +326,7 @@ class Parser:
     def pyrex(self, node):
         fn = arg(node)
         label = f"ex:{Path(fn).name}"
-        opts = kwargs(node)
+        opts = self.kwargs(node)
         caption = opts.get('caption')
         nr = self._toc.labels[label]
         logging.debug(f"Processing pyrex {nr}: {caption}")
@@ -363,6 +348,34 @@ class Parser:
             if what_output in {'r', 'both'}:
                 rows[-1] += [self._code_output(f"{fn}.r", f"{'R' if what_output == 'both' else ''} output", format)]
         return codex_html(caption, nr, label, rows)
+
+    def kwargs(self, node):
+        # TODO: handle braces correctly :(
+        result = {}
+        argtext = optarg(node)
+        # HACK remove index/emph tags from caption since they mess up processing
+        argtext = re.sub(r"\\index\{([^}]+)}", "", argtext)
+        argtext = re.sub(r"\\(emph|texttt)\{([^}]+)}", "\\2", argtext)
+        if "\\refex" in argtext:
+            m = re.match(r"(.*)\\refex\{([^}]+)}(.*)", argtext)
+            pre, ex, post = m.groups()
+            ex = self._ref("Example", f"ex:{ex}")
+            argtext = "".join([pre, ex, post])
+
+        argtext = re.sub(r"\\refex\{([^}]+)}", "", argtext)
+        # HACK to parse braces around caption
+        if m := re.search(r"(.*),?caption=\{([^}]+)\}(.*)", argtext):
+            result['caption'] = m.group(2)
+            argtext = f"{m.group(1)}{m.group(3)}"
+        for arg in argtext.split(","):
+            if arg.strip():
+                try:
+                    k, v = arg.split("=")
+                    result[k.strip()] = v.strip()
+                except:
+                    logging.exception(f"Cannot parse {repr(arg)} in {argtext}")
+                    raise
+        return result
 
     def ccsexample(self, node):
         rows = []
@@ -509,7 +522,8 @@ def inline_verb(nodelist):
         raise ValueError(f"Unexpected verbatim input: {text}")
     to = text.find(verb_char)
     while to == -1:
-        text += "".join(nodelist.pop(0).text)
+        n = nodelist.pop(0)
+        text += "".join(n.text)
         to = text.find(verb_char)
     verb_text = text[:to].replace("__DOLLAR__", "$")
     remainder = text[(to + 1):]

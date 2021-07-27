@@ -182,12 +182,11 @@ To store the results, simply assign it to a new object as normal.
 \pyrex[caption={Aggregation. Note that in the Python example, we can specify often-used functions such as \texttt{"mean"} simply as a string, but instead, we could also pass functions directly, such as numpy's \texttt{np.mean}},output=r,format=table]{chapter06/aggregate}
 
 In R, you use the \index{dplyr}\emph{dplyr} function \index{group\_by}\texttt{group\_by}  to define the groups,
-and then call the function \index{summarize~}\texttt{summarize~} to compute summary values by specifying
+and then call the function \index{summarize}\texttt{summarize} to compute summary values by specifying
 \verb+name=function(value)+.
 
 In Python, the grouping step is quite similar.
-In the summarization step, however, you specify which summaries to compute in a dictionary%
-\footnote{See Section~\ref{sec:datatypes} for more information on working with dictionaries}.
+In the summarization step, however, you specify which summaries to compute in a dictionary\footnote{See Section~\ref{sec:datatypes} for more information on working with dictionaries}.
 The keys of the dictionary lists the value columns to compute summaries of,
 and the values contain the summary functions to apply, so  \verb+{'value': function} or \verb+{'value': [list of functions]}+.
 
@@ -206,10 +205,10 @@ Essentially, this calls the second method on the result of the first method: \ve
 In R, the data needs, of course, to be included in the function arguments. But we can also chain these function calls.
 This is done using the \emph{pipe operator} (\verb+%>%+) from the (cutely named) \index{magrittr}\emph{magrittr} package.
 The pipe operator inserts the result of the first function as the first argument of the second function.
-More technically, \verb+f1(d) %>% f2()+ is equivalent to \verb+f2(f1(d))+.
+More technically, \verb|f1(d) %>% f2()| is equivalent to \verb|f2(f1(d))|.
 This can be used to chain multiple commands together, e.g.\ \verb+data = data %>% function1(arguments) %>% function2(arguments)+.
 
-\pyrex[caption={Combining multiple functions or methods. The result is identical to \refex{aggregate}},output=none,format=table]{chapter06/aggregate2}{
+\pyrex[caption={Combining multiple functions or methods. The result is identical to \refex{aggregate}},output=none,format=table]{chapter06/aggregate2}
 
 \refex{aggregate2} shows the same operation as in Example~\ref{ex:aggregate}, but chained into a single statement.
 
@@ -323,7 +322,7 @@ This will be lead to missing values (|NA|/|NaN|) being inserted in the columns o
 
 \begin{figure}
     \centering
-    \includegraphics{figures/ch07_figjoins}
+    \includegraphics{figures/ch07_figjoins.png}
     \caption{The solid area indicates whether the cases in the resulting datasets need to appear in one, both, or any of the datasets.}
     \label{fig:joinvenn}
 \end{figure}
