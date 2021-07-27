@@ -21,6 +21,9 @@ base = Path.cwd()
 out = Path("/tmp/book")
 toc = TOC(base)
 template = get_template('chapter.html')
+
+#list(read_tex(base, "chapter08/test.tex"))
+#import sys; sys.exit()
 for chapnr, chapter in enumerate(toc.chapters, start=1):
     if args.chapters and chapnr not in args.chapters:
         continue

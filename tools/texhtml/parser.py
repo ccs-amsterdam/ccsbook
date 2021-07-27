@@ -1,4 +1,5 @@
 #TODO: pageref in chapter 7
+#TODO: math and tikz figures in chapter 8
 
 import base64
 import logging
@@ -54,7 +55,10 @@ def codex_row(row):
                    "</div></div>",
                 ]
     elif len(row) == 1:
-        result = ["<div class='code-single'>", row[0].to_html(), "</div>"]
+        if isinstance(row[0], str):
+            result = row
+        else:
+            result = ["<div class='code-single'>", row[0].to_html(), "</div>"]
     else:
         raise Exception(f"Codex rows should have 1 or 2 entries, not {len(row)}")
     return "\n".join(result)
@@ -335,6 +339,7 @@ class Parser:
         return CodexCell(self, format, caption, result)
 
     def pyrex(self, node):
+        print("!!!", node)
         fn = arg(node)
         label = f"ex:{Path(fn).name}"
         opts = self.kwargs(node)
@@ -391,11 +396,14 @@ class Parser:
     def ccsexample(self, node):
         rows = []
         caption = arg(node.caption)
-        print("!", caption)
         label = arg(node.label)
         nr = self._toc.labels[label]
         logging.debug(f"Processing ccsexample {nr}:{caption}")
         for child in node:
+            if isinstance(child, str):
+                rows.append([child])
+                continue
+            #print(">>>", type(child), repr(child))
             if child.name == "doublecodex":
                 fn = arg(child)
                 py = self._code_input(f"{fn}.py", "Python code")
@@ -435,9 +443,14 @@ class Parser:
             # Not actually a figure, but a 'feature' that was supposed to be floating
             return self.feature(nodes["feature"])
         caption = "".join(nodes['caption'].text)
+        if 'label' not in nodes:
+            logging.error(f"Cannot find label in figure {caption}")
+            return
         ref = "".join(nodes['label'].text)
         nr = self._toc.labels[ref]
         img = Path(arg(nodes['includegraphics']))
+        if img.suffix in (".pdf", ".eps"):
+            img = img.with_suffix(".png")
         outf = self._img_folder / img.name
         shutil.copy(self._base / img, outf)
         thumb = thumbnail(outf)

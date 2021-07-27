@@ -15,8 +15,6 @@
 
 \newpage
 \begin{feature}
-
- %TODO FIX
 In this chapter, we use the Python package \index{statsmodels}\emph{statsmodels} for classical statistical modeling, before we move on to use a dedicated machine learning package, \index{scikit-learn}\emph{scikit-learn}. In R, we use base R for statistical modeling, \index{rsample}\emph{rsample} for splitting our dataset, \index{caret}\emph{caret} for machine learning, and \index{pROC}\emph{pROC} for determining the Receiver Operating Characteristic (ROC) curve. Note that caret requires additional packages for the actual machine learning models: \index{naivebayes}\emph{naivebayes}, \index{LiblineaR}\emph{LiblineaR}, and \index{randomforest}\emph{randomforest}. You can install them as follows (see Section~\ref{sec:installing} for more details):
 
 \doublecodex{chapter08/chapter08install}
@@ -25,7 +23,9 @@ In this chapter, we use the Python package \index{statsmodels}\emph{statsmodels}
 
 \doublecodex{chapter08/chapter08library}
 
-Note that in Python, we could also simply write \texttt{\small{import sklearn}} once instead of all the \texttt{\small{from sklearn import ...}} lines. But our approach saves a lot of typing later on, as we can simply write (\texttt{\small{classification\_report}}) instead of \texttt{\small{sklearn.metrics.classification\_report}}, for instance.
+Note that in Python, we could also simply write \verb|import sklearn| once instead of all the \verb|from sklearn import ...| lines.
+But our approach saves a lot of typing later on, as we can simply write \verb|classification_report|
+instead of \verb|sklearn.metrics.classification_report|, for instance.
 \end{feature}
 
 
@@ -80,7 +80,7 @@ make much sense to distinguish between statistics on the one hand and
 machine learning on the other hand.
 Still, there are some differences between traditional statistical
 approaches that you may have learned about in your statistics classes
-and the machine learning approach, even if 
+and the machine learning approach, even if
 some of the same
 mathematical tools are used. One may say that  the focus is a different
 one, and the objective we want to achieve may differ.
@@ -184,7 +184,7 @@ guideline of how some typical machine learning terms translate to statistical
 terms that you may be familiar with.
 
 \begin{table}
-\caption{Some common machine learning terms explained\label{tab:mllingo}}{
+\caption{\label{tab:mllingo}Some common machine learning terms explained}{
   \centering
 \begin{tabularx}{\textwidth}{XX}
 \toprule
@@ -266,7 +266,7 @@ known as overfitting (see Figure ~\ref{fig:overfit}).
 
 \begin{figure}
 \centering
-\includegraphics[width=\linewidth]{figures/ch09_overfitting}
+\includegraphics[width=\linewidth]{figures/ch09_overfitting.png}
 \caption{Underfitting and overfitting. Example adapted from https://scikit-learn.org/stable/auto\_examples/model\_selection/plot\_underfitting\_overfitting.html}
 \label{fig:overfit}
 \end{figure}
@@ -289,7 +289,7 @@ As shown in Example~\ref{ex:classificationreport}, we can create a \emph{confusi
 
 \begin{figure}
 \centering
-\includegraphics[width=\linewidth]{figures/ch09_matrix}
+\includegraphics[width=\linewidth]{figures/ch09_matrix.png}
 \caption{Visual representation of a confusion matrix.}
 \label{fig:matrix}
 \end{figure}
@@ -765,7 +765,7 @@ but this shows the big difference that a hidden layer can make in the range of r
 
 In Section~\ref{sec:neural}, we introduced neural networks with hidden layers and the backpropagation algorithm to fit them,
 both of which date back to at least the 1970's.
-In the past decade, however, the Artificial Intelligence community has been transformed by the introduction of  
+In the past decade, however, the Artificial Intelligence community has been transformed by the introduction of
 \index{deep learning}\emph{deep learning},
 where deep refers to a large amount of hidden layers between the input and output layers.
 Many of the recent advances in AI, from self-driving cars to automatic translation and voice assistants,
@@ -797,7 +797,7 @@ is directly encoded in the input features.
 In the example used earlier, if ``not'' and ``good'' are separate features, a single-layer network (or a Na\"ive Bayes model)
 cannot learn that these words together have a different meaning than the addition of their separate meanings.
 However, similar to regression analysis, where you can create an interaction term or squared term to model a non-linear relationship,
-the researcher can create input features for e.g.\ word pairs, for example including bigrams { (word pairs) such as ``not\_good''.
+the researcher can create input features for e.g.\ word pairs, for example including bigrams (word pairs) such as ``not\_good''.
 In fact, engineering the right features was the main way in which a researcher could improve model performance.
 In deep learning, however, this feature learning step is generally included in the model itself,
 with subsequent layers encoding different aspects of the raw data.
@@ -938,7 +938,7 @@ expense of a lower recall.
 
 \begin{figure}
 \centering
-\includegraphics[width=0.4\linewidth]{figures/ch09_roccurve}
+\includegraphics[width=0.4\linewidth]{figures/ch09_roccurve.eps}
 \caption{A (pretty good) ROC curve.}
 \label{fig:roccurve}
 \end{figure}
@@ -967,7 +967,8 @@ value with the maximum distance between TPR and FPR, and use that one.
   \doublecodex{chapter08/cutoffpointb}
   \doubleoutput{chapter08/cutoffpointb}
   Note: Python and R have slightly different outcomes because the underlying implementation is different, but for this example that may be ignored.
-  \caption{Choosing a different cutoff point for predictions with logistic regression. In this case, we make a trade-off and maximize the difference between false positive rate and true positive rate to improve the precision for the the second category the precision for the first category}\label{ex:cutoffpoint}
+  \caption{Choosing a different cutoff point for predictions with logistic regression. In this case, we make a trade-off and maximize the difference between false positive rate and true positive rate to improve the precision for the the second category the precision for the first category}
+  \label{ex:cutoffpoint}
 \end{ccsexample}
 
 \pyrex[output=py,format=png,caption={The ROC curve of a (not very impressive) classifier and its area under the curve (AUC)}]{chapter08/roccurve}
@@ -1062,12 +1063,14 @@ criterion, and whether or not to use
 bootstrapping. Example~\ref{ex:gridsearch}, \ref{ex:gridsearch2}, and
 \ref{ex:gridsearch3} illustrate how you can automatically assess which
 values you should choose.
+% WvA moved this from the caption as it is a bit long and messed up the html script
+Note that in R, not all parameters are ``tunable'' using standard \index{caret}\emph{caret}. Therefore, an exact replication of the grid searches in Example~\ref{ex:gridsearch} and Example~\ref{ex:gridsearch2} would requires either manual comparisons or writing a so-called caret extension.
 
 \pyrex[input=py, output=py,caption=A simple gridsearch in Python]{chapter08/gridsearch}
 
 \pyrex[input=py,output=py,caption=A gridsearch in Python using multiple CPUs]{chapter08/gridsearch2}
 
-\pyrex[input=r,output=r,caption={A gridsearch in R. Note that in R, not all parameters are ``tunable'' using standard \index{caret}\emph{caret}. Therefore, an exact replication of the grid searches in Example~\ref{ex:gridsearch} and Example~\ref{ex:gridsearch2} would requires either manual comparisons or writing a so-called caret extension.}]{chapter08/gridsearch3}
+\pyrex[input=r,output=r,caption={A gridsearch in R. }]{chapter08/gridsearch3}
 
 \begin{feature}
     Supervised machine learning is one of the areas where you really
@@ -1092,4 +1095,6 @@ values you should choose.
     solution for all your use cases in R as well, if supervised
     machine learning is at the core of your project, it may save you a
     lot of cursing to do this in Python.
+    Hopefully, the \pkg{tidymodels} package will provide a better solution for machine learning in R
+    in the near future.
 \end{feature}

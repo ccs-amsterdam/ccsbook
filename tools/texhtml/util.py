@@ -16,9 +16,13 @@ def read_tex(base: Path, fn: str):
     # drop hard spaces and \, spaces
     tex = tex.replace("\\ ", " ").replace("\\,", "")
     # change \'{a} into \'a
-    tex = re.sub(r"\\'\{(\w+)\}", "\\'\\1", tex)
+    tex = re.sub(r"\\('|\")\{(\w+)\}", "\\1\\2", tex)
     # change d$name into d__DOLLAR__name
-    tex = tex.replace("d$", "d__DOLLAR__").replace("df$", "df__DOLLAR__")
+    tex = re.sub(r"\b(df?)$(\w)", "\\1__DOLLAR__\\2", tex)
+    #tex = tex.replace(r"d$", "d__DOLLAR__").replace("df$", "df__DOLLAR__")
+    ## Change \mid into | to avoid pissing off texsoup
+    #tex = tex.replace(r"\\mid\b", "|")
+    #print(tex)
     root = TexSoup(tex)
     for node in root.all:
         if getattr(node, "name", None) == "input":
@@ -114,6 +118,8 @@ def clean_text(text: str) -> str:
 
 
 def thumbnail(img: Path, size=640) -> Path:
+    if img.suffix != ".png":
+        raise Exception("Sorry :(")
     outf = img.parent / f"{img.stem}_thumb{img.suffix}"
     if not outf.exists():
         im = Image.open(img)

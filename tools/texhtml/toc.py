@@ -18,6 +18,9 @@ class TOC:
                 inf = base / m.group(1) / m.group(2)
                 texf = inf.with_suffix(".tex")
                 for line in open(inf):
+                    # chance \"{i} into \"i because regex are context free grammars
+                    line = re.sub(r"\\('|\")\{(\w+)\}", "\\1\\2", line)
+
                     if m:=re.match(r"\\newlabel\{([^}]+)\}\{\{([^}]+)\}\{([^}]+)\}\{([^}]+)\}\{([^}]+)\}", line):
                         #\newlabel{chap:fundata}{{2}{21}{Getting started: Fun with data and visualizations}{chapter.2}{}}
                         name=m.group(1)
