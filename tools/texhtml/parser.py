@@ -1,8 +1,7 @@
-#TODO: saveverb in chapter 6
-#TODO: pageref in chapter 7
 #TODO: tikz figures in chapter 8
 #TODO: tables in chapter 9
-
+#TODO: figures in chapter 15
+1
 import base64
 import logging
 import re
@@ -19,6 +18,7 @@ from texhtml.util import optarg, arg, args, next_sibling
 from tools.texhtml.util import optargs, clean_text, thumbnail, text
 
 VERBS = []
+SAVED_VERBS = {}
 
 class CodexCell:
     def __init__(self, parser, type, caption, content):
@@ -31,7 +31,7 @@ class CodexCell:
         if self.type == "input":
             if neighbour and neighbour.type == "input":
                 if len(self.content) < len(neighbour.content):
-                    self.content += [''] * (len(neighbour.content) - len(self.content))
+                    self.content += [None] * (len(neighbour.content) - len(self.content))
             return self._code_block(self.caption, self.content)
         elif self.type == "plain":
             content = self.content.replace("<", "&lt;").replace(">", "&gt;")
@@ -45,7 +45,8 @@ class CodexCell:
         return ""
 
     def _code_block(self, caption, lines):
-        code = "\n".join(f"<code>{line}</code>" for line in lines)
+        code = "\n".join((f"<code>{line}</code>" if line is not None else "&nbsp;")
+                         for line in lines)
         code = f"<pre class='code'>{code}</pre>"
         return f"<div class='code-input'><div class='code-caption'>{caption}</div>\n{code}\n</div>"
     # input return
@@ -108,6 +109,8 @@ class Parser:
             if m := (re.match(r"\\verb\|([^|]+)\|", x) or re.match(r"\\verb\+([^+]+)\+", x)):
                 buffer.append(f"\\verbplaceholder{{{len(VERBS)}}}")
                 VERBS.append(m.group(1))
+            elif m := re.match(r"\\SaveVerb\{(\w+)\}\|([^|]+)\|", x):
+                print("????", m.groups())
             else:
                 buffer.append(x)
         tex = "".join(buffer)
@@ -117,8 +120,10 @@ class Parser:
         tex = tex.replace("\\ ", " ").replace("\\,", "")
         # change \'{a} into \'a
         tex = re.sub(r"\\('|\"|=)\{(\w+)\}", "\\1\\2", tex)
-        if isinstance(fn, str): fn = Path(fn)
-        open(f"/tmp/{fn.name}","w").write(tex)
+        # page references don't make sense. Also, we only have the one...
+        tex = tex.replace("on p.~\\pageref{feature:sparse}", "in \\refsec{workflow}")
+        #if isinstance(fn, str): fn = Path(fn)
+        #open(f"/tmp/{fn.name}","w").write(tex)
         root = TexSoup(tex)
         for node in root.all:
             if getattr(node, "name", None) == "input":
@@ -277,6 +282,9 @@ class Parser:
         print(self.nodes[0])
         raise Exception("Unprocessed verb")
 
+    def SaveVerb(self, node):
+        pass
+
     # def verb(self, node):
     #     # This is not parsed correctly by texsoup, so workaround
     #     verb, remainder = inline_verb(self.nodes)
@@ -375,6 +383,8 @@ class Parser:
         else:
             nr = self._toc.labels[ref]
             chap = int(nr.split(".")[0])
+            if ref.startswith("sec:") or ref.startswith("chap:"):
+                ref = nr.replace(".", "_")
             file = "" if chap == self._chapter else f"chapter{chap:02d}.html"
         if label:
             label = f"{label} "
@@ -426,7 +436,6 @@ class Parser:
         fn = arg(node)
         label = f"ex:{Path(fn).name}"
         opts = self.kwargs(node)
-        print(node)
         caption = opts.get('caption')
         nr = self._toc.labels[label]
         logging.debug(f"Processing pyrex {nr}: {caption}")
@@ -521,7 +530,7 @@ class Parser:
 
     # Figures
     def figure(self, node):
-        nodes = {n.name: n for n in node.all}
+        nodes = {n.name: n for n in node.children}
         if "feature" in nodes:
             # Not actually a figure, but a 'feature' that was supposed to be floating
             return self.feature(nodes["feature"])
@@ -548,10 +557,11 @@ class Parser:
         nodes = {n.name: n for n in node.all}
 
         caption, body, notes = args(nodes['caption'])
-        if not (m := re.match(r"\\label\{([^}]+)\}(.*)", caption)):
+        if not (m := re.match(r"(.*)\\label\{([^}]+)\}(.*)", caption)):
             raise Exception(f"Cannot parse table caption: {caption}")
-        ref, caption = m.groups()
-        table = parse(body + "}")
+        caption, ref, caption2 = m.groups()
+        caption = f"{caption}{caption2}"
+        table = parse(body)
         nr = self._toc.labels[ref]
         return f'''
                 <div class='figure'>

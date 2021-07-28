@@ -54,4 +54,8 @@ def parse_braces(line):
     return result
 
 if __name__ == '__main__':
-    TOC(Path.cwd())
+    x = TOC(Path.cwd())
+    for chapter in x.chapters:
+        print(chapter.nr, chapter.caption)
+        for sec in chapter.children:
+            print("", sec.nr, sec.caption)

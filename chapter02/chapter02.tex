@@ -32,7 +32,7 @@
 
 
 %\input{chapter02/fun}
-\section{Fun With Tweets}
+\section{Fun With Tweets}\label{sec:funtweets}
 
 The goal of this chapter is to showcase how you can use R or Python to quickly and easily
 run some impressive analyses of real world data.
@@ -72,7 +72,7 @@ See Chapter~\ref{chap:datawrangling} for an in-depth explanation of the aggregat
 
 \pyrex[caption=Barplot of tweets over time,input=both,output=r,format=png]{chapter02/funtime}
 
-\section{Fun With Textual Data}
+\section{Fun With Textual Data}\label{sec:funtext}
 
 \paragraph{Corpus Analysis} Next, we can analyze which hash tags are most frequently used in this dataset.
 Example~\ref{ex:funcloud} does this by creating a \index{document-term matrix}\emph{document-term matrix} using the package \index{quanteda}\emph{quanteda} (in R)
@@ -107,7 +107,7 @@ See \refsec{unsupervised} for more information about fitting, interpreting, and 
 
 \pyrex[caption=Topic Model of the COVID tags,input=both,output=r,format=table]{chapter02/funlda}
 
-\section{Fun With Visualizing Geographic Information}
+\section{Fun With Visualizing Geographic Information}\label{sec:fungeo}
 For the final set of examples, we will use the location information contained in the Twitter data.
 This information is based on what Twitter users enter into their profile, and as such it is incomplete and noisy
 with many users giving a nonsensical location such as `Ethereally here' or not filling in any location at all.
@@ -143,7 +143,7 @@ or compare Spanish tweets from different locations.
 
 % TODO CITE THIS FOR PYTHON EXAMPLE? Gallagher, R. J., Frank, M. R., Mitchell, Lewis, Schwartz, A. J., Reagan, A. J., Danforth, C. M., Dodds, P. S.. (2020). Generalized Word Shift Graphs: A Method for Visualizing and Explaining Pairwise Comparisons Between Texts. arXiv preprint 2008.02250.
 
-\section{Fun With Networks}
+\section{Fun With Networks}\label{sec:funnet}
 
 Twitter, of course, is a social network as well as a microblogging service:
 users are connected to other users because they follow each other and retweet and like each others' tweets.

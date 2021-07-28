@@ -52,7 +52,8 @@ Then, the URL column is dropped using the \index{tidyverse}\emph{tidyverse} func
 Notice that the result of these operations is assigned to the same object \texttt{d}.
 This means that the original \texttt{d} is overwritten.
 
-\note{In R, the \index{tidyverse}\emph{tidyverse} function \index{select}\texttt{select} is quite versatile.
+\begin{feature}
+  In R, the \index{tidyverse}\emph{tidyverse} function \index{select}\texttt{select} is quite versatile.
   You can specify multiple columns using \verb|select(d, column1, column2)|
   or by specifying a range of columns: \verb|select(d, column1:column3)|.
   Both commands keep only the specified columns.
@@ -61,7 +62,7 @@ This means that the original \texttt{d} is overwritten.
   Finally, you can rename columns in the select command as well:
   \verb|select(d, column1=col1, column2)| renames \texttt{col} to \texttt{column1},
   keeps that column and \texttt{column2},and drops all other columns.
-  }
+\end{feature}
 
 We then filter the dataset to list only the polls on whether teachers should be armed
 (you can understand this is close to our heart).
@@ -307,7 +308,9 @@ This is then used to compute the correlation between private and public capital,
 which shows that there is a weak but (just) significant negative correlation ($\rho=-.32, p=.04$)%
 \footnote{Of course, the fact that this is time series data means that the independence assumption of regular correlation is violated badly, so this should be interpreted as a descriptive statistic, e.g.\ in the years with high private capital there is low public capital and the other way around.}.
 
-\note{Next to \index{merge}\texttt{merge}, pandas data frames also have a method called \index{join}\texttt{join}. It is a simplified version for joining on indices (i.e., the row labels). If you have two data frames in which corresponding rows have the same row number, you can simply write \texttt{df1.join(df2)}. In short: both methods do the same, but merge provides more options, and join is easier if you want to join on the indices.}
+\begin{feature}
+  Next to \index{merge}\texttt{merge}, pandas data frames also have a method called \index{join}\texttt{join}. It is a simplified version for joining on indices (i.e., the row labels). If you have two data frames in which corresponding rows have the same row number, you can simply write \texttt{df1.join(df2)}. In short: both methods do the same, but merge provides more options, and join is easier if you want to join on the indices.
+\end{feature}
 
 
 

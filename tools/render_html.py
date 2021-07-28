@@ -24,6 +24,7 @@ template = get_template('chapter.html')
 
 #list(read_tex(base, "chapter08/test.tex"))
 #import sys; sys.exit()
+unknown = {}
 for chapnr, chapter in enumerate(toc.chapters, start=1):
     if args.chapters and chapnr not in args.chapters:
         continue
@@ -38,4 +39,8 @@ for chapnr, chapter in enumerate(toc.chapters, start=1):
     open(outf, "w").write(html)
 
     if parser.unknown_nodes:
-         logging.warning(f"Chapter {chapter.nr} Unknown nodes: {parser.unknown_nodes}")
+        unknown[chapter.nr] = parser.unknown_nodes
+
+if unknown:
+    for chapter, missing in unknown.items():
+        logging.warning(f"Chapter {chapter} Unknown nodes: {missing}")
