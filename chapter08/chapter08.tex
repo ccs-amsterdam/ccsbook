@@ -118,7 +118,7 @@ regression equation, why not use it to do some \textit{prediction}?
 
 We have just estimated that
 
-$\textrm{newspaperreading} = -0.0896 + 0.0676 \cdot \textrm{age} + 0.1767 \cdot \textrm{gender}$
+$$\textrm{newspaperreading} = -0.0896 + 0.0676 \cdot \textrm{age} + 0.1767 \cdot \textrm{gender}$$
 
 By just filling in the values for a 20 year old man, or a 40 year old
 woman, we can easily calculate the expected number of days such a
@@ -127,9 +127,9 @@ person reads the newspaper per week, \emph{even if no such person
 
 We learn that
 
-$\hat{y}_{man20} = -0.0896 + 0.0676 \cdot 20 + 1 \cdot 0.1767 = 1.4391$
+$$\hat{y}_{man20} = -0.0896 + 0.0676 \cdot 20 + 1 \cdot 0.1767 = 1.4391$$
 
-$\hat{y}_{woman40} = -0.0896 + 0.0676 \cdot 40 + 0 \cdot 0.1767 = 2.6144$
+$$\hat{y}_{woman40} = -0.0896 + 0.0676 \cdot 40 + 0 \cdot 0.1767 = 2.6144$$
 
 This was easy to do by hand, but of course, we could do this automatically for a large and essentially unlimited number of cases.
 This could be as simple as shown in Example~\ref{ex:olspredict}.
@@ -368,14 +368,14 @@ regularly violated, the Na\"ive Bayes classifier works reasonably well
 in practice.
 
 The Bayes part of the Na\"ive Bayes classifier comes from the fact
-that it uses Bayes' formula, $$ P(\rm{A} \mid \rm{B}) = \frac{P(\rm{B} \mid \rm{A}) \cdot P(\rm{A})}{P(\rm {B})} $$.
+that it uses Bayes' formula, $ P(\rm{A} \mid \rm{B}) = \frac{P(\rm{B} \mid \rm{A}) \cdot P(\rm{A})}{P(\rm {B})} $.
 
 As a short refresher: The $P(\rm{A} \mid \rm{B})$ can be read as: the
 probability of A, given B. Or: the probability of A if B is the
 case/present/true.  Applied to our problem, this means that we are
 interested in estimating the probability of an item having a label,
 given a set of features:
-$$ P(\rm{label} \mid \rm{features}) = \frac{P(\rm{features} \mid \rm{label}) \cdot P(\rm{label})}{P(\rm{features})} $$.
+$ P(\rm{label} \mid \rm{features}) = \frac{P(\rm{features} \mid \rm{label}) \cdot P(\rm{label})}{P(\rm{features})} $.
 
 P(label) can be easily calculated: it's just the fraction of all
 cases with the label we are interested in.  Because we assume that our
@@ -392,7 +392,7 @@ conditional probabilities and calculate the percentage of cases
 If we fill this in our formula, we get:
 
 
-$$ P(\rm{label} \mid \rm{features}) = \frac{P(x_1 \mid label) \cdot P(x_2 \mid \rm{label})\ \cdot P(x_3 \mid label) \cdot P(label)}{P(x_1) \cdot P(x_2) \cdot P(x_3)}$$.
+$$ P(\rm{label} \mid \rm{features}) = \frac{P(x_1 \mid label) \cdot P(x_2 \mid \rm{label})\ \cdot P(x_3 \mid label) \cdot P(label)}{P(x_1) \cdot P(x_2) \cdot P(x_3)}$$
 
 Remember that all we need to do to calculate this formula is: (1)
 count how many cases we have in total; (2) count how many cases
@@ -879,8 +879,8 @@ or a recall higher than some threshold you are willing to accept.
 If we build a classifier to distinguish spam messages from legitimate
 messages, we could ask the following questions:
 \begin{description}
-\item[Precision] Which percentage of what our classifier predicts to be
-  spam really is spam?
+\item[Precision]{Which percentage of what our classifier predicts to be
+  spam really is spam?}
 \item[Recall]{What percentage of all spam messages has our classifier
   found?}
 \item[Accuracy]{In which percentage of all cases was our classifier

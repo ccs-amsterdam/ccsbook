@@ -1,6 +1,7 @@
-#TODO: pageref in chapter 7
-#TODO: math and tikz figures in chapter 8
 #TODO: saveverb in chapter 6
+#TODO: pageref in chapter 7
+#TODO: tikz figures in chapter 8
+#TODO: tables in chapter 9
 
 import base64
 import logging
@@ -115,13 +116,9 @@ class Parser:
         # drop hard spaces and \, spaces
         tex = tex.replace("\\ ", " ").replace("\\,", "")
         # change \'{a} into \'a
-        tex = re.sub(r"\\('|\")\{(\w+)\}", "\\1\\2", tex)
-        # change d$name into d__DOLLAR__name
-        tex = re.sub(r"\b(df?)$(\w)", "\\1__DOLLAR__\\2", tex)
-        # tex = tex.replace(r"d$", "d__DOLLAR__").replace("df$", "df__DOLLAR__")
-        ## Change \mid into | to avoid pissing off texsoup
-        # tex = tex.replace(r"\\mid\b", "|")
-        open("/tmp/x.tex","w").write(tex)
+        tex = re.sub(r"\\('|\"|=)\{(\w+)\}", "\\1\\2", tex)
+        if isinstance(fn, str): fn = Path(fn)
+        open(f"/tmp/{fn.name}","w").write(tex)
         root = TexSoup(tex)
         for node in root.all:
             if getattr(node, "name", None) == "input":
@@ -151,6 +148,8 @@ class Parser:
             return self.math(node)
         elif node.name == "$$":
             return self.expression(node)
+        elif node.name == "cite*":
+            return self.citestar(node)
         elif hasattr(self, node.name):
             result = getattr(self, node.name)(node)
             return result
@@ -179,14 +178,20 @@ class Parser:
         return f"<b>{t}</b>"
 
     def math(self, node):
-        text = "".join(node.text)
-        return f"<code>{text}</code>"
+        mathjax = str(node).strip("$")
+        return f"\\({mathjax}\\)"
+        fn =  f"expr_{id(node)}.png"
+        sympy.preview(str(node), viewer='file', filename=self._img_folder / fn)
+        return f"<img src='img/{fn}' />"
+
 
     def expression(self, node):
+        mathjax = str(node).strip("$")
+        return f"<p>\\({mathjax}\\)</p>"
+
         fn =  f"expr_{id(node)}.png"
         sympy.preview(str(node), viewer='file', filename=self._img_folder / fn)
         return f"<div><img src='img/{fn}' /></div>"
-        #print(node.text)
 
     def url(self, node):
         text = "".join(node.text)
@@ -202,20 +207,23 @@ class Parser:
             pre, post = opt[0] + " ", opt[1] + " "
         else:
             pre, post = "", ""
-        inner = self.citet(node)
+        inner = self.citet(node, add_parentheses=False)
         return f"({pre}{inner}{post})"
-    def citet(self, node):
+    def citet(self, node, add_parentheses=True):
         refs = []
         for item in arg(node).split(","):
-            short, entries = self._bibliography[item]
+            short, entries = self._bibliography[item.strip()]
+            if add_parentheses:
+                short = re.sub(r", (\d\d\d\d)", " (\\1)", short)
             entry = " ".join(entries)
             html = f'<span class="cite" title="{entry}">{short}</span>'
             refs.append(html)
-        return ';'.join(refs)
-
+        return '; '.join(refs)
+    def citealp(self, node):
+        inner = self.citet(node, add_parentheses=False)
+        return inner
 
     def footnote(self, node):
-        print(">>> footnote")
         parser = Parser(self._base, self._chapter, self._toc, self._bibliography, self._out_folder, nodes=TexSoup(node.text).all)
         inner = parser.parse()
         if inner.startswith("http") and " " not in inner:
@@ -261,9 +269,13 @@ class Parser:
         return "..."
 
     def verbplaceholder(self, node):
-        print(args(node))
         n = int(arg(node))
-        return f"<code>{VERBS[n]}</code>"
+        verb = VERBS[n].replace("<", "&lt;")
+        return f"<code>{verb}</code>"
+
+    def verb(self, node):
+        print(self.nodes[0])
+        raise Exception("Unprocessed verb")
 
     # def verb(self, node):
     #     # This is not parsed correctly by texsoup, so workaround
@@ -289,9 +301,23 @@ class Parser:
     def itemize(self, node):
         items = "\n".join(f"  <li> {text(c)}" for c in node.children)
         return f"<ul>\n{items}\n</ul>"
+    def description(self, node):
+        items = []
+        for n in node.children:
+            label = process_math(optarg(n))
+            text = process_math(arg(n))
+            items.append(f"  <li><b>{label}.</b> {text}")
+        items = "\n".join(items)
+        return f"<ul>\n{items}\n</ul>"
     def enumerate(self, node):
         items = "\n".join(f"  <li> {text(c)}" for c in node.children)
         return f"<ol>\n{items}\n</ol>"
+
+    def textbackslash(self, node):
+        return "\\"
+
+    def textbar(self, node):
+        return "|"
 
     # Concepts
     def _concept(self, name: str):
@@ -315,14 +341,31 @@ class Parser:
         return f"<div class='objectives'><div class='caption'>Chapter objectives:</div><ul>{items}</ul></div>"
 
     def feature(self, node):
-        print(">>> feature")
-
         parser = Parser(self._base, self._chapter, self._toc, self._bibliography, self._out_folder, nodes=list(node.all))
         inner = parser.parse()
         return f"<div class='feature'>{inner}</div>"
 
     def keywords(self, node):
         return f"<div class='keywords'><span class='caption'>Keywords:</span> {node.text[0]}</div>"
+
+    def dirtree(self, node):
+        result = []
+        cur_depth = 0
+        for line in "".join(node.text).split("\n"):
+            if m := re.match(r"\.(\d+) (.*)\.", line):
+                item = f"<li>{clean_text(m.group(2))}"
+                depth = int(m.group(1))
+                if depth == (cur_depth + 1):
+                    result += ["<ul style='list-style-type: \"↪\"'>", item]
+                    cur_depth = depth
+                elif depth == (cur_depth - 1):
+                    result += ["</ul>", item]
+                    cur_depth = depth
+                else:
+                    result += [item]
+        result += ["</ul>"] * cur_depth
+
+        return "\n".join(result)
 
     # References
     def _ref(self, label, ref):
@@ -369,7 +412,7 @@ class Parser:
         return CodexCell(self, "input", caption, lines)
 
     def _code_output(self, fn, caption, format):
-        suffix = dict(plain=".out", png=".png", table=".table.html")[format]
+        suffix = dict(plain=".out", png=".png", table=".table.html", html=".html")[format]
         out_file = self._base / "snippets" / f"{fn}{suffix}"
         if format == "png":
             #png = out_file.open("rb").read()
@@ -383,6 +426,7 @@ class Parser:
         fn = arg(node)
         label = f"ex:{Path(fn).name}"
         opts = self.kwargs(node)
+        print(node)
         caption = opts.get('caption')
         nr = self._toc.labels[label]
         logging.debug(f"Processing pyrex {nr}: {caption}")
@@ -443,7 +487,6 @@ class Parser:
             if isinstance(child, str):
                 rows.append([child])
                 continue
-            #print(">>>", type(child), repr(child))
             if child.name == "doublecodex":
                 fn = arg(child)
                 py = self._code_input(f"{fn}.py", "Python code")
@@ -508,7 +551,6 @@ class Parser:
         if not (m := re.match(r"\\label\{([^}]+)\}(.*)", caption)):
             raise Exception(f"Cannot parse table caption: {caption}")
         ref, caption = m.groups()
-        print(">>> table")
         table = parse(body + "}")
         nr = self._toc.labels[ref]
         return f'''
@@ -581,17 +623,6 @@ def build_url(link, text=None):
         text = link.replace("https://", "").replace("http://", "")
     return f"<a href='{link}'>{text}</a>"
 
-def inline_verb(nodelist):
-    text = "".join(nodelist.pop(0).text)
-    verb_char = text[0]
-    text = text[1:]
-    if verb_char not in "+|":
-        raise ValueError(f"Unexpected verbatim input: {text}")
-    to = text.find(verb_char)
-    while to == -1:
-        n = nodelist.pop(0)
-        text += "".join(n.text)
-        to = text.find(verb_char)
-    verb_text = text[:to].replace("__DOLLAR__", "$")
-    remainder = text[(to + 1):]
-    return f"<code>{verb_text}</code>", remainder
+
+def process_math(text):
+    return re.sub("\$([^$]+)\$", "\\(\\1\\)", text)

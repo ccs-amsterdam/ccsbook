@@ -172,7 +172,7 @@ The format of the data is also slightly different, following the convention for 
 In R we use the data frame returned by \index{readtext}\texttt{readtext},
 which can read files from a folder or zip archive and return a data frame containing one text per row.
 In Python, we have separate lists for the train and test datasets and for the full texts and labels:
-\texttt{\small{X\_train}} are the training texts and \texttt{\small{y\_train}} are the corresponding labels.
+\verb|X_train| are the training texts and \verb|y_train| are the corresponding labels.
 
 \begin{ccsexample}
   \doublecodex{chapter11/reviewdata}
@@ -185,7 +185,7 @@ the file is downloaded from the Internet.
 In R, we then extract the file and call \index{readtext}\texttt{readtext} on the resulting folder.
 This automatically creates columns for the subfolders, so in this case for the dataset and label.
 After this, we remove the download file and the extracted folder,
-clean up the \texttt{\small{reviewdata}}, and save it to the \texttt{\small{reviewdata.rds}} file.
+clean up the \verb|reviewdata|, and save it to the \verb|reviewdata.rds| file.
 In Python, we can extract files from the downloaded file directly,
 so we do not need to explicitly extract it.
 We loop over all files in the archive, and use a regular expression to
@@ -417,10 +417,12 @@ before they are matched in such a way that only the features that are
 present in the training matrix are retained in the test matrix.
 
 
-\note{A word that is not present in the training data, but is present
+\begin{feature}
+  A word that is not present in the training data, but is present
   in the test data, is thus ignored. If you want to use the
   information such out-of-vocabulary words can entail (e.g., they may
-  be synonyms), you need to use a word embedding approach (see Section~\ref{sec:wordembeddings})}
+  be synonyms), you need to use a word embedding approach (see Section~\ref{sec:wordembeddings})
+\end{feature}
 
 We do not necessarily expect this first model to be the best
 classifier we can come up with, but it provides us with a reasonable
@@ -745,7 +747,8 @@ Thus, if a document already contains a number of words placed in a certain topic
 a new word is more likely to be placed in that topic as well.
 After enough iterations, this converges to a solution.
 
-\note{\textbf{The Dirichlet Distribution and its Hyperparameters}
+\begin{feature}
+  \textbf{The Dirichlet Distribution and its Hyperparameters}
   The Dirichlet distribution can be seen as a distribution over multinomial distributions,
   that is, every draw from a Dirichlet distribution results in a multinomial distribution.
   An easy way to visualize this is to see the Dirichlet distribution as a bag of dice.
@@ -773,7 +776,7 @@ After enough iterations, this converges to a solution.
 
   To get a more intuitive understanding of the effects of alpha,
   please see \url{http://cssbook.net/lda} for additional material and visualizations.
-  }
+\end{feature}
 
 \subsection{Fitting an LDA Model}
 
@@ -898,12 +901,12 @@ excel in bottom-up and explorative analyses (Section~\ref{sec:deciding}).
 
 This chapter focused on regular or ``vanilla'' LDA topic modeling.
 Since the seminal publication, however, a large amount of variations and extensions on LDA have been proposed.
-These include, for example, dynamic topic models (which incorporate time; \cite*{dynamiclda}),
-correlated topic models (which explicitly model correlation between topics; \cite{correlatedlda}).
+These include, for example, dynamic topic models (which incorporate time; \citealp{dynamiclda}),
+correlated topic models (which explicitly model correlation between topics; \citealp{correlatedlda}).
 Although it is beyond the scope of this book to describe these models in detail,
 the interested reader is encouraged to learn more about these models.
 
-Especially noteworthy are \index{Structural Topic Models}\emph{Structural Topic Models} (R package \index{stm}\emph{stm}; \cite*{stm}),
+Especially noteworthy are \index{Structural Topic Models}\emph{Structural Topic Models} (R package \index{stm}\emph{stm}; \citealp{stm}),
 which allow you to model covariates as topic or word predictors.
 This allows you, for example, to model topic shifts over time or
 different words for the same topic based on, e.g., Republican or Democrat presidents.

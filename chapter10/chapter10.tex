@@ -276,7 +276,7 @@ Many words, however, are not informative for many questions.
 This is especially apparent if you look at a \index{word cloud}\emph{word cloud},
 essentially a plot of the most frequent words in a  \index{corpus}\emph{corpus} (set of documents).
 
-\note{
+\begin{feature}
   \textbf{Vectors and a geometric interpretation of document-term matrices}
   We said that a document is represented by a ``vector'' of numbers, where each number (for a document-term matrix)
   is the frequency of a specific word in that document. This term is also seen in the name for the tokenizer \sklearn:
@@ -296,7 +296,8 @@ essentially a plot of the most frequent words in a  \index{corpus}\emph{corpus} 
   two documents are. Techniques that reduce the number of columns in the matrix (such as clustering or topic modeling)
   can then be seen as dimensionality reduction techniques since they turn the DTM into a matrix with lower dimensionality
   (while hopefully retaining as much of the relevant information as possible).
-  }\vspace{1em}
+\end{feature}
+\vspace{1em}
 
 More formally, a document-term matrix can be seen as a representation of data points about documents:
 each document (row) is represented as a vector containing any count per word (column).
@@ -407,14 +408,14 @@ Since both hyperlinks and HTML entities are split over multiple tokens, it would
 \end{ccsexample}
 
 Regular expressions are explained fully in Section~\ref{sec:regular}, so we will keep the explanation short:
-the bar \verb#|# splits the pattern in two parts, i.e.\ it will match if it finds either of the subpatterns.
-The first pattern looks for the literal text \verb#http#, followed by an optional \verb#s# and the sequence \verb#://#.
+the bar \verb+|+ splits the pattern in two parts, i.e.\ it will match if it finds either of the subpatterns.
+The first pattern looks for the literal text \verb+http+, followed by an optional \verb+s+ and the sequence \verb+://+.
 Then, it takes all non-whitespace characters it finds, i.e.\ the pattern ends at the next whitespace or end of the text.
-The second pattern looks for an ampersand (\verb#&#) followed by one or more letters (\verb#\\w+#), followed by a semicolon (\verb#;#).
-This matches HTML escapes like \verb#&amp;# for an ampersand.
+The second pattern looks for an ampersand (\verb+&+) followed by one or more letters (\verb|\\w+|), followed by a semicolon (\verb+;+).
+This matches HTML escapes like \verb+&amp;+ for an ampersand.
 
 In the next step, we process the tokenized text to remove every token that is either a stopword or does not start with a letter.
-In Python, this is done by using a list comprehension (\verb#[process(item) for item in list]#) for tokenizing each document; and a nested list comprehension for filtering each token in each document.
+In Python, this is done by using a list comprehension (\verb+[process(item) for item in list]+) for tokenizing each document; and a nested list comprehension for filtering each token in each document.
 In R this is not needed as the \index{tokens\_*}\texttt{tokens\_*} functions are \index{vectorized}\emph{vectorized}, that is, they directly run over all the tokens.
 
 Comparing R and Python, we see that the different tokenization functions mean that \verb|#trump| is removed in R (since it is a token that does not start with a letter),
@@ -433,7 +434,19 @@ In Python, you can see that we now have a nested list comprehension, where the o
 Next, we make a \verb|do_nothing| function for the vectorizer since the results are already tokenized.
 Note that we need to disable lowercasing as otherwise it will try to call \verb|.lower()| on the token lists.
 
-\note{\textbf{\index{lambda}\texttt{lambda} functions in Python.} Sometimes, we need to define a function that is very simple and that we need only once. An example for such a throwaway function is \texttt{\small{do\_nothing}} in Example~\ref{ex:tagcloud}. Instead of defining a reusable function with the \index{def}\texttt{def} keyword and then to call it by its name when we need it later, we can therefore also directly define an unnamed function when we need it with the \index{lambda}\texttt{lambda} keyword. The syntax is simple: \texttt{\small{lambda argument: returnvalue}}. A function that maps a value onto itself can therefore be written as \texttt{\small{lambda x: x}}. In Example~\ref{ex:tagcloud}, instead of defining a named function, we could therefore also simply write \texttt{\small{cv = CountVectorizer(tokenizer=lambda x: x, lowercase=False)}}. The advantages are that it saves you two lines of code here and  you don't clutter your environment with functions you do not intend to re-use anyway. The disadvantage is that it may be less clear what is happening, at least for people not familiar with lambda functions.}
+\begin{feature}
+  \textbf{\index{lambda}\texttt{lambda} functions in Python.}
+  Sometimes, we need to define a function that is very simple and that we need only once.
+  An example for such a throwaway function is \verb|do_nothing| in Example~\ref{ex:tagcloud}.
+  Instead of defining a reusable function with the \index{def}\texttt{def} keyword and then to call it by its name when we need it later,
+  we can therefore also directly define an unnamed function when we need it with the \index{lambda}\texttt{lambda} keyword.
+  The syntax is simple: \verb|lambda argument: returnvalue|.
+  A function that maps a value onto itself can therefore be written as \verb|lambda x: x|.
+  In Example~\ref{ex:tagcloud}, instead of defining a named function,
+  we could therefore also simply write \verb|v = CountVectorizer(tokenizer=lambda x: x, lowercase=False)|.
+  The advantages are that it saves you two lines of code here and  you don't clutter your environment with functions you do not intend to re-use anyway.
+  The disadvantage is that it may be less clear what is happening, at least for people not familiar with lambda functions.
+\end{feature}
 
 
 
@@ -576,8 +589,8 @@ Example~\ref{ex:colloc} shows how to identify the most ``surprising'' collocatio
 For Python, we use the \index{gensim}\emph{gensim} package which we will also use for topic modeling in Section~\ref{sec:unsupervised}.
 This package has a \index{Phrases}\texttt{Phrases} class which can identify the bigrams in a list of tokens.
 In R, we use the \index{textstat\_collocations}\texttt{textstat\_collocations} function from \index{quanteda}\emph{quanteda}.
-These packages each use a different implementation: \index{gensim}\emph{gensim} uses pointwise mutual information, i.e.\
-how much information about finding the second word does seeing the first word give you?
+These packages each use a different implementation: \index{gensim}\emph{gensim} uses pointwise mutual information,
+i.e.\ how much information about finding the second word does seeing the first word give you?
 Quanteda estimates an interaction parameter in a loglinear model.
 Nonetheless, both methods give very similar results, with Saddam Hussein, the Iron Curtain, Al Qaida, and red tape topping the list for each.
 

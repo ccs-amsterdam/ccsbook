@@ -18,17 +18,18 @@ def arg(node):
 def args(node):
     if node is None:
         raise TypeError("?")
-    return [str(x).strip("{}") for x in node.args if isinstance(x, BraceGroup)]
+    return [re.sub(r"^{|}$", "", str(x)) for x in node.args if isinstance(x, BraceGroup)]
 
 def optarg(node, default=None):
-    opts = [str(x).strip("[]") for x in node.args if isinstance(x, BracketGroup)]
+    opts = optargs(node)
     if opts:
         return opts[0]
     else:
         return default
 
 def optargs(node):
-    return [str(x).strip("[]") for x in node.args if isinstance(x, BracketGroup)]
+    return [re.sub(r"^\[|\]$", "", str(x)) for x in node.args if isinstance(x, BracketGroup)]
+
 
 def next_sibling(node):
     # The texsoup API doesn't really collaborate on this one...
@@ -56,7 +57,6 @@ SUBS = {
     "\\}": "}",
     "\\%": "%",
     "\\_": "_",
-    "__DOLLAR__": "$",
     "\\$": "$",
 }
 
@@ -77,6 +77,7 @@ ACCENTS = {
     '\\`u': "ù",
     '\\`e': "è",
     '\\"o': "ò",
+    '\\=o': 'ō',
 }
 
 def clean_text(text: str) -> str:
@@ -86,8 +87,9 @@ def clean_text(text: str) -> str:
         text = text.replace(k, v).replace(k.upper(), v.upper())
     # For some weird reason, \index(x)\emph(x) was not processed in capter 6 :(
     text = re.sub(r"\\index\{([^}]+)\}", "", text)
-    text = re.sub(r"\\(emph|texttt)\{([^}]+)\}", "\\2", text)
+    text = re.sub(r"\\(emph|texttt|small)\{([^}]+)\}", "\\2", text)
     text = re.sub(r"\\(verb)\|([^|]+)\|", "\\2", text)
+
     if "\\" in text:
         raise Exception(f"Unknown accent: {repr(text)}")
     return text

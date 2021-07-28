@@ -49,14 +49,16 @@ The next chapter will focus on text as words and shows how you can represent tex
 
 \section{Text as a String of Characters} \label{sec:unicode}
 
-\note{\textbf{Important: Unicode and Encodings}
+\begin{feature}
+  \textbf{Important: Unicode and Encodings}
   Technically speaking, text is represented as bytes (numbers) rather than characters.
   The  Unicode standard determines how these bytes should be interpreted or ``decoded''.
   This chapter assumes that the bytes in a file are already ``decoded'' into characters (or Unicode code points),
   and we can just work with the characters.
   Especially if you are not working with English text, it is very important to make sure you understand Unicode and encodings
   and check that the texts you work with are decoded properly.
-  Please see Section~\ref{sec:encodings} for more information on how this works.}
+  Please see Section~\ref{sec:encodings} for more information on how this works.
+\end{feature}
 
 When we think about text, we might think sentences or words, but the computer only ``thinks'' about letters:
 text is represented internally as a string of characters.
@@ -87,7 +89,7 @@ you either need to use one of Panda's methods shown below or use a \index{for lo
 
 \subsection{Methods for Dealing With Text}
 
-\note{\textbf{Stringi, stringr, and base string operations in R}
+\begin{feature}\textbf{Stringi, stringr, and base string operations in R}
   As is so often the case, R has multiple packages that partially replicate functionality for basic text handling.
   In this book we will mainly use the \index{stringr}\emph{stringr} package, which is part of \index{tidyverse}\emph{tidyverse}.
   This is not because that package is necessarily better or easier than the alternative \index{stringi}\emph{stringi} package
@@ -96,7 +98,7 @@ you either need to use one of Panda's methods shown below or use a \index{for lo
   so for now it is easiest to stick to \index{stringr}\emph{stringr}.
   In particular, \index{stringr}\emph{stringr} is very similar to \index{stringi}\emph{stringi} (and in fact is partially based on it).
   So, to give one example, the function \index{str\_detect}\texttt{str\_detect} is more or less the same as \index{stringi::str\_detect}\texttt{stringi::str\_detect} and \index{base::grepl}\texttt{base::grepl}.
-}
+\end{feature}
 
 The first thing to keep in mind is that once you load any text on R or Python you usually store this content as a \emph{character} or \emph{string} object (you may also often use \emph{lists} or \emph{dictionaries}, but they will have strings inside then), which means that basic operations and conditions of this data type apply, such as indexing or slicing to access individual characters or substrings (see Section~\ref{sec:datatypes}). In fact, base strings operations are very powerful to clean your text and eliminate a large amount of noise.  Table~\ref{tab:stringoperations} summarizes some useful operations on strings in R and Python that will help you in this stage.
 
@@ -123,7 +125,7 @@ text that contains HTML tags or boilerplate and natural upper/lower
 case letters.
 Using the \index{stringr}\emph{stringr} function \index{str\_replace\_all}\texttt{str\_replace\_all} in R
 and \index{replace}\texttt{replace} in Python we can do a find-and-replace and replace substrings
-by others (in our case, replace \texttt{<b>} with a space, for instance).
+by others (in our case, replace \verb|<b>| with a space, for instance).
 To remove unnecessary double spaces we apply the \index{str\_squish}\texttt{str\_squish} function provided by \index{stringr}\emph{stringr} and in Python,
 we first chunk our string into a list of words by using the \index{split}\texttt{split} string method, before we use the \index{join}\texttt{join} method
 to join them again with now a single space.
@@ -139,8 +141,11 @@ For instance, you probably do not want to list \emph{all possible} HTML tags in 
 
 \pyrex[output=both,caption=Some basic text cleaning approaches]{chapter09/clean}
 
-\note{\textbf{To regex or not to regex in Python} You may wonder why we introduce basic string methods like \index{replace}\texttt{replace} or the \index{split}\texttt{split}-then-\index{join}\texttt{join} trick, if everything can be done with regular expressions anyway. There are a couple of reasons for still using these methods: first, they are easy and don't have any dependencies. If you just want to replace a single thing, then you don't need to import any additional module. Second, regular expressions are considerably slower than string methods -- in most cases, you won't notice, but if you do a lot of replacements (think in thousands per news article, for a million  articles), then this may matter. Third, you can use the \index{join}\texttt{join} trick also for other things like punctuation removal -- in this case, by generating a list of all characters in a string called \verb|text| provided they are no punctuation characters, and then joining them directly to each other:
-\verb|from string import punctuation; "".join([c for c in text if c not in punctuation])|}
+\begin{feature}
+  \textbf{To regex or not to regex in Python}
+  You may wonder why we introduce basic string methods like \index{replace}\texttt{replace} or the \index{split}\texttt{split}-then-\index{join}\texttt{join} trick, if everything can be done with regular expressions anyway. There are a couple of reasons for still using these methods: first, they are easy and don't have any dependencies. If you just want to replace a single thing, then you don't need to import any additional module. Second, regular expressions are considerably slower than string methods -- in most cases, you won't notice, but if you do a lot of replacements (think in thousands per news article, for a million  articles), then this may matter. Third, you can use the \index{join}\texttt{join} trick also for other things like punctuation removal -- in this case, by generating a list of all characters in a string called \verb|text| provided they are no punctuation characters, and then joining them directly to each other:
+\verb|from string import punctuation; "".join([c for c in text if c not in punctuation])|
+  \end{feature}
 
 
 %\input{chapter09/regular}
@@ -183,7 +188,7 @@ For example, \verb|a+| means one or more a's while \verb|a?| means zero or one a
 and \verb|lo?l| matches `lol' or `ll'.
 This raises the question, of course, of how to look for actual occurrences of a plus, question mark, or period.
 The solution is to \index{escape}\emph{escape} these special symbols by placing a backslash (\verb|\|) before them:
-\verb|a\+| matches the literal text ``a+'', and \verb|\\w| (with a double backslash) matches the literal text ``\textbackslash w''.
+\verb|a\+| matches the literal text ``a+'', and \verb|\\w| (with a double backslash) matches the literal text ``\textbackslash{}w''.
 
 Now, we can have another look at the example emails address pattern given above.
 The first part, \verb|[\w\.-]| creates a character class containing word characters, (literal) periods, and dashes.
@@ -199,7 +204,7 @@ However, it will take some practice to get comfortable with turning something se
 The next subsection will explain regular expression syntax in more detail, followed by an explanation of grouping,
 and in the final subsection we will see how to use these regular expressions in R and Python to do text cleaning.
 
-\newcommand{\fnregexnote}{\footnote{Note that this is not a full review of everything that is possible with regular expressions, but this includes the most used options and should be enough for the majority of cases. Moreover, if you descend into the more specialized aspects of regular expressions (with beautiful names such as ``negative lookbehind assertions'') you will also run into differences between Python, R, and other languages, while the features used in this chapter should function in most implementations you come across unless specifically noted.}}
+
 
 
 
@@ -259,7 +264,9 @@ and in the final subsection we will see how to use these regular expressions in 
 \end{table}
 
 
-In Table~\ref{tab:regex} you will find an overview of the most important parts of regular expression syntax.\fnregexnote
+In Table~\ref{tab:regex} you will find an overview of the most important parts of regular expression syntax.\footnote{
+  Note that this is not a full review of everything that is possible with regular expressions, but this includes the most used options and should be enough for the majority of cases. Moreover, if you descend into the more specialized aspects of regular expressions (with beautiful names such as ``negative lookbehind assertions'') you will also run into differences between Python, R, and other languages, while the features used in this chapter should function in most implementations you come across unless specifically noted.
+}
  The first part shows a number of common specifiers for determining what to match, e.g.\ letters, digits, etc.,
 followed by the quantifiers available to determine how often something should be matched.
 These quantifiers always follow a specifier, i.e.\ you first say what you're looking for, and then how many of those you need.
@@ -382,7 +389,7 @@ identifying matching texts, removing and replacing all matching text, extracting
 For R, we again use the functions from the \index{stringr}\emph{stringr} package.
 For Python, you can use either the \index{re}\emph{re} or \index{regex}\emph{regex} package,
 which both support the same functions and syntax so you can just import one or the other.
-The \index{re}\emph{re} package is more common, but does not support Unicode character properties (\verb!\p!).
+The \index{re}\emph{re} package is more common, but does not support Unicode character properties (\verb|\p|).
 We also list the corresponding commands for \index{pandas}\emph{pandas}, which are run on a whole column instead of a single text
 (but note that \index{pandas}\emph{pandas}\ does not support Unicode character properties.)
 
@@ -392,7 +399,8 @@ special characters which are also escaped. In Python, you can create a \index{ra
 \verb|r"\d+"| creates the regular expression pattern \verb|\d|.
 From version 4.0 (released in spring 2020), R has a similar construct: \verb|r"(\d+)"|. In R, the parentheses are part of the string delimiters, but you can use more parentheses within the string without a problem.
 The only thing you cannot include in a string is the closing sequence \verb|)"|, but as you are also allowed to use square or curly brackets instead of parentheses and single instead of double quotes to delimit the raw string you can generally avoid this problem:
-to create the pattern \verb!"(cat|dog)"! (i.e.\ cat or dog enclosed in quotation marks), you can use \verb!r"{"(cat|dog)"}"! or \verb!r'("(cat|dog)")'! (or even more legible: \verb!r'{"(cat|dog)"}'!).
+to create the pattern \verb+"(cat|dog)"+ (i.e.\ cat or dog enclosed in quotation marks), you can use \verb+r"{"(cat|dog)"}"+ or \verb+r'("(cat|dog)")'+
+(or even more legible: \verb+r'{"(cat|dog)"}'+).
 
 Unfortunately, in earlier versions of R (and in any case if you don't use raw strings), you need to escape special characters twice:
 first for the regular expression, and then for R. So, the pattern \verb|\d| becomes \verb|"\\d+"|. To match a literal backslash you would use the pattern \verb|\\|,
@@ -455,9 +463,9 @@ In the example, that would mean that each tweet is now represented by multiple r
 namely one for each hash tag.
 Example~\ref{ex:splitlong} shows how this can be achieved in both R and {\bf Both Pandas and pandas are used, please confirm which is correct} pandas.
 One thing to note is that in pandas,
-\verb!t.str.extractall! automatically returns the desired long format,
+\verb|t.str.extractall| automatically returns the desired long format,
 but it is essential that the index of the data frame actually contains the identifier (in this case, the tweet (status) id).
-\verb!t.str.split!, however, returns a data frame with a column containing lists,
+\verb|t.str.split|, however, returns a data frame with a column containing lists,
 similar to how both R functions return a list containing character vectors.
 We can normalize this to a long data frame using \index{t.explode}\texttt{t.explode} (pandas) and \index{pivot\_longer}\texttt{pivot\_longer} (R).
 After this, we can use all regular data frame operations, for example to join and summarize the data.
