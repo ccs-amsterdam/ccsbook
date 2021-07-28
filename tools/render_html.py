@@ -6,7 +6,7 @@ from jinja2 import Template
 
 from texhtml.parser import Parser, UnknownNode
 from texhtml.toc import TOC
-from texhtml.util import read_tex, get_template
+from texhtml.util import get_template
 from tools.readbbl import read_bbl
 
 logging.basicConfig(level=logging.DEBUG, format='[%(asctime)s %(name)-12s %(levelname)-5s] %(message)s')
@@ -29,8 +29,8 @@ for chapnr, chapter in enumerate(toc.chapters, start=1):
         continue
     outf = out / chapter.fn
     print(f"{chapter.nr}: {chapter.texfile} -> {outf}")
-    nodes = list(read_tex(base, chapter.texfile))
-    parser = Parser(nodes, base, chapnr, toc, bibliography, out)
+    parser = Parser(base, chapnr, toc, bibliography, out)
+    parser.read_nodes(chapter.texfile)
     content = parser.parse()
 
     current_chapter = chapter.fn

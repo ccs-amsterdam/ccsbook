@@ -77,9 +77,10 @@ As a simple example, the figure at the top of Example~\ref{ex:text} shows how th
 This text is split info separate characters, with each character representing a letter (or space,  punctuation, emoji, or Chinese character).
 These characters are indexed starting from the first one, with (as always) R counting from one, but Python counting from zero.
 
-In Python, texts are represented as \index{str}\texttt{str} (string) objects, in which we can directly address the individual characters by their position: \texttt{\small{text[0]}} is the first character of \texttt{\small{text}}, and so on.
+In Python, texts are represented as \index{str}\texttt{str} (string) objects, in which we can directly address the individual characters by their position:
+\verb|text[0]| is the first character of \verb|text|, and so on.
 In R, however, texts (like all objects) represent columns (or vectors) rather than individual values.
-Thus, \texttt{\small{text[1]}} in R is the first text in a series of text.
+Thus, \verb|text[1]| in R is the first text in a series of text.
 To access individual characters in a text, you have to use a function such as \index{str\_length}\texttt{str\_length} and \index{str\_sub}\texttt{str\_sub} that will be discussed in more detail below.
 This also means that in Python, if you have a column (or list) of strings that you need to apply an operation to,
 you either need to use one of Panda's methods shown below or use a \index{for loop}\emph{for loop} or \index{list comprehension}\emph{list comprehension} to iterate over all the strings.
@@ -273,14 +274,14 @@ The third section discusses other constructs.
 First, by default a quantifier applies to the letter directly before it, so \verb|no+| matches ``no'', ``nooo'', etc.
 If you group a number of characters you can apply a quantifier to the group. So, \verb|that's (not)? good| matches either ``that's not good'' or 	``that's good''.
 Second, when using a vertical bar (\textbar) to have multiple options, you very often want to put them into a group so you can use it as part of a larger pattern.
-For example, \verb!a (great|fantastic)? victory! matches either ``a victory'', ``a great victory'', or ``a fantastic victory''.
+For example, \verb+a (great|fantastic)? victory+ matches either ``a victory'', ``a great victory'', or ``a fantastic victory''.
 Third, as will be discussed below in Section~\ref{sec:regextract}, you can use groups to capture (extract) a specific part of a string, e.g.\ to get only the domain part of a web address.
 
 The other important construct are \index{character classes}\emph{character classes}, formed using square brackets \verb|[]|.
 Within a character class, you can specify a number of different characters that you want to match, using a dash (\verb|-|) to indicate a range.
 You can add as many characters as you want: \verb|[A-F0-9]| matches digits and capital letters A through F.
 You can also invert this selection using an initial caret: \verb|[^a-z]| matches everything except for lowercase Latin letters.
-Finally, you sometimes need to match a control character  (e.g.\ \verb!+!, \verb|?|, \verb|\|). Since those characters have a special meaning within a regular expressing, they cannot be used directly. The solution is to add a backslash (\verb|\|) behind them to \index{escape}\emph{escape} them:
+Finally, you sometimes need to match a control character  (e.g.\ \verb|+|, \verb|?|, \verb|\|). Since those characters have a special meaning within a regular expressing, they cannot be used directly. The solution is to add a backslash (\verb|\|) behind them to \index{escape}\emph{escape} them:
 \verb|.| matches any character, but \verb|\.| matches an actual period. \verb|\\| matches an actual backslash.
 
 \subsection{Example Patterns}
@@ -320,7 +321,7 @@ Next, Dutch postal codes are simply four numbers followed by two letters, and we
 Similarly simple, dates in ISO format are three groups of numbers separated by dashes.
 German dates follow a different order, use periods as separator, and allow for single-digit day and month numbers.
 Note that these patterns do not check for the validity of dates.
-A simple addition would be to restrict months to 01-12, e.g.\ using \verb!(0[1-9]|1[0-2])!.
+A simple addition would be to restrict months to 01-12, e.g.\ using \verb+(0[1-9]|1[0-2])+.
 However, in general validation is better left to specialized libraries, as properly validating the day number would require taking the month (and leap years) into account.
 
 A slightly more complicated pattern is the one given for international phone numbers.
@@ -331,7 +332,7 @@ This allows dashes and spaces at any position except the start and end, but does
 It also makes sure that there are at least eight numbers regardless of how many dashes or spaces there are.
 
 The final four examples are patterns for common notations found online.
-For URLs, we look for \texttt{\small{http://}} or \texttt{\small{https://}} and take everything until the next space or end of the string.
+For URLs, we look for \verb|http://| or \verb|https://| and take everything until the next space or end of the string.
 For email addresses, we define a character class for letters, periods, or dashes and look for it before and after the at sign.
 Then, there needs to be at least one period and a top level domain containing only letters.
 Note that the dash within the character class does not need to be escaped because it is the final character in the class, so it cannot form a range.

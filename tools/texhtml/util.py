@@ -7,31 +7,7 @@ from TexSoup import TexSoup
 from TexSoup.data import BraceGroup, BracketGroup
 from jinja2 import Environment, PackageLoader, select_autoescape
 
-def read_tex(base: Path, fn: str):
-    logging.info(f"Parsing {base / fn}")
-    tex = open(base / fn).read()
-    # Workarounds to deal (mostly) with imperfect texsoup parsing
-    # Remove comments
-    tex = re.sub(r"^\%.*$", "", tex, flags=re.MULTILINE)
-    # drop hard spaces and \, spaces
-    tex = tex.replace("\\ ", " ").replace("\\,", "")
-    # change \'{a} into \'a
-    tex = re.sub(r"\\('|\")\{(\w+)\}", "\\1\\2", tex)
-    # change d$name into d__DOLLAR__name
-    tex = re.sub(r"\b(df?)$(\w)", "\\1__DOLLAR__\\2", tex)
-    #tex = tex.replace(r"d$", "d__DOLLAR__").replace("df$", "df__DOLLAR__")
-    ## Change \mid into | to avoid pissing off texsoup
-    #tex = tex.replace(r"\\mid\b", "|")
-    #print(tex)
-    root = TexSoup(tex)
-    for node in root.all:
-        if getattr(node, "name", None) == "input":
-            fn2 = str(node.args[0]).strip("{}")
-            if not fn2.endswith(".tex"):
-                fn2 = f"{fn2}.tex"
-            yield from read_tex(base, fn2)
-        else:
-            yield node
+
 
 
 

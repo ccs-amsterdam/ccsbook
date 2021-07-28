@@ -1,11 +1,13 @@
 #TODO: pageref in chapter 7
 #TODO: math and tikz figures in chapter 8
+#TODO: saveverb in chapter 6
 
 import base64
 import logging
 import re
 import shutil
 from pathlib import Path
+from typing import Type
 
 import sympy
 from TexSoup import TexSoup
@@ -15,6 +17,7 @@ from texhtml.util import optarg, arg, args, next_sibling
 
 from tools.texhtml.util import optargs, clean_text, thumbnail, text
 
+VERBS = []
 
 class CodexCell:
     def __init__(self, parser, type, caption, content):
@@ -77,8 +80,8 @@ class UnknownNode(Exception):
 NODE = None
 
 class Parser:
-    def __init__(self, nodes, base: Path, chapter: int,  toc: TOC, bibliography: dict, out_folder: Path):
-        self.nodes = nodes
+    def __init__(self, base: Path, chapter: int,  toc: TOC, bibliography: dict, out_folder: Path, nodes=None):
+        self.nodes = [] if nodes is None else nodes
         self._base = base
         self._toc = toc
         self._chapter = chapter
@@ -92,6 +95,43 @@ class Parser:
 
     def _o(self, text):
         self.buffer.append(text)
+
+    def read_nodes(self, fn: str):
+        global VERBS
+        logging.info(f"Parsing {self._base / fn}")
+        tex = open(self._base / fn).read()
+        # Workarounds to deal (mostly) with imperfect texsoup parsing
+        # store verbs and replace with placeholder command
+        buffer = []
+        for x in re.split(r"(\\verb\|[^|]+\||\\verb\+[^+]+\+)", tex):
+            if m := (re.match(r"\\verb\|([^|]+)\|", x) or re.match(r"\\verb\+([^+]+)\+", x)):
+                buffer.append(f"\\verbplaceholder{{{len(VERBS)}}}")
+                VERBS.append(m.group(1))
+            else:
+                buffer.append(x)
+        tex = "".join(buffer)
+        # Remove comments
+        tex = re.sub(r"^\%.*$", "", tex, flags=re.MULTILINE)
+        # drop hard spaces and \, spaces
+        tex = tex.replace("\\ ", " ").replace("\\,", "")
+        # change \'{a} into \'a
+        tex = re.sub(r"\\('|\")\{(\w+)\}", "\\1\\2", tex)
+        # change d$name into d__DOLLAR__name
+        tex = re.sub(r"\b(df?)$(\w)", "\\1__DOLLAR__\\2", tex)
+        # tex = tex.replace(r"d$", "d__DOLLAR__").replace("df$", "df__DOLLAR__")
+        ## Change \mid into | to avoid pissing off texsoup
+        # tex = tex.replace(r"\\mid\b", "|")
+        open("/tmp/x.tex","w").write(tex)
+        root = TexSoup(tex)
+        for node in root.all:
+            if getattr(node, "name", None) == "input":
+                fn2 = str(node.args[0]).strip("{}")
+                if not fn2.endswith(".tex"):
+                    fn2 = f"{fn2}.tex"
+                self.read_nodes(fn2)
+            else:
+                self.nodes.append(node)
+
 
     def parse(self):
         buffer = []
@@ -116,11 +156,6 @@ class Parser:
             return result
         else:
             self.unknown_nodes.add(node.name)
-
-    def get_html(self):
-        if self.in_verb:
-            raise Exception("Still in verb")
-        return "\n".join(self.buffer)
 
     def text(self, texts = None):
         if texts and not isinstance(texts, list): raise Exception(repr(texts))
@@ -180,8 +215,8 @@ class Parser:
 
 
     def footnote(self, node):
-        nodes = TexSoup(node.text).all
-        parser = Parser(nodes, self._base, self._chapter, self._toc, self._bibliography, self._out_folder)
+        print(">>> footnote")
+        parser = Parser(self._base, self._chapter, self._toc, self._bibliography, self._out_folder, nodes=TexSoup(node.text).all)
         inner = parser.parse()
         if inner.startswith("http") and " " not in inner:
             inner = build_url(inner)
@@ -225,11 +260,16 @@ class Parser:
     def ldots(self, node):
         return "..."
 
-    def verb(self, node):
-        # This is not parsed correctly by texsoup, so workaround
-        verb, remainder = inline_verb(self.nodes)
-        text = self.text([remainder])
-        return f"{verb}\n\n{text}"
+    def verbplaceholder(self, node):
+        print(args(node))
+        n = int(arg(node))
+        return f"<code>{VERBS[n]}</code>"
+
+    # def verb(self, node):
+    #     # This is not parsed correctly by texsoup, so workaround
+    #     verb, remainder = inline_verb(self.nodes)
+    #     text = self.text([remainder])
+    #     return f"{verb}\n\n{text}"
 
     def newpage(self, node):
         return
@@ -268,7 +308,6 @@ class Parser:
     def abstract(self, node):
         caption = arg(node)
         text = node.text[1]
-        print(node.text)
         return f"<div class='abstract'><span class='caption'>{caption}</span> {text}</div>"
 
     def objectives(self, node):
@@ -276,7 +315,9 @@ class Parser:
         return f"<div class='objectives'><div class='caption'>Chapter objectives:</div><ul>{items}</ul></div>"
 
     def feature(self, node):
-        parser = Parser(list(node.all), self._base, self._chapter, self._toc, self._bibliography, self._out_folder)
+        print(">>> feature")
+
+        parser = Parser(self._base, self._chapter, self._toc, self._bibliography, self._out_folder, nodes=list(node.all))
         inner = parser.parse()
         return f"<div class='feature'>{inner}</div>"
 
@@ -339,7 +380,6 @@ class Parser:
         return CodexCell(self, format, caption, result)
 
     def pyrex(self, node):
-        print("!!!", node)
         fn = arg(node)
         label = f"ex:{Path(fn).name}"
         opts = self.kwargs(node)
@@ -468,6 +508,7 @@ class Parser:
         if not (m := re.match(r"\\label\{([^}]+)\}(.*)", caption)):
             raise Exception(f"Cannot parse table caption: {caption}")
         ref, caption = m.groups()
+        print(">>> table")
         table = parse(body + "}")
         nr = self._toc.labels[ref]
         return f'''
@@ -496,10 +537,9 @@ class Parser:
                         if x and not re.match("\([lr]+\)", x):
                             target[-1][-1] += x
             else:
-                if n.name == "verb":
-                    verb, remainder = inline_verb(nodes)
-                    target[-1][-1] += verb
-                    nodes.insert(0, remainder)
+                if n.name == "verbplaceholder":
+                    verb = VERBS[int(arg(n))]
+                    target[-1][-1] += f"<code>{verb}</code>"
                 elif n.name == "midrule":
                     target = body
                 elif n.name == "multicolumn":
@@ -533,8 +573,7 @@ class Parser:
 
 
 def parse(tex: str):
-    nodes = TexSoup(tex).all
-    parser = Parser(nodes, None, None, None, None, None)
+    parser = Parser(None, None, None, None, None, nodes=TexSoup(tex).all)
     return parser.parse()
 
 def build_url(link, text=None):
