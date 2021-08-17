@@ -58,6 +58,8 @@ SUBS = {
     "\\%": "%",
     "\\_": "_",
     "\\$": "$",
+    "\\cdot": "·",
+    "\\times": "×",
 }
 
 ACCENTS = {
@@ -76,11 +78,11 @@ ACCENTS = {
     '\\`i': "ì",
     '\\`u': "ù",
     '\\`e': "è",
-    '\\"o': "ò",
     '\\=o': 'ō',
 }
 
 def clean_text(text: str) -> str:
+    text = re.sub(r"(?<!\\)\$(.*?)\$", "<em>\\1</em>", text)
     for k,v in SUBS.items():
         text = text.replace(k, v)
     for k,v in ACCENTS.items():
@@ -89,7 +91,7 @@ def clean_text(text: str) -> str:
     text = re.sub(r"\\index\{([^}]+)\}", "", text)
     text = re.sub(r"\\(emph|texttt|small)\{([^}]+)\}", "\\2", text)
     text = re.sub(r"\\(verb)\|([^|]+)\|", "\\2", text)
-
+    text = re.sub(r"(https?://)(.*?)( |$)", "<a href='\\1\\2'>\\2</a>", text)
     if "\\" in text:
         raise Exception(f"Unknown accent: {repr(text)}")
     return text

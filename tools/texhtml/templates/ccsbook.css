@@ -1,0 +1,213 @@
+.concept {
+    font-family: monospace;
+    color: red
+}
+
+.verbatim {
+    font-family: monospace;
+    color: blue
+}
+
+.code-example {
+    border: 1px solid grey;
+    padding: 1em;
+    border-radius: .5em;
+}
+
+.cite:hover {
+    color: darkblue;
+}
+
+a.note {
+    color: darkblue;
+}
+
+a.note:hover {
+    cursor: pointer
+}
+
+a.anchor {
+    visibility: visible;
+    color: grey;
+    text-decoration: none;
+}
+
+#sidebar a {
+    text-decoration: none;
+    word-wrap: break-word;
+}
+
+.toc-chapter-current {
+
+    border: 1px solid grey;
+    border-radius: .2em;
+}
+
+/********* Code examples *******/
+
+pre.output {
+    max-height: 20ch;
+}
+
+.code-row-double pre {
+    width: 55ch;
+    max-width: 100%;
+    overflow: scroll;
+    white-space: pre-wrap;
+    font-size: x-small;
+}
+
+.code-single pre {
+    max-width: 100%;
+    overflow: scroll;
+    white-space: pre-wrap;
+}
+
+@media (min-width: 992px) {
+    .code-row-double pre {
+        font-size: small !important;
+    }
+}
+
+pre.code {
+    border-top: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+}
+
+pre.code:before {
+    counter-reset: listing;
+}
+
+pre.code code {
+    counter-increment: listing;
+}
+
+pre.code code::before {
+    content: counter(listing) ". ";
+    display: inline-block;
+    width: 2em; /* now works */
+    padding-left: auto; /* now works */
+    margin-left: auto; /* now works */
+    text-align: right; /* now works */
+    color: grey;
+}
+
+.code-example .table-wrapper {
+    overflow-x: auto;
+    width: 100%;
+}
+
+.code-example table {
+    font-size: small;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+    caption-side: top;
+
+}
+
+.code-example thead {
+    border-bottom: 1px solid black;
+}
+
+.code-example img {
+    max-width: 100%;
+}
+
+.code-row-double {
+        width: 100%;
+    }
+
+@media (min-width: 768px) {
+    .code-row-double {
+        display: grid;
+        gap: 1.5rem;
+        grid-template-areas: "left right";
+        grid-template-columns: 1fr 1fr;
+        width: 100%;
+    }
+}
+.figure {
+    display: block;
+    max-width: 100%
+}
+
+.figure img {
+    max-width: 100%
+}
+
+/********* Various markup *******/
+
+
+.abstract {
+    max-width: 60em;
+    margin-right: 4em;
+    margin-left: 4em;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    font-style: italic;
+}
+
+.caption {
+    font-weight: bold;
+}
+
+.keywords {
+    margin-right: 4em;
+    margin-left: 4em;
+    font-style: italic;
+
+}
+
+.objectives {
+    margin-right: 4em;
+    margin-left: 4em;
+    margin-bottom: 2em;
+}
+
+.feature {
+    margin: .5em;
+    padding: .5em;
+    background: #eee;
+}
+
+
+/****** Sidebar and main structure ******/
+
+@media (min-width: 992px) {
+    .css-layout {
+        grid-template-columns:1fr 5fr
+    }
+}
+
+@media (min-width: 768px) {
+    .css-layout {
+        display: grid;
+        gap: 1.5rem;
+        grid-template-areas: "sidebar main";
+        grid-template-columns: 1fr 5fr;
+    }
+}
+
+.css-sidebar {
+    grid-area: sidebar
+}
+
+@media (min-width: 768px) {
+    .css-nav {
+        display: block !important;
+        position: sticky;
+        overflow-y: auto;
+        top: 5rem;
+    }
+}
+
+.css-main {
+    grid-area: main;
+}
+
+.navbar-toggler div {
+    width: 35px;
+    height: 5px;
+    background-color: black;
+    margin: 6px 0;
+}

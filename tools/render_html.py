@@ -1,4 +1,5 @@
 import logging
+import shutil
 from pathlib import Path
 import argparse
 
@@ -21,6 +22,11 @@ base = Path.cwd()
 out = Path("/tmp/book")
 toc = TOC(base)
 template = get_template('chapter.html')
+
+css_out = out / "ccsbook.css"
+if not css_out.exists():
+    css_in = Path(template.filename).parent / "ccsbook.css"
+    shutil.copy(css_in, css_out)
 
 #list(read_tex(base, "chapter08/test.tex"))
 #import sys; sys.exit()

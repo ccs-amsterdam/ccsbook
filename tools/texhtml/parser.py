@@ -1,7 +1,10 @@
+#TODO: tcbraster in chapter1
 #TODO: tikz figures in chapter 8
 #TODO: tables in chapter 9
+#TODO: haiku in chapter 10
 #TODO: figures in chapter 15
-1
+#TODO: table in chapter 12
+
 import base64
 import logging
 import re
@@ -20,6 +23,7 @@ from tools.texhtml.util import optargs, clean_text, thumbnail, text
 VERBS = []
 SAVED_VERBS = {}
 
+
 class CodexCell:
     def __init__(self, parser, type, caption, content):
         self.parser = parser
@@ -35,11 +39,9 @@ class CodexCell:
             return self._code_block(self.caption, self.content)
         elif self.type == "plain":
             content = self.content.replace("<", "&lt;").replace(">", "&gt;")
-            return f"<pre>{content}</pre>"
+            return f"<pre class='output'>{content}</pre>"
         elif self.type == "png":
             return self.parser.img_html(self.content)
-
-            #return f"<img src='data:image/png;base64, {self.content}' />"
         elif self.type == "table":
             return f"<div class='table-wrapper'>{self.content}</div>"
         return ""
@@ -51,13 +53,16 @@ class CodexCell:
         return f"<div class='code-input'><div class='code-caption'>{caption}</div>\n{code}\n</div>"
     # input return
 
+
 def codex_row(row):
     if len(row) == 2:
-        result = [f"<div class='code-double row'>\n<div class='col-xxl-5 col-xl-6 col-md-12'>",
+        result = [f"<div class='code-row-double'>\n",
+                  "  <div class='code-cell'>\n",
                    row[0].to_html(row[1]),
-                   "</div>\n<div class='col-md-6'>",
+                  "  </div>\n",
+                  "  <div class='code-cell'>\n",
                    row[1].to_html(row[0]),
-                   "</div></div>",
+                   "  </div>\n</div>\n",
                 ]
     elif len(row) == 1:
         if isinstance(row[0], str):
@@ -68,7 +73,9 @@ def codex_row(row):
         raise Exception(f"Codex rows should have 1 or 2 entries, not {len(row)}")
     return "\n".join(result)
 
+
 def codex_html(caption, nr, label, rows):
+    caption = clean_text(caption)
     buffer = [f"<div class='code-example'><h4><small class='text-muted'><a class='anchor' href='#{label}' name='{label}'>Example {nr}.</a></small><br/> {caption}</h4>"]
     buffer += [codex_row(row) for row in rows]
     buffer += ["</div>"]
@@ -134,7 +141,6 @@ class Parser:
             else:
                 self.nodes.append(node)
 
-
     def parse(self):
         buffer = []
         while self.nodes:
@@ -147,7 +153,9 @@ class Parser:
         node = self.nodes.pop(0)
         global NODE
         NODE = node
-        if node.name == "text":
+        if isinstance(node, Token):
+            return str(node)
+        elif node.name == "text":
             return self.text(node.text)
         elif node.name == "$":
             return self.math(node)
@@ -172,70 +180,16 @@ class Parser:
         return clean_text(text)
 
     # Structure
-    def subsection(self, node):
-        self._thesubsection += 1
-        nr = f"{self._chapter}.{self._thesection}.{self._thesubsection}"
-        label = nr.replace(".", "_")
-        return f"<h3><small class='text-muted'><a class='anchor' href='#{label}' name='{label}'>{nr}</a></small> {args(node)[0]}</h3>"
-
-    def paragraph(self, node):
-        t = text(node).replace("\\footnotesize", "")
-        return f"<b>{t}</b>"
-
-    def math(self, node):
-        mathjax = str(node).strip("$")
-        return f"\\({mathjax}\\)"
-        fn =  f"expr_{id(node)}.png"
-        sympy.preview(str(node), viewer='file', filename=self._img_folder / fn)
-        return f"<img src='img/{fn}' />"
-
-
-    def expression(self, node):
-        mathjax = str(node).strip("$")
-        return f"<p>\\({mathjax}\\)</p>"
-
-        fn =  f"expr_{id(node)}.png"
-        sympy.preview(str(node), viewer='file', filename=self._img_folder / fn)
-        return f"<div><img src='img/{fn}' /></div>"
-
-    def url(self, node):
-        text = "".join(node.text)
-        return build_url(text)
-
-    def cite(self, node):
-        return self.citep(node)
-    def citep(self, node):
-        opt = optargs(node)
-        if len(opt) == 1:
-            pre, post = "", opt[0] + " "
-        elif len(opt) == 2:
-            pre, post = opt[0] + " ", opt[1] + " "
+    def chapter(self, node):
+        self._thesection = 0
+        self._thesubsection = 0
+        next = next_sibling(node)
+        if next.name == "label":
+            label = arg(next)
+            nr = self._toc.labels[label]
+            return f"<h1><small class='text-muted'><a class='anchor' href='#{label}' name='{label}'>Chapter {nr}.</a></small><br/> {arg(node)}</h1>\n\n"
         else:
-            pre, post = "", ""
-        inner = self.citet(node, add_parentheses=False)
-        return f"({pre}{inner}{post})"
-    def citet(self, node, add_parentheses=True):
-        refs = []
-        for item in arg(node).split(","):
-            short, entries = self._bibliography[item.strip()]
-            if add_parentheses:
-                short = re.sub(r", (\d\d\d\d)", " (\\1)", short)
-            entry = " ".join(entries)
-            html = f'<span class="cite" title="{entry}">{short}</span>'
-            refs.append(html)
-        return '; '.join(refs)
-    def citealp(self, node):
-        inner = self.citet(node, add_parentheses=False)
-        return inner
-
-    def footnote(self, node):
-        parser = Parser(self._base, self._chapter, self._toc, self._bibliography, self._out_folder, nodes=TexSoup(node.text).all)
-        inner = parser.parse()
-        if inner.startswith("http") and " " not in inner:
-            inner = build_url(inner)
-        self.n_notes += 1
-        return f'<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note {self.n_notes}" data-bs-content="{inner}">[{self.n_notes}]</a>'
-
+            raise Exception("!")
 
     def section(self, node):
         self._thesection += 1
@@ -247,19 +201,70 @@ class Parser:
         else:
             nr = f"{self._chapter}.{self._thesection}"
             label = nr.replace(".", "_")
-        return f"<h2><small class='text-muted'><a class='anchor' href='#{label}' name='{label}'>{nr}</a></small> {arg(node)}</h2>"
+        caption = clean_text(arg(node))
+        return f"\n\n<!--section {nr} -->\n<h2><small class='text-muted'><a class='anchor' href='#{label}' name='{label}'>{nr}</a></small> {caption}</h2>\n\n"
 
+    def subsection(self, node):
+        self._thesubsection += 1
+        nr = f"{self._chapter}.{self._thesection}.{self._thesubsection}"
+        label = nr.replace(".", "_")
+        caption = clean_text(args(node)[0])
+        return f"\n\n<!-- Subsection {nr} -->\n<h3><small class='text-muted'><a class='anchor' href='#{label}' name='{label}'>{nr}</a></small> {caption}</h3>\n\n"
 
-    def chapter(self, node):
-        self._thesection = 0
-        self._thesubsection = 0
-        next = next_sibling(node)
-        if next.name == "label":
-            label = arg(next)
-            nr = self._toc.labels[label]
-            return f"<h1><small class='text-muted'><a class='anchor' href='#{label}' name='{label}'>Chapter {nr}.</a></small><br/> {arg(node)}</h1>"
+    def paragraph(self, node):
+        t = text(node).replace("\\footnotesize", "")
+        return f"<b>{t}</b>"
+
+    def math(self, node):
+        mathjax = str(node).strip("$")
+        return f"\\({mathjax}\\)"
+
+    def expression(self, node):
+        mathjax = str(node).strip("$")
+        return f"<p>\\({mathjax}\\)</p>"
+
+    def url(self, node):
+        text = "".join(node.text)
+        return build_url(text)
+
+    def cite(self, node):
+        return self.citet(node)
+
+    def citep(self, node):
+        opt = optargs(node)
+        if len(opt) == 1:
+            pre, post = "", opt[0] + " "
+        elif len(opt) == 2:
+            pre, post = opt[0] + " ", opt[1] + " "
         else:
-            raise Exception("!")
+            pre, post = "", ""
+        inner = self.citet(node, add_parentheses=False)
+        return f"({pre}{inner}{post})"
+
+    def citet(self, node, add_parentheses=True):
+        refs = []
+        for item in arg(node).split(","):
+            short, entries = self._bibliography[item.strip()]
+            if add_parentheses:
+                short = re.sub(r", (\d\d\d\d)", " (\\1)", short)
+            entry = " ".join(entries)
+            html = f'<span class="cite" title="{entry}">{short}</span>'
+            refs.append(html)
+        return '; '.join(refs)
+
+    def citealp(self, node):
+        inner = self.citet(node, add_parentheses=False)
+        return inner
+
+    def footnote(self, node):
+        parser = Parser(self._base, self._chapter, self._toc, self._bibliography, self._out_folder, nodes=node.expr.all)
+        inner = parser.parse()
+        if inner.startswith("http") and " " not in inner:
+            inner = build_url(inner)
+        else:
+            inner = clean_text(inner)
+        self.n_notes += 1
+        return f'<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note {self.n_notes}" data-bs-content="{inner}">[{self.n_notes}]</a>'
 
     # Markup
 
@@ -285,12 +290,6 @@ class Parser:
     def SaveVerb(self, node):
         pass
 
-    # def verb(self, node):
-    #     # This is not parsed correctly by texsoup, so workaround
-    #     verb, remainder = inline_verb(self.nodes)
-    #     text = self.text([remainder])
-    #     return f"{verb}\n\n{text}"
-
     def newpage(self, node):
         return
 
@@ -299,8 +298,10 @@ class Parser:
     texttt = ttt
 
     def verbatim(self, node):
-        return f"<pre>{node.text[0]}</pre>"
-    lstlisting=verbatim
+        text = node.text[0]
+        text = text.replace("<", "&lt;")
+        return f"<pre>{text}</pre>"
+    lstlisting = verbatim
 
     def vspace(self, node):
         pass
@@ -309,6 +310,7 @@ class Parser:
     def itemize(self, node):
         items = "\n".join(f"  <li> {text(c)}" for c in node.children)
         return f"<ul>\n{items}\n</ul>"
+
     def description(self, node):
         items = []
         for n in node.children:
@@ -317,6 +319,7 @@ class Parser:
             items.append(f"  <li><b>{label}.</b> {text}")
         items = "\n".join(items)
         return f"<ul>\n{items}\n</ul>"
+
     def enumerate(self, node):
         items = "\n".join(f"  <li> {text(c)}" for c in node.children)
         return f"<ol>\n{items}\n</ol>"
@@ -340,18 +343,21 @@ class Parser:
     pandas = tidyverse = sklearn = numpy = _fixed_concept
 
     def abstract(self, node):
-        caption = arg(node)
-        text = node.text[1]
-        return f"<div class='abstract'><span class='caption'>{caption}</span> {text}</div>"
+        caption, *text = node.text
+        caption = clean_text(caption)
+        txt = clean_text("".join(text))
+        print(f"Caption: {caption}")
+        print(f"Text: {txt}")
+        return f"\n<div class='abstract'>\n  <span class='caption'>{caption}</span> {txt}\n</div>\n"
 
     def objectives(self, node):
         items = '\n'.join(f"<li>{item.text[0]}" for item in node)
-        return f"<div class='objectives'><div class='caption'>Chapter objectives:</div><ul>{items}</ul></div>"
+        return f"\n<div class='objectives'>\n  <div class='caption'>Chapter objectives:</div>\n<ul>{items}</ul>\n</div>"
 
     def feature(self, node):
         parser = Parser(self._base, self._chapter, self._toc, self._bibliography, self._out_folder, nodes=list(node.all))
         inner = parser.parse()
-        return f"<div class='feature'>{inner}</div>"
+        return f"\n<div class='feature'>\n{inner}\n</div>\n"
 
     def keywords(self, node):
         return f"<div class='keywords'><span class='caption'>Keywords:</span> {node.text[0]}</div>"
@@ -534,7 +540,7 @@ class Parser:
         if "feature" in nodes:
             # Not actually a figure, but a 'feature' that was supposed to be floating
             return self.feature(nodes["feature"])
-        caption = "".join(nodes['caption'].text)
+        caption = clean_text("".join(nodes['caption'].text))
         if 'label' not in nodes:
             logging.error(f"Cannot find label in figure {caption}")
             return
@@ -631,6 +637,7 @@ def parse(tex: str):
 def build_url(link, text=None):
     if text is None:
         text = link.replace("https://", "").replace("http://", "")
+    text = clean_text(text)
     return f"<a href='{link}'>{text}</a>"
 
 
