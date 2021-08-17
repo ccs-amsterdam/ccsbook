@@ -224,7 +224,7 @@ class Parser:
         return f"<p>\\({mathjax}\\)</p>"
 
     def url(self, node):
-        text = "".join(node.text)
+        text = "".join(args(node))
         return build_url(text)
 
     def cite(self, node):
@@ -263,6 +263,9 @@ class Parser:
             inner = build_url(inner)
         else:
             inner = clean_text(inner)
+            # cannot handle math in footnotes, so replace by italices
+            inner = re.sub(r"\\\((\w+)\\\)", "<em>\\1</em>", inner)
+
         self.n_notes += 1
         return f'<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note {self.n_notes}" data-bs-content="{inner}">[{self.n_notes}]</a>'
 

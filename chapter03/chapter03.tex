@@ -114,17 +114,17 @@ The first line is a command to create the object \emph{a} and store
 its value 100; and the second is illustrative and will give you the
 class of the created object, in this case ``numeric''. Notice that we
 are using two native functions of R, \index{print}\texttt{print} and \index{print}\texttt{print}, and
-including |a| as an argument of \index{class}\texttt{class}, and the very same
+including \verb|a| as an argument of \index{class}\texttt{class}, and the very same
 \index{class(a)}\texttt{class(a)} as an argument of \index{print}\texttt{print}. The only difference
 between R and Python, here, is that the relevant Python function is
 called \index{type}\texttt{type} instead of \index{class}\texttt{class}.
 
 
 Once created, you can now perform multiple operations
-with |a| and other values or new variables as shown in Example~\ref{ex:var2}. For example, you
-could transform |a| by multiplying |a| by 2, create a new
-variable |b| of value 50 and then create another new object
-|c| with the result of |a + b|.
+with \verb|a| and other values or new variables as shown in Example~\ref{ex:var2}. For example, you
+could transform \verb|a| by multiplying \verb|a| by 2, create a new
+variable \verb|b| of value 50 and then create another new object
+\verb|c| with the result of \verb|a + b|.
 
 \pyrex[output=both,caption=Some simple operations]{chapter03/var2}
 
@@ -151,16 +151,16 @@ a coefficient and an exponent (to the base of 2), many integers (or,
 in fact, many decimal fractions) can only approximately be stored
 as a floating point number. Except for specific domains (such
 as finance), these inaccuracies are often not of much practical importance.
-But it explains why calculating |6*6/10| in Python returns 3.6, while
-|6*0.6| or |6*(6/10)| returns 3.599\,999\,999\,999\,999\,6. Therefore, if
+But it explains why calculating \verb|6*6/10| in Python returns 3.6, while
+\verb|6*0.6| or \verb|6*(6/10)| returns 3.599\,999\,999\,999\,999\,6. Therefore, if
 a value can logically only be a whole number (anything that is
 countable, in fact), it makes sense to restrict it to an integer.
 
 We also have a data type that is even more restricted and can take
 only two values: true or false. It is called ``logical'' (R) or ``bool''
 (Python).  Just notice that boolean values are case sensitive:
-while in R you must capitalize the whole value (|TRUE|, |FALSE|), in
-Python we only capitalize the first letter: |True|, |False|.  As you can
+while in R you must capitalize the whole value (\verb|TRUE|, \verb|FALSE|), in
+Python we only capitalize the first letter: \verb|True|, \verb|False|.  As you can
 see in Example~\ref{ex:var3}, such an object behaves exactly as an integer that
 is only allowed to be 0 or 1, and it can easily be converted to an
 integer.
@@ -197,7 +197,9 @@ To include an actual backslash in a text, you also escape it with a backslash,
 so you end up with a double backslash (\verb|\\|). 
 
 The Python example also shows a concept introduced in Python 3.6 (introduced in December 2016):
-the f-string. These are strings that are prefixed with the letter \texttt{f} and are \emph{formatted} strings. This means that these strings will automatically insert a value where curly brackets indicate that you wish to do so. This means that you can write: |print(f"The value of i is {i}")| in order to print ``The value of i is 5'' (given that |i| equals 5).
+the f-string. These are strings that are prefixed with the letter \texttt{f} and are \emph{formatted} strings.
+This means that these strings will automatically insert a value where curly brackets indicate that you wish to do so.
+This means that you can write: \verb|print(f"The value of i is {i}")| in order to print ``The value of i is 5'' (given that \verb|i| equals 5).
 In R, the \index{glue}\emph{glue} package allows you to use an f-string-like syntax as well: \texttt{glue("The value of i is \{i\}")}.
 
 Although this will be explained in more detail in Section~\ref{sec:unicode},
@@ -243,7 +245,7 @@ The core idea is always the same: we take multiple objects
 
 \pyrex[caption=Collections arrays (such as vectors in R or lists in Python) can contain multiple values]{chapter03/1darray1}
 
-As you see, we now have one name (such as |scores|) to refer to all of the scores.
+As you see, we now have one name (such as \verb|scores|) to refer to all of the scores.
 The Python object in Example~\ref{ex:1darray1} is called a \emph{list}, the R object a \emph{vector}.
 There are more  such combined data types, which have slightly different
 properties that can be important to know about: first, whether you can mix different
@@ -260,7 +262,7 @@ is \emph{indexing}. It lets you locate any given
 element or group of elements within a vector using its or their
 positions. The first item of a vector in R is called 1, the second 2, and so on;
 in Python, we begin counting with 0.  You can retrieve a specific element
-from a vector or list by simply putting the index between square brackets |[]| (Example~\ref{ex:1darray2}). 
+from a vector or list by simply putting the index between square brackets \verb|[]| (Example~\ref{ex:1darray2}).
 
 \pyrex[input=both, output=both, caption=Slicing vectors and converting data types]{chapter03/1darray2}
 
@@ -268,19 +270,19 @@ In the first case, we asked for the score of the 5th student ("9");
 in the second we asked for the 1st and 10th position ("8" "5"); and
 finally for all the elements between the 1st and 4th position ("8"
 "8" "7" "6"). We can directly indicate a range
-by using a |:|. After the colon, we provide the index of
+by using a \verb|:|. After the colon, we provide the index of
 the last element (in R), while Python stops just \emph{before} the index.\footnote{This is related to the
 reason why Python starts counting with zero. If you are interested
 in this, have a look at \url{https://www.cs.utexas.edu/users/EWD/transcriptions/EWD08xx/EWD831.html}}
 If we want to pass multiple single index values instead of a range,
-we need to create a vector of these indices by using |c()| (Example~\ref{ex:1darray2}).
+we need to create a vector of these indices by using \verb|c()| (Example~\ref{ex:1darray2}).
 Take a moment to compare the different ways of indexing between Python
 and R in Example~\ref{ex:1darray2}!
 
 Indexing is very useful to access elements and also to
 create new objects from a part of another one. The last line of our
 example shows how to create a new array with just the first four
-entries of |scores| and store them all as numbers. To do so, we
+entries of \verb|scores| and store them all as numbers. To do so, we
 use \emph{slicing} to get the first four scores and then either change its class using the function
 as.numeric (in R) or convert the elements to integers one-by-one (Python)  (Example~\ref{ex:1darray2}).
 
@@ -311,7 +313,7 @@ force some elements to be transformed, so that all elements belong to the same
 class. For example, if you re-build the vector of scores with a new student who has
 been graded with the letter \emph{b} instead of a number (Example~\ref{ex:1darray1b}), your vector
 will become a character vector. If you print it, you will see that the
-values are now displayed surrounded by |"|.
+values are now displayed surrounded by \verb|"|.
 
 
 \pyrex[caption=R enforces that all elements of a vector have the same data type, output=r, input=r]{chapter03/1darray1b}
@@ -328,7 +330,7 @@ that matter.
 
 In R you can also uses lists, even though they are much less popular in R than
 they are in Python because vectors are better if all objects are of the same type.
-R lists are created in a similar way as vectors, except that we have to add the word |list|
+R lists are created in a similar way as vectors, except that we have to add the word \verb|list|
 before declaring the values. Let us build a list with four different
 kinds of elements, a numeric object, a character object, a square root
 function (\index{sqrt}\texttt{sqrt}), and a numeric vector (Example~\ref{ex:1darray4}). In fact, you
@@ -394,7 +396,7 @@ which can be very useful,  e.g.\ finding all elements that occur in two lists.
 Python \emph{dictionaries} are a very powerful and versatile data type.
 Dictionaries contain unordered and mutable collections of objects that
 contain certain information in another object. Python generates this
-data type in the form of |{key : value}| pairs in order
+data type in the form of \verb|{key : value}| pairs in order
 to map any object by its key and not by its relative position in the
 collection. Unlike in a list, in which you index with an integer denoting
 the position in a list, you can index a dictionary using the key.
@@ -453,14 +455,14 @@ In Python, the easiest representation is to simply construct a list of
 lists. This is, in fact, often done, but has the disadvantage that
 there are no easy ways to get, for instance, the dimensions (the
 shape) of the table, or to print it in a neat(er) format. To get all
-that, one can transform the list of lists into an |array|, a
+that, one can transform the list of lists into an \verb|array|, a
 datastructure provided by the package \index{numpy}\emph{numpy}.
 
 To create a matrix in R, you have to use the function \fn{matrix} and
 create a vector of values with the indication of how many rows and
 columns will be on it. We also have to tell R if the order of the
 values is determined by the row or not. In Example~\ref{ex:2darray}, we create
-two matrices in which we vary the |byrow| argument to be TRUE and
+two matrices in which we vary the \verb|byrow| argument to be TRUE and
 FALSE, respectively, to illustrate how it changes the values of the
 matrix, even when the shape ($2 \times3$) remains identical. As you may
 imagine, we can operate with matrices, such as adding up two of them.
@@ -539,7 +541,7 @@ them is very straightforward: You provide your computer with some
 \emph{statements} (directly or from a script), and your computer
 reacts. We call a sequence of these statements a \emph{computer program}.
 When we created objects by writing, for instance,
-|a = 100|,  we already dealt with a very basic statement, the \emph{assignment statement}. But of course the statements can be more complex.
+\verb|a = 100|,  we already dealt with a very basic statement, the \emph{assignment statement}. But of course the statements can be more complex.
 
 In particular, we may want to say more about how and when
 statements need to be executed. Maybe we want to repeat
@@ -558,8 +560,8 @@ In your script, you usually indicate such loops and conditions
 visually by using \emph{indentation}. Logical empty spaces -- two in R and four in
 Python -- depict blocks and sub-blocks on your code structure.
 As you will see in the next section, in R, using indention
-is optional, and curly brackets will indicate the beginning (|{|)
-and end (|}|) of a code block; whereas in Python, indention
+is optional, and curly brackets will indicate the beginning (\verb|{|)
+and end (\verb|}|) of a code block; whereas in Python, indention
 is mandatory and tells your interpreter where the block
 starts and ends.
 
@@ -647,10 +649,15 @@ To do this, we can include the conditional statement in the loop, executing the 
 
 \pyrex[caption=A simple conditional control structure, output=py]{chapter03/if1}
 
-We could also make it a bit more complicated: first check whether the length is smaller than 40, then check whether it is exactly 44 (|elif| / |else if|), and finally specify what to do if none of the conditions was met (|else|).
+We could also make it a bit more complicated: first check whether the length is smaller than 40,
+then check whether it is exactly 44 (\verb|elif| / \verb|else if|), and finally specify what to do if none of the conditions was met (\verb|else|).
 
-In Example~\ref{ex:if2}, we will print the headline if it is shorter than 40 characters, print the string ``What a surprise!'' if it is exactly 44 characters, and print ``NaN'' in all other cases. 
-Notice that we have included the clause \emph{elif} in the structure (in R it is noted \emph{else if}).  \emph{elif} is a combination of \emph{else} and \emph{if}: if the previous condition is not satisfied, this condition is checked and the corresponding code block (or \emph{else} block) is executed. This avoids having to nest the second \emph{if} within the \emph{else}, but otherwise the reasoning behind the control flow statements remains the same.
+In Example~\ref{ex:if2}, we will print the headline if it is shorter than 40 characters,
+print the string ``What a surprise!'' if it is exactly 44 characters, and print ``NaN'' in all other cases.
+Notice that we have included the clause \emph{elif} in the structure (in R it is noted \emph{else if}).
+\emph{elif} is a combination of \emph{else} and \emph{if}: if the previous condition is not satisfied,
+this condition is checked and the corresponding code block (or \emph{else} block) is executed.
+This avoids having to nest the second \emph{if} within the \emph{else}, but otherwise the reasoning behind the control flow statements remains the same.
 
 
 \pyrex[caption=A more complex conditional control structure, output=py]{chapter03/if2}
@@ -674,8 +681,8 @@ similar concepts. The difference between them is that the functions
 are defined independently from the object, while methods are created
 based on a class, meaning that they are associated with an object. For
 example, in Python, each string has an associated method \index{lower}\texttt{lower},
-so that writing |'HELLO'.lower()| will return 'hello'. In R, in
-contrast, one uses a function, |tolower('HELLO')|. For now, it is not
+so that writing \verb|'HELLO'.lower()| will return 'hello'. In R, in
+contrast, one uses a function, \verb|tolower('HELLO')|. For now, it is not
 really important to know why some things are implemented as a method
 and some are implemented as a function; it is partly an arbitrary
 choice that the developers made, and to fully understand it, you need
@@ -745,7 +752,7 @@ once using a loop. This costs you only two extra lines of code
   need the \emph{next} value at a time. This is especially interesting when calculating the whole list would take a lot of time or a lot 
   of memory. Rather than waiting for all values to be calculated, you can immediately begin processing the first value before the next arrives; or 
   you can work with data so large that it do not all fit into your memory at the same time.  You recognize a generator by 
-  the |yield| keyword instead of a |return| keyword (Example~\ref{ex:generators})
+  the \verb|yield| keyword instead of a \verb|return| keyword (Example~\ref{ex:generators})
 \end{feature}
 
 \pyrex[input=py, output=py, caption={Generators behave like lists in that you can iterate (loop) over them, but each element is only 
