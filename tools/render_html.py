@@ -1,11 +1,13 @@
 import logging
 import shutil
+from io import StringIO
 from pathlib import Path
 import argparse
 
+from TexSoup import TexSoup
 from jinja2 import Template
 
-from texhtml.parser import Parser, UnknownNode
+from texhtml.texparser import preprocess, Parser
 from texhtml.toc import TOC
 from texhtml.util import get_template
 from tools.readbbl import read_bbl
@@ -36,16 +38,19 @@ for chapnr, chapter in enumerate(toc.chapters, start=1):
         continue
     outf = out / chapter.fn
     print(f"{chapter.nr}: {chapter.texfile} -> {outf}")
-    parser = Parser(base, chapnr, toc, bibliography, out)
-    parser.read_nodes(chapter.texfile)
-    content = parser.parse()
 
-    current_chapter = chapter.fn
+
+    with open(chapter.texfile) as source:
+        tex, verbs = preprocess(source.read())
+
+    parser = Parser(chapter=chapnr, toc=toc, bibliography=bibliography, verbs=verbs,
+                    base=base, out_folder=out)
+    content = parser.parse_str(TexSoup(tex).expr._contents)
     html = template.render(**locals())
     open(outf, "w").write(html)
 
-    if parser.unknown_nodes:
-        unknown[chapter.nr] = parser.unknown_nodes
+    #if parser.unknown_nodes:
+    #    unknown[chapter.nr] = parser.unknown_nodes
 
 if unknown:
     for chapter, missing in unknown.items():

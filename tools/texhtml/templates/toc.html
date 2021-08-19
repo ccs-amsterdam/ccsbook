@@ -6,7 +6,7 @@
             <ul class="collapse list-unstyled {% if chapter.fn == current_chapter %}show{% endif %}" id="toc_chap_{{ loop.index }}">
                 {% for section in chapter.children %}
                     <li class="toc-section">
-                        <a href="{{ chapter.fn }}#{{ section.label }}">{{ section.nr }}. {{ section.caption }}</a>
+                        <a href="{{ chapter.fn }}#{{ chapter.nr }}_{{ loop.index }}">{{ section.nr }}. {{ section.caption }}</a>
                     </li>
                 {% endfor %}
             </ul>

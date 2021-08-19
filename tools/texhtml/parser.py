@@ -1,4 +1,3 @@
-#TODO: tcbraster in chapter1
 #TODO: tikz figures in chapter 8
 #TODO: tables in chapter 9
 #TODO: haiku in chapter 10
@@ -109,6 +108,9 @@ class Parser:
         global VERBS
         logging.info(f"Parsing {self._base / fn}")
         tex = open(self._base / fn).read()
+        self.read_tex_string(tex)
+
+    def read_tex_string(self, tex: str):
         # Workarounds to deal (mostly) with imperfect texsoup parsing
         # store verbs and replace with placeholder command
         buffer = []
@@ -287,7 +289,6 @@ class Parser:
         return f"<code>{verb}</code>"
 
     def verb(self, node):
-        print(self.nodes[0])
         raise Exception("Unprocessed verb")
 
     def SaveVerb(self, node):
@@ -297,7 +298,8 @@ class Parser:
         return
 
     def ttt(self, node):
-        return f"<code>{clean_text(arg(node))}</code> "
+        inner = self.parse_inner(node)
+        return f"<code>{inner}</code> "
     texttt = ttt
 
     def verbatim(self, node):
@@ -349,8 +351,6 @@ class Parser:
         caption, *text = node.text
         caption = clean_text(caption)
         txt = clean_text("".join(text))
-        print(f"Caption: {caption}")
-        print(f"Text: {txt}")
         return f"\n<div class='abstract'>\n  <span class='caption'>{caption}</span> {txt}\n</div>\n"
 
     def objectives(self, node):
@@ -537,6 +537,15 @@ class Parser:
         r = self._code_input(f"{fn}.r", "R code")
         return f"<div class='code-example'>{codex_row([py, r])}</div>"
 
+    def tcbraster(self, node):
+        row = []
+        for child in node.children:
+            assert child.name == "codex"
+            fn = arg(child)
+            caption = self.kwargs(child)['caption']
+            row.append(self._code_input(fn, caption))
+        return codex_row(row)
+
     # Figures
     def figure(self, node):
         nodes = {n.name: n for n in node.children}
@@ -572,6 +581,8 @@ class Parser:
         caption = f"{caption}{caption2}"
         table = parse(body)
         nr = self._toc.labels[ref]
+        if nr == "9.2":
+            self.nodes = []
         return f'''
                 <div class='figure'>
                 <h4><small class='text-muted'><a class='anchor' href='#{ref}' name='{ref}'>Table {nr}</a></small> {caption}</h3>
@@ -598,6 +609,12 @@ class Parser:
                         if x and not re.match("\([lr]+\)", x):
                             target[-1][-1] += x
             else:
+                if n.name == "texttt":
+                    print(">>>>>>>", "".join(args(n)))
+                    sub_parse(n)
+                    print("<<<<<<<<")
+                    text = clean_text("".join(args(n)))
+                    target[-1][-1] += f"<code>{text}</code>"
                 if n.name == "verbplaceholder":
                     verb = VERBS[int(arg(n))]
                     target[-1][-1] += f"<code>{verb}</code>"
@@ -605,6 +622,7 @@ class Parser:
                     target = body
                 elif n.name == "multicolumn":
                     cols, just, text = args(n)
+                    text = clean_text(text)
                     target[-1][-1] += f"<th colspan='{cols}'>{text}</th>"
         html = ["<table class='table'><thead>"]
         def td(x, tag):
@@ -632,6 +650,11 @@ class Parser:
         <img src='img/{thumb.name}' />   
         </a> """
 
+    def parse_inner(self, node):
+        if hasattr(node, "expr"):
+            for child in node.expr.all:
+                print(self.parse())
+                self.parse_inner(child)
 
 def parse(tex: str):
     parser = Parser(None, None, None, None, None, nodes=TexSoup(tex).all)
@@ -646,3 +669,10 @@ def build_url(link, text=None):
 
 def process_math(text):
     return re.sub("\$([^$]+)\$", "\\(\\1\\)", text)
+
+
+
+if __name__ == '__main__':
+    parser = Parser(None, None, None, None, None)
+    parser.read_tex_string(r"\texttt{\small{\textbackslash{}}p\{LETTER\}}")
+    print(parser.parse())

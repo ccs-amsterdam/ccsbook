@@ -61,6 +61,13 @@ SUBS = {
     "\\cdot": "·",
     "\\times": "×",
     "\\textless": "&lt;",
+    "\\textbar": "|",
+    "\\lbrack": "[",
+    "\\rbrack": "]",
+    "\\textbackslash": "&bsol;",
+    "\\dagger": "",
+    "\\color{gray}": "",
+    "\\^": "^",
 }
 
 ACCENTS = {
@@ -90,7 +97,9 @@ def clean_text(text: str) -> str:
         text = text.replace(k, v).replace(k.upper(), v.upper())
     # For some weird reason, \index(x)\emph(x) was not processed in capter 6 :(
     text = re.sub(r"\\index\{([^}]+)\}", "", text)
-    text = re.sub(r"\\(emph|texttt|small)\{([^}]+)\}", "\\2", text)
+    text = re.sub(r"\\(emph|texttt|small|textit)\{([^}]+)\}", "\\2", text)
+    text = re.sub(r"\\(textbf)\{([^}]+)\}", "<b>\\2</b>", text)
+    #text = re.sub(r"\{\\color\{gray\}([^}]+)\}", "<i>\\1</i>", text)
     text = re.sub(r"\\(verb)\|([^|]+)\|", "\\2", text)
     text = re.sub(r"(https?://)(.*?)( |$)", "<a href='\\1\\2'>\\2</a>", text)
     if "\\" in text.replace("\\(", "").replace("\\)", ""):
