@@ -2,6 +2,7 @@ import logging
 import shutil
 import sys
 import re
+from collections import namedtuple
 from io import StringIO
 from itertools import count
 from pathlib import Path
@@ -16,11 +17,12 @@ from TexSoup.data import BraceGroup, BracketGroup, TexExpr, TexEnv, TexCmd
 from tools.texhtml.toc import TOC
 from tools.texhtml.util import args, arg
 
-
 IGNORE = {
     "centering",
     "index",
     "label",
+    "newpage",
+    "noindent"
 }
 SIMPLE_ENVS = {
     "[tex]": None,
@@ -34,13 +36,16 @@ SIMPLE_COMMANDS = {
     "texttt": "code",
     "ttt": "code",
     "textbf": "b",
-    "concept": "i",
     "emph": "i",
     "paragraph": "b",
+    "concept": "i",
+
 }
 SIMPLE_NODES = {
     "textbar": "|",
     "textbackslash": "\\",
+    "tidyverse": "<code>tidyverse</code>",
+    "pandas": "<code>pandas</code>",
 }
 SUBS = {
     "<": "&lt;",
@@ -132,12 +137,13 @@ class Parser:
 
     def simple_cmd(self, node):
         self._open_p()
-        assert len(node.args) == 1
+        args = [a for a in node.args if isinstance(a, BraceGroup)]
+        assert len(args) == 1, f"#arguments != 1: [{node.name}] {repr(args)} : {repr(node)}"
         assert isinstance(node, TexCmd)
         tag = SIMPLE_COMMANDS[node.name]
         if tag:
             self.emit(f"<{tag}>")
-        self.parse(node.args[0]._contents)
+        self.parse(args[0]._contents)
         if tag:
             end_tag = tag.split(" ")[0]
             self.emit(f"</{end_tag}>")
@@ -281,10 +287,8 @@ class Parser:
     def figure(self, node, _nodes):
         self.emit("<div class='figure'>")
         # pull caption and label to start
-        def _pop(nodes, name):
-            return nodes.pop([node.name for node in nodes].index(name))
         nodes = list(node._contents)
-        nodes = [_pop(nodes, "caption"), _pop(nodes, "label")] + nodes
+        nodes = [_pop_named(nodes, "caption"), _pop(nodes, "label")] + nodes
         self.parse(nodes)
         self.emit("</div>")
 
@@ -292,20 +296,136 @@ class Parser:
         img = Path(_args(node)[0])
         if img.suffix in (".pdf", ".eps"):
             img = img.with_suffix(".png")
+        self.emit(self._img_html(img))
+
+    def _img_html(self, img: Path):
         outf = self._img_folder / img.name
         shutil.copy(self._base / img, outf)
         thumb = thumbnail(outf)
-        self.emit(f"<a href='img/{img.name}' title='Click to open full-size image'>\n  <img src='img/{thumb.name}' />\n</a>")
+        return f"<a href='img/{img.name}' title='Click to open full-size image'>\n  <img src='img/{thumb.name}' />\n</a>"
 
     def caption(self, node, nodes):
         ref = self._get_label(nodes)
         nr = self._toc.labels[ref]
-        self.emit(f"<h4><small class='text-muted'><a class='anchor' href='#{ref}' name='{ref}'>Fig. {nr}</a></small>")
+        label = {"ex": "Example",
+                 "fig": "Figure"}[ref.split(":")[0]]
+        print("!!!", ref, nr)
+        self.emit(f"<h4><small class='text-muted'><a class='anchor' href='#{ref}' name='{ref}'>{label} {nr}.</a></small><br/>")
         self.parse(node.args[0]._contents)
         self.emit("</h4>")
 
 
-    ### REFERENCES ###
+    ##### CODE EXAMPLES #####
+    def _read_snippet(self, fn):
+        snippet_file = self._base / "snippets" / f"{fn}"
+        code = snippet_file.open().read()
+        lines = [x.replace("<", "&lt;").replace(">", "&gt;")
+                 for x in code.split("\n")]
+        return lines
+
+    def _code_input(self, caption, lines):
+        self.emit(f"<div class='code-input'>\n  <div class='code-caption'>{caption}</div>\n  <pre class='code'>")
+        for i, line in enumerate(lines):
+            if i:
+                self.emit("\n")
+            if line is None:
+                self.emit("&nbsp;")
+            else:
+                self.emit(f"<code>{line}</code>")
+        self.emit("  </pre>\n</div>")
+
+    def _doublecodex(self, fn):
+        self._close_p()
+        self.emit("<div class='code-row-double'>")
+        snippets = [self._read_snippet(f"{fn}.{ext}") for ext in ["py", "r"]]
+        add_blank_lines(*snippets)
+        self._code_input("Python code", snippets[0])
+        self._code_input("R code", snippets[1])
+        self.emit("</div>")
+
+
+    def doublecodex(self, node, nodes):
+        self._doublecodex(_arg(node))
+
+    def codex(self, node, nodes):
+        #\codex[caption = Output]{chapter02 / tweetsb.r.out}
+        fn = _arg(node)
+        snippet_file = self._base / "snippets" / f"{fn}"
+        content = snippet_file.open().read()
+        kwargs = extract_kwargs(_optarg(node))
+        content = content.replace("<", "&lt;").replace(">", "&gt;")
+        self.emit("<div class='code-single'>")
+        self.emit(f"<pre class='output'>{content}</pre>")
+        self.emit("</div>")
+
+    def codexoutputtable(self, node, nodes):
+        self._codexoutputtable(_arg(node))
+
+    def _codexoutputtable(self, fn):
+        snippet_file = self._base / "snippets" / f"{fn}.table.html"
+        content = snippet_file.open().read()
+        self.emit(f"<div class='table-wrapper'>{content}</div>")
+
+    def codexoutputpng(self, node, nodes):
+        self._codexoutputpng(_arg(node))
+    def _codexoutputpng(self, fn):
+        snippet_file = self._base / "snippets" / f"{fn}.png"
+        self.emit(self._img_html(snippet_file))
+
+
+    def tcbraster(self, node, nodes):
+        self._close_p()
+        self.emit("<div class='code-row-double'>")
+        codices = [n for n in node._contents if getattr(n, "name", None) == "codex"]
+        snippets = [self._read_snippet(_arg(n)) for n in codices]
+        add_blank_lines(*snippets)
+        captions = [extract_kwargs(_optarg(n))['caption'] for n in codices]
+        assert len(codices) == 2
+        self._code_input(captions[0], snippets[0])
+        self._code_input(captions[1], snippets[1])
+        #self.codex(codices[0])
+        self.emit("</div>")
+
+    def ccsexample(self, node, nodes):
+        self._close_p()
+        self.emit(f"<div class='code-example'>")
+        nodes = list(node._contents)
+        nodes = [_pop_named(nodes, "caption"), _pop_named(nodes, "label")] + nodes
+        self.parse(nodes)
+        self.emit("</div>")
+
+    def pyrex(self, node, nodes):
+        self._close_p()
+        self.emit(f"<div class='code-example'>")
+        fn = _arg(node)
+        kwargs = extract_kwargs(_optarg(node))
+        ref = f"ex:{Path(fn).name}"
+        nr = self._toc.labels[ref]
+        self.emit(f"<h4><small class='text-muted'><a class='anchor' href='#{ref}' name='{ref}'>Example {nr}.</a></small><br/>{kwargs['caption']}</h4>")
+
+        #\pyrex[caption=Barplot of tweets over time,input=both,output=r,format=png]{chapter02/funtime}
+        if kwargs.get('input', 'both') == 'both':
+            self._doublecodex(fn)
+        else:
+            raise Exception("!")
+        output = kwargs.get('output', 'both')
+        format = kwargs.get('format', 'plain')
+        if output in ('r', 'py'):
+            fn = f"{fn}.{output}"
+            if format == "png":
+                self._codexoutputpng(fn)
+            elif format == "table":
+                self._codexoutputtable(fn)
+            else:
+                raise Exception("!")
+        else:
+            self.emit("<div class='code-row-double'>")
+            for output in "py", "r":
+
+            self.emit("</div>")
+        self.emit("</div>")
+
+    ##### REFERENCES #####
     def _ref(self, label, ref):
         if ref not in self._toc.labels:
             logging.warning(f"unknown reference: {ref}")
@@ -328,6 +448,9 @@ class Parser:
 
     def reffig(self, node, _nodes):
         self._ref("Figure", f"fig:{_args(node)[0]}")
+
+    def ref(self, node, _nodes):
+        self._ref("", f"{_args(node)[0]}")
 
     #### CITATIONS ####
     def citep(self, node, nodes):
@@ -365,8 +488,55 @@ def _optargs(node):
     return [str(x.string) for x in node.args if isinstance(x, BracketGroup)]
 
 
+def _optarg(node):
+    args = _optargs(node)
+    assert len(args) == 1, f"#Optional Arguments != 1: {args} [{node}]"
+    return args[0]
+
+
 def _args(node):
     return [str(x.string) for x in node.args if isinstance(x, BraceGroup)]
+
+
+def _arg(node):
+    args = _args(node)
+    assert len(args) == 1, f"#Arguments != 1: {args} [{node}]"
+    return args[0]
+
+
+def extract_kwargs(argtext):
+    # TODO: handle braces correctly :(
+    result = {}
+    # HACK remove index/emph tags from caption since they mess up processing
+    argtext = re.sub(r"\\index\{([^}]+)}", "", argtext)
+    argtext = re.sub(r"\\(emph|texttt)\{([^}]+)}", "\\2", argtext)
+    if "\\refex" in argtext:
+        m = re.match(r"(.*)\\refex\{([^}]+)}(.*)", argtext)
+        pre, ex, post = m.groups()
+        ex = self._ref("Example", f"ex:{ex}")
+        argtext = "".join([pre, ex, post])
+
+    argtext = re.sub(r"\\refex\{([^}]+)}", "", argtext)
+    # HACK to parse braces around caption
+    if m := re.search(r"(.*),?caption=\{([^}]+)\}(.*)", argtext):
+        result['caption'] = m.group(2)
+        argtext = f"{m.group(1)}{m.group(3)}"
+    for arg in argtext.split(","):
+        if arg.strip():
+            try:
+                k, v = arg.split("=")
+                result[k.strip()] = v.strip()
+            except:
+                logging.exception(f"Cannot parse {repr(arg)} in {argtext}")
+                raise
+    return result
+
+def add_blank_lines(lines1, lines2):
+    n = len(lines1) - len(lines2)
+    if n > 0:
+        lines2 += [None] * n
+    elif n < 0:
+        lines1 += [None] * -n
 
 
 def thumbnail(img: Path, size=640) -> Path:
@@ -377,6 +547,9 @@ def thumbnail(img: Path, size=640) -> Path:
         im.thumbnail((size, size))
         im.save(outf)
     return outf
+
+def _pop_named(nodes, name):
+    return nodes.pop([node.name for node in nodes].index(name))
 
 
 def preprocess(tex: str):
