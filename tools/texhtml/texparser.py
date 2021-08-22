@@ -288,7 +288,7 @@ class Parser:
         self.emit("<div class='figure'>")
         # pull caption and label to start
         nodes = list(node._contents)
-        nodes = [_pop_named(nodes, "caption"), _pop(nodes, "label")] + nodes
+        nodes = [_pop_named(nodes, "caption"), _pop_named(nodes, "label")] + nodes
         self.parse(nodes)
         self.emit("</div>")
 
@@ -309,8 +309,8 @@ class Parser:
         nr = self._toc.labels[ref]
         label = {"ex": "Example",
                  "fig": "Figure"}[ref.split(":")[0]]
-        print("!!!", ref, nr)
         self.emit(f"<h4><small class='text-muted'><a class='anchor' href='#{ref}' name='{ref}'>{label} {nr}.</a></small><br/>")
+        print("!!!", label, nr,  node.args[0]._contents)
         self.parse(node.args[0]._contents)
         self.emit("</h4>")
 
@@ -372,6 +372,19 @@ class Parser:
         snippet_file = self._base / "snippets" / f"{fn}.png"
         self.emit(self._img_html(snippet_file))
 
+    def _codexoutputplain(self, fn):
+        snippet_file = self._base / "snippets" / f"{fn}.out"
+        content = snippet_file.open().read()
+        content = content.replace("<", "&lt;").replace(">", "&gt;")
+        self.emit(f"<pre class='output'>{content}</pre>")
+
+    def _codexoutput(self, fn, format):
+        handlers = dict(
+            png=self._codexoutputpng,
+            table=self._codexoutputtable,
+            plain=self._codexoutputplain,
+        )
+        handlers[format](fn)
 
     def tcbraster(self, node, nodes):
         self._close_p()
@@ -401,29 +414,32 @@ class Parser:
         kwargs = extract_kwargs(_optarg(node))
         ref = f"ex:{Path(fn).name}"
         nr = self._toc.labels[ref]
-        self.emit(f"<h4><small class='text-muted'><a class='anchor' href='#{ref}' name='{ref}'>Example {nr}.</a></small><br/>{kwargs['caption']}</h4>")
+        print("???", kwargs['caption'])
+        # Captions from kwargs are not parsed, so manually do required substitutions
+        caption = kwargs['caption']
+        caption = re.sub(r"\$([^$]+)\$", "<i>\\1</i>", caption)
+        print(caption)
+        self.emit(f"<h4><small class='text-muted'><a class='anchor' href='#{ref}' name='{ref}'>Example {nr}.</a></small><br/>{caption}</h4>")
 
-        #\pyrex[caption=Barplot of tweets over time,input=both,output=r,format=png]{chapter02/funtime}
-        if kwargs.get('input', 'both') == 'both':
+        input = kwargs.get('input', 'both')
+        if input == 'both':
             self._doublecodex(fn)
         else:
-            raise Exception("!")
+            lines = self._read_snippet(f"{fn}.{input}")
+            name = dict(py="Python", r="R")[input]
+            self._code_input(f"{name} code", lines)
         output = kwargs.get('output', 'both')
         format = kwargs.get('format', 'plain')
         if output in ('r', 'py'):
-            fn = f"{fn}.{output}"
-            if format == "png":
-                self._codexoutputpng(fn)
-            elif format == "table":
-                self._codexoutputtable(fn)
-            else:
-                raise Exception("!")
+            self._codexoutput(f"{fn}.{output}", format)
         else:
             self.emit("<div class='code-row-double'>")
             for output in "py", "r":
-
+                self._codexoutput(f"{fn}.{output}", format)
             self.emit("</div>")
         self.emit("</div>")
+
+
 
     ##### REFERENCES #####
     def _ref(self, label, ref):
