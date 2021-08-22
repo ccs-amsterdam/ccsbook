@@ -12,7 +12,7 @@ from texhtml.toc import TOC
 from texhtml.util import get_template
 from tools.readbbl import read_bbl
 
-logging.basicConfig(level=logging.DEBUG, format='[%(asctime)s %(name)-12s %(levelname)-5s] %(message)s')
+logging.basicConfig(level=logging.INFO, format='[%(asctime)s %(name)-12s %(levelname)-5s] %(message)s')
 
 parser = argparse.ArgumentParser(description='Convert CCS book latex into HTML')
 parser.add_argument('chapters', type=int, nargs='*')
@@ -22,6 +22,7 @@ bibliography = read_bbl("main.bbl")
 
 base = Path.cwd()
 out = Path("/tmp/book")
+out.mkdir(exist_ok=True)
 toc = TOC(base)
 template = get_template('chapter.html')
 

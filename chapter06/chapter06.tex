@@ -330,7 +330,20 @@ This will be lead to missing values (|NA|/|NaN|) being inserted in the columns o
     \label{fig:joinvenn}
 \end{figure}
 
-\input{chapter06/tabjoins}
+\begin{table}
+  \caption{\label{tab:joins}Different types of joins between datasets d1 and d2}{
+  \begin{tabularx}{\linewidth}{lXll}
+    \toprule
+    Type &  Description  & R & Python \\
+    \midrule
+    Outer &  All units from both sets & \verb|full_join(d1,d2)| & \verb|d1.merge(d2, how='outer')| \\
+    Inner & Only units that are in both sets & \verb|inner_join(d1,d2)| & \verb|d1.merge(d2, how='inner')| \\
+    Left & All units from left-hand set & \verb|left_join(d1,d2)| & \verb|d1.merge(d2, how='left')| \\
+    Right & All units from right-hand set & \verb|right_join(d1,d2)| & \verb|d1.merge(d2, how='right')| \\
+    \bottomrule
+  \end{tabularx}}{}
+\end{table}
+
 
 In most cases, you will either use inner join or left join.
 Inner join is useful when information should be complete,

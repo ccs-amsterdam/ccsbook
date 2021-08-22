@@ -210,3 +210,7 @@ pre.code code::before {
     background-color: black;
     margin: 6px 0;
 }
+
+.gray {
+    color: dimgrey;
+}
