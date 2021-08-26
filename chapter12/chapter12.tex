@@ -82,13 +82,13 @@ to  examples other than ours.
 In its  simplest form, using an API is nothing other than visiting
 a specific URL. The first part of the URL specifies the so-called
 API endpoint: the address of the specific API you want to use. This
-address is then followed by a |?| and one or more key-value pairs with an
-equal sign like this: |key=value|. Multiple key-value pairs are
+address is then followed by a \verb|?| and one or more key-value pairs with an
+equal sign like this: \verb|key=value|. Multiple key-value pairs are
 separated with a \texttt{\&}.
 
 For instance, at the time of the writing of this book, Google offers
-an API endpoint, |https://www.googleapis.com/books/v1/volumes|, to search for books on Google Books.
-If you want to search for books about Python, you can supply a key |q| (which stands for query) with
+an API endpoint, \verb|https://www.googleapis.com/books/v1/volumes|, to search for books on Google Books.
+If you want to search for books about Python, you can supply a key \verb|q| (which stands for query) with
 the value ``python'' (Example~\ref{ex:googleapi1}). We do not need any specific
 software for this -- we could, in fact, use a web browser as well.
 Popular packages that allow us to do it programatically are \index{httr}\emph{httr}
@@ -98,12 +98,12 @@ But how do we know which parameters (i.e., which key-value pairs) we can use?
 We need to look it up in the documentation of the API we are
 interested in (in this example \url{https://developers.google.com/books/docs/v1/using}).
 There is no other way of knowing that the key to submit a query
-is called |q|, and which other parameters can be specified.
+is called \verb|q|, and which other parameters can be specified.
 
 \begin{feature}
   In our example, we used a simple value to include in the request:
   the string ``python''.  But what if we want to submit a string that
-  contains, let's say, a space, or a character like |&| or |?| which,
+  contains, let's say, a space, or a character like \verb|&| or \verb|?| which,
   as we have seen, have a special meaning in the request? In these
   cases, you need to ``encode'' your URL using a mechanism called URL
   encoding or percent encoding. You may have seen this earlier: a
@@ -401,7 +401,7 @@ Regardless of whether you use XPATHS or CSS Selectors to specify which part of t
 \pyrex[output=py,caption={Getting the text of an HTML element versus getting the text of the element and its children}]{chapter12/htmlparse2}
 
 
-Notably, you may want to parse links. In HTML, links use a specific tag, |a|. These tags have an attribute, |href|, which contains the link itself. Example~\ref{ex:htmlparse3} shows how, after selecting the |a| tags, we can access these attributes.
+Notably, you may want to parse links. In HTML, links use a specific tag, \verb|a|. These tags have an attribute, \verb|href|, which contains the link itself. Example~\ref{ex:htmlparse3} shows how, after selecting the \verb|a| tags, we can access these attributes.
 
 \pyrex[output=py,caption={Parsing link texts and links}]{chapter12/htmlparse3}
 
@@ -469,7 +469,7 @@ Also think about how the data that you want to extract should be organized.
 We will illustrate this process using our mock-up review website \url{http://cssbook.net/d/restaurants/}.
 First, have a look at the site and try to understand its structure.
 
-You will see that it has an overview page, |index.html|, with the
+You will see that it has an overview page, \verb|index.html|, with the
 names of all restaurants and, per restaurant, a link to a page with reviews.
 Click on these links, and note your observations, such as:
 \begin{itemize}
@@ -496,7 +496,7 @@ that crawls and parses all reviews for all restaurants
 \pyrex[output=py,input=py,caption={Crawling a website}]{chapter12/crawling}
 
 First, we need to get a list of all restaurants and the links to their
-reviews. That's what is done in the function |get_restaurants|. This
+reviews. That's what is done in the function \verb|get_restaurants|. This
 is actually the first thing we do (see line 34--35).
 
 We now want to loop over these links and retrieve the reviews.  We
@@ -508,21 +508,21 @@ instance, due to a time out, a block, or a programming error), then we
 have already saved the reviews we got so far.
 
 We loop over the links to the restaurants (line 38) and call the
-function |get_reviews| (line 40). Each review it returns (the review
+function \verb|get_reviews| (line 40). Each review it returns (the review
 is a  dict) gets the name of the restaurant as an extra key, and then
 gets written to a file which contains one JSON-object per line (also
 known as a jsonlines-file).
 
-The function |get_reviews| takes a link to a review page as input and
+The function \verb|get_reviews| takes a link to a review page as input and
 yields reviews. If we knew all pages with reviews already, then we
 would not need the while loop statement in line 16 and the lines
 28--33. However, as we have seen, some review pages contain a link to
 older reviews. We therefore use a loop that runs forever (that is what
-|while True:| does), \emph{unless} it encounters a |break| statement
+\verb|while True:| does), \emph{unless} it encounters a \verb|break| statement
 (line 33).  An inspection of the HTML code shows that these links have
-a |span| tag with the attribute |class="backbutton"|. We therefore
-check if such a button exists (line 27), and if so, we get its |href|
-attribute (i.e., the link itself), overwrite the |url| variable with
+a \verb|span| tag with the attribute \verb|class="backbutton"|. We therefore
+check if such a button exists (line 27), and if so, we get its \verb|href|
+attribute (i.e., the link itself), overwrite the \verb|url| variable with
 it, and then go back to line 16, the beginning of the loop, so that we
 can download and parse this next URL.  This goes on until such a
 link is no longer found.
@@ -688,10 +688,10 @@ can find out what cookies you need to manually set.
 In Example~\ref{ex:cookiewall}, we illustrate this for a specific page  (at the
 time of writing of our book). Here, by inspecting the cookies in Firefox,
 we found out that clicking ``Accept'' on the cookie wall landing page
-caused a cookie with the name |cpc| and the value |10| to be set.   To set those cookies in our scraper, the easiest way is to retrieve that page first and store the cookies sent by the server. In Example~\ref{ex:cookiewall}, we therefore start a \emph{session}
+caused a cookie with the name \verb|cpc| and the value \verb|10| to be set.   To set those cookies in our scraper, the easiest way is to retrieve that page first and store the cookies sent by the server. In Example~\ref{ex:cookiewall}, we therefore start a \emph{session}
 and try to download the page. We know that this will only show us the
 cookie wall -- but it will also generate the necessary cookies. We then
-store these cookies, and add the cookie that we want to be set (|cpc=10|)
+store these cookies, and add the cookie that we want to be set (\verb|cpc=10|)
 to this cookie jar. Now, we have all cookies that we need for future
 requests. They will stay there for the whole session.
 
@@ -763,7 +763,7 @@ Once all ethical and legal concerns are sorted out and you have made sure that y
 
 \paragraph{Consider using a database} Imagine the following scenario: your scraper visits hundreds of websites, collects its results in a list or in a data frame, and after hours of running suddenly crashes -- maybe because some element that you were sure must exist on each page,  exists only on 999 out of 1000 pages, because a connection timed out, or any other error. Your data is lost, you need to start again (not only annoying, but also undesirable from a traffic minimization point of view). A better strategy may be to immediately write the data for each page  to a file. But then, you need to handle a potentially huge number of files later on. A much better approach, especially if you plan to run your scraper repeatedly over a long period of time, is to consider the use of a database in which you dump the results immediately after a page has been scraped (see Section~\ref{sec:databases}).
 
-\paragraph{Run your script from the command line} Store your scraper as a .py or .R script and run it from your terminal (your command line) by typing |python myscript.py| or |R myscript.R| rather than using an IDE such as Spyder or R Studio or a Jupyter Notebook. You may want to have your script print a lot of status information (for instance, which page it is currently scraping), so that you can watch what it is doing. If you want to, you can have your computer run this script in regular intervals (e.g., once an hour). On Linux and MacOS, for instance, you can use a so-called \index{cron}\emph{cron} job to automate this.
+\paragraph{Run your script from the command line} Store your scraper as a .py or .R script and run it from your terminal (your command line) by typing \verb|python myscript.py| or \verb|R myscript.R| rather than using an IDE such as Spyder or R Studio or a Jupyter Notebook. You may want to have your script print a lot of status information (for instance, which page it is currently scraping), so that you can watch what it is doing. If you want to, you can have your computer run this script in regular intervals (e.g., once an hour). On Linux and MacOS, for instance, you can use a so-called \index{cron}\emph{cron} job to automate this.
 
 \paragraph{Run your script on a server} If your scraper runs for longer than a couple of hours, you may not want to run it on your laptop, especially if your Internet connection is not stable. Instead, you may consider using a server. As we will explain in Section~\ref{sec:cloudcomputing}, it is quite affordable to set up a Linux VM on a cloud computing platform (and next to commercial services, in some countries and institutions there are free services for academics). You can then use tools like \index{nohup}\emph{nohup} or \index{screen}\emph{screen} to run your script on the background, even if you are no longer connected to the server (see Section~\ref{sec:cloudcomputing}).
 

@@ -105,7 +105,7 @@ economy rather than about sports, culture, etc. Yet, many of these
 articles won't directly state that they are about the economy by
 explicitly using the word ``economy''.
 
-We may think of extending our dictionary not only with |econom.*| (a
+We may think of extending our dictionary not only with \verb|econom.*| (a
 regular expression that includes economists, economic, and so on), but
 also come up with other words like ``stock exchange'', ``market'',
 ``company.'' Unfortunately, we will quickly run into a problem that we also
@@ -367,7 +367,7 @@ downloaded at
 
 These data do not come in one file, but rather in a set of textfiles
 that are sorted in different folders named after the dataset to which they
-belong  (|test| or |train|) and their label (|pos| and |neg|). This
+belong  (\verb|test| or \verb|train|) and their label (\verb|pos| and \verb|neg|). This
 means that we cannot simply use a pre-defined function to read them,
 but we need to think of a way of reading the content into a
 data structure that we can use.
@@ -517,7 +517,7 @@ result stays the same).
 
 Such a pipeline lends itself very well to performing a
 gridsearch. Example~\ref{ex:gridsearchlogreg} gives you an example.  With
-|LogisticRegression?| and |TfIdfVectorizer?|, we can get a list of all
+\verb|LogisticRegression?| and \verb|TfIdfVectorizer?|, we can get a list of all
 possible hyperparameters that we may want to tune. For instance, these
 could be the minimum and maximum frequency for words to be included or
 whether we want to use only unigrams (single words) or also bigrams
@@ -590,7 +590,7 @@ Therefore, it makes sense to save both our classifier and our
 vectorizer to a file, so that we can reload them later
 (Example~\ref{ex:reuse}). Keep in mind that you have to re-use \emph{both}
 -- after all, the columns of your feature matrix will be different (and hence, completely useless for the classifier) when
-fitting a new vectorizer. Therefore, as you see, you do not do any fitting any longer, and only use the |.transform()| method of the (already fitted) vectorizer and the |.predict()| method of the (already fitted) classifier.
+fitting a new vectorizer. Therefore, as you see, you do not do any fitting any longer, and only use the \verb|.transform()| method of the (already fitted) vectorizer and the \verb|.predict()| method of the (already fitted) classifier.
 
 In R, you have no vectorizer you could save -- but because in contrast to Python, both your DTM and your classifier include the feature names, it suffices to save the classifier only (using \verb+saveRDS(myclassifier, "myclassifier.rds")+) and using on a new DTM later on. You do need to remember, though, how you constructed the DTM (e.g., which preprocessing steps you took), to make sure that the features are comparable.
 
@@ -604,7 +604,7 @@ example, what actually characterizes the best and the worst
 reviews. Example~\ref{ex:eli5} shows how this can be done in one line of code
 using \index{eli5}\emph{eli5} -- a package that aims to ``\emph{e}xplain [the model]
 \emph{l}ike \emph{I}'m \emph{5} years old''. Here, we re-use the
-|pipe| we constructed earlier to provide both the vectorizer and the
+\verb|pipe| we constructed earlier to provide both the vectorizer and the
 classifier to  \index{eli5}\emph{eli5} -- if we had only provided the
 classifier, then the feature names would have been internal
 identifiers (which are meaningless to us) rather than human-readable

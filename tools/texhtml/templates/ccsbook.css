@@ -57,6 +57,15 @@ pre.output {
     font-size: x-small;
 }
 
+.code-output pre {
+    width: 130ch;
+    max-width: 100%;
+    overflow: scroll;
+    white-space: pre-wrap;
+    font-size: small;
+
+}
+
 .code-single pre {
     max-width: 100%;
     overflow: scroll;
@@ -111,6 +120,16 @@ pre.code code::before {
 
 .code-example img {
     max-width: 100%;
+}
+
+.code-caption {
+    color: grey;
+    font-style: italic;
+    font-size: small;
+}
+
+.code-output .code-caption{
+    border-bottom: 1px dotted grey;
 }
 
 .code-row-double {

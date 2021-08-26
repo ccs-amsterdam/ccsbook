@@ -1,7 +1,9 @@
 import logging
 import shutil
+import subprocess
 import sys
 import re
+import tempfile
 from collections import namedtuple
 from io import StringIO
 from itertools import count
@@ -25,11 +27,14 @@ IGNORE = {
     "center",
     "toprule",
     "bottomrule",
+    "footnotesize",
+    "nocite",
+    "vspace",
+    "hfill",
 }
 SIMPLE_ENVS = {
     "[tex]": None,
     "feature": "div class='feature'",
-    "item": "li",
     "table": "div class='figure'"
 }
 SIMPLE_COMMANDS = {
@@ -41,6 +46,7 @@ SIMPLE_COMMANDS = {
     "paragraph": "b",
     "concept": "code",
     "fn": "code",
+    "pkg": "code",
 
 }
 SIMPLE_NODES = {
@@ -52,6 +58,9 @@ SIMPLE_NODES = {
     "rbrack": "]",
     "tidyverse": "<code>tidyverse</code>",
     "pandas": "<code>pandas</code>",
+    "sklearn": "<code>scikit-learn</code>",
+    "numpy": "<code>numpy</code>",
+
 }
 SUBS = {
     "<": "&lt;",
@@ -71,7 +80,10 @@ SUBS = {
     "\\)": ")",
 }
 ACCENTS = {
-    "\\'": 'acute'
+    "\\'": 'acute',
+    '\\"': 'uml',
+    '\\`': 'grave',
+    '\\=': 'macr',
 }
 
 
@@ -94,6 +106,7 @@ class Parser:
         self._img_folder = self._out_folder / "img"
         self._img_folder.mkdir(parents=True, exist_ok=True)
         self._intable = False
+        self._last_float = None
 
 
     def emit(self, text: str):
@@ -119,6 +132,8 @@ class Parser:
             getattr(self, node.name)(node, nodes)
         elif node.name == "$":
             self.dollar(node)
+        elif node.name == "$$":
+            self.double_dollar(node)
         elif node.name in SIMPLE_ENVS:
             self.simple_env(node)
         elif node.name in SIMPLE_COMMANDS:
@@ -129,7 +144,7 @@ class Parser:
             pass
         else:
             self._unknown_nodes.add(node.name)
-            logging.warning(f"Unknown node: {node.name} [{type(node)}: {repr(node)[:20]}...]")
+            logging.warning(f"Unknown node: {node.name} [{type(node)}: {repr(node)[:60]}...]")
 
     ##### GENERIC MARKUP #####
 
@@ -223,11 +238,17 @@ class Parser:
     ###### MATH ######
 
     def dollar(self, node):
+        self._open_p()
         expr = str(node).strip("$")
         if self._intable and expr == "\\cdots":
             self.emit("&hellip;")
         else:
             self.emit(f"\\({expr}\\)")
+
+    def double_dollar(self, node):
+        self._close_p()
+        mathjax = str(node).strip("$")
+        self.emit(f"<p>\\({mathjax}\\)</p>")
 
     ###### MARKUP #####
 
@@ -236,6 +257,7 @@ class Parser:
         text = escape(str(node._contents[0]))
 
         self.emit(f"<pre>{text}</pre>")
+    lstlisting = verbatim
 
     def verbplaceholder(self, node, _nodes):
         self._open_p()
@@ -249,10 +271,10 @@ class Parser:
         next = nodes.pop(0)
         if getattr(next, "name", None) == "BraceGroup":
             text = "".join(next.string)
-        elif isinstance(next, TexSoup.utils.Token):
+        elif isinstance(next, (TexSoup.utils.Token, TexSoup.data.TexText)):
             text = str(next)
         else:
-            raise TypeError(next)
+            raise TypeError(f"Expeced token or bracegroup, got {type(next)}: {str(next)}")
         self.emit(f"&{text[0]}{accent};{text[1:]}")
 
     def url(self, node, nodes):
@@ -339,20 +361,55 @@ class Parser:
         self.parse(node._contents)
         self.emit("\n</ol>")
 
+    def itemize(self, node, _nodes):
+        self._close_p()
+        self.emit("\n<ul>")
+        self.parse(node._contents)
+        self.emit("\n</ul>")
+    description = itemize
+
+    def item(self, node, _nodes):
+        self._close_p()
+        self.emit("<li>")
+        if node.args:
+            args = list(node.args)
+            if isinstance(args[0], BracketGroup):
+                title = args.pop(0)
+                self.emit("<b>")
+                self.parse(title._contents)
+                self.emit("</b>.")
+            self.parse(args)
+        self.parse(node._contents)
+        self.emit("</li>")
+
     ### FIGURES / TABLES ###
+
+    def minipage(self, node, nodes):
+        self.parse(node._contents)
 
     def figure(self, node, nodes):
         self.emit("<div class='figure'>")
         # pull caption and label to start
         nodes = list(node._contents)
-        nodes = [_pop_named(nodes, "caption"), _pop_named(nodes, "label")] + nodes
+        names = [node.name for node in nodes]
+        caption = _pop_named(nodes, "caption", strict=False)
+        if not caption:
+            assert 'feature' in names  # This is not really a figure, just a 'floating feature'
+            return self.parse(node._contents)
+        label = _pop_named(nodes, "label", strict=False)
+        if not label:
+            label = _label_from_caption(caption)
+        nodes = [caption, label] + nodes
         self.parse(nodes)
         self.emit("</div>")
+
 
     def includegraphics(self, node, _nodes):
         if self._intable:
             self._open_cell()
-        img = Path(_args(node)[0])
+
+        fn = _arg(node).replace("{", "").replace("}", "")
+        img = Path(fn)
         if img.name == "emoji.pdf":
             return self.emit("&#x1F60A;")
         elif img.name == "hangul.pdf":
@@ -363,6 +420,12 @@ class Parser:
             img = img.with_suffix(".png")
         html = self._img_html(img)
         self.emit(html)
+
+    def tikzpicture(self, node, _nodes):
+        fn = f"{self._last_float.replace(':', '_')}.png"
+        tikzfig(self._img_folder / fn, str(node))
+        self.emit(f"<img src='img/{fn}' />")
+    neuralnetwork=tikzpicture
 
     def _img_html(self, img: Path):
         outf = self._img_folder / img.name
@@ -382,6 +445,13 @@ class Parser:
 
     def tabularx(self, node, _nodes):
         size, columns = _args(node)
+        self._table(node, columns)
+
+    def tabular(self, node, _nodes):
+        columns = _arg(node)
+        self._table(node, columns)
+
+    def _table(self, node, columns):
         self._intable = dict(columns=list(columns), inhead=True, inrow=None, incell=False)
         self.emit("<table class='table'>")
         self.emit("<thead>\n")
@@ -400,7 +470,7 @@ class Parser:
         #self._close_cell()
 
     def _table_text(self, text):
-        for t in re.split(r"(\\\\|&)", text):
+        for t in re.split(r"(\\\\|&(?!\w+;))", text):
             if t == "\\\\":
                 self._close_row()
             elif t == "&":
@@ -466,6 +536,7 @@ class Parser:
                  "tab": "Table"}[ref.split(":")[0]]
         self.emit(f"<h4>\n")
         self._caption(ref, f"{label} {nr}")
+        self._last_float = ref
         self.parse(contents)
         self.emit("</h4>\n")
 
@@ -475,6 +546,23 @@ class Parser:
             self.emit("<br />\n")
         if caption:
             self.emit(caption)
+
+    def dirtree(self, node, _nodes):
+        cur_depth = 0
+        for line in _arg(node).split("\n"):
+            if m := re.match(r"\.(\d+) (.*)\.", line):
+                text = m.group(2)
+                for k, v in SUBS.items():
+                    text = text.replace(k, v)
+                depth = int(m.group(1))
+                if depth == (cur_depth + 1):
+                    self.emit("<ul style='list-style-type: \"↪\"'>")
+                    cur_depth = depth
+                elif depth == (cur_depth - 1):
+                    self.emit("</ul>")
+                    cur_depth = depth
+                self.emit(f"<li>{text}</li>")
+        self.emit("</ul>" * cur_depth)
 
     ##### CODE EXAMPLES #####
     def _read_snippet(self, fn):
@@ -518,7 +606,10 @@ class Parser:
         self.emit("</div>")
 
     def codexoutputtable(self, node, _nodes):
-        self._codexoutputtable(_arg(node))
+        fn = _arg(node)
+        lang = Path(fn).suffix.replace(".", "")
+        caption = outputcaption(lang)
+        self._codexoutput(_arg(node), "table", caption)
 
     def _codexoutputtable(self, fn):
         snippet_file = self._base / "snippets" / f"{fn}.table.html"
@@ -526,7 +617,10 @@ class Parser:
         self.emit(f"<div class='table-wrapper'>{content}</div>")
 
     def codexoutputpng(self, node, _nodes):
-        self._codexoutputpng(_arg(node))
+        fn = _arg(node)
+        lang = Path(fn).suffix.replace(".", "")
+        caption = outputcaption(lang)
+        self._codexoutput(_arg(node), "png", caption)
 
     def _codexoutputpng(self, fn):
         snippet_file = self._base / "snippets" / f"{fn}.png"
@@ -538,13 +632,24 @@ class Parser:
         content = content.replace("<", "&lt;").replace(">", "&gt;")
         self.emit(f"<pre class='output'>{content}</pre>")
 
-    def _codexoutput(self, fn, format):
+    def _codexoutputhtml(self, fn):
+        snippet_file = self._base / "snippets" / f"{fn}.html"
+        content = snippet_file.open().read()
+        self.emit(content)
+
+
+    def _codexoutput(self, fn, format, caption=None):
+        self.emit(f"\n<div class='code-output'>")
+        if caption:
+            self.emit(f"\n    <div class='code-caption'>{caption}</div>\n")
         handlers = dict(
             png=self._codexoutputpng,
             table=self._codexoutputtable,
             plain=self._codexoutputplain,
+            html=self._codexoutputhtml,
         )
         handlers[format](fn)
+        self.emit("\n</div>")
 
     def doubleoutput(self, node, _nodes):
         self._doubleoutput(_arg(node))
@@ -553,21 +658,34 @@ class Parser:
     def _doubleoutput(self, fn):
         self.emit("<div class='code-row-double'>")
         for output in "py", "r":
-            self._codexoutput(f"{fn}.{output}", "plain")
+            name = dict(py="Python", r="R")[output]
+            self._codexoutput(f"{fn}.{output}", "plain", f"{name} output")
         self.emit("</div>")
 
     def tcbraster(self, node, _nodes):
         self._close_p()
         self.emit("<div class='code-row-double'>")
         codices = [n for n in node._contents if getattr(n, "name", None) == "codex"]
-        snippets = [self._read_snippet(_arg(n)) for n in codices]
-        add_blank_lines(*snippets)
-        captions = [self.extract_kwargs(_optarg(n))['caption'] for n in codices]
-        assert len(codices) == 2
-        self._code_input(captions[0], snippets[0])
-        self._code_input(captions[1], snippets[1])
-        #self.codex(codices[0])
+        if len(codices) == 2:
+            snippets = [self._read_snippet(_arg(n)) for n in codices]
+            add_blank_lines(*snippets)
+            captions = [self.extract_kwargs(_optarg(n))['caption'] for n in codices]
+            self._code_input(captions[0], snippets[0])
+            self._code_input(captions[1], snippets[1])
+        else:
+            boxes = [n for n in node._contents if getattr(n, "name", None) == "tcolorbox"]
+            assert len(boxes) == 2
+            self.parse(boxes)
         self.emit("</div>")
+
+    def tcolorbox(self, node, _nodes):
+        self._close_p()
+        kwargs = self.extract_kwargs(_optarg(node))
+        self.emit(f"\n<div class='code-output'>")
+        if 'title' in kwargs:
+            self.emit(f"\n    <div class='code-caption'>{kwargs['title']}</div>\n")
+        self.parse(node._contents)
+        self.emit("\n</div>")
 
     def ccsexample(self, node, nodes):
         self._close_p()
@@ -586,7 +704,14 @@ class Parser:
         nr = self._toc.labels[ref]
         # Captions from kwargs are not parsed, so manually do required substitutions
         caption = kwargs['caption']
-        caption = re.sub(r"\$([^$]+)\$", "<i>\\1</i>", caption)
+        caption = re.sub("\$([^$]+)\$", "<i>\\1</i>", caption)
+        parts = []
+        for x in re.split(r"(\\['\"`=]\w)", caption):
+            if x[:-1] in ACCENTS:
+                parts.append(f"&{x[-1]}{ACCENTS[x[:-1]]};")
+            else:
+                parts.append(x)
+        caption = "".join(parts)
         self.emit("<h4>")
         self._caption(ref, f"Example {nr}", caption=caption)
         self.emit("</h4>")
@@ -600,7 +725,7 @@ class Parser:
         output = kwargs.get('output', 'both')
         format = kwargs.get('format', 'plain')
         if output in ('r', 'py'):
-            self._codexoutput(f"{fn}.{output}", format)
+            self._codexoutput(f"{fn}.{output}", format, caption=outputcaption(output))
         elif output == "both":
             self._doubleoutput(fn)
         self.emit("</div>")
@@ -629,6 +754,12 @@ class Parser:
 
     def refsec(self, node, _nodes):
         self._ref("Section", f"sec:{_args(node)[0]}")
+
+    def pageref(self, node, _nodes):
+        ref = _arg(node)
+        assert ref == "feature:sparse"
+        return self.ref
+
 
     def reffig(self, node, _nodes):
         self._ref("Figure", f"fig:{_args(node)[0]}")
@@ -665,8 +796,8 @@ class Parser:
             html = f'<span class="cite" title="{entry}">{short}</span>'
             refs.append(html)
         self.emit('; '.join(refs))
-    def citealp(self, node):
-        self.citet(node, add_parentheses=False)
+    def citealp(self, node, nodes):
+        self.citet(node, nodes, add_parentheses=False)
     cite = citet
 
     def extract_kwargs(self, argtext):
@@ -735,8 +866,17 @@ def thumbnail(img: Path, size=640) -> Path:
         im.save(outf)
     return outf
 
-def _pop_named(nodes, name):
-    return nodes.pop([node.name for node in nodes].index(name))
+
+def _label_from_caption(caption):
+    assert len(caption.args) == 1
+    return _pop_named(caption.args[0]._contents, "label", strict=False)
+
+
+def _pop_named(nodes, name, strict=True):
+    names = [node.name for node in nodes]
+    if not strict and name not in names:
+        return
+    return nodes.pop(names.index(name))
 
 
 def preprocess(tex: str):
@@ -751,14 +891,50 @@ def preprocess(tex: str):
         else:
             buffer.append(x)
     tex = "".join(buffer)
-    tex = tex.replace("\\ ", " ").replace("\\,", "")
+    tex = tex.replace("\\ ", " ").replace("\\,", "").replace("on p.~\\pageref{feature:sparse}", "in \\refsec{workflow}")
+
     return tex, verbs
 
+def outputcaption(lang):
+    name = dict(py="Python", r="R")[lang]
+    other = dict(py="R", r="Python")[lang]
+    return f"{name} output. Note that {other} output may look slightly different"
+
+
+def tikzfig(outf: Path, tikz: str, density=144):
+    tmpdir = Path(tempfile.mkdtemp())
+    logging.info(f"Creating tikz figure in {tmpdir}")
+    with open(tmpdir / "test.tex", "w") as f:
+        f.write("""\\documentclass{article}
+                   \\usepackage{tikz}
+                   \\usepackage{pgfplots}
+                   \\usepackage{neuralnetwork} 
+                   \\usetikzlibrary{external}
+                   \\tikzexternalize
+                   \\begin{document}\n\n""")
+        f.write(tikz)
+        f.write("\n\n\\end{document}")
+    cmd = 'pdflatex -halt-on-error -interaction=batchmode -jobname "test-figure0" "\\def\\tikzexternalrealjob{test}\input{test}"'
+    subprocess.check_call(cmd, shell=True, cwd=tmpdir)
+    cmd = ["convert", "-density", str(density), tmpdir/'test-figure0.pdf', outf]
+    subprocess.check_call(cmd)
+    shutil.rmtree(tmpdir)
 
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO, format='[%(asctime)s %(name)-12s %(levelname)-5s] %(message)s')
+    if True:
+        tikz = '''\\dirtree{%
+        .1 html.
+        .2 body.
+        }'''
+        tikzfig("/tmp/test.png", tikz)
+        sys.exit()
+
     tex = " ".join(sys.argv[1:])
-    #tex, verbs = preprocess(tex)
+    #tex = open("/home/wva/test.tex").read()
+    tex, verbs = preprocess(tex)
     nodes = TexSoup.TexSoup(tex).expr._contents
-    #p = Parser(chapter=1, sink=StringIO(), verbs=verbs)
-    #p.parse([root])
-    #print(p.sink.getvalue())
+    p = Parser(chapter=1, sink=StringIO(), verbs=verbs, base=None, out_folder=Path("/tmp"), toc=None, bibliography=None)
+    html = p.parse_str(nodes)
+    print(html)
+    #open("/tmp/bla.html", "w").write(html)

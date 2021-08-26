@@ -39,8 +39,7 @@ for chapnr, chapter in enumerate(toc.chapters, start=1):
         continue
     outf = out / chapter.fn
     print(f"{chapter.nr}: {chapter.texfile} -> {outf}")
-
-
+    current_chapter = chapter.fn
     with open(chapter.texfile) as source:
         tex, verbs = preprocess(source.read())
 

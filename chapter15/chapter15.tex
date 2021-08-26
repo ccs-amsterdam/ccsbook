@@ -89,8 +89,8 @@ for relational databases. Even though they have already been around for
 powerful and very widely used.  They consist of multiple tables that
 are linked by shared columns (keys). For instance, you could imagine a
 table with the orders placed in a webshop that has a column
-|customer-id|, and a different table with addresses, billing
-information, and for each |customer-id|. Using filter and join
+\verb|customer-id|, and a different table with addresses, billing
+information, and for each \verb|customer-id|. Using filter and join
 operations (like in Chapter~\ref{chap:datawrangling}, but then on the database directly), one can then easily retrieve
 information on where the order has to be shipped. A big advantage of
 such a relational database is that, if a customer places 100 orders,
@@ -200,7 +200,7 @@ Of course, \index{SQlite}\emph{SQlite} cannot give you the same performance as a
 write-operations per second, then you may have to switch at some
 point. But as you can see in Example~\ref{ex:sqlite}, Python and R do not
 really care about the back end: all you need to do is to change the
-connection |conn| such that it points to your new database instead of
+connection \verb|conn| such that it points to your new database instead of
 the sqlite file.
 
 
@@ -287,18 +287,18 @@ After a couple of minutes, your machine is ready to use.
     \includegraphics[width=\textwidth]{figures/vmopennebula.png}
     %\caption{}
   \end{minipage}
-  \caption{Creating a Virtual Machine on Microsoft Azure (left) and on a university cloud computing platform using OpenNebula (right).\label{fig:createvm}}
+  \caption{\label{fig:createvm}Creating a Virtual Machine on Microsoft Azure (left) and on a university cloud computing platform using OpenNebula (right).}
 \end{figure}
 
 While setting up such a machine is easy, some knowledge is required
 for the responsible and safe administration of the machine, in
 particular to prevent unauthorized access.
 
-Imagine you have a script |myscript.py| that takes a couple of days to
-run. You can then use the tool |scp| to copy it to your new virtual
-machine, log on to your virtual machine using |ssh|, and then -- now
+Imagine you have a script \verb|myscript.py| that takes a couple of days to
+run. You can then use the tool \verb|scp| to copy it to your new virtual
+machine, log on to your virtual machine using \verb|ssh|, and then -- now
 on your virtual machine! -- run the script using a tool such as
-|nohup| or |screen| that will start your script and will keep running
+\verb|nohup| or \verb|screen| that will start your script and will keep running
 it (Figure~\ref{fig:ssh}). You can safely logout again, and your
 virtual machine in the cloud will keep on doing its work. The only
 thing you need to do is collect your results once your script is done,
@@ -309,7 +309,7 @@ it at set intervals.
 \begin{figure}[!tbp]
   \centering
   \includegraphics[width=\textwidth]{figures/ssh.png}
-  \caption{Running a script on a virtual machine\label{fig:ssh}. Note that the first two commands are issued on the local machine (``damian-thinkpad'') and the next command on the remote machine (``packer-ubuntu-16'').}
+  \caption{\label{fig:ssh}Running a script on a virtual machine. Note that the first two commands are issued on the local machine (``damian-thinkpad'') and the next command on the remote machine (``packer-ubuntu-16'').}
 \end{figure}
 
 You may want to have some extra luxury, though. Popular things to
@@ -354,8 +354,8 @@ restrictions (\cite{VanAtteveldt2019}). Using a version control
 platform like github from the beginning makes this easy: when
 publishing your paper, the only thing you have to do is to set access
 of your repository to ``public'' (in case it was private before), add
-a |README.md| file (in case you have not done so earlier), and
-preferably, get a persistent identifier, a |doi| for your
+a \verb|README.md| file (in case you have not done so earlier), and
+preferably, get a persistent identifier, a \verb|doi| for your
 code (see \url{https://guides.github.com/activities/citable-code/}).
 And don't forget to add a license to your code, such as MIT, GPL, or
 Apache. All of these have specific implications on what others can or
@@ -388,7 +388,7 @@ The checklist below can help making your code publishable from the
 outset.
 
 \begin{itemize}
-\item Do not hard-code values. Rather than using |"myoutputfile.csv"| or |50| within your script, create constants like |OUTPUTFILE="myoutputfile"| and |NUMBER_OF_TOPICS=50| at the beginning of your script and use these variables instead of the values later on. Even better, let the user provide these arguments as command line arguments or via a configuration file.
+\item Do not hard-code values. Rather than using \verb|"myoutputfile.csv"| or \verb|50| within your script, create constants like \verb|OUTPUTFILE="myoutputfile"| and \verb|NUMBER_OF_TOPICS=50| at the beginning of your script and use these variables instead of the values later on. Even better, let the user provide these arguments as command line arguments or via a configuration file.
 \item Use functions. Rather than writing large scripts that are executed from the first line to the last in that order, structure the code in different functions that fulfill one specific task each, and can hence be reused. If you find yourself copy-pasting code, then most likely, you can write a function instead.
 \item Document your code. Use docstrings (Python) or comments (R) to make clear what each function does.
 \end{itemize}
@@ -424,21 +424,18 @@ so-called \emph{Docker image}. You can build such an image yourself,
 but it can also be distributed by pushing it to a so-called registry,
 such as the \index{Docker Hub}\emph{Docker Hub}. If you publish your software this
 way, the end user has to do nothing other than installing Docker and
-running the command |docker run nameofyourimage| -- it will even be 
+running the command \verb|docker run nameofyourimage| -- it will even be
 downloaded automatically if necessary. There are also GUI versions
 of Docker available, which lowers the threshold for some end user
 groups even more.
 
 Let's illustrate the typical workflow with a toy example. Imagine
-you wrote the following script, |myscript.py|:
+you wrote the following script, \verb|myscript.py|:
 
 \begin{verbatim}
 import numpy as np
-
 from random import randint
-
 a = randint(0,10)
-
 print(f"exp({a}) = {np.exp(a)}")
 \end{verbatim}
 
@@ -454,31 +451,29 @@ What would a Docker image that runs this code need to contain? Not
 much: first some basic operating system (usually, a tiny Linux distribution),
 Python, numpy, and the script itself.
 
-To create such a Docker image, you create a file named |Dockerfile|
+To create such a Docker image, you create a file named \verb|Dockerfile|
 in the same directory as your script with the following content:
 
-\texttt{
+\begin{verbatim}
 FROM python:3
-
 ADD myscript.py /
-
 RUN pip install numpy
-
-CMD [ "python", "./myscript.py" ] }
+CMD [ "python", "./myscript.py" ]
+\end{verbatim}
 
 
 The first line tells Docker to build your new image by starting
 from an existing image that already contains an operating system
 and Python3. You could also start from scratch here, but this
 makes your life much easier. The next line adds your script to the
-image, and then we run |pip install numpy| within the image.
+image, and then we run \verb|pip install numpy| within the image.
 The last line just specifies which command with which parameters
 needs to be executed when the image is run -- in our case
-|python ./myscript.py|.
+\verb|python ./myscript.py|.
 
-To create the image, you run |docker build -t dockertest .| (naming
+To create the image, you run \verb|docker build -t dockertest .| (naming
 the image ``dockertest''). After that, you can run
-it using |docker run dockertest| -- and, if you want to, publish it.
+it using \verb|docker run dockertest| -- and, if you want to, publish it.
 
 Easy, right?
 

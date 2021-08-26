@@ -62,21 +62,22 @@ For example, should ``haven't'' be seen as a single word, or two?
 \pyrex[caption=Differences between tokenizers]{chapter10/tokenize}
 
 Example~\ref{ex:tokenize} shows how Python and R deal with the sentence ``I haven't seen John's derring-do''.
-For Python, we first use |CountVectorizer.build_tokenizer| to access the built-in tokenizer.
-As you can see in the first line of input, this tokenizes ``haven't'' to |haven|,
+For Python, we first use \verb|CountVectorizer.build_tokenizer| to access the built-in tokenizer.
+As you can see in the first line of input, this tokenizes ``haven't'' to \verb|haven|,
 which of course has a radically different meaning. Moreover, it silently drops all single-letter words,
-including the |'t|, |'s|, and |I|.
+including the \verb|'t|, \verb|'s|, and \verb|I|.
 
-In the box ``Tokenizing in Python'' below, we therefore discuss some alternatives. For instance, the \index{TreebankWordTokenizer}\texttt{TreebankWordTokenizer} included in the \index{nltk}\emph{nltk} package is a more reasonable tokenizer and
-splits ``haven't'' into |have| and |n't|, which is a reasonable outcome.
+In the box ``Tokenizing in Python'' below, we therefore discuss some alternatives.
+For instance, the \index{TreebankWordTokenizer}\texttt{TreebankWordTokenizer} included in the \index{nltk}\emph{nltk} package is a more reasonable tokenizer and
+splits ``haven't'' into \verb|have| and \verb|n't|, which is a reasonable outcome.
 Unfortunately, this tokenizer assumes that text has already been split into sentences,
 and it also includes punctuation as tokens by default.
 To circumvent this, we can introduce a custom tokenizer based on the Treebank tokenizer,
 which splits text into sentences (using \index{nltk.sent\_tokenize}\texttt{nltk.sent\_tokenize}) -- see the box for more details.
 
 For R, we simply call the \index{tokens}\texttt{tokens} function from the \index{quanteda}\emph{quanteda}\ package.
-This keeps |haven't| and |John's| as a single word, which is probably less desirable than splitting the words
-but at least better than outputting the word |haven|.
+This keeps \verb|haven't| and \verb|John's| as a single word, which is probably less desirable than splitting the words
+but at least better than outputting the word \verb|haven|.
 
 As this simple example shows, even a relatively simple sentence is tokenized differently by the tokenizers considered here (and see the box on tokenization in Python).
 Depending on the research question, these differences might or might not be important.
@@ -117,13 +118,13 @@ what information is kept or discarded.
 \begin{ccsexample}
   \doublecodex{chapter10/haiku}
   \begin{tcbraster}[raster columns=2,raster equal height=rows,raster valign=top]
-  \begin{tcolorbox}[title=Python Output]
-      \includegraphics[width=\linewidth]{{chapter10/haiku.py}.png}
-  \end{tcolorbox}%
-  \begin{tcolorbox}[title=R Output]
-      \includegraphics[width=\linewidth]{{chapter10/haiku.r}.png}
-  \end{tcolorbox}%
-\end{tcbraster}
+    \begin{tcolorbox}[title=Python Output]
+        \includegraphics[width=\linewidth]{{chapter10/haiku.py}.png}
+    \end{tcolorbox}%
+    \begin{tcolorbox}[title=R Output]
+        \includegraphics[width=\linewidth]{{chapter10/haiku.r}.png}
+    \end{tcolorbox}%
+  \end{tcbraster}
   \caption{Tokenization of Japanese verse.}\label{ex:haiku}
 \end{ccsexample}
 
@@ -254,7 +255,7 @@ For example, Example~\ref{ex:wordcloud} shows the word cloud for the state of th
 In R, this is done using the \index{quanteda}\emph{quanteda}\ function \index{textplot\_wordcloud}\texttt{textplot\_wordcloud}.
 In Python we need to work a little harder, since it only has the counts, not the actual words.
 So, we sum the DTM columns to get the frequency of each word, and combine that with the feature names (words)
-from the |CountVectorized| object |cv|. Then we can create the word cloud and give it the frequencies to use.
+from the \verb|CountVectorized| object \verb|cv|. Then we can create the word cloud and give it the frequencies to use.
 Finally, we plot the cloud and remove the axes.
 
 \pyrex[caption=Word cloud of the US State of the Union corpus,format=png]{chapter10/wordcloud}
