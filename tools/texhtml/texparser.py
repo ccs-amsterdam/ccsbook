@@ -276,7 +276,8 @@ class Parser:
             text = str(next)
         else:
             raise TypeError(f"Expeced token or bracegroup, got {type(next)}: {str(next)}")
-        self.emit(f"&{text[0]}{accent};{text[1:]}")
+        self.emit(f"&{text[0]}{accent};")
+        self._text(text[1:])
 
     def url(self, node, nodes):
         href, = _args(node)
@@ -711,7 +712,6 @@ class Parser:
         ref = f"ex:{Path(fn).name}"
         nr = self._toc.labels[ref]
         # Captions from kwargs are not parsed, so manually do required substitutions
-        print("???", kwargs['caption'])
         caption = kwargs['caption']
         caption = re.sub("\$([^$]+)\$", "<i>\\1</i>", caption)
         parts = []
