@@ -49,12 +49,8 @@ pre.output {
     max-height: 20ch;
 }
 
-.code-row-double pre {
-    width: 55ch;
-    max-width: 100%;
-    overflow: scroll;
-    white-space: pre-wrap;
-    font-size: x-small;
+.code-row-double .code-output pre {
+    width: 55ch !important;
 }
 
 .code-output pre {

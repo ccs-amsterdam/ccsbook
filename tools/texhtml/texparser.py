@@ -72,7 +72,7 @@ SUBS = {
     "''": '&rdquo;',
     '--': '&ndash;',
     "\\#": '#',
-    "\\%": "%",
+    "\\%": "&percnt;",
     "\\_": "_",
     "\\$": "$",
     "\\^": "^",
@@ -107,6 +107,7 @@ class Parser:
         self._img_folder.mkdir(parents=True, exist_ok=True)
         self._intable = False
         self._last_float = None
+        self._in_footnote = False
 
 
     def emit(self, text: str):
@@ -283,7 +284,9 @@ class Parser:
         self.emit(f"<a href='{href}'>{text}</a>")
 
     def footnote(self, node, nodes):
+        self._in_footnote = True
         inner = self.parse_str(node.args[0]._contents)
+        self._in_footnote = False
         # Footnote cannot contain math, so un-jax it:
         #TODO: deal with expressions within footnotes?
         inner = inner.replace("\\(", " <em>").replace("\\)", "</em> ")
@@ -616,6 +619,11 @@ class Parser:
         content = snippet_file.open().read()
         self.emit(f"<div class='table-wrapper'>{content}</div>")
 
+    def codexpng(self, node, _nodes):
+        caption, _size, fn = _args(node)
+        self._codexoutput(fn, "png", caption)
+
+
     def codexoutputpng(self, node, _nodes):
         fn = _arg(node)
         lang = Path(fn).suffix.replace(".", "")
@@ -652,14 +660,14 @@ class Parser:
         self.emit("\n</div>")
 
     def doubleoutput(self, node, _nodes):
-        self._doubleoutput(_arg(node))
+        self._doubleoutput(_arg(node), format="plain")
 
 
-    def _doubleoutput(self, fn):
+    def _doubleoutput(self, fn, format):
         self.emit("<div class='code-row-double'>")
         for output in "py", "r":
             name = dict(py="Python", r="R")[output]
-            self._codexoutput(f"{fn}.{output}", "plain", f"{name} output")
+            self._codexoutput(f"{fn}.{output}", format, f"{name} output")
         self.emit("</div>")
 
     def tcbraster(self, node, _nodes):
@@ -703,6 +711,7 @@ class Parser:
         ref = f"ex:{Path(fn).name}"
         nr = self._toc.labels[ref]
         # Captions from kwargs are not parsed, so manually do required substitutions
+        print("???", kwargs['caption'])
         caption = kwargs['caption']
         caption = re.sub("\$([^$]+)\$", "<i>\\1</i>", caption)
         parts = []
@@ -712,6 +721,7 @@ class Parser:
             else:
                 parts.append(x)
         caption = "".join(parts)
+        caption = self.parse_str(TexSoup.TexSoup(kwargs['caption']).expr._contents)
         self.emit("<h4>")
         self._caption(ref, f"Example {nr}", caption=caption)
         self.emit("</h4>")
@@ -727,7 +737,7 @@ class Parser:
         if output in ('r', 'py'):
             self._codexoutput(f"{fn}.{output}", format, caption=outputcaption(output))
         elif output == "both":
-            self._doubleoutput(fn)
+            self._doubleoutput(fn, format)
         self.emit("</div>")
 
 
@@ -736,7 +746,7 @@ class Parser:
         self.emit(self._ref_html(label, ref))
 
     def _ref_html(self, label, ref):
-        if ref not in self._toc.labels:
+        if not self._toc or ref not in self._toc.labels:
             logging.warning(f"unknown reference: {ref}")
             file, nr = "", "??"
         else:
@@ -793,7 +803,7 @@ class Parser:
             if add_parentheses:
                 short = re.sub(r", (\d\d\d\d)", " (\\1)", short)
             entry = " ".join(entries)
-            html = f'<span class="cite" title="{entry}">{short}</span>'
+            html = short if self._in_footnote else f'<span class="cite" title="{entry}">{short}</span>'
             refs.append(html)
         self.emit('; '.join(refs))
     def citealp(self, node, nodes):
@@ -827,21 +837,21 @@ class Parser:
                     raise
         return result
 
-def _optargs(node):
+def _optargs(node) -> List[str]:
     return [str(x.string) for x in node.args if isinstance(x, BracketGroup)]
 
 
-def _optarg(node):
+def _optarg(node) -> str:
     args = _optargs(node)
     assert len(args) == 1, f"#Optional Arguments != 1: {args} [{node}]"
     return args[0]
 
 
-def _args(node):
+def _args(node) -> List[str]:
     return [str(x.string) for x in node.args if isinstance(x, BraceGroup)]
 
 
-def _arg(node):
+def _arg(node) -> str:
     args = _args(node)
     assert len(args) == 1, f"#Arguments != 1: {args} [{node}]"
     return args[0]
@@ -922,18 +932,11 @@ def tikzfig(outf: Path, tikz: str, density=144):
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, format='[%(asctime)s %(name)-12s %(levelname)-5s] %(message)s')
-    if True:
-        tikz = '''\\dirtree{%
-        .1 html.
-        .2 body.
-        }'''
-        tikzfig("/tmp/test.png", tikz)
-        sys.exit()
-
     tex = " ".join(sys.argv[1:])
     #tex = open("/home/wva/test.tex").read()
     tex, verbs = preprocess(tex)
     nodes = TexSoup.TexSoup(tex).expr._contents
+    n = nodes.copy()
     p = Parser(chapter=1, sink=StringIO(), verbs=verbs, base=None, out_folder=Path("/tmp"), toc=None, bibliography=None)
     html = p.parse_str(nodes)
     print(html)
