@@ -1,6 +1,9 @@
 import re
 import sys
 import keyword
+from pathlib import Path
+from subprocess import check_output
+
 keywords = {"py": {"!pip3", "install"} | set(keyword.kwlist),
             "r": {"colnames", "glue","print","library","install.packages",r"%>%" }}
 
@@ -85,9 +88,7 @@ def check(snippet):
             yield i+1, "TOO LONG"
         if "'" in line and '"' not in line:
             yield i+1, "QUOTE   "
-            print()
-            print(line)
-            print()
+            print(repr(line))
         if "http:" in line:
             yield i+1, "NO HTTPS"
 
@@ -102,7 +103,10 @@ def get_snippets(fn):
         return
     snippet = open(f"snippets/{fn}").read()
     for i, problem in check(snippet):
-        print(f"[{problem}] {caption}:{i}")
+        ref = Path(fn).with_suffix("").name
+        cmd = f"grep -l '{ref}' {Path(fn).parent}/*.ipynb"
+        files = ", ".join(check_output(cmd, shell=True, encoding='utf-8').strip().split("\n"))
+        print(f"[{problem}] {caption}:{i} [{ref}:{files}]")
     title = f"{langs[lang]} {'output' if x else 'code'}"
     yield title, lang, snippet
 
@@ -113,6 +117,8 @@ def output(chapter, snippets):
         f.write(html)
         
 
+only_chapter = int(sys.argv[1]) if len(sys.argv) > 1 else None
+
 snippets = []
 last_chapter = None
 for line in open("main.log", encoding='latin-1'):
@@ -120,6 +126,8 @@ for line in open("main.log", encoding='latin-1'):
     if m:
         chapter, section, fn = m.groups()
         chapter = int(chapter)
+        if only_chapter and chapter != only_chapter:
+            continue
         if chapter != last_chapter:
             if snippets:
                 output(last_chapter, snippets)
@@ -132,5 +140,5 @@ for line in open("main.log", encoding='latin-1'):
         
         #qsnippets = list(get_snippet
 
-output(chapter, snippets)
+output(last_chapter, snippets)
 snippets = []
