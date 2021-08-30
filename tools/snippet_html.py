@@ -10,13 +10,15 @@ def format(snippet, lang):
     for kw in keywords[lang]:
         snippet = re.sub(f"(\\s|^|\\b)(?<!\")({kw})(\\W|$|\\b)", "\\1<spankeyword>\\2</span>\\3", snippet, flags=re.M)
     snippet = re.sub(r"\b(\w+)\(", "<spanfunction>\\1</span>(", snippet)
-    snippet = re.sub(r"^#(.*)", "<spancomment>#\\1</span>", snippet, flags=re.M) 
-    snippet = snippet.replace("\n", "<br/>\n").replace(" ", "&nbsp;")
+    snippet = re.sub(r"^#(.*)", "<spancomment>#\\1</span>", snippet, flags=re.M)
+    snippet = "".join(f"<divcode>{x}<br/></div>" for x in snippet.replace(" ", "&nbsp;").split("\n"))
+    #snippet = snippet.replace("\n", "<br/>\n").replace(" ", "&nbsp;")
     snippet = re.sub("('.*?')", "<span class='quote'>\\1</span>", snippet)
     snippet = re.sub('(".*?")', "<span class='quote'>\\1</span>", snippet)
     snippet = snippet.replace("<spankeyword>", "<span class='keyword'>")
     snippet = snippet.replace("<spanfunction>", "<span class='function'>")
     snippet = snippet.replace("<spancomment>", "<span class='comment'>")
+    snippet = snippet.replace("<divcode>", "<div class='code'>")
     return snippet
 
 def render(snippets):
@@ -29,7 +31,30 @@ def render(snippets):
     font-family: monospace;
     font-weight: normal;
     }
+    .snippet:before {
+        counter-reset: listing;
+    }
+    .snippet {
+    width: 54ch;
+    }
     
+    .snippet .code {
+    display:block;
+        width: 100%;
+        counter-increment: listing;
+    }
+    .snippet .code:nth-child(even) {background: #eee}
+    
+    .snippet .code::before {
+        content: counter(listing) ". ";
+        display: inline-block;
+        width: 2em; /* now works */
+        padding-left: auto; /* now works */
+        margin-left: auto; /* now works */
+        text-align: right; /* now works */
+        color: grey;
+    }
+
     h1 {color: #555}
     h2 {color: #555}
     .quote {font-style: italic; color: #555}
@@ -90,7 +115,7 @@ def output(chapter, snippets):
 
 snippets = []
 last_chapter = None
-for line in open("main.log"):
+for line in open("main.log", encoding='latin-1'):
     m = re.match(r"EXAMPLE (\d+).(\d+): code (.*)", line)
     if m:
         chapter, section, fn = m.groups()
