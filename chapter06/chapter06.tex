@@ -394,7 +394,13 @@ Democratic primary.
 Conversely, the \texttt{counties} dataset shows a large number of facts about these counties,
 such as population, change in population, gender and education distribution, etc.
 
-\pyrex[caption={2016 Primary results and county-level metadata. Note that to avoid duplicate output, we display the counties data in the Python example and the results data in the R example.}]{chapter06/primary}
+\begin{ccsexample}
+  \doublecodex{chapter06/primary}
+  \codexoutputtable[R Output. Note: Python output will look slightly different]{chapter06/primarya.r}
+  \doublecodex{chapter06/primaryb}
+  \codexoutputtable[R Output (some columns omitted). Note: Python output will look slightly different]{chapter06/primaryc.r}
+  \caption{\label{ex:primary} 2016 Primary results and county-level metadata. Note that to avoid duplicate output, we display the counties data in the Python example and the results data in the R example}
+\end{ccsexample}
 
 Suppose we hypothesize that Hillary would do relatively well in areas with more black voters.
 We would then need to combine the county level data about ethnic composition with the country $\times$ candidate
