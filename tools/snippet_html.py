@@ -10,6 +10,7 @@ keywords = {"py": {"!pip3", "install"} | set(keyword.kwlist),
 langs = {"py": "Python", "r": "R"}
 
 def format(snippet, lang):
+    snippet = snippet.replace("<", "&lt;")
     for kw in keywords[lang]:
         snippet = re.sub(f"(\\s|^|\\b)(?<!\")({kw})(\\W|$|\\b)", "\\1<spankeyword>\\2</span>\\3", snippet, flags=re.M)
     snippet = re.sub(r"\b(\w+)\(", "<spanfunction>\\1</span>(", snippet)
