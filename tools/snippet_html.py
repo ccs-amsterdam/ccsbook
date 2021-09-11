@@ -1,3 +1,4 @@
+from collections import defaultdict
 import re
 import sys
 import keyword
@@ -58,7 +59,7 @@ def render(snippets):
         text-align: right; /* now works */
         color: grey;
     }
-
+    a {color: inherit; text-decoration:inherit}
     h1 {color: #555}
     h2 {color: #555}
     .quote {font-style: italic; color: #555}
@@ -68,12 +69,15 @@ def render(snippets):
     </style>
     <body>"""
     lastex = None
+    counter = defaultdict(int)
     for caption, title, lang, snippet in snippets:
+        anchor = caption.replace("Example ", "").replace(".","_")
         if caption != lastex:
-            yield(f"<h1>{caption}</h1>")
+            yield(f"<h1><a href='#{anchor}' name='{anchor}'>{caption}</a></h1>")
             lastex = caption
-
-        yield(f"<h2>{title}</h2>")
+        counter[anchor, lang] += 1
+        ref = f"{anchor}_{lang}_{counter[anchor, lang]}"
+        yield(f"<h2><a href='#{ref}' name='{ref}'>{title}</a></h2>")
         yield("<div class='snippet'>")
         yield(format(snippet, lang))
         yield("</div>")
