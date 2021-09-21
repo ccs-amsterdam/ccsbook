@@ -118,6 +118,8 @@ class Parser:
         while nodes:
             node = nodes.pop(0)
             self.parse_node(node, nodes)
+            #if node.name == "section":
+            #    return
         self._depth -= 1
 
     def parse_str(self, nodes):
@@ -554,7 +556,8 @@ class Parser:
     def dirtree(self, node, _nodes):
         cur_depth = 0
         for line in _arg(node).split("\n"):
-            if m := re.match(r"\.(\d+) (.*)\.", line):
+            m = re.match(r"\.(\d+) (.*)\.", line)
+            if m:
                 text = m.group(2)
                 for k, v in SUBS.items():
                     text = text.replace(k, v)
@@ -700,7 +703,13 @@ class Parser:
         self._close_p()
         self.emit(f"<div class='code-example'>")
         nodes = list(node._contents)
-        nodes = [_pop_named(nodes, "caption"), _pop_named(nodes, "label")] + nodes
+        caption = _pop_named(nodes, "caption")
+        label = _pop_named(nodes, "label", strict=False)
+        if not label:
+            label = _label_from_caption(caption)
+        if not label:
+            raise Exception("!")
+        nodes = [caption, label] + nodes
         self.parse(nodes)
         self.emit("</div>")
 
@@ -824,7 +833,8 @@ class Parser:
 
         argtext = re.sub(r"\\refex\{([^}]+)}", "", argtext)
         # HACK to parse braces around caption
-        if m := re.search(r"(.*),?caption=\{([^}]+)\}(.*)", argtext):
+        m = re.search(r"(.*),?caption=\{([^}]+)\}(.*)", argtext)
+        if m:
             result['caption'] = m.group(2)
             argtext = f"{m.group(1)}{m.group(3)}"
         for arg in argtext.split(","):
@@ -884,7 +894,9 @@ def _label_from_caption(caption):
 
 def _pop_named(nodes, name, strict=True):
     names = [node.name for node in nodes]
-    if not strict and name not in names:
+    if name not in names:
+        if strict:
+            raise ValueError(f"{name} not in {names}: {nodes}")
         return
     return nodes.pop(names.index(name))
 
@@ -893,13 +905,16 @@ def preprocess(tex: str):
     verbs = []
     buffer = []
     for x in re.split(r"(\\verb\|[^|]+\||\\verb\+[^+]+\+)", tex):
-        if m := (re.match(r"\\verb\|([^|]+)\|", x) or re.match(r"\\verb\+([^+]+)\+", x)):
+        m = (re.match(r"\\verb\|([^|]+)\|", x) or re.match(r"\\verb\+([^+]+)\+", x))
+        if m:
             buffer.append(f"\\verbplaceholder{{{len(verbs)}}}")
             verbs.append(m.group(1))
-        elif m := re.match(r"\\SaveVerb\{(\w+)\}\|([^|]+)\|", x):
-            print("????", m.groups())
         else:
-            buffer.append(x)
+            m = re.match(r"\\SaveVerb\{(\w+)\}\|([^|]+)\|", x)
+            if m:
+                print("????", m.groups())
+            else:
+                buffer.append(x)
     tex = "".join(buffer)
     tex = tex.replace("\\ ", " ").replace("\\,", "").replace("on p.~\\pageref{feature:sparse}", "in \\refsec{workflow}")
 
