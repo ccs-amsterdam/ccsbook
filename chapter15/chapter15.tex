@@ -32,7 +32,8 @@ In this chapter, we provide a brief overview of techniques for scaling up comput
 \section{Storing Data in SQL and noSQL Databases}
 \label{sec:databases}
 
-\subsection{When to Use a Database}
+\subsection{When to Use a Database}\label{sec:whendb}
+
 In this book, we have so far stored our data in files. In fact, before
 covering the wide range of methods for computational analysis, we
 discussed some basics of file handling
@@ -127,7 +128,8 @@ large to fit in memory, but also when your data are continuously changed,
 for instance because new data are added while scraping.
 
 
-\subsection{Choosing the Right Database}
+\subsection{Choosing the Right Database}\label{sec:rightdb}
+
 Choosing the right database is not always easy, and has many consequences
 for the way you may conduct your analyses. As \citet{Gunther2018} explain,
 this is not a purely technical choice, but impacts your social-scientific
@@ -168,7 +170,7 @@ In relational databases, it is relatively hard to change the structure afterward
 
 
 
-\subsection{A Brief Example Using SQLite}
+\subsection{A Brief Example Using SQLite}\label{sec:sqlite}
 
 Installing a database server such as \index{mysql}\emph{mysql}, \index{mariadb}\emph{mariadb} (an
 open-source fork of mysql), \index{MongoDB}\emph{MongoDB}, or \index{Elasticsearch}\emph{Elasticsearch} is

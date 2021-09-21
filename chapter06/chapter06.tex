@@ -191,7 +191,7 @@ In the summarization step, however, you specify which summaries to compute in a 
 The keys of the dictionary lists the value columns to compute summaries of,
 and the values contain the summary functions to apply, so  \verb+{'value': function}+ or \verb+{'value': [list of functions]}+.
 
-\subsection{Combining Multiple Operations}
+\subsection{Combining Multiple Operations}\label{sec:combining}
 
 In the examples above, each line of code (often called a \emph{statement}) contained a single operation, generally a call to a function or method (see Section~\ref{sec:functions}).
 The general shape of each line in R was \verb+data = function(data, arguments)+, that is, the data is provided as the first argument to the function.
@@ -214,7 +214,7 @@ This can be used to chain multiple commands together, e.g.\ \verb+data = data %>
 \refex{aggregate2} shows the same operation as in Example~\ref{ex:aggregate}, but chained into a single statement.
 
 
-\subsection{Adding Summary Values}
+\subsection{Adding Summary Values}\label{sec:summarizing}
 
 Rather than reducing a data frame to contain only the group-level information,
 it is sometimes desirable to add the summary values to the original data.
@@ -251,7 +251,7 @@ To test whether we can explain variance in poll results from factors such as edu
 we would need to combine the poll results with the economic data.
 This process is often called merging or joining data.
 
-\subsection{Equal Units of Analysis}
+\subsection{Equal Units of Analysis}\label{sec:equalunits}
 
 \begin{ccsexample}
   \doublecodex{chapter06/piketty_1}
@@ -314,7 +314,7 @@ which shows that there is a weak but (just) significant negative correlation ($\
 
 
 
-\subsection{Inner and Outer Joins}
+\subsection{Inner and Outer Joins}\label{sec:innerouter}
 
 In the example above, both datasets had exactly one entry for each unit (year), making it the most straightforward case.
 If either (or both) of the datasets have missing units, however, you need to specify how to deal with this.
@@ -375,7 +375,7 @@ Outer (or full) joins can be useful when you are adding information from e.g.\ m
 and you want to include any respondent that answered any of the waves.
 Of course, you will have to carefully think about how to deal with the resulting missing values in the substantive analysis.
 
-\subsection{Nested Data}
+\subsection{Nested Data}\label{sec:nested}
 
 The sections above discuss merging two datasets at the same level of analysis,
 i.e.\ with rows representing the same units (respondents, items, years) in both sets.

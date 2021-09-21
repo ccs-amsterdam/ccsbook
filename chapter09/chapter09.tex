@@ -87,7 +87,7 @@ To access individual characters in a text, you have to use a function such as \i
 This also means that in Python, if you have a column (or list) of strings that you need to apply an operation to,
 you either need to use one of Panda's methods shown below or use a \index{for loop}\emph{for loop} or \index{list comprehension}\emph{list comprehension} to iterate over all the strings.
 
-\subsection{Methods for Dealing With Text}
+\subsection{Methods for Dealing With Text}\label{sec:textmethods}
 
 \begin{feature}\textbf{Stringi, stringr, and base string operations in R}
   As is so often the case, R has multiple packages that partially replicate functionality for basic text handling.
@@ -174,7 +174,7 @@ so once you learn regular expressions you will have acquired a powerful and vers
 In the next section, we will first review general expression syntax without reference to running them in Python or R.
 Subsequently, you will see how you can apply these expression to inspect and clean texts in both languages.
 
-\subsection{Regular Expression Syntax}
+\subsection{Regular Expression Syntax}\label{sec:regex}
 
 At its core, regular expressions are patters for matching sequences of characters.
 In the simplest case, a regular letter just matches that letter, so the pattern ``cat'' matches the text ``cat''.
@@ -291,7 +291,7 @@ You can also invert this selection using an initial caret: \verb|[^a-z]| matches
 Finally, you sometimes need to match a control character  (e.g.\ \verb|+|, \verb|?|, \verb|\|). Since those characters have a special meaning within a regular expressing, they cannot be used directly. The solution is to add a backslash (\verb|\|) behind them to \index{escape}\emph{escape} them:
 \verb|.| matches any character, but \verb|\.| matches an actual period. \verb|\\| matches an actual backslash.
 
-\subsection{Example Patterns}
+\subsection{Example Patterns}\label{sec:regexamples}
 
 Using the syntax explained in the previous section, we can now make patterns for common tasks in cleaning and analyzing text.
 Table~\ref{tab:regexample} lists a number of regular expressions for common tasks such as finding dates or stripping HTML artifacts.
@@ -428,7 +428,7 @@ Then, we replace everything that is not a letter by a single space.
 
 \pyrex[output=r,format=table,caption=Using regular expressions on a data frame]{chapter09/cleanpandas}
 
-\subsection{Splitting and Joining Strings, and Extracting Multiple Matches}
+\subsection{Splitting and Joining Strings, and Extracting Multiple Matches}\label{sec:regexadvanced}
 
 So far, the operations we used all took a single string object and returned a single value,
 either a cleaned version of the string or e.g.\ a boolean indicating whether there is a match.

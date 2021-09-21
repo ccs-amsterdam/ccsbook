@@ -307,8 +307,7 @@ market returns, ``increasing'' may indicate something positive,
 in a dataset about unemployment rates the same word would be something
 negative.
 
-\subsection{Putting Together a Workflow}
-\label{sec:workflow}
+\subsection{Putting Together a Workflow}\label{sec:workflow}
 
 With the knowledge we gained in previous chapters, it is not difficult
 to set up a supervised machine learning classifier to automatically
@@ -436,7 +435,7 @@ is concerningly low.
 
 
 
-\subsection{Finding the Best Classifier}
+\subsection{Finding the Best Classifier}\label{sec:bestclassifier}
 
 %\todo[inline]{\url{https://github.com/quanteda/quanteda.textmodels} seems to be under heavy development right now. In the CRAN version of quanteda, there is only a NB classifier present. Let's wait for a moment to check which textmodels will be available via quanteda and then incorporate them here.}
 % As of 2020-11-10, still only logreg, svm, nb -- better, but much less than scikit lean
@@ -573,7 +572,7 @@ based on at least some human-annotated data.
 
 
 
-\subsection{Using the Model}
+\subsection{Using the Model}\label{sec:usingmodel}
 
 So far, we have focused on training and evaluating models, almost
 forgetting why we were doing this in the first place: to use them to
@@ -619,7 +618,7 @@ classification, and in which direction (Example~\ref{ex:eli5b}).
 
 \pyrex[output=py, input=py, format=html, caption=Using eli5 to explain a prediction]{chapter11/eli5b}
 
-\subsection{Deep Learning}
+\subsection{Deep Learning}\label{sec:deeplearning}
 
 Deep learning models were introduced in Section~\ref{sec:deeplearning} as a (relatively) new class of models in
 supervised machine learning.
@@ -687,7 +686,7 @@ In early research on document clustering, a technique called Latent Semantic Ana
 This has yielded promising results in information retrieval (i.e., document search) and studying human memory and language use.
 However, it has a number of drawbacks including factor loadings that can be difficult to interpret substantively and is not a good way of dealing with words that can have multiple meanings \citep{lsa}.
 
-\subsection{Latent Dirichlet Allocation (LDA)}
+\subsection{Latent Dirichlet Allocation (LDA)}\label{sec:lda}
 
 The most widely used technique for topic modeling is Latent Dirichlet Allocation (LDA).
 Although the goal of LDA is the same as for clustering techniques, it starts from the other end with what is called a \index{generative model}\emph{generative model}.
@@ -778,7 +777,7 @@ After enough iterations, this converges to a solution.
   please see \url{http://cssbook.net/lda} for additional material and visualizations.
 \end{feature}
 
-\subsection{Fitting an LDA Model}
+\subsection{Fitting an LDA Model}\label{sec:ldafit}
 
 
 \begin{ccsexample}
@@ -826,7 +825,7 @@ Finally, note that we showed the R results here. As \index{gensim}\emph{gensim} 
 (and \sklearn\ uses a different tokenizer and stopword list), results will not be identical,
 but should be mostly similar.
 
-\subsection{Analyzing Topic Model Results}
+\subsection{Analyzing Topic Model Results}\label{sec:ldainspect}
 
 \begin{ccsexample}
 \doublecodex{chapter11/ldaresults1}
@@ -852,7 +851,7 @@ As you can see from this example, carefully inspecting the top documents for eac
 is very helpful for making sense of the results.
 
 
-\subsection{Validating and Inspecting Topic Models}
+\subsection{Validating and Inspecting Topic Models}\label{sec:ldavalidate}
 
 As we saw in the previous subsection, running a topic model is relatively easy.
 However, that doesn't mean that the resulting topic model will always be useful.
@@ -897,7 +896,7 @@ as topic models often do not exactly capture our categories. After all, unsuperv
 excel in bottom-up and explorative analyses (Section~\ref{sec:deciding}).
 
 
-\subsection{Beyond LDA}
+\subsection{Beyond LDA}\label{sec:beyondlda}
 
 This chapter focused on regular or ``vanilla'' LDA topic modeling.
 Since the seminal publication, however, a large amount of variations and extensions on LDA have been proposed.

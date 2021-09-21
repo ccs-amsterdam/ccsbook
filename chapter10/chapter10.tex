@@ -51,7 +51,7 @@ This function can take a vector or column of texts and transforms it directly in
 In Python, you achieve the same by creating an object of the \index{CountVectorizer}\texttt{CountVectorizer} class, which has a \index{fit\_transform}\texttt{fit\_transform} function.
 
 
-\subsection{Tokenization}
+\subsection{Tokenization}\label{sec:tokenizations}
 
 In order to turn a corpus into a matrix, each text needs to be \index{tokenized}\emph{tokenized},
 meaning that it must be split into a list (vector) of words.
@@ -144,7 +144,7 @@ it might be better to use preprocessing tools developed specifically for these l
 beyond the scope of this book.
 
 
-\subsection{The DTM as a Sparse Matrix}
+\subsection{The DTM as a Sparse Matrix}\label{sec:dtm}
 
 \pyrex[caption=Example document-term matrix]{chapter10/sotu}
 
@@ -219,7 +219,7 @@ Because the feature names (the words themselves) are stored in the CountVectoriz
 rather than the document-term matrix, you generally need to keep both objects.
 \end{feature}
 
-\subsection{The DTM as a ``Bag of Words''}
+\subsection{The DTM as a ``Bag of Words''}\label{sec:bagofwords}
 
 
 As you can see already in these simple examples, the document-term matrix discards quite a lot of information from text.
@@ -241,7 +241,7 @@ you can also use automatic syntactic analysis to take grammatical relations into
 As is always the case with automatic analyses, it is important to understand what information the computer is looking at,
 as the computer cannot find patterns in information that it doesn't have.
 
-\subsection{The (Unavoidable) Word Cloud}
+\subsection{The (Unavoidable) Word Cloud}\label{sec:wordcloud}
 
  One of the most famous text visualizations is without doubt the word cloud.
 Essentially, a word cloud is an image where each word is displayed in a size that is representative of its frequency.
@@ -323,7 +323,7 @@ Please note that although tweets are perhaps overused as a source of scientific 
 we use them here as an example since they nicely exemplify issues around non-textual elements such as hyperlinks.
 See Chapter~\ref{chap:scraping} for information on how to use the Twitter and other APIs to collect your own data.
 
-\subsection{Removing stopwords}
+\subsection{Removing stopwords}\label{sec:stopwords}
 
 A first step in cleaning a DTM is often \index{stop word removal}\emph{stop word removal}.
 Words such as ``a'' and ``the'' are often called stop words, i.e.\ words that do not tell us much about the content.
@@ -373,7 +373,7 @@ see the package documentation for the \index{stopwords}\emph{stopwords} package 
 
 %J. Nothman, H. Qin and R. Yurchak (2018). “Stop Word Lists in Free Open-source Software Packages”. In Proc. Workshop for NLP Open Source Software.
 
-\subsection{Removing Punctuation and Noise}
+\subsection{Removing Punctuation and Noise}\label{sec:punctuation}
 
 
 Next to stop words, text often contains punctuation and other things that can be considered ``noise'' for most research questions.
@@ -452,7 +452,7 @@ Note that we need to disable lowercasing as otherwise it will try to call \verb|
 
 
 
-\subsection{Trimming a DTM}
+\subsection{Trimming a DTM}\label{sec:trimdtm}
 
 The techniques above both drop terms from the DTM based on specific choices or patterns.
 It can also be beneficial to trim a DTM by removing words that occur very infrequently or overly frequently.
@@ -475,7 +475,7 @@ Note that dropping words that occur almost never should normally not influence t
 However, trimming a DTM to e.g.\ at least 1\% document frequency often radically reduces the number of words (columns) in the DTM.
 Since many algorithms have to assign weights or parameters to each word, this can provide a significant improvement in computing speed or memory use.
 
-\subsection{Weighting a DTM}
+\subsection{Weighting a DTM}\label{sec:dtmweight}
 
 The DTMs created above all use the raw frequencies as cell values.
 It can also be useful to weight the words so more informative words have a higher weight than less informative ones.
@@ -534,7 +534,8 @@ The core idea of this section is that in many cases this information can be capt
 This is often called \index{feature engineering}\emph{feature engineering}, as we are using our domain expertise to find the right features (columns, independent variables) to capture the relevant meaning for our research question.
 If we are using other columns than words it is also technically more correct to use the name \index{document-feature matrix}\emph{document-feature matrix}, as \index{quanteda}\emph{quanteda}\ does, but we will stick to the most common name here and simply continue using the name DTM.
 
-\subsection{$n$-grams}
+\subsection{$n$-grams}\label{sec:ngrams}
+
 The first feature we will discuss are n-grams.
 The simplest case is a bigram (or 2-gram), where each feature is a pair of adjacent words.
 The example used above, \emph{the movie was not bad}, will yield the following bigrams: \emph{the-movie}, \emph{movie-was}, \emph{was-not}, and \emph{not-bad}.
@@ -575,7 +576,7 @@ The terms local and federal government can be quite important to understand poli
 but for e.g.\ sentiment analysis a bigram like \emph{not good} would also be insightful
 (but make sure ``not'' is not on your stop word list!).
 
-\subsection{Collocations}
+\subsection{Collocations}\label{sec:collocations}
 
 A special case of n-grams are collocations.
 In the strict corpus linguistic sense of the word, collocations are pairs of words that occur more frequently than expected
@@ -613,8 +614,8 @@ After setting a standard threshold of 0.7, we can use \index{fit\_transform}\tex
 The term statistics again show how the individual terms are now replaced by their compound.
 
 
-\subsection{Word Embeddings}
-\label{sec:wordembeddings}
+\subsection{Word Embeddings} \label{sec:wordembeddings}
+
 A recent addition to the text analysis toolbox are \index{word embeddings}\emph{word embeddings}.
 Although it is beyond the scope of this book to give a full explanation of the algorithms behind word embeddings,
 they are relatively easy to understand and use at an intuitive level.
@@ -676,8 +677,7 @@ Finally, analogies are solved by simply adding and subtracting the vectors as ex
 
 
 
-\subsection{Linguistic Preprocessing}
-\label{sec:nlp}
+\subsection{Linguistic Preprocessing} \label{sec:nlp}
 
 A final technique to be discussed here is the use of linguistic preprocessing steps to enrich and filter a DTM.
 So far, all techniques discussed here are language independent.

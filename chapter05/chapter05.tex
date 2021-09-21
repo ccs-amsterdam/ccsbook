@@ -95,7 +95,7 @@ But how do we -- toy examples like those in Example~\ref{ex:createdataframe} asi
 \section{Reading and Saving Data}
 \label{sec:reading}
 
-\subsection{The Role of Files}
+\subsection{The Role of Files}\label{sec:files}
 
 In statistical software like SPSS or Stata, or in all typical office applications for that matter, you \emph{open} a file, do some work on it, and then \emph{save} the changes to the same file once you are done. You basically ``work on that file''.
 
@@ -139,8 +139,8 @@ RDS/RDA & R objects             & yes & no \\
 \end{table}
 
 
-\subsection{Encodings and Dialects}
-\label{sec:encodings}
+\subsection{Encodings and Dialects} \label{sec:encodings}
+
 Plan \verb|txt| files, \verb|csv| files, and \verb|json| files are all files that are based on text. Unlike binary file formats, you can read them in any text editor. Try it yourself to understand what is going on under the hood.
 
 Download a csv file (such as \url{http://cssbook.net/d/gun-polls.csv})
@@ -204,7 +204,7 @@ get a list of all supported files. For instance, you could
 after typing \verb|haven::| to get an overview over functions such as
 \verb|read_spss|.
 
-\subsection{File handling beyond data frames}
+\subsection{File handling beyond data frames}\label{sec:beyonddataframes}
 Data frames are a very useful data structure for organizing and analyzing data, and will occur in many examples in this book.
 However, not all things that we might want to read from a file needs to go into a data frame.
 Imagine if we have a list of words that we later want to remove from some texts (so-called stopwords, see Chapter~\ref{chap:protext}).
