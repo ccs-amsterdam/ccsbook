@@ -1,0 +1,29 @@
+<ul class="list-unstyled components">
+  {% for chapter in toc.chapters %}
+  {% if chapter.fn == current_chapter %}
+                  <div class="rightbar-header">
+                    {{chapter.nr}} {{chapter.caption}}
+                </div>
+
+            <ul class="list-unstyled" id="toc_chap_{{ loop.index }}">
+              {% for section in chapter.children %}
+	          {% set thesection = loop.index %}
+                    <li class="toc-section">
+                        <a href="{{ chapter.fn }}#{{ chapter.nr }}_{{ thesection }}">{{ section.nr }}. {{ section.caption }}</a>
+		    </li>
+		    {% if section.children %}
+		    <ul class="list-unstyled list-subsections" id="toc_chap_{{ loop.index }}">
+		    {% for subsection in section.children %}
+                    <li class="toc-section">
+                        <a href="{{ chapter.fn }}#{{ chapter.nr }}_{{ thesection }}_{{ loop.index }}">{{ subsection.nr }}. {{ subsection.caption }}</a>
+                    </li>
+
+                    {% endfor %}
+		    </ul>
+		    {% endif %}
+
+		{% endfor %}
+            </ul>
+	    {% endif %}
+    {% endfor %}
+</ul>

@@ -32,11 +32,6 @@ a.anchor {
     text-decoration: none;
 }
 
-#sidebar a {
-    text-decoration: none;
-    word-wrap: break-word;
-}
-
 .toc-chapter-current {
 
     border: 1px solid grey;
@@ -189,7 +184,7 @@ pre.code code::before {
 
 @media (min-width: 992px) {
     .css-layout {
-        grid-template-columns:1fr 5fr
+        grid-template-columns:1fr 5fr 1fr;
     }
 }
 
@@ -197,13 +192,31 @@ pre.code code::before {
     .css-layout {
         display: grid;
         gap: 1.5rem;
-        grid-template-areas: "sidebar main";
-        grid-template-columns: 1fr 5fr;
+        grid-template-areas: "sidebar main rightbar";
+        grid-template-columns: 1fr 4fr 1fr;
     }
 }
 
 .css-sidebar {
-    grid-area: sidebar
+    grid-area: sidebar;
+}
+
+.css-rightbar {
+    grid-area: rightbar;
+}
+
+#sidebar a {
+    text-decoration: none;
+    word-wrap: break-word;
+}
+
+.rightbar-header {
+    font-weight:bold;
+    margin-bottom: .5em;
+}
+
+.list-subsections {
+    margin-left: .5em;
 }
 
 @media (min-width: 768px) {

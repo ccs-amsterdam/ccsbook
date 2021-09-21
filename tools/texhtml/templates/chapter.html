@@ -16,8 +16,9 @@
         <aside class="css-sidebar">
             <nav id="sidebar" class="collapse css-nav">
                 <div class="sidebar-header">
-                    <h3>Contents</h3>
+                    <p><a href="index.html">Computational Analysis of&nbsp;Communication</a></p>
                 </div>
+		<p>Contents</p>
                 {%  include 'toc.html' %}
             </nav>
         </aside>
@@ -27,5 +28,14 @@
             {{content|safe}}
         </div>
 
+
+	<!-- Secondary sidebar -->
+        <aside class="css-rightbar">
+            <nav id="right" class="collapse css-nav">
+                {%  include 'subtoc.html' %}
+            </nav>
+        </aside>
+	
+	
     </div>
 {%  endblock %}
