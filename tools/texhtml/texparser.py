@@ -108,6 +108,7 @@ class Parser:
         self._intable = False
         self._last_float = None
         self._in_footnote = False
+        self._current_ref = None
 
 
     def emit(self, text: str):
@@ -118,8 +119,8 @@ class Parser:
         while nodes:
             node = nodes.pop(0)
             self.parse_node(node, nodes)
-            #if node.name == "section":
-            #    return
+            if self._current_ref == "5_2":
+                return
         self._depth -= 1
 
     def parse_str(self, nodes):
@@ -547,6 +548,7 @@ class Parser:
         self.emit("</h4>\n")
 
     def _caption(self, ref, label, br=True, caption=None):
+        self._current_ref = ref
         self.emit(f"  <small class='text-muted'><a class='anchor' href='#{ref}' name='{ref}'>{label}.</a></small>")
         if br:
             self.emit("<br />\n")

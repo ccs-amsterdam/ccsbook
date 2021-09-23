@@ -45,7 +45,7 @@ pre.output {
 }
 
 .code-row-double .code-output pre {
-    width: 55ch !important;
+    width: 52ch !important;
 }
 
 .code-output pre {
@@ -182,10 +182,18 @@ pre.code code::before {
 
 /****** Sidebar and main structure ******/
 
-@media (min-width: 992px) {
+@media (min-width: 160ch) {
     .css-layout {
-        grid-template-columns:1fr 5fr 1fr;
+        grid-template-columns: 30ch 110ch 20ch !important;
     }
+    body {background-color: #ffdddd !important}
+}
+
+@media (min-width: 120ch) and (max-width: 160ch) {
+    .css-layout {
+        grid-template-columns: 1fr 3fr 1fr;
+    }
+    body {background-color: #ddffdd}
 }
 
 @media (min-width: 768px) {
@@ -193,7 +201,6 @@ pre.code code::before {
         display: grid;
         gap: 1.5rem;
         grid-template-areas: "sidebar main rightbar";
-        grid-template-columns: 1fr 4fr 1fr;
     }
 }
 
@@ -208,6 +215,7 @@ pre.code code::before {
 #sidebar a {
     text-decoration: none;
     word-wrap: break-word;
+    white-space: nowrap;
 }
 
 .rightbar-header {

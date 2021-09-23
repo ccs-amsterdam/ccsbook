@@ -5,6 +5,12 @@ from pathlib import Path
 
 TOCEntry = namedtuple("TOCEntry", ["nr", "texfile", "fn", "label", "caption", "children"])
 
+RENAMES = {
+    "Statistical Modeling and Supervised Machine Learning": "Modeling and Machine Learning",
+    "Getting started: Fun with data and visualizations": "Fun with Data",
+    "Programming concepts for data analysis": "Programming Concepts"
+    }
+
 class TOC:
     def __init__(self, base, fn='main.aux'):
         self.labels = {} # name : number
@@ -29,9 +35,11 @@ class TOC:
                     name, args = parse_braces(line)
                     number, _, caption, tocnr, _ = parse_braces(args)
                     fn = f"chapter{chapter:02d}.html"
+                    if tocnr.startswith("chapter") and caption in RENAMES:
+                        caption = RENAMES[caption]
                     entry = TOCEntry(number, texf, fn, name, caption, [])
-                    print(tocnr)
                     if tocnr.startswith("chapter"):
+                        print(caption)
                         self.chapters.append(entry)
                     elif tocnr.startswith("section"):
                         self.chapters[-1].children.append(entry)
