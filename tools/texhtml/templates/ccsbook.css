@@ -49,7 +49,7 @@ pre.output {
 }
 
 .code-output pre {
-    width: 130ch;
+    width: 110ch;
     max-width: 100%;
     overflow: scroll;
     white-space: pre-wrap;
@@ -127,15 +127,6 @@ pre.code code::before {
         width: 100%;
     }
 
-@media (min-width: 768px) {
-    .code-row-double {
-        display: grid;
-        gap: 1.5rem;
-        grid-template-areas: "left right";
-        grid-template-columns: 1fr 1fr;
-        width: 100%;
-    }
-}
 .figure {
     display: block;
     max-width: 100%
@@ -182,37 +173,62 @@ pre.code code::before {
 
 /****** Sidebar and main structure ******/
 
-@media (min-width: 160ch) {
-    .css-layout {
-        grid-template-columns: 30ch 110ch 20ch !important;
-    }
-    body {background-color: #ffdddd !important}
-}
+body {padding-top: 4em}
 
-@media (min-width: 120ch) and (max-width: 160ch) {
-    .css-layout {
-        grid-template-columns: 1fr 3fr 1fr;
-    }
-    body {background-color: #ddffdd}
-}
-
-@media (min-width: 768px) {
+@media (min-width: 992px)  {
     .css-layout {
         display: grid;
         gap: 1.5rem;
-        grid-template-areas: "sidebar main rightbar";
+        grid-template-areas: "main rightbar";
+        grid-template-columns: auto auto !important;
+    }
+
+    .css-rightnav {
+        display: block !important;
+        position: sticky;
+        overflow-y: auto;
+        top: 5rem;
+    }
+    .subtoc {
+        display: none;
     }
 }
 
-.css-sidebar {
-    grid-area: sidebar;
+@media (max-width: 768px) {
+    .navhome {
+	display:none;
+    }
+}
+
+
+@media (min-width: 768px) {
+    .code-row-double {
+        display: grid;
+        gap: 1.5rem;
+        grid-template-areas: "left right";
+        grid-template-columns: 1fr 1fr;
+        width: 100%;
+    }
+}
+
+.toc {
+    font-size: .9rem;
 }
 
 .css-rightbar {
+    font-size: .9rem;
     grid-area: rightbar;
 }
 
-#sidebar a {
+a {
+    text-decoration: none;
+}
+
+header a {
+    color: black;
+}
+
+#toc a {
     text-decoration: none;
     word-wrap: break-word;
     white-space: nowrap;
@@ -225,15 +241,6 @@ pre.code code::before {
 
 .list-subsections {
     margin-left: .5em;
-}
-
-@media (min-width: 768px) {
-    .css-nav {
-        display: block !important;
-        position: sticky;
-        overflow-y: auto;
-        top: 5rem;
-    }
 }
 
 .css-main {
@@ -250,3 +257,29 @@ pre.code code::before {
 .gray {
     color: dimgrey;
 }
+
+
+.indextoc {
+        display: grid;
+        gap: 1.5rem;
+    
+    grid-template-areas: "pic toc";
+    grid-template-columns: 200px auto;   
+   align-items: center;>
+}
+
+.bookpicture{
+    width: 100%;
+
+}
+
+.chevrons {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+body {
+    padding-top: 5em;
+}
+

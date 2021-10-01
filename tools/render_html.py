@@ -38,6 +38,8 @@ for chapnr, chapter in enumerate(toc.chapters, start=1):
     if args.chapters and chapnr not in args.chapters:
         continue
     outf = out / chapter.fn
+    prevchap = toc.chapters[chapnr-2] if chapnr > 1 else None
+    nextchap = toc.chapters[chapnr] if chapnr < len(toc.chapters) else None
     print(f"{chapter.nr}: {chapter.texfile} -> {outf}")
     current_chapter = chapter.fn
     with open(chapter.texfile) as source:
@@ -51,6 +53,14 @@ for chapnr, chapter in enumerate(toc.chapters, start=1):
 
     #if parser.unknown_nodes:
     #    unknown[chapter.nr] = parser.unknown_nodes
+
+print(f"** Index")
+current_chapter = "index"
+inf = get_template("index.html")
+outf = out / "index.html"
+html = inf.render(**locals())
+
+outf.open("w").write(html)
 
 if unknown:
     for chapter, missing in unknown.items():

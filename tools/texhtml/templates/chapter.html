@@ -1,41 +1,25 @@
+
+
 {% extends 'base.html' %}
 
 {% block content %}
-    <header class="navbar css-navbar navbar-expand-md">
-        <nav class="container-xxl" aria-label="Navigation">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle Navigation">
-                <div></div>
-                <div></div>
-                <div></div>
-            </button>
-        </nav>
-    </header>
-    <div id="content" class="container-xxl css-layout">
 
-        <!-- Sidebar -->
-        <aside class="css-sidebar">
-            <nav id="sidebar" class="collapse css-nav">
-                <div class="sidebar-header">
-                    <p><a href="index.html">Computational Analysis<br/> of&nbsp;Communication</a></p>
-                </div>
-		<p>Contents</p>
-                {%  include 'toc.html' %}
-            </nav>
-        </aside>
-
-        <!-- Main Content -->
-        <div class="css-main">
+    <div class="css-layout">
+      <!-- Main Content -->
+      <div class="css-main">
+	{% include 'chevrons.html' %}
+	  <br/>
             {{content|safe}}
         </div>
 
-
+	{% include 'chevrons.html' %}
 	<!-- Secondary sidebar -->
         <aside class="css-rightbar">
-            <nav id="right" class="collapse css-nav">
+            <nav id="right" class="collapse css-rightnav">
                 {%  include 'subtoc.html' %}
             </nav>
         </aside>
-	
-	
-    </div>
+</div>
+
+
 {%  endblock %}

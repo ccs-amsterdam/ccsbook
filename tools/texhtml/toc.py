@@ -6,9 +6,10 @@ from pathlib import Path
 TOCEntry = namedtuple("TOCEntry", ["nr", "texfile", "fn", "label", "caption", "children"])
 
 RENAMES = {
-    "Statistical Modeling and Supervised Machine Learning": "Modeling and Machine Learning",
+    "Statistical Modeling and Supervised Machine Learning": "Machine Learning",
     "Getting started: Fun with data and visualizations": "Fun with Data",
-    "Programming concepts for data analysis": "Programming Concepts"
+    "Programming concepts for data analysis": "Programming Concepts",
+    "From file to data frame and back": "Files and Data Frames",
     }
 
 class TOC:

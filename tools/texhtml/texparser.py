@@ -119,7 +119,7 @@ class Parser:
         while nodes:
             node = nodes.pop(0)
             self.parse_node(node, nodes)
-            if self._current_ref == "5_2":
+            if self._current_ref == "xxx":
                 return
         self._depth -= 1
 
