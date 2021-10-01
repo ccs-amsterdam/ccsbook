@@ -1,0 +1,11 @@
+<div class='chevrons'>
+&laquo;
+	  {% if prevchap %}
+	  <a href='{{ prevchap.fn }}'>Ch. {{prevchap.nr}} {{ prevchap.caption }}</a>
+	  {% else %}
+	  <a href='index.html'>Table of Contents</a>
+	  {% endif %}
+	  {% if nextchap %}
+	  | <a href='{{ nextchap.fn }}'>Ch. {{nextchap.nr}} {{ nextchap.caption }}</a>&raquo;
+	  {% endif %}
+</div>
