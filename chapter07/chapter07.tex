@@ -147,9 +147,9 @@ Because all geometries start with \verb|geom_|, all scales start with \verb|scal
 you can use the RStudio autocompletion to browse through the complete list of options:
 simply type \verb|geom_|, press tab or control+space, and you get a list of the options with a short description, and you can press F1 to get help on each option. The help for every geometry also lists all aesthetic elements that can or must be supplied.
 
-\newcommand{\fnviza}{\footnote{Freely available at \url{https://socviz.co/}}}
-\newcommand{\fnvizb}{\footnote{\url{https://www.r-graph-gallery.com/}}}
-\newcommand{\fnvizc}{\footnote{\url{https://www.data-to-viz.com/}}}
+%\newcommand{\fnviza}{\footnote{Freely available at \url{https://socviz.co/}}}
+%\newcommand{\fnvizb}{\footnote{\url{https://www.r-graph-gallery.com/}}}
+%\newcommand{\fnvizc}{\footnote{\url{https://www.data-to-viz.com/}}}
 \nocite{healy2018data}
 
 Besides the built-in help, there are a number of great (online) resources to learn more. Specifically, we recommend the book \emph{Data Visualization: A practical introduction} by Kieran Healy\footnote{Freely available at \url{https://socviz.co/}}. Another great resource is the R Graph Gallery\footnote{\url{https://www.r-graph-gallery.com/}}, which has an enormous list of possible visualizations, all with R code included and most of them based on \index{ggplot}\emph{ggplot}. Finally, we recommend the Data-to-Viz\footnote{\url{https://www.data-to-viz.com/}} website, which allows you to explore a number of graph types depending on your data, lists the do's and don'ts for each graph, and links to the Graph Gallery for concrete examples.
@@ -157,7 +157,7 @@ Besides the built-in help, there are a number of great (online) resources to lea
 \end{figure}
 
 
-\subsection{Plotting Frequencies and Distributions}
+\subsection{Plotting Frequencies and Distributions}\label{sec:barplot}
 In the case of nominal data, the most straightforward way to visualize them is to simply count the frequency of value and then plot them as a bar chart. For instance, when we depict the support to help refugees (Example~\ref{ex:bar}) you can quickly get that the option ``tend to agree'' is the most frequently voiced answer.
 
 \pyrex[output=py,format=png,caption=Barplot of support for refugees]{chapter07/bar}
@@ -174,7 +174,7 @@ Another way to show distributions is using bloxplots, which are powerful represe
 
 
 
-\subsection{Plotting Relationships}
+\subsection{Plotting Relationships}\label{sec:plotrelation}
 
 After having inspected distributions of single variables, you may want to check how two variables are related. We are going to discuss two ways of doing so: plotting data over time, and scatterplots to illustrate the relationship between two continuous variables.
 
@@ -236,7 +236,7 @@ As you will notice, one of the goals of EDA is exploring the variance of our var
 
 
 
-\subsection{Plotting Geospatial Data}
+\subsection{Plotting Geospatial Data}\label{sec:plotgeo}
 
 Plotting geospatial data is a more powerful tool to compare countries or other regions.  Maps are very easy to understand and can have greater impact to all kinds of readers, which make them a useful representation for a wide range of studies that any computational analyst has to deal with. Geospatial data is based on the specific location of any country, region, city or geographical area, marked by its coordinates, latitude and longitude, that can later build points and polygon areas. The coordinates are normally mandatory to plot any data on a map, but are not always provided in our raw data. In those cases, we must joint the geographical information we have (i.e.\ the name of a country) with its coordinates in order to have an accurate data frame for plotting geospatial data. Some libraries in R and Python might directly read and interpret different kinds of geospatial information by recognizing strings such as ``France'' or ``Paris'', but in the end they will be converted into coordinates.
 
@@ -254,7 +254,7 @@ Finally, we plot it using the \index{ggplot2}\emph{ggplot2} function \index{geom
 \pyrex[output=r,format=png,caption=Map of Europe with the average level of support for refugees by country]{chapter07/map2}
 
 
-\subsection{Other Possibilities}
+\subsection{Other Possibilities}\label{sec:plotother}
 
 There are many other ways of visualizing data. For EDA we have covered in this chapter only some of the most used techniques but they might be still limited for your future work. There are many books that cover data visualization in detail, such as \cite{tufte2006beautiful}, \cite{cairo2019charts}, and \cite{Kirk2016}.  There are also many online resources, such as the Python Graph Gallery \url{https://www.python-graph-gallery.com/} and the R Graph Gallery (\url{https://r-graph-gallery.com/}, which introduce you to other useful plot types.  These sites include code examples, many using the \index{ggplot}\emph{ggplot}, \index{matplotlib}\emph{matplotlib} and \index{seaborn}\emph{seaborn} packages introduced here, but also using other packages such as \index{bokeh}\emph{bokeh} or \index{plot.ly}\emph{plot.ly} for interactive plots.
 
@@ -301,7 +301,7 @@ in all UML, the groups will come unlabeled and the computational
 analyst will be in charge of finding an appropriate and meaningful
 label for each cluster to better communicate the results.
 
-\subsection{$k$-means Clustering}
+\subsection{$k$-means Clustering}\label{sec:kmeans}
 
 $k$-means is a very frequently used algorithm to perform cluster
 analysis. Its main advantage is that, compared to the hierarchical
@@ -370,7 +370,7 @@ Using the function \index{fviz\_cluster}\texttt{fviz\_cluster} of the library \i
 \pyrex[output=r,format=png,caption=Visualization of clusters]{chapter07/kmeans2}
 
 
-\subsection{Hierarchical Clustering}
+\subsection{Hierarchical Clustering}\label{sec:hierarchical}
 
 Another method to conduct a cluster analysis is hierarchical clustering, which builds a hierarchy of clusters that we can visualize in a dendogram.  This algorithm has two versions: a bottom-up approach (observations begin in their own clusters), also called \textit{agglomerative}, and a top-down approach (all observations begin in one cluster), also called \textit{divisive}. We will follow the bottom-up approach in this chapter and when you  look at the dendogram you will realize how this strategy repeatedly combines the two \textit{nearest} clusters at the bottom into a larger one in the top. The distance between clusters is initially estimated for every pair of observation points and then put every point in its own cluster in order to get the closest pair of points and iteratively compute the distance between each new cluster and the previous ones. This is the internal rule of the algorithm and we must choose a specific linkage method (complete, single, average or centroid, or Ward's linkage). Ward's linkage is a good default choice: it minimizes the variance of the clusters being merged. In doing so, it tends to produce roughly evenly sized clusters and is less sensitive to noise and outliers than some of the other methods.
 In Example~\ref{ex:hc} we will use the function \index{hcut}\texttt{hcut} of the package \index{factoextra}\emph{factoextra} in R and \index{scikit-learn}\emph{scikit-learn} function \index{AgglomerativeClustering}\texttt{AgglomerativeClustering} in Python, to compute the hierarchical clustering.
@@ -398,8 +398,8 @@ If you re-run the hierarchical clustering for three clusters (Example~\ref{ex:hc
 \pyrex[output=r,format=png,caption=Re-run hierarchical clustering with three clusters]{chapter07/vishc3}
 
 
-\subsection{Principal Component Analysis and Singular Value Decomposition}
-\label{sec:pcasvd}
+\subsection{Principal Component Analysis and Singular Value Decomposition} \label{sec:pcasvd}
+
 Cluster analyses are in principle used to group similar
 cases. Sometimes, we want to group similar variables instead.  A
 well-known method for this is principal component analysis (PCA)\footnote{If your had to learn statistics using SPSS, you have almost certainly already conducted a PCA. Quite counter-intuitively, the default analysis that is run when clicking on the ``Factor'' menu in SPSS, is a PCA.}. This

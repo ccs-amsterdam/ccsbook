@@ -13,10 +13,12 @@ def read_bbl(fn) -> dict:
             else:
                 line = clean_text(line.replace("\\newblock", "").replace("\\em", "").replace("{", "").replace("}", "")).strip()
                 items[current_item][1].append(line)
-        elif m := re.match(r"\\bibitem\[([^]]+)\]{([^}]+)}", line):
-            short, key = m.groups()
-            key = key.strip()
-            current_item = key
-            short = clean_text(short.replace("{", "").replace("}", "")).strip()
-            items[key] = (short, [])
+        else:
+            m = re.match(r"\\bibitem\[([^]]+)\]{([^}]+)}", line)
+            if m:
+                short, key = m.groups()
+                key = key.strip()
+                current_item = key
+                short = clean_text(short.replace("{", "").replace("}", "")).strip()
+                items[key] = (short, [])
     return items

@@ -1,4 +1,4 @@
-state,state_abbreviation,county,fips,party,candidate,votes,fraction_votes
+state,state_abbrev,county,fips,party,candidate,votes,fraction_votes
 Alabama,AL,Autauga,1001.0,Democrat,Bernie Sanders,544,0.182
 Alabama,AL,Autauga,1001.0,Democrat,Hillary Clinton,2387,0.8
 Alabama,AL,Baldwin,1003.0,Democrat,Bernie Sanders,2694,0.32899999999999996

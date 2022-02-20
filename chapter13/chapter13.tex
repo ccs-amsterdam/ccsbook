@@ -113,7 +113,7 @@ So far we have created networks from scratch, but most of the time you will have
 
 This section gives an overview of the existing measures to conduct Social Network Analysis (SNA). Among other functions, we explain how to examine paths and reachability, how to calculate centrality measures (degree, closeness, betweenness, eigenvector) to quantify the importance of a node in a graph, and how to detect communities in the graph using clustering.
 
-\subsection{Paths and Reachability}
+\subsection{Paths and Reachability}\label{sec:paths}
 
 The first idea that comes to  mind when analyzing a graph is to understand how their nodes are connected. When multiple edges create a network we can observe how the vertices constitute one or many paths that can be described. In this sense, a \texttt{sequence} between node \textit{x} and node \textit{y} is a path where each node is \texttt{adjacent} to the previous. In the imaginary social network of friendship of American politicians contained in the undirected graph \texttt{g1}, we can determine the sequences or simple paths between any pair of politicians. As shown in Example~\ref{ex:path} we can use the function \index{all\_simple\_paths}\texttt{all\_simple\_paths} contained in both \index{igraph}\emph{igraph} (R) and \index{networkx}\emph{networkx} (Python), to obtain the two possible routes between Barack Obama and John McCain. The shortest path includes the nodes Hillary Clinton and Donald Trump; and the longer includes Sanders, Clinton, and Trump.
 
@@ -156,7 +156,7 @@ In Example~\ref{ex:density} we show how to estimate these four measures in R and
 
 \pyrex[output=both,caption={Estimations of density, transitivity, diameter and reciprocity}]{chapter13/density}
 
-\subsection{Centrality Measures}
+\subsection{Centrality Measures}\label{sec:centrality}
 
 Now let us move to \index{centrality measures}\emph{centrality measures}. Centrality is probably the most common popular or known measure in the analysis of social networks because it gives you a clear idea of the importance of any of the nodes within a graph. Using its measures you can pose many questions such as which is the most central person in a network of friends on Facebook, who can be considered an opinion leader on Twitter or who is an influencer on Instagram. Moreover, knowing the specific importance of every node of the network can help us to visualize or label only certain vertices that overpass a previously determined threshold, or to use the color or size to distinguish the most central nodes from the others. There are four typical centrality measures: \emph{degree}, \emph{closeness}, \emph{eigenvector} and \emph{betweenness}.
 
@@ -181,7 +181,7 @@ We can use these centrality measures in many ways. For example, you can take the
   \label{ex:plotsize}
 \end{ccsexample}
 
-\subsection{Clustering and Community Detection}
+\subsection{Clustering and Community Detection}\label{sec:communitydetection}
 
 One of the greatest potentials of SNA is the ability to identify how nodes are interconnected and thus define \index{communities}\emph{communities} within a graph. This is to say that most of the time the nodes and edges in our network are not distributed homogeneously, but they tend to form clusters that can  later be interpreted. In a social network you can think for example of the principle of \index{homophily}\emph{homophily}, which is the tendency of human beings to associate and interact with similar individuals; or you can think of extrinsic factors (i.e., economical or legal) that may generate the cohesion of small groups of citizens that belong to a wider social structure. While it is of course difficult to make strong claims regarding the underlying causes, we can use different computational approaches to model and detect possible communities that emerge from social networks and even interpret and label those groups. The creation of clusters as an unsupervised machine learning technique was introduced in Section~\ref{sec:clustering} for structured data and in Section~\ref{sec:unsupervised} for text analysis (topic modeling). We will use some similar unsupervised approaches for community detection in social networks.
 

@@ -87,7 +87,7 @@ To access individual characters in a text, you have to use a function such as \i
 This also means that in Python, if you have a column (or list) of strings that you need to apply an operation to,
 you either need to use one of Panda's methods shown below or use a \index{for loop}\emph{for loop} or \index{list comprehension}\emph{list comprehension} to iterate over all the strings.
 
-\subsection{Methods for Dealing With Text}
+\subsection{Methods for Dealing With Text}\label{sec:textmethods}
 
 \begin{feature}\textbf{Stringi, stringr, and base string operations in R}
   As is so often the case, R has multiple packages that partially replicate functionality for basic text handling.
@@ -174,7 +174,7 @@ so once you learn regular expressions you will have acquired a powerful and vers
 In the next section, we will first review general expression syntax without reference to running them in Python or R.
 Subsequently, you will see how you can apply these expression to inspect and clean texts in both languages.
 
-\subsection{Regular Expression Syntax}
+\subsection{Regular Expression Syntax}\label{sec:regex}
 
 At its core, regular expressions are patters for matching sequences of characters.
 In the simplest case, a regular letter just matches that letter, so the pattern ``cat'' matches the text ``cat''.
@@ -230,7 +230,7 @@ and in the final subsection we will see how to use these regular expressions in 
 
 & Beginning of the string	& \texttt{\small{\^{}}} & \texttt{\small{\^{}}go} & \texttt{\small{\textbf{go}} {\color{gray}go go}}\\
 & Ending of the string   & \texttt{\small{\$}} & \texttt{\small{go\$}} & \texttt{\small{{\color{gray}}go go} \textbf{go}} \\
-& Beginning or end of word & \texttt{\small{\textbackslash b}} & \texttt{\small{\textbackslash{}}bword\textbackslash{}b} & \texttt{\small{{\color{gray}}a} \textbf{word}\color{gray}!} \\
+& Beginning or end of word & \texttt{\small{\textbackslash b}} & \texttt{\small{\textbackslash{}}bword\textbackslash{}b} & \texttt{\small{{\color{gray}a}} \textbf{word}\color{gray}!} \\
 & Either first or second option  & \texttt{\small{$\cdots$\textbar$\cdots$}} & \texttt{\small{cat\textbar{}}dog} & \texttt{\small{cat}}, \texttt{\small{dog}}\\
 
 \multicolumn{2}{l}{\textit{Quantifier: How many to match}} \\
@@ -291,7 +291,7 @@ You can also invert this selection using an initial caret: \verb|[^a-z]| matches
 Finally, you sometimes need to match a control character  (e.g.\ \verb|+|, \verb|?|, \verb|\|). Since those characters have a special meaning within a regular expressing, they cannot be used directly. The solution is to add a backslash (\verb|\|) behind them to \index{escape}\emph{escape} them:
 \verb|.| matches any character, but \verb|\.| matches an actual period. \verb|\\| matches an actual backslash.
 
-\subsection{Example Patterns}
+\subsection{Example Patterns}\label{sec:regexamples}
 
 Using the syntax explained in the previous section, we can now make patterns for common tasks in cleaning and analyzing text.
 Table~\ref{tab:regexample} lists a number of regular expressions for common tasks such as finding dates or stripping HTML artifacts.
@@ -428,7 +428,7 @@ Then, we replace everything that is not a letter by a single space.
 
 \pyrex[output=r,format=table,caption=Using regular expressions on a data frame]{chapter09/cleanpandas}
 
-\subsection{Splitting and Joining Strings, and Extracting Multiple Matches}
+\subsection{Splitting and Joining Strings, and Extracting Multiple Matches}\label{sec:regexadvanced}
 
 So far, the operations we used all took a single string object and returned a single value,
 either a cleaned version of the string or e.g.\ a boolean indicating whether there is a match.
@@ -461,7 +461,7 @@ Although there are multiple ways of dealing with this,
 if you are working with data frames our advice is to normalize the data structure to a long format.
 In the example, that would mean that each tweet is now represented by multiple rows,
 namely one for each hash tag.
-Example~\ref{ex:splitlong} shows how this can be achieved in both R and {\bf Both Pandas and pandas are used, please confirm which is correct} pandas.
+Example~\ref{ex:splitlong} shows how this can be achieved in both R and Pandas.
 One thing to note is that in pandas,
 \verb|t.str.extractall| automatically returns the desired long format,
 but it is essential that the index of the data frame actually contains the identifier (in this case, the tweet (status) id).

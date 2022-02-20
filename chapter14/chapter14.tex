@@ -125,7 +125,8 @@ Now, in Example~\ref{ex:imagergb} we convert our original JPG file to a RGB obje
 
 Instead of pixels, there are other ways to store digital images. One of them is the \textit{vector graphics}, with formats such as .ai, .eps, .svg or .drw. Differently to bitmap images, they don't have a grid of dots but a set of \textit{paths} (lines, triangles, square, curvy shapes, etc.) that have a start and end point, so  simple and complex images are created with paths. The great advantage of this format is that images do not get  ``pixelated'' when you enlarge them because the paths can easily be transformed 	while remaining smooth. However, to obtain the standard mathematical representation of images you can convert the vector graphics to raster graphics (the way back is a bit more difficult and often only possible by approximation).
 
-Sometimes you need to convert your image to a specific size. For example, in the case of image classification this is a very important step since all the input images of the model must have the same size. For this reason, one of the most common tasks in the preprocessing stage is to change the dimensions of the image in order to adjust width and height to a different size. In Example~\ref{ex:resize} we use the \index{resize}\texttt{resize} method provided by \index{pil}\emph{pil} and the \index{image\_scale}\texttt{image\_scale} function in \index{imagemagik}\emph{imagemagik} to reduce the first of our original pictures in RGB (\texttt{my\_image1\_RGB}) to 25\% . Notice that we first obtain the original dimensions of the photograph (i.e. \texttt{my\_image1\_RGB.width} or \verb|image_info(my\_image1\_RGB)['width'][[1]]|) and then multiply by 0.25 in order to obtain the new size which is the argument required by the functions.
+Sometimes you need to convert your image to a specific size. For example, in the case of image classification this is a very important step since all the input images of the model must have the same size. For this reason, one of the most common tasks in the preprocessing stage is to change the dimensions of the image in order to adjust width and height to a different size. In Example~\ref{ex:resize} we use the \index{resize}\texttt{resize} method provided by \index{pil}\emph{pil} and the \index{image\_scale}\texttt{image\_scale} function in \index{imagemagik}\emph{imagemagik} to reduce the first of our original pictures in RGB (\texttt{my\_image1\_RGB}) to 25\% . Notice that we first obtain the original dimensions of the photograph
+(i.e. \texttt{my\_image1\_RGB.width} or \verb|image_info(my_image1_RGB)['width'][[1]]|) and then multiply by 0.25 in order to obtain the new size which is the argument required by the functions.
 
 \pyrex[output=both,format=png,caption=Resize to 25\% and visualize a picture]{chapter14/resize}
 
@@ -139,7 +140,8 @@ Of course you are now losing part of the picture information, so you may think o
 
 \pyrex[output=both,format=png,caption=Function to crop the image to create a square and the resize the picture]{chapter14/crop}
 
-You can also adjust the orientation of the image, flip it, or change its background, among other commands. These techniques might be useful for creating extra images in order to enlarge the training set in image classification (see Section~\ref{sec:cnn}). This is called \textit{data augmentation} and consists of duplicating the initial examples on which the model was trained and altering them so that the algorithm can be more robust and generalize better. In Example~\ref{ex:rotate} we used the \index{rotate}\texttt{rotate} method in \index{pil}\emph{pil} and \index{image\_rotate}\texttt{image\_rotate} function in \index{imagemagik}\emph{imagemagik} to rotate 45 degrees the above resized image \texttt{my\_image1\_RGB\_224} to see how easily we can get an alternative picture with similar information to include in an augmented training set.
+You can also adjust the orientation of the image, flip it, or change its background, among other commands. These techniques might be useful for creating extra images in order to enlarge the training set in image classification (see Section~\ref{sec:cnn}). This is called \textit{data augmentation} and consists of duplicating the initial examples on which the model was trained and altering them so that the algorithm can be more robust and generalize better. In Example~\ref{ex:rotate} we used the \index{rotate}\texttt{rotate} method in \index{pil}\emph{pil} and \index{image\_rotate}\texttt{image\_rotate} function in \index{imagemagik}\emph{imagemagik}
+to rotate 45 degrees the above resized image \texttt{my\_image1\_RGB\_224} to see how easily we can get an alternative picture with similar information to include in an augmented training set.
 
 \pyrex[output=both,format=png,caption=Rotating 45 degrees a picture]{chapter14/rotate}
 
@@ -196,8 +198,7 @@ Source: \citet{geron2019hands}}
 
 It is beyond the scope of this book to address the implementation of object detection or semantic segmentation, but we will focus on how to conduct basic image classification in state-of-the-art libraries in R and Python. As you may have imagined we will need some already-labelled images to have a proper training set. It is also out of the scope of this chapter to collect and annotate the images, which is the reason why we will mostly rely on pre-existing image databases (i.e., MINST or Fashion MINST) and pre-trained models (i.e., CNNs architectures).
 
-\subsection{Basic Classification with Shallow Algorithms}
-\label{subsec:shallow}
+\subsection{Basic Classification with Shallow Algorithms}\label{subsec:shallow}
 
 In Chapter~\ref{chap:introsml} we introduced you to the exciting world of machine learning and in Section~\ref{sec:supervised}  we introduced the \textit{supervised} approach to classify texts. Most of the discussed models used so called \textit{shallow} algorithms such as Na\"ive Bayes or Support Vector Machines rather than the various large neural network models called \index{deep learning}\emph{deep learning}. As we will see in the next section, deep neural networks are nowadays the best option for complex tasks in image classification. However, we will now explain how to conduct simple multi-class classification of images that contain numbers with a shallow algorithm.
 
@@ -223,8 +224,7 @@ Now, we used the basic concepts of the Random Forest algorithm (see subsection~\
 This approach based on shallow algorithms seems to work pretty well for simple images, but has a lot of limitations for more complex images such as figures or real pictures. After all, the more complex the image and the more abstract the concept, the less likely it is that one can expect a direct relationship between a pixel color and the classification. In the next section we introduce the use of deep learning in image classification which is nowadays a more accurate approach for complex tasks.
 
 
-\subsection{Deep Learning for Image Analysis}
-\label{subsec:deep}
+\subsection{Deep Learning for Image Analysis}\label{subsec:deep}
 
 Even though they require heavy computations, Deep Neural Networks (DNN) are nowadays the best way to conduct image classification because their performance is normally higher than shallow algorithms. The reason is that we broaden the learning process using intermediate hidden layers, so each of these layers can learn different patterns or aspects of the image with different levels of abstraction: e.g., from detecting lines or contours in the first layers to catching higher feature representation of an image (such as the color of skin, the shapes of the eyes or the noses) in the next layers. In Section~\ref{sec:neural} and Section~\ref{sec:deeplearning} we introduced the general concepts of a DNN (such as perceptrons, layers, hidden layers, back or forward propagation, and output functions), and now we will cover some common architectures for image analysis.
 
@@ -266,8 +266,7 @@ Finally, you can use the model to predict the classes of any new image (using \i
 Using the above-described concepts and code you may try to train a new MLP using color images of ten classes (airplane, automobile, bird, cat, deer, dog, frog, horse, ship, and truck) using the CIFAR-10 and CIFAR-100 datasets\footnote{https://www.cs.toronto.edu/~kriz/cifar.html}!
 
 
-\subsection{Re-using an Open Source CNN}
-\label{subsec:tuning}
+\subsection{Re-using an Open Source CNN}\label{subsec:tuning}
 
 Training complex images such as photographs is normally a more sophisticated task if we compare it to the examples included in the last sections. On the one hand, it might not be a good idea to build a deep neural network from scratch as we did in subsection~\ref{subsec:deep} to train a MLP. This means that you can re-use some lowers layers of other DNNs and deploy \textit{transfer learning} to save time with less training data. On the other hand, we should also move from traditional MLPs to other kinds of DNNs such as Convolutional Neural Networks (CNNs) which are  nowadays the state-of-the-art approach in computer vision. Moreover, to get good results we should also build or explore different CNNs architectures that can produce more accurate prediction in image classification.  In this section we will show how to re-use an open source CNN architecture and will suggest an example of how to fine-tune an existing CNN for a social science problem.
 

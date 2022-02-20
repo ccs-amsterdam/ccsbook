@@ -188,7 +188,8 @@ terms that you may be familiar with.
   \centering
 \begin{tabularx}{\textwidth}{XX}
 \toprule
-machine learning lingo  & statistics lingo\\ \midrule
+machine learning lingo  & statistics lingo\\
+\midrule
 feature                 & independent variable  \\
 label                   & dependent variable  \\
 labeled dataset         & dataset with both independent and dependent variables\\
@@ -232,9 +233,9 @@ smaller test dataset.
 In Example~\ref{ex:preparedata}, we prepare the dataset we already used in
 Section~\ref{sec:prediction} for classification by creating a
 dichotomous variable (the label) and splitting it into a training and
-a test dataset. We use |y_train| to denote the training labels and
-|X_train| to denote the feature matrix of the training dataset;
-|y_test| and |X_test| is the corresponding test dataset. We set a
+a test dataset. We use \verb|y_train| to denote the training labels and
+\verb|X_train| to denote the feature matrix of the training dataset;
+\verb|y_test| and \verb|X_test| is the corresponding test dataset. We set a
 so-called random-state seed to make sure that the random splitting
 will be the same when re-running the code. We can easily split these datasets using the \index{rsample}\emph{rsample} function \index{initial\_split}\texttt{initial\_split} in R and the \index{sklearn}\emph{sklearn} function \index{train\_test\_split}\texttt{train\_test\_split} in Python.
 
@@ -333,8 +334,7 @@ We limit ourselves to the most common ones in this chapter. The
 website of scikit-learn (\url{http://www.scikit-learn.org}) gives a
 good overview of more alternatives.
 
-\subsection{Na\"ive Bayes}
-\label{subsec:Na\"ive Bayes}
+\subsection{Na\"ive Bayes} \label{subsec:Na\"ive Bayes}
 
 The Na\"ive Bayes classifier is a very simple classifier that is often
 used as a ``baseline''. Before estimating more complicated and
@@ -440,8 +440,7 @@ respectively.
 
 
 
-\subsection{Regression}
-\label{subsec:regression}
+\subsection{Regression} \label{subsec:regression}
 
 Regression analysis does not make as strong an assumption about the
 independence of features as the Na\"ive Bayes classifier does.  Sure,
@@ -526,7 +525,7 @@ regression models) if you want to estimate a continuous outcome.
 
 
 
-\subsection{Support Vector Machines}
+\subsection{Support Vector Machines}\label{sec:svm}
 Support Vector Machines (SVM) are another very popular and versatile
 approach to supervised machine learning.  In fact, they are quite
 similar to logistic regression, but try to optimize a different
@@ -582,8 +581,8 @@ Example~\ref{ex:svm} shows how we implement standard SVM to our data using the \
 
 
 
-\subsection{Decision Trees and Random Forests}
-\label{subsec:randomforest}
+\subsection{Decision Trees and Random Forests} \label{subsec:randomforest}
+
 In the models we have discussed so far, we were essentially  modeling linear
 relationships. If the value of a feature is twice as high, its
 influence on the outcome will be twice as high as well.  Sure, we can
@@ -809,8 +808,7 @@ mostly because these networks are widely used in both text and image analysis.
 Hopefully, this will give you insight into the general idea behind deep learning,
 and you can learn about this and other models in more detail in the specialized resources cited above.
 
-\subsection{Convolutional Neural Networks}
-\label{sec:cnnbasis}
+\subsection{Convolutional Neural Networks} \label{sec:cnnbasis}
 
 One challenge in many machine learning problems is a mismatch between the level of measurement of the output and the input.
 For example, we normally want to  assign a single code such as sentiment or topic to a document or image.
@@ -854,10 +852,8 @@ This involves creating a two-dimensional window over pixels rather than a unidim
 The underlying technique of convolutional networks, however, is the same in both cases.
 
 %\input{chapter08/validation}
-\section{Validation and Best Practices}
-\label{sec:validation}
-\subsection{Finding a Balance Between Precision and Recall}
-\label{sec:balance}
+\section{Validation and Best Practices} \label{sec:validation}
+\subsection{Finding a Balance Between Precision and Recall} \label{sec:balance}
 
 In the previous sections, we have learned how to fit different models:
 Na\"ive Bayes, logistic regressions, support vector machines, and
@@ -975,8 +971,7 @@ value with the maximum distance between TPR and FPR, and use that one.
 
 
 
-\subsection{Train, Validate, Test}
-\label{sec:train}
+\subsection{Train, Validate, Test}\label{sec:train}
 
 By now, we have established which measures we can use to decide which
 model to use. For all of them, we have assumed that we split our
@@ -1006,8 +1001,8 @@ unbiased estimate of its performance.
 
 
 
-\subsection{Cross-validation and Grid Search}
-\label{sec:crossvalidation}
+\subsection{Cross-validation and Grid Search} \label{sec:crossvalidation}
+
 In an ideal world, we would have a huge labeled dataset and would not
 need to worry about the decreasing size of our training dataset as we
 set aside our validation and test datasets.

@@ -3,7 +3,7 @@
 
 
 \begin{abstract}{Abstract}
-  This chapter teaches you basics of file handling, such as different file formats and encodings. It introduces csv files, json files, plain text files, and binary file formats. We discuss different approaches to organizing data in files, and how to write data frames to and read them from these files].  Finally, we provide guidance for retrieving example datasets.
+  This chapter teaches you basics of file handling, such as different file formats and encodings. It introduces csv files, json files, plain text files, and binary file formats. We discuss different approaches to organizing data in files, and how to write data frames to and read them from these files.  Finally, we provide guidance for retrieving example datasets.
 \end{abstract}
 
 \keywords{file formats, encodings, reading and writing files, data frames, datasets}
@@ -26,7 +26,7 @@
 \end{feature}
 
 
-\section{Why and When Do We Use Data Frames?}
+\section{Why and When Do We Use Data Frames?}\label{sec:dataframes}
 
 In Section~\ref{sec:datatypes}, we introduced basic data types: strings (which contain text), integers (which contain whole numbers, or numbers without anything ``behind the dot''), floats (floating point numbers; numbers with decimals), and bools (boolean values, True or False).
 We also learned that a series of multiple values (e.g., multiple integers, multiple strings) can be stored in what we call a vector (R) or a list (Python).
@@ -95,7 +95,7 @@ But how do we -- toy examples like those in Example~\ref{ex:createdataframe} asi
 \section{Reading and Saving Data}
 \label{sec:reading}
 
-\subsection{The Role of Files}
+\subsection{The Role of Files}\label{sec:files}
 
 In statistical software like SPSS or Stata, or in all typical office applications for that matter, you \emph{open} a file, do some work on it, and then \emph{save} the changes to the same file once you are done. You basically ``work on that file''.
 
@@ -127,18 +127,20 @@ For the sake of completeness, we also listed the native Python and R formats pic
 \caption{\label{tab:fileformats} Basics of data frame handling}{%
 \begin{tabular}{@{}llll@{}}
 \toprule
-        & Used for?             & open   & interoperable?\\ \midrule
+        & Used for?             & open   & interoperable?\\
+\midrule
 txt     & plain text            &yes & yes            \\
 csv     & tabular data          & yes & yes            \\
 json    & nested data, key-value pairs   & yes & yes             \\
 pickle  & Python objects        & yes & no     \\
-RDS/RDA & R objects             & yes & no \\ \bottomrule
+RDS/RDA & R objects             & yes & no \\
+\bottomrule
 \end{tabular}}{}
 \end{table}
 
 
-\subsection{Encodings and Dialects}
-\label{sec:encodings}
+\subsection{Encodings and Dialects} \label{sec:encodings}
+
 Plan \verb|txt| files, \verb|csv| files, and \verb|json| files are all files that are based on text. Unlike binary file formats, you can read them in any text editor. Try it yourself to understand what is going on under the hood.
 
 Download a csv file (such as \url{http://cssbook.net/d/gun-polls.csv})
@@ -202,7 +204,7 @@ get a list of all supported files. For instance, you could
 after typing \verb|haven::| to get an overview over functions such as
 \verb|read_spss|.
 
-\subsection{File handling beyond data frames}
+\subsection{File handling beyond data frames}\label{sec:beyonddataframes}
 Data frames are a very useful data structure for organizing and analyzing data, and will occur in many examples in this book.
 However, not all things that we might want to read from a file needs to go into a data frame.
 Imagine if we have a list of words that we later want to remove from some texts (so-called stopwords, see Chapter~\ref{chap:protext}).
