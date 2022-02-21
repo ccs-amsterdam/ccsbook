@@ -58,11 +58,11 @@ behavior in new ways.
 A frequent misunderstanding, then, about computational approaches is
 that they would somehow be a-theoretical. This is probably fueled by
 clich\'{e}s coined during the ``Big Data''-hype in the 2010's, such as the
-infamous saying that in the age of Big Data, correlation is enough \citep{Mayer2013},
+infamous saying that in the age of Big Data, correlation is enough \citep{Mayer2013};
 but one could not be more wrong: as the work of Kitchin shows \citep{Kitchin2014,Kitchin2014data}, computational approaches can
 be well situated within existing epistemologies.
 For the field to advance, computational and theoretical work should be symbiotic, with each informing the other
-and with neither claiming superiority \cite{margolin19}.
+and with neither claiming superiority \citep{Margolin2019}.
 Thus, the computational
 scientists' toolbox includes both more data-driven and more
 theory-driven techniques; some are more bottom-up and inductive,
@@ -86,12 +86,12 @@ genuinely interesting question. In this example, the inner workings of
 the Named Entity Recognition step are not genuinely interesting for us
 -- we just need to do it to answer our question.
 We do care about how well it works and especially which biases it may have that could affect our substantive outcomes,
-but we are not really evaluating any theory on named entity recognition here.
+but we are not really evaluating any theory on Named Entity Recognition here.
 We are, however, answering a theoretically
 interesting question when we look at the pipeline as a whole,
 that is, when we apply the tools in order to tackle a social scientific problem. 
 Of course, what is genuinely interesting depends on one's discipline: For a
-computational linguist, the inner workings of the named entity recognition
+computational linguist, the inner workings of the Named Entity Recognition
 may actually be the interesting part, and our research question just one
 possible ``downstream task''.
 
@@ -113,12 +113,12 @@ parliamentary speeches, you are building a (better) mousetrap. But as
 a social scientist, your work does not stop there. You need to use
 the mousetrap to answer some theoretically interesting question.
 
-Actually, we expect that the contents of this book will provide a background that helps you to face the current research challenges in both academia and industry. On the one hand, the emerging field of Computational Social Science has become one of the most promising areas of knowledge and many universities and research institutes are looking for scholars with this profile.  On the other hand, it is widely known that nowadays the computational skills will increase your job opportunities in private companies, public organizations or ONGs, given the growing interest in data-driven solutions.
+Actually, we expect that the contents of this book will provide a background that helps you to face the current research challenges in both academia and industry. On the one hand, the emerging field of Computational Social Science has become one of the most promising areas of knowledge and many universities and research institutes are looking for scholars with this profile.  On the other hand, it is widely known that nowadays the computational skills will increase your job opportunities in private companies, public organizations, or NGOs, given the growing interest in data-driven solutions.
 
 When planning this book, we needed to make a couple of tough
 choices. We aimed to at least give an introduction to all techniques
 that students and scholars who want to computationally analyze
-communication probably will be confronted with. Of course, specific --
+communication will probably be confronted with. Of course, specific --
 technical -- literature on techniques such as, for instance, machine
 learning can cover the subject in more depth, and the interested student may indeed
 want to dive into one or several of the techniques we cover more
@@ -160,7 +160,7 @@ preferably  both of them.
 There are very few tasks that you cannot do with at least one of them.
 
 Some people have strong beliefs as to which language is ``better'' -- we 
-do subscribe to that view. Most techniques that are relevant to us can be
+do not subscribe to that view. Most techniques that are relevant to us can be
 done in either language, and personal preference is a big factor. R
 started out as a statistical programming environment, and that
 heritage is still visible, for instance in the strong emphasis on
@@ -205,10 +205,10 @@ and more conceptual books on the other hand. We do cover the technical
 background that is necessary to understand what is going on, but we
 keep both computer science concepts and mathematical concepts to a
 minimum. For instance, if we had written a more technical book about
-Programming in Python, we would have introduced rather early and in
-detail to concepts such as classes, inheritence, and instances of
-classes. Instead, we decided to give such information only as
-additional background where necessary and focus, rather pragmatically,
+programming in Python, we would have introduced rather early and in
+detail concepts such as classes, inheritance, and instances of
+classes. Instead, we decided to provide such information only as
+additional background where necessary, and to focus, rather pragmatically,
 on the application of techniques for the computational analysis of
 communication. Vice versa, if we had written a more conceptual book on
 new methods in our field, we would have given more emphasis to
@@ -219,7 +219,7 @@ We do not expect much prior knowledge from the readers of this
 book. Sure, some affinity with computers helps, but there is no strict
 requirement on what you need to know. Also in terms of statistics, it
 helps if you have heard of concepts such as correlation or
-regression analysis, but even if your knoweldge here is rather
+regression analysis, but even if your knowledge here is rather
 limited, you should be able to follow along.
 %Again, a bit of
 %previous knowledge helps, but you can also acquire it along the way.
@@ -234,7 +234,7 @@ learning in general, or with the handling of textual data.
 
 This book is designed in such a way that it can be used as a text book
 for introductory courses on the computational analysis of
-communications. Often, such courses will be on the gradutate level,
+communications. Often, such courses will be on the graduate level,
 but it is equally possible to use this book in an undergraduate
 course; maybe skipping some parts that may go too deep. All code
 examples are not only printed in this book, but also available
@@ -255,13 +255,13 @@ we generally provide a copy of this data on the book website,
 but we also provide a link to the original source.
 %TODO do we provide a link?
 
-One thing to note is that to avoid unnessecary repetition
+One thing to note is that to avoid unnecessary repetition
 the examples are sometimes designed to continue on earlier
-snipets from that chapter.
+snippets from that chapter.
 So, if you seem to be missing a data set, or if some package is not imported yet,
 make sure you run all the code examples from that chapter.
 
-Note that although it is possible to copy-paste the code from the website accompaying this book\footnote{https://cssbook.net},
+Note that although it is possible to copy-paste the code from the website accompanying this book\footnote{https://cssbook.net},
 we would actually recommend typing the examples yourself.
 That way, you are more conscious about the commands you are using and you are adding them to your `muscle memory'.
 
@@ -295,19 +295,19 @@ it is generally better to install an interpreter on your own computer.
 After installing Python or R, you can execute code in these languages, but you also want a nice
 \concept{Integrated Development Environment (IDE)} to develop your data analysis scripts. 
 For R we recommend RStudio, which is free to install and is currently the most popular environment for working with R.
-For Python we recommend starting with JupyterLab or JupyterNotebook, which is a web-based environment for writing and running Python code.
+For Python we recommend starting with JupyterLab or JupyterNotebook, which is a browser-based environment for writing and running Python code.
 All of these tools are available and well documented for Windows, MacOS, and Linux. 
 After explaining how to install R and Python, there is a very important section on installing packages.
 If you plan to only use either R or Python (for now), feel free to skip the part about the other language.
 
-If you are writing longer Python programs (as opposed to, for instance, short data analysis scripts) you probably want to install a full-blown IDE (Integrated Development Environment) as well.
+If you are writing longer Python programs (as opposed to, for instance, short data analysis scripts) you probably want to install a full-blown IDE as well.
 We recommend PyCharm\footnote{\url{https://www.jetbrains.com/pycharm/}} for this, which has a free version that has everything you need, and the premium version is also free for students and academic or open source developers.
 See their website for download and installation instructions.
 
 
 \begin{feature}\textbf{Anaconda}. An alternative to installing 
   R, Python, and optional libraries separately and as you need them
-  (which we will explain in this chapter) is to install the so called
+  (which we will explain later in this chapter) is to install the so-called
   Anaconda distribution, one of the most used and extensive platforms
   to perform data science. Anaconda is free and open-source, and is
   conceived to run Python and R code for data analysis and machine
@@ -327,17 +327,17 @@ See their website for download and installation instructions.
   depends. On the pro side, by downloading Anaconda you have everything installed at once and do
   not have to worry about dependencies (e.g., Windows users usually
   do not have a C compiler installed, but some packages may need
-  it). On the con side,  it is huge and also installs many
-  things you do not need, you essentially get a non-standard
-  installation, in which programs and packages are stored in locations different
-  locations to those you (or your computer) may expect. Nowadays, almost all computers
+  it). On the con side, it is huge and also installs many
+  things you do not need, so you essentially get a non-standard
+  installation, in which programs and packages are stored in different
+  locations than those you (or your computer) may expect. Nowadays, as almost all computers
   actually already \emph{have} some version of Python installed (even though you may
   not know it), you also end up in a possibly confusing situation
   where it may be unclear which version you are actually running, or
   for which version you installed a package.
   For this reason, our recommendation is to not use Anaconda unless
   it is already installed or you have a specific reason to do so
-  (for example, if your Professor requires you to use it).
+  (for example, if your professor requires you to use it).
 \end{feature}
 
 \subsection{Installing R and RStudio}\label{sec:installr}
@@ -354,8 +354,8 @@ operations. If you are not familiar with other statistical packages,
 do not panic, we will guide you from the very beginning. Unlike
 much traditional software that requires just one complete and initial
 installation, when working with R, we will first install the raw
-programming language and then we will continue to instal additional
-components during  our journey. It might sound cumbersome, but
+programming language and then we will continue to install additional
+components during our journey. It might sound cumbersome, but
 in fact it will make your work more powerful and flexible, since you
 will be able to choose the best way to interact with R and especially
 you will select the packages that are suitable for your project.
@@ -379,7 +379,7 @@ For Ubuntu linux, it is best to follow the instructions on \url{https://cran.r-p
 After installing R, let us immediately install RStudio Desktop (the free version).
 Go to \url{https://rstudio.com/products/rstudio/download/#download} and download and run the installer for your computer.
 If you open RStudio you should get a screen similar to \reffig{rstudio}.
-If this is the first time you open RStudio you probably don't see the top left pane (the scripts),
+If this is the first time you open RStudio you probably won't see the top left pane (the scripts),
 you can create that pane by creating a new \emph{R Script} via the \emph{file} menu or with the green plus icon in the top left corner. 
 
 \begin{figure}
@@ -410,9 +410,9 @@ the easiest way to run R code is line by line.
 You can simply place your cursor on the first line,
 and repeatedly press control+Enter, which executes a line and then places the cursor on the next line.
 You can also select multiple lines (or part of a line) to execute those commands together,
-but in general it is easiest to check that everything is going as planned if you run the code line by line.
+but in general it is easier to check that everything is going as planned if you run the code line by line.
 
-You can also write commands directly in the console and execute them (by pressing enter).
+You can also write commands directly in the console and execute them (by pressing Enter).
 This can be useful for trying things out or to run things that only need to be run once,
 but in general we would strongly recommend typing all your commands in a script and then executing them.
 That way, the script serves as a log of the commands you used to analyze your data,
@@ -429,7 +429,7 @@ so you (or a colleague) can read and understand how you did the analyses.
   and you don't need to mess around with specifying the locations of files
   (which will probably be different for someone else or on a different computer).
   Moreover, RStudio remembers which files you were editing for each project,
-  so if you are working on multiple project it's very easy to switch between them.
+  so if you are working on multiple projects, it's very easy to switch between them.
   We recommend creating a project now for the book (and/or for any projects you are working on),
   and always switching to a project when you open RStudio
 \end{feature}
@@ -449,7 +449,7 @@ move directly to console or to an R document.
 Note that in the environment you can save and load your ``workspace'' (all data in the computer memory).
 However, relying on this functionality is often not a good idea: it
 will only save the state of your current session, whereas you most
-likely want to save your R syntax file and/or your data instead.
+likely will want to save your R syntax file and/or your data instead.
 If you have your raw input data (e.g., as a csv file, see \refchap{filetodata})
 and your analysis script, you can always
 reproduce what you have been doing. If you only have a snapshot of
@@ -477,14 +477,14 @@ Thus, you can just use any recent Python 3 version for this book.
 When browsing through questions on online fora such as Stackoverflow or reading other people's code on Github (we will talk about that in \refchap{worldcode}), you still may come across legacy code in Python 2. Such code usually does not run directly in a Python 3 interpreter, but in most cases, only minor adaptions are necessary to make it work.
 
 We will install and run Python and Jupyter Notebook using a \concept{terminal} or command line interface.
-This is a tool that is installed on all computers that allows you to give commands to the computer directly.
+This is a tool that is installed on all computers that allows you to enter commands to the computer directly.
 First, create a project folder for this book using the File Explorer (Windows) or Finder (MacOS).
 Then, on Windows you can shift + Right click that folder and select ``Open command Window here''.
 On MacOS, after navigating to the folder you just created, you click on ``Finder'' in the menu at the top of the screen, then on ``Services'', then on ``New Terminal at Folder.''
 In both cases, this should open a new window (usually black or gray) that allows you to type commands.
 
 Note that on most computers, Python is already installed by default.
-You can check this by typing the following the command in your terminal:
+You can check this by typing the following command in your terminal:
 
 \begin{verbatim}
 python3 --version
@@ -518,13 +518,13 @@ On some systems \verb|pip3| will not work, so use \verb|pip| in that case
 \paragraph{Installing Jupyter Notebook}
 Next, we will install Jupyter Notebook, which you can use to run all the examples in this book
 and is a great environment for developing Python data analysis scripts.
-Jupyter Notebooks (which are also included in IDE JupyterLab if you installed that), 
+Jupyter Notebooks (in IDE JupyterLab if you installed that), 
 are run as a web application
 that allows you to create documents that contain code and inline text fragments.
  One of the nicest things about 
 the Jupyter Notebook is that the code is inserted in fields (so-called ``cells'') that you
-can run one by one, getting its respective output, which added to the
-designed narrative text will make your script more clean and
+can run one by one, getting its respective output, which when added to the
+narrative text, will make your script more clean and
 reproducible. You can also add formatted text blocks (using a simple formatting language called \concept{Markdown})
 to explain to the reader what you are doing. In \refsec{practices}, we will address
 notebooks again as a good practice for a computational scientist.
@@ -564,7 +564,7 @@ or Markdown for text fragments, which can be used to explain the code and/or int
 \section{Installing Third-Party Packages}
 \label{sec:installingpackages}
 
-The \index{print}\texttt{print} function used above is included automatically when you start R or Python.
+The \index{print}\texttt{print} function used above is automatically included when you start R or Python.
 Many functions, however, are included in separate \concept{packages} (also known as \concept{libraries} or \concept{modules}), which are
 generally collections of commands for a certain task or activity.
 
@@ -574,7 +574,7 @@ Throughout this book, we will be using such third-party packages for a variety o
 For example, we will use the R package \emph{tidyverse} and the Python packages \emph{pandas} for data wrangling.
 
 To install these packages on your computer, run the following commands:
-(Note: if you are using Anaconda, replace \ttt{pip3 install} by \ttt{conda install})  
+(Note: if you are using Anaconda, replace \ttt{pip3 install} with \ttt{conda install})  
 
 \begin{tcbraster}[raster columns=2,raster equal height=rows,raster valign=top]
    \codex[caption=Installing a package from Jupyter]{chapter01/ch01install.py}
@@ -585,7 +585,7 @@ To install these packages on your computer, run the following commands:
 These commands will automatically fetch the package from the right repository\footnote{Similar to the App Store or Play Store, both R and Python have a centralized repository for third party packages.  For R, this is the Comprehensive R Archive Network (CRAN) encountered earlier,
     while for Python this is the Python Package Index (PyPI) accessed by \verb|pip|.  Normally, all packages in these repositories are open source and safe to install.} and install them on your computer. This can take a while, especially for large packages such as tidyverse.
 Fortunately, this only needs to be done once.
-Every time time you use a package, you also need to \emph{activate} it using the \index{import}\texttt{import} (Python) or  \index{library}\texttt{library} (R) command.
+Every time you use a package, you also need to \emph{activate} it using the \index{import}\texttt{import} (Python) or  \index{library}\texttt{library} (R) command.
 
 In general, whenever you get an error \texttt{No module named 'pandas'} (Python) or \texttt{there is no package called ‘tidyverse’},
 you can just install the package with that name using the code listed above.
@@ -601,7 +601,7 @@ To make it easy to keep track of the packages needed for each chapter,
 every chapter that includes code in this book starts with a note like this that gives an overview of the main packages introduced in that chapter.
 It also includes the code needed to install these packages, which of course is only needed if you didn't install these packages before.
 Note again that if you are using Anaconda for Python,
-you should replace \ttt{!pip3 install} by \ttt{!conda install} in that code. On some systems, you may need to use \ttt{!pip install} instead of \ttt{!pip3 install}.
+you should replace \ttt{!pip3 install} with \ttt{!conda install} in that code. On some systems, you may need to use \ttt{!pip install} instead of \ttt{!pip3 install}.
 
 These notes also includes a code block to import all the packages used for that chapter,
 which you need to run every time you use examples from that chapter.
