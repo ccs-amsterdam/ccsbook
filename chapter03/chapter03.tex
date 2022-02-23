@@ -2,7 +2,7 @@
 \label{chap:programmingconcepts}
 
 \begin{abstract}{Abstract}
-  This chapter introduces readers to the basics of programming
+  This chapter introduces readers to the basics of programming, data types, control strucutres, and functions
   in Python and R. It
 explains how to deal with objects, statements, expressions, variables
 and different types of data, and shows how to create and understand
@@ -71,7 +71,7 @@ object.
   reason, we will use the word \emph{object} to refer to both the
   actual object or value and its name. (If you want some extra food
   for thought and want to challenge your brain
-  a bit, you can try to see the relationship between the idea of a pointer and
+  a bit, try to see the relationship between the idea of a pointer and
   the discussion about mutable and immutable objects below.)
 \end{feature}
 
@@ -113,7 +113,7 @@ Let us have a closer look at the code in Example~\ref{ex:var1} above.
 The first line is a command to create the object \emph{a} and store
 its value 100; and the second is illustrative and will give you the
 class of the created object, in this case ``numeric''. Notice that we
-are using two native functions of R, \index{print}\texttt{print} and \index{print}\texttt{print}, and
+are using two native functions of R, \index{print}\texttt{print} and \index{class}\texttt{class}, and
 including \verb|a| as an argument of \index{class}\texttt{class}, and the very same
 \index{class(a)}\texttt{class(a)} as an argument of \index{print}\texttt{print}. The only difference
 between R and Python, here, is that the relevant Python function is
@@ -147,8 +147,7 @@ as you truncate your data.
 So why not just always use a float? First,
 floating point operations usually take more time than integer operations.
 Second, because floating point numbers are stored as a combination of
-a coefficient and an exponent (to the base of 2), many integers (or,
-in fact, many decimal fractions) can only approximately be stored
+a coefficient and an exponent (to the base of 2), many decimal fractions can only approximately be stored
 as a floating point number. Except for specific domains (such
 as finance), these inaccuracies are often not of much practical importance.
 But it explains why calculating \verb|6*6/10| in Python returns 3.6, while
@@ -175,7 +174,7 @@ integer.
 As a computational analyst of communication you will usually work with
 text objects or strings of characters. Commonly simply known as ``strings'',
 such text objects are also referred to as ``character vector objects'' in R.
-You can create them just by adding single or double quotes around the value of the variable (keep in mind to begin and finish the string either with single or with double quotes, and not to mix their use). Every time you want to analyze a social-media message, or any other text, you will be dealing with such strings. 
+Every time you want to analyze a social-media message, or any other text, you will be dealing with such strings. 
 
 \begin{ccsexample}
   \doublecodex{chapter03/var4}
@@ -196,13 +195,13 @@ and similarly for double-quoted strings.
 To include an actual backslash in a text, you also escape it with a backslash,
 so you end up with a double backslash (\verb|\\|). 
 
-The Python example also shows a concept introduced in Python 3.6 (introduced in December 2016):
+The Python example also shows a concept introduced in Python 3.6:
 the f-string. These are strings that are prefixed with the letter \texttt{f} and are \emph{formatted} strings.
 This means that these strings will automatically insert a value where curly brackets indicate that you wish to do so.
 This means that you can write: \verb|print(f"The value of i is {i}")| in order to print ``The value of i is 5'' (given that \verb|i| equals 5).
 In R, the \index{glue}\emph{glue} package allows you to use an f-string-like syntax as well: \texttt{glue("The value of i is \{i\}")}.
 
-Although this will be explained in more detail in Section~\ref{sec:unicode},
+Although this will be explained in more detail in Section 5.2.2~\ref{sec:unicode},
 it is good to introduce how computers store text in memory or files. 
 It is not too difficult to imagine how a computer internally
 handles \emph{integers}: after all, even though the number may be displayed
@@ -224,7 +223,7 @@ you need to specify the encoding (usually UTF-8).
 However, both Python and R also allow you to work with the raw data
 (e.g.\ before decoding) in the form of \index{bytes}\emph{bytes} (Python) or \index{raw}\emph{raw} (R) data,
 which is sometimes necessary if there are encoding problems.
-This is shown briefly in the bottom part of \index{var4}\emph{var4}.
+This is shown briefly in the bottom part of \index{example 3.4}\emph{var4}.
 Note that while R shows the underlying hexadecimal byte values of the raw data (so 54 is \verb|T|, 68 is \verb|h| and so on) and Python 
 displays the bytes as text characters, in both cases the underlying data type is the same: raw (non-decoded) bytes.
 
@@ -274,7 +273,7 @@ by using a \verb|:|. After the colon, we provide the index of
 the last element (in R), while Python stops just \emph{before} the index.\footnote{This is related to the
 reason why Python starts counting with zero. If you are interested
 in this, have a look at \url{https://www.cs.utexas.edu/users/EWD/transcriptions/EWD08xx/EWD831.html}}
-If we want to pass multiple single index values instead of a range,
+If we want to pass multiple single index values instead of a range in R,
 we need to create a vector of these indices by using \verb|c()| (Example~\ref{ex:1darray2}).
 Take a moment to compare the different ways of indexing between Python
 and R in Example~\ref{ex:1darray2}!
@@ -344,7 +343,7 @@ Python users often like the fact that lists give  a lot of flexibility, as they 
 entries of very different types. But also Python users sometimes may want a stricter
 structure like R's vector. This may be especially interesting for
 high-performance calculations, and therefore, such a structure is
-available from the \index{numpy}\emph{numpy} (\emph{num}bers in \emph{py}thon)
+available from the \index{numpy}\emph{numpy} (which stands for Numbers in Python)
 package: the numpy array.
 This will be discussed in more detail when we deal with data frames in Chapter~\ref{chap:filetodata}.
 
@@ -358,7 +357,7 @@ This will be discussed in more detail when we deal with data frames in Chapter~\
   In Python, however, we now have two variables (names) that both point to or \index{reference}\emph{reference} the same object,
   and if we change $x$ we also change $y$ and vice versa, which can be quite unexpected.
   Note that if you really want to copy an object in Python, you can run \verb|x.copy()|.
-  See Example~\ref{ex:mutable} for an example.
+  See Example~\ref{ex:mutable} for an example. 
 
   Note that this is only important for \index{mutable}\emph{mutable} objects, that is,
   objects that can be changed.
@@ -394,13 +393,13 @@ which can be very useful,  e.g.\ finding all elements that occur in two lists.
 \subsection{Dictionaries}\label{sec:dictionaries}
 
 Python \emph{dictionaries} are a very powerful and versatile data type.
-Dictionaries contain unordered and mutable collections of objects that
+Dictionaries contain unordered\footnote{Newer versions of Python actually do remember the order in which items are inserted into a dictionary. However, for the purpose of this introduction, you can assume that you hardly ever care about the order of elements in a dictionary.} and mutable collections of objects that
 contain certain information in another object. Python generates this
 data type in the form of \verb|{key : value}| pairs in order
 to map any object by its key and not by its relative position in the
 collection. Unlike in a list, in which you index with an integer denoting
 the position in a list, you can index a dictionary using the key.
-For example, in Example~\ref{ex:dict}, we want to get the values of the object ``positive'' in the
+This is the case shown in Example~\ref{ex:dict}, in which we want to get the values of the object ``positive'' in the
 dictionary \emph{sentiments} and of the object ``A'' in the dictionary
 \emph{grades}. You will
 find dictionaries very useful in your journey as a computational
@@ -456,7 +455,7 @@ lists. This is, in fact, often done, but has the disadvantage that
 there are no easy ways to get, for instance, the dimensions (the
 shape) of the table, or to print it in a neat(er) format. To get all
 that, one can transform the list of lists into an \verb|array|, a
-datastructure provided by the package \index{numpy}\emph{numpy}.
+datastructure provided by the package \index{numpy}\emph{numpy} (see Chapter 5 for more details).
 
 To create a matrix in R, you have to use the function \fn{matrix} and
 create a vector of values with the indication of how many rows and
@@ -489,7 +488,7 @@ function.  Let’s generate a simple data frame of three instances (each
 case is an author of this book) and three variables of the types
 numeric (\emph{age}), character (\emph{country} where they obtained their
 master degree) and logic (\emph{living abroad}, whether they currently
-lives out of the country in which they were born) (Example~\ref{ex:dataframe1}).
+live outside the country in which they were born) (Example~\ref{ex:dataframe1}).
 Notice that you have the label of the variables at the top of each column and that it creates an automatic numbering for indexing the rows.  
 
 \pyrex[caption=Creating a simple data frame, output=py]{chapter03/dataframe1}
@@ -506,7 +505,7 @@ Notice that you have the label of the variables at the top of each column and th
   on each row of a column and sometimes do not use data frames at all.
   Thus, if you are primarily interested in using R you could consider skipping
   the remainder of this chapter for now and returning later when you are ready to learn more.
-  If you are learning Python, we strongly recommend continuing this chapter as
+  If you are learning Python, we strongly recommend continuing with this chapter, as
   control structures are used in many of the examples in the book.
   \end{feature}
   
@@ -559,9 +558,9 @@ inputs.
 In your script, you usually indicate such loops and conditions
 visually by using \emph{indentation}. Logical empty spaces -- two in R and four in
 Python -- depict blocks and sub-blocks on your code structure.
-As you will see in the next section, in R, using indention
+As you will see in the next section, in R, using indentation
 is optional, and curly brackets will indicate the beginning (\verb|{|)
-and end (\verb|}|) of a code block; whereas in Python, indention
+and end (\verb|}|) of a code block; whereas in Python, indentation
 is mandatory and tells your interpreter where the block
 starts and ends.
 
@@ -580,7 +579,7 @@ instruction. The most common types of loops are \emph{for},
 concerned with so-called for-loops. Imagine you have a list of
 headlines as an object and you want a simple script
 to print the length of each message. Of course you can go headline
-by headline using the indexing, but you will get bored or will not
+by headline using indexing, but you will get bored or will not
 have  enough time if you have thousands of cases. Thus, the idea is to
 operate a loop in the list so you can get all the results, from the
 first until the last element, with just one instruction.  The syntax
@@ -653,7 +652,7 @@ We could also make it a bit more complicated: first check whether the length is 
 then check whether it is exactly 44 (\verb|elif| / \verb|else if|), and finally specify what to do if none of the conditions was met (\verb|else|).
 
 In Example~\ref{ex:if2}, we will print the headline if it is shorter than 40 characters,
-print the string ``What a surprise!'' if it is exactly 44 characters, and print ``NaN'' in all other cases.
+print the string ``What a coincidence!'' if it is exactly 44 characters, and print ``NaN'' in all other cases.
 Notice that we have included the clause \emph{elif} in the structure (in R it is noted \emph{else if}).
 \emph{elif} is a combination of \emph{else} and \emph{if}: if the previous condition is not satisfied,
 this condition is checked and the corresponding code block (or \emph{else} block) is executed.
@@ -667,8 +666,8 @@ This avoids having to nest the second \emph{if} within the \emph{else}, but othe
 
 \emph{Functions} and \emph{methods} are fundamental concepts in
 writing code in object-orientated programming. Both are objects that
-we use to store a set of statements and operations that we can later
-use without writing the whole syntax again. This makes our code
+we use to store a set of statements and operations that we can use later
+without having to write the whole syntax again. This makes our code
 simpler and more powerful.
 
 We have already used some built-in functions, such as \index{length}\texttt{length} and
@@ -739,7 +738,7 @@ Example~\ref{ex:functions} shows how to write our function and how to use it.
 
 The power of functions, though, lies in scenarios where they are used
 repeatedly.  Imagine that you have a list of 5 (or 5 million!) scores
-and you wish to apply the function \verb|por_60_cond| to all the scores at
+and you wish to apply the function \verb|perc_60_cond| to all the scores at
 once using a loop. This costs you only two extra lines of code
 (Example~\ref{ex:functions2}).
 
@@ -751,7 +750,7 @@ once using a loop. This costs you only two extra lines of code
   Think of a function that returns a list of multiple values. Often, you do not need all values at once: you may only 
   need the \emph{next} value at a time. This is especially interesting when calculating the whole list would take a lot of time or a lot 
   of memory. Rather than waiting for all values to be calculated, you can immediately begin processing the first value before the next arrives; or 
-  you can work with data so large that it do not all fit into your memory at the same time.  You recognize a generator by 
+  you can work with data so large that it doesn't all fit into your memory at the same time.  You recognize a generator by 
   the \verb|yield| keyword instead of a \verb|return| keyword (Example~\ref{ex:generators})
 \end{feature}
 
@@ -766,5 +765,5 @@ wonderful Youtube tutorials to keep learning. We can recommend the
 books by \cite{crawley2012r} and \cite{vanderplas2016python} to have
 more insights into R and Python, respectively. In the next chapter, we
 will go deeper into the world of code in order to learn how and why
-you should re-use existing code, what to do if you are stuck during your
+you should re-use existing code, what to do if you get stuck during your
 programming journey and what are the best practices when coding.
