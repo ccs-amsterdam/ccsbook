@@ -327,8 +327,8 @@ are dealing with a list (Example~\ref{ex:1darray1}).
 In fact, lists can even contain other lists, or any other object for
 that matter.
 
-In R you can also uses lists, even though they are much less popular in R than
-they are in Python because vectors are better if all objects are of the same type.
+In R you can also use lists, even though they are much less popular in R than
+they are in Python, because vectors are better if all objects are of the same type.
 R lists are created in a similar way as vectors, except that we have to add the word \verb|list|
 before declaring the values. Let us build a list with four different
 kinds of elements, a numeric object, a character object, a square root
@@ -582,7 +582,7 @@ to print the length of each message. Of course you can go headline
 by headline using indexing, but you will get bored or will not
 have  enough time if you have thousands of cases. Thus, the idea is to
 operate a loop in the list so you can get all the results, from the
-first until the last element, with just one instruction.  The syntax
+first until the last element, with just one instruction. The syntax
 of the for-loop is:
 
 \doublecodex{chapter03/forsyntax}
@@ -608,7 +608,7 @@ loops.
   analysis with different datasets or different specifications. But
   this is error-prone and hard to maintain, as it involves a lot of
   extra work if you want to change something. In many cases where you
-  find yourself pasting multiple versions of the dataset, you would
+  find yourself pasting multiple versions of your code, you would
   probably be better using a for-loop instead.
   \end{feature}
 
@@ -652,7 +652,7 @@ We could also make it a bit more complicated: first check whether the length is 
 then check whether it is exactly 44 (\verb|elif| / \verb|else if|), and finally specify what to do if none of the conditions was met (\verb|else|).
 
 In Example~\ref{ex:if2}, we will print the headline if it is shorter than 40 characters,
-print the string ``What a coincidence!'' if it is exactly 44 characters, and print ``NaN'' in all other cases.
+print the string ``What a coincidence!'' if it is exactly 44 characters, and print ``Too Low'' in all other cases.
 Notice that we have included the clause \emph{elif} in the structure (in R it is noted \emph{else if}).
 \emph{elif} is a combination of \emph{else} and \emph{if}: if the previous condition is not satisfied,
 this condition is checked and the corresponding code block (or \emph{else} block) is executed.
