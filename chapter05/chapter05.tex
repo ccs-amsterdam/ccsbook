@@ -36,7 +36,7 @@ Such data structures are really useful for nested data:
 For example, if we do not want to only store people's ages, but also their addresses,
 we could store a dict within a dict.
 %\rpyex{chapter05/snippets/listvsdict}{CAPTION}
-In fact, as we will see later in this chapter, much data used by computational social scientists work in such a format.
+In fact, as we will see later in this chapter, much of the data used by computational social scientists comes in such a format.
 For instance, data about an online product can contain many reviews which in turn have various pieces of information on the review author.
 
 But ultimately, for many social-scientific analyses, a tabular data format is preferred.
@@ -109,8 +109,8 @@ A typical workflow would look like this:
 
 \begin{enumerate}
 \item Read raw data from file \texttt{\small{myrawdata.csv}} into data frame \texttt{\small{df}}
-\item Do some operations and analyses on df
-\item Save df to file \texttt{\small{myfinaldata.csv}}
+\item Do some operations and analyses on \texttt{\small{df}}
+\item Save \texttt{\small{df}} to file \texttt{\small{myfinaldata.csv}}
 \end{enumerate}
 Note that the last step is not even necessary, but may be handy if running the script takes very long, or if you want to re-distribute the resulting file.
 
@@ -174,7 +174,7 @@ very old versions of MacOS used a Carriage Return only (\verb+\r+), and newer ve
 In our field, the Linux (or Unix) style line endings have become most dominant,
 and Python 3 even automatically converts Windows style line endings to Unix style line endings when reading a file -- even on Windows itself.
 
-A third difference is the use of so-called \emph{byte-order markers} (BOM). In essence, a BOM is an additional byte added to the beginning of a text file to indicate that it is a UTF-encoded file and to indicate in which order the bytes are to be read (the so-called endianness). While informative, this can cause trouble if your program does not expect that byte to be there. In that case, you might either want to remove it or explicitly specify the encoding as such (e.g., 'utf-8-bom' instead of 'utf-8' in the examples below).
+A third difference is the use of so-called \emph{byte-order markers} (BOM). In essence, a BOM is an additional byte added to the beginning of a text file to indicate that it is a UTF-encoded file and to indicate in which order the bytes are to be read (the so-called endianness). While informative, this can cause trouble if your program does not expect that byte to be there. In that case, you might either want to remove it or explicitly specify the encoding as such. For instance, you can add an argument such as \texttt{encoding="UTF-8"} or \texttt{encoding="UTF-8bom"} to the \texttt{open} (Python} or \texttt{scan} (R) command.
 
 
 In short, the most standard form in which you probably want to encode your data is in UTF-8 with Linux-style line endings without the use of a byte-order marker.
