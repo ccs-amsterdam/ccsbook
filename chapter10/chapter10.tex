@@ -34,7 +34,7 @@ You can install these packages with the code below if needed  (see Section~\ref{
 \label{sec:dtm}
 
 Before you can conduct any computational analysis of text, you need to solve a problem: computations are usually done on numerical data -- but you have text. Hence, you must find a way to \emph{represent} the text by numbers.
-The document-term matrix (DTM, also called the term-document matrix or TDM) is such a common numerical representation of text.
+The document-term matrix (DTM, also called the term-document matrix or TDM) is one common numerical representation of text.
 It represents a \index{corpus}\emph{corpus} (or set of documents) as a matrix or table, where each row represents a document, each column represents a term (word),
 and the numbers in each cell show how often that word occurs in that document.
 
@@ -114,7 +114,7 @@ what information is kept or discarded.
 \end{feature}
 \end{figure}
 
-% Listings won't work with the japanese output, so I manually created png. Sorry!
+% Listings won't work with the Japanese output, so I manually created png. Sorry!
 \begin{ccsexample}
   \doublecodex{chapter10/haiku}
   \begin{tcbraster}[raster columns=2,raster equal height=rows,raster valign=top]
@@ -151,7 +151,7 @@ beyond the scope of this book.
 Example~\ref{ex:sotu} shows a more realistic example.
 It downloads all US ``State of the Union'' speeches and creates a document-term matrix from them.
 Since the matrix is now easily too large to print, both Python and R simply list the size of the matrix.
-R lists $85$ documents (rows) and $17\,999$ features (columns), and Python reports that it's size is $85\times17\,185$.
+R lists $85$ documents (rows) and $17\,999$ features (columns), and Python reports that its size is $85\times17\,185$.
 Note the difference in the number of columns (unique terms) due to the differences in tokenization as discussed above.
 
 \begin{ccsexample}
@@ -171,7 +171,7 @@ Second, we take a look at the frequency of these same words in four speeches fro
 However, the words that ranked around 1000 in the top frequency are still used in less than half of the documents.
 Since there are about 17\,000 even less frequent words in the corpus, you can imagine that most of the document-term matrix consists of zeros.
 The output also noted this \index{sparsity}\emph{sparsity} in the first output above.
-In fact, R reports that the dtm is $91\%$ sparse, meaning 91\% percent of all entries is zero.
+In fact, R reports that the dtm is $91\%$ sparse, meaning 91\% percent of all entries are zero.
 Python reports a similar figure, namely that there are only just under 150\,000 non-zero entries
 out of a possible $8\times22\,219$, which boils down to a 92\% sparse matrix.
 
@@ -182,10 +182,10 @@ This conversion (using the function \verb|as.matrix| and the method \verb|todens
 In general,  it is very inefficient to store and work with the matrix in a \concept[dense matrix]{dense} format.
 For a reasonably large corpus with tens of thousands of documents and different words, this can quickly run to billions of numbers,
 which can cause problems even on modern computers and is, moreover, very inefficient.
-With sparsities of often above 99\%, using a sparse matrix representation can easily reduce storage requirements by  a hundred times and in the process speed up calculations by reducing the number of entries that need to be inspected.
+Because sparsity values are often higher than 99\%, using a sparse matrix representation can easily reduce storage requirements by a hundred times, and in the process speed up calculations by reducing the number of entries that need to be inspected.
 Both \index{quanteda}\emph{quanteda}\ and \sklearn\ store DTMs as sparse matrices by default,
 and most analysis tools are able to deal with sparse matrices very efficiently
-(but see Section~\ref{sec:workflow} for problems with machine learning on sparse matrices in R).
+(see, however, Section~\ref{sec:workflow} for problems with machine learning on sparse matrices in R).
 
 A final note on the difference between Python and R in this example.
 The code in R is much simpler and produces nicer results since it also shows the words and the speech names.
@@ -301,9 +301,9 @@ essentially a plot of the most frequent words in a  \index{corpus}\emph{corpus} 
 \vspace{1em}
 
 More formally, a document-term matrix can be seen as a representation of data points about documents:
-each document (row) is represented as a vector containing any count per word (column).
+each document (row) is represented as a vector containing the count per word (column).
 Although it is a simplification compared to the original text,
-an unfiltered document-term matrix contains all relevant information.
+an unfiltered document-term matrix contains a lot of relevant information.
 For example, if a president uses the word ``terrorism'' more often than the word ``economy'', that could be an indication of their policy priorities.
 
 However, there is also a lot of \emph{noise} crowding out this \emph{signal}:
@@ -320,7 +320,7 @@ Before we can start analyzing this data, we need to decide on and perform multip
 \pyrex[caption=Top words used in Trump Tweets,format=table,output=py]{chapter10/trumptweets}
 
 Please note that although tweets are perhaps overused as a source of scientific information,
-we use them here as an example since they nicely exemplify issues around non-textual elements such as hyperlinks.
+we use them here because they nicely exemplify issues around non-textual elements such as hyperlinks.
 See Chapter~\ref{chap:scraping} for information on how to use the Twitter and other APIs to collect your own data.
 
 \subsection{Removing stopwords}\label{sec:stopwords}
@@ -357,7 +357,7 @@ Simply dropping such words from the corpus can be problematic; see Section~\ref{
 for more fine-grained filtering.
 
 Moreover, some research questions might actually be interested in certain stop words.
-If you are interesting in references to the future or specific modalities,
+If you are interested in references to the future or specific modalities,
 the word might actually be a key indicator.
 Similarly, if you are studying self-expression on Internet forums, social identity theory, or populist rhetoric,
 words like ``I'', ``us'' and ``them'' can actually be very informative.
@@ -377,7 +377,7 @@ see the package documentation for the \index{stopwords}\emph{stopwords} package 
 
 
 Next to stop words, text often contains punctuation and other things that can be considered ``noise'' for most research questions.
-For example, it could contain emoticons or emoji, twitter hashtags or at-mentions, or HTML tags or other annotations.
+For example, it could contain emoticons or emoji, Twitter hashtags or at-mentions, or HTML tags or other annotations.
 
 In both Python and R, we can use regular expressions to remove (parts of) words.
 As explained above in Section~\ref{sec:regular}, regular expressions are a powerful way to specify (sequences of) characters which are to be kept or removed.
@@ -393,7 +393,7 @@ Similarly, if you want to remove a term that would be split by the tokenization 
 if can be better to remove them before the tokenization occurs.
 
 Example~\ref{ex:noise} shows how we can use regular expressions to remove noise in Python and R.
-To more clearly show the results of each step, it shows the result of each processing step on a single tweet that exemplifies many of the problems described above.
+For clarity, it shows the result of each step, it shows the result of each processing step on a single tweet that exemplifies many of the problems described above.
 To better understand the tokenization process, we print the tokens in that tweet separated by a vertical bar (\verb+|+).
 As a first cleaning step, we will use a regular expression to remove hyperlinks and HTML entities like \verb|&amp;| from the untokenized texts.
 Since both hyperlinks and HTML entities are split over multiple tokens, it would be hard to remove them after tokenization.
@@ -428,8 +428,8 @@ Concretely, with the \index{TreebankWordtokenizer}\texttt{TreebankWordtokenizer}
 
 \pyrex[caption=Cleaning the whole corpus and making a tag cloud,output=r,format=png]{chapter10/tagcloud}
 
-As a final example, Example~\ref{ex:tagcloud} shows how to filter tokens for the whole corpus, but rather than removing hashtags it keeps only the hash tags to produce a tag cloud.
-In R, this is mostly a pipeline of \index{quanteda}\emph{quanteda}\ functions to create the corpus, tokenize, keep only hashtags, and create a dfm.
+As a final example, Example~\ref{ex:tagcloud} shows how to filter tokens for the whole corpus, but rather than removing hashtags it keeps only the hashtags to produce a tag cloud.
+In R, this is mostly a pipeline of \index{quanteda}\emph{quanteda}\ functions to create the corpus, tokenize, keep only hashtags, and create a DFM.
 To spice up the output we use the \index{RColorBrewer}\emph{RColorBrewer} package to set random colors for the tags.
 In Python, you can see that we now have a nested list comprehension, where the outer loop iterates over the texts and the inner loop iterates over the tokens in each text.
 Next, we make a \verb|do_nothing| function for the vectorizer since the results are already tokenized.
@@ -465,7 +465,7 @@ If every president in the corpus uses those terms, they are no longer informativ
 \pyrex[caption=Trimming a Document-Term Matrix]{chapter10/trimming}
 
 Example~\ref{ex:trimming} shows how you can use the \index{relative document frequency}\emph{relative document frequency} to trim a DTM in Python and R.
-We keep only words with a document frequency of between 1\% and 75\%.
+We keep only words with a document frequency of between 0.5\% and 75\%.
 
 Although these are reasonable numbers every choice depends on the corpus and the research question, so it can be a good idea to check which words are dropped.
 %Example~\ref{ex:docfreq} shows how you can make a table of all word frequencies in the corpus, and filter for excluded words.
@@ -524,7 +524,7 @@ The examples above all created document-term matrices where each column actually
 There is more information in a text, however, than pure word counts.
 The phrases: \emph{the movie was not good, it was in fact quite bad} and \emph{the movie was not bad, in fact it was quite good}
 have exactly the same word frequencies, but are quite different in meaning.
-Similarly, \emph{the new residents of York} and \emph{the residents of New York} are talking about quite different people.
+Similarly, \emph{the new kings of York} and \emph{the kings of New York} refer to very different people.
 
 Of course, in the end which aspect of the meaning of a text is important depends on your research question:
 if you want to know the sentiment about the movie, it is important to take a word like ``not'' into account;
@@ -549,13 +549,13 @@ making it more difficult to find sufficient examples of each to generalize over.
 
 Although bigrams are the most frequent use case, trigrams (3-grams) and (rarely) higher-order n-grams can also be used.
 As you can imagine, this will create even bigger DTMs and worse data scarcity problems,
-so require even more attention paid to feature selection and/or trimming.
+so even more attention must be paid to feature selection and/or trimming.
 
 
 \pyrex[caption=Generating n-grams]{chapter10/ngram}
 
 Example~\ref{ex:ngram} shows how n-grams can be created and used in Python and R.
-In Python, you can pass the \verb|ngram=(n, m)| option to the vectorizer,
+In Python, you can pass the \verb|ngram_range=(n, m)| option to the vectorizer,
 while R has a \verb|tokens_ngrams(n:m)| function.
 Both will post-process the tokens to create all n-grams in the range of n to m.
 In this example, we are asking for unigrams (i.e., the words themselves), bigrams and trigrams of a simple example sentence.
@@ -566,7 +566,7 @@ Both languages produce the same output, with R separating the words with an unde
 Example~\ref{ex:ngram2} shows how you can generate n-grams for a whole corpus.
 In this case, we create a DTM of the state of the union matrix with all bigrams included.
 A glance at the frequency table for all words containing \emph{government} shows that,
-besides the word itself and it's plural and possessive forms, the bigrams include compound words (federal and local government),
+besides the word itself and its plural and possessive forms, the bigrams include compound words (federal and local government),
 phrases with  the government as subject (the government can and must), and nouns for which the government is an adjective
 (government spending and government programs).
 
@@ -636,11 +636,11 @@ a model fit on embedding vectors gets a ``head start'' since the vectors for wor
 The assumption that words with similar meanings have similar vectors can also be used directly to extract synonyms.
 This can be very useful, for example for (semi-)automatically expanding a dictionary for a concept.
 Example~\ref{ex:embedding} shows how to download and use pre-trained embedding vectors to extract synonyms.
-First, we download a very small subset of the pre-trained Glove embedding vectors\footnote{The full embedding models can be downloaded from https://nlp.stanford.edu/projects/glove/. To make the file easier to download, we took only the 10\,000 most frequent words of the smallest embeddings file (the 50 dimension version of the 6B tokens model). For serious applications you probably want to download the larger files, in our experience the 300 dimension version usually gives good results. Note that the files on that site are in a slightly different format which lacks the initial header line, so if you want to use other vectors for the examples here you can convert them with the \index{glove2word2vec}\texttt{glove2word2vec} function in the \index{gensim}\emph{gensim} package. For R, you can also simply omit the \verb|skip=1| argument as apart from the header line the formats are identical},
+First, we download a very small subset of the pre-trained Glove embedding vectors\footnote{The full embedding models can be downloaded from https://nlp.stanford.edu/projects/glove/. To make the file easier to download, we took only the 10\,000 most frequent words of the smallest embeddings file (the 50 dimension version of the 6B tokens model). For serious applications you probably want to download the larger files, in our experience the 300 dimension version usually gives good results. Note that the files on that site are in a slightly different format which lacks the initial header line, so if you want to use other vectors for the examples here you can convert them with the \index{glove2word2vec}\texttt{glove2word2vec} function in the \index{gensim}\emph{gensim} package. For R, you can also simply omit the \verb|skip=1| argument as apart from the header line the formats are identical.},
 wrapping the download call in a condition to only download it when needed.
 
 Then, for Python, we use the excellent support from the \index{gensim}\emph{gensim} package to load the embeddings into a \index{KeyedVectors}\texttt{KeyedVectors} object.
-Although not needed for the rest of the example, we create a pandas DataFrame from the internal embedding values so the internal structure becomes clear: each row is a word, and the columns (in this case 50) are the different (semantic) dimensions that characterize that word according to the embeddings model.
+Although not needed for the rest of the example, we create a \textit{Pandas} data frame from the internal embedding values so the internal structure becomes clear: each row is a word, and the columns (in this case 50) are the different (semantic) dimensions that characterize that word according to the embeddings model.
 This data frame is sorted on the first dimension, which shows that negative values on that dimension are related to various sports.
 Next, we switch back to the \index{KeyedVectors}\texttt{KeyedVectors} object to get the most similar words to the word \emph{fraud}, which is apparently related to similar words like \emph{bribery} and \emph{corruption} but also to words like \emph{charges} and \emph{alleged}.
 These similarities are a good way to (semi-)automatically expand a dictionary: start from a small list of words,
@@ -686,7 +686,7 @@ Two techniques will be discussed here as they are relatively widely available fo
 
 In \index{part-of-speech tagging}\emph{part-of-speech tagging} or POS-tagging, each word is enriched with information on its function in the sentence: verb, noun, determiner etc.
 For most languages, this can be determined with very high accuracy, although sometimes text can be ambiguous:
-in one famous example, the flies in \emph{fruit flies} is generally a noun (fruit flies are a type of fly), but it can also be a verb (if fruit could fly).
+in one famous example, the word flies in \emph{fruit flies} is generally a noun (fruit flies are a type of fly), but it can also be a verb (if fruit could fly).
 Although there are different sets of POS tags used by different tools, there is broad agreement on the core set of tags listed in Table~\ref{tab:postags}.
 
 %\input{chapter10/tabpostags}
@@ -700,7 +700,7 @@ Although there are different sets of POS tags used by different tools, there is 
     Noun            & apple & NOUN & NN, NNS \\
     Proper Name     & Carlos & PROPN & NNP \\
     Verb            & write & VERB & VB, VBD, VBP, .. \\
-    Auxilliary verb & be, have & VERB & (same as verb) \\
+    Auxiliary verb & be, have & AUX & (same as verb) \\
     Adjective       & quick & ADJ & JJ, JJR, JJS \\
     Adverb          & quickly & ADV & RB \\
     Pronoun         & I, him  & PRON & PRP \\
@@ -717,7 +717,7 @@ For example, like as a verb (I like books) is generally positive, but like as a 
 
 \index{Lemmatizing}\emph{Lemmatizing} is a technique for reducing each word to its root or \index{lemma}\emph{lemma} (plural: lemmata).
 For example, the lemma of the verb \emph{reads} is (to) \emph{read} and the lemma of the noun \emph{books} is \emph{book}.
-Lemmatizing is useful since for most of our research question we do not care about these different conjugations of the same word.
+Lemmatizing is useful since for most of our research questions we do not care about these different conjugations of the same word.
 By lemmatizing the texts, we do not need to include all conjugations in a dictionary,
 and it reduces the dimensionality of the DTM -- and thus also the data scarcity.
 
@@ -742,7 +742,7 @@ Finally, we use the \index{conllu}\emph{conllu} package to read the results into
 
 In both cases, the resulting tokens clearly show some of the potential advantages of linguistic processing:
 the lemma column shows that it correctly deals with irregular verbs and plural forms.
-Looking at the upos (universal part-of-speech) column, John is recognized as a proper name (PROPN), brought as a verb, and knives as a noun.
+Looking at the upos (universal part-of-speech) column, John is recognized as a proper name (PROPN), bought as a verb, and knives as a noun.
 Finally, the \verb|head_token_id| and \verb|dep_rel| columns represent the syntactic information in the sentence:
 ``Bought'' (token 2) is the root of the sentence, and ``John'' is the subject (nsubj) while ``knives'' is the object of the buying.
 
@@ -766,7 +766,7 @@ In the next chapter we will show how you can further analyze these data, for exa
 As an alternative to UDPipe, you can also use Spacy,
 which is another free and popular natural language toolkit.
 It is written in Python, but the \index{spacyr}\emph{spacyr} package offers an easy way to use it from R.
-For R users, installation of \index{spacyr}\emph{spacyr} on MacOS is easy,
+For R users, installation of \index{spacyr}\emph{spacyr} on MacOS and Linux is easy,
 but note that on Windows there are some additional steps, see
 \url{https://cran.r-project.org/web/packages/spacyr/readme/README.html} for more details.
 
@@ -789,7 +789,7 @@ Note that in R, you can use the \index{quanteda}\emph{quanteda} function \index{
 
 As you can see, nowadays there are a number of good and relatively easy to use linguistic toolkits that can be used.
 Especially \index{Stanza}\emph{Stanza} \citep{stanza} is also a very good and flexible toolkit with support for multiple (human) languages and good integration especially with Python.
-If you want to learn more about natural language processing, the book \emph{Speech and Language Processing} by Jurafsky and Martin is a very good starting point \citep{jurafsky}\footnote{See \url{https://web.stanford.edu/~jurafsky/slp3/} for their draft of a new edition, which is (at the time of writing) free to download}.
+If you want to learn more about natural language processing, the book \emph{Speech and Language Processing} by Jurafsky and Martin is a very good starting point \citep{jurafsky}\footnote{See \url{https://web.stanford.edu/~jurafsky/slp3/} for their draft of a new edition, which is (at the time of writing) free to download.}.
 
 
 \section{Which Preprocessing to Use?}
@@ -802,7 +802,7 @@ This of courses raises the question of how to know which preprocessing steps to 
 First, there are a number of things that you should (almost) always do.
 If your data contains noise such as boilerplate language, HTML artifacts, etc., you should generally strip these out before proceeding.
 Second, text almost always has an abundance of uninformative (stop) words and a very long tail of very rare words.
-Thus, it is almost always a good idea to use a combination of stop word removal, trimming based on document frequency, and/or tf$cdot$idf weighting.
+Thus, it is almost always a good idea to use a combination of stop word removal, trimming based on document frequency, and/or \verb|tf.idf| weighting.
 Note that when using a stop word list, you should always manually inspect and/or fine-tune the word list to make sure it matches your domain and research question.
 
 The other steps such as n-grams, collocations, and tagging and lemmatization are more optional but can be quite important depending on the specific research.
@@ -821,7 +821,7 @@ For the mouse trap, it is OK if it is a black box for which we have no understan
 For the social science model, this is not the case as it is exactly the inner workings we are interested in.
 
 Technical (pre)processing steps such as those reviewed in this chapter are primarily engineering devices:
-we don't really care how something like tf$cdot$idf works, as long as it produces the best possible measurement of the variables we need for our analysis.
+we don't really care how something like \verb|tfc.idf| works, as long as it produces the best possible measurement of the variables we need for our analysis.
 In other words, it is an engineering challenge, not a social science research question.
 As a consequence, the key criterion by which to judge these steps is validity, not explainability.
 Thus, it is fine to try out different options, as long as you validate the results properly.
