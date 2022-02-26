@@ -2,7 +2,7 @@
 \label{chap:scraping}
 
 \begin{abstract}{Abstract}
-In this chapter, you learn how to retrieve your data from online sources. We first discuss the use of application programming interfaces, so-called APIs, which allow you to retrieve data from social media platforms, but also government data or other forms of open data, in a machine-readable format. We then discuss how to do web scraping in a narrower sense to retrieve data from websites that do not offer an API. We also discuss how to deal with authentication mechanisms, cookies, and the like, as well as ethical, legal, and practical considerations.
+In this chapter, you will learn how to retrieve your data from online sources. We first discuss the use of Application Programming Interfaces, more commonly known as APIs, which allow you to retrieve data from social media platforms, government websites, or other forms of open data, in a machine-readable format. We then discuss how to do web scraping in a narrower sense to retrieve data from websites that do not offer an API. We also discuss how to deal with authentication mechanisms, cookies, and the like, as well as ethical, legal, and practical considerations.
 \end{abstract}
 
 \keywords{web scraping, application programming interface (API), crawling, HTML parsing}
@@ -61,11 +61,11 @@ Luckily, however, many online services  not only have web interfaces
 optimized for human reading, but also offer another possibility to
 access the data they provide: an API (Application Programming
 Interface).
-The vast amount of contemporary web APIs works like this: you send a
+The vast amount of contemporary web APIs work like this: you send a
 \emph{request} to some URL, and you get back a  JSON object. As you
 learned in Section~\ref{sec:reading}, JSON is a nested data structure, very
-much like a Python dictionary (and, in fact, JSON data are typically 
-represented as a dictionary in Python). In other words: APIs directly
+much like a Python dictionary or R named list (and, in fact, JSON data are typically 
+represented as such in Python and R). In other words: APIs directly
 gives us machine-readable data that we can work with without any need
 to develop a custom parser.
 
@@ -79,7 +79,7 @@ we discuss the generic principles of APIs that should easily translate
 to  examples other than ours.
 
 
-In its  simplest form, using an API is nothing other than visiting
+In its simplest form, using an API is nothing more than visiting
 a specific URL. The first part of the URL specifies the so-called
 API endpoint: the address of the specific API you want to use. This
 address is then followed by a \verb|?| and one or more key-value pairs with an
@@ -131,7 +131,7 @@ over the different items and extract the information we are interested in.
 You may have realized that you did not get \emph{all} results.
 This protects you from accidentally downloading a huge dataset (you
 may have underestimated the number of Python books available on the
-market), and saves the provider of the API a lot of bandwith.
+market), and saves the provider of the API a lot of bandwidth.
 This does not mean that you cannot get more data. In fact, many APIs work
 with \emph{pagination}: you first get the first ``page'' of results,
 then the next, and so on. Sometimes, the API response contains
@@ -172,8 +172,8 @@ token as a parameter with the URL. However, many APIs use
 more advanced authentication methods such as OAuth (see Section~\ref{sec:authentication}).
 
 Lastly, for many APIs that are very popular with social
-scientists, specific wrapper packages exist (such as, to name just one example, \index{tweepy}\emph{tweepy})
-which are a bit more user-friendly and handle things like authentication,
+scientists, specific wrapper packages exist (such as \index{tweepy}\emph{tweepy} (Python) or \index{rtweet}\emph{rtweet} (R) for downloading twitter messages)
+which are a bit more user-friendly and handle things like authentication, pagination,
 respecting rate-limits, etc., for you.
 
 
@@ -244,7 +244,7 @@ it would be a bit like re-inventing the wheel. Packages like
 \index{rvest}\emph{rvest} (R), \index{beautifulsoup}\emph{beautifulsoup}, and \index{lxml}\emph{lxml} (both Python)
 already do this for you.
 
-In order to use them, though, you need need to have a basic
+In order to use them, though, you need to have a basic
 understanding of what an HTML page looks like. Here is a simplified
 example:
 
@@ -292,9 +292,9 @@ draw the code as a tree. In our example, this would look like this:
 
 Additionally, tags can have \emph{attributes}. For instance, the
 makers of a page with customer reviews may use attributes to specify
-what a section contains. For instance, they may write
+what a section contains. For example, they may have written
 \verb|<p class="lead"> ... </div>| to mark the lead paragraph of an article,
-and \verb|<a href=test.html"> ...</a>| specifies the target of a hyperlink.
+and \verb|<a href=test.html"> ...</a>| to specify the target of a hyperlink.
 Especially important here are the \verb|id| and \verb|class| attributes,
 which are often used by webpages to control the formatting.
 \verb|id| (indicated with the hash sign \verb|#| above) gives a unique ID to a single element,
@@ -327,7 +327,7 @@ are interested in.
 & any node with \texttt{\small{id x1}} & \texttt{\small{\#x1}} & \texttt{\small{//*[@id='x1']}} \\
 & \texttt{\small{<div class='row'>}} & \texttt{\small{div.row}} & \texttt{\small{//div[@class='row']}} \\
 & any node with \texttt{\small{class row}} & \texttt{\small{.row}} & \texttt{\small{//*[@class='row']}} \\
-& \texttt{\small{a}} with \texttt{\small{href="\#"}} & (not possible) & \texttt{\small{//a[@href="\#"]}} \\
+& \texttt{\small{a}} with \texttt{\small{href="\#"}} & \texttt{\small{a[href="#"]} & \texttt{\small{//a[@href="\#"]}} \\
 \multicolumn{3}{l}{\textit{Advanced tree navigation}} \\
 & \texttt{\small{a}} in a \texttt{\small{div}} with class 'meta' & \texttt{\small{\#main > div.meta a}} & \texttt{\small{//*[@id='main']}} \\
 & $\;\;\;\;$ directly inside the \texttt{\small{main}} element & &$\;\;\;\;$ \texttt{\small{/div[@class='meta']//a}} \\
@@ -369,20 +369,18 @@ you specify the \concept[XPath axis]{axis} with e.g. \texttt{\small{//a/parent::
 A second difference with CSS Selectors is that the \emph{class} and \emph{id} attributes are not given special treatment,
 but can be used with the general \texttt{\small{[@attribute='value']}} pattern.
 Thus, to get the lead paragraph you would specify \texttt{\small{//p[@class='lead']}}.
-The big advantage of this is that you can specify any attribute (including, e.g., \texttt{\small{href=}} or \texttt{\small{data=}}),
-while in CSS Selectors you only have access to the \emph{class} and \emph{id}.
 
 The advantage of XPath is that it is a very powerful tool.
 Everything that you can describe with a CSS Selector can also be described with an XPath pattern,
 but there are some things that CSS Selectors cannot describe,
-such as parents and attributes other than class and id.
+such as parents.
 On the other hand, XPath patterns can be a bit harder to write, read, and debug.
 You can choose to use either tool, and you can even mix and match them in a single script,
 but our general recommendation is to use CSS Selectors unless you need to use the specific abilities of XPath.
 
 Example~\ref{ex:htmlparse1} shows how to use XPATHs and CSS selectors to parse
 an HTML page. To fully understand it, open
-\url{http://cssbook.net/d/restaurants/index.html} in a browser and
+\url{https://cssbook.net/d/restaurants/index.html} in a browser and
 look at its source code (all modern browsers have a function ``View
 page source'' or similar), or -- more comfortable -- right-click on an
 element you are interested in (such as a restaurant name) and select
@@ -427,7 +425,7 @@ but in our experience, it may be more of a burden to learn that
 framework than to just implement your crawler yourself.
 
 Staying with the example of a restaurant review website, we might be
-interested retrieving all restaurants from a specific city, and for
+interested in retrieving all restaurants from a specific city, and for
 all of these restaurants, all available reviews.
 
 Our approach, thus, could look as follows:
@@ -465,7 +463,7 @@ Take a sheet of paper, draw its structure, and try to find out which
 pages you need to parse, and how you can get from one page to the next.
 Also think about how the data that you want to extract should be organized.
 
-We will illustrate this process using our mock-up review website \url{http://cssbook.net/d/restaurants/}.
+We will illustrate this process using our mock-up review website \url{https://cssbook.net/d/restaurants/}.
 First, have a look at the site and try to understand its structure.
 
 You will see that it has an overview page, \verb|index.html|, with the
@@ -495,32 +493,32 @@ that crawls and parses all reviews for all restaurants
 \pyrex[output=py,input=py,caption={Crawling a website}]{chapter12/crawling}
 
 First, we need to get a list of all restaurants and the links to their
-reviews. That's what is done in the function \verb|get_restaurants|. This
-is actually the first thing we do (see line 34--35).
+reviews. That's what is done in the function \textit{get_restaurants}. This
+is actually the first thing we do (see line 32).
 
 We now want to loop over these links and retrieve the reviews.  We
 decided to use a \emph{generator} (Section~\ref{sec:controlstructures}): instead of writing a
 function that collects \emph{all} reviews in a list first, we let the
-function yield each review immediately -- and immediately append that review
+function yield each review immediately -- and then append that review
 to a file. This has a big advantage: if our scraper fails (for
 instance, due to a time out, a block, or a programming error), then we
 have already saved the reviews we got so far.
 
-We loop over the links to the restaurants (line 38) and call the
-function \verb|get_reviews| (line 40). Each review it returns (the review
-is a  dict) gets the name of the restaurant as an extra key, and then
+We loop over the links to the restaurants (line 36) and call the
+function \textit{get_reviews} (line 38). Each review it returns (the review
+is a dict) gets the name of the restaurant as an extra key, and then
 gets written to a file which contains one JSON-object per line (also
 known as a jsonlines-file).
 
 The function \verb|get_reviews| takes a link to a review page as input and
 yields reviews. If we knew all pages with reviews already, then we
-would not need the while loop statement in line 16 and the lines
-28--33. However, as we have seen, some review pages contain a link to
+would not need the while loop statement in line 12 and the lines
+24--29. However, as we have seen, some review pages contain a link to
 older reviews. We therefore use a loop that runs forever (that is what
 \verb|while True:| does), \emph{unless} it encounters a \verb|break| statement
-(line 33).  An inspection of the HTML code shows that these links have
+(line 29).  An inspection of the HTML code shows that these links have
 a \verb|span| tag with the attribute \verb|class="backbutton"|. We therefore
-check if such a button exists (line 27), and if so, we get its \verb|href|
+check if such a button exists (line 24), and if so, we get its \verb|href|
 attribute (i.e., the link itself), overwrite the \verb|url| variable with
 it, and then go back to line 16, the beginning of the loop, so that we
 can download and parse this next URL.  This goes on until such a
@@ -558,7 +556,7 @@ and use the following checklist to find
 
 \begin{enumerate}
 \item Does using a different user-agent string (see above) solve the issue?
-\item Is the issue due to some cookie that needs to be accepted or you need to log in (see below)?
+\item Is the issue due to some cookie that needs to be accepted or requires you to log in (see below)?
 \item Is a different page delivered for different browsers, devices, display settings, etc.?
 \end{enumerate}
 
@@ -566,8 +564,8 @@ If all of this does not help, or if you already know for sure that the
 content you are interested in is dynamically fetched via JavaScript or
 similar, you can use \index{Selenium}\emph{Selenium} to literally start a browser and
 extract the content you are interested in from there. Selenium has
-been designed for testing web sites and allows you to automate clicks
-etc. in a browser window, and also supports CSS selectors and XPATHS
+been designed for testing web sites and allows you to automate clicks 
+in a browser window, and also supports CSS selectors and Xpaths
 to specify parts of the web page.
 
 Using Selenium may require some additional setup on your computer,
@@ -587,7 +585,7 @@ that string, and take a screenshot of the result.
 \pyrex[output=none,input=py,caption={Using Selenium to literally open a browser, input text, click on a link, and take a screenshot.}]{chapter12/selenium}
 
 
-\begin{feature}\textbf{Loosing your head}
+\begin{feature}\textbf{Losing your head}
 If you want to run long-lasting scraping processes using Selenium in
 the background (or on a server without a graphical user interface),
 you may want to look into what is called a ``headless'' browser. For
@@ -637,7 +635,7 @@ not require authentication such as outlined in Section~\ref{sec:apis}.
 However, many APIs use more complex protocols for authentication.
 
 The most popular one is called OAuth, and it is used by many APIs
-provided by major players such as Google, Facebook, Twitter, Github,
+provided by major players such as Google, Facebook, Twitter, GitHub,
 LinkedIn, etc. Here, you have a client ID and a client secret
 (sometimes also called consumer key and consumer secret, or API key and API secret) and an
 access token with associated access token secret. The first pair
@@ -723,7 +721,7 @@ instance, when using APIs as described in Section~\ref{sec:apis}, in most
 cases, you have to consent to the terms of service (TOS) of the API
 provider.
 
-For instance, the Twitter TOS allow you to redistribute the numerical
+For example, Twitter's TOS allow you to redistribute the numerical
 tweet ids, but not the tweets themselves, and therefore, it is common
 to share such lists of ids with fellow researchers instead of the
 ``real'' Twitter datasets. Of course, this is not optimal from a
@@ -755,7 +753,7 @@ strategies to minimize potential problems.
 
 \paragraph{Collaborate} Another way to minimize traffic and server load is to collaborate more. A concerted effort with multiple researchers may lead to less duplicate data and in the end probably an even better, re-usable dataset.
 
-\paragraph{Be extra careful with personal data} Both from an ethical and a legal point of view, the situation changes drastically as soon as personal data are involved. Especially since the GDPR regulations took effect in the European Union, collecting and processing such data requires a lot of additional precaution and is usually subject to explicit consent. It is clearly infeasible to ask every Twitter user  for consent to process their tweet and doing so is probably covered by research exceptions, the general advice is to store as little personal data as possible and only what is absolutely needed. Most likely, you need to have a data management plan in place, and should get appropriate  advice from your legal department. Therefore, think carefully whether you really need, for instance, the user names of the authors of reviews you are going to scrape, or whether the text alone suffices.
+\paragraph{Be extra careful with personal data} Both from an ethical and a legal point of view, the situation changes drastically as soon as personal data are involved. Especially since the General Data Protection Regulation (GDPR) regulations took effect in the European Union, collecting and processing such data requires a lot of additional precaution and is usually subject to explicit consent. It is clearly infeasible to ask every Twitter user  for consent to process their tweet and doing so is probably covered by research exceptions, the general advice is to store as little personal data as possible and only what is absolutely needed. Most likely, you need to have a data management plan in place, and should get appropriate  advice from your legal department. Therefore, think carefully whether you really need, for instance, the user names of the authors of reviews you are going to scrape, or whether the text alone suffices.
 
 Once all ethical and legal concerns are sorted out and you have made sure that you have written a scraper in such a way that it does not cause unnecessary traffic and load on the servers from which you are scraping, and after doing some test runs, it is time to think about how to actually run it on a larger scale. You may already have figured that you probably do not want to run your scraper from a Jupyter Notebook that is constantly open in your browser on your personal laptop. Also here, we would like to offer some suggestions.
 
