@@ -327,7 +327,7 @@ are interested in.
 & any node with \texttt{\small{id x1}} & \texttt{\small{\#x1}} & \texttt{\small{//*[@id='x1']}} \\
 & \texttt{\small{<div class='row'>}} & \texttt{\small{div.row}} & \texttt{\small{//div[@class='row']}} \\
 & any node with \texttt{\small{class row}} & \texttt{\small{.row}} & \texttt{\small{//*[@class='row']}} \\
-& \texttt{\small{a}} with \texttt{\small{href="\#"}} & \texttt{\small{a[href="#"]} & \texttt{\small{//a[@href="\#"]}} \\
+& \texttt{\small{a}} with \texttt{\small{href="\#"}} & \texttt{\small{a[href="\#"]}} & \texttt{\small{//a[@href="\#"]}} \\
 \multicolumn{3}{l}{\textit{Advanced tree navigation}} \\
 & \texttt{\small{a}} in a \texttt{\small{div}} with class 'meta' & \texttt{\small{\#main > div.meta a}} & \texttt{\small{//*[@id='main']}} \\
 & $\;\;\;\;$ directly inside the \texttt{\small{main}} element & &$\;\;\;\;$ \texttt{\small{/div[@class='meta']//a}} \\
@@ -493,7 +493,7 @@ that crawls and parses all reviews for all restaurants
 \pyrex[output=py,input=py,caption={Crawling a website}]{chapter12/crawling}
 
 First, we need to get a list of all restaurants and the links to their
-reviews. That's what is done in the function \textit{get_restaurants}. This
+reviews. That's what is done in the function \textit{get\_restaurants}. This
 is actually the first thing we do (see line 32).
 
 We now want to loop over these links and retrieve the reviews.  We
@@ -505,7 +505,7 @@ instance, due to a time out, a block, or a programming error), then we
 have already saved the reviews we got so far.
 
 We loop over the links to the restaurants (line 36) and call the
-function \textit{get_reviews} (line 38). Each review it returns (the review
+function \textit{get\_reviews} (line 38). Each review it returns (the review
 is a dict) gets the name of the restaurant as an extra key, and then
 gets written to a file which contains one JSON-object per line (also
 known as a jsonlines-file).
