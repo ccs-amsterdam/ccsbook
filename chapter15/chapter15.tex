@@ -45,13 +45,13 @@ you were dealing with a handful of csv files; except for huge image classificati
 deal with were the 50\,000 text files from the IMDB movie review
 dataset.
 
-In particular, when loading your data into a dataframe, you copied all
+In particular, when loading your data into a data frame, you copied all
 the data from your disk into memory\footnote{In fact, this is
-  sometimes a reason to avoid dataframes: for instance, it is possible
+  sometimes a reason to avoid data frames: for instance, it is possible
   to use a generator that reads data line-by-line from a file and
   yields them to \index{scikit-learn}\emph{scikit-learn}. In this way, only \emph{one} row
-  of data is in your memory at the same time (see Section~\ref{sec:functions}).}
-But what if we want to scale up our analyses a bit
+  of data is in your memory at the same time (see Section~\ref{sec:functions}).}.
+But what if you want to scale up your analyses a bit
 \cite[see][]{Trilling2018b}? Maybe we want to build up a larger
 data collection, maybe even share it with multiple team members, search
 and filter our data, or collect it over a larger timespan? An
@@ -78,7 +78,7 @@ Once you want to retrieve a subset of your articles for analysis,
 you can send a query to the database and read from it. Both Python and
 R offer integration for multiple commonly used databases. It is even
 possible to directly get the results of such a database query in the
-form of a dataframe.
+form of a data frame.
 
 We can distinguish two main categories of databases
 that are most relevant to us \citep[see also][]{Gunther2018}:
@@ -91,7 +91,7 @@ powerful and very widely used.  They consist of multiple tables that
 are linked by shared columns (keys). For instance, you could imagine a
 table with the orders placed in a webshop that has a column
 \verb|customer-id|, and a different table with addresses, billing
-information, and for each \verb|customer-id|. Using filter and join
+information, and names for each \verb|customer-id|. Using filter and join
 operations (like in Chapter~\ref{chap:datawrangling}, but then on the database directly), one can then easily retrieve
 information on where the order has to be shipped. A big advantage of
 such a relational database is that, if a customer places 100 orders,
@@ -139,7 +139,7 @@ later? What is your trade-off between avoiding any inconsistency and risking
  throwing away too much raw information?
 
 Acknowledging that there are often many different valid choices, and at
-the risk over oversimplifying matters, we will try to give some guidance
+the risk of oversimplifying matters, we will try to give some guidance
 in which databases to choose by offering some guiding questions.
 
 
@@ -158,7 +158,7 @@ column in advance?  If so, then a SQL database such as \index{MySQL}\emph{MySQL}
 for. If, on the other hand, you cannot determine such a structure \emph{a
 priori}, if you believe that the structure of your information will
 change over time, or if it is very messy, then you may need a more
-flexible, noSQL approach, for instance using \index{MongoDB}\emph{MongoDB} or
+flexible noSQL approach, such as \index{MongoDB}\emph{MongoDB} or
 \index{ElasticSearch}\emph{ElasticSearch}.
 
 \paragraph[How important is full-text searching for you?]{How important is full-text searching for you?}
@@ -213,7 +213,7 @@ the sqlite file.
 
 Throughout this book, we assumed that all tasks can actually be
 performed on your own computer. And often, that is indeed the best
-thing to do: you often want to maintain a local copy of your data
+thing to do: you normally want to maintain a local copy of your data
 anyway, and it may be the safest bet for ethical and legal reasons --
 when working with sensitive data, you need to know what you are doing
 before transferring them somewhere else.
@@ -242,8 +242,8 @@ scenarios:
   analyses. On the bright side, this gives you full control, but it is
   also not very flexible: after all, you make a larger investment
   once, and if it turns out that you need more (or less) resources,
-  then it's too late to change.
-\item A virtual machine on a cloud computing platform. For most
+  then it might be too late to change.
+\item A virtual machine (VM) on a cloud computing platform. For most
   practical purposes, you can do the same as in the previous option,
   with the crucial difference that you rent the resources. If you need
   more, you just rent more; and when you are done, you just stop the
@@ -251,8 +251,7 @@ scenarios:
 \item A set of machines to run complex tasks using parallel computing. With large amounts of information (think about image or video data) and sophisticated modeling (such as deep learning) you may need to distribute the computation among several different computers at the same time.
 \end{enumerate}
 
-An example for the first option is Google Colab, which we already used
-(Chapter~\ref{chap:fundata}). While it makes it easy to share and run notebooks,
+An example for the first option is Google Colab. While it makes it easy to share and run notebooks,
 the free tier we used so far does not necessarily solve any of the
 scalability issues discussed. However, Google Colab also has a paid Pro
 version, in which additional hardware (such as GPUs, TPUs or extra memory)
@@ -323,9 +322,9 @@ for instance using \index{letsencrypt}\emph{letsencrypt}.
 
 Finally, option 4 must be selected when the scale of your data and the complexity of the tasks cannot be deployed in a single server or virtual machine. For example, building a classification model by training a complex and deep convolutional neural network with millions of images and update this model constantly may require the use of different computers at the same time. Actually, in modern computers with multiple cores or processors you normally run parallel computing within a single machine. But when working at scale you will probably need to set a infrastructure of different computers such as that of a \textit{grid} or a \textit{cluster}.
 
-Cloud services (e.g. AWS, Microsoft Azure, etc.) or scientific infrastructures (e.g. Supercomputers) offer the possibility to set these architectures remotely. For instance, in a computer cluster you can configure a group of virtual computers, where one will act as a \textit{master} and the others as \textit{slaves}. With this logic the master can distribute the storage and analysis of data among the slaves and then resume the results: see for example the \textit{MapReduce} or the \textit{Resilient Distributed Dataset} (RDD) approaches used by the open-source softwares \textit{Apache Hadoop} and \textit{Apache Spark} respectively.  For a specific example of parallel computing in computational analysis of communication you can take a look at the implementation of distributed supervised sentiment analysis,  in which one of the authors of this book deployed supervised text classification in \textit{Apache Spark}  and connected this infrastructure with real-time analysis of tweets using \textit{Apache Kafka}  in order to perform streaming analytics\cite[see][]{calderon2019distributed}.
+Cloud services (e.g. AWS, Microsoft Azure, etc.) or scientific infrastructures (e.g. supercomputers) offer the possibility to set these architectures remotely. For instance, in a computer cluster you can configure a group of virtual computers, where one will act as a \textit{main} and the others as \textit{workers}. With this logic the main can distribute the storage and analysis of data among the slaves and then resume the results: see for example the \textit{MapReduce} or the \textit{Resilient Distributed Dataset} (RDD) approaches used by the open-source software \textit{Apache Hadoop} and \textit{Apache Spark} respectively.  For a specific example of parallel computing in computational analysis of communication you can take a look at the implementation of distributed supervised sentiment analysis,  in which one of the authors of this book deployed supervised text classification in \textit{Apache Spark}  and connected this infrastructure with real-time analysis of tweets using \textit{Apache Kafka}  in order to perform streaming analytics\cite[see][]{calderon2019distributed}.
 
-These architectures for parallel processing will significantly increase your computation capacity for big data problems but the initial implementation will consume time and (most of the time) money, which is the reason why you must think in advance if there is a simpler solution (such as single but powerful single machine) before implementing a more complex infrastructure in your analysis.
+These architectures for parallel processing will significantly increase your computation capacity for big data problems but the initial implementation will consume time and (most of the time) money, which is the reason why you must think in advance if there is a simpler solution (such as a single but powerful machine) before implementing a more complex infrastructure in your analysis.
 
 %\input{chapter15/publishingsource}
 
@@ -353,7 +352,7 @@ In the computational analysis of communication, it is becoming more and
 more the norm to publish all your source code together with an
 article, even though it is important to keep in mind ethical and legal
 restrictions (\cite{VanAtteveldt2019}). Using a version control
-platform like github from the beginning makes this easy: when
+platform like GitHub from the beginning makes this easy: when
 publishing your paper, the only thing you have to do is to set access
 of your repository to ``public'' (in case it was private before), add
 a \verb|README.md| file (in case you have not done so earlier), and
@@ -362,7 +361,7 @@ code (see \url{https://guides.github.com/activities/citable-code/}).
 And don't forget to add a license to your code, such as MIT, GPL, or
 Apache. All of these have specific implications on what others can or
 cannot do with your code (e.g., whether it can be used for commercial
-purposes or whether derivatives need to be published under the same license as well). Whatever you choose here, it is important \emph{that} you make a choice, as otherwise, it may not be (legally) possible to use
+purposes or whether derivatives need to be published under the same license as well). Whatever you choose here, it is important that you make a choice, as otherwise, it may not be (legally) possible to use
 your code at all.
 If your code pertains to a specific paper, then we suggest you organize
 your repository as a so-called ``research compendium'', integrating
@@ -371,14 +370,14 @@ both your code and your data.
 \footnote{See url{https://compendium.ccs.amsterdam}}.
 
 In virtually all instances, your code will rely on libraries written
-by others, which are available free of charge to you. Therefore,
+by others, which are available free of charge. Therefore,
 it only seems fair to ``give back'' and make sure that any code that
 you wrote and that can be useful to others, is also available to them.
 
 Just like in the case of a research compendium for a specific paper,
-also publishing source code for more generic re-use begins with a
-github repository. In fact, both R (with \index{devtools}\emph{devtools}) and Python
-(via \index{pip}\emph{pip}) can install packages directly from github. In order
+publishing source code for more generic reuse also begins with a
+GitHub repository. In fact, both R (with \index{devtools}\emph{devtools}) and Python
+(via \index{pip}\emph{pip}) can install packages directly from GitHub. In order
 to make sure that your code can be installed as a package, you
 need to follow specific instructions on how to name files, how to
 structure your directory, and so on (see \url{https://packaging.python.org/tutorials/packaging-projects/}
@@ -444,7 +443,7 @@ print(f"exp({a}) = {np.exp(a)}")
 You think that this is an awesome program (after all, it calculates
 $e$ to the power of a random integer!), and others should be able
 to use it. And you don't want to bother them with setting up Python,
-installing numpy, and then running the script. In fact, they do
+installing \emph{numpy}, and then running the script. In fact, they do
 not even need to \emph{know} that it's a Python program. You
 could have written it as well in R, or any other language -- for
 the user, that will make no difference at all.
@@ -490,5 +489,5 @@ scenarios where this makes a lot of sense.
 \item To avoid interfering with existing installations. Already our toy example had a dependency, \index{numpy}\emph{numpy}, but often, dependencies can be more complex and a program we write may need very specific libraries, or even some other software beyond Python or R libraries. Distributing the source code alone means forcing the user to also install these; and there are many good reasons why people may be reluctant to do so. It may be incompatible with other software on their computer, there may be security concerns, or it just may be too much work. But if it runs inside of the Docker container, many of these problems disappear.
 \end{itemize}
 
-In short, the Docker image is rarely the \emph{only} way in which you distribute your source code. But already adding a Dockerfile to your github repository so that users can build a Docker container can offer another and maybe better way of running your software to your audience.
+In short, the Docker image is rarely the \emph{only} way in which you distribute your source code. But already adding a Dockerfile to your GitHub repository so that users can build a Docker container can offer another and maybe better way of running your software to your audience.
 
