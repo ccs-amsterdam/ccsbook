@@ -8,7 +8,7 @@ filtering, changing, grouping, and joining data. Finally, the last section shows
 reshape data.
 \end{abstract}
 
-\keywords{Data wrangling, data cleaning, filtering, merging, reshaping}
+\keywords{data wrangling, data cleaning, filtering, merging, reshaping}
 
 \begin{objectives}
 \item Filter rows and columns in data frames
@@ -19,7 +19,7 @@ reshape data.
 \newpage
 \begin{feature}
   \textbf{Packages used in this chapter}\\
-  This chapter uses the \index{readxl}\emph{readxl} package for reading excel files and various parts of the \index{tidyverse}\emph{tidyverse} including \index{ggplot2}\emph{ggplot2}, \index{dplyr}\emph{dplyr}, and \index{tidyr}\emph{tidyr} (which are installed automatically when you install tidyverse). In Python we rely mostly on the \index{pandas}\emph{pandas} package, but we also use \index{scipy}\emph{scipy} package for statistics and the \index{xlrd}\emph{xlrd} for reading excel files. You can install these packages with the code below if needed
+  This chapter uses the \index{readxl}\emph{readxl} package for reading Excel files and various parts of the \index{tidyverse}\emph{tidyverse} including \index{ggplot2}\emph{ggplot2}, \index{dplyr}\emph{dplyr}, and \index{tidyr}\emph{tidyr} (which are installed automatically when you install tidyverse). In Python we rely mostly on the \index{pandas}\emph{pandas} package, but we also use \index{scipy}\emph{scipy} package for statistics and the \index{xlrd}\emph{xlrd} for reading Excel files. You can install these packages with the code below if needed
   (see Section~\ref{sec:installing} for more details):
 
 \doublecodex{chapter06/chapter06install}
@@ -54,20 +54,20 @@ This means that the original \texttt{d} is overwritten.
 
 \begin{feature}
   In R, the \index{tidyverse}\emph{tidyverse} function \index{select}\texttt{select} is quite versatile.
-  You can specify multiple columns using \verb|select(d, column1, column2)|
+  You can specify multiple columns using \verb|select(d, column1, column2)| 
   or by specifying a range of columns: \verb|select(d, column1:column3)|.
   Both commands keep only the specified columns.
   As in the example, you can also specify a negative selection with the minus sign:
   \verb|select(d, -column1)| drops \texttt{column1}, keeping all other columns.
   Finally, you can rename columns in the select command as well:
   \verb|select(d, column1=col1, column2)| renames \texttt{col} to \texttt{column1},
-  keeps that column and \texttt{column2},and drops all other columns.
+  keeps that column and \texttt{column2}, and drops all other columns.
 \end{feature}
 
 We then filter the dataset to list only the polls on whether teachers should be armed
 (you can understand this is close to our heart).
 This is done by comparing the value of the \emph{Question} column to the value \texttt{'arm-teachers'}.
-This comparison is done with a double equals sign (\verb+==+).
+This comparison is done with a double equal sign (\verb+==+).
 In both Python and R, a single equals sign is used for assignment,
 and a double equal sign is used for comparison.
 A final thing to notice is that while in R we used the \index{dplyr}\emph{dplyr} function (\index{filter}\texttt{filter}) to filter out rows,
@@ -108,7 +108,7 @@ but in Python or in R direct assignment you also need to specify the name of the
 In Python, this would be \verb+d["rep"] - d["dem"]+ \footnote{You can also write \texttt{d.rep - d.dem}, which is shorter, but does not work if your column names contain, for instance, spaces.}, while in R this is \verb+d$rep - d$dem+.
 
 In many cases, however, you want to use various functions to perform tasks like cleaning and data conversion
-(see Section~\ref{sec:functions} for more explanation of built-in and custom functions).
+(see Section~\ref{sec:functions} for a detailed explanation of built-in and custom functions).
 For example, to convert a column to numeric you would use the base R function \index{as.numeric}\texttt{as.numeric} in R or the \index{pandas}\emph{pandas} function \index{to\_numeric}\texttt{to\_numeric} in Python.
 Both functions take a column as argument and convert it to a numeric column.
 
@@ -116,16 +116,16 @@ Almost all R functions work on whole columns like that.
 In Python, however, many \emph{functions} work on individual values rather than columns.
 To apply a function on each element of a column \verb+col+, you can use \verb+df.col.apply(my_function)+
 (where \texttt{df} and \texttt{col} are the names of your data frame and column).
-In contast, pandas columns have multiple useful \emph{methods} that -- because they are methods
+In contast, \textit{Pandas} columns have multiple useful \emph{methods} that -- because they are methods
 of that column -- apply to the whole column\footnote{See Section~\ref{sec:functions} for a refresher on methods and functions}.
 For example, the method \verb+df.col.fillna+ replaces
-missing values in the column \verb+col+, and \verb+df.col.str.replace+ does a find and replace.
+missing values in the column \verb+col+, and \verb+df.col.str.replace+ conducts a find and replace.
 Unlike functions that expect individual values rather than columns as an input, there is no need to explicitly \verb+apply+ such a method.
-As always, you can use tab completion (pressing the TAB key after writing \texttt{df.col.}) to get a menu that includes all availbale methods.
+As always, you can use tab completion (pressing the TAB key after writing \texttt{df.col.}) to get a menu that includes all available methods.
 
 \pyrex[output=r,format=table,caption=Mutate]{chapter06/mutate}
 
-To illustrate some of the many possibilities, \refex{mutate} has code for cleaning a version of the Guns Polls
+To illustrate some of the many possibilities, \refex{mutate} has code for cleaning a version of the gun polls
 in which we intentionally introduced two problems: we added some typos to the \emph{rep} column
 and introduced a missing value in the \emph{Support} column.
 To clean this, we perform three steps: First, we remove all non-numeric characters using a regular expression
@@ -136,21 +136,21 @@ Finally, we replace the missing value by the column mean
 we do it mainly to show how one can deal with missing values technically. You will find some more discussion about missing values in Section~\ref{sec:simpleeda}).
 
 The cleaning process is actually performed twice: lines 5-10 use direct assignment,
-while lines 12-18 use the \index{mutate}\texttt{mutate}/\index{assign}\texttt{assign} function.
-Finally, lines 20-26 show how you can define and apply a custom function to combine the first two cleaning steps.
+while lines 12-19 use the \index{mutate}\texttt{mutate}/\index{assign}\texttt{assign} function.
+Finally, lines 21-27 show how you can define and apply a custom function to combine the first two cleaning steps.
 This can be quite useful if you use the same cleaning steps in multiple places,
 since it reduces the repetition of code and hence the possibility of introducing bugs or inconsistencies.
 
 Note that all these versions work fine and produce the same result.
-In the end, it is up to the researcher to determine which feels most natural in the circumstances.
+In the end, it is up to the researcher to determine which feels most natural given the circumstances.
 As noted above, in R we would generally prefer \index{mutate}\texttt{mutate} over direct assignment,
 mostly because it fits nicely into the \index{tidyverse}\emph{tidyverse} workflow and you do not need to repeat the data frame name.
-In Python, we would generally prefer the direct assignment, unless it is desired to make a copy of the data
-with the changes made, in which case \index{assign}\texttt{assign} can be more useful.
+In Python, we would generally prefer the direct assignment, unless a copy of the data with the changes made is convenient, 
+in which case \index{assign}\texttt{assign} can be more useful.
 
 \section{Grouping and Aggregating} \label{sec:grouping}
 
-The functions we used to change data above operated on individual rows.
+The functions we used to change the data above operated on individual rows.
 Sometimes, however, we wish to compute summary statistics of groups of rows.
 This essentially shifts the unit of analysis to a higher level of abstraction.
 For example, we could compute per-school statistics from a data file containing information per student;
@@ -188,8 +188,8 @@ and then call the function \index{summarize}\texttt{summarize} to compute summar
 
 In Python, the grouping step is quite similar.
 In the summarization step, however, you specify which summaries to compute in a dictionary\footnote{See Section~\ref{sec:datatypes} for more information on working with dictionaries}.
-The keys of the dictionary lists the value columns to compute summaries of,
-and the values contain the summary functions to apply, so  \verb+{'value': function}+ or \verb+{'value': [list of functions]}+.
+The keys of the dictionary list the value columns to compute summaries of,
+and the values contain the summary functions to apply, so  \texttt{'value': function} or \texttt{'value': [list of functions]}.
 
 \subsection{Combining Multiple Operations}\label{sec:combining}
 
@@ -202,7 +202,7 @@ Although there is nothing wrong with limiting each line to a single operation, b
 Especially for grouping and summarizing, it can make sense to link these operations together as they can be thought of as a single ``data wrangling'' step.
 
 In Python, this can be achieved by adding the second \verb+.method()+ directly to the end of the first statement.
-Essentially, this calls the second method on the result of the first method: \verb+data = datamethod1(arguments).method2(arguments)+.
+Essentially, this calls the second method on the result of the first method: \verb+data = data.method1(arguments).method2(arguments)+.
 In R, the data needs, of course, to be included in the function arguments. But we can also chain these function calls.
 This is done using the \emph{pipe operator} (\verb+%>%+) from the (cutely named) \index{magrittr}\emph{magrittr} package.
 The pipe operator inserts the result of the first function as the first argument of the second function.
@@ -238,7 +238,7 @@ first the mean per group is calculated, followed by the deviation of this mean.
 
 The Python code also uses the same syntax used for computing new columns.
 The first line selects the \emph{Support} column on the grouped dataset,
-and then calls the \index{pandas}\emph{pandas} function \index{transform}\texttt{transform} on that column to compute the mean per group,
+and then calls the \index{pandas}\emph{pandas} method \index{transform}\texttt{transform} on that column to compute the mean per group,
 adding it as a new column by assigning it to the column name.
 The second line uses the regular assignment syntax to create the deviation based on the support and calculated mean.
 
@@ -277,11 +277,11 @@ Often, the key column is some sort of identifier, like a respondent or location 
 The resulting data frame will contain the shared key column(s), and all other columns from both joined data frames.
 
 In both Python and R, all columns that occur in both data frames are by default assumed to be the key columns.
-In many cases, this is the desired behavior as both data frame may contain e.g.\ a \emph{Year} or \emph{RepondentID} column.
+In many cases, this is the desired behavior as both data frames may contain e.g.\ a \emph{Year} or \emph{RepondentID} column.
 Sometimes, however, this is not the case.
 Possibly, the key column is called differently in both data frames, e.g.\ \emph{respID} in one and \emph{Respondent} in the other.
 It is also possible that the two frames contain columns with the same name,
-but which contain actual data that should not be used as key.
+but which contain actual data that should not be used as a key.
 For example, in the Piketty data shown above the key column is called \emph{Year} in both frames,
 but they also share the columns for the countries which are data columns.
 
@@ -303,13 +303,13 @@ Even if the key column is the only shared column, however, it can still be good 
 
 This is shown in \refex{merge}.
 The first two lines select only the \emph{Year} and \emph{France} columns, and rename the \emph{France} column to indicate whether it is the private or public data.
-Lines 3 and 5 do the actual join, with and without the explicit selection of key column, respectively.
+Line 3 does the actual join, with and without the explicit selection of key column, respectively.
 This is then used to compute the correlation between private and public capital,
 which shows that there is a weak but (just) significant negative correlation ($\rho=-.32, p=.04$)%
 \footnote{Of course, the fact that this is time series data means that the independence assumption of regular correlation is violated badly, so this should be interpreted as a descriptive statistic, e.g.\ in the years with high private capital there is low public capital and the other way around.}.
 
 \begin{feature}
-  Next to \index{merge}\texttt{merge}, pandas data frames also have a method called \index{join}\texttt{join}. It is a simplified version for joining on indices (i.e., the row labels). If you have two data frames in which corresponding rows have the same row number, you can simply write \texttt{df1.join(df2)}. In short: both methods do the same, but merge provides more options, and join is easier if you want to join on the indices.
+  Next to \index{merge}\texttt{merge}, /textit{Pandas} data frames also have a method called \index{join}\texttt{join}. It is a simplified version for joining on indices (i.e., the row labels). If you have two data frames in which corresponding rows have the same row number, you can simply write \texttt{df1.join(df2)}. In short: both methods do the same, but merge provides more options, and join is easier if you want to join on the indices.
 \end{feature}
 
 
@@ -402,8 +402,8 @@ such as population, change in population, gender and education distribution, etc
   \caption{\label{ex:primary} 2016 Primary results and county-level metadata. Note that to avoid duplicate output, we display the counties data in the Python example and the results data in the R example}
 \end{ccsexample}
 
-Suppose we hypothesize that Hillary would do relatively well in areas with more black voters.
-We would then need to combine the county level data about ethnic composition with the country $\times$ candidate
+Suppose we hypothesize that Hillary Clinton would do relatively well in areas with more black voters.
+We would then need to combine the county level data about ethnic composition with the county $\times$ candidate
 level data on vote outcomes.
 
 This is achieved in Example~\ref{ex:nested} in two steps.
@@ -443,7 +443,7 @@ i.e.\ the unit of analysis is a respondent per week.
 
 Generally, data with multiple observations of the same unit is called \index{wide data}\emph{wide data} (as there are many columns),
 while a dataset with one row for each observation is called \index{long data}\emph{long data} (as there are many rows).
-In most cases, long data is easiest to work with, and in fact in \index{tidyverse}\emph{tidyverse}\ jargon such data is called \index[tidy data]{tidy}\emph{tidy}.
+In most cases, long data is easiest to work with, and in fact in \index{tidyverse}\emph{tidyverse}\ jargon such data is called \index[tidy data]\emph{tidy data}.
 
 As a first relatively simple example, consider the datasets containing public and private capital.
 This data is ``wide'' in the sense that the measurements for the different countries are contained in the columns.
@@ -469,7 +469,7 @@ As a final example, we will look at the data on income and wage shares from Pike
 We want to visualize the income and wage share going to the top 1\% earners in France and the US.
 \reffig{messy} shows a screen shot of this data in Libre Office, with the US data having a similar shape.
 For the previous examples, we used a clean csv version of this data, but now we will tackle the additional challenge
-of dealing with the excel file including extra header rows and column names aimed at human consumption rather than easy computing.
+of dealing with the Excel file including extra header rows and column names aimed at human consumption rather than easy computing.
 
 \begin{figure}
   \includegraphics[width=\linewidth]{chapter06/messy.png}
@@ -483,7 +483,7 @@ understanding which series of generally small steps are needed to go from one da
 Although there is not a fixed set of steps that are always needed, the steps to get from the raw data visualized in Figure~\ref{fig:messy} to a ``tidy'' dataset are fairly typical:
 
 \begin{enumerate}
-  \item Input:  read the data into data frames. In this case, reading from an excel sheet and skipping the extra header rows
+  \item Input:  read the data into data frames. In this case, reading from an Excel sheet and skipping the extra header rows
   \item Reshape: pivoting the data into long format
   \item Normalize: normalize names, value types, etc. In this case, also separate a header like ``Top 1\% income share'' into income type (income, wage) and percentile (10\%, 1\%, etc)
   \item Filter: filter for the desired data
@@ -493,8 +493,8 @@ Although there is not a fixed set of steps that are always needed, the steps to 
 Fortunately, these steps have been discussed before: reading csv data in Section~\ref{sec:reading}; pivot to long data in Section~\ref{sec:pivot};
 add a column in Section~\ref{sec:calculate}; joining data in Section~\ref{sec:join}; and visualizing in Section~\ref{sec:visualization}.
 
-Example~\ref{ex:excel} shows how to perform the first three steps for the US case.
-First, we use the \index{readxl}\emph{readxl} (R) and \index{xlrd}\emph{xlrd} (Python) to read a sheet from an excel file into a data frame,
+Example~\ref{ex:excel} shows how to perform these steps for the US case.
+First, we use the \index{readxl}\emph{readxl} (R) and \index{xlrd}\emph{xlrd} (Python) to read a sheet from an Excel file into a data frame,
 manually specifying the number of header and footer rows to skip.
  Then, we pivot the columns into a  long format.
 In step 3, we split the header into two columns using \fn{separate} (R) and \fn{split} (Python). Finally, steps 4 and 5 take the desired subset and create a line plot. 

@@ -6,7 +6,7 @@
 Many datasets that are relevant for social science consist of textual data, from political discussions and newspaper archives to open-ended survey questions and reviews. This chapter gives an introduction to dealing with textual data using base functions in Python and (mostly) the \index{stringr}\emph{stringr} package in R.
 \end{abstract}
 
-\keywords{Text representation, text cleaning, regular expressions}
+\keywords{text representation, text cleaning, regular expressions}
 
 \begin{objectives}
 \item Understand how text is represented in the computer
@@ -20,7 +20,7 @@ Many datasets that are relevant for social science consist of textual data, from
   \textbf{Packages used in this chapter}\\
   This chapter introduces the packages for handling textual data.
   For R, this is mainly the \index{stringr}\emph{stringr} package (included in \index{tidyverse}\emph{tidyverse}).
-  In Python, most functions are built-in, but will show how to use these functions in \index{pandas}\emph{pandas} and also introduce the \index{regex}\emph{regex} alternative to built-in regular expressions.
+  In Python, most functions are built-in, but will show how to use these functions in \index{pandas}\emph{pandas} and also introduce the \index{regex}\emph{regex} package, an alternative to built-in regular expressions.
 You can install these packages with the code below if needed  (see Section~\ref{sec:installing} for more details):
 
 \doublecodex{chapter09/chapter09install}
@@ -28,12 +28,12 @@ You can install these packages with the code below if needed  (see Section~\ref{
 \noindent After installing, you need to import (activate) the packages every session:
 
 \doublecodex{chapter09/chapter09library}
-
+,
 \end{feature}
 
 %\input{chapter09/readtext}
 
-When dealing with textual data, an important step is to normalize the data. Such preprocessing ensures that noise is removed, and reduces the amount of data to deal with. In Section~\ref{sec:encodings} we explained how to read data from different formats, such as txt, csv or json that can include textual data, and we also mentioned some of the challenges when reading text (i.e.\ encoding/decoding from/to Unicode). In this section we cover typical cleaning steps such as lowercasing and removing punctuation, HTML tags and boilerplate.
+When dealing with textual data, an important step is to normalize the data. Such preprocessing ensures that noise is removed, and reduces the amount of data to deal with. In Section~\ref{sec:encodings} we explained how to read data from different formats, such as txt, csv or json that can include textual data, and we also mentioned some of the challenges when reading text (e.g.,\ encoding/decoding from/to Unicode). In this section we cover typical cleaning steps such as lowercasing and removing punctuation, HTML tags and boilerplate.
 
 As a computational communication scientist you will come across many sources of text that range from electronic versions of newspapers in HTML to parliamentary speeches in PDF. Moreover, most of the contents in their original shape will include data that will not be of interest for the analysis but, instead,  will produce noise that might negatively affect the quality of the research. You have to decide which parts of the raw text should be considered for analysis and determine the shape of these contents in order to have a good input in the analytical process.
 
@@ -60,7 +60,7 @@ The next chapter will focus on text as words and shows how you can represent tex
   Please see Section~\ref{sec:encodings} for more information on how this works.
 \end{feature}
 
-When we think about text, we might think sentences or words, but the computer only ``thinks'' about letters:
+When we think about text, we might think of sentences or words, but the computer only ``thinks'' about letters:
 text is represented internally as a string of characters.
 This is reflected of course in the type name, with R calling it a \index{character}\emph{character} vector and Python a \index{string}\emph{string}.
 
@@ -75,8 +75,8 @@ This is reflected of course in the type name, with R calling it a \index{charact
   \caption{Internal representation and of single and multiple texts.}\label{ex:text}
 \end{ccsexample}
 
-As a simple example, the figure at the top of Example~\ref{ex:text} shows how the text ``This is a text.'' is represented.
-This text is split info separate characters, with each character representing a letter (or space,  punctuation, emoji, or Chinese character).
+As a simple example, the figure at the top of Example~\ref{ex:text} shows how the text ``This is text.'' is represented.
+This text is split into separate characters, with each character representing a letter (or space,  punctuation, emoji, or Chinese character).
 These characters are indexed starting from the first one, with (as always) R counting from one, but Python counting from zero.
 
 In Python, texts are represented as \index{str}\texttt{str} (string) objects, in which we can directly address the individual characters by their position:
@@ -85,7 +85,7 @@ In R, however, texts (like all objects) represent columns (or vectors) rather th
 Thus, \verb|text[1]| in R is the first text in a series of text.
 To access individual characters in a text, you have to use a function such as \index{str\_length}\texttt{str\_length} and \index{str\_sub}\texttt{str\_sub} that will be discussed in more detail below.
 This also means that in Python, if you have a column (or list) of strings that you need to apply an operation to,
-you either need to use one of Panda's methods shown below or use a \index{for loop}\emph{for loop} or \index{list comprehension}\emph{list comprehension} to iterate over all the strings.
+you either need to use one of /textit{Pandas}' methods shown below or use a \index{for loop}\emph{for loop} or \index{list comprehension}\emph{list comprehension} to iterate over all the strings (see also section 3.2).
 
 \subsection{Methods for Dealing With Text}\label{sec:textmethods}
 
@@ -100,7 +100,7 @@ you either need to use one of Panda's methods shown below or use a \index{for lo
   So, to give one example, the function \index{str\_detect}\texttt{str\_detect} is more or less the same as \index{stringi::str\_detect}\texttt{stringi::str\_detect} and \index{base::grepl}\texttt{base::grepl}.
 \end{feature}
 
-The first thing to keep in mind is that once you load any text on R or Python you usually store this content as a \emph{character} or \emph{string} object (you may also often use \emph{lists} or \emph{dictionaries}, but they will have strings inside then), which means that basic operations and conditions of this data type apply, such as indexing or slicing to access individual characters or substrings (see Section~\ref{sec:datatypes}). In fact, base strings operations are very powerful to clean your text and eliminate a large amount of noise.  Table~\ref{tab:stringoperations} summarizes some useful operations on strings in R and Python that will help you in this stage.
+The first thing to keep in mind is that once you load any text in R or Python, you usually store this content as a \emph{character} or \emph{string} object (you may also often use \emph{lists} or \emph{dictionaries}, but they will have strings inside them), which means that basic operations and conditions of this data type apply, such as indexing or slicing to access individual characters or substrings (see Section~\ref{sec:datatypes}). In fact, base strings operations are very powerful to clean your text and eliminate a large amount of noise.  Table~\ref{tab:stringoperations} summarizes some useful operations on strings in R and Python that will help you in this stage.
 
 \begin{table}
   \caption{\label{tab:stringoperations}Useful strings operations in R and Python to clean noise.}{
@@ -113,15 +113,15 @@ Count characters in s & \texttt{\small{str\_length(s)}}          & \texttt{\smal
 Extract a substring   & \texttt{\small{str\_sub(s, n1, n2)}}     & \texttt{\small{s[n1:n2]}} & \texttt{\small{s.str.slice(n1, n2)}} \\
 Test if s contains s2 & \texttt{\small{str\_detect(s, s2)}}$^*$       & \texttt{\small{s2 in s}}       & \texttt{\small{s.str.match(s2)$^*$}} \\
 Strip spaces          & \texttt{\small{trimws(s)}}               & \texttt{\small{s.strip()}}     & \texttt{\small{s.str.strip()}} \\
-Convert to lowercase  & \texttt{\small{tolower(s)}}              & \texttt{\small{s.lower()}}     & \texttt{\small{s.str.upper()}} \\
-Convert to uppercase  & \texttt{\small{toupper(s)}}              & \texttt{\small{s.upper()}}     & \texttt{\small{s.str.lower()}} \\
+Convert to lowercase  & \texttt{\small{tolower(s)}}              & \texttt{\small{s.lower()}}     & \texttt{\small{s.str.lower()}} \\
+Convert to uppercase  & \texttt{\small{toupper(s)}}              & \texttt{\small{s.upper()}}     & \texttt{\small{s.str.upper()}} \\
 Find s1 and replace by s2 & \texttt{\small{str\_replace(s, s1, s2)}}$^*$ & \texttt{\small{s.replace(s1, s2)}} & \texttt{\small{s.str.replace(s1, s2)$^*$}}  \\
     \bottomrule
   \end{tabularx}}{(*) The R functions \texttt{\small{str\_detect}} and \texttt{\small{str\_replace}} and the Pandas function \texttt{\small{s.str.match}} and \texttt{\small{s.str.replace}} use \index{regular expressions}\emph{regular expressions} to define what to find and replace. See Section~\ref{sec:regular} below for more information.}
 \end{table}
 
 Let us apply some of these functions/methods to a simple Wikipedia
-text that contains HTML tags or boilerplate and natural upper/lower
+text that contains HTML tags, or boilerplate, and upper/lower
 case letters.
 Using the \index{stringr}\emph{stringr} function \index{str\_replace\_all}\texttt{str\_replace\_all} in R
 and \index{replace}\texttt{replace} in Python we can do a find-and-replace and replace substrings
@@ -155,8 +155,8 @@ For instance, you probably do not want to list \emph{all possible} HTML tags in 
 
 A \index{regular expression}\emph{regular expression} or \emph{regex} is a powerful language to locate strings that conform to a given pattern. For instance, we can extract usernames or email-addresses from text, or normalize spelling variations and improve the cleaning methods covered in the previous section. Specifically, regular expressions are a sequence of characters that we can use to design a pattern and then use this pattern to \emph{find} strings (identify or extract) and also \emph{replace} those strings by new ones.
 
-Regular expressions look complicated, and in fact they take some getting used to initially.
-For example, a relatively simple (and not quite correct) expression to match an email address is \verb|[\w\.-]+@[\w\.-]+\.\w\w+|,
+Regular expressions look complicated, and in fact they take time to get used to initially.
+For example, a relatively simple (and not totally correct) expression to match an email address is \verb|[\w\.-]+@[\w\.-]+\.\w\w+|,
 which doesn't look like anything at all unless you know what you are looking for.
 The good news is that regular expression syntax is the same in R and Python (and many other languages),
 so once you learn regular expressions you will have acquired a powerful and versatile tool for text processing.
@@ -168,11 +168,11 @@ so once you learn regular expressions you will have acquired a powerful and vers
 %%   In this book we will use the \index{regex}\emph{regex} package, however.
 %%   This modules has the same functions and arguments as the \index{re}\emph{re} module,
 %%   but it has better support for Unicode, which is very important when dealing with non-western text.
-%%   However, for almost all examples you can also use the \index{re}\emph{re} module if prefered.
+%%   However, for almost all examples you can also use the \index{re}\emph{re} module if preferred.
 %%   }
 
 In the next section, we will first review general expression syntax without reference to running them in Python or R.
-Subsequently, you will see how you can apply these expression to inspect and clean texts in both languages.
+Subsequently, you will see how you can apply these expressions to inspect and clean texts in both languages.
 
 \subsection{Regular Expression Syntax}\label{sec:regex}
 
@@ -190,7 +190,7 @@ This raises the question, of course, of how to look for actual occurrences of a 
 The solution is to \index{escape}\emph{escape} these special symbols by placing a backslash (\verb|\|) before them:
 \verb|a\+| matches the literal text ``a+'', and \verb|\\w| (with a double backslash) matches the literal text ``\textbackslash{}w''.
 
-Now, we can have another look at the example emails address pattern given above.
+Now, we can have another look at the example email address pattern given above.
 The first part, \verb|[\w\.-]| creates a character class containing word characters, (literal) periods, and dashes.
 Thus, \verb|[\w\.-]+@[\w\.-]+| means one or more letters, digits, underscores, periods, or dashes, followed by an at sign,
 followed by one or more letters, digits, etc.
@@ -259,7 +259,7 @@ and in the final subsection we will see how to use these regular expressions in 
 
     \bottomrule
   \end{tabularx}}{\small
-    $*$ These selectors can be inverted by changing them into  capital letters.   Thus, \texttt{\small{\textbackslash W}} matches everything except word characters, and \texttt{\small{\textbackslash{}}P\{PUNCTUATION\}} matches everything except punctuation\\
+    $*$ These selectors can be inverted by changing them into  capital letters.   Thus, \texttt{\small{\textbackslash W}} matches everything except word characters, and \texttt{\small{\textbackslash{}}P\{PUNCTUATION\}} matches everything except punctuation.
     $\dagger$ See \url{https://www.unicode.org/reports/tr44/\#Property\_Index} for a full list of Unicode properties. Note that when using Python, these are only available if you use \index{regex}\emph{regex}, which is a drop-in replacement for the more common \index{re}\emph{re}.}
 \end{table}
 
@@ -279,9 +279,9 @@ so, \verb|<.*?>| will match the individual `<p>' and `</p>' substrings.
 The third section discusses other constructs.
 \concept[Capture Groups]{Groups} are formed using parentheses \verb|()| and are useful in at least three ways.
 First, by default a quantifier applies to the letter directly before it, so \verb|no+| matches ``no'', ``nooo'', etc.
-If you group a number of characters you can apply a quantifier to the group. So, \verb|that's (not)? good| matches either ``that's not good'' or 	``that's good''.
+If you group a number of characters you can apply a quantifier to the group. So, \verb|that's( not)? good| matches either ``that's not good'' or 	``that's good''.
 Second, when using a vertical bar (\textbar) to have multiple options, you very often want to put them into a group so you can use it as part of a larger pattern.
-For example, \verb+a (great|fantastic)? victory+ matches either ``a victory'', ``a great victory'', or ``a fantastic victory''.
+For example, \verb+a( great| fantastic)? victory+ matches either ``a victory'', ``a great victory'', or ``a fantastic victory''.
 Third, as will be discussed below in Section~\ref{sec:regextract}, you can use groups to capture (extract) a specific part of a string, e.g.\ to get only the domain part of a web address.
 
 The other important construct are \index{character classes}\emph{character classes}, formed using square brackets \verb|[]|.
@@ -354,12 +354,12 @@ If you want to extract e.g.\ zip codes from a longer document, it is often usefu
 
 Please note that many of those patterns are not necessarily fully complete and correct, especially the final patterns for online notations.
 For example, email addresses can contain plus signs in the first part, but not in the domain name, while domain names are not allowed to start with a dash -- a completely correct regular expression to match email addresses is over 400 characters long!
-Even worse, a complete HTML tag expression is probably not even possible because as a regular expression as they can contain comments and nested escapes within attributes.
+Even worse, complete HTML tags are probably not even possible to describe using regular expressions, because HTML tags frequently contain comments and nested escapes within attributes.
 For a better way to deal with analyzing HTML, please see Chapter~\ref{chap:scraping}. In the end, patterns like these are fine for a (somewhat) noisy analysis of (often also somewhat noisy) source texts as long as you understand the limitations.
 
 \section{Using Regular Expressions in Python and R}\label{sec:regextract}
 
-Now that you hopefully have a firm grasp of regular expression syntax,
+Now that you hopefully have a firm grasp of the syntax of regular expressions,
 it is relatively easy to use these patterns in Python or R (or most other languages).
 Table~\ref{tab:regextract} lists the commands for four of the most common use cases:
 identifying matching texts, removing and replacing all matching text, extracting matched groups, and splitting texts.
@@ -389,7 +389,7 @@ identifying matching texts, removing and replacing all matching text, extracting
 For R, we again use the functions from the \index{stringr}\emph{stringr} package.
 For Python, you can use either the \index{re}\emph{re} or \index{regex}\emph{regex} package,
 which both support the same functions and syntax so you can just import one or the other.
-The \index{re}\emph{re} package is more common, but does not support Unicode character properties (\verb|\p|).
+The \index{re}\emph{re} package is more common and significantly faster, but does not support Unicode character properties (\verb|\p|).
 We also list the corresponding commands for \index{pandas}\emph{pandas}, which are run on a whole column instead of a single text
 (but note that \index{pandas}\emph{pandas}\ does not support Unicode character properties.)
 
@@ -403,12 +403,12 @@ to create the pattern \verb+"(cat|dog)"+ (i.e.\ cat or dog enclosed in quotation
 (or even more legible: \verb+r'{"(cat|dog)"}'+).
 
 Unfortunately, in earlier versions of R (and in any case if you don't use raw strings), you need to escape special characters twice:
-first for the regular expression, and then for R. So, the pattern \verb|\d| becomes \verb|"\\d+"|. To match a literal backslash you would use the pattern \verb|\\|,
+first for the regular expression, and then for R. So, the pattern \verb|\d| becomes \verb|"\\d"|. To match a literal backslash you would use the pattern \verb|\\|,
 which would then be represented in R as \verb|"\\\\"|!
 
 Example~\ref{ex:reclean} cleans the same text as Example~\ref{ex:clean} above, this time using regular expressions.
 First, it uses \verb|<[^>+]>| to match all HTML tags: an angular opening bracket, followed by anything except for a closing angular bracket (\verb|[^>]|), repeated one or more times (\verb|+|),
-finally folloewd by a closing bracket.
+finally followed by a closing bracket.
 Next, it replaces one or more whitespace characters (\verb|\s+|) by a single space.
 Finally, it uses a vertical bar to select either space at the start of the string (\verb|^\s+|), or at the end  (\verb|\s+$|), and removes it. 
 As you can see, you can express a lot of patterns using regular expressions in this way, making for more generic (but sometimes less readable) clean-up code. 
@@ -445,7 +445,7 @@ using a regular expression (in this case, any punctuation followed by any space)
 and by matching the items we are interested in (letters) rather than the separator.
 Finally, we join these items together again using \index{join}\texttt{join} (Python) and \index{str\_c}\texttt{str\_c} (R).
 
-One thing to note in the previous example is the use of the index \verb|[[1]]| to select the first element in a list.
+One thing to note in the previous example is the use of the index \verb|[[1]]| in R to select the first element in a list.
 This is needed because in R, splitting a text actually splits all the given texts, returning a \index{list}\texttt{list} containing all the matches for each input text.
 If there is only a single input text, it still returns a list, so we select the first element of the list.
 
@@ -454,7 +454,7 @@ from tweets to news articles and open survey questions.
 In the example above, we extracted only the first url from each tweet.
 If we  want to extract e.g.\ all hash tags from each tweet, we cannot simply add a ``tags'' column,
 as there can be multiple tags in each tweet.
-Essentially, the problem is that the urls per tweet are now nested in each row,
+Essentially, the problem is that the URLs per tweet are now nested in each row,
 creating a non-rectangular data structure.
 
 Although there are multiple ways of dealing with this,
@@ -485,7 +485,7 @@ This is shown in the final line of the example, where we split a tweet into word
 \codexoutputtable{chapter09/splitlong2.r}
 \doublecodex{chapter09/splitlong3}
 \codexoutputtable{chapter09/splitlong3.r}
-  \caption{Applying split and extract\_all on text columns'}\label{ex:splitlong}
+  \caption{Applying split and extract\_all on text columns}\label{ex:splitlong}
 \end{ccsexample}
 
 

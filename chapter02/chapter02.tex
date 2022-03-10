@@ -74,9 +74,9 @@ See Chapter~\ref{chap:datawrangling} for an in-depth explanation of the aggregat
 
 \section{Fun With Textual Data}\label{sec:funtext}
 
-\paragraph{Corpus Analysis} Next, we can analyze which hash tags are most frequently used in this dataset.
+\paragraph{Corpus Analysis} Next, we can analyze which hashtags are most frequently used in this dataset.
 Example~\ref{ex:funcloud} does this by creating a \index{document-term matrix}\emph{document-term matrix} using the package \index{quanteda}\emph{quanteda} (in R)
-or \index{scikit-learn}\emph{scikit-learn} (in Python).
+or by manually counting the words using a defaultdict (in Python).
 The code shows a number of steps that are made to create the final results, each of which represent
 researcher choices about which data to keep and which to discard as noise.
 In this case,  we select English tweets, convert text to lower case,  remove stop words, and keep only words that start with \#,
@@ -97,10 +97,10 @@ Example~\ref{ex:funlda} explores the tweets by automatically clustering the tags
 Topic modeling is non-deterministic -- if you run it again you can get slightly different topics,
 and topics are swapped around randomly as the topic numbers have no special meaning.
 By setting the computer's \index{random seed}\emph{random seed} you can ensure that if you run it again you get the same results.
-As you can see, some topics seem easily interpretable (such as topic 6 about economic consequences,
-and topic 7 about masks and prevention), it is always recommended that you inspect the clustered documents
+As you can see, some topics seem easily interpretable (such as topic 2 about social distancing,
+and topic 8 on health care), it is always recommended that you inspect the clustered documents
 and edge cases in addition to the top words (or tags) as shown here.
-You can play around with this example, for example by using a different selection of words
+You can play around with this example by using a different selection of words
 (modifying the code in Example~\ref{ex:funcloud}) or changing the number of topics.
 You can also change (or remove) the random seed and see how running the same model multiple times will give different results. 
 See \refsec{unsupervised} for more information about fitting, interpreting, and validating topic models.
@@ -117,7 +117,7 @@ we can use it to map where most tweets are coming from.
 The first step in this analysis is to resolve a name such as `Lahore, Pakistan' to its geographical coordinates (in this case, about 31 degrees north and 74 degrees east). This is called geocoding, and both Google maps and Open Street Maps can be used
 to perform this automatically.
 As with the tweets themselves, we will use a cached version of the geocoding results here so we can proceed directly.
-At the end of this chapter we will show the code that was used to create this file so you can play around with it as well. 
+Please see https://cssbook.net/datasets for the code that was used to create this file so you can play around with it as well. 
 
 Example~\ref{ex:funmap} shows how this data can be used to create a map of Twitter activity.
 First, the cached user data is retrieved, showing the correct location for Lahore but also
@@ -150,7 +150,7 @@ users are connected to other users because they follow each other and retweet an
 Using the \verb+reply_to_screen_name+ column, we can inspect the retweet network contained in the COVID tweet dataset.
 Example~\ref{ex:fungraph} first uses the data summarization commands from \tidyverse\ (R) and \pandas\ (Python) to
 create a data frame of connections or \concept{edges} listing how often each user retweets each other user.
-The second code block shows how the \index{igraph}\emph{igraph} package is used to convert this edge list into a graph.
+The second code block shows how the \index{igraph}\emph{igraph} (R) and \index{networkx}\emph{networkx} (Python) packages are used to convert this edge list into a graph.
 From this graph, we select only the largest connected component and use a clustering algorithm to analyze which
 nodes (users) form cohesive subnetworks.
 Finally, a number of options are used to set the color and size of the edges, nodes, and labels,

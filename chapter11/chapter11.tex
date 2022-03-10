@@ -19,9 +19,9 @@
 \newpage
 \begin{feature}
   \textbf{Packages used in this chapter}\\
-  This chapter uses the basic text and data handling that were described in Chapter~\ref{chap:dtm} (\index{tidyverse}\emph{tidyverse}, \index{readtext}\emph{readtext}, and \index{quanteda}\emph{quanteda} for R, \index{pandas}\emph{pandas} and \index{nltk}\emph{nltk}for Python).
-  For supervised text analysis, we use \index{quanteda.textmodels}\emph{quanteda.textmodels} (R) and \index{sklearn}\emph{sklearn} (Python).
-  For topic models we use \index{topicmodels}\emph{topicmodels} (R) and \index{gensim}\emph{gensim}.
+  This chapter uses the basic text and data handling that were described in Chapter~\ref{chap:dtm} (\index{tidyverse}\emph{tidyverse}, \index{readtext}\emph{readtext}, and \index{quanteda}\emph{quanteda} for R, \index{pandas}\emph{pandas} and \index{nltk}\emph{nltk} for Python).
+  For supervised text analysis, we use \index{quanteda.textmodels}\emph{quanteda.textmodels} in R, and \index{sklearn}\emph{sklearn} and \index{keras}\emph{keras} in Python.
+  For topic models we use \index{topicmodels}\emph{topicmodels} (R) and \index{gensim}\emph{gensim} (Python).
   You can install these packages with the code below if needed  (see Section~\ref{sec:installing} for more details):
 
 \doublecodex{chapter11/chapter11install}
@@ -44,9 +44,9 @@ When thinking about the computational analysis of texts, it is
 important to realize that there is no method that is \emph{the one}  to do
 so. While there are good choices and bad choices, we also cannot say
 that one method is necessarily and always superior to another. Some
-methods are more fashionable than others (for instance, there has been
-a growing interest in topic models, see Section~\ref{sec:unsupervised}) in the
-last years. There are indeed very good applications for such models,
+methods are more fashionable than others. For instance, there has been
+a growing interest in topic models (see Section~\ref{sec:unsupervised}) in the
+past few years. There are indeed very good applications for such models,
 they are also sometimes applied to research questions and/or data
 where they make much less sense.  As always, the choice of method
 should follow the research question and not the other way round. We
@@ -80,7 +80,7 @@ use cases of the three main approaches for the
 computational analysis of text: dictionary (or rule-based) approaches,
 supervised machine learning, and unsupervised machine learning.
 
-Dictionary approaches excel under three conditions: first, the
+Dictionary approaches excel under three conditions. First, the
 variable we want to code is \emph{manifest and concrete} rather than
 \emph{latent and abstract}: names of actors, specific physical
 objects, specific phrases, etc., rather than feelings, frames, or
@@ -105,7 +105,7 @@ economy rather than about sports, culture, etc. Yet, many of these
 articles won't directly state that they are about the economy by
 explicitly using the word ``economy''.
 
-We may think of extending our dictionary not only with \verb|econom.*| (a
+We may think of extending our dictionary not only with \verb|econom.+| (a
 regular expression that includes economists, economic, and so on), but
 also come up with other words like ``stock exchange'', ``market'',
 ``company.'' Unfortunately, we will quickly run into a problem that we also
@@ -128,7 +128,7 @@ article as economic is done by the computer in seconds. Supervised
 machine learning, therefore, has replaced dictionary approaches in
 many areas.
 
-Both dictionary approaches or rule-based approaches assume that you
+Both dictionary (or rule-based) approaches and supervised machine learning assume that you
 know in advance which categories (positive versus negative; sports
 versus economy versus politics; \ldots) exist. The big strength of unsupervised
 approaches such as topic models is that you can also apply them
@@ -172,7 +172,7 @@ The format of the data is also slightly different, following the convention for 
 In R we use the data frame returned by \index{readtext}\texttt{readtext},
 which can read files from a folder or zip archive and return a data frame containing one text per row.
 In Python, we have separate lists for the train and test datasets and for the full texts and labels:
-\verb|X_train| are the training texts and \verb|y_train| are the corresponding labels.
+\verb|text_train| are the training texts and \verb|y_train| are the corresponding labels.
 
 \begin{ccsexample}
   \doublecodex{chapter11/reviewdata}
@@ -225,7 +225,7 @@ positive. Relatedly, we cannot handle modifiers such as ``very
 good''. Also, all words are either positive or negative, while
 ``great'' should be more positive than ``good''. More advanced
 dictionary-based sentiment analysis packages like Vader \citep{Hutto2014}
-or SentiStrength \citep{Thelwall2012} include such functionality. Yet, as we will
+or SentiStrength \citep{Thelwall2012} include such functionalities. Yet, as we will
 discuss in Section~\ref{sec:supervised}, also these off-the-shelf
 packages perform very poorly in many sentiment analysis tasks,
 especially outside of the domains they were developed for.
@@ -241,7 +241,7 @@ evaluates one object (the film).
 
 Still, there are many use cases where dictionary approaches work very
 well. Because your list of words can contain anything, not just
-positive or negative words. Dictionary approaches have been used, for
+positive or negative words, dictionary approaches have been used, for
 instance, to measure the use of racist words or swearwords in online
 fora \citep[e.g.,][]{Tulkens2016}. Dictionary approaches are simple to understand and
 straightforward, which can be a good argument for using them when it
@@ -282,7 +282,7 @@ quantify the performance of your dictionary-based approach.
 
   To determine the number of documents one needs to determine the agreement between a human and a machine, one can follow the same standards that are recommended for traditional manual content analysis.
 
-  For instance, \citet{Krippendorff2004} provides a convenience table to look up the required sample sizes for determining the agreement between two human coders (p.~240). \citet{riffe2019} provide similar suggestions (p.~114ff). In short, the sample size depends on the level of statistical significance the researcher deems acceptable as well as on the distribution of the data. In an extreme case, if only 5 out of 100 items are to be coded as $x$, then in a sample of 20 items, such an item may not even occur. In order to determine agreement between the automated method and a human, we suggest that sample sizes that one would also use for the calculation of agreement between human coders are used. For specific calculations, we refer to content analysis books such as the two referenced here. To give a very rough ballpark figure (that shouldn't replace a careful calculation!), roughly 100 to 200 items will cover many scenarios.
+  For instance, \citet{Krippendorff2004} provides a convenience table to look up the required sample sizes for determining the agreement between two human coders (p.~240). \citet{riffe2019} provide similar suggestions (p.~114). In short, the sample size depends on the level of statistical significance the researcher deems acceptable as well as on the distribution of the data. In an extreme case, if only 5 out of 100 items are to be coded as $x$, then in a sample of 20 items, such an item may not even occur. In order to determine agreement between the automated method and a human, we suggest that sample sizes that one would also use for the calculation of agreement between human coders are used. For specific calculations, we refer to content analysis books such as the two referenced here. To give a very rough ballpark figure (that shouldn't replace a careful calculation!), roughly 100 to 200 items will cover many scenarios (assuming a small amount of reasonably balanced classes).
   \end{feature}
 
 %\input{chapter11/supervised}
@@ -301,11 +301,11 @@ that topics, but also sentiment, in fact, are quite a complex concepts
 that are often hard to capture with dictionaries (or at least, crafting
 a custom dictionary would be  difficult). For instance, while ``positive''
 and ``negative'' seem straightforward categories at first sight,
-the more we think about it, the more apparent it becomes how context-
-dependent it actually is: in a dataset about the economy and stock
+the more we think about it, the more apparent it becomes how context-dependent 
+it actually is: in a dataset about the economy and stock
 market returns, ``increasing'' may indicate something positive,
 in a dataset about unemployment rates the same word would be something
-negative.
+negative. Thus, machine learning can be a more appropriate technique for such tasks.
 
 \subsection{Putting Together a Workflow}\label{sec:workflow}
 
@@ -364,7 +364,7 @@ downloaded at
 \url{https://ai.stanford.edu/~amaas/data/sentiment/aclImdb_v1.tar.gz}
 
 
-These data do not come in one file, but rather in a set of textfiles
+These data do not come in one file, but rather in a set of text files
 that are sorted in different folders named after the dataset to which they
 belong  (\verb|test| or \verb|train|) and their label (\verb|pos| and \verb|neg|). This
 means that we cannot simply use a pre-defined function to read them,
@@ -445,7 +445,7 @@ is concerningly low.
 Let us start by comparing the two simple classifiers we know (Na\"ive
 Bayes and Logistic Regression (see Section~\ref{sec:nb2dnn}) and the two
 vectorizers that transform our texts into two numerical
-representations that we know: word counts and $tf\cdot idf$ scores
+representations that we know: word counts and \verb|tf.idf| scores
 (see Chapter~\ref{chap:dtm}).
 
 We can also tune some things in the vectorizer, such as filtering out
@@ -494,7 +494,7 @@ There may be instances where one nevertheless may want to use a Count
 Vectorizer with a Na\"ive Bayes classifier instead (especially if it
 is too computationally expensive to estimate the other model), but for
 now, we may settle on the best performing combination, logistic
-regression with a $tf\cdot idf$ vectorizer. You could also try fitting
+regression with a \verb|tf.idf| vectorizer. You could also try fitting
 a Support Vector Machine instead, but we have little reason to believe
 that our data isn't linearly separable, which means that there is
 little reason to believe that the SVM will perform better. Given the
@@ -528,16 +528,16 @@ that we want to consider in a dictionary, with a descriptive key (i.e., a string
 
 The gridsearch procedure will then estimate all combinations of all
 values, using cross-validation (see Section~\ref{sec:validation}). In
-our example, we have $2 \cdot 2 \cdot 2 \cdot 2 \cdot 3 = 24$
-different models, and $24$ models $\cdot 5$ folds $= 120$ models to
+our example, we have $2 x 2 x 2 x 2 x 3 = 24$
+different models, and $24 models x 5 folds = 120$ models to
 estimate. Hence, it may take you some time to run the code.
 
 \pyrex[input=py, output=py, caption={A gridsearch to find the best hyperparameters for a pipeline consisting of a vectorizer and a classifier. Note that we can tune any parameter that either the vectorizer or the classifier accepts as an input, not only the four hyperparameters we chose in this example.}]{chapter11/gridsearchlogreg}
 
 We see that we could further improve our model to precision and recall
 values of 0.90, by excluding extremely infrequent and extremely
-frequent words), including both unigrams and bigrams (which, we may
-speculate, helps us to account for the ``not good'' versus ``not'',
+frequent words, including both unigrams and bigrams (which, we may
+speculate, help us to account for the ``not good'' versus ``not'',
 ``good'' problem), and changing the default penalty of $C=1$ to $C=100$.
 
 Let us, just for the sake of it, compare the performance of our model
@@ -651,7 +651,7 @@ which are then used in a regular (hidden) \emph{dense} layer followed by an outp
 Finally, in Example~\ref{ex:rnn} we train the model on 4000 documents and test it against the remaining documents.
 The Python model, which uses pre-trained word embeddings (the \texttt{w2v\_320d} file downloaded at the top),
 achieves a mediocre accuracy of about 56\% (probably due to the low number of training sentences).
-The R model, which trains the embedding layer as part of the model, performs more poorly at 45\% as this model is even more dependent on large training data to properly estimate the embedding layer.
+The R model, which trains the embedding layer as part of the model, performs more poorly at 44\% as this model is even more dependent on large training data to properly estimate the embedding layer.
 
 
 %\input{chapter11/unsupervised}
@@ -666,7 +666,7 @@ Similarly, especially in survey research it is common to use factor analysis to 
 In essence, the idea behind these techniques is similar:
 by understanding the regularities in the data (which cases or variables behave similarly),
 you can describe the relevant information in the data with fewer data points.
-Moreover, assuming the regularities capture interesting information and the deviations from these regularities are mostly
+Moreover, assuming that the regularities capture interesting information and the deviations from these regularities are mostly
 uninteresting noise, these clusters of cases or variables can actually be substantively informative.
 
 Since a document-term matrix (DTM) is ``just'' a matrix, you can also apply these clustering techniques to the DTM
@@ -677,7 +677,7 @@ If you see the word ``agriculture'' in a news article, there is a good chance yo
 and there is a lower chance you will find a word like ``soldier''.
 In other words, the words ``agriculture'' and ``farm'' generally occur in the same kind of documents, so they can be said to be part of the same topic.
 Similarly, two documents that share a lot of words are probably about the same topic,
-and if you know what topic a document is on (e.g., an agricultural topic), you are better able to guess what words might occur in that document (e.g., ``cattle'')
+and if you know what topic a document is on (e.g., an agricultural topic), you are better able to guess what words might occur in that document (e.g., ``cattle'').
 
 Thus, we can formulate the goal of topic modeling as: given a corpus, find a set of $n$ topics, consisting of specific words and/or documents, that minimize the mistakes we would make if we try to reconstruct the corpus from the topics.
 This is similar to regression where we try to find a line that minimizes the prediction error.
@@ -724,7 +724,7 @@ Starting from the left, for each document you pick a set of topics $\Theta$.
 This set of topics is drawn from a \index{Dirichlet distribution}\emph{Dirichlet distribution} which itself has a parameter $\alpha$
 (see note).
 Next, for each word you select a single topic $z$ from the topics in that document.
-Finally, you pick an actual word $w$ from the words in that topic, again controlled by a parameter $\beta$ (see note).
+Finally, you pick an actual word $w$ from the words in that topic, again controlled by a parameter $\beta$.
 
 Now, if we  know which words and documents are in which topics, we can start generating the documents in the corpus.
 In reality, of course, we have the reverse situation:
@@ -762,7 +762,7 @@ After enough iterations, this converges to a solution.
   A low alpha means that each die is unfair in the sense of having a strong preference for some number(s), as if these numbers are weighted. You can then draw a die that prefers ones, or a die that prefers sixes.
   For topic models this means that each document tends to have one or two dominant topics.
   Finally, alpha can be symmetric (meaning dice are unfair, but randomly, so in the end each topic has the same chance)
-  or asymmetric (they are still unfair, and now also favour some topics more than others).
+  or asymmetric (they are still unfair, and now also favor some topics more than others).
   This would correspond to some topics being more likely to occur in all documents.
 
   In our experience, most documents actually do have one or two dominant topics,
@@ -774,7 +774,7 @@ After enough iterations, this converges to a solution.
   and optionally try using an asymmetric alpha if you find some words that occur across multiple topics.
 
   To get a more intuitive understanding of the effects of alpha,
-  please see \url{http://cssbook.net/lda} for additional material and visualizations.
+  please see \url{https://cssbook.net/lda} for additional material and visualizations.
 \end{feature}
 
 \subsection{Fitting an LDA Model}\label{sec:ldafit}
@@ -797,7 +797,7 @@ while in Python we use \index{pandas}\emph{pandas}' \index{str.split}\texttt{str
 which we then convert into a paragraph per row using \index{explode}\texttt{explode}.
 Converting this to a DTM we get a reasonably sized matrix of 738 paragraphs and 746 unique words.
 
-Next, we fit the actual LDA model using the package \index{gensim}\emph{gensim} (Python) and \index{topicmodels}\emph{topicmodels}.
+Next, we fit the actual LDA model using the package \index{gensim}\emph{gensim} (Python) and \index{topicmodels}\emph{topicmodels} (R).
 Before we can do this, we need to convert the DTM format into a format accepted by that package.
 For Python, this is done using the \index{Sparse2Corpus}\texttt{Sparse2Corpus} helper function while in R this is done with the \index{quanteda}\emph{quanteda}\ \index{convert}\texttt{convert} function.
 Then, we fit the model, asking for 10 topics to be identified in these paragraphs.
@@ -806,13 +806,13 @@ First, we specify a \index{random seed}\emph{random seed} of 123 to make sure th
 Second, we specify an ``asymmetric'' of \verb|1/1:10|, meaning the first topic has alpha 1, the second 0.5, etc. (in R).
 In Python, instead  of using the default of \verb|alpha='symmetric'|, we set  \verb|alpha='asymmetric'|, which uses the formula
 $\frac{1}{topic\_index + \sqrt{num\_topics}}$ to determine the priors. At the cost of a longer estimation time, we can even
-specify \verb|alpha='auto'|, which will learn an asymmetric prior from the data. For more background, see the note on hyperparameters for more information.
+specify \verb|alpha='auto'|, which will learn an asymmetric prior from the data. See the note on hyperparameters for more information.
 Third, for Python we also need to specify the vocabulary names since these are not included in the DTM.
 
 The final line generates a data frame of top words per topic for first inspection
 (which in Python requires separating the words from their weights in a list comprehension and converting it to a data frame for easy viewing).
 As you can see, most topics are interpretable and somewhat coherent: for example, topic 1 seems to be about education and jobs,
-while topic two is health care. You also see that the word ``job'' occurs in multiple topics (presumably because unemployment was a pervasive concern during Obama's tenure).
+while topic 2 is health care. You also see that the word ``job'' occurs in multiple topics (presumably because unemployment was a pervasive concern during Obama's tenure).
 Also, some topics like topic 3 are relatively more difficult to interpret from this table.
 A possible reason for this is that not every paragraph actually has policy content.
 For example, the first paragraph of his first State of the Union was:
@@ -900,8 +900,8 @@ excel in bottom-up and explorative analyses (Section~\ref{sec:deciding}).
 
 This chapter focused on regular or ``vanilla'' LDA topic modeling.
 Since the seminal publication, however, a large amount of variations and extensions on LDA have been proposed.
-These include, for example, dynamic topic models (which incorporate time; \citealp{dynamiclda}),
-correlated topic models (which explicitly model correlation between topics; \citealp{correlatedlda}).
+These include, for example, \textit{Dynamic Topic Models} (which incorporate time; \citealp{dynamiclda}) and
+\textit{Correlated Topic Models} (which explicitly model correlation between topics; \citealp{correlatedlda}).
 Although it is beyond the scope of this book to describe these models in detail,
 the interested reader is encouraged to learn more about these models.
 
@@ -910,7 +910,7 @@ which allow you to model covariates as topic or word predictors.
 This allows you, for example, to model topic shifts over time or
 different words for the same topic based on, e.g., Republican or Democrat presidents.
 
-Python users should check out Hierarchical Topic Modeling \citep{hierarchicallda}.
+Python users should check out \textit{Hierarchical Topic Modeling} \citep{hierarchicallda}.
 In hierarchical topic modeling, rather than the researcher specifying a fixed number of topics,
 the model returns a hierarchy of topics from few general topics to a large number of specific topics,
 allowing for a more flexible exploration and analysis of the data.
@@ -930,7 +930,7 @@ allowing for a more flexible exploration and analysis of the data.
   There are a number of such metrics proposed in the literature, of which we will introduce two.
   \index{Perplexity}\emph{Perplexity}  is a score of how well the LDA model can fit (predict) the actual word distribution
   (or in other words: how ``perplexed'' the model is seeing the corpus).
-  \index{Coherence}\emph{Coherence} is a measure of how semantically coherent the topics are by checking how often the top token co-occur in documents in each topic \citep{mimno11}.
+  \index{Coherence}\emph{Coherence} is a measure of how semantically coherent the topics are by checking how often the top token co-occurs in documents in each topic \citep{mimno11}.
 
   Example~\ref{ex:ldacoherence} below shows how these can be calculated for a range of topic counts, and the same code could be used for trying different values of \emph{alpha}.
   For both measures, lower values are better, and both essentially keep decreasing as you add more topics.
