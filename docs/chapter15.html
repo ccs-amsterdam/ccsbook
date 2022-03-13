@@ -1,0 +1,1318 @@
+
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+      <link href="ccsbook.css" rel="stylesheet">
+      <!-- MathJax -->
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js">
+  </script>
+
+    <title>Computational Analysis of Communication</title>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-light fixed-top bg-light">
+    <div class="container-xxl">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#toc" aria-controls="toc" aria-expanded="false" aria-label="Toggle TOC">
+                <div></div>
+                <div></div>
+                <div></div>
+            </button>
+	    <div class='navhome'>
+              <a href="index.html">Computational Analysis of Communication</a>
+	      </div>
+    </div>
+    </nav>
+    <div id='content' class='container-xxl'>
+
+        <!-- Sidebar -->
+        <aside class="toc">
+            <nav id="toc" class="collapse">
+                <div class="subtoc">
+                    <ul class="list-unstyled components">
+  
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+                  <div class="rightbar-header">In this chapter</div>
+
+            <ul class="list-unstyled" id="toc_chap_15">
+<li class='toc-section'>15 Scaling up and distributing</li>
+
+              
+	          
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_1">15.1. Storing Data in SQL and noSQL Databases</a>
+		    </li>
+		    
+		    <ul class="list-unstyled list-subsections" id="toc_chap_1">
+		    
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_1_1">15.1.1. When to Use a Database</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_1_2">15.1.2. Choosing the Right Database</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_1_3">15.1.3. A Brief Example Using SQLite</a>
+                    </li>
+
+                    
+		    </ul>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_2">15.2. Using Cloud Computing</a>
+		    </li>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_3">15.3. Publishing Your Source</a>
+		    </li>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_4">15.4. Distributing Your Software as Container</a>
+		    </li>
+		    
+
+		
+            </ul>
+	    
+    
+  
+    
+</ul>
+                </div>
+
+		<div class="rightbar-header">Table of Contents</div>
+                <ul class="list-unstyled components">
+    
+        <li class="active toc-chapter ">
+            <a href="chapter01.html">1 Introduction</a>
+            <!--<a href="#toc_chap_1" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_1"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_1">
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_1">1.1. The Role of Computational Analysis in the Social Sciences</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_2">1.2. Why Python and/or R?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_3">1.3. How to use this book</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_4">1.4. Installing R and Python</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_5">1.5. Installing Third-Party Packages</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter02.html">2 Fun with Data</a>
+            <!--<a href="#toc_chap_2" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_2"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_2">
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_1">2.1. Fun With Tweets</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_2">2.2. Fun With Textual Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_3">2.3. Fun With Visualizing Geographic Information</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_4">2.4. Fun With Networks</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter03.html">3 Programming Concepts</a>
+            <!--<a href="#toc_chap_3" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_3"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_3">
+                
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_1">3.1. About Objects and Data Types</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_2">3.2. Simple Control Structures: Loops and Conditions</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_3">3.3. Functions and Methods</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter04.html">4 How to write code</a>
+            <!--<a href="#toc_chap_4" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_4"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_4">
+                
+                    <li class="toc-section">
+                        <a href="chapter04.html#4_1">4.1. Re-using Code: How Not to Re-Invent the Wheel</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter04.html#4_2">4.2. Understanding Errors and Getting Help</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter04.html#4_3">4.3. Best Practice: Beautiful Code, GitHub, and Notebooks</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter05.html">5 Files and Data Frames</a>
+            <!--<a href="#toc_chap_5" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_5"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_5">
+                
+                    <li class="toc-section">
+                        <a href="chapter05.html#5_1">5.1. Why and When Do We Use Data Frames?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter05.html#5_2">5.2. Reading and Saving Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter05.html#5_3">5.3. Data from online sources</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter06.html">6 Data Wrangling</a>
+            <!--<a href="#toc_chap_6" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_6"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_6">
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_1">6.2. Calculating Values</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_2">6.3. Grouping and Aggregating</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_3">6.4. Merging Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_4">6.5. Reshaping Data: Wide To Long And Long To Wide</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter07.html">7 Exploratory data analysis</a>
+            <!--<a href="#toc_chap_7" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_7"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_7">
+                
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_1">7.1. Simple Exploratory Data Analysis</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_2">7.2. Visualizing Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_3">7.3. Clustering and Dimensionality Reduction</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter08.html">8 Machine Learning</a>
+            <!--<a href="#toc_chap_8" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_8"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_8">
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_1">8.1. Statistical Modeling and Prediction</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_2">8.2. Concepts and Principles</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_3">8.3. Classical Machine Learning: From Na&#34;ive Bayes to Neural Networks</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_4">8.4. Deep Learning</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_5">8.5. Validation and Best Practices</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter09.html">9 Processing text</a>
+            <!--<a href="#toc_chap_9" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_9"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_9">
+                
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_1">9.1. Text as a String of Characters</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_2">9.2. Regular Expressions</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_3">9.3. Using Regular Expressions in Python and R</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter10.html">10 Text as data</a>
+            <!--<a href="#toc_chap_10" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_10"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_10">
+                
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_1">10.1. The Bag of Words and the Term-Document Matrix</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_2">10.2. Weighting and Selecting Documents and Terms</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_3">10.3. Advanced Representation of Text</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter11.html">11 Automatic analysis of text</a>
+            <!--<a href="#toc_chap_11" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_11"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_11">
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_1">11.1. Deciding on the Right Method</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_2">11.2. Obtaining a Review Dataset</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_3">11.3. Dictionary Approaches to Text Analysis</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_4">11.4. Supervised Text Analysis: Automatic Classification and Sentiment Analysis</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_5">11.5. Unsupervised Text Analysis: Topic Modeling</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter12.html">12 Scraping online data</a>
+            <!--<a href="#toc_chap_12" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_12"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_12">
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_1">12.1. Using Web APIs: From Open Resources to Twitter</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_2">12.2. Retrieving and Parsing Web Pages</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_3">12.3. Authentication, Cookies, and Sessions</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_4">12.4. Ethical, Legal, and Practical Considerations</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter13.html">13 Network Data</a>
+            <!--<a href="#toc_chap_13" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_13"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_13">
+                
+                    <li class="toc-section">
+                        <a href="chapter13.html#13_1">13.1. Representing and Visualizing Networks</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter13.html#13_2">13.2. Social Network Analysis</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter14.html">14 Multimedia data</a>
+            <!--<a href="#toc_chap_14" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_14"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_14">
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_1">14.1. Beyond Text Analysis: Images, Audio and Video</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_2">14.2. Using Existing Libraries and APIs</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_3">14.3. Storing, Representing, and Converting Images</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_4">14.4. Image Classification</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter toc-chapter-current">
+            <a href="chapter15.html">15 Scaling up and distributing</a>
+            <!--<a href="#toc_chap_15" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_15"></a>
+            <ul class="collapse list-unstyled show" id="toc_chap_15">
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_1">15.1. Storing Data in SQL and noSQL Databases</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_2">15.2. Using Cloud Computing</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_3">15.3. Publishing Your Source</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_4">15.4. Distributing Your Software as Container</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter16.html">16 Where to go next</a>
+            <!--<a href="#toc_chap_16" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_16"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_16">
+                
+                    <li class="toc-section">
+                        <a href="chapter16.html#16_1">16.1. How Far Have We Come?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter16.html#16_2">16.2. Where To Go Next?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter16.html#16_3">16.3. Open, Transparent, and Ethical Computational Science</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+</ul>
+            </nav>
+        </aside>
+	
+      
+  
+
+    <div class="css-layout">
+      <!-- Main Content -->
+      <div class="css-main">
+	<div class='chevrons'>
+&laquo;
+	  
+	  <a href='chapter14.html'>Ch. 14 Multimedia data</a>
+	  
+	  
+	  | <a href='chapter16.html'>Ch. 16 Where to go next</a>&raquo;
+	  
+</div>
+	  <br/>
+            
+<h1>  <small class='text-muted'><a class='anchor' href='#chap:scalingup' name='chap:scalingup'>15.</a></small>Scaling up and distributing
+</h1>
+
+
+<div class='abstract'>
+  <span class='caption'>
+Abstract
+  </span>
+  Throughout this book, we have been working with examples that consist of
+  code to conduct one specific analysis of data sets of modest size.
+  But at some point, you may want to scale up. You may want  others
+  to be able to  apply your code to their data; and you may want to be able to also
+  use your own analyses on larger and more complex datasets. Or you may
+  need to run analyses that your own computer cannot deal with.
+  This chapter deals with such  steps and points you to some techniques that become increasingly useful
+  the larger your projects get.
+
+</div>
+
+<div class='keywords'>
+  <span class='caption'>Keywords:</span>
+databases, cloud computing, containerization, source code, version control
+</div>
+<div class='objectives'>
+  <div class='caption'>Chapter objectives:</div>
+  <ul><li> Be able to scale up your analyses
+</li><li> Know when to use databases
+</li><li> Know when to use cloud computing
+</li><li> Know about distributing source code and containers.
+</li>
+  </ul>
+</div><div class='feature'>
+In this chapter, we provide a brief overview of techniques for scaling up computational analyses. In particular, we introduce SQL and noSQL databases, cloud computing platforms, version control systems, and Docker containers.
+</div>
+<h2>  <small class='text-muted'><a class='anchor' href='#15_1' name='15_1'>15.1.</a></small>Storing Data in SQL and noSQL Databases
+</h2>
+
+
+<h3>  <small class='text-muted'><a class='anchor' href='#15_1_1' name='15_1_1'>15.1.1.</a></small>When to Use a Database
+</h3>
+
+
+<p>
+In this book, we have so far stored our data in files. In fact, before
+covering the wide range of methods for computational analysis, we
+discussed some basics of file handling
+(Chapter&nbsp;<a href='chapter05.html#5'>5</a>). Probably, you did not experience any major
+trouble here (apart from occasional struggles with non-standard
+encodings, or confusion about the delimiters in a csv file). On the
+other hand, the examples we used were still modest in size: usually,
+you were dealing with a handful of csv files; except for huge image classification datasets, the maximum you had to
+deal with were the 50000 text files from the IMDB movie review
+dataset.
+</p>
+
+<p>
+In particular, when loading your data into a data frame, you copied all
+the data from your disk into memory<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 1" data-bs-content="In fact, this is
+  sometimes a reason to avoid data frames: for instance, it is possible
+  to use a generator that reads data line-by-line from a file and
+  yields them to <i>scikit-learn</i>. In this way, only <i>one</i> row
+  of data is in your memory at the same time (see Section&nbsp;<a href='chapter03.html#3_3'>3.3</a>).">[1]</a>.
+But what if you want to scale up your analyses a bit
+<span class="cite" title="Trilling, D. and Jonkman, J.&nbsp;G. (2018). Scaling up content analysis. Communication Methods and Measures, 12(2-3):158--174.">Trilling and Jonkman (2018)</span>? Maybe we want to build up a larger
+data collection, maybe even share it with multiple team members, search
+and filter our data, or collect it over a larger timespan? An
+example may illustrate the problems that can arise.
+</p>
+
+<p>
+Imagine you do some web scraping (Chapter&nbsp;<a href='chapter12.html#12'>12</a>) that goes beyond
+a few thousand texts. Maybe you want to visit relevant news sites on a
+regular basis (say, once an hour) and retrieve everything that's
+new. How do you store your data then? You could append everything to a
+huge csv file, but this file would quickly grow so large that you
+cannot load it into memory any more. Besides, you may run the risk of
+corrupting the file if something goes wrong in one of your attempts to
+extend the file. Or you could also write each article to a new, separate file.
+That's maybe more failsafe, but you would need to design a good way
+to organize the data. In particular, devising a method to search
+and find relevant files would be a whole project in itself.
+</p>
+
+<p>
+Luckily, you can outsource all these problems to a database that you can
+install on your own computer or possibly on a server (in that case, make
+sure that it is properly secured!). In the example, the scraper, which
+is running once an hour, just sends the scraped data to the database
+instead of to a file, and the database will take care of storing it.
+Once you want to retrieve a subset of your articles for analysis,
+you can send a query to the database and read from it. Both Python and
+R offer integration for multiple commonly used databases. It is even
+possible to directly get the results of such a database query in the
+form of a data frame.
+</p>
+
+<p>
+We can distinguish two main categories of databases
+that are most relevant to us see also <span class="cite" title="Günther, E., Trilling, D., and van de Velde, B. (2018). But how do we store it? Data architecture in the social-scientific research process. In Stuetzer, C., Welker, M., and Egger, M., editors, Computational social science in the age of Big Data. Concepts, methodologies, tools, and applications, pages 161--187. Herbert von Halem.">Günther et&nbsp;al., 2018</span> :
+relational databases (or SQL-databases) and noSQL-databases. Strictly
+speaking, SQL (&ldquo;structured query language&rdquo;) is a query language for
+databases, but it is so widespread that it is used almost synonymously
+for relational databases. Even though they have already been around for
+ 50 years <span class="cite" title="Codd, E.&nbsp;F. (1970). A relational model of data for large shared data banks. Communications of the ACM, 13(6):377–387.">Codd, 1970</span>, relational databases are still  very
+powerful and very widely used.  They consist of multiple tables that
+are linked by shared columns (keys). For instance, you could imagine a
+table with the orders placed in a webshop that has a column
+<code>customer-id</code>, and a different table with addresses, billing
+information, and names for each <code>customer-id</code>. Using filter and join
+operations (like in Chapter&nbsp;<a href='chapter06.html#6'>6</a>, but then on the database directly), one can then easily retrieve
+information on where the order has to be shipped. A big advantage of
+such a relational database is that, if a customer places 100 orders,
+we do not need to store their address 100 times, but only once, which
+is not only more efficient in terms of storage, but also prevents
+inconsistencies in the data.
+</p>
+
+<p>
+In contrast to SQL databases, noSQL databases are not based on tables,
+but use concepts such as &ldquo;documents&rdquo; or key-value pairs, very much
+like Python dictionaries or JSON files. These types of databases are
+particularly interesting when your data are less well-structured. If
+not all of your cases have the same variables, or if the content is not
+well-defined (let's say, you don't know exactly in what format the date
+of publication on a news site will be written), or if the data structure
+may change over time, then it is hard or impossible to come up with a
+good table structure for an SQL database. Therefore, in many &ldquo;big data&rdquo;
+contexts, noSQL databases are used, as they &ndash; depending on your
+configuration &ndash; will happily accept almost any kind of content you dump
+in them. This comes, of course, at the expense of giving up advantages
+of SQL databases, such as the avoidance of inconsistencies. But often,
+you may  want to store your data first and clean up later, rather
+than risking that data collection fails because you enforced a too strict
+structure. Also, there are many noSQL databases that are very fast in
+searching full text &ndash; something that SQL databases, in general, are
+not optimized for.
+</p>
+
+<p>
+Despite all of these differences, both SQL and noSQL databases can play
+the same role in the computational analysis of communication. They both
+help you to focus on data collection and data analysis without needing
+to devise an ingenious way to store your data. They both allow for much
+more efficient searching and filtering than you could design on your own.
+All of this becomes especially interesting when your dataset grows too
+large to fit in memory, but also when your data are continuously changed,
+for instance because new data are added while scraping.
+</p>
+
+<h3>  <small class='text-muted'><a class='anchor' href='#15_1_2' name='15_1_2'>15.1.2.</a></small>Choosing the Right Database
+</h3>
+
+
+<p>
+Choosing the right database is not always easy, and has many consequences
+for the way you may conduct your analyses. As <span class="cite" title="Günther, E., Trilling, D., and van de Velde, B. (2018). But how do we store it? Data architecture in the social-scientific research process. In Stuetzer, C., Welker, M., and Egger, M., editors, Computational social science in the age of Big Data. Concepts, methodologies, tools, and applications, pages 161--187. Herbert von Halem.">Günther et&nbsp;al. (2018)</span> explain,
+this is not a purely technical choice, but impacts your social-scientific
+workflow. Do you want to enforce a specific structure from the very
+start, or do you  want to collect everything first and clean up
+later? What is your trade-off between avoiding any inconsistency and risking
+ throwing away too much raw information?
+</p>
+
+<p>
+Acknowledging that there are often many different valid choices, and at
+the risk of oversimplifying matters, we will try to give some guidance
+in which databases to choose by offering some guiding questions.
+</p>
+
+<p>
+<b>How is your data structured?</b>
+Ask yourself: can I organize my data
+in a set of relational tables? For instance, think of television
+viewing data: there may be a table that gives information on when the
+television set was switched on and which channel was watched and by
+which user id. A second table can be used to associate personal
+characteristics such as age and gender with the user id. And a third
+table may be used to map the time stamps to details about a specific
+program aired at the time.  If your data looks like this, ask
+yourself: can I determine the columns and the data types for each
+column in advance?  If so, then a SQL database such as <i>MySQL</i>,
+<i>PostgreSQL</i>, or <i>MariaDB</i> is probably what you are looking
+for. If, on the other hand, you cannot determine such a structure <i>a
+priori</i>, if you believe that the structure of your information will
+change over time, or if it is very messy, then you may need a more
+flexible noSQL approach, such as <i>MongoDB</i> or
+<i>ElasticSearch</i>.
+</p>
+
+<p>
+<b>How important is full-text searching for you?</b>
+SQL databases can handle numeric datatypes as well as text datatypes, but they are usually not optimized for the latter. They handle short strings (such as usernames, addresses, and so on) just fine, but if you are interested in full-text searching, they are not the right tool for the job. This is in particular true if you want to be able to do fuzzy searches where, for instance,  documents containing the plural of a word that you searched for as singular are also found. Databases of, for instance, news articles, tweets, transcripts of speeches, or other documents are much better accessed in a database such as <i>ElasticSearch</i>.
+</p>
+
+<p>
+<b>How flexible does it need to be?</b>
+In relational databases, it is relatively hard to change the structure afterwards. In contrast, a noSQL database has no problem whatsoever with adding a new document that contains keys that did not exist before. There is no assumption that all documents contain the same keys. Therefore, if it is hard to tell in advance which &ldquo;columns&rdquo; or &ldquo;keys&rdquo; may represent your data best, you should stay clear of SQL databases. In particular, if you think of gradually extending your data and use it on a long timeline for re-use, potentially even by multiple teams, the flexibility of a noSQL database may be a game changer.
+</p>
+
+<h3>  <small class='text-muted'><a class='anchor' href='#15_1_3' name='15_1_3'>15.1.3.</a></small>A Brief Example Using SQLite
+</h3>
+
+
+<p>
+Installing a database server such as <i>mysql</i>, <i>mariadb</i> (an
+open-source fork of mysql), <i>MongoDB</i>, or <i>Elasticsearch</i> is
+not really difficult (in fact, it may already be come pre-packaged
+with your operating system), but the exact configuration and setup may
+differ widely depending on your computer and your needs. Most
+importantly, especially if you store sensitive data in your database,
+you will need to think about authentication, roles, etc. &ndash;- all
+beyond the scope of this book.
+</p>
+
+<p>
+Luckily, there is a compromise between storing your data in the files
+that you need to manage yourself and setting up a database server,
+locally or remotely. The library <i>SQlite</i> offers a self-contained
+database engine &ndash; essentially, it allows you to store a whole
+database in one file and interact with it using the SQL query language.
+Both R and Python offer multiple ways of directly interacting with
+sqlite files (Example&nbsp;<a href='#ex:sqlite'>15.1</a>). This gives you access to some great
+functionality straight away: after all, you can issue (almost) any SQL command
+now, including (and maybe most importantly) commands for filtering,
+joining, and aggregating data. Or you could consider immediately writing
+each datapoint you get from an API or a webscraper (Chapter&nbsp;<a href='chapter12.html#12'>12</a>)
+without risking  losing any data if connections time out or scraping
+fails halfway.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:sqlite' name='ex:sqlite'>Example 15.1.</a></small><br />
+SQLite offers you database functionality without setting up a database server such as mysql</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>import pandas as pd</code>
+<code>import sqlite3</code>
+<code></code>
+<code># Load a dataframe</code>
+<code>url = "https://cssbook.net/d/gun-polls.csv"</code>
+<code>d = pd.read_csv(url)</code>
+<code></code>
+<code># connecting  to a SQLite database</code>
+<code>conn = sqlite3.connect("mydb.db")</code>
+<code># store the df as table "gunpolls" in the database</code>
+<code>d.to_sql("gunpolls", con=conn)</code>
+<code></code>
+<code># run a query on the SQLite database</code>
+<code>sql = """SELECT support, pollster </code>
+<code>         FROM gunpolls LIMIT 5;"""</code>
+<code>d2 = pd.read_sql_query(sql, conn)</code>
+<code># close connection</code>
+<code>conn.close()</code>
+<code>d2</code>
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>library(tidyverse)</code>
+<code>library(RSQLite)</code>
+<code></code>
+<code># Load a dataframe</code>
+<code>url = "https://cssbook.net/d/gun-polls.csv"</code>
+<code>d = read_csv(url)</code>
+<code></code>
+<code># connecting  to a SQLite database</code>
+<code>mydb = dbConnect(RSQLite::SQLite(), "mydb.sqlite")</code>
+<code># store the df as table "gunpolls" in the database</code>
+<code>#dbWriteTable(mydb, "gunpolls", d)</code>
+<code></code>
+<code># run a query on the SQLite database</code>
+<code>sql = "SELECT support, pollster </code>
+<code>       FROM gunpolls LIMIT 5;"</code>
+<code>d2 = dbGetQuery(mydb, sql)</code>
+<code>d2</code>
+<code># close connection</code>
+<code>dbDisconnect(mydb)</code>
+<code></code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<div class='table-wrapper'><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Support</th>
+      <th>Pollster</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>72.0</td>
+      <td>CNN/SSRS</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>82.0</td>
+      <td>NPR/Ipsos</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>67.0</td>
+      <td>Rasmussen</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>84.0</td>
+      <td>Harris Interactive</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>78.0</td>
+      <td>Quinnipiac</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div></div>
+<p>
+Of course, <i>SQlite</i> cannot give you the same performance as a &ldquo;real&rdquo; mysql (or similar) installation could offer. Therefore, if your project grows bigger, or if you have a lot of read-
+ or
+write-operations per second, then you may have to switch at some
+point. But as you can see in Example&nbsp;<a href='#ex:sqlite'>15.1</a>, Python and R do not
+really care about the back end: all you need to do is to change the
+connection <code>conn</code> such that it points to your new database instead of
+the sqlite file.
+</p>
+
+<h2>  <small class='text-muted'><a class='anchor' href='#15_2' name='15_2'>15.2.</a></small>Using Cloud Computing
+</h2>
+
+
+<p>
+Throughout this book, we assumed that all tasks can actually be
+performed on your own computer. And often, that is indeed the best
+thing to do: you normally want to maintain a local copy of your data
+anyway, and it may be the safest bet for ethical and legal reasons &ndash;
+when working with sensitive data, you need to know what you are doing
+before transferring them somewhere else.
+</p>
+
+<p>
+However, once you scale up your project, problems may arise (see <span class="cite" title="Trilling, D. and Jonkman, J.&nbsp;G. (2018). Scaling up content analysis. Communication Methods and Measures, 12(2-3):158--174.">Trilling and Jonkman (2018)</span>):
+
+</p>
+
+<ul><li> Multiple people need to work on the same data
+</li><li> Your dataset is too large to fit on your disk
+</li><li> You do not have enough RAM or processing power
+</li><li> Running a process simply takes too long (e.g., training a model
+  for several days) or needs to be run in continuous intervals (e.g.,
+  scraping news articles once an hour) and you need your computer for
+  other things.
+</li>
+</ul>
+<p>
+This is the point where you need to start moving your project to some
+remote server instead. Broadly speaking, we can consider four
+scenarios:
+
+</p>
+
+<ol><li> A cloud service that just lets you run code. Here, you can just
+  submit your code and have it run. You do not have full control, you
+  cannot set up your own system, but you also do not have to do any
+  administration.
+</li><li> A dedicated server. You (or your university) could buy a
+  dedicated, physical server to run computational social science
+  analyses. On the bright side, this gives you full control, but it is
+  also not very flexible: after all, you make a larger investment
+  once, and if it turns out that you need more (or less) resources,
+  then it might be too late to change.
+</li><li> A virtual machine (VM) on a cloud computing platform. For most
+  practical purposes, you can do the same as in the previous option,
+  with the crucial difference that you rent the resources. If you need
+  more, you just rent more; and when you are done, you just stop the
+  machine.
+</li><li> A set of machines to run complex tasks using parallel computing. With large amounts of information (think about image or video data) and sophisticated modeling (such as deep learning) you may need to distribute the computation among several different computers at the same time.
+</li>
+</ol>
+<p>
+An example for the first option is Google Colab. While it makes it easy to share and run notebooks,
+the free tier we used so far does not necessarily solve any of the
+scalability issues discussed. However, Google Colab also has a paid Pro
+version, in which additional hardware (such as GPUs, TPUs or extra memory)
+that you may not have on your own computer can be used. This makes
+it an attractive solution for enabling projects (e.g., involving
+resource-intensive neural networks) that otherwise would not be possible.
+</p>
+
+<p>
+However, this is often not enough. For instance, you may want to run
+a database (Section&nbsp;<a href='#15_1'>15.1</a>) or define a so-called <i>cron</i> job,
+which runs a specific script (e.g., a web scraper) at defined intervals.
+Here, options 2 and 3 come into play &ndash; most realistically for most
+beginners, option 3.
+</p>
+
+<p>
+There are different providers for setting up VMs in the cloud, the
+most well-known probably being Amazon Web Services (AWS) and
+Microsoft Azure. Some universities or (national) research infrastructure
+providers provide high-performance computing in the cloud as well.
+While the specific way to set up a virtual machine of your own on
+such an infrastructure varies, the processes are roughly similar:
+you select the technical specifications such as the number of CPU
+cores and the amount of memory you need, attach some storage, and
+select a disk image with an operating system, virtually always some
+Linux distribution (Figure&nbsp;<a href='#fig:createvm'>15.1</a>).
+After a couple of minutes, your machine is ready to use.
+</p>
+<div class='figure'><h4>
+  <small class='text-muted'><a class='anchor' href='#fig:createvm' name='fig:createvm'>Figure 15.1.</a></small><br />
+Creating a Virtual Machine on Microsoft Azure (left) and on a university cloud computing platform using OpenNebula (right).</h4>
+<a href='img/vmazure.png' title='Click to open full-size image'>
+  <img src='img/vmazure_thumb.png' />
+</a><a href='img/vmopennebula.png' title='Click to open full-size image'>
+  <img src='img/vmopennebula_thumb.png' />
+</a></div>
+<p>
+While setting up such a machine is easy, some knowledge is required
+for the responsible and safe administration of the machine, in
+particular to prevent unauthorized access.
+</p>
+
+<p>
+Imagine you have a script <code>myscript.py</code> that takes a couple of days to
+run. You can then use the tool <code>scp</code> to copy it to your new virtual
+machine, log on to your virtual machine using <code>ssh</code>, and then &ndash; now
+on your virtual machine! &ndash; run the script using a tool such as
+<code>nohup</code> or <code>screen</code> that will start your script and will keep running
+it (Figure&nbsp;<a href='#fig:ssh'>15.2</a>). You can safely logout again, and your
+virtual machine in the cloud will keep on doing its work. The only
+thing you need to do is collect your results once your script is done,
+even if that's a couple of weeks later. Or you may want to add your
+script to the crontab (Google it!), which will automatically run
+it at set intervals.
+</p>
+<div class='figure'><h4>
+  <small class='text-muted'><a class='anchor' href='#fig:ssh' name='fig:ssh'>Figure 15.2.</a></small><br />
+Running a script on a virtual machine. Note that the first two commands are issued on the local machine (&ldquo;damian-thinkpad&rdquo;) and the next command on the remote machine (&ldquo;packer-ubuntu-16&rdquo;).</h4>
+<a href='img/ssh.png' title='Click to open full-size image'>
+  <img src='img/ssh_thumb.png' />
+</a></div>
+<p>
+You may want to have some extra luxury, though. Popular things to
+set up are databases (Section&nbsp;<a href='#15_1'>15.1</a>) and <i>JupyterHub</i>, which
+allows users such as your colleagues to connect through their
+web browser with your server and run their own Jupyter Notebooks
+on the machine. Do not forget to properly encrypt all connections,
+for instance using <i>letsencrypt</i>.
+</p>
+
+<p>
+Finally, option 4 must be selected when the scale of your data and the complexity of the tasks cannot be deployed in a single server or virtual machine. For example, building a classification model by training a complex and deep convolutional neural network with millions of images and update this model constantly may require the use of different computers at the same time. Actually, in modern computers with multiple cores or processors you normally run parallel computing within a single machine. But when working at scale you will probably need to set a infrastructure of different computers such as that of a <em>grid</em> or a <em>cluster</em>.
+</p>
+
+<p>
+Cloud services (e.g. AWS, Microsoft Azure, etc.) or scientific infrastructures (e.g. supercomputers) offer the possibility to set these architectures remotely. For instance, in a computer cluster you can configure a group of virtual computers, where one will act as a <em>main</em> and the others as <em>workers</em>. With this logic the main can distribute the storage and analysis of data among the slaves and then resume the results: see for example the <em>MapReduce</em> or the <em>Resilient Distributed Dataset</em> (RDD) approaches used by the open-source software <em>Apache Hadoop</em> and <em>Apache Spark</em> respectively.  For a specific example of parallel computing in computational analysis of communication you can take a look at the implementation of distributed supervised sentiment analysis,  in which one of the authors of this book deployed supervised text classification in <em>Apache Spark</em>  and connected this infrastructure with real-time analysis of tweets using <em>Apache Kafka</em>  in order to perform streaming analytics<span class="cite" title="Calderón, C.&nbsp;A., Mohedano, F.&nbsp;O., Álvarez, M., and Mari&amp;nbsp;no, M.&nbsp;V. (2019). Distributed supervised sentiment analysis of tweets: Integrating machine learning and streaming analytics for big data challenges in communication and audience research. Empiria: Revista de metodología de ciencias sociales, (42):113--136.">Calderón et&nbsp;al. (2019)</span>.
+</p>
+
+<p>
+These architectures for parallel processing will significantly increase your computation capacity for big data problems but the initial implementation will consume time and (most of the time) money, which is the reason why you must think in advance if there is a simpler solution (such as a single but powerful machine) before implementing a more complex infrastructure in your analysis.
+</p>
+
+<h2>  <small class='text-muted'><a class='anchor' href='#15_3' name='15_3'>15.3.</a></small>Publishing Your Source
+</h2>
+
+
+<p>
+Already in Section&nbsp;<a href='chapter04.html#4_3'>4.3</a>, we briefly introduced the idea of
+version control protocols such as <i>git</i>, and the most well-known
+online git repository <i>GitHub</i>.
+There are others, such as <i>Bitbucket</i>
+and the question of which one you use is not really of importance for our
+argument here. Already for small projects, it is a good idea to use
+version control so that you can always go back to earlier versions,
+but as soon as you start working with multiple people on one project,
+it becomes indispensable.
+</p>
+
+<p>
+In particular, it is possible to work on multiple <i>branches</i>,
+different versions of the code that can later be merged again. In this
+way, it is possible to develop new features without interfering with
+the main version of the code. There are plenty of git tutorials
+available online, and we highly recommended using git from the
+beginning of a specific project on &ndash; be it your bachelor, master or doctoral thesis, a paper, or a tool that you want to create.
+</p>
+
+<p>
+In the computational analysis of communication, it is becoming more and
+more the norm to publish all your source code together with an
+article, even though it is important to keep in mind ethical and legal
+restrictions (<span class="cite" title="Van Atteveldt, W., Strycharz, J., Trilling, D., and Welbers, K. (2019). Toward Open Computational Communication Science : A Practical Road Map for Reusable Data and Code University of Amsterdam , the Netherlands. International Journal of Communication, 13:3935--3954.">Van Atteveldt et&nbsp;al. (2019)</span>). Using a version control
+platform like GitHub from the beginning makes this easy: when
+publishing your paper, the only thing you have to do is to set access
+of your repository to &ldquo;public&rdquo; (in case it was private before), add
+a <code>README.md</code> file (in case you have not done so earlier), and
+preferably, get a persistent identifier, a <code>doi</code> for your
+code (see <a href='https://guides.github.com/activities/citable-code/'>guides.github.com/activities/citable-code/</a>).
+And don't forget to add a license to your code, such as MIT, GPL, or
+Apache. All of these have specific implications on what others can or
+cannot do with your code (e.g., whether it can be used for commercial
+purposes or whether derivatives need to be published under the same license as well). Whatever you choose here, it is important that you make a choice, as otherwise, it may not be (legally) possible to use
+your code at all.
+If your code pertains to a specific paper, then we suggest you organize
+your repository as a so-called &ldquo;research compendium&rdquo;, integrating
+both your code and your data.
+<span class="cite" title="Van Atteveldt, W., Kroon, A., Loecherbach, F., Steijaert, M., Strycharz, J., Trilling, D., Van der Velden, M., and Welbers, K. (2020a). Standardized research compendiums: Making open and transparent science fun and easy. In  International Communication Association (ICA), Gold Coast, Australia (online due to Corona crisis).">Van Atteveldt et&nbsp;al. (2020)a</span> provide a template and tools for easily creating one
+<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 2" data-bs-content="See urlhttps://compendium.ccs.amsterdam">[2]</a>.
+</p>
+
+<p>
+In virtually all instances, your code will rely on libraries written
+by others, which are available free of charge. Therefore,
+it only seems fair to &ldquo;give back&rdquo; and make sure that any code that
+you wrote and that can be useful to others, is also available to them.
+</p>
+
+<p>
+Just like in the case of a research compendium for a specific paper,
+publishing source code for more generic reuse also begins with a
+GitHub repository. In fact, both R (with <i>devtools</i>) and Python
+(via <i>pip</i>) can install packages directly from GitHub. In order
+to make sure that your code can be installed as a package, you
+need to follow specific instructions on how to name files, how to
+structure your directory, and so on (see <a href='https://packaging.python.org/tutorials/packaging-projects/'>packaging.python.org/tutorials/packaging-projects/</a>
+and <a href='http://r-pkgs.had.co.nz/'>r-pkgs.had.co.nz/</a>).
+</p>
+
+<p>
+Regardless of these specific technical instructions, you can make
+sure from the outset, though, that your code is easily re-usable.
+The checklist below can help making your code publishable from the
+outset.
+</p>
+
+<ul><li> Do not hard-code values. Rather than using <code>&#34;myoutputfile.csv&#34;</code> or <code>50</code> within your script, create constants like <code>OUTPUTFILE=&#34;myoutputfile&#34;</code> and <code>NUMBER_OF_TOPICS=50</code> at the beginning of your script and use these variables instead of the values later on. Even better, let the user provide these arguments as command line arguments or via a configuration file.
+</li><li> Use functions. Rather than writing large scripts that are executed from the first line to the last in that order, structure the code in different functions that fulfill one specific task each, and can hence be reused. If you find yourself copy-pasting code, then most likely, you can write a function instead.
+</li><li> Document your code. Use docstrings (Python) or comments (R) to make clear what each function does.
+</li>
+</ul>
+<h2>  <small class='text-muted'><a class='anchor' href='#15_4' name='15_4'>15.4.</a></small>Distributing Your Software as Container
+</h2>
+
+
+<p>
+
+When publishing your software, you can think of multiple user
+groups. Some may be interested in building on and further developing
+your code. Some may not care about your code at all and just want your
+software to run. And many others will be somewhere in between.
+</p>
+
+<p>
+<i>Only</i> publishing your source code (Section&nbsp;<a href='#15_3'>15.3</a>) may
+be a burden for those who want your code to &ldquo;just run&rdquo; once your
+code becomes more complex and has more dependencies. Imagine a
+scenario where your software requires a specific version of
+Python or R and/or some very specific (or maybe incompatible) libraries
+that you do not want to force the user to install.
+</p>
+
+<p>
+And maybe your prospective user does not even know any R or Python.
+</p>
+
+<p>
+For such cases, so-called containers are the solution, with as most
+prominent platform <i>Docker</i>. You can envision a container as a
+minimalistic virtual machine that includes everything to run your
+software. To the outside, none of that is visible &ndash; just a network
+port to connect to, or a command line to interact with, depending on
+your choices.
+</p>
+
+<p>
+Software that is containerized using Docker is distributed as a
+so-called <i>Docker image</i>. You can build such an image yourself,
+but it can also be distributed by pushing it to a so-called registry,
+such as the <i>Docker Hub</i>. If you publish your software this
+way, the end user has to do nothing other than installing Docker and
+running the command <code>docker run nameofyourimage</code> &ndash; it will even be
+downloaded automatically if necessary. There are also GUI versions
+of Docker available, which lowers the threshold for some end user
+groups even more.
+</p>
+
+<p>
+Let's illustrate the typical workflow with a toy example. Imagine
+you wrote the following script, <code>myscript.py</code>:
+</p>
+<pre>
+import numpy as np
+from random import randint
+a = randint(0,10)
+print(f&#34;exp({a}) = {np.exp(a)}&#34;)
+</pre>
+<p>
+You think that this is an awesome program (after all, it calculates
+\(e\) to the power of a random integer!), and others should be able
+to use it. And you don't want to bother them with setting up Python,
+installing <i>numpy</i>, and then running the script. In fact, they do
+not even need to <i>know</i> that it's a Python program. You
+could have written it as well in R, or any other language &ndash; for
+the user, that will make no difference at all.
+</p>
+
+<p>
+What would a Docker image that runs this code need to contain? Not
+much: first some basic operating system (usually, a tiny Linux distribution),
+Python, numpy, and the script itself.
+</p>
+
+<p>
+To create such a Docker image, you create a file named <code>Dockerfile</code>
+in the same directory as your script with the following content:
+</p>
+<pre>
+FROM python:3
+ADD myscript.py /
+RUN pip install numpy
+CMD [ &#34;python&#34;, &#34;./myscript.py&#34; ]
+</pre>
+<p>
+The first line tells Docker to build your new image by starting
+from an existing image that already contains an operating system
+and Python3. You could also start from scratch here, but this
+makes your life much easier. The next line adds your script to the
+image, and then we run <code>pip install numpy</code> within the image.
+The last line just specifies which command with which parameters
+needs to be executed when the image is run &ndash; in our case
+<code>python ./myscript.py</code>.
+</p>
+
+<p>
+To create the image, you run <code>docker build -t dockertest .</code> (naming
+the image &ldquo;dockertest&rdquo;). After that, you can run
+it using <code>docker run dockertest</code> &ndash; and, if you want to, publish it.
+</p>
+
+<p>
+Easy, right?
+</p>
+
+<p>
+But when does it make sense to use Docker? Not in our toy example,
+of course. While the original code is only a couple of bytes, it now
+got bloated to hundreds of megabytes. But there are plenty of
+scenarios where this makes a lot of sense.
+</p>
+
+<ul><li> To &ldquo;abstract away&rdquo; the inner workings of your code. Rather than giving potentially complicated instructions how to run your code, which dependencies to install, etc., you can just provide users with the Docker image, in which everything is already taken care of.
+</li><li> To ensure that users get the same results. Though it doesn't form a huge problem on a daily basis for most computational scientists, different versions of different libraries on different systems may occasionally produce slightly different results. The container ensures that the code is run using the same software setup.
+</li><li> To avoid interfering with existing installations. Already our toy example had a dependency, <i>numpy</i>, but often, dependencies can be more complex and a program we write may need very specific libraries, or even some other software beyond Python or R libraries. Distributing the source code alone means forcing the user to also install these; and there are many good reasons why people may be reluctant to do so. It may be incompatible with other software on their computer, there may be security concerns, or it just may be too much work. But if it runs inside of the Docker container, many of these problems disappear.
+</li>
+</ul>
+<p>
+In short, the Docker image is rarely the <i>only</i> way in which you distribute your source code. But already adding a Dockerfile to your GitHub repository so that users can build a Docker container can offer another and maybe better way of running your software to your audience.
+</p>
+
+        </div>
+
+	<div class='chevrons'>
+&laquo;
+	  
+	  <a href='chapter14.html'>Ch. 14 Multimedia data</a>
+	  
+	  
+	  | <a href='chapter16.html'>Ch. 16 Where to go next</a>&raquo;
+	  
+</div>
+	<!-- Secondary sidebar -->
+        <aside class="css-rightbar">
+            <nav id="right" class="collapse css-rightnav">
+                <ul class="list-unstyled components">
+  
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+                  <div class="rightbar-header">In this chapter</div>
+
+            <ul class="list-unstyled" id="toc_chap_15">
+<li class='toc-section'>15 Scaling up and distributing</li>
+
+              
+	          
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_1">15.1. Storing Data in SQL and noSQL Databases</a>
+		    </li>
+		    
+		    <ul class="list-unstyled list-subsections" id="toc_chap_1">
+		    
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_1_1">15.1.1. When to Use a Database</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_1_2">15.1.2. Choosing the Right Database</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_1_3">15.1.3. A Brief Example Using SQLite</a>
+                    </li>
+
+                    
+		    </ul>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_2">15.2. Using Cloud Computing</a>
+		    </li>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_3">15.3. Publishing Your Source</a>
+		    </li>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_4">15.4. Distributing Your Software as Container</a>
+		    </li>
+		    
+
+		
+            </ul>
+	    
+    
+  
+    
+</ul>
+            </nav>
+        </aside>
+</div>
+
+
+
+    </div>
+    <!-- Optional JavaScript; choose one of the two! -->
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+    -->
+  <script>
+      var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+  return new bootstrap.Popover(popoverTriggerEl, {html: true})
+})
+  </script>
+  </body>
+</html>

@@ -1,0 +1,1894 @@
+
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+      <link href="ccsbook.css" rel="stylesheet">
+      <!-- MathJax -->
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js">
+  </script>
+
+    <title>Computational Analysis of Communication</title>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-light fixed-top bg-light">
+    <div class="container-xxl">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#toc" aria-controls="toc" aria-expanded="false" aria-label="Toggle TOC">
+                <div></div>
+                <div></div>
+                <div></div>
+            </button>
+	    <div class='navhome'>
+              <a href="index.html">Computational Analysis of Communication</a>
+	      </div>
+    </div>
+    </nav>
+    <div id='content' class='container-xxl'>
+
+        <!-- Sidebar -->
+        <aside class="toc">
+            <nav id="toc" class="collapse">
+                <div class="subtoc">
+                    <ul class="list-unstyled components">
+  
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+                  <div class="rightbar-header">In this chapter</div>
+
+            <ul class="list-unstyled" id="toc_chap_13">
+<li class='toc-section'>13 Network Data</li>
+
+              
+	          
+                    <li class="toc-section">
+                        <a href="chapter13.html#13_1">13.1. Representing and Visualizing Networks</a>
+		    </li>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter13.html#13_2">13.2. Social Network Analysis</a>
+		    </li>
+		    
+		    <ul class="list-unstyled list-subsections" id="toc_chap_2">
+		    
+                    <li class="toc-section">
+                        <a href="chapter13.html#13_2_1">13.2.1. Paths and Reachability</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter13.html#13_2_2">13.2.2. Centrality Measures</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter13.html#13_2_3">13.2.3. Clustering and Community Detection</a>
+                    </li>
+
+                    
+		    </ul>
+		    
+
+		
+            </ul>
+	    
+    
+  
+    
+  
+    
+  
+    
+</ul>
+                </div>
+
+		<div class="rightbar-header">Table of Contents</div>
+                <ul class="list-unstyled components">
+    
+        <li class="active toc-chapter ">
+            <a href="chapter01.html">1 Introduction</a>
+            <!--<a href="#toc_chap_1" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_1"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_1">
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_1">1.1. The Role of Computational Analysis in the Social Sciences</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_2">1.2. Why Python and/or R?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_3">1.3. How to use this book</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_4">1.4. Installing R and Python</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_5">1.5. Installing Third-Party Packages</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter02.html">2 Fun with Data</a>
+            <!--<a href="#toc_chap_2" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_2"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_2">
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_1">2.1. Fun With Tweets</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_2">2.2. Fun With Textual Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_3">2.3. Fun With Visualizing Geographic Information</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_4">2.4. Fun With Networks</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter03.html">3 Programming Concepts</a>
+            <!--<a href="#toc_chap_3" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_3"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_3">
+                
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_1">3.1. About Objects and Data Types</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_2">3.2. Simple Control Structures: Loops and Conditions</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_3">3.3. Functions and Methods</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter04.html">4 How to write code</a>
+            <!--<a href="#toc_chap_4" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_4"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_4">
+                
+                    <li class="toc-section">
+                        <a href="chapter04.html#4_1">4.1. Re-using Code: How Not to Re-Invent the Wheel</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter04.html#4_2">4.2. Understanding Errors and Getting Help</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter04.html#4_3">4.3. Best Practice: Beautiful Code, GitHub, and Notebooks</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter05.html">5 Files and Data Frames</a>
+            <!--<a href="#toc_chap_5" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_5"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_5">
+                
+                    <li class="toc-section">
+                        <a href="chapter05.html#5_1">5.1. Why and When Do We Use Data Frames?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter05.html#5_2">5.2. Reading and Saving Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter05.html#5_3">5.3. Data from online sources</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter06.html">6 Data Wrangling</a>
+            <!--<a href="#toc_chap_6" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_6"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_6">
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_1">6.2. Calculating Values</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_2">6.3. Grouping and Aggregating</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_3">6.4. Merging Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_4">6.5. Reshaping Data: Wide To Long And Long To Wide</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter07.html">7 Exploratory data analysis</a>
+            <!--<a href="#toc_chap_7" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_7"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_7">
+                
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_1">7.1. Simple Exploratory Data Analysis</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_2">7.2. Visualizing Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_3">7.3. Clustering and Dimensionality Reduction</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter08.html">8 Machine Learning</a>
+            <!--<a href="#toc_chap_8" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_8"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_8">
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_1">8.1. Statistical Modeling and Prediction</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_2">8.2. Concepts and Principles</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_3">8.3. Classical Machine Learning: From Na&#34;ive Bayes to Neural Networks</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_4">8.4. Deep Learning</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_5">8.5. Validation and Best Practices</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter09.html">9 Processing text</a>
+            <!--<a href="#toc_chap_9" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_9"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_9">
+                
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_1">9.1. Text as a String of Characters</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_2">9.2. Regular Expressions</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_3">9.3. Using Regular Expressions in Python and R</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter10.html">10 Text as data</a>
+            <!--<a href="#toc_chap_10" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_10"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_10">
+                
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_1">10.1. The Bag of Words and the Term-Document Matrix</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_2">10.2. Weighting and Selecting Documents and Terms</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_3">10.3. Advanced Representation of Text</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter11.html">11 Automatic analysis of text</a>
+            <!--<a href="#toc_chap_11" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_11"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_11">
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_1">11.1. Deciding on the Right Method</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_2">11.2. Obtaining a Review Dataset</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_3">11.3. Dictionary Approaches to Text Analysis</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_4">11.4. Supervised Text Analysis: Automatic Classification and Sentiment Analysis</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_5">11.5. Unsupervised Text Analysis: Topic Modeling</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter12.html">12 Scraping online data</a>
+            <!--<a href="#toc_chap_12" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_12"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_12">
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_1">12.1. Using Web APIs: From Open Resources to Twitter</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_2">12.2. Retrieving and Parsing Web Pages</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_3">12.3. Authentication, Cookies, and Sessions</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_4">12.4. Ethical, Legal, and Practical Considerations</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter toc-chapter-current">
+            <a href="chapter13.html">13 Network Data</a>
+            <!--<a href="#toc_chap_13" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_13"></a>
+            <ul class="collapse list-unstyled show" id="toc_chap_13">
+                
+                    <li class="toc-section">
+                        <a href="chapter13.html#13_1">13.1. Representing and Visualizing Networks</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter13.html#13_2">13.2. Social Network Analysis</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter14.html">14 Multimedia data</a>
+            <!--<a href="#toc_chap_14" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_14"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_14">
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_1">14.1. Beyond Text Analysis: Images, Audio and Video</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_2">14.2. Using Existing Libraries and APIs</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_3">14.3. Storing, Representing, and Converting Images</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_4">14.4. Image Classification</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter15.html">15 Scaling up and distributing</a>
+            <!--<a href="#toc_chap_15" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_15"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_15">
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_1">15.1. Storing Data in SQL and noSQL Databases</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_2">15.2. Using Cloud Computing</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_3">15.3. Publishing Your Source</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_4">15.4. Distributing Your Software as Container</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter16.html">16 Where to go next</a>
+            <!--<a href="#toc_chap_16" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_16"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_16">
+                
+                    <li class="toc-section">
+                        <a href="chapter16.html#16_1">16.1. How Far Have We Come?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter16.html#16_2">16.2. Where To Go Next?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter16.html#16_3">16.3. Open, Transparent, and Ethical Computational Science</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+</ul>
+            </nav>
+        </aside>
+	
+      
+  
+
+    <div class="css-layout">
+      <!-- Main Content -->
+      <div class="css-main">
+	<div class='chevrons'>
+&laquo;
+	  
+	  <a href='chapter12.html'>Ch. 12 Scraping online data</a>
+	  
+	  
+	  | <a href='chapter14.html'>Ch. 14 Multimedia data</a>&raquo;
+	  
+</div>
+	  <br/>
+            
+<h1>  <small class='text-muted'><a class='anchor' href='#chap:network' name='chap:network'>13.</a></small>Network Data
+</h1>
+
+
+<div class='abstract'>
+  <span class='caption'>
+Abstract
+  </span>
+
+Many types of data, especially social media data, can often be represented as networks. This chapter introduces <i>igraph</i> (R and Python) and <i>networkx</i> (Python) to showcase how to deal with such data, perform Social Network Analysis (SNA), and represent it visually.
+
+</div>
+
+<div class='keywords'>
+  <span class='caption'>Keywords:</span>
+graphs, social network analysis
+</div>
+<div class='objectives'>
+  <div class='caption'>Chapter objectives:</div>
+  <ul><li> Understand how can networks be represented and visualized
+</li><li> Conduct basic description of networks
+</li><li> Perform Social Network Analysis
+</li>
+  </ul>
+</div><div class='feature'><b>Packages used in this chapter</b><br/>
+  This chapter uses functions from the package <i>igraph</i> in R and the package <i>networkx</i> in Python.
+  In Python we will also use the <i>python-louvain</i> packages which introduces the Louvain clustering functions in <i>community</i>.
+  
+  You can install these packages with the code below if needed  (see Section&nbsp;<a href='chapter01.html#1_4'>1.4</a> for more details):
+
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>!pip3 install networkx matplotlib python-louvain</code>
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code># Common packages used in this book</code>
+<code>install.packages(c("glue", "tidyverse"))</code>
+<code># Packages for network analysis</code>
+<code>install.packages(c("igraph"))</code>  </pre>
+</div></div> After installing, you need to import (activate) the packages every session:
+
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>import urllib.request</code>
+<code>%matplotlib inline</code>
+<code>import matplotlib.pyplot as plt</code>
+<code>import networkx as nx</code>
+<code>import networkx.algorithms.community as nxcom</code>
+<code>import community # from python-louvain package</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>library(glue)</code>
+<code>library(igraph)</code>
+<code>library(tidyverse)</code>
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div></div></div>
+<h2>  <small class='text-muted'><a class='anchor' href='#13_1' name='13_1'>13.1.</a></small>Representing and Visualizing Networks
+</h2>
+
+
+<p>
+How can networks help us to understand and represent social problems? How can we use social media as a source for small and large-scale network analysis? In the computational analysis of communication these questions become highly relevant given the huge amount of social media data produced every minute on the Internet.  In fact, although graph theory and SNA were already being used during the last two decades of the 20th century, we can say that the widespread adoption of the Internet and especially social networking services such as Twitter and Facebook really unleashed their potential. Firstly, computers made it easier to compute graph measures and visualize their general and communal structures. Secondly, the emergence of a big spectrum of social media network sites (i.e. Facebook, Twitter, Sina Weibo, Instagram, Linkedin, etc.) produced an unprecedented number of online social interactions, which still is certainly an excellent arena to apply this framework. Thus, the use of social media as a source for network analysis has become one of the most exciting and promising areas in the field of computational social science.
+</p>
+
+<p>
+This section presents a brief overview of graph structures (nodes and edges) and types (directed, weighted, etc.), together with their representations in R and Python. We also include visual representations and basic graph analysis.
+</p>
+
+<p>
+A graph is a structure derived from a set of elements and their relationships. The element could be a neuron, a person, an organization, a street, or even a message, and the relationship could be a synapse, a trip, a commercial agreement, a drive connection or a content transmission. This is a different way to represent, model and analyze the world: instead of having rows and columns as in a typical data frame, in a graph we have <i>nodes</i> (components) and <i>edges</i> (relations).
+The mathematical representation of a graph \(G=(V,E)\) is based on a set of nodes (also called vertices): \(\{v_{1}, v_{2},\ldots v_{n}\}\) and the edges or pair of nodes: \(\{(v_{1}, v_{2}), (v_{1}, v_{3}), (v_{2},v_{3}) \ldots (v_{m}, v_{n}) \in E\}\) As you may imagine, it is a very versatile procedure to represent many kinds of situations that include social, media, or political interactions. In fact, if we go back to 1934 we can see how graph theory (originally established in the 18th century) was first applied to the representation of social interactions <span class="cite" title="Moreno, J.&nbsp;L. (1934). Who shall survive? A new approach to the problem of human interrelations. Nervous and mental disease publishing co.">Moreno, 1934</span> in order to measure the attraction and repulsion of individuals of a social group<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 1" data-bs-content="See also the mathematical problem of the <i>Seven Bridges of K&ouml;nigsberg</i>, formulated by Leonhard Euler in 1736, which is considered the basis of graph theory. Inspired by a city divided by a river and connected by several bridges, the problem consisted of walking through the whole city crossing each bridge exactly once.">[1]</a>.
+</p>
+
+<p>
+The network approach in social sciences has an enormous potential to model and predict <em>social actions</em>. There is empirical evidence that we can successfully apply this framework to explain distinct phenomena such as political opinions, obesity, and happiness, given the influence of our friends (or even of the friends of our friends) over our behavior <span class="cite" title="Christakis, N.&nbsp;A. and Fowler, J.&nbsp;H. (2009). Connected: The surprising power of our social networks and how they shape our lives. Little, Brown Spark.">Christakis and Fowler, 2009</span>. The network created by this sophisticated structure of human and social connections is an ideal scenario to understand how close we are to each other in terms of degrees of separation <span class="cite" title="Watts, D.&nbsp;J. (2004). Six degrees: The science of a connected age. WW Norton &amp; Company.">Watts, 2004</span> in small (e.g., a school) and large-scale (e.g., a global pandemic) social dynamics. Moreover, the network approach can help us to track the propagation either of a virus in epidemiology, or a fake news story in political and social sciences, such as in the work by
+<span class="cite" title="Vosoughi, S., Roy, D., and Aral, S. (2018). The spread of true and false news online. Science, 359(6380):1146--1151.">Vosoughi et&nbsp;al. (2018)</span>.
+</p>
+
+<p>
+Now, let us show you how to create and visualize network structures in R and Python. As we mentioned above, the structure of a graph is based on nodes and edges, which are the fundamental components of any network. Suppose that we want to model the social network of five American politicians in 2017 (Donald Trump, Bernie Sanders, Hillary Clinton, Barack Obama and John McCain), based on their <em>imaginary</em> connections on Facebook (friending) and Twitter (following)<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 2" data-bs-content="The connections among these politicians on Facebook and Twitter in the examples are of course purely fictional and were created <em>ad hoc</em> to illustrate small social networks.">[2]</a>. Technically, the base of any graph is a list of edges (written as pair of nodes that indicate the relationships) and a list of nodes (some nodes might be isolated without any connection!).  For instance, the friendship on Facebook between two politicians would normally be expressed as two strings separated by comma (e.g., &ldquo;Hillary Clinton&rdquo;, &ldquo;Donald Trump&rdquo;). In Example&nbsp;<a href='#ex:graph'>13.1</a> we use libraries <i>igraph</i> (R)<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 3" data-bs-content="You can use this library in Python with the adapted package <i>python-igraph</i>.">[3]</a> and <i>networkx</i> (Python) to create from scratch a simple graph with five nodes and four edges, using the above-mentioned structure of pairs of nodes (notice that we only include the edges while the vertices are automatically generated).
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:graph' name='ex:graph'>Example 13.1.</a></small><br />
+Creating a graph from scratch</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>edges = [("Hillary Clinton", "Donald Trump"), </code>
+<code>         ("Bernie Sanders","Hillary Clinton"), </code>
+<code>         ("Hillary Clinton",  "Barack Obama"), </code>
+<code>         ("John McCain", "Donald Trump"), </code>
+<code>         ("Barack Obama", "Bernie Sanders")]</code>
+<code>g1 = nx.Graph()</code>
+<code>g1.add_edges_from(edges)</code>
+<code>print("Imaginary Facebook network of 5 "</code>
+<code>      "American politicians")</code>
+<code>print("Nodes:", g1.number_of_nodes(),</code>
+<code>      "Edges: ", g1.number_of_edges())</code>
+<code>print(g1.edges)</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>edges=c("Hillary Clinton", "Donald Trump", </code>
+<code>        "Bernie Sanders","Hillary Clinton", </code>
+<code>        "Hillary Clinton",  "Barack Obama", </code>
+<code>        "John McCain", "Donald Trump", </code>
+<code>        "Barack Obama", "Bernie Sanders")</code>
+<code>g1 = make_graph(edges, directed = FALSE)</code>
+<code>glue("Imaginary Facebook network of 5",</code>
+<code>"American politicians")</code>
+<code>g1</code>
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>Imaginary Facebook network of 5 American politicians
+Nodes: 5 Edges:  5
+[('Hillary Clinton', 'Donald Trump'), ('Hillary Clinton', 'Bernie Sanders'), ('Hillary Clinton', 'Barack Obama'), ('Donald Trump', 'John McCain'), ('Bernie Sanders', 'Barack Obama')]</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>Imaginary Facebook network of 5American politicians
+IGRAPH 2f92795 UN-- 5 5 --
++ attr: name (v/c)
++ edges from 2f92795 (vertex names):
+[1] Hillary Clinton--Donald Trump   Hillary Clinton--Bernie Sanders
+[3] Hillary Clinton--Barack Obama   Donald Trump   --John McCain
+[5] Bernie Sanders --Barack Obama</pre>
+</div></div></div>
+<p>
+In both cases we generated a graph object <code>g1</code> which contains the structure of the network and different attributes (such as <code>number_of_nodes()</code> in <i>networkx</i>). You can add/remove nodes and edges to/from this initial graph, or even modify the names of the vertices. One of the most useful functions is the visualization of the network (<code>plot</code> in <i>igraph</i> and <code>draw</code> or <code>draw_networkx</code> in <i>networkx</i>). Example&nbsp;<a href='#ex:visgraph'>13.2</a> shows a basic visualization of the imaginary network of friendships of five American politicians on Facebook.
+</p>
+<div class='code-example'><h4>
+  <small class='text-muted'><a class='anchor' href='#ex:visgraph' name='ex:visgraph'>Example 13.2.</a></small><br />
+Visualization of a simple graph.</h4>
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>nx.draw_networkx(g1)   </code>
+<code></code>
+<code>pos=nx.shell_layout(g1)</code>
+<code>x_values, y_values = zip(*pos.values())</code>
+<code>x_max = max(x_values)</code>
+<code>x_min = min(x_values)</code>
+<code>x_margin = (x_max - x_min) * 0.40</code>
+<code>plt.xlim(x_min - x_margin, x_max + x_margin)</code>
+<code>plt.box(False)</code>
+<code>plt.show()</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>plot(g1)</code>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Undirected graph</div>
+<a href='img/visgraph.r.png' title='Click to open full-size image'>
+  <img src='img/visgraph.r_thumb.png' />
+</a>
+</div></div>
+<p>
+Using network terminology, either nodes or edges can be <em>adjacent</em> or not. In the figure we can say that nodes representing Donald Trump and John McCain are adjacent because they are connected by an edge that depicts their friendship. Moreover, the edges representing the friendships between John McCain and Donald Trump, and Hillary Clinton and Donald Trump, are also adjacent because they share one node (Donald Trump).
+</p>
+
+<p>
+Now that you know the relevant terminology and basics of working with graphs, you might be wondering: what if I want to do the same with Twitter? Can I represent the relationships between users in the very same way as Facebook? Well, when you model networks it is extremely important that you have a clear definition of what you mean with nodes and edges, in order to maintain a coherent interpretation of the graph. In both, Facebook and Twitter, the nodes represent the users, but the edges might not be the same. In Facebook, an edge represents the friendship between two users and this link <em>has no direction</em> (once a user accepts a friend request, both users become friends). In the case of Twitter, an edge could represent various relationships. For example, it could mean that two users follow each other, or that one user is following another user, but not the other way around! In the latter case, the edge <em>has a direction</em>, which you can establish in the graph. When you give directions to the edges you are creating a <em>directed graph</em>. In Example&nbsp;<a href='#ex:directed'>13.3</a> the directions are declared with the order of the pair of nodes: the first position is for the &ldquo;from&rdquo; and the second for the &ldquo;to&rdquo;. In <i>igraph</i> (R) we  set the argument <code>directed</code> of the function <code>make_graph</code> to <code>TRUE</code>. In <i>networkx</i> (Python), you use the class <code>DiGraph</code> instead of <code>Graph</code> to create the object <code>g2</code>.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:directed' name='ex:directed'>Example 13.3.</a></small><br />
+Creating a directed graph</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>edges += [("Hillary Clinton", "Bernie Sanders"),</code>
+<code>          ("Barack Obama","Hillary Clinton")]</code>
+<code>g2 = nx.DiGraph()</code>
+<code>g2.add_edges_from(edges)</code>
+<code>print("Imaginary Twitter network of 5 "</code>
+<code>      "American politicians")</code>
+<code>print("Nodes:", g2.number_of_nodes(),</code>
+<code>      "Edges: ", g2.number_of_edges())</code>
+<code>print(g2.edges)</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>edges = c(edges, </code>
+<code>          "Hillary Clinton", "Bernie Sanders",</code>
+<code>          "Barack Obama","Hillary Clinton")</code>
+<code>g2 = make_graph(edges, directed = TRUE)</code>
+<code>glue("Imaginary Facebook network of 5",</code>
+<code>"American politicians")</code>
+<code>print(g2)</code>
+&nbsp;
+&nbsp;  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>Imaginary Twitter network of 5 American politicians
+Nodes: 5 Edges:  7
+[('Hillary Clinton', 'Donald Trump'), ('Hillary Clinton', 'Barack Obama'), ('Hillary Clinton', 'Bernie Sanders'), ('Bernie Sanders', 'Hillary Clinton'), ('Barack Obama', 'Bernie Sanders'), ('Barack Obama', 'Hillary Clinton'), ('John McCain', 'Donald Trump')]</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>Imaginary Facebook network of 5American politicians
+IGRAPH ba21464 DN-- 5 7 --
++ attr: name (v/c)
++ edges from ba21464 (vertex names):
+[1] Hillary Clinton-&gt;Donald Trump    Bernie Sanders -&gt;Hillary Clinton
+[3] Hillary Clinton-&gt;Barack Obama    John McCain    -&gt;Donald Trump
+[5] Barack Obama   -&gt;Bernie Sanders  Hillary Clinton-&gt;Bernie Sanders
+[7] Barack Obama   -&gt;Hillary Clinton</pre>
+</div></div></div>
+<p>
+In the new graph the edges represent the action of following a user on Twitter. The first declared edge indicates that Hillary Clinton follows Donald Trump, but does not indicate the opposite. In order to provide the directed graph with more <em>arrows</em> we included in <code>g2</code> two new edges (Obama following Clinton and Clinton following Sanders), so we can have a couple of reciprocal relationships besides the unidirectional ones. You can visualize the directed graph in Example&nbsp;<a href='#ex:visdirected'>13.4</a> and see how the edges now contain useful arrows.
+</p>
+<div class='code-example'><h4>
+  <small class='text-muted'><a class='anchor' href='#ex:visdirected' name='ex:visdirected'>Example 13.4.</a></small><br />
+Visualization of a directed graph.</h4>
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>nx.draw_networkx(g2)</code>
+<code></code>
+<code>pos=nx.shell_layout(g2)</code>
+<code>x_values, y_values = zip(*pos.values())</code>
+<code>x_max = max(x_values)</code>
+<code>x_min = min(x_values)</code>
+<code>x_margin = (x_max - x_min) * 0.40</code>
+<code>plt.xlim(x_min - x_margin, x_max + x_margin)</code>
+<code>plt.box(False)</code>
+<code>plt.show()</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>plot(g2)</code>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Directed graph</div>
+<a href='img/visdirected.r.png' title='Click to open full-size image'>
+  <img src='img/visdirected.r_thumb.png' />
+</a>
+</div></div>
+<p>
+The edges and nodes of our graph can also have weights and features or attributes. When the edges have specific values that depict a feature of every pair of nodes (i.e., the distance between two cities) we say that we have a <em>weighted graph</em>. This type of graph is extremely useful for creating a more accurate representation of a network. For example, in our hypothetical network of American politicians on Twitter (<code>g2</code>) we can assign weights to the edges by including the number of likes that each politician has given to the followed user. This value  can serve as a measure of the distance between the nodes (i.e., the higher the number of likes the shorter the social distance). In Example&nbsp;<a href='#ex:weighted'>13.5</a> we include the weights for each edge: Clinton has given five likes to Trumps' tweets, Sanders 20 to Clinton's messages, and so on. In the plot you can see how the sizes of the lines between the nodes change as a function of the weights.
+</p>
+<div class='code-example'><h4>
+  <small class='text-muted'><a class='anchor' href='#ex:weighted' name='ex:weighted'>Example 13.5.</a></small><br />
+Visualization of a weighted graph</h4>
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>edges_w = [("Hillary Clinton", "Donald Trump", 5),</code>
+<code>    ("Bernie Sanders","Hillary Clinton", 20),</code>
+<code>    ("Hillary Clinton", "Barack Obama", 30), </code>
+<code>    ("John McCain", "Donald Trump", 40),</code>
+<code>    ("Barack Obama", "Hillary Clinton", 50),</code>
+<code>    ("Hillary Clinton", "Bernie Sanders", 10),</code>
+<code>    ("Barack Obama", "Bernie Sanders", 15)]</code>
+<code>g2 = nx.DiGraph()</code>
+<code>g2.add_weighted_edges_from(edges_w)</code>
+<code></code>
+<code>edge_labels=dict([((u,v,),d["weight"]) for </code>
+<code>                  u,v,d in g2.edges(data=True)])</code>
+<code></code>
+<code>nx.draw_networkx_edge_labels(g2,pos,</code>
+<code>                    edge_labels=edge_labels)</code>
+<code>nx.draw_networkx(g2, pos)</code>
+<code></code>
+<code>pos=nx.spring_layout(g2)</code>
+<code>x_values, y_values = zip(*pos.values())</code>
+<code>x_max = max(x_values)</code>
+<code>x_min = min(x_values)</code>
+<code>x_margin = (x_max - x_min) * 0.40</code>
+<code>plt.xlim(x_min - x_margin, x_max + x_margin)</code>
+<code>plt.box(False)</code>
+<code>plt.show()</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>E(g2)$weight = c(5, 20, 30, 40, 50, 10, 15)</code>
+<code>plot(g2, edge.label = E(g2)$weight)</code>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Weighted graph</div>
+<a href='img/weighted.r.png' title='Click to open full-size image'>
+  <img src='img/weighted.r_thumb.png' />
+</a>
+</div></div>
+<p>
+You can include more properties of the components of your graph. Imagine you want to use the number of followers of each politician to determine the size of the nodes, or the gender of the user to establish a color. In Example&nbsp;<a href='#ex:weighted2'>13.6</a> we added the variable <i>followers</i> to each of the nodes and asked the packages to plot the network using this value as the size parameter (in fact we multiplied the values by 0.001 to make it realistic on the screen, but you could also normalize these values when needed). We also included the variable <i>party</i> that was later recoded in a new one called <i>color</i> in order to represent Republicans with red and Democrats with blue.  You may need to add other features to the nodes or edges, but with this example you have an overview of what you can do.
+</p>
+<div class='code-example'><h4>
+  <small class='text-muted'><a class='anchor' href='#ex:weighted2' name='ex:weighted2'>Example 13.6.</a></small><br />
+Visualization of a weighted graph including vertex sizes.</h4>
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>attrs = {"Hillary Clinton": {"followers": 100000,</code>
+<code>                             "party": "Democrat"},</code>
+<code>         "Donald Trump": {"followers": 200000, </code>
+<code>                          "party": "Republican"}, </code>
+<code>         "Bernie Sanders": {"followers": 50000,</code>
+<code>                            "party": "Democrat"}, </code>
+<code>         "Barack Obama": {"followers": 500000,</code>
+<code>                          "party": "Democrat"}, </code>
+<code>         "John McCain": {"followers": 40000,</code>
+<code>                         "party": "Republican"} }</code>
+<code>nx.set_node_attributes(g2, attrs)</code>
+<code>size = nx.get_node_attributes(g2, "followers")</code>
+<code>size = list(size.values())</code>
+<code></code>
+<code>colors= nx.get_node_attributes(g2, "party")</code>
+<code>colors = list(colors.values())</code>
+<code>colors = [w.replace("Democrat", "blue") for</code>
+<code>          w in colors]</code>
+<code>colors = [w.replace("Republican", "red") for</code>
+<code>          w in colors]</code>
+<code></code>
+<code>nx.draw_networkx_edge_labels(g2,pos,</code>
+<code>                    edge_labels=edge_labels)</code>
+<code>nx.draw_networkx(g2, pos, node_size=</code>
+<code>                 [x * 0.002 for x in size], </code>
+<code>                 node_color=colors)</code>
+<code></code>
+<code>pos=nx.spring_layout(g2)</code>
+<code>x_values, y_values = zip(*pos.values())</code>
+<code>x_max = max(x_values)</code>
+<code>x_min = min(x_values)</code>
+<code>x_margin = (x_max - x_min) * 0.40</code>
+<code>plt.xlim(x_min - x_margin, x_max + x_margin)</code>
+<code>plt.box(False)</code>
+<code>plt.show()</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>V(g2)$followers = c(100000, 200000,</code>
+<code>                    50000,500000, 40000)</code>
+<code>V(g2)$party = c("Democrat", "Republican",</code>
+<code>            "Democrat", "Democrat", "Republican")</code>
+<code>V(g2)$color = V(g2)$party</code>
+<code>V(g2)$color = gsub("Democrat", "blue", </code>
+<code>                   V(g2)$color)</code>
+<code>V(g2)$color = gsub("Republican", "red",</code>
+<code>                   V(g2)$color)</code>
+<code>plot(g2, edge.label = E(g2)$weight,</code>
+<code>     vertex.size = V(g2)$followers*0.0001)</code>
+<code></code>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Weighted graph including vertex sizes</div>
+<a href='img/weighted2.r.png' title='Click to open full-size image'>
+  <img src='img/weighted2.r_thumb.png' />
+</a>
+</div></div>
+<p>
+We can  mention a third type of graphs: the <em>induced subgraphs</em>, which are in fact subsets of nodes and edges of a bigger graph. We can represent these subsets as \(G' = V', E'\). In Example&nbsp;<a href='#ex:subgraph'>13.7</a> we extract two induced subgraphs from our original network of American politicians on Facebook (<code>g1</code>): the first (<code>g3</code>) is built with the edges that contain only Democrat nodes, and the second (<code>g4</code>) with edges formed by Republican nodes. There is also a special case of an induced subgraph, called a <em>clique</em>, which is an independent or complete subset of an undirected graph (each node of the clique must be connected to the rest of the nodes of the subgraph).
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:subgraph' name='ex:subgraph'>Example 13.7.</a></small><br />
+Induced subgraphs for Democrats and Republicans</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>g3 = g1.subgraph(["Hillary Clinton", </code>
+<code>                  "Bernie Sanders", </code>
+<code>                  "Barack Obama"])</code>
+<code>print("Democrats:")</code>
+<code>print("Nodes:", g3.number_of_nodes(),</code>
+<code>      "Edges: ", g3.number_of_edges())</code>
+<code>print(g3.edges)</code>
+<code></code>
+<code>g4 = g1.subgraph(["Donald Trump", "John McCain"])</code>
+<code>print("Republicans:")</code>
+<code>print("Nodes:", g4.number_of_nodes(),</code>
+<code>      "Edges: ", g4.number_of_edges())</code>
+<code>print(g4.edges)</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>g3 = induced_subgraph(g1, c(1,3,4))</code>
+<code>glue("Democrats subgraph")</code>
+<code>print(g3)</code>
+<code>g4 = induced_subgraph(g1, c(2,5))</code>
+<code>glue("Republicans subgraph")</code>
+<code>print(g4)</code>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>Democrats:
+Nodes: 3 Edges:  3
+[('Hillary Clinton', 'Bernie Sanders'), ('Hillary Clinton', 'Barack Obama'), ('Bernie Sanders', 'Barack Obama')]
+Republicans:
+Nodes: 2 Edges:  1
+[('Donald Trump', 'John McCain')]</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>Democrats subgraph
+IGRAPH a3c9de5 UN-- 3 3 --
++ attr: name (v/c)
++ edges from a3c9de5 (vertex names):
+[1] Hillary Clinton--Bernie Sanders Hillary Clinton--Barack Obama
+[3] Bernie Sanders --Barack Obama
+Republicans subgraph
+IGRAPH eea5ef9 UN-- 2 1 --
++ attr: name (v/c)
++ edge from eea5ef9 (vertex names):
+[1] Donald Trump--John McCain</pre>
+</div></div></div>
+<p>
+Keep in mind that in network visualization you can always configure the size, shape and color of your nodes or edges. It is out of the scope of this book to go into more technical details, but you can always check the online documentation of the recommended libraries.
+</p>
+
+<p>
+So far we have created networks from scratch, but most of the time you will have to create a graph from an existing data file. This means that you will need an input data file with the graph structure, and some functions to load them as objects onto your workspace in R or Python. You can import graph data from different specific formats (e.g., Graph Modeling Language (GML), GraphML, JSON, etc.), but one popular and standardized procedure is to obtain the data from a text file containing a list of edges or a matrix. In Example&nbsp;<a href='#ex:read'>13.8</a>  we illustrate how to read graph data in <i>igraph</i> and <i>networkx</i> using a simple adjacency list that corresponds to our original imaginary Twitter network of American politicians (<code>g2</code>).
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:read' name='ex:read'>Example 13.8.</a></small><br />
+Reading a graph from a file</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>url="https://cssbook.net/d/poltwit.csv"</code>
+<code>fn, _headers = urllib.request.urlretrieve(url)</code>
+<code>g2 = nx.read_adjlist(fn, create_using=nx.DiGraph,</code>
+<code>                     delimiter=",")</code>
+<code>print("Nodes:", g2.number_of_nodes(),</code>
+<code>      "Edges: ", g2.number_of_edges())</code>
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>edges = read_csv(</code>
+<code>"https://cssbook.net/d/poltwit.csv",</code>
+<code>    col_names=FALSE)</code>
+<code>g2 = graph_from_data_frame(d=edges) </code>
+<code>glue("Nodes: ", gorder(g2),</code>
+<code>     "  Edges: ", gsize(g2))</code>
+<code>plot(g2)</code>  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>Nodes: 5 Edges:  7</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>Nodes: 5  Edges: 7</pre>
+</div></div></div>
+<h2>  <small class='text-muted'><a class='anchor' href='#13_2' name='13_2'>13.2.</a></small>Social Network Analysis
+</h2>
+
+
+<p>
+This section gives an overview of the existing measures to conduct Social Network Analysis (SNA). Among other functions, we explain how to examine paths and reachability, how to calculate centrality measures (degree, closeness, betweenness, eigenvector) to quantify the importance of a node in a graph, and how to detect communities in the graph using clustering.
+</p>
+
+<h3>  <small class='text-muted'><a class='anchor' href='#13_2_1' name='13_2_1'>13.2.1.</a></small>Paths and Reachability
+</h3>
+
+
+<p>
+The first idea that comes to  mind when analyzing a graph is to understand how their nodes are connected. When multiple edges create a network we can observe how the vertices constitute one or many paths that can be described. In this sense, a <code>sequence</code> between node <em>x</em> and node <em>y</em> is a path where each node is <code>adjacent</code> to the previous. In the imaginary social network of friendship of American politicians contained in the undirected graph <code>g1</code>, we can determine the sequences or simple paths between any pair of politicians. As shown in Example&nbsp;<a href='#ex:path'>13.9</a> we can use the function <code>all_simple_paths</code> contained in both <i>igraph</i> (R) and <i>networkx</i> (Python), to obtain the two possible routes between Barack Obama and John McCain. The shortest path includes the nodes Hillary Clinton and Donald Trump; and the longer includes Sanders, Clinton, and Trump.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:path' name='ex:path'>Example 13.9.</a></small><br />
+Possible paths between two nodes in the imaginary Facebook network of American politicians</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>for path in nx.all_simple_paths(g1, </code>
+<code>                source="Barack Obama",</code>
+<code>                target="John McCain"):</code>
+<code>    print(path)</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>all_simple_paths(g1, "Barack Obama","John McCain",</code>
+<code>                 mode = c("all"))</code>
+&nbsp;
+&nbsp;  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>['Barack Obama', 'Hillary Clinton', 'Donald Trump', 'John McCain']
+['Barack Obama', 'Bernie Sanders', 'Hillary Clinton', 'Donald Trump', 'John McCain']</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>[[1]]
++ 4/5 vertices, named, from 2f92795:
+[1] Barack Obama    Hillary Clinton Donald Trump    John McCain
+
+[[2]]
++ 5/5 vertices, named, from 2f92795:
+[1] Barack Obama    Bernie Sanders  Hillary Clinton Donald Trump
+[5] John McCain</pre>
+</div></div></div>
+<p>
+One specific type of path is the one in which the initial node is the same than the final node. This closed path is called a <i>circuit</i>. To understand this concept let us recover the inducted subgraph of Democrat politicians (<code>g3</code>) in which we only have three nodes. If you plot this graph, as we do in Example&nbsp;<a href='#ex:circuit'>13.10</a>, you can clearly visualize how a circuit works.
+</p>
+<div class='code-example'><h4>
+  <small class='text-muted'><a class='anchor' href='#ex:circuit' name='ex:circuit'>Example 13.10.</a></small><br />
+Visualization of a circuit.</h4>
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>nx.draw_networkx(g3)</code>
+<code>pos=nx.shell_layout(g3)</code>
+<code>x_values, y_values = zip(*pos.values())</code>
+<code>x_max = max(x_values)</code>
+<code>x_min = min(x_values)</code>
+<code>x_margin = (x_max - x_min) * 0.40</code>
+<code>plt.xlim(x_min - x_margin, x_max + x_margin)</code>
+<code>plt.box(False)</code>
+<code>plt.show()</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>plot(g3)</code>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>A circuit of three nodes</div>
+<a href='img/circuit.r.png' title='Click to open full-size image'>
+  <img src='img/circuit.r_thumb.png' />
+</a>
+</div></div>
+<p>
+In SNA it is extremely important to be able to describe the possible paths since they help us to estimate the reachability of the vertices. For instance, if we go back to our original graph of American politicians on Facebook (<code>g1</code>) visualized in Example&nbsp;<a href='#ex:visgraph'>13.2</a>, we can see that Sanders is reachable from McCain because there is a path between them (McCain&ndash;Trump&ndash;Clinton&ndash;Sanders).  Moreover, we observe that this social network is fully <i>connected</i> because you can reach any given node from any other node in the graph. But it might not always be that way. Imagine that we remove the friendship of Clinton and Trump by deleting that specific edge. As you can observe in Example&nbsp;<a href='#ex:component'>13.11</a>, when we create and visualize the graph <code>g6</code> without this edge we can see that the network is no longer fully connected and it has two <i>components</i>. Technically speaking, we would say for example that the subgraph of Republicans is a connected component of the network of American politicians, given that this connected subgraph is part of the bigger graph while not connected to it.
+</p>
+<div class='code-example'><h4>
+  <small class='text-muted'><a class='anchor' href='#ex:component' name='ex:component'>Example 13.11.</a></small><br />
+Visualization of connected components.</h4>
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>#Remove the friendship between Clinton and Trump</code>
+<code>g6 = g1.copy()</code>
+<code>g6.remove_edge("Hillary Clinton","Donald Trump")</code>
+<code>nx.draw_networkx(g6)</code>
+<code>pos=nx.shell_layout(g6)</code>
+<code>x_values, y_values = zip(*pos.values())</code>
+<code>x_max = max(x_values)</code>
+<code>x_min = min(x_values)</code>
+<code>x_margin = (x_max - x_min) * 0.40</code>
+<code>plt.xlim(x_min - x_margin, x_max + x_margin)</code>
+<code>plt.box(False)</code>
+<code>plt.show()</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>#Remove the friendship between Clinton and Trump</code>
+<code>g6 = delete.edges(g1, E(g1, P=</code>
+<code>            c("Hillary Clinton","Donald Trump")))</code>
+<code>plot(g6)</code>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Connected components</div>
+<a href='img/component.r.png' title='Click to open full-size image'>
+  <img src='img/component.r_thumb.png' />
+</a>
+</div></div>
+<p>
+When analyzing paths and reachability you may be interested in knowing the distances in your graph. One common question is what is the average path length of a social network, or in other words, what is the average of the shortest distance between each pair of vertices in the graph? This <i>mean distance</i> can tell you a lot about how close the nodes in the network are: the shorter the distance the closer the nodes are. Moreover, you can estimate the specific distance (shortest path) between two specific nodes.  As shown in Example&nbsp;<a href='#ex:distance'>13.12</a> we can estimate the average path length (1.7) in our imaginary Facebook network of American politicians using the functions <code>mean_distance</code> in <i>igraph</i> and <code>average_shortest_path_length</code> in <i>networkx</i>. In this example we also estimate the specific distance in the network between Obama and McCain (3) using the function <code>distances</code> in <i>igraph</i> and estimating the length (<code>len</code>) of the shortest path (first result of <code>shortest_simple_paths</code> minus 1) in <i>networkx</i>.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:distance' name='ex:distance'>Example 13.12.</a></small><br />
+Estimating distances in the network</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>print("Average path length in Facebook network: ",</code>
+<code>      nx.average_shortest_path_length(g1))</code>
+<code>paths = list(nx.shortest_simple_paths(g1,</code>
+<code>                "Barack Obama", "John McCain"))</code>
+<code>print("Distance between Obama and McCain",</code>
+<code>      len(paths[0])-1)</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>glue("Average path length in Facebook network: ",</code>
+<code>     mean_distance(g1, directed = T))</code>
+<code>glue("Distance between Obama and McCain",</code>
+<code>     "in Facebook network: ", </code>
+<code>     distances(g1, v="Barack Obama", </code>
+<code>               to="John McCain", weights=NA))</code>  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>Average path length in Facebook network:  1.7
+Distance between Obama and McCain 3</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>Average path length in Facebook network: 1.7
+Distance between Obama and McCainin Facebook network: 3</pre>
+</div></div></div>
+<p>
+In terms of distance, we can also wonder what  the edges or nodes that share a border with any given vertex are. In the first case, we can identify the <i>incident edges</i> that go out or into one vertex. As shown in Example&nbsp;<a href='#ex:incident'>13.13</a>, by using the functions <code>incident</code> in <i>igraph</i> and <code>edges</code> in <i>networkx</i> we can easily get incident edges of John McCain in the Facebook Network (<code>g1</code>), which is just one single edge that joins Trump with McCain. In the second case, we can also identify its adjacent nodes, or in other words its <i>neighbors</i>. In the very same example, we use <code>neighbors</code> (same function in <i>igraph</i> and <i>networkx</i>) to obtain all the nodes one step away from McCain (in this case only Trump).
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:incident' name='ex:incident'>Example 13.13.</a></small><br />
+Incident edges and neighbors of J. McCain the imaginary Facebook Network</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>print("Incident edges of John McCain:",</code>
+<code>      g1.edges("John McCain"))</code>
+<code>print("Neighbors of John McCain", </code>
+<code>      [n for n in g1.neighbors("John McCain")])</code>
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>#mode: all, out, in</code>
+<code>glue("Incident edges of John McCain in",</code>
+<code>     "Facebook Network:")</code>
+<code>incident(g1, V(g1)["John McCain"], mode="all")</code>
+<code>glue("Neighbors of John McCain in",</code>
+<code>     "Facebook Network:")</code>
+<code>neighbors(g1, V(g1)["John McCain"], mode="all")</code>  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>Incident edges of John McCain: [('John McCain', 'Donald Trump')]
+Neighbors of John McCain ['Donald Trump']</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>Incident edges of John McCain inFacebook Network:
++ 1/5 edge from 2f92795 (vertex names):
+[1] Donald Trump--John McCain
+Neighbors of John McCain inFacebook Network:
++ 1/5 vertex, named, from 2f92795:
+[1] Donald Trump</pre>
+</div></div></div>
+<p>
+There are some other interesting descriptors of social networks. One of the most common measures is the <i>density</i> of the graph, which accounts for the proportion of edges relative to all possible ties in the network. In simpler words, the density tells us from 0 to 1 how much connected the nodes of a graph are. This can be estimated for both undirected and directed graphs. Using the functions <code>edge_density</code> in <i>igraph</i> and <code>density</code> in <i>networkx</i> we obtain a density of 0.5 (middle level) in the imaginary Facebook network of American politicians (undirected graph) and 0.35 in the Twitter network (directed graph).
+</p>
+
+<p>
+In undirected graphs we can also measure <i>transitivity</i> (also known as <i>clustering coefficient</i>) and <i>diameter</i>. The first is a key property of social networks that refers to the ratio of triangles over the total amount of connected triples. It is to say that we wonder how likely it is that two nodes are connected if they share a mutual neighbor. Applying the function <code>transitivity</code> (included in <i>igraph</i> and <i>networkx</i>) to <code>g1</code> we can see that this tendency is of 0.5 in the Facebook network (there is a 50&percnt; probability that two politicians
+are friends when they have a common contact). The second descriptor, the diameter, depicts the length of the network in terms of the longest geodesic distance<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 4" data-bs-content="The <i>geodesic distance</i> is the shortest number of edges between two vertices">[4]</a>. We use the function <code>diameter</code> (included in <i>igraph</i> and <i>networkx</i>) in the Facebook network and get a diameter of 3, which you can also check if you go back to the visualization of <code>g1</code> in Example&nbsp;<a href='#ex:visgraph'>13.2</a>.
+</p>
+
+<p>
+Additionally, in directed graphs we can calculate the <i>reciprocity</i>, which is just the proportion of reciprocal ties in a social network and can be computed with the function <code>reciprocity</code> (included in <i>igraph</i> and <i>networkx</i>). For the imaginary Twitter network (directed graph) we get a reciprocity of 0.57 (which is not bad for a Twitter graph where important people usually have much more followers than follows!).
+</p>
+
+<p>
+In Example&nbsp;<a href='#ex:density'>13.14</a> we show how to estimate these four measures in R and Python. Notice that in some of the network descriptors you have to decide whether or not to include the edge weights for computation (in the provided examples we did not take these weights into account).
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:density' name='ex:density'>Example 13.14.</a></small><br />
+Estimations of density, transitivity, diameter and reciprocity</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>print("Density in Facebook network: ", </code>
+<code>      nx.density(g1))</code>
+<code>print("Density in Twitter network: ",</code>
+<code>      nx.density(g2))</code>
+<code>print("Transitivity in Facebook network: ",</code>
+<code>      nx.transitivity(g1))</code>
+<code>print("Diameter in Facebook network: ",</code>
+<code>      nx.diameter(g1, e=None, usebounds=False))</code>
+<code>print("Reciprocity in Twitter network: ", </code>
+<code>      nx.reciprocity(g2))</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>glue("Density in Facebook network: ",</code>
+<code>     edge_density(g1))</code>
+<code>glue("Density in Twitter network: ", </code>
+<code>     ecount(g2)/(vcount(g2)*(vcount(g2)-1)) )</code>
+<code>glue("Transitivity in Facebook network: ",</code>
+<code>     transitivity(g1), type="global")</code>
+<code>glue("Diameter in Facebook network: ",</code>
+<code>     diameter(g1, directed = F, weights = NA))</code>
+<code>glue("Reciprocity in Twitter network: ",</code>
+<code>     reciprocity(g2))</code>  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>Density in Facebook network:  0.5
+Density in Twitter network:  0.35
+Transitivity in Facebook network:  0.5
+Diameter in Facebook network:  3
+Reciprocity in Twitter network:  0.5714285714285714</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>Density in Facebook network: 0.5
+Density in Twitter network: 0.35
+Transitivity in Facebook network: 0.5
+Diameter in Facebook network: 3
+Reciprocity in Twitter network: 0.571428571428571</pre>
+</div></div></div>
+<h3>  <small class='text-muted'><a class='anchor' href='#13_2_2' name='13_2_2'>13.2.2.</a></small>Centrality Measures
+</h3>
+
+
+<p>
+Now let us move to <i>centrality measures</i>. Centrality is probably the most common, popular, or known measure in the analysis of social networks because it gives you a clear idea of the importance of any of the nodes within a graph. Using its measures you can pose many questions such as which is the most central person in a network of friends on Facebook, who can be considered an opinion leader on Twitter or who is an influencer on Instagram. Moreover, knowing the specific importance of every node of the network can help us to visualize or label only certain vertices that overpass a previously determined threshold, or to use the color or size to distinguish the most central nodes from the others. There are four typical centrality measures: <i>degree</i>, <i>closeness</i>, <i>eigenvector</i> and <i>betweenness</i>.
+</p>
+
+<p>
+The <i>degree</i> of a node refers to the number of ties of that vertex, or in other words, to the number of edges that are incident to that node. This definition is constant for undirected graphs in which the directions of the links are not declared. In the case of directed graphs, you will have three options to measure the degree. First, you can think of the number of edges pointing <i>into</i> a node, which we call <i>indegree</i>; second, we have the number of edges pointing <i>out</i> of a node, or <i>outdegree</i>. In addition, we could also have the total number of edges pointing (in and out) any node. Degree, as well as other measures of centrality mentioned below, can be expressed in absolute numbers, but we can also <i>normalize</i><a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 5" data-bs-content="The approach is to divide by the maximum possible number of vertices ( <em>N</em> ) minus 1, or by  <em>N-1</em> . We may also estimate the <code>weighted degree</code> of a node, which is the same degree but ponderated by the weight of the edges.">[5]</a>  these measures for better interpretation and comparison. We will prefer this latter approach in our examples, which is also the default option in many SNA packages.
+</p>
+
+<p>
+We can then estimate the degree of two of our example networks. In Example&nbsp;<a href='#ex:centrality1'>13.15</a>, we first estimate the degree of each of the five American politicians in the imaginary Facebook network, which is an undirected graph; and then the total degree in the Twitter network, which is a directed graph. For both cases, we use the functions <code>degree</code> in <i>igraph</i> (R) and <code>degree_centrality</code> in <i>networkx</i> (Python). We later compute the <code>in</code> and <code>out</code> degree for the Twitter network. Using <i>igraph</i> we again used the function <code>degree</code> but now adjust the parameter <code>mode</code> to <code>in</code> or <code>out</code>, respectively. Using <i>networkx</i>, we employ the functions <code>in_degree_centrality</code> and <code>out_degree_centrality</code>.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:centrality1' name='ex:centrality1'>Example 13.15.</a></small><br />
+Computing degree centralities in undirected and directed graphs</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>print("Degree centrality of Facebook" </code>
+<code>      "network (undirected): \n",</code>
+<code>      nx.degree_centrality(g1))</code>
+<code>print("Degree centrality of Twitter"</code>
+<code>      "network (directed): \n",</code>
+<code>      nx.degree_centrality(g2))</code>
+<code>print("In degree centrality of Twitter"</code>
+<code>      "network (directed): \n",</code>
+<code>      nx.in_degree_centrality(g2))</code>
+<code>print("Out degree centrality of Twitter"</code>
+<code>      "network (directed): \n",</code>
+<code>      nx.out_degree_centrality(g2))</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>print("Degree centrality")</code>
+<code>print("Facebook network (undirected):" )</code>
+<code>print(degree(g1, normalized = T))</code>
+<code>print("Degree centrality")</code>
+<code>print("Twitter network (directed):" )</code>
+<code>print(degree(g2, normalized = T, mode="all"))</code>
+<code>print("In degree centrality")</code>
+<code>print("Twitter network (directed):" )</code>
+<code>print(degree(g2, normalized = T, mode="in"))</code>
+<code>print("Out degree centrality")</code>
+<code>print("Twitter network (directed):" )</code>
+<code>print(degree(g2, normalized = T, mode="out"))</code>  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>Degree centrality of Facebooknetwork (undirected):
+ {'Hillary Clinton': 0.75, 'Donald Trump': 0.5, 'Bernie Sanders': 0.5, 'Barack Obama': 0.5, 'John McCain': 0.25}
+Degree centrality of Twitternetwork (directed):
+ {'Hillary Clinton': 1.25, 'Donald Trump': 0.5, 'Bernie Sanders': 0.75, 'Barack Obama': 0.75, 'John McCain': 0.25}
+In degree centrality of Twitternetwork (directed):
+ {'Hillary Clinton': 0.5, 'Donald Trump': 0.5, 'Bernie Sanders': 0.5, 'Barack Obama': 0.25, 'John McCain': 0.0}
+Out degree centrality of Twitternetwork (directed):
+ {'Hillary Clinton': 0.75, 'Donald Trump': 0.0, 'Bernie Sanders': 0.25, 'Barack Obama': 0.5, 'John McCain': 0.25}</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>[1] "Degree centrality"
+[1] "Facebook network (undirected):"
+Hillary Clinton    Donald Trump  Bernie Sanders    Barack Obama     John McCain
+           0.75            0.50            0.50            0.50            0.25
+[1] "Degree centrality"
+[1] "Twitter network (directed):"
+Hillary Clinton  Bernie Sanders     John McCain    Barack Obama    Donald Trump
+           1.25            0.75            0.25            0.75            0.50
+[1] "In degree centrality"
+[1] "Twitter network (directed):"
+Hillary Clinton  Bernie Sanders     John McCain    Barack Obama    Donald Trump
+           0.50            0.50            0.00            0.25            0.50
+[1] "Out degree centrality"
+[1] "Twitter network (directed):"
+Hillary Clinton  Bernie Sanders     John McCain    Barack Obama    Donald Trump
+           0.75            0.25            0.25            0.50            0.00</pre>
+</div></div></div>
+<p>
+There are three other types of centrality measures. <i>Closeness centrality</i> refers to the geodesic distance of a node to the rest of nodes in the graph. Specifically, it indicates how close a node is to the others by taking the length of the shortest paths between the vertices. <i>Eigenvector centrality</i> takes into account the importance of the surrounding nodes and computes the centrality of a vertex based on the centrality of its neighbors. In technical words, the measure is proportional to the sum of connection centralities. Finally, <i>betweenness centrality</i> indicates to what extent the node is in the paths that connect many other nodes. Mathematically it is computed as the sum of the fraction of every pair of (shortest) paths that go through the analyzed node.
+</p>
+
+<p>
+As shown in Example&nbsp;<a href='#ex:centrality2'>13.16</a>, we can obtain these three measures from undirected graphs using the functions <code>closeness</code>, <code>eigen_centrality</code> and <code>betweenness</code> in <i>igraph</i>, and <code>closeness_centrality</code>, <code>eigenvector_centrality</code> and <code>betweenness_centrality</code> in <i>networkx</i>. If we take a look to the centrality measures for every politician of the imaginary Facebook network we see that Clinton seems to be a very important and central node of the graph, just coinciding with the above-mentioned findings based on the degree. It is not a rule that we obtain the very same trend in each of the centrality measures but it is likely that they have similar results although they are looking for different dimensions of the same construct.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:centrality2' name='ex:centrality2'>Example 13.16.</a></small><br />
+Estimations of closeness, eigenvector and betweenness centralities</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>print("Closeness centrality of Facebook"</code>
+<code>      "network (undirected): \n",</code>
+<code>      nx.closeness_centrality(g1))</code>
+<code>print("Eigenvector centrality of Facebook"</code>
+<code>      "network (undirected): \n",</code>
+<code>      nx.eigenvector_centrality(g1))</code>
+<code>print("Betweenness centrality of Facebook"</code>
+<code>      "network (undirected): \n",</code>
+<code>      nx.betweenness_centrality(g1))</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>print("Closeness centrality")</code>
+<code>print("Facebook network (undirected):")</code>
+<code>print(closeness(g1, normalized = T))</code>
+<code>print("Eigenvector centrality")</code>
+<code>print("Facebook network (undirected):" )</code>
+<code>print(eigen_centrality(g1, scale=F)$vector)</code>
+<code>print("Betweenness centrality")</code>
+<code>print("Facebook network (undirected):" )</code>
+<code>print(betweenness(g1, normalized = T))</code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<pre class='output'>Closeness centrality of Facebooknetwork (undirected):
+ {'Hillary Clinton': 0.8, 'Donald Trump': 0.6666666666666666, 'Bernie Sanders': 0.5714285714285714, 'Barack Obama': 0.5714285714285714, 'John McCain': 0.4444444444444444}
+Eigenvector centrality of Facebooknetwork (undirected):
+ {'Hillary Clinton': 0.6037035301706529, 'Donald Trump': 0.34248744909850964, 'Bernie Sanders': 0.49715259845254134, 'Barack Obama': 0.49715259845254134, 'John McCain': 0.15467056143060928}
+Betweenness centrality of Facebooknetwork (undirected):
+ {'Hillary Clinton': 0.6666666666666666, 'Donald Trump': 0.5, 'Bernie Sanders': 0.0, 'Barack Obama': 0.0, 'John McCain': 0.0}</pre>
+</div></div>
+<p>
+We can use these centrality measures in many ways. For example, you can take the degree centrality as a parameter of the node size and labeling when plotting the network. This may be of great utility since the reader can visually identify the most important nodes of the network while minimizing the visual impact of those that are less central. In Example&nbsp;<a href='#ex:plotsize'>13.17</a> we decided to specify the size of the nodes (parameters <code>vertex.size</code> in <i>igraph</i> and <code>node_size</code> in <i>networkx</i>) with the degree centrality of each of the American politicians in the Twitter network (directed graph) contained in <code>g2</code>. We also used the degree centrality to filter the labels in the graph, and then included only those that overpassed a threshold of 0.5 (parameters <code>vertex.label</code> in <i>igraph</i> and <code>labels</code> in <i>networkx</i>). These two simple parameters of the plot give you a fair image of the potential of the centrality measures to describe and understand your social network.
+</p>
+<div class='code-example'><h4>
+  <small class='text-muted'><a class='anchor' href='#ex:plotsize' name='ex:plotsize'>Example 13.17.</a></small><br />
+Using the degree centrality to change the size and labels of the nodes</h4>
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>size = list(nx.degree_centrality(g2).values())</code>
+<code>size = [x * 1000 for x in size]</code>
+<code>labels_filtered = {k: v for k, v in </code>
+<code>    nx.degree_centrality(g2).items() if v &gt; 0.5 }</code>
+<code>labels = {} </code>
+<code>for k, v in labels_filtered.items(): </code>
+<code>    labels[k] = k</code>
+<code></code>
+<code>nx.draw_networkx(g2, node_size= size, </code>
+<code>                 labels=labels)</code>
+<code></code>
+<code>pos=nx.shell_layout(g2)</code>
+<code>x_values, y_values = zip(*pos.values())</code>
+<code>x_max = max(x_values)</code>
+<code>x_min = min(x_values)</code>
+<code>x_margin = (x_max - x_min) * 0.40</code>
+<code>plt.xlim(x_min - x_margin, x_max + x_margin)</code>
+<code>plt.box(False)</code>
+<code>plt.show()</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>plot(g2, vertex.label.cex = 2, </code>
+<code>     vertex.size= degree(g2, normalized = T)*40,</code>
+<code>     vertex.label = ifelse(degree(g2, </code>
+<code>        normalized = T) &gt; 0.5, V(g2)$name, NA))</code>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Network Plot</div>
+<a href='img/plotsize.r.png' title='Click to open full-size image'>
+  <img src='img/plotsize.r_thumb.png' />
+</a>
+</div></div>
+<h3>  <small class='text-muted'><a class='anchor' href='#13_2_3' name='13_2_3'>13.2.3.</a></small>Clustering and Community Detection
+</h3>
+
+
+<p>
+One of the greatest potentials of SNA is the ability to identify how nodes are interconnected and thus define <i>communities</i> within a graph. This is to say that most of the time the nodes and edges in our network are not distributed homogeneously, but they tend to form clusters that can  later be interpreted. In a social network you can think for example of the principle of <i>homophily</i>, which is the tendency of human beings to associate and interact with similar individuals; or you can think of extrinsic factors (e.g., economic or legal) that may generate the cohesion of small groups of citizens that belong to a wider social structure. While it is of course difficult to make strong claims regarding the underlying causes, we can use different computational approaches to model and detect possible communities that emerge from social networks and even interpret and label those groups. The creation of clusters as an unsupervised machine learning technique was introduced in Section&nbsp;<a href='chapter07.html#7_3'>7.3</a> for structured data and in Section&nbsp;<a href='chapter11.html#11_5'>11.5</a> for text analysis (topic modeling). We will use some similar unsupervised approaches for community detection in social networks.
+</p>
+
+<p>
+Many social and communication questions may arise when clustering a network. The identification of subgroups can tell us how diverse and fragmented a network is, or how the behavior of a specific community relates to other groups and to the entire graph. Moreover, the concentration of edges in some nodes of the graph would let us know about the social structure of the networks which in turn would mean a better understanding of its inner dynamic.  It is true that the computational analyst will need more than the provided algorithms when labeling the groups to understand the communities, which means that you must become familiar with the way the graph has been built and what the nodes, edges or weights represent.
+</p>
+
+<p>
+A first step towards an analysis of subgroups within a network is to find the available complete subgraphs in an undirected graph. As we briefly explained at the end of Section&nbsp;<a href='#13_1'>13.1</a>, these independent subgraphs are called <code>cliques</code> and refer to subgroups where every vertex is connected to every other vertex. We can find the <code>maximal cliques</code> (a clique is maximal when it cannot be extended to a  bigger clique) in the imaginary undirected graph of American politicians on Facebook (<code>g1</code>) by using the functions <code>max_cliques</code> in <i>igraph</i><span class="cite" title="Eppstein, D., Löffler, M., and Strash, D. (2010). Listing all maximal cliques in sparse graphs in near-optimal time. In  International Symposium on Algorithms and Computation, pages 403--414. Springer.">Eppstein et&nbsp;al., 2010</span> and <code>max_cliques</code> in <i>networkx</i><span class="cite" title="Cazals, F. and Karande, C. (2008). A note on the problem of reporting maximal cliques. Theoretical Computer Science, 407(1-3):564--568.">Cazals and Karande, 2008</span>. As you can see in Example&nbsp;<a href='#ex:cliques'>13.18</a>, we obtain a total of three subgraphs, one representing the Democrats, another the Republicans, and one more the connector of the two parties (Clinton&ndash;Trump).
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:cliques' name='ex:cliques'>Example 13.18.</a></small><br />
+Finding all the maximal cliques in an undirected graph</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>print("Number of cliques: ",</code>
+<code>      nx.graph_number_of_cliques(g1))</code>
+<code>print("Cliques: ", list(nx.find_cliques(g1)))</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>glue("Number of cliques: {clique_num(g1)}")</code>
+<code>max_cliques(g1)</code>
+&nbsp;  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>Number of cliques:  3
+Cliques:  [['Hillary Clinton', 'Donald Trump'], ['Hillary Clinton', 'Bernie Sanders', 'Barack Obama'], ['John McCain', 'Donald Trump']]</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>Number of cliques: 3
+[[1]]
++ 2/5 vertices, named, from 2f92795:
+[1] Donald Trump John McCain
+
+[[2]]
++ 2/5 vertices, named, from 2f92795:
+[1] Donald Trump    Hillary Clinton
+
+[[3]]
++ 3/5 vertices, named, from 2f92795:
+[1] Hillary Clinton Bernie Sanders  Barack Obama</pre>
+</div></div></div>
+<p>
+Now, in order to properly detect communities we will apply some common algorithms to obtain the most likely subgroups in a social network. The first of these models is the so called <i>edge-between</i> or Girvan&ndash;Newman algorithm <span class="cite" title="Newman, M.&nbsp;E. and Girvan, M. (2004). Finding and evaluating community structure in networks. Physical review E, 69(2):026113.">Newman and Girvan, 2004</span>. This algorithm is based on divisive hierarchical clustering (explained in Section&nbsp;<a href='chapter07.html#7_3'>7.3</a>) by breaking down the graph into pieces and iteratively removing edges from the original one. Specifically,  the Girvan&ndash;Newman approach uses the betweenness centrality measure to remove the most central edge at each iteration. You can easily visualize this splitting process in a dendogram, as we do in Example&nbsp;<a href='#ex:girvan'>13.19</a>, where we estimated <code>cluster1</code> to detect possible communities in the Facebook network. We used the functions <code>cluster_edge_betweenness</code> in <i>igraph</i> and <code>girvan_newman</code> in <i>networkx</i>.
+</p>
+<div class='code-example'><h4>
+  <small class='text-muted'><a class='anchor' href='#ex:girvan' name='ex:girvan'>Example 13.19.</a></small><br />
+Dendrogram to visualize clustering with Girvan&ndash;Newman.</h4>
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>cluster1 = nxcom.girvan_newman(g1)</code>
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>cluster1 = cluster_edge_betweenness(g1) </code>
+<code>dendPlot(cluster1, mode="hclust")</code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Dendogram</div>
+<a href='img/girvan.r.png' title='Click to open full-size image'>
+  <img src='img/girvan.r_thumb.png' />
+</a>
+</div></div>
+<p>
+When you look at the figure you will notice that the final leaves correspond to the nodes (the politicians) and then you have different partition levels (1 to 4), which in fact are different cluster possibilities. In edge-betweenness clustering, the big question is which partition level to choose, or in other words, which of the community division is better. The concept of <i>modularity</i> arises as a good measure (\(-1\) to 1) to evaluate how good the division is (technically it's measured as the fraction of edges that fall within any given groups, let's say group 1 and group 2, minus the expected number of edges within those groups distributed at random). Thus, we can choose which of the four proposed divisions is the best based on the highest value of their modularities: the higher the modularity the more dense the connections <i>within</i> the community and the more sparse the connections <i>across</i> communities. In the case of <code>cluster_edge_betweenness</code> in <i>igraph</i> it automatically estimates that the best division (on modularity) is the first one with two communities.
+</p>
+
+<p>
+With community detection algorithms we can then estimate the length (number of suggested clusters), membership (to which cluster belongs each node) and modularity (how good is the clustering). In the case of <i>igraph</i> in R we apply the functions <code>length</code> (base), <code>membership</code> and <code>modularity</code> over the produced clustering object (i.e., <code>cluster1</code>). In the case of <i>networkx</i> in Python we first have to specify that we want to use the first component of the divisions (out of four) using the function <code>next</code>. Then, we can apply the functions <code>len</code> (base) and <code>modularity</code> to get the descriptors, and print the first division (stored as <code>communities1</code>) to obtain the membership (see Example&nbsp;<a href='#ex:girvan2'>13.20</a>).
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:girvan2' name='ex:girvan2'>Example 13.20.</a></small><br />
+Community detection with Girvan&ndash;Newman</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>c1 = next(cluster1)</code>
+<code>print(f"Girvan-Neuman:\nLength {len(c1)}")</code>
+<code>print(f"Modularity: "</code>
+<code>      f"{nxcom.modularity(g1, c1):.2f}")</code>
+<code>print(f"Membership: {c1}")</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>print("Girvan-Neuman")</code>
+<code>print(glue("Length: {length(cluster1)}"))</code>
+<code>print(glue("Modularity: {modularity(cluster1)}"))</code>
+<code>print(membership(cluster1))</code>
+&nbsp;  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<pre class='output'>Girvan-Neuman:
+Length 2
+Modularity: 0.22
+Membership: ({'Hillary Clinton', 'Bernie Sanders', 'Barack Obama'}, {'Donald Trump', 'John McCain'})</pre>
+</div></div>
+<p>
+We can estimate the communities for our network using many other more clustering algorithms, such as the <i>Louvain algorithm</i>, the <i>Propagating Label algorithm</i>, and <i>Greedy Optimization</i>, among others. Similar to Girvan&ndash;Newman, the Louvain algorithm uses the measure of modularity to obtain a multi-level optimization <span class="cite" title="Blondel, V.&nbsp;D., Guillaume, J.-L., Lambiotte, R., and Lefebvre, E. (2008). Fast unfolding of communities in large networks. Journal of statistical mechanics: theory and experiment, 2008(10):P10008.">Blondel et&nbsp;al., 2008</span> and its goal is to obtain optimized clusters which minimize the number of edges between the communities and maximize the number of edges within the same community. For its part, the Greedy Optimization algorithm is also based on the modularity indicator <span class="cite" title="Clauset, A., Newman, M.&nbsp;E., and Moore, C. (2004). Finding community structure in very large networks. Physical review E, 70(6):066111.">Clauset et&nbsp;al., 2004</span>. It does not consider the edges' weights and works by initially setting each vertex in its own community and then joining two communities to increase modularity until obtaining the maximum modularity. Finally, the Propagating Label algorithm &ndash; which takes into account edges' weights &ndash; initializes each node with a unique label and then iteratively each vertex adopts the label of its neighbors until all nodes have the most common label of their neighbors <span class="cite" title="Raghavan, U.&nbsp;N., Albert, R., and Kumara, S. (2007). Near linear time algorithm to detect community structures in large-scale networks. Physical review E, 76(3):036106.">Raghavan et&nbsp;al., 2007</span>. The process can be conducted asynchronously (as done in our example), synchronously or semi-synchronously (it might produce different results).
+</p>
+
+<p>
+In Example&nbsp;<a href='#ex:clustalgo'>13.21</a> we use <code>cluster_louvain</code>, <code>cluster_fast_greedy</code> and <code>cluster_label_prop</code> in <i>igrapgh</i> (R) and <code>best_partition</code>, <code>greedy_modularity_communities</code> and <code>asyn_lpa_communities</code> in <i>networkx</i> (Python). You can see  that the results are quite similar<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 6" data-bs-content="This similarity is because our example network is extremely small. In larger networks, the results might not be that similar.">[6]</a>  and it is pretty clear that there are two communities in the Facebook network: Democrats and Republicans!
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:clustalgo' name='ex:clustalgo'>Example 13.21.</a></small><br />
+Community detection with Louvain Propagating Label and Greedy Optimization</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>print("Louvain")</code>
+<code>cluster2 = community.best_partition(g1)</code>
+<code>print("Length: "</code>
+<code>      f"{float(len(set(cluster2.values())))}")</code>
+<code>print("Modularity: "</code>
+<code>      f"{community.modularity(cluster2, g1):.2f}")</code>
+<code>print(f"Membership: {cluster2}")</code>
+<code></code>
+<code>print("\nGreedy optimization")</code>
+<code>cluster3 = nxcom.greedy_modularity_communities(g1)</code>
+<code>c3 = sorted(cluster3, key=len, reverse=True)</code>
+<code>print(f"Length {len(c3)}")</code>
+<code>print("Modularity:"</code>
+<code>      f"{nxcom.modularity(g1, c3):.2f}")</code>
+<code>print(f"Membership: {c3}")</code>
+<code></code>
+<code>print("\nPropagating label: ")</code>
+<code>cluster4 = nxcom.asyn_lpa_communities(g1)</code>
+<code>c4 = sorted(cluster4, key=len, reverse=True)</code>
+<code>print("Length: ", len(c4))</code>
+<code>print("Modularity:"</code>
+<code>      f"{nxcom.modularity(g1, c4):.2f}")</code>
+<code>print("Membership: ", c4)</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>print("Louvain:")</code>
+<code>cluster2 = cluster_louvain(g1) </code>
+<code>print(glue("Length: {length(cluster2)}"))</code>
+<code>print(glue("Modularity: {modularity(cluster2)}"))</code>
+<code>print(membership(cluster2))</code>
+<code></code>
+<code>print("Greedy optimization:")</code>
+<code>cluster3 = cluster_fast_greedy(g1) </code>
+<code>print(glue("Length: {length(cluster3)}"))</code>
+<code>print(glue("Modularity: {modularity(cluster3)}"))</code>
+<code>print(membership(cluster3))</code>
+<code></code>
+<code>print("Label propagation:")</code>
+<code>cluster4 = cluster_label_prop(g1) </code>
+<code>print(glue("Length {length(cluster4)}"))</code>
+<code>print(glue("Modularity: {modularity(cluster4)}"))</code>
+<code>print(membership(cluster4))</code>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<pre class='output'>Louvain
+Length: 2.0
+Modularity: 0.22
+Membership: {'Hillary Clinton': 0, 'Donald Trump': 1, 'Bernie Sanders': 0, 'Barack Obama': 0, 'John McCain': 1}
+
+Greedy optimization
+Length 2
+Modularity:0.22
+Membership: [frozenset({'Barack Obama', 'Hillary Clinton', 'Bernie Sanders'}), frozenset({'Donald Trump', 'John McCain'})]
+
+Propagating label:
+Length:  1
+Modularity:0.00
+Membership:  [{'Donald Trump', 'Barack Obama', 'Bernie Sanders', 'Hillary Clinton', 'John McCain'}]</pre>
+</div></div>
+<p>
+We can plot each of those clusters for better visualization of the communities. In Example&nbsp;<a href='#ex:plotcluster'>13.22</a> we generate the plots with the <i>Greedy Optimization</i> algorithm in R and the <i>Louvain</i> algorithm in Python, and we get two identical results.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:plotcluster' name='ex:plotcluster'>Example 13.22.</a></small><br />
+Plotting clusters with Greedy optimization in R and Louvain in Python</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>#Plot with Louvain algortihm</code>
+<code>pos = nx.spring_layout(g1)</code>
+<code>plt.figure(figsize=(6,3))</code>
+<code>plt.axis("off")</code>
+<code>nx.draw_networkx_labels(g1,pos,font_size=6)</code>
+<code>nx.draw_networkx_nodes(g1, pos,</code>
+<code>        cmap=plt.cm.RdYlBu,</code>
+<code>        node_color=list(cluster2.values()))</code>
+<code>nx.draw_networkx_edges(g1, pos, alpha=0.3)</code>
+<code>plt.show(g1)</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>plot(cluster3, g1)</code>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<img src='img/plotcluster.py.png' />
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<a href='img/plotcluster.r.png' title='Click to open full-size image'>
+  <img src='img/plotcluster.r_thumb.png' />
+</a>
+</div></div></div>
+<p>
+There are more ways to obtain subgraphs of your network (such as the <code>K-core decomposition</code>) or to evaluate the homophily of your graph (using the indicator of <code>assortativity</code> that measures the degree to which the nodes associate to similar vertices). In fact, there are many other measures and techniques you can use to conduct SNA that we have deliberately omitted in this section for reasons of space, but we have covered the most important aspects and procedures you need to know to initiate yourself in the computational analysis of networks.
+</p>
+
+<p>
+So far we have seen how to conduct SNA over &ldquo;artificial&rdquo; graphs for the sake of simplicity. However, the representation and analysis of &ldquo;real world&rdquo; networks will normally be more challenging because of their size or their complexity. To conclude this chapter we will show you how to apply some of the explained concepts to real data.
+</p>
+
+<p>
+Using the Twitter API (see Section&nbsp;<a href='chapter12.html#12_1'>12.1</a>), we retrieved the names of the first 100 followers of the five most important politicians in Spain by 2017 (Mariano Rajoy, Pedro S&aacute;nchez, Albert Rivera, Alberto Garz&oacute;n and Pablo Iglesias). With this information we produced an undirected graph<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 7" data-bs-content="We deliberately omitted the directions of the edges given their impossible reciprocity.">[7]</a> of the &ldquo;friends&rdquo; of these Spanish politicians in order to understand how these leaders where connected through their followers. In Example&nbsp;<a href='#ex:friends1'>13.23</a> we load the data into a graph object <code>g_friends</code> that contains the 500 edges of the network. As we may imagine the five mentioned politicians were normally the most central nodes, but if we look at the degree, betweenness and closeness centralities we can easily get some of the relevant nodes of the Twitter network: CEARefugio, elenballesteros or Unidadpopular. These accounts deserve special attention since they contribute to the connection of the main leaders of that country. In fact, if we conduct clustering analysis using Louvain algorithm we will find a high modularity (0.77, which indicates that the clusters are well separated) and not surprisingly five clusters.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:friends1' name='ex:friends1'>Example 13.23.</a></small><br />
+Loading and analyzing a real network of Spanish politicians and their followers on Twitter</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>url = "https://cssbook.net/d/friends3.csv"</code>
+<code>fn, _headers = urllib.request.urlretrieve(url)</code>
+<code>g_friends = nx.read_adjlist(fn,</code>
+<code>            create_using=nx.Graph, delimiter=";")</code>
+<code>print("Nodes:", g_friends.number_of_nodes(),</code>
+<code>      "Edges: ", g_friends.number_of_edges())</code>
+<code>print("Nodes:", g_friends.number_of_nodes(),</code>
+<code>      "Edges: ", g_friends.number_of_edges())</code>
+<code>print("Degree centrality: ")</code>
+<code>print(sorted(nx.degree_centrality(</code>
+<code>    g_friends).items(), key=lambda x: x[1], </code>
+<code>             reverse=True)[0:9])</code>
+<code>print("Betweenness centrality: ")</code>
+<code>print(sorted(nx.betweenness_centrality(</code>
+<code>    g_friends).items(), key=lambda x: x[1],</code>
+<code>             reverse=True)[0:9])</code>
+<code>print("Closeness centrality: ")</code>
+<code>print(sorted(nx.closeness_centrality(</code>
+<code>    g_friends).items(), key=lambda x: x[1],</code>
+<code>             reverse=True)[0:9])</code>
+<code>print("Clustering with Louvain: ")</code>
+<code>cluster5 = community.best_partition(g_friends)</code>
+<code>size = float(len(set(cluster5.values())))</code>
+<code>print("Length: ", size)</code>
+<code>print("Modularity: "</code>
+<code>f"{community.modularity(cluster5,g_friends):.2f}")</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>edges = read_delim(</code>
+<code>    "https://cssbook.net/d/friends3.csv",</code>
+<code>    col_names=FALSE, delim=";")</code>
+<code>g_friends = graph_from_data_frame(d=edges, </code>
+<code>                                directed = FALSE)</code>
+<code>glue("Nodes: ", gorder(g_friends),</code>
+<code>     "  Edges: ", gsize(g_friends))</code>
+<code></code>
+<code>print("Degree centrality:")</code>
+<code>print(sort(degree(g_friends, normalized = T),</code>
+<code>           decreasing = TRUE)[1:10])</code>
+<code>print("Betweenness centrality:")</code>
+<code>print(sort(betweenness(g_friends, normalized = T),</code>
+<code>           decreasing = TRUE)[1:10])</code>
+<code>print("Closeness centrality:")</code>
+<code>print(sort(closeness(g_friends, normalized = T),</code>
+<code>           decreasing = TRUE)[1:10])</code>
+<code>print("Clustering with Louvain:")</code>
+<code>cluster5 = cluster_louvain(g_friends) </code>
+<code>print(glue("Length: {length(cluster5)}"))</code>
+<code>print(glue("Modularity: {modularity(cluster5)}"))</code>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<pre class='output'>Nodes: 491 Edges:  500
+Nodes: 491 Edges:  500
+Degree centrality:
+[('Pablo_Iglesias_', 0.20612244897959187), ('Albert_Rivera', 0.20408163265306123), ('agarzon', 0.20408163265306123), ('sanchezcastejon', 0.20408163265306123), ('marianorajoy', 0.20408163265306123), ('CEARefugio', 0.004081632653061225), ('VictorLapuente', 0.004081632653061225), ('javierfernandez', 0.004081632653061225), ('mas_demo', 0.004081632653061225)]
+Betweenness centrality:
+[('sanchezcastejon', 0.4847681328312369), ('agarzon', 0.44044055921356695), ('Albert_Rivera', 0.4226327682769384), ('marianorajoy', 0.384657568548892), ('Pablo_Iglesias_', 0.35788117228958527), ('elenballesteros', 0.19595159798490358), ('Unidadpopular__', 0.13749254219017618), ('kanciller', 0.08787927105192601), ('JuanfranGuevara', 0.08787927105192601)]
+Closeness centrality:
+[('sanchezcastejon', 0.3592375366568915), ('agarzon', 0.33653846153846156), ('Pablo_Iglesias_', 0.3356164383561644), ('Unidadpopular__', 0.3353867214236824), ('CEARefugio', 0.3349282296650718), ('VictorLapuente', 0.3349282296650718), ('javierfernandez', 0.3349282296650718), ('mas_demo', 0.3349282296650718), ('elenballesteros', 0.31511254019292606)]
+Clustering with Louvain:
+Length:  5.0
+Modularity: 0.77</pre>
+</div></div>
+<p>
+When we visualize the clusters in the network (Example&nbsp;<a href='#ex:friends2'>13.24</a>) using the degree centrality for the size of the node, we can locate the five politicians in the center of the clusters (depicted with different colors). More interesting, we can see that even when some users follow two of the political leaders, they are just assigned to one of the clusters. This the case of the node joining Garz&oacute;n and S&aacute;nchez who is assigned to the S&aacute;nchez's cluster, or the node joining Garz&oacute;n and Rajoy who is assigned to Rajoy's cluster. In the plot you can also see two more interesting facts. First, we can see a triangle that groups S&aacute;nchez, Garz&oacute;n and Iglesias, which are leaders of the left-wing parties in Spain. Second, some pair of politicians (such as Iglesias&ndash;Garz&oacute;n or S&aacute;nchez&ndash;Rivera) share more friends than the other possible pairs.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:friends2' name='ex:friends2'>Example 13.24.</a></small><br />
+Visualizing the network of Spanish politicians and their followers on Twitter and plotting its clusters</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>pos = nx.spring_layout(g_friends)</code>
+<code>plt.figure(figsize=(10,10))</code>
+<code>plt.axis("off")</code>
+<code></code>
+<code>size = list(nx.degree_centrality(</code>
+<code>    g_friends).values())</code>
+<code>size = [x * 7000 for x in size]</code>
+<code>labels_filtered = {k: v for k, v in</code>
+<code>    nx.degree_centrality(g_friends).items() if </code>
+<code>                   v &gt; 0.005 }</code>
+<code>labels = {} </code>
+<code>for k, v in labels_filtered.items(): </code>
+<code>    labels[k] = k</code>
+<code></code>
+<code>nx.draw_networkx_labels(g_friends,</code>
+<code>    pos, font_size=10,</code>
+<code>    labels=labels)</code>
+<code>nx.draw_networkx_nodes(g_friends,</code>
+<code>    pos,node_size= size, cmap=plt.cm.RdYlBu,</code>
+<code>    node_color=list(cluster5.values()))</code>
+<code>nx.draw_networkx_edges(g_friends, pos, alpha=0.5)</code>
+<code>plt.show(g_friends)</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>plot(cluster5, g_friends, vertex.label.cex = 2,</code>
+<code>   vertex.size=degree(g_friends, normalized=T)*40,</code>
+<code>   vertex.label = ifelse(degree(g_friends,</code>
+<code>                         normalized=T) &gt; 0.005,</code>
+<code>                         V(g_friends)$name, NA))</code>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<img src='img/friends2.py.png' />
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<a href='img/friends2.r.png' title='Click to open full-size image'>
+  <img src='img/friends2.r_thumb.png' />
+</a>
+</div></div></div>
+        </div>
+
+	<div class='chevrons'>
+&laquo;
+	  
+	  <a href='chapter12.html'>Ch. 12 Scraping online data</a>
+	  
+	  
+	  | <a href='chapter14.html'>Ch. 14 Multimedia data</a>&raquo;
+	  
+</div>
+	<!-- Secondary sidebar -->
+        <aside class="css-rightbar">
+            <nav id="right" class="collapse css-rightnav">
+                <ul class="list-unstyled components">
+  
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+                  <div class="rightbar-header">In this chapter</div>
+
+            <ul class="list-unstyled" id="toc_chap_13">
+<li class='toc-section'>13 Network Data</li>
+
+              
+	          
+                    <li class="toc-section">
+                        <a href="chapter13.html#13_1">13.1. Representing and Visualizing Networks</a>
+		    </li>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter13.html#13_2">13.2. Social Network Analysis</a>
+		    </li>
+		    
+		    <ul class="list-unstyled list-subsections" id="toc_chap_2">
+		    
+                    <li class="toc-section">
+                        <a href="chapter13.html#13_2_1">13.2.1. Paths and Reachability</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter13.html#13_2_2">13.2.2. Centrality Measures</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter13.html#13_2_3">13.2.3. Clustering and Community Detection</a>
+                    </li>
+
+                    
+		    </ul>
+		    
+
+		
+            </ul>
+	    
+    
+  
+    
+  
+    
+  
+    
+</ul>
+            </nav>
+        </aside>
+</div>
+
+
+
+    </div>
+    <!-- Optional JavaScript; choose one of the two! -->
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+    -->
+  <script>
+      var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+  return new bootstrap.Popover(popoverTriggerEl, {html: true})
+})
+  </script>
+  </body>
+</html>

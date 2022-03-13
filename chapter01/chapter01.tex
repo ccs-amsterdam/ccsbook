@@ -62,7 +62,7 @@ infamous saying that in the age of Big Data, correlation is enough \citep{Mayer2
 but one could not be more wrong: as the work of Kitchin shows \citep{Kitchin2014,Kitchin2014data}, computational approaches can
 be well situated within existing epistemologies.
 For the field to advance, computational and theoretical work should be symbiotic, with each informing the other
-and with neither claiming superiority \citep{Margolin2019}.
+and with neither claiming superiority \citep{margolin19}.
 Thus, the computational
 scientists' toolbox includes both more data-driven and more
 theory-driven techniques; some are more bottom-up and inductive,
@@ -89,7 +89,7 @@ We do care about how well it works and especially which biases it may have that 
 but we are not really evaluating any theory on Named Entity Recognition here.
 We are, however, answering a theoretically
 interesting question when we look at the pipeline as a whole,
-that is, when we apply the tools in order to tackle a social scientific problem. 
+that is, when we apply the tools in order to tackle a social scientific problem.
 Of course, what is genuinely interesting depends on one's discipline: For a
 computational linguist, the inner workings of the Named Entity Recognition
 may actually be the interesting part, and our research question just one
@@ -159,7 +159,7 @@ of communication without learning at least either Python or R, and
 preferably  both of them.
 There are very few tasks that you cannot do with at least one of them.
 
-Some people have strong beliefs as to which language is ``better'' -- we 
+Some people have strong beliefs as to which language is ``better'' -- we
 do not subscribe to that view. Most techniques that are relevant to us can be
 done in either language, and personal preference is a big factor. R
 started out as a statistical programming environment, and that
@@ -241,7 +241,7 @@ examples are not only printed in this book, but also available
 online. Students as well as social-scientists who want to brush up
 their skillset should therefore also be able to use this book for
 self-study, without a formal course around it. Lastly, this book can
-also be a reference for readers asking themselves: ``How do I 
+also be a reference for readers asking themselves: ``How do I
 do this again?''. In particular, if the main language you work in is
 R, you can look up how to do similar things in Python and vice versa.
 
@@ -270,7 +270,7 @@ There's often more ways to do something, and our way is not necessarily the only
 So, after you get an example to work, spend some time to play around with it:
 try different options, maybe try it on your own data, or try to achieve the same result in a different way.
 The most important thing to remember is: you can't break anything!
-So just go ahead, have fun, and if nothing works anymore you can always start over from the code example from the book. 
+So just go ahead, have fun, and if nothing works anymore you can always start over from the code example from the book.
 \end{feature}
 
 
@@ -293,10 +293,10 @@ Although there are various web-based services on which you can run code for both
 it is generally better to install an interpreter on your own computer.
 
 After installing Python or R, you can execute code in these languages, but you also want a nice
-\concept{Integrated Development Environment (IDE)} to develop your data analysis scripts. 
+\concept{Integrated Development Environment (IDE)} to develop your data analysis scripts.
 For R we recommend RStudio, which is free to install and is currently the most popular environment for working with R.
 For Python we recommend starting with JupyterLab or JupyterNotebook, which is a browser-based environment for writing and running Python code.
-All of these tools are available and well documented for Windows, MacOS, and Linux. 
+All of these tools are available and well documented for Windows, MacOS, and Linux.
 After explaining how to install R and Python, there is a very important section on installing packages.
 If you plan to only use either R or Python (for now), feel free to skip the part about the other language.
 
@@ -305,7 +305,7 @@ We recommend PyCharm\footnote{\url{https://www.jetbrains.com/pycharm/}} for this
 See their website for download and installation instructions.
 
 
-\begin{feature}\textbf{Anaconda}. An alternative to installing 
+\begin{feature}\textbf{Anaconda}. An alternative to installing
   R, Python, and optional libraries separately and as you need them
   (which we will explain later in this chapter) is to install the so-called
   Anaconda distribution, one of the most used and extensive platforms
@@ -318,7 +318,7 @@ See their website for download and installation instructions.
   Jupyter, and RStudio. It also includes a large set of pre-installed
   packages often used in data science and its own package manager,
   \emph{conda}, which will help you to install and update other
-  libraries or dependencies. In short, Anaconda bundles  almost all the 
+  libraries or dependencies. In short, Anaconda bundles  almost all the
   important software to perform computational analysis of
   communication.
 
@@ -380,7 +380,7 @@ After installing R, let us immediately install RStudio Desktop (the free version
 Go to \url{https://rstudio.com/products/rstudio/download/#download} and download and run the installer for your computer.
 If you open RStudio you should get a screen similar to \reffig{rstudio}.
 If this is the first time you open RStudio you probably won't see the top left pane (the scripts),
-you can create that pane by creating a new \emph{R Script} via the \emph{file} menu or with the green plus icon in the top left corner. 
+you can create that pane by creating a new \emph{R Script} via the \emph{file} menu or with the green plus icon in the top left corner.
 
 \begin{figure}
 \centering
@@ -392,7 +392,7 @@ you can create that pane by creating a new \emph{R Script} via the \emph{file} m
 Of the four panes in RStudio,
 you will probably spend most time in the top left pane, where you can view and edit your analysis \emph{scripts}.
 A script is simply a list of commands that the computer should execute one after the other,
-for example: open your data, do some computations, and make a nice graph. 
+for example: open your data, do some computations, and make a nice graph.
 
 To run a line of code, you can place your cursor anywhere on that line and click the \emph{Run} icon or
 press control+Enter.
@@ -416,7 +416,7 @@ You can also write commands directly in the console and execute them (by pressin
 This can be useful for trying things out or to run things that only need to be run once,
 but in general we would strongly recommend typing all your commands in a script and then executing them.
 That way, the script serves as a log of the commands you used to analyze your data,
-so you (or a colleague) can read and understand how you did the analyses. 
+so you (or a colleague) can read and understand how you did the analyses.
 
 \begin{feature}
   \textbf{RStudio Projects}
@@ -424,7 +424,7 @@ so you (or a colleague) can read and understand how you did the analyses.
   In fact, we would recommend you to now create a new empty project for the examples in this book.
   To do this, click on the \emph{Project} button in the top right and select ``New Project''.
   Then, select New Directory and New Project and enter a name for this project
-  and a parent folder for the project if you don't want it in your Documents. 
+  and a parent folder for the project if you don't want it in your Documents.
   Using a project means that the scripts and data files for your project are all in the same location
   and you don't need to mess around with specifying the locations of files
   (which will probably be different for someone else or on a different computer).
@@ -518,10 +518,10 @@ On some systems \verb|pip3| will not work, so use \verb|pip| in that case
 \paragraph{Installing Jupyter Notebook}
 Next, we will install Jupyter Notebook, which you can use to run all the examples in this book
 and is a great environment for developing Python data analysis scripts.
-Jupyter Notebooks (in IDE JupyterLab if you installed that), 
+Jupyter Notebooks (in IDE JupyterLab if you installed that),
 are run as a web application
 that allows you to create documents that contain code and inline text fragments.
- One of the nicest things about 
+ One of the nicest things about
 the Jupyter Notebook is that the code is inserted in fields (so-called ``cells'') that you
 can run one by one, getting its respective output, which when added to the
 narrative text, will make your script more clean and
@@ -543,7 +543,7 @@ jupyter notebook
 \end{verbatim}
 
 This will print some useful information, including the URL at which you can access the notebook.
-However, it should also directly open this in a browser (e.g. Chrome) so you can directly start working. 
+However, it should also directly open this in a browser (e.g. Chrome) so you can directly start working.
 In your browser you should see the Jupyter main screen similar to the middle window in \reffig{jupyter}.
 Create a new notebook by clicking on the \emph{New} button in the top right and selecting Python 3.
 This should open a window similar to the bottom window in \reffig{jupyter}.
@@ -574,7 +574,7 @@ Throughout this book, we will be using such third-party packages for a variety o
 For example, we will use the R package \emph{tidyverse} and the Python packages \emph{pandas} for data wrangling.
 
 To install these packages on your computer, run the following commands:
-(Note: if you are using Anaconda, replace \ttt{pip3 install} with \ttt{conda install})  
+(Note: if you are using Anaconda, replace \ttt{pip3 install} with \ttt{conda install})
 
 \begin{tcbraster}[raster columns=2,raster equal height=rows,raster valign=top]
    \codex[caption=Installing a package from Jupyter]{chapter01/ch01install.py}
@@ -590,7 +590,7 @@ Every time you use a package, you also need to \emph{activate} it using the \ind
 In general, whenever you get an error \texttt{No module named 'pandas'} (Python) or \texttt{there is no package called ‘tidyverse’},
 you can just install the package with that name using the code listed above.
 If you get an error such as \texttt{name 'pandas' is not defined} (Python) or \texttt{object 'ggplot' not found} (R),
-it is quite possible you forgot to activate the package that includes that function. 
+it is quite possible you forgot to activate the package that includes that function.
 
 
 \begin{feature}

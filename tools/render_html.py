@@ -21,7 +21,7 @@ args = parser.parse_args()
 bibliography = read_bbl("main.bbl")
 
 base = Path.cwd()
-out = Path("/tmp/book")
+out = base / "docs"
 out.mkdir(exist_ok=True)
 toc = TOC(base)
 template = get_template('chapter.html')

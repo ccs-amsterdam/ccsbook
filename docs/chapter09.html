@@ -1,0 +1,2402 @@
+
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+      <link href="ccsbook.css" rel="stylesheet">
+      <!-- MathJax -->
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js">
+  </script>
+
+    <title>Computational Analysis of Communication</title>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-light fixed-top bg-light">
+    <div class="container-xxl">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#toc" aria-controls="toc" aria-expanded="false" aria-label="Toggle TOC">
+                <div></div>
+                <div></div>
+                <div></div>
+            </button>
+	    <div class='navhome'>
+              <a href="index.html">Computational Analysis of Communication</a>
+	      </div>
+    </div>
+    </nav>
+    <div id='content' class='container-xxl'>
+
+        <!-- Sidebar -->
+        <aside class="toc">
+            <nav id="toc" class="collapse">
+                <div class="subtoc">
+                    <ul class="list-unstyled components">
+  
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+                  <div class="rightbar-header">In this chapter</div>
+
+            <ul class="list-unstyled" id="toc_chap_9">
+<li class='toc-section'>9 Processing text</li>
+
+              
+	          
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_1">9.1. Text as a String of Characters</a>
+		    </li>
+		    
+		    <ul class="list-unstyled list-subsections" id="toc_chap_1">
+		    
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_1_1">9.1.1. Methods for Dealing With Text</a>
+                    </li>
+
+                    
+		    </ul>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_2">9.2. Regular Expressions</a>
+		    </li>
+		    
+		    <ul class="list-unstyled list-subsections" id="toc_chap_2">
+		    
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_2_1">9.2.1. Regular Expression Syntax</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_2_2">9.2.2. Example Patterns</a>
+                    </li>
+
+                    
+		    </ul>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_3">9.3. Using Regular Expressions in Python and R</a>
+		    </li>
+		    
+		    <ul class="list-unstyled list-subsections" id="toc_chap_3">
+		    
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_3_1">9.3.1. Splitting and Joining Strings, and Extracting Multiple Matches</a>
+                    </li>
+
+                    
+		    </ul>
+		    
+
+		
+            </ul>
+	    
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+</ul>
+                </div>
+
+		<div class="rightbar-header">Table of Contents</div>
+                <ul class="list-unstyled components">
+    
+        <li class="active toc-chapter ">
+            <a href="chapter01.html">1 Introduction</a>
+            <!--<a href="#toc_chap_1" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_1"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_1">
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_1">1.1. The Role of Computational Analysis in the Social Sciences</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_2">1.2. Why Python and/or R?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_3">1.3. How to use this book</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_4">1.4. Installing R and Python</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_5">1.5. Installing Third-Party Packages</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter02.html">2 Fun with Data</a>
+            <!--<a href="#toc_chap_2" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_2"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_2">
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_1">2.1. Fun With Tweets</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_2">2.2. Fun With Textual Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_3">2.3. Fun With Visualizing Geographic Information</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_4">2.4. Fun With Networks</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter03.html">3 Programming Concepts</a>
+            <!--<a href="#toc_chap_3" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_3"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_3">
+                
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_1">3.1. About Objects and Data Types</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_2">3.2. Simple Control Structures: Loops and Conditions</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_3">3.3. Functions and Methods</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter04.html">4 How to write code</a>
+            <!--<a href="#toc_chap_4" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_4"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_4">
+                
+                    <li class="toc-section">
+                        <a href="chapter04.html#4_1">4.1. Re-using Code: How Not to Re-Invent the Wheel</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter04.html#4_2">4.2. Understanding Errors and Getting Help</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter04.html#4_3">4.3. Best Practice: Beautiful Code, GitHub, and Notebooks</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter05.html">5 Files and Data Frames</a>
+            <!--<a href="#toc_chap_5" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_5"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_5">
+                
+                    <li class="toc-section">
+                        <a href="chapter05.html#5_1">5.1. Why and When Do We Use Data Frames?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter05.html#5_2">5.2. Reading and Saving Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter05.html#5_3">5.3. Data from online sources</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter06.html">6 Data Wrangling</a>
+            <!--<a href="#toc_chap_6" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_6"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_6">
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_1">6.2. Calculating Values</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_2">6.3. Grouping and Aggregating</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_3">6.4. Merging Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_4">6.5. Reshaping Data: Wide To Long And Long To Wide</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter07.html">7 Exploratory data analysis</a>
+            <!--<a href="#toc_chap_7" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_7"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_7">
+                
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_1">7.1. Simple Exploratory Data Analysis</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_2">7.2. Visualizing Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_3">7.3. Clustering and Dimensionality Reduction</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter08.html">8 Machine Learning</a>
+            <!--<a href="#toc_chap_8" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_8"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_8">
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_1">8.1. Statistical Modeling and Prediction</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_2">8.2. Concepts and Principles</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_3">8.3. Classical Machine Learning: From Na&#34;ive Bayes to Neural Networks</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_4">8.4. Deep Learning</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_5">8.5. Validation and Best Practices</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter toc-chapter-current">
+            <a href="chapter09.html">9 Processing text</a>
+            <!--<a href="#toc_chap_9" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_9"></a>
+            <ul class="collapse list-unstyled show" id="toc_chap_9">
+                
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_1">9.1. Text as a String of Characters</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_2">9.2. Regular Expressions</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_3">9.3. Using Regular Expressions in Python and R</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter10.html">10 Text as data</a>
+            <!--<a href="#toc_chap_10" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_10"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_10">
+                
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_1">10.1. The Bag of Words and the Term-Document Matrix</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_2">10.2. Weighting and Selecting Documents and Terms</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_3">10.3. Advanced Representation of Text</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter11.html">11 Automatic analysis of text</a>
+            <!--<a href="#toc_chap_11" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_11"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_11">
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_1">11.1. Deciding on the Right Method</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_2">11.2. Obtaining a Review Dataset</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_3">11.3. Dictionary Approaches to Text Analysis</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_4">11.4. Supervised Text Analysis: Automatic Classification and Sentiment Analysis</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_5">11.5. Unsupervised Text Analysis: Topic Modeling</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter12.html">12 Scraping online data</a>
+            <!--<a href="#toc_chap_12" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_12"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_12">
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_1">12.1. Using Web APIs: From Open Resources to Twitter</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_2">12.2. Retrieving and Parsing Web Pages</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_3">12.3. Authentication, Cookies, and Sessions</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_4">12.4. Ethical, Legal, and Practical Considerations</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter13.html">13 Network Data</a>
+            <!--<a href="#toc_chap_13" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_13"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_13">
+                
+                    <li class="toc-section">
+                        <a href="chapter13.html#13_1">13.1. Representing and Visualizing Networks</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter13.html#13_2">13.2. Social Network Analysis</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter14.html">14 Multimedia data</a>
+            <!--<a href="#toc_chap_14" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_14"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_14">
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_1">14.1. Beyond Text Analysis: Images, Audio and Video</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_2">14.2. Using Existing Libraries and APIs</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_3">14.3. Storing, Representing, and Converting Images</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_4">14.4. Image Classification</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter15.html">15 Scaling up and distributing</a>
+            <!--<a href="#toc_chap_15" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_15"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_15">
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_1">15.1. Storing Data in SQL and noSQL Databases</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_2">15.2. Using Cloud Computing</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_3">15.3. Publishing Your Source</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_4">15.4. Distributing Your Software as Container</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter16.html">16 Where to go next</a>
+            <!--<a href="#toc_chap_16" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_16"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_16">
+                
+                    <li class="toc-section">
+                        <a href="chapter16.html#16_1">16.1. How Far Have We Come?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter16.html#16_2">16.2. Where To Go Next?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter16.html#16_3">16.3. Open, Transparent, and Ethical Computational Science</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+</ul>
+            </nav>
+        </aside>
+	
+      
+  
+
+    <div class="css-layout">
+      <!-- Main Content -->
+      <div class="css-main">
+	<div class='chevrons'>
+&laquo;
+	  
+	  <a href='chapter08.html'>Ch. 8 Machine Learning</a>
+	  
+	  
+	  | <a href='chapter10.html'>Ch. 10 Text as data</a>&raquo;
+	  
+</div>
+	  <br/>
+            
+<h1>  <small class='text-muted'><a class='anchor' href='#chap:protext' name='chap:protext'>9.</a></small>Processing text
+</h1>
+
+
+<div class='abstract'>
+  <span class='caption'>
+Abstract
+  </span>
+Many datasets that are relevant for social science consist of textual data, from political discussions and newspaper archives to open-ended survey questions and reviews. This chapter gives an introduction to dealing with textual data using base functions in Python and (mostly) the <i>stringr</i> package in R.
+
+</div>
+
+<div class='keywords'>
+  <span class='caption'>Keywords:</span>
+text representation, text cleaning, regular expressions
+</div>
+<div class='objectives'>
+  <div class='caption'>Chapter objectives:</div>
+  <ul><li> Understand how text is represented in the computer
+</li><li> Be able to clean up and alter text
+</li><li> Understand and be able to use regular expressions
+</li>
+  </ul>
+</div><div class='feature'><b>Packages used in this chapter</b><br/>
+  This chapter introduces the packages for handling textual data.
+  For R, this is mainly the <i>stringr</i> package (included in <i>tidyverse</i>).
+  In Python, most functions are built-in, but will show how to use these functions in <i>pandas</i> and also introduce the <i>regex</i> package, an alternative to built-in regular expressions.
+You can install these packages with the code below if needed  (see Section&nbsp;<a href='chapter01.html#1_4'>1.4</a> for more details):
+
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>!pip3 install regex pandas</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>install.packages(c("glue", "tidyverse"))</code>  </pre>
+</div></div> After installing, you need to import (activate) the packages every session:
+
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>import regex</code>
+<code>import re</code>
+<code>import pandas as pd</code>
+<code></code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>library(glue)</code>
+<code>library(tidyverse)</code>
+&nbsp;
+&nbsp;  </pre>
+</div></div>
+,
+</div>
+<p>
+When dealing with textual data, an important step is to normalize the data. Such preprocessing ensures that noise is removed, and reduces the amount of data to deal with. In Section&nbsp;<a href='chapter05.html#5_2_2'>5.2.2</a> we explained how to read data from different formats, such as txt, csv or json that can include textual data, and we also mentioned some of the challenges when reading text (e.g., encoding/decoding from/to Unicode). In this section we cover typical cleaning steps such as lowercasing and removing punctuation, HTML tags and boilerplate.
+</p>
+
+<p>
+As a computational communication scientist you will come across many sources of text that range from electronic versions of newspapers in HTML to parliamentary speeches in PDF. Moreover, most of the contents in their original shape will include data that will not be of interest for the analysis but, instead,  will produce noise that might negatively affect the quality of the research. You have to decide which parts of the raw text should be considered for analysis and determine the shape of these contents in order to have a good input in the analytical process.
+</p>
+
+<p>
+As the difference between useful information and noise is determined by your research question,
+there is not a fixed list of steps to take that can guide you in this preprocessing stage.
+It is highly likely that you will have to test different combinations of steps and assess what  the best options are.
+For example, in some cases keeping capital letters within a chat conversation or a news comment might be valuable to detect the tone of the message, but in more formal speeches transforming the whole text to lowercases would help to normalize the content.
+However, it is true that there are some typical challenges to reducing the noise from the text.
+</p>
+
+<p>
+This chapter and the next will show you how to clean and manipulate text to transform the raw strings of letters into useful data.
+This chapter focuses on dealing with the text as characters and especially shows you how to use <i>regular expressions</i> to search and replace textual content.
+The next chapter will focus on text as words and shows how you can represent text in a suitable format for further computational analysis.
+</p>
+
+<h2>  <small class='text-muted'><a class='anchor' href='#9_1' name='9_1'>9.1.</a></small>Text as a String of Characters
+</h2>
+
+<div class='feature'><b>Important: Unicode and Encodings</b>
+  Technically speaking, text is represented as bytes (numbers) rather than characters.
+  The  Unicode standard determines how these bytes should be interpreted or &ldquo;decoded&rdquo;.
+  This chapter assumes that the bytes in a file are already &ldquo;decoded&rdquo; into characters (or Unicode code points),
+  and we can just work with the characters.
+  Especially if you are not working with English text, it is very important to make sure you understand Unicode and encodings
+  and check that the texts you work with are decoded properly.
+  Please see Section&nbsp;<a href='chapter05.html#5_2_2'>5.2.2</a> for more information on how this works.
+</div>
+<p>
+When we think about text, we might think of sentences or words, but the computer only &ldquo;thinks&rdquo; about letters:
+text is represented internally as a string of characters.
+This is reflected of course in the type name, with R calling it a <i>character</i> vector and Python a <i>string</i>.
+</p>
+<div class='code-example'><h4>
+  <small class='text-muted'><a class='anchor' href='#ex:text' name='ex:text'>Example 9.1.</a></small><br />
+Internal representation and of single and multiple texts.</h4>
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>text = "This is text."</code>
+<code>print(f"type(text): {type(text)}")</code>
+<code>print(f"len(text): {len(text)}")</code>
+<code>print(f"text[0]: '{text[0]}'")</code>
+<code>print(f"text[5:7]: '{text[5:7]}'")</code>
+<code>print(f"text[-1]: '{text[-1]}'")</code>
+<code>print(f"text[-4:]: '{text[-5:]}'")</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>text = "This is text."</code>
+<code>glue("class(text): {class(text)}")</code>
+<code>glue("length(text): {length(text)}")</code>
+<code>glue("text[1]: {text[1]}")</code>
+<code>glue("str_length(text): {str_length(text)}")</code>
+<code>glue("str_sub(text, 6,7): {str_sub(text, 6,7)}")</code>
+<code></code>  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>type(text): &lt;class 'str'&gt;
+len(text): 13
+text[0]: 'T'
+text[5:7]: 'is'
+text[-1]: '.'
+text[-4:]: 'text.'</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>class(text): character
+length(text): 1
+text[1]: This is text.
+str_length(text): 13
+str_sub(text, 6,7): is</pre>
+</div></div><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>words = ["These", "are", "words"]</code>
+<code>print(f"type(words): {type(words)}")</code>
+<code>print(f"len(words): {len(words)}")</code>
+<code>print(f"words[0]: '{words[0]}'")</code>
+<code>print(f"words[1:3]: '{words[1:3]}'")</code>
+&nbsp;
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>words = c("These", "are", "words")</code>
+<code>glue("class(words): {class(words)}")</code>
+<code>print("length(words): {length(words)}")</code>
+<code>glue("words[1]: {words[1]}")</code>
+<code># Note: use collapse to convert to single value</code>
+<code>words_2_3 = str_c(words[2:3], collapse=", ")</code>
+<code>glue("words[2:3]: {words_2_3}")</code>  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>type(words): &lt;class 'list'&gt;
+len(words): 3
+words[0]: 'These'
+words[1:3]: '['are', 'words']'</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>class(words): character
+[1] "length(words): {length(words)}"
+words[1]: These
+words[2:3]: are, words</pre>
+</div></div></div>
+<p>
+As a simple example, the figure at the top of Example&nbsp;<a href='#ex:text'>9.1</a> shows how the text &ldquo;This is text.&rdquo; is represented.
+This text is split into separate characters, with each character representing a letter (or space,  punctuation, emoji, or Chinese character).
+These characters are indexed starting from the first one, with (as always) R counting from one, but Python counting from zero.
+</p>
+
+<p>
+In Python, texts are represented as <code>str</code> (string) objects, in which we can directly address the individual characters by their position:
+<code>text[0]</code> is the first character of <code>text</code>, and so on.
+In R, however, texts (like all objects) represent columns (or vectors) rather than individual values.
+Thus, <code>text[1]</code> in R is the first text in a series of text.
+To access individual characters in a text, you have to use a function such as <code>str_length</code> and <code>str_sub</code> that will be discussed in more detail below.
+This also means that in Python, if you have a column (or list) of strings that you need to apply an operation to,
+you either need to use one of /textitPandas' methods shown below or use a <i>for loop</i> or <i>list comprehension</i> to iterate over all the strings (see also section 3.2).
+</p>
+
+<h3>  <small class='text-muted'><a class='anchor' href='#9_1_1' name='9_1_1'>9.1.1.</a></small>Methods for Dealing With Text
+</h3>
+
+<div class='feature'><b>Stringi, stringr, and base string operations in R</b>
+  As is so often the case, R has multiple packages that partially replicate functionality for basic text handling.
+  In this book we will mainly use the <i>stringr</i> package, which is part of <i>tidyverse</i>.
+  This is not because that package is necessarily better or easier than the alternative <i>stringi</i> package
+  or the built-in (<i>base</i>) methods.
+  However, the methods are well-documented, clearly named, and consistent with other tidyverse functions,
+  so for now it is easiest to stick to <i>stringr</i>.
+  In particular, <i>stringr</i> is very similar to <i>stringi</i> (and in fact is partially based on it).
+  So, to give one example, the function <code>str_detect</code> is more or less the same as <code>stringi::str_detect</code> and <code>base::grepl</code>.
+</div>
+<p>
+The first thing to keep in mind is that once you load any text in R or Python, you usually store this content as a <i>character</i> or <i>string</i> object (you may also often use <i>lists</i> or <i>dictionaries</i>, but they will have strings inside them), which means that basic operations and conditions of this data type apply, such as indexing or slicing to access individual characters or substrings (see Section&nbsp;<a href='chapter03.html#3_1'>3.1</a>). In fact, base strings operations are very powerful to clean your text and eliminate a large amount of noise.  Table&nbsp;<a href='#tab:stringoperations'>9.1</a> summarizes some useful operations on strings in R and Python that will help you in this stage.
+</p>
+<div class='figure'><h4>
+  <small class='text-muted'><a class='anchor' href='#tab:stringoperations' name='tab:stringoperations'>Table 9.1.</a></small><br />
+Useful strings operations in R and Python to clean noise.</h4>
+<table class='table'><thead>
+  <tr>
+    <th>
+
+    String operation      
+    </th>
+    <th>
+ R (<i>stringr</i>)  
+    </th>
+    <th>
+ Python  
+    </th>
+    <th>
+ Pandas
+    </th>
+    <th>
+
+    </th>
+
+  </tr>
+  <tr>
+    <th>
+
+    </th>
+    <th>
+ (whole column)  
+    </th>
+    <th>
+ (single string) 
+    </th>
+    <th>
+ (whole column)
+    </th>
+    <th>
+
+    </th>
+
+  </tr>
+</thead><tbody>
+  <tr>
+    <td>
+
+Count characters in s 
+    </td>
+    <td>
+<code>str_length(s)</code>          
+    </td>
+    <td>
+<code>len(s)</code>        
+    </td>
+    <td>
+<code>s.str.len()</code>  
+    </td>
+    <td>
+
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+Extract a substring   
+    </td>
+    <td>
+<code>str_sub(s, n1, n2)</code>     
+    </td>
+    <td>
+<code>s[n1:n2]</code> 
+    </td>
+    <td>
+<code>s.str.slice(n1, n2)</code> 
+    </td>
+    <td>
+
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+Test if s contains s2 
+    </td>
+    <td>
+<code>str_detect(s, s2)</code>\(^*\)       
+    </td>
+    <td>
+<code>s2 in s</code>       
+    </td>
+    <td>
+<code>s.str.match(s2)\(^*\)</code> 
+    </td>
+    <td>
+
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+Strip spaces          
+    </td>
+    <td>
+<code>trimws(s)</code>               
+    </td>
+    <td>
+<code>s.strip()</code>     
+    </td>
+    <td>
+<code>s.str.strip()</code> 
+    </td>
+    <td>
+
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+Convert to lowercase  
+    </td>
+    <td>
+<code>tolower(s)</code>              
+    </td>
+    <td>
+<code>s.lower()</code>     
+    </td>
+    <td>
+<code>s.str.lower()</code> 
+    </td>
+    <td>
+
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+Convert to uppercase  
+    </td>
+    <td>
+<code>toupper(s)</code>              
+    </td>
+    <td>
+<code>s.upper()</code>     
+    </td>
+    <td>
+<code>s.str.upper()</code> 
+    </td>
+    <td>
+
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+Find s1 and replace by s2 
+    </td>
+    <td>
+<code>str_replace(s, s1, s2)</code>\(^*\) 
+    </td>
+    <td>
+<code>s.replace(s1, s2)</code> 
+    </td>
+    <td>
+<code>s.str.replace(s1, s2)\(^*\)</code>  
+    </td>
+    <td>
+
+    </td>
+
+  </tr>
+</tbody>
+</table></div>
+<p>
+Let us apply some of these functions/methods to a simple Wikipedia
+text that contains HTML tags, or boilerplate, and upper/lower
+case letters.
+Using the <i>stringr</i> function <code>str_replace_all</code> in R
+and <code>replace</code> in Python we can do a find-and-replace and replace substrings
+by others (in our case, replace <code>&lt;b&gt;</code> with a space, for instance).
+To remove unnecessary double spaces we apply the <code>str_squish</code> function provided by <i>stringr</i> and in Python,
+we first chunk our string into a list of words by using the <code>split</code> string method, before we use the <code>join</code> method
+to join them again with now a single space.
+In the case of converting letters from upper to lower case, we use the base R function <code>tolower</code> and the string
+method <code>lower</code> in Python.
+Finally, the base R function <code>trimws</code> and the
+Python string method <code>strip</code> remove the white space from the beginning
+and end of the string.
+Example&nbsp;<a href='#ex:clean'>9.2</a> shows how to conduct this cleaning process.
+</p>
+
+<p>
+While you can get quite far with these techniques, there are more advanced and flexible approaches possible.
+For instance, you probably do not want to list <i>all possible</i> HTML tags in separate <code>replace</code> methods or <code>str_replace_all</code> functions. In the next section, we therefore show how to use so-called <i>regular expressions</i> to formulate such generalizable patterns.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:clean' name='ex:clean'>Example 9.2.</a></small><br />
+Some basic text cleaning approaches</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>text = """   &lt;b&gt;Communication&lt;/b&gt;    </code>
+<code>    (from Latin communicare, meaning to share) """</code>
+<code># remove tags:</code>
+<code>cleaned=text.replace("&lt;b&gt;","").replace("&lt;/b&gt;","")</code>
+<code># normalize white space</code>
+<code>cleaned = " ".join(cleaned.split())</code>
+<code># lower case</code>
+<code>cleaned = cleaned.lower()</code>
+<code># trim spaces from start and end</code>
+<code>cleaned = cleaned.strip()</code>
+<code></code>
+<code>print(cleaned)</code>
+&nbsp;
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>text = "    &lt;b&gt;Communication&lt;/b&gt;    </code>
+<code>     (from Latin communicare, meaning to share)  "</code>
+<code>cleaned = text %&gt;% </code>
+<code>  # remove HTML tags:</code>
+<code>  str_replace_all("&lt;b&gt;", " ")  %&gt;% </code>
+<code>  str_replace_all("&lt;/b&gt;", " ")  %&gt;% </code>
+<code>  # normalize white space </code>
+<code>  str_squish() %&gt;%</code>
+<code>  # lower case</code>
+<code>  tolower()  %&gt;% </code>
+<code>  # trim spaces at start and end</code>
+<code>  trimws()</code>
+<code></code>
+<code>glue(cleaned)</code>  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>communication (from latin communicare, meaning to share)</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>communication (from latin communicare, meaning to share)</pre>
+</div></div></div><div class='feature'><b>To regex or not to regex in Python</b>
+  You may wonder why we introduce basic string methods like <code>replace</code> or the <code>split</code>-then-<code>join</code> trick, if everything can be done with regular expressions anyway. There are a couple of reasons for still using these methods: first, they are easy and don't have any dependencies. If you just want to replace a single thing, then you don't need to import any additional module. Second, regular expressions are considerably slower than string methods &ndash; in most cases, you won't notice, but if you do a lot of replacements (think in thousands per news article, for a million  articles), then this may matter. Third, you can use the <code>join</code> trick also for other things like punctuation removal &ndash; in this case, by generating a list of all characters in a string called <code>text</code> provided they are no punctuation characters, and then joining them directly to each other:
+<code>from string import punctuation; &#34;&#34;.join([c for c in text if c not in punctuation])</code></div>
+<h2>  <small class='text-muted'><a class='anchor' href='#9_2' name='9_2'>9.2.</a></small>Regular Expressions
+</h2>
+
+
+<p>
+A <i>regular expression</i> or <i>regex</i> is a powerful language to locate strings that conform to a given pattern. For instance, we can extract usernames or email-addresses from text, or normalize spelling variations and improve the cleaning methods covered in the previous section. Specifically, regular expressions are a sequence of characters that we can use to design a pattern and then use this pattern to <i>find</i> strings (identify or extract) and also <i>replace</i> those strings by new ones.
+</p>
+
+<p>
+Regular expressions look complicated, and in fact they take time to get used to initially.
+For example, a relatively simple (and not totally correct) expression to match an email address is <code>[\w\.-]+@[\w\.-]+\.\w\w+</code>,
+which doesn't look like anything at all unless you know what you are looking for.
+The good news is that regular expression syntax is the same in R and Python (and many other languages),
+so once you learn regular expressions you will have acquired a powerful and versatile tool for text processing.
+</p>
+
+<p>
+In the next section, we will first review general expression syntax without reference to running them in Python or R.
+Subsequently, you will see how you can apply these expressions to inspect and clean texts in both languages.
+</p>
+
+<h3>  <small class='text-muted'><a class='anchor' href='#9_2_1' name='9_2_1'>9.2.1.</a></small>Regular Expression Syntax
+</h3>
+
+
+<p>
+At its core, regular expressions are patters for matching sequences of characters.
+In the simplest case, a regular letter just matches that letter, so the pattern &ldquo;cat&rdquo; matches the text &ldquo;cat&rdquo;.
+Next, there are various wildcards, or ways to match different letters.
+For example, the period (<code>.</code>) matches any character, so <code>c.t</code> matches both &ldquo;cat&rdquo; and &ldquo;cot&rdquo;.
+You can place multiple letters between square brackets to create a <i>character class</i> that matches all the specified letters, so <code>c[au]t</code> matches &ldquo;cat&rdquo; and &ldquo;cut&rdquo;, but not &ldquo;cot&rdquo;.
+There are also a number of pre-defined classes, such as <code>\w</code> which matches &ldquo;word characters&rdquo; (letters, digits, and (curiously) underscores).
+</p>
+
+<p>
+Finally, for each character or group of characters you can specify how often it should occur.
+For example, <code>a+</code> means one or more a's while <code>a?</code> means zero or one a, so <code>lo+l</code> matches `lol', `lool', etc.,
+and <code>lo?l</code> matches `lol' or `ll'.
+This raises the question, of course, of how to look for actual occurrences of a plus, question mark, or period.
+The solution is to <i>escape</i> these special symbols by placing a backslash (<code>\</code>) before them:
+<code>a\+</code> matches the literal text &ldquo;a+&rdquo;, and <code>\\w</code> (with a double backslash) matches the literal text &ldquo;\w&rdquo;.
+</p>
+
+<p>
+Now, we can have another look at the example email address pattern given above.
+The first part, <code>[\w\.-]</code> creates a character class containing word characters, (literal) periods, and dashes.
+Thus, <code>[\w\.-]+@[\w\.-]+</code> means one or more letters, digits, underscores, periods, or dashes, followed by an at sign,
+followed by one or more letters, digits, etc.
+Finally, the last part <code>\.\w\w+</code> means a literal period, a word character, and one or more word characters.
+In other words, we are looking for a name (possibly containing dashes or periods) before the at sign,
+followed by a domain, followed by a top level domain (like <code>.com</code>) of at least two characters.
+</p>
+
+<p>
+In essence, thinking in terms of what you want to match and how often
+you want to match it is all there is to regular expressions.
+However, it will take some practice to get comfortable with turning something sensible (such as an email address) into a correct regular expression pattern.
+The next subsection will explain regular expression syntax in more detail, followed by an explanation of grouping,
+and in the final subsection we will see how to use these regular expressions in R and Python to do text cleaning.
+</p>
+<div class='figure'><h4>
+  <small class='text-muted'><a class='anchor' href='#tab:regex' name='tab:regex'>Table 9.2.</a></small><br />
+Regular expression syntax</h4>
+<table class='table'><thead>
+  <tr>
+    <th colspan="2">
+Function      
+    </th>
+    <th>
+ Syntax   
+    </th>
+    <th>
+ Example 
+    </th>
+    <th>
+ Matches    
+    </th>
+
+  </tr>
+</thead><tbody>
+  <tr>
+    <td colspan="2">
+<em>Specifier: What to match</em> 
+    </td>
+    <td colspan="3">
+
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+ All characters except for new lines   
+    </td>
+    <td>
+<code>.</code> 
+    </td>
+    <td>
+<code>d.g</code> 
+    </td>
+    <td>
+<code>d<b>i</b>g</code>, <code>d<b>!</b>g</code>
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+ Word characters\(^*\)
+  (letters, digits, _)         
+    </td>
+    <td>
+<code>\w</code> 
+    </td>
+    <td>
+<code>d\wg</code> 
+    </td>
+    <td>
+<code>dig</code>, <code>dog</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+ Digits\(^*\) (0 to 9)                       
+    </td>
+    <td>
+<code>\d</code> 
+    </td>
+    <td>
+<code>202\d</code> 
+    </td>
+    <td>
+<code>2020</code>, <code>2021</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+ Whitespace\(^*\) (space, tab, newline) 
+    </td>
+    <td>
+<code>\s</code> 
+    </td>
+    <td colspan="2">
+
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+ Newline	
+    </td>
+    <td>
+<code>\n</code> 
+    </td>
+    <td colspan="2">
+
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+ Beginning of the string	
+    </td>
+    <td>
+<code>^</code> 
+    </td>
+    <td>
+<code>^go</code> 
+    </td>
+    <td>
+<code><b>go</b><span class='gray'></span>go go</code>
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+ Ending of the string   
+    </td>
+    <td>
+<code>$</code> 
+    </td>
+    <td>
+<code>go$</code> 
+    </td>
+    <td>
+<code><span class='gray'></span>go go <b>go</b></code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+ Beginning or end of word 
+    </td>
+    <td>
+<code>\b</code> 
+    </td>
+    <td>
+<code>\bword\b</code> 
+    </td>
+    <td>
+<code><span class='gray'></span>a <b>word</b><span class='gray'></span>!</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+ Either first or second option  
+    </td>
+    <td>
+<code>&hellip;|&hellip;</code> 
+    </td>
+    <td>
+<code>cat|dog</code> 
+    </td>
+    <td>
+<code>cat</code>, <code>dog</code>
+    </td>
+
+  </tr>
+  <tr>
+    <td colspan="2">
+<em>Quantifier: How many to match</em> 
+    </td>
+    <td colspan="3">
+
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+ Zero or more 
+    </td>
+    <td>
+<code>*</code> 
+    </td>
+    <td>
+<code>d.*g</code> 
+    </td>
+    <td>
+<code>dg</code>, <code>drag</code>, <code>d = g</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+ Zero or more (non-greedy) 
+    </td>
+    <td>
+<code>*?</code> 
+    </td>
+    <td>
+<code>d.*?g</code> 
+    </td>
+    <td>
+<code><b>dog</b><span class='gray'></span>g</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+ One or more 
+    </td>
+    <td>
+<code>+</code>  
+    </td>
+    <td>
+<code>\d+&percnt;</code> 
+    </td>
+    <td>
+<code>1&percnt;</code>, <code>200&percnt;</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+ One or more (non-greedy) 
+    </td>
+    <td>
+<code>+?</code>  
+    </td>
+    <td>
+<code>\d+&percnt;</code> 
+    </td>
+    <td>
+<code><span class='gray'></span>20<b>0&percnt;</b></code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+ Zero or one  
+    </td>
+    <td>
+<code>?</code> 
+    </td>
+    <td>
+<code>colou?r</code> 
+    </td>
+    <td>
+<code>color</code>, <code>colour</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+ Exactly \(n\) times  
+    </td>
+    <td>
+<code>{n}</code> 
+    </td>
+    <td>
+<code>\d{4}</code> 
+    </td>
+    <td>
+<code>1940</code>, <code>2020</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+ At least \(n\) times  
+    </td>
+    <td>
+<code>{n,}</code> 
+    </td>
+    <td colspan="2">
+
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+ Between \(n\) and \(m\) times  
+    </td>
+    <td>
+<code>{n,m}</code> 
+    </td>
+    <td colspan="2">
+
+    </td>
+
+  </tr>
+  <tr>
+    <td colspan="2">
+<em>Other constructs</em> 
+    </td>
+    <td colspan="3">
+
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+ Groups 
+    </td>
+    <td>
+<code>(&hellip;)</code> 
+    </td>
+    <td>
+<code>'(bla )+'</code> 
+    </td>
+    <td>
+<code>'bla bla bla'</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+ Selection of characters 
+    </td>
+    <td>
+<code>[&hellip;]</code> 
+    </td>
+    <td>
+<code>d[iuo]g</code>
+    </td>
+    <td>
+<code>dig</code>, <code>dug</code>, <code>dog</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+ Range of characters in selection 
+    </td>
+    <td>
+<code>[a-z]</code> 
+    </td>
+    <td colspan="2">
+
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+ Everything except selection 
+    </td>
+    <td>
+<code>[^...]</code> 
+    </td>
+    <td colspan="2">
+
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+ Escape special character 
+    </td>
+    <td>
+<code>\</code> 
+    </td>
+    <td>
+<code>3\.14</code> 
+    </td>
+    <td>
+<code>3.14</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td colspan="4">
+<em>Unicode character properties\(^\dagger\)</em> 
+    </td>
+    <td>
+
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+ Letters\(^*\) 
+    </td>
+    <td colspan="2">
+<code>\p{LETTER}</code> 
+    </td>
+    <td>
+<code>words</code>, &#21336;&#35486;
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+ Punctuation\(^*\) 
+    </td>
+    <td colspan="2">
+ <code>\p{PUNCTUATION}</code> 
+    </td>
+    <td>
+ . , : 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+ Quotation marks\(^*\) 
+    </td>
+    <td colspan="2">
+<code>\p{QUOTATION MARK}</code> 
+    </td>
+    <td>
+ ' ` " «  
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+ Emoji\(^*\) 
+    </td>
+    <td colspan="2">
+<code>\p{EMOJI}</code> 
+    </td>
+    <td>
+&#x1F60A;  
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+ Specific scripts, e.g. Hangul\(^*\)
+    </td>
+    <td colspan="2">
+<code>\p{HANG}</code> 
+    </td>
+    <td>
+&#54620;&#44544;
+    </td>
+
+  </tr>
+</tbody>
+</table></div>
+<p>
+In Table&nbsp;<a href='#tab:regex'>9.2</a> you will find an overview of the most important parts of regular expression syntax.<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 1" data-bs-content="
+  Note that this is not a full review of everything that is possible with regular expressions, but this includes the most used options and should be enough for the majority of cases. Moreover, if you descend into the more specialized aspects of regular expressions (with beautiful names such as &ldquo;negative lookbehind assertions&rdquo;) you will also run into differences between Python, R, and other languages, while the features used in this chapter should function in most implementations you come across unless specifically noted.
+">[1]</a>
+ The first part shows a number of common specifiers for determining what to match, e.g. letters, digits, etc.,
+followed by the quantifiers available to determine how often something should be matched.
+These quantifiers always follow a specifier, i.e. you first say what you're looking for, and then how many of those you need.
+Note that by default quantifiers are <i>greedy</i>, meaning they match as many characters as possible.
+For example, <code>&lt;.*&gt;</code> will match everything between angle brackets, but if you have something like `&lt;p>a paragraph&lt;/p>'
+it will happily match everything from the first opening bracket to the last closing bracket.
+By appending a question mark (<code>?</code>) to the quantifier, it becomes <i>non-greedy</i>.
+so, <code>&lt;.*?&gt;</code> will match the individual `&lt;p>' and `&lt;/p>' substrings.
+</p>
+
+<p>
+The third section discusses other constructs.
+<code>Groups</code> are formed using parentheses <code>()</code> and are useful in at least three ways.
+First, by default a quantifier applies to the letter directly before it, so <code>no+</code> matches &ldquo;no&rdquo;, &ldquo;nooo&rdquo;, etc.
+If you group a number of characters you can apply a quantifier to the group. So, <code>that&#39;s( not)? good</code> matches either &ldquo;that's not good&rdquo; or 	&ldquo;that's good&rdquo;.
+Second, when using a vertical bar (|) to have multiple options, you very often want to put them into a group so you can use it as part of a larger pattern.
+For example, <code>a( great| fantastic)? victory</code> matches either &ldquo;a victory&rdquo;, &ldquo;a great victory&rdquo;, or &ldquo;a fantastic victory&rdquo;.
+Third, as will be discussed below in Section&nbsp;<a href='#9_3'>9.3</a>, you can use groups to capture (extract) a specific part of a string, e.g. to get only the domain part of a web address.
+</p>
+
+<p>
+The other important construct are <i>character classes</i>, formed using square brackets <code>[]</code>.
+Within a character class, you can specify a number of different characters that you want to match, using a dash (<code>-</code>) to indicate a range.
+You can add as many characters as you want: <code>[A-F0-9]</code> matches digits and capital letters A through F.
+You can also invert this selection using an initial caret: <code>[^a-z]</code> matches everything except for lowercase Latin letters.
+Finally, you sometimes need to match a control character  (e.g. <code>+</code>, <code>?</code>, <code>\</code>). Since those characters have a special meaning within a regular expressing, they cannot be used directly. The solution is to add a backslash (<code>\</code>) behind them to <i>escape</i> them:
+<code>.</code> matches any character, but <code>\.</code> matches an actual period. <code>\\</code> matches an actual backslash.
+</p>
+
+<h3>  <small class='text-muted'><a class='anchor' href='#9_2_2' name='9_2_2'>9.2.2.</a></small>Example Patterns
+</h3>
+
+
+<p>
+Using the syntax explained in the previous section, we can now make patterns for common tasks in cleaning and analyzing text.
+Table&nbsp;<a href='#tab:regexample'>9.3</a> lists a number of regular expressions for common tasks such as finding dates or stripping HTML artifacts.
+</p>
+<div class='figure'><h4>
+  <small class='text-muted'><a class='anchor' href='#tab:regexample' name='tab:regexample'>Table 9.3.</a></small><br />
+Regular expression syntax in Python and R</h4>
+<table class='table'><thead>
+  <tr>
+    <th>
+
+      Goal 
+    </th>
+    <th>
+ Pattern 
+    </th>
+    <th>
+ Example 
+    </th>
+
+  </tr>
+</thead><tbody>
+  <tr>
+    <td>
+
+      US Zip Code 
+    </td>
+    <td>
+<code>\{5}</code> 
+    </td>
+    <td>
+<code>90210</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+      US Phone number 
+    </td>
+    <td>
+<code>(\{3}-)?\{3}-\{4}</code> 
+    </td>
+    <td>
+<code>202-456-1111</code>, <code>456-1111</code>
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+      Dutch Postcode 
+    </td>
+    <td>
+<code>\{4} ?[A-Za-z]{2}</code> 
+    </td>
+    <td>
+<code>1015 GK</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+      ISO Date 
+    </td>
+    <td>
+<code>\d{4}-\d{2}-\d{2}</code> 
+    </td>
+    <td>
+<code>2020-07-20</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+      German Date 
+    </td>
+    <td>
+<code>\d{1,2}\.\d{1,2}\.\d{4}</code> 
+    </td>
+    <td>
+<code>25.6.1988</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+      International phone number 
+    </td>
+    <td>
+<code>\+(\d[-]?){7,}\d</code> 
+    </td>
+    <td>
+<code>+1 555-1234567</code>
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+      URL 
+    </td>
+    <td>
+<code>https?://\S+</code> 
+    </td>
+    <td>
+<code>https://example.com?a=b</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+      E-mail address 
+    </td>
+    <td>
+<code>[\w\.-]+@[\w\.-]+\.\w+</code> 
+    </td>
+    <td>
+<code>me@example.com</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+      HTML tags 
+    </td>
+    <td>
+<code>&lt;/?\w[^>]*></code> 
+    </td>
+    <td>
+<code>&lt;/html></code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+      HTML Character escapes 
+    </td>
+    <td>
+<code>&amp;[^;]+;</code> 
+    </td>
+    <td>
+<code>&amp;nbsp;</code> 
+    </td>
+
+  </tr>
+</tbody>
+</table></div>
+<p>
+We start with a number of relatively simple patterns for Zip codes and phone numbers.
+Starting with the simplest example, US Zip codes are simply five consecutive numbers.
+Next, a US phone number can be written down as three groups of numbers separated by parentheses,
+where the first group is made optional for local phone numbers using parentheses to group these numbers so the question mark applies to the whole group.
+Next, Dutch postal codes are simply four numbers followed by two letters, and we allow an optional space in between.
+Similarly simple, dates in ISO format are three groups of numbers separated by dashes.
+German dates follow a different order, use periods as separator, and allow for single-digit day and month numbers.
+Note that these patterns do not check for the validity of dates.
+A simple addition would be to restrict months to 01-12, e.g. using <code>(0[1-9]|1[0-2])</code>.
+However, in general validation is better left to specialized libraries, as properly validating the day number would require taking the month (and leap years) into account.
+</p>
+
+<p>
+A slightly more complicated pattern is the one given for international phone numbers.
+They always start with a plus sign and contain at least eight numbers, but can contain dashes and spaces depending on the country.
+So, after the literal <code>+</code> (which we need to escape since <code>+</code> is a control character),
+we look for seven or more numbers, optionally followed by a single dash or space, and end with a single number.
+This allows dashes and spaces at any position except the start and end, but does not allow for e.g. double dashes.
+It also makes sure that there are at least eight numbers regardless of how many dashes or spaces there are.
+</p>
+
+<p>
+The final four examples are patterns for common notations found online.
+For URLs, we look for <code>http://</code> or <code>https://</code> and take everything until the next space or end of the string.
+For email addresses, we define a character class for letters, periods, or dashes and look for it before and after the at sign.
+Then, there needs to be at least one period and a top level domain containing only letters.
+Note that the dash within the character class does not need to be escaped because it is the final character in the class, so it cannot form a range.
+For HTML tags and character escapes, we anchor the start (<code>&lt;</code> and <code>&amp;</code>) and end (<code>&gt;</code> and <code>;</code>) and allow any characters except for the ending character in between
+using an inverted character class.
+</p>
+
+<p>
+Note that these example patterns would also match if the text is enclosed in a larger text.
+For example, the zip code pattern would happily match the first five numbers of a 10-digit number.
+If you want to check that an input value is a valid zip code (or email address, etc.),
+you probably want to check that it only contains that code by surrounding it with start-of-text and end-of-text markers: <code>^\d{5}$</code>.
+If you want to extract e.g. zip codes from a longer document, it is often useful to surround them with word boundary markers: <code>\b\d{5}\b</code>.
+</p>
+
+<p>
+Please note that many of those patterns are not necessarily fully complete and correct, especially the final patterns for online notations.
+For example, email addresses can contain plus signs in the first part, but not in the domain name, while domain names are not allowed to start with a dash &ndash; a completely correct regular expression to match email addresses is over 400 characters long!
+Even worse, complete HTML tags are probably not even possible to describe using regular expressions, because HTML tags frequently contain comments and nested escapes within attributes.
+For a better way to deal with analyzing HTML, please see Chapter&nbsp;<a href='chapter12.html#12'>12</a>. In the end, patterns like these are fine for a (somewhat) noisy analysis of (often also somewhat noisy) source texts as long as you understand the limitations.
+</p>
+
+<h2>  <small class='text-muted'><a class='anchor' href='#9_3' name='9_3'>9.3.</a></small>Using Regular Expressions in Python and R
+</h2>
+
+
+<p>
+Now that you hopefully have a firm grasp of the syntax of regular expressions,
+it is relatively easy to use these patterns in Python or R (or most other languages).
+Table&nbsp;<a href='#tab:regextract'>9.4</a> lists the commands for four of the most common use cases:
+identifying matching texts, removing and replacing all matching text, extracting matched groups, and splitting texts.
+</p>
+<div class='figure'><h4>
+  <small class='text-muted'><a class='anchor' href='#tab:regextract' name='tab:regextract'>Table 9.4.</a></small><br />
+Regular expression syntax</h4>
+<table class='table'><thead>
+  <tr>
+    <th>
+
+      Operation 
+    </th>
+    <th>
+ R (<i>stringr</i>) 
+    </th>
+    <th>
+ Python 
+    </th>
+    <th>
+ Pandas 
+    </th>
+
+  </tr>
+  <tr>
+    <th>
+
+    </th>
+    <th>
+ (whole column)  
+    </th>
+    <th>
+ (single string) 
+    </th>
+    <th>
+ (whole column)
+    </th>
+
+  </tr>
+</thead><tbody>
+  <tr>
+    <td>
+
+      Does pattern p occur in text t? 
+    </td>
+    <td>
+<code>str_detect(t, p)</code> 
+    </td>
+    <td>
+<code>re.search(p, t)</code> 
+    </td>
+    <td>
+<code>t.str.contains(p)</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+      Does text t start with pattern p? 
+    </td>
+    <td>
+<code>str_detect(t, "^p")</code> 
+    </td>
+    <td>
+<code>re.match(p, t)</code> 
+    </td>
+    <td>
+<code>t.str.match(p)</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+      Count occurrences of p in t 
+    </td>
+    <td>
+<code>str_count(t, "^p")</code> 
+    </td>
+    <td>
+<code>re.match(p, t)</code> 
+    </td>
+    <td>
+<code>t.str.count(p)</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+      Remove all occurences of p in t 
+    </td>
+    <td>
+<code>str_remove_all(t, p)</code> 
+    </td>
+    <td>
+<code>re.sub(p, "", t)</code> 
+    </td>
+    <td>
+<code>t.str.replace(p, "")</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+      Replace p by r in text t 
+    </td>
+    <td>
+<code>str_replace_all(t, p, r)</code> 
+    </td>
+    <td>
+<code>re.sub(p, r, t)</code> 
+    </td>
+    <td>
+<code>t.str.replace(p, r)</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+      Extract the first match of p in t 
+    </td>
+    <td>
+<code>str_extract(t, p)</code> 
+    </td>
+    <td>
+<code>re.search(p, t).group(1)</code> 
+    </td>
+    <td>
+<code>t.str.extract(p)</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+      Extract all matches of p in t 
+    </td>
+    <td>
+<code>str_extract_all(t, p)</code> 
+    </td>
+    <td>
+<code>re.findall(p, t)</code> 
+    </td>
+    <td>
+<code>t.str.extractall(p)</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+      Split t on matches of p 
+    </td>
+    <td>
+<code>str_split(t, p)</code> 
+    </td>
+    <td>
+<code>re.split(p, t)</code> 
+    </td>
+    <td>
+<code>t.str.split(p)</code> 
+    </td>
+
+  </tr>
+</tbody>
+</table></div>
+<p>
+For R, we again use the functions from the <i>stringr</i> package.
+For Python, you can use either the <i>re</i> or <i>regex</i> package,
+which both support the same functions and syntax so you can just import one or the other.
+The <i>re</i> package is more common and significantly faster, but does not support Unicode character properties (<code>\p</code>).
+We also list the corresponding commands for <i>pandas</i>, which are run on a whole column instead of a single text
+(but note that <i>pandas</i> does not support Unicode character properties.)
+</p>
+
+<p>
+Finally, a small but important note about <i>escaping</i> special characters by placing a backslash (<code>\</code>) before them.
+The regular expression patterns are used <i>within</i> another language (in this case, Python or R), but these languages have their own
+special characters which are also escaped. In Python, you can create a <i>raw string</i> by putting a single <code>r</code> before the opening quotation mark:
+<code>r&#34;\d+&#34;</code> creates the regular expression pattern <code>\d</code>.
+From version 4.0 (released in spring 2020), R has a similar construct: <code>r&#34;(\d+)&#34;</code>. In R, the parentheses are part of the string delimiters, but you can use more parentheses within the string without a problem.
+The only thing you cannot include in a string is the closing sequence <code>)&#34;</code>, but as you are also allowed to use square or curly brackets instead of parentheses and single instead of double quotes to delimit the raw string you can generally avoid this problem:
+to create the pattern <code>&#34;(cat|dog)&#34;</code> (i.e. cat or dog enclosed in quotation marks), you can use <code>r&#34;{&#34;(cat|dog)&#34;}&#34;</code> or <code>r&#39;(&#34;(cat|dog)&#34;)&#39;</code>
+(or even more legible: <code>r&#39;{&#34;(cat|dog)&#34;}&#39;</code>).
+</p>
+
+<p>
+Unfortunately, in earlier versions of R (and in any case if you don't use raw strings), you need to escape special characters twice:
+first for the regular expression, and then for R. So, the pattern <code>\d</code> becomes <code>&#34;\\d&#34;</code>. To match a literal backslash you would use the pattern <code>\\</code>,
+which would then be represented in R as <code>&#34;\\\\&#34;</code>!
+</p>
+
+<p>
+Example&nbsp;<a href='#ex:reclean'>9.3</a> cleans the same text as Example&nbsp;<a href='#ex:clean'>9.2</a> above, this time using regular expressions.
+First, it uses <code>&lt;[^&gt;+]&gt;</code> to match all HTML tags: an angular opening bracket, followed by anything except for a closing angular bracket (<code>[^&gt;]</code>), repeated one or more times (<code>+</code>),
+finally followed by a closing bracket.
+Next, it replaces one or more whitespace characters (<code>\s+</code>) by a single space.
+Finally, it uses a vertical bar to select either space at the start of the string (<code>^\s+</code>), or at the end  (<code>\s+$</code>), and removes it. 
+As you can see, you can express a lot of patterns using regular expressions in this way, making for more generic (but sometimes less readable) clean-up code. 
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:reclean' name='ex:reclean'>Example 9.3.</a></small><br />
+Using regular expressions to clean a text</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>text = """   &lt;b&gt;Communication&lt;/b&gt;    </code>
+<code>    (from Latin communicare, meaning to share) """</code>
+<code># remove tags:</code>
+<code>cleaned = re.sub("&lt;[^&gt;]+&gt;", "", text)</code>
+<code># normalize white space</code>
+<code>cleaned = re.sub("\s+", " ", cleaned)</code>
+<code># trim spaces from start and end</code>
+<code>cleaned = re.sub("^\s+|\s+$", "", cleaned)</code>
+<code>cleaned = cleaned.strip()</code>
+<code></code>
+<code>print(cleaned)</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>text = "    &lt;b&gt;Communication&lt;/b&gt;    </code>
+<code>     (from Latin communicare, meaning to share)  "</code>
+<code>cleaned = text %&gt;% </code>
+<code>  # remove HTML tags:</code>
+<code>  str_replace_all("&lt;[^&gt;]+&gt;", " ")  %&gt;% </code>
+<code>  # normalize white space </code>
+<code>  str_replace_all("\\p{space}+", " ")  %&gt;% </code>
+<code>  # trim spaces at start and end</code>
+<code>  str_remove_all("^\\s+|\\s+$")</code>
+<code></code>
+<code>cleaned</code>  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>Communication (from Latin communicare, meaning to share)</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>[1] "Communication (from Latin communicare, meaning to share)"</pre>
+</div></div></div>
+<p>
+Finally, Example&nbsp;<a href='#ex:cleanpandas'>9.4</a> shows how you can run the various commands on a whole column of text rather than on individual strings,
+using  a small set of made-up tweets to showcase various operations.
+First, we determine whether a pattern occurs, in this case for detecting hashtags.
+This is very useful for e.g. subsetting a data frame to only rows that contain this pattern.
+Next, we count how many at-mentions are contained in the text, where we require that the character before the mention needs to be either whitespace or the start of the string (<code>^</code>), to exclude email addresses and other non-mentions that do contain at signs.
+Then, we extract the (first) url found in the text, if any, using the pattern discussed above.
+Finally, we extract the plain text of the tweet in two chained operations:
+first, we remove every word starting with an at-sign, hash, or http, removing everything up to the next whitespace character.
+Then, we replace everything that is not a letter by a single space.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:cleanpandas' name='ex:cleanpandas'>Example 9.4.</a></small><br />
+Using regular expressions on a data frame</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>import pandas as pd</code>
+<code>url = "https://cssbook.net/d/example_tweets.csv"</code>
+<code>tweets = pd.read_csv(url, index_col="id")</code>
+<code># identify tweets with hashtags</code>
+<code>tweets["tag"]=tweets.text.str.contains(r"#\w+")</code>
+<code># How many at-mentions are there?</code>
+<code>tweets["at"]=tweets.text.str.count(r"(^|\s)@\w+")</code>
+<code># Extract first url</code>
+<code>tweets["url"]=tweets.text.str.extract(</code>
+<code>    r"(https?://\S+)")</code>
+<code># Remove urls, tags, and @-mentions</code>
+<code>expr=r"(^|\s)(@|#|https?://)\S+"</code>
+<code>tweets["plain2"]=(tweets.text.str</code>
+<code>                  .replace(expr, " ", regex=True)</code>
+<code>                  .replace(r"\W+", " "))</code>
+<code>tweets</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>library(tidyverse)</code>
+<code>url="https://cssbook.net/d/example_tweets.csv"</code>
+<code>tweets = read_csv(url)</code>
+<code>tweets = tweets %&gt;% mutate(</code>
+<code>    # identify tweets with hashtags</code>
+<code>    has_tag=str_detect(text, "#\\w+"),</code>
+<code>    # How many at-mentions are there?</code>
+<code>    n_at = str_count(text, "(^|\\s)@\\w+"),</code>
+<code>    # Extract first url</code>
+<code>    url = str_extract(text, "(https?://\\S+)"),</code>
+<code>    # Remove at-mentions, tags, and urls</code>
+<code>    plain2 = str_replace_all(text, </code>
+<code>       "(^|\\s)(@|#|https?://)\\S+", " ") %&gt;% </code>
+<code>             str_replace_all("\\W+", " ")</code>
+<code>    )</code>
+<code>tweets</code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>R output. Note that Python output may look slightly different</div>
+<div class='table-wrapper'><table class="dataframe">
+<caption>A spec_tbl_df: 4 × 6</caption>
+<thead>
+	<tr><th scope=col>id</th><th scope=col>text</th><th scope=col>has_tag</th><th scope=col>n_at</th><th scope=col>url</th><th scope=col>plain2</th></tr>
+	<tr><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;lgl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>1</td><td>RT: @john_doe https://example.com/news very interesting!</td><td>FALSE</td><td>1</td><td>https://example.com/news </td><td>RT very interesting </td></tr>
+	<tr><td>2</td><td>tweet with just text                                    </td><td>FALSE</td><td>0</td><td>NA                       </td><td>tweet with just text</td></tr>
+	<tr><td>3</td><td>http://example.com/pandas #breaking #mustread           </td><td> TRUE</td><td>0</td><td>http://example.com/pandas</td><td>                    </td></tr>
+	<tr><td>4</td><td>@me and @myself #selfietime                             </td><td> TRUE</td><td>2</td><td>NA                       </td><td> and                </td></tr>
+</tbody>
+</table>
+</div>
+</div></div>
+<h3>  <small class='text-muted'><a class='anchor' href='#9_3_1' name='9_3_1'>9.3.1.</a></small>Splitting and Joining Strings, and Extracting Multiple Matches
+</h3>
+
+
+<p>
+So far, the operations we used all took a single string object and returned a single value,
+either a cleaned version of the string or e.g. a boolean indicating whether there is a match.
+This is convenient when using data frames, as you can transform a single column into another column.
+There are three common operations, however, that complicate matters:
+you can <i>split</i> a string into multiple substrings, or <i>extract</i> multiple matches from a string,
+and you can <i>join</i> multiple matches together.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:split' name='ex:split'>Example 9.5.</a></small><br />
+Splitting extracting and joining a single text</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>text = "apples, pears, oranges"</code>
+<code># Three ways to achieve the same thing:</code>
+<code>items = text.split(", ")</code>
+<code>items = regex.split(r"\p{PUNCTUATION}\s*", text)</code>
+<code>items = regex.findall(r"\p{LETTER}+", text)</code>
+<code>print(f"Split text into items: {items}")</code>
+<code>joined = " & ".join(items)</code>
+<code>print(joined)</code>
+<code></code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>text = "apples, pears, oranges"</code>
+<code>items=strsplit(text,", ", fixed=T)[[1]]</code>
+<code>items=str_split(text,"\\p{PUNCTUATION}\\s*")[[1]]</code>
+<code>items=str_extract_all(text,"\\p{LETTER}+")[[1]]</code>
+<code>print(items)</code>
+<code>joined = str_c(items, collapse=" & ")</code>
+<code>print(joined)</code>
+&nbsp;
+&nbsp;  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>Split text into items: ['apples', 'pears', 'oranges']
+apples & pears & oranges</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>[1] "apples"  "pears"   "oranges"
+[1] "apples & pears & oranges"</pre>
+</div></div></div>
+<p>
+Example&nbsp;<a href='#ex:split'>9.5</a> shows the &ldquo;easier&rdquo; case of splitting up a single text and joining the result back together.
+We show three different ways to split: using a fixed pattern to split on (in this case, a comma plus space);
+using a regular expression (in this case, any punctuation followed by any space);
+and by matching the items we are interested in (letters) rather than the separator.
+Finally, we join these items together again using <code>join</code> (Python) and <code>str_c</code> (R).
+</p>
+
+<p>
+One thing to note in the previous example is the use of the index <code>[[1]]</code> in R to select the first element in a list.
+This is needed because in R, splitting a text actually splits all the given texts, returning a <code>list</code> containing all the matches for each input text.
+If there is only a single input text, it still returns a list, so we select the first element of the list.
+</p>
+
+<p>
+In many cases, however, you are not working on a single text but rather on a series of texts loaded into a data frame,
+from tweets to news articles and open survey questions.
+In the example above, we extracted only the first url from each tweet.
+If we  want to extract e.g. all hash tags from each tweet, we cannot simply add a &ldquo;tags&rdquo; column,
+as there can be multiple tags in each tweet.
+Essentially, the problem is that the URLs per tweet are now nested in each row,
+creating a non-rectangular data structure.
+</p>
+
+<p>
+Although there are multiple ways of dealing with this,
+if you are working with data frames our advice is to normalize the data structure to a long format.
+In the example, that would mean that each tweet is now represented by multiple rows,
+namely one for each hash tag.
+Example&nbsp;<a href='#ex:splitlong'>9.6</a> shows how this can be achieved in both R and Pandas.
+One thing to note is that in pandas,
+<code>t.str.extractall</code> automatically returns the desired long format,
+but it is essential that the index of the data frame actually contains the identifier (in this case, the tweet (status) id).
+<code>t.str.split</code>, however, returns a data frame with a column containing lists,
+similar to how both R functions return a list containing character vectors.
+We can normalize this to a long data frame using <code>t.explode</code> (pandas) and <code>pivot_longer</code> (R).
+After this, we can use all regular data frame operations, for example to join and summarize the data.
+</p>
+
+<p>
+A final thing to note is that  while you normally use a function like <code>mean</code> to summarize the values in a group,
+you can also join strings together as a summarization.
+The only requirement for a summarization function is that it returns a single value for a group of values,
+which of course is exactly what joining a multiple string together does.
+This is shown in the final line of the example, where we split a tweet into words and then reconstruct the tweet from the individual words.
+</p>
+<div class='code-example'><h4>
+  <small class='text-muted'><a class='anchor' href='#ex:splitlong' name='ex:splitlong'>Example 9.6.</a></small><br />
+Applying split and extract_all on text columns</h4>
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>tags = tweets.text.str.extractall("(#\\w+)")</code>
+<code>tags.merge(tweets, left_on="id", right_on="id")</code>
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>tags = tweets %&gt;% mutate(</code>
+<code>    tag=str_extract_all(tweets$text,"(#\\w+)"))%&gt;%</code>
+<code>  select(id, tag)</code>
+<code>tags_long = tags  %&gt;% unnest(tag)</code>
+<code>left_join(tags_long, tweets)</code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>R output. Note that Python output may look slightly different</div>
+<div class='table-wrapper'><table class="dataframe">
+<caption>A tibble: 3 × 7</caption>
+<thead>
+	<tr><th scope=col>id</th><th scope=col>tag</th><th scope=col>text</th><th scope=col>has_tag</th><th scope=col>n_at</th><th scope=col>url</th><th scope=col>plain2</th></tr>
+	<tr><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;lgl&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>3</td><td>#breaking  </td><td>http://example.com/pandas #breaking #mustread</td><td>TRUE</td><td>0</td><td>http://example.com/pandas</td><td>     </td></tr>
+	<tr><td>3</td><td>#mustread  </td><td>http://example.com/pandas #breaking #mustread</td><td>TRUE</td><td>0</td><td>http://example.com/pandas</td><td>     </td></tr>
+	<tr><td>4</td><td>#selfietime</td><td>@me and @myself #selfietime                  </td><td>TRUE</td><td>2</td><td>NA                       </td><td> and </td></tr>
+</tbody>
+</table>
+</div>
+</div><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>words = tweets.text.str.split("\\W+")</code>
+<code>words_long = words.explode()</code>
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>words = tweets %&gt;% mutate(</code>
+<code>    word=str_split(tweets$text, "\\W+")) %&gt;% </code>
+<code>  select(id, word)</code>
+<code>words_long = words %&gt;% unnest(word)</code>
+<code>head(words_long)</code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>R output. Note that Python output may look slightly different</div>
+<div class='table-wrapper'><table class="dataframe">
+<caption>A tibble: 6 × 2</caption>
+<thead>
+	<tr><th scope=col>id</th><th scope=col>word</th></tr>
+	<tr><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;chr&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>1</td><td>RT      </td></tr>
+	<tr><td>1</td><td>john_doe</td></tr>
+	<tr><td>1</td><td>https   </td></tr>
+	<tr><td>1</td><td>example </td></tr>
+	<tr><td>1</td><td>com     </td></tr>
+	<tr><td>1</td><td>news    </td></tr>
+</tbody>
+</table>
+</div>
+</div><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>words_long.groupby("id").agg("_".join)</code>
+&nbsp;
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>words_long %&gt;% </code>
+<code>  group_by(id) %&gt;% </code>
+<code>  summarize(joined=str_c(word, collapse="_"))</code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>R output. Note that Python output may look slightly different</div>
+<div class='table-wrapper'><table class="dataframe">
+<caption>A tibble: 4 × 2</caption>
+<thead>
+	<tr><th scope=col>id</th><th scope=col>joined</th></tr>
+	<tr><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;chr&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>1</td><td>RT_john_doe_https_example_com_news_very_interesting_</td></tr>
+	<tr><td>2</td><td>tweet_with_just_text                                </td></tr>
+	<tr><td>3</td><td>http_example_com_pandas_breaking_mustread           </td></tr>
+	<tr><td>4</td><td>_me_and_myself_selfietime                           </td></tr>
+</tbody>
+</table>
+</div>
+</div></div>
+        </div>
+
+	<div class='chevrons'>
+&laquo;
+	  
+	  <a href='chapter08.html'>Ch. 8 Machine Learning</a>
+	  
+	  
+	  | <a href='chapter10.html'>Ch. 10 Text as data</a>&raquo;
+	  
+</div>
+	<!-- Secondary sidebar -->
+        <aside class="css-rightbar">
+            <nav id="right" class="collapse css-rightnav">
+                <ul class="list-unstyled components">
+  
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+                  <div class="rightbar-header">In this chapter</div>
+
+            <ul class="list-unstyled" id="toc_chap_9">
+<li class='toc-section'>9 Processing text</li>
+
+              
+	          
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_1">9.1. Text as a String of Characters</a>
+		    </li>
+		    
+		    <ul class="list-unstyled list-subsections" id="toc_chap_1">
+		    
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_1_1">9.1.1. Methods for Dealing With Text</a>
+                    </li>
+
+                    
+		    </ul>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_2">9.2. Regular Expressions</a>
+		    </li>
+		    
+		    <ul class="list-unstyled list-subsections" id="toc_chap_2">
+		    
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_2_1">9.2.1. Regular Expression Syntax</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_2_2">9.2.2. Example Patterns</a>
+                    </li>
+
+                    
+		    </ul>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_3">9.3. Using Regular Expressions in Python and R</a>
+		    </li>
+		    
+		    <ul class="list-unstyled list-subsections" id="toc_chap_3">
+		    
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_3_1">9.3.1. Splitting and Joining Strings, and Extracting Multiple Matches</a>
+                    </li>
+
+                    
+		    </ul>
+		    
+
+		
+            </ul>
+	    
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+</ul>
+            </nav>
+        </aside>
+</div>
+
+
+
+    </div>
+    <!-- Optional JavaScript; choose one of the two! -->
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+    -->
+  <script>
+      var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+  return new bootstrap.Popover(popoverTriggerEl, {html: true})
+})
+  </script>
+  </body>
+</html>

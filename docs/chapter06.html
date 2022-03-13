@@ -1,0 +1,1951 @@
+
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+      <link href="ccsbook.css" rel="stylesheet">
+      <!-- MathJax -->
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js">
+  </script>
+
+    <title>Computational Analysis of Communication</title>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-light fixed-top bg-light">
+    <div class="container-xxl">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#toc" aria-controls="toc" aria-expanded="false" aria-label="Toggle TOC">
+                <div></div>
+                <div></div>
+                <div></div>
+            </button>
+	    <div class='navhome'>
+              <a href="index.html">Computational Analysis of Communication</a>
+	      </div>
+    </div>
+    </nav>
+    <div id='content' class='container-xxl'>
+
+        <!-- Sidebar -->
+        <aside class="toc">
+            <nav id="toc" class="collapse">
+                <div class="subtoc">
+                    <ul class="list-unstyled components">
+  
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+                  <div class="rightbar-header">In this chapter</div>
+
+            <ul class="list-unstyled" id="toc_chap_6">
+<li class='toc-section'>6 Data Wrangling</li>
+
+              
+	          
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_1">6.2. Calculating Values</a>
+		    </li>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_2">6.3. Grouping and Aggregating</a>
+		    </li>
+		    
+		    <ul class="list-unstyled list-subsections" id="toc_chap_2">
+		    
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_2_1">6.3.1. Combining Multiple Operations</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_2_2">6.3.2. Adding Summary Values</a>
+                    </li>
+
+                    
+		    </ul>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_3">6.4. Merging Data</a>
+		    </li>
+		    
+		    <ul class="list-unstyled list-subsections" id="toc_chap_3">
+		    
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_3_1">6.4.1. Equal Units of Analysis</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_3_2">6.4.2. Inner and Outer Joins</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_3_3">6.4.3. Nested Data</a>
+                    </li>
+
+                    
+		    </ul>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_4">6.5. Reshaping Data: Wide To Long And Long To Wide</a>
+		    </li>
+		    
+
+		
+            </ul>
+	    
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+</ul>
+                </div>
+
+		<div class="rightbar-header">Table of Contents</div>
+                <ul class="list-unstyled components">
+    
+        <li class="active toc-chapter ">
+            <a href="chapter01.html">1 Introduction</a>
+            <!--<a href="#toc_chap_1" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_1"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_1">
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_1">1.1. The Role of Computational Analysis in the Social Sciences</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_2">1.2. Why Python and/or R?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_3">1.3. How to use this book</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_4">1.4. Installing R and Python</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_5">1.5. Installing Third-Party Packages</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter02.html">2 Fun with Data</a>
+            <!--<a href="#toc_chap_2" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_2"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_2">
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_1">2.1. Fun With Tweets</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_2">2.2. Fun With Textual Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_3">2.3. Fun With Visualizing Geographic Information</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_4">2.4. Fun With Networks</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter03.html">3 Programming Concepts</a>
+            <!--<a href="#toc_chap_3" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_3"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_3">
+                
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_1">3.1. About Objects and Data Types</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_2">3.2. Simple Control Structures: Loops and Conditions</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_3">3.3. Functions and Methods</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter04.html">4 How to write code</a>
+            <!--<a href="#toc_chap_4" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_4"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_4">
+                
+                    <li class="toc-section">
+                        <a href="chapter04.html#4_1">4.1. Re-using Code: How Not to Re-Invent the Wheel</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter04.html#4_2">4.2. Understanding Errors and Getting Help</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter04.html#4_3">4.3. Best Practice: Beautiful Code, GitHub, and Notebooks</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter05.html">5 Files and Data Frames</a>
+            <!--<a href="#toc_chap_5" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_5"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_5">
+                
+                    <li class="toc-section">
+                        <a href="chapter05.html#5_1">5.1. Why and When Do We Use Data Frames?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter05.html#5_2">5.2. Reading and Saving Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter05.html#5_3">5.3. Data from online sources</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter toc-chapter-current">
+            <a href="chapter06.html">6 Data Wrangling</a>
+            <!--<a href="#toc_chap_6" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_6"></a>
+            <ul class="collapse list-unstyled show" id="toc_chap_6">
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_1">6.2. Calculating Values</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_2">6.3. Grouping and Aggregating</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_3">6.4. Merging Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_4">6.5. Reshaping Data: Wide To Long And Long To Wide</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter07.html">7 Exploratory data analysis</a>
+            <!--<a href="#toc_chap_7" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_7"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_7">
+                
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_1">7.1. Simple Exploratory Data Analysis</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_2">7.2. Visualizing Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_3">7.3. Clustering and Dimensionality Reduction</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter08.html">8 Machine Learning</a>
+            <!--<a href="#toc_chap_8" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_8"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_8">
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_1">8.1. Statistical Modeling and Prediction</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_2">8.2. Concepts and Principles</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_3">8.3. Classical Machine Learning: From Na&#34;ive Bayes to Neural Networks</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_4">8.4. Deep Learning</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_5">8.5. Validation and Best Practices</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter09.html">9 Processing text</a>
+            <!--<a href="#toc_chap_9" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_9"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_9">
+                
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_1">9.1. Text as a String of Characters</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_2">9.2. Regular Expressions</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_3">9.3. Using Regular Expressions in Python and R</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter10.html">10 Text as data</a>
+            <!--<a href="#toc_chap_10" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_10"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_10">
+                
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_1">10.1. The Bag of Words and the Term-Document Matrix</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_2">10.2. Weighting and Selecting Documents and Terms</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_3">10.3. Advanced Representation of Text</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter11.html">11 Automatic analysis of text</a>
+            <!--<a href="#toc_chap_11" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_11"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_11">
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_1">11.1. Deciding on the Right Method</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_2">11.2. Obtaining a Review Dataset</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_3">11.3. Dictionary Approaches to Text Analysis</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_4">11.4. Supervised Text Analysis: Automatic Classification and Sentiment Analysis</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_5">11.5. Unsupervised Text Analysis: Topic Modeling</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter12.html">12 Scraping online data</a>
+            <!--<a href="#toc_chap_12" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_12"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_12">
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_1">12.1. Using Web APIs: From Open Resources to Twitter</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_2">12.2. Retrieving and Parsing Web Pages</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_3">12.3. Authentication, Cookies, and Sessions</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_4">12.4. Ethical, Legal, and Practical Considerations</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter13.html">13 Network Data</a>
+            <!--<a href="#toc_chap_13" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_13"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_13">
+                
+                    <li class="toc-section">
+                        <a href="chapter13.html#13_1">13.1. Representing and Visualizing Networks</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter13.html#13_2">13.2. Social Network Analysis</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter14.html">14 Multimedia data</a>
+            <!--<a href="#toc_chap_14" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_14"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_14">
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_1">14.1. Beyond Text Analysis: Images, Audio and Video</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_2">14.2. Using Existing Libraries and APIs</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_3">14.3. Storing, Representing, and Converting Images</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_4">14.4. Image Classification</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter15.html">15 Scaling up and distributing</a>
+            <!--<a href="#toc_chap_15" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_15"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_15">
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_1">15.1. Storing Data in SQL and noSQL Databases</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_2">15.2. Using Cloud Computing</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_3">15.3. Publishing Your Source</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_4">15.4. Distributing Your Software as Container</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter16.html">16 Where to go next</a>
+            <!--<a href="#toc_chap_16" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_16"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_16">
+                
+                    <li class="toc-section">
+                        <a href="chapter16.html#16_1">16.1. How Far Have We Come?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter16.html#16_2">16.2. Where To Go Next?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter16.html#16_3">16.3. Open, Transparent, and Ethical Computational Science</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+</ul>
+            </nav>
+        </aside>
+	
+      
+  
+
+    <div class="css-layout">
+      <!-- Main Content -->
+      <div class="css-main">
+	<div class='chevrons'>
+&laquo;
+	  
+	  <a href='chapter05.html'>Ch. 5 Files and Data Frames</a>
+	  
+	  
+	  | <a href='chapter07.html'>Ch. 7 Exploratory data analysis</a>&raquo;
+	  
+</div>
+	  <br/>
+            
+<h1>  <small class='text-muted'><a class='anchor' href='#chap:datawrangling' name='chap:datawrangling'>6.</a></small>Data Wrangling
+</h1>
+
+
+<div class='abstract'>
+  <span class='caption'>
+Abstract
+  </span>
+This chapter shows you how to do &ldquo;data wrangling&rdquo; in R and Python.
+Data wrangling is the process of transforming raw data into a shape that is suitable for analysis. The sections of this chapter first take you through the normal data wrangling pipeline of
+filtering, changing, grouping, and joining data. Finally, the last section shows how you can
+reshape data.
+
+</div>
+
+<div class='keywords'>
+  <span class='caption'>Keywords:</span>
+data wrangling, data cleaning, filtering, merging, reshaping
+</div>
+<div class='objectives'>
+  <div class='caption'>Chapter objectives:</div>
+  <ul><li> Filter rows and columns in data frames
+</li><li> Compute new columns and summary statistics for data frames
+</li><li> Reshape and merge data frames
+</li>
+  </ul>
+</div><div class='feature'><b>Packages used in this chapter</b><br/>
+  This chapter uses the <i>readxl</i> package for reading Excel files and various parts of the <i>tidyverse</i> including <i>ggplot2</i>, <i>dplyr</i>, and <i>tidyr</i> (which are installed automatically when you install tidyverse). In Python we rely mostly on the <i>pandas</i> package, but we also use <i>scipy</i> package for statistics and the <i>xlrd</i> for reading Excel files. You can install these packages with the code below if needed
+  (see Section&nbsp;<a href='chapter01.html#1_4'>1.4</a> for more details):
+
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>!pip3 install pandas scipy seaborn xlrd</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>#install.packages("tidyverse")</code>  </pre>
+</div></div> After installing, you need to import (activate) the packages every session:
+
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>import pandas as pd</code>
+<code>import seaborn as sns</code>
+<code>import scipy.stats</code>
+<code>import re</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>library(tidyverse)</code>
+<code>library(readxl)</code>
+&nbsp;
+&nbsp;  </pre>
+</div></div></div>
+<h2>  <small class='text-muted'><a class='anchor' href='#6_1' name='6_1'>6.1.</a></small>Filtering, Selecting, and Renaming
+</h2>
+
+
+<p>
+<b>Selecting and renaming columns</b>
+A first clean up step we often want to do is removing unnecessary columns and renaming columns with unclear or overly long names.
+In particular, it is often convenient to rename columns that contain spaces or non-standard characters, so it is easier to refer to them later.
+</p>
+
+<p>
+<b>Selecting rows</b>
+As a next step, we can decide to filter certain rows.
+For example, we might want to use only a subset of the data,
+or we might want to remove certain rows because they are incomplete or incorrect.
+</p>
+
+<p>
+As an example, FiveThirtyEight published a quiz about American public opinion about guns,
+and were nice enough to also publish the underlying data<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 1" data-bs-content="https://projects.fivethirtyeight.com/guns-parkland-polling-quiz/; see https://github.com/fivethirtyeight/data/tree/master/poll-quiz-guns for the underlying data.">[1]</a>.
+<a href='#ex:data-filter'>Example 6.1</a> gives an example of loading and cleaning this dataset, starting with the function <code>read_csv</code> (included in both <i>tidyverse</i> and <i>pandas</i>) to load the data directly from the Internet.
+This dataset contains one poll result per row, with a <i>Question</i> column indicating which question was asked,
+and the columns listing how many Americans (adults or registered voters) were in favor of that measure, in total and for Republicans and Democrats.
+Next, the columns <i>Republican</i> and <i>Democratic Support</i> are renamed to shorten the names and remove the space.
+Then, the URL column is dropped using the <i>tidyverse</i> function <code>select</code> in R or the <i>pandas</i> function <code>drop</code> in Python.
+Notice that the result of these operations is assigned to the same object <code>d</code>.
+This means that the original <code>d</code> is overwritten.
+</p>
+<div class='feature'>
+  In R, the <i>tidyverse</i> function <code>select</code> is quite versatile.
+  You can specify multiple columns using <code>select(d, column1, column2)</code> 
+  or by specifying a range of columns: <code>select(d, column1:column3)</code>.
+  Both commands keep only the specified columns.
+  As in the example, you can also specify a negative selection with the minus sign:
+  <code>select(d, -column1)</code> drops <code>column1</code>, keeping all other columns.
+  Finally, you can rename columns in the select command as well:
+  <code>select(d, column1=col1, column2)</code> renames <code>col</code> to <code>column1</code>,
+  keeps that column and <code>column2</code>, and drops all other columns.
+</div>
+<p>
+We then filter the dataset to list only the polls on whether teachers should be armed
+(you can understand this is close to our heart).
+This is done by comparing the value of the <i>Question</i> column to the value <code>'arm-teachers'</code>.
+This comparison is done with a double equal sign (<code>==</code>).
+In both Python and R, a single equals sign is used for assignment,
+and a double equal sign is used for comparison.
+A final thing to notice is that while in R we used the <i>dplyr</i> function (<code>filter</code>) to filter out rows,
+in Python we <i>index</i> the data frame using square brackets on the <i>pandas</i> DataFrame attribute <code>loc</code>(ation): <code>d.loc[]</code>.
+</p>
+
+<p>
+Note that we chose to assign the result of this filtering to <code>d2</code>,
+so after this operation we have the original full dataset <code>d</code> as well as the subset <code>d2</code> at our disposal.
+In general, it is your choice whether you overwrite the data by assigning to the same object,
+or create a copy by assigning to a new name<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 2" data-bs-content="Keep in mind that in Python, <code>df2=df1</code> does <i>not</i> create a copy of a data frame, but a pointer to the same memory location (see the discussion on mutable objects in Section&nbsp;<a href='chapter03.html#3_1'>3.1</a>). This may often not be of practical importance, but if you really need to be sure that a copy is created, use <code>df2=df1.copy()</code>.">[2]</a>.
+If you will later need to work with a different subset, it is smart to keep the original so you can subset it again later.
+On the other hand, if all your analyses will be on the subset, you might as well overwrite the original.
+We can always re-download it from the internet (or reload it from our harddisk) if it turns out we needed the original anyway.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:data-filter' name='ex:data-filter'>Example 6.1.</a></small><br />
+Filtering</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>url="https://cssbook.net/d/guns-polls.csv"</code>
+<code>d=pd.read_csv(url)</code>
+<code>d = d.rename(columns={"Republican Support": "rep",</code>
+<code>    "Democratic Support": "dem"})</code>
+<code>d = d.drop(columns="URL")   </code>
+<code># alternatively, we can write:</code>
+<code># d.drop(columns="URL", inplace=True)   </code>
+<code>d2 = d.loc[d.Question == "arm-teachers"]</code>
+<code>d2</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>url="https://cssbook.net/d/guns-polls.csv"</code>
+<code>d = read_csv(url)</code>
+<code>d = rename(d, rep=`Republican Support`, </code>
+<code>           dem=`Democratic Support`)</code>
+<code>d = select(d, -URL)</code>
+<code></code>
+<code></code>
+<code>d2 = filter(d, Question == "arm-teachers")</code>
+<code>d2</code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>R output. Note that Python output may look slightly different</div>
+<div class='table-wrapper'><table class="dataframe">
+<caption>A tibble: 6 × 8</caption>
+<thead>
+	<tr><th scope=col>Question</th><th scope=col>Start</th><th scope=col>End</th><th scope=col>Pollster</th><th scope=col>Population</th><th scope=col>Support</th><th scope=col>rep</th><th scope=col>dem</th></tr>
+	<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>arm-teachers</td><td>2/23/18</td><td>2/25/18</td><td>YouGov/Huffpost</td><td>Registered Voters</td><td>41</td><td>69</td><td>20</td></tr>
+	<tr><td>arm-teachers</td><td>2/20/18</td><td>2/23/18</td><td>CBS News       </td><td>Adults           </td><td>44</td><td>68</td><td>20</td></tr>
+	<tr><td>arm-teachers</td><td>2/27/18</td><td>2/28/18</td><td>Rasmussen      </td><td>Adults           </td><td>43</td><td>71</td><td>24</td></tr>
+	<tr><td>arm-teachers</td><td>2/27/18</td><td>2/28/18</td><td>NPR/Ipsos      </td><td>Adults           </td><td>41</td><td>68</td><td>18</td></tr>
+	<tr><td>arm-teachers</td><td>3/3/18 </td><td>3/5/18 </td><td>Quinnipiac     </td><td>Registered Voters</td><td>40</td><td>77</td><td>10</td></tr>
+	<tr><td>arm-teachers</td><td>2/26/18</td><td>2/28/18</td><td>SurveyMonkey   </td><td>Registered Voters</td><td>43</td><td>80</td><td>11</td></tr>
+</tbody>
+</table>
+</div>
+</div></div>
+<h2>  <small class='text-muted'><a class='anchor' href='#6_2' name='6_2'>6.2.</a></small>Calculating Values
+</h2>
+
+
+<p>
+Very often, we need to calculate values for new columns or change the content of existing columns.
+For example, we might wish to calculate the difference between two columns,
+or we may need to clean a column by correcting clerical errors or converting between data types.
+</p>
+
+<p>
+In these steps, the general pattern is that a column is assigned a new value based on
+a calculation that generally involves other columns.
+In both R and Python, there are two general ways to accomplish this.
+First, you can simply assign to an existing or new column,
+using the column selection notation discussed in Section&nbsp;<a href='chapter03.html#3_1'>3.1</a>:
+<code>df[&#34;column&#34;] = ...</code> in Python, or <code>df$column = ...</code> in R.
+</p>
+
+<p>
+Both Python and R also offer a function that allows multiple columns to be changed,
+returning a new copy of the data frame rather than changing the original data frame.
+In R, this is done using the <i>tidyverse</i> function <code>mutate</code>, which is the recommended way to compute values.
+The Python equivalent, <i>pandas</i> function <code>assign</code>, is used more rarely as it does not offer many advantages over direct assignment.
+</p>
+
+<p>
+In either case, you can use arithmetic: e.g. <code>rep - dem</code> to compute the difference between these columns.
+This works directly in R <code>mutate</code>,
+but in Python or in R direct assignment you also need to specify the name of the data frame.
+In Python, this would be <code>d[&#34;rep&#34;] - d[&#34;dem&#34;]</code><a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 3" data-bs-content="You can also write <code>d.rep - d.dem</code>, which is shorter, but does not work if your column names contain, for instance, spaces.">[3]</a>, while in R this is <code>d$rep - d$dem</code>.
+</p>
+
+<p>
+In many cases, however, you want to use various functions to perform tasks like cleaning and data conversion
+(see Section&nbsp;<a href='chapter03.html#3_3'>3.3</a> for a detailed explanation of built-in and custom functions).
+For example, to convert a column to numeric you would use the base R function <code>as.numeric</code> in R or the <i>pandas</i> function <code>to_numeric</code> in Python.
+Both functions take a column as argument and convert it to a numeric column.
+</p>
+
+<p>
+Almost all R functions work on whole columns like that.
+In Python, however, many <i>functions</i> work on individual values rather than columns.
+To apply a function on each element of a column <code>col</code>, you can use <code>df.col.apply(my_function)</code>
+(where <code>df</code> and <code>col</code> are the names of your data frame and column).
+In contast, <em>Pandas</em> columns have multiple useful <i>methods</i> that &ndash; because they are methods
+of that column &ndash; apply to the whole column<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 4" data-bs-content="See Section&nbsp;<a href='chapter03.html#3_3'>3.3</a> for a refresher on methods and functions">[4]</a>.
+For example, the method <code>df.col.fillna</code> replaces
+missing values in the column <code>col</code>, and <code>df.col.str.replace</code> conducts a find and replace.
+Unlike functions that expect individual values rather than columns as an input, there is no need to explicitly <code>apply</code> such a method.
+As always, you can use tab completion (pressing the TAB key after writing <code>df.col.</code>) to get a menu that includes all available methods.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:mutate' name='ex:mutate'>Example 6.2.</a></small><br />
+Mutate</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code># version of the guns polls with some errors </code>
+<code>url="https://cssbook.net/d/guns-polls-dirty.csv"</code>
+<code>d2=pd.read_csv(url)</code>
+<code></code>
+<code># Option 1: clean with direct assignment</code>
+<code># Note that when creating a new column, </code>
+<code># you have to use df["col"] rather than df.col </code>
+<code>d2["rep2"] = d2.rep.str.replace("[^0-9\\.]", "")</code>
+<code>d2["rep2"] = pd.to_numeric(d2.rep2)</code>
+<code>d2["Support2"]=d2.Support.fillna(d.Support.mean())</code>
+<code></code>
+<code># Alternatively, clean with .assign </code>
+<code># Note the need to use an anonymous function</code>
+<code># (lambda) to chain calculations</code>
+<code>cleaned = d2.assign(</code>
+<code>    rep2 = d2.rep.str.replace("[^0-9\\.]", ""),</code>
+<code>    rep3 = lambda d2: pd.to_numeric(d2.rep2),</code>
+<code>    Support2=d2.Support.fillna(d2.Support.mean()))</code>
+<code></code>
+<code></code>
+<code># Finally, you can create your own function </code>
+<code>def clean_num(x):</code>
+<code>    x = re.sub("[^0-9\\.]", "", x)</code>
+<code>    return int(x)</code>
+<code></code>
+<code>cleaned["rep3"] = cleaned.rep.apply(clean_num)</code>
+<code>cleaned.head()</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code># version of the guns polls with some errors</code>
+<code>url="https://cssbook.net/d/guns-polls-dirty.csv"</code>
+<code>d2 = read_csv(url) </code>
+<code></code>
+<code># Option 1: clean with direct assignment. </code>
+<code># Note the need to specify d2$ everywhere</code>
+<code>d2$rep2=str_replace_all(d2$rep, "[^0-9\\.]", "")</code>
+<code>d2$rep2 = as.numeric(d2$rep2)</code>
+<code>d2$Support2 = replace_na(d2$Support, </code>
+<code>                        mean(d2$Support, na.rm=T))</code>
+<code></code>
+<code># Alternative, clean with mutate</code>
+<code># No need to specify d2$, </code>
+<code># and we can assign to a new or existing object</code>
+<code>cleaned = mutate(d2, </code>
+<code>    rep2 = str_replace_all(rep, "[^0-9\\.]", ""),</code>
+<code>    rep2 = as.numeric(rep2),</code>
+<code>    Support2 = replace_na(Support, </code>
+<code>        mean(Support, na.rm=TRUE)))</code>
+<code></code>
+<code># Finally, you can create your own function</code>
+<code>clean_num = function(x) {</code>
+<code>    x = str_replace_all(x, "[^0-9\\.]", "")</code>
+<code>    as.numeric(x)</code>
+<code>}</code>
+<code>cleaned = mutate(cleaned, rep3 = clean_num(rep))</code>
+<code>head(cleaned)</code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>R output. Note that Python output may look slightly different</div>
+<div class='table-wrapper'><table class="dataframe">
+<caption>A tibble: 6 × 11</caption>
+<thead>
+	<tr><th scope=col>Question</th><th scope=col>Start</th><th scope=col>End</th><th scope=col>Pollster</th><th scope=col>Population</th><th scope=col>Support</th><th scope=col>rep</th><th scope=col>dem</th><th scope=col>rep2</th><th scope=col>Support2</th><th scope=col>rep3</th></tr>
+	<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>arm-teachers</td><td>2/23/18</td><td>2/25/18</td><td>YouGov/Huffpost</td><td>Registered Voters</td><td>41</td><td>69 </td><td>20</td><td>69</td><td>41.0</td><td>69</td></tr>
+	<tr><td>arm-teachers</td><td>2/20/18</td><td>2/23/18</td><td>CBS News       </td><td>Adults           </td><td>NA</td><td>68 </td><td>20</td><td>68</td><td>41.6</td><td>68</td></tr>
+	<tr><td>arm-teachers</td><td>2/27/18</td><td>2/28/18</td><td>Rasmussen      </td><td>Adults           </td><td>43</td><td>71d</td><td>24</td><td>71</td><td>43.0</td><td>71</td></tr>
+	<tr><td>arm-teachers</td><td>2/27/18</td><td>2/28/18</td><td>NPR/Ipsos      </td><td>Adults           </td><td>41</td><td>68 </td><td>18</td><td>68</td><td>41.0</td><td>68</td></tr>
+	<tr><td>arm-teachers</td><td>3/3/18 </td><td>3/5/18 </td><td>Quinnipiac     </td><td>Registered Voters</td><td>40</td><td>77 </td><td>10</td><td>77</td><td>40.0</td><td>77</td></tr>
+	<tr><td>arm-teachers</td><td>2/26/18</td><td>2/28/18</td><td>SurveyMonkey   </td><td>Registered Voters</td><td>43</td><td>80 </td><td>11</td><td>80</td><td>43.0</td><td>80</td></tr>
+</tbody>
+</table>
+</div>
+</div></div>
+<p>
+To illustrate some of the many possibilities, <a href='#ex:mutate'>Example 6.2</a> has code for cleaning a version of the gun polls
+in which we intentionally introduced two problems: we added some typos to the <i>rep</i> column
+and introduced a missing value in the <i>Support</i> column.
+To clean this, we perform three steps: First, we remove all non-numeric characters using a regular expression
+(see Section&nbsp;<a href='chapter09.html#9_2'>9.2</a> for more information on text handling and regular expressions).
+Next, we need to explicitly convert the resulting column into a numeric column so we can later use it in calculations.
+Finally, we replace the missing value by the column mean
+(of course, it is doubtful that that is the best strategy for imputing missing values here,
+we do it mainly to show how one can deal with missing values technically. You will find some more discussion about missing values in Section&nbsp;<a href='chapter07.html#7_1'>7.1</a>).
+</p>
+
+<p>
+The cleaning process is actually performed twice: lines 5-10 use direct assignment,
+while lines 12-19 use the <code>mutate</code>/<code>assign</code> function.
+Finally, lines 21-27 show how you can define and apply a custom function to combine the first two cleaning steps.
+This can be quite useful if you use the same cleaning steps in multiple places,
+since it reduces the repetition of code and hence the possibility of introducing bugs or inconsistencies.
+</p>
+
+<p>
+Note that all these versions work fine and produce the same result.
+In the end, it is up to the researcher to determine which feels most natural given the circumstances.
+As noted above, in R we would generally prefer <code>mutate</code> over direct assignment,
+mostly because it fits nicely into the <i>tidyverse</i> workflow and you do not need to repeat the data frame name.
+In Python, we would generally prefer the direct assignment, unless a copy of the data with the changes made is convenient, 
+in which case <code>assign</code> can be more useful.
+</p>
+
+<h2>  <small class='text-muted'><a class='anchor' href='#6_3' name='6_3'>6.3.</a></small>Grouping and Aggregating
+</h2>
+
+
+<p>
+The functions we used to change the data above operated on individual rows.
+Sometimes, however, we wish to compute summary statistics of groups of rows.
+This essentially shifts the unit of analysis to a higher level of abstraction.
+For example, we could compute per-school statistics from a data file containing information per student;
+or we could compute the average number of mentions of a politician per day from data file containing information per articles (each date might have multiple articles and each article multiple mentions to politicians!).
+</p>
+
+<p>
+In data analysis, this is called <i>aggregation</i>.
+In both Python and R, it consists of two steps:
+First, you define which rows are <i>grouped</i> together to form a new unit
+by specifying which column identifies these groups.
+In the previous examples, this would be the school name or the date of each article.
+It is also possible to group by multiple columns, for example to compute the average per day per news source.
+</p>
+
+<p>
+The next step is to specify one or more summary (or <i>aggregation</i>) functions to be computed over the desired value columns.
+These functions compute a summary value, like the mean, sum, or standard deviation, over all the values belonging to each group.
+In the example, to compute average test scores per school we would apply the average (or mean) function to the test score value column.
+In general, you can use multiple functions (e.g.  mean and variance) and multiple columns (e.g. mean test score and mean parental income).
+</p>
+
+<p>
+The resulting dataset is reduced both in rows and in columns.
+Each row now represents a group of previuos cases (e.g. school or date),
+and the columns are now only the grouping columns and the computed summary scores.
+</p>
+<a href='#ex:aggregate'>Example 6.3</a>
+<p>
+ shows the code in R and Python to define groups and compute summary values.
+First, we group by poll <i>question</i>; and for each question, we compute the average and standard deviation.
+The syntax is a little different for R and Python, but the idea is the same:
+first we create a new variable <code>groups</code> that stores the grouping information,
+and then we create the aggregate statistics.
+In this example, we do not store the result of the computation, but print it on the screen.
+To store the results, simply assign it to a new object as normal.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:aggregate' name='ex:aggregate'>Example 6.3.</a></small><br />
+Aggregation. Note that in the Python example, we can specify often-used functions such as "mean" simply as a string, but instead, we could also pass functions directly, such as numpy's np.mean</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>groups = d.groupby("Question")</code>
+<code>groups.agg({"Support": ["mean", "std"]})</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>groups = group_by(d, Question)</code>
+<code>summarize(groups, m=mean(Support), sd=sd(Support))</code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>R output. Note that Python output may look slightly different</div>
+<div class='table-wrapper'><table class="dataframe">
+<caption>A tibble: 8 × 3</caption>
+<thead>
+	<tr><th scope=col>Question</th><th scope=col>m</th><th scope=col>sd</th></tr>
+	<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>age-21                     </td><td>75.85714</td><td>6.011893</td></tr>
+	<tr><td>arm-teachers               </td><td>42.00000</td><td>1.549193</td></tr>
+	<tr><td>background-checks          </td><td>87.42857</td><td>7.322503</td></tr>
+	<tr><td>ban-assault-weapons        </td><td>61.75000</td><td>6.440285</td></tr>
+	<tr><td>ban-high-capacity-magazines</td><td>67.28571</td><td>3.860669</td></tr>
+	<tr><td>mental-health-own-gun      </td><td>85.83333</td><td>5.455884</td></tr>
+	<tr><td>repeal-2nd-amendment       </td><td>10.00000</td><td>      NA</td></tr>
+	<tr><td>stricter-gun-laws          </td><td>66.45455</td><td>5.145165</td></tr>
+</tbody>
+</table>
+</div>
+</div></div>
+<p>
+In R, you use the <i>dplyr</i> function <code>group_by</code>  to define the groups,
+and then call the function <code>summarize</code> to compute summary values by specifying
+<code>name=function(value)</code>.
+</p>
+
+<p>
+In Python, the grouping step is quite similar.
+In the summarization step, however, you specify which summaries to compute in a dictionary<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 5" data-bs-content="See Section&nbsp;<a href='chapter03.html#3_1'>3.1</a> for more information on working with dictionaries">[5]</a>.
+The keys of the dictionary list the value columns to compute summaries of,
+and the values contain the summary functions to apply, so  <code>'value': function</code> or <code>'value': [list of functions]</code>.
+</p>
+
+<h3>  <small class='text-muted'><a class='anchor' href='#6_3_1' name='6_3_1'>6.3.1.</a></small>Combining Multiple Operations
+</h3>
+
+
+<p>
+In the examples above, each line of code (often called a <i>statement</i>) contained a single operation, generally a call to a function or method (see Section&nbsp;<a href='chapter03.html#3_3'>3.3</a>).
+The general shape of each line in R was <code>data = function(data, arguments)</code>, that is, the data is provided as the first argument to the function.
+In Python, we often used methods that &ldquo;belong to&rdquo; objects such as data frames or columns. Here, we therefore specify the object itself followed by a period and its method that is to be called,
+i.e. <code>object = object.method(arguments)</code>.
+</p>
+
+<p>
+Although there is nothing wrong with limiting each line to a single operation, both languages allow multiple operations to be chained together.
+Especially for grouping and summarizing, it can make sense to link these operations together as they can be thought of as a single &ldquo;data wrangling&rdquo; step.
+</p>
+
+<p>
+In Python, this can be achieved by adding the second <code>.method()</code> directly to the end of the first statement.
+Essentially, this calls the second method on the result of the first method: <code>data = data.method1(arguments).method2(arguments)</code>.
+In R, the data needs, of course, to be included in the function arguments. But we can also chain these function calls.
+This is done using the <i>pipe operator</i> (<code>%&gt;%</code>) from the (cutely named) <i>magrittr</i> package.
+The pipe operator inserts the result of the first function as the first argument of the second function.
+More technically, <code>f1(d) %&gt;% f2()</code> is equivalent to <code>f2(f1(d))</code>.
+This can be used to chain multiple commands together, e.g. <code>data = data %&gt;% function1(arguments) %&gt;% function2(arguments)</code>.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:aggregate2' name='ex:aggregate2'>Example 6.4.</a></small><br />
+Combining multiple functions or methods. The result is identical to &lt;a href='#ex:aggregate'>Example 6.3&lt;/a></h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>d.groupby("Question").agg(</code>
+<code>    {"Support": ["mean", "std"]})</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>d %&gt;% group_by(Question) %&gt;% </code>
+<code>  summarize(m=mean(Support), sd=sd(Support))</code>  </pre>
+</div></div></div><a href='#ex:aggregate2'>Example 6.4</a>
+<p>
+ shows the same operation as in Example&nbsp;<a href='#ex:aggregate'>6.3</a>, but chained into a single statement.
+</p>
+
+<h3>  <small class='text-muted'><a class='anchor' href='#6_3_2' name='6_3_2'>6.3.2.</a></small>Adding Summary Values
+</h3>
+
+
+<p>
+Rather than reducing a data frame to contain only the group-level information,
+it is sometimes desirable to add the summary values to the original data.
+For example, if we add the average score per school to the student-level data,
+we can then determine whether individual students outperform the school average.
+</p>
+
+<p>
+Of course, the summary scores are the same for all rows in the same group:
+all students in the same school have the same school average.
+So, these values will be repeated for these rows, essentially
+mixing individual and group level variables in the same data frame.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:transform' name='ex:transform'>Example 6.5.</a></small><br />
+Adding summary values to individual cases</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code># Note the use of ( ) to split a long line</code>
+<code>d["mean"] = (d.groupby("Question")["Support"]</code>
+<code>              .transform("mean"))</code>
+<code>d["deviation"] = d["Support"] - d["mean"]</code>
+<code>d.head()</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>d = d %&gt;% group_by(Question) %&gt;% </code>
+<code>  mutate(mean = mean(Support), </code>
+<code>         deviation=Support - mean)</code>
+<code>head(d)</code>
+&nbsp;  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>R output. Note that Python output may look slightly different</div>
+<div class='table-wrapper'><table class="dataframe">
+<caption>A grouped_df: 6 × 10</caption>
+<thead>
+	<tr><th scope=col>Question</th><th scope=col>Start</th><th scope=col>End</th><th scope=col>Pollster</th><th scope=col>Population</th><th scope=col>Support</th><th scope=col>rep</th><th scope=col>dem</th><th scope=col>mean</th><th scope=col>deviation</th></tr>
+	<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>age-21</td><td>2/20/18</td><td>2/23/18</td><td>CNN/SSRS          </td><td>Registered Voters</td><td>72</td><td>61</td><td>86</td><td>75.85714</td><td>-3.857143</td></tr>
+	<tr><td>age-21</td><td>2/27/18</td><td>2/28/18</td><td>NPR/Ipsos         </td><td>Adults           </td><td>82</td><td>72</td><td>92</td><td>75.85714</td><td> 6.142857</td></tr>
+	<tr><td>age-21</td><td>3/1/18 </td><td>3/4/18 </td><td>Rasmussen         </td><td>Adults           </td><td>67</td><td>59</td><td>76</td><td>75.85714</td><td>-8.857143</td></tr>
+	<tr><td>age-21</td><td>2/22/18</td><td>2/26/18</td><td>Harris Interactive</td><td>Registered Voters</td><td>84</td><td>77</td><td>92</td><td>75.85714</td><td> 8.142857</td></tr>
+	<tr><td>age-21</td><td>3/3/18 </td><td>3/5/18 </td><td>Quinnipiac        </td><td>Registered Voters</td><td>78</td><td>63</td><td>93</td><td>75.85714</td><td> 2.142857</td></tr>
+	<tr><td>age-21</td><td>3/4/18 </td><td>3/6/18 </td><td>YouGov            </td><td>Registered Voters</td><td>72</td><td>65</td><td>80</td><td>75.85714</td><td>-3.857143</td></tr>
+</tbody>
+</table>
+</div>
+</div></div>
+<p>
+Example&nbsp;<a href='#ex:transform'>6.5</a> shows how this can be achieved in Python and R,
+computing the mean support per question and then calculating how each poll deviates from this mean.
+</p>
+
+<p>
+In R, the code is very similar to Example&nbsp;<a href='#ex:aggregate2'>6.4</a> above, simply
+replacing the <i>dplyr</i> function <code>summarize</code> by the function <code>mutate</code> discussed above.
+In this function you can mix summary functions and regular functions, as shown in the example:
+first the mean per group is calculated, followed by the deviation of this mean.
+</p>
+
+<p>
+The Python code also uses the same syntax used for computing new columns.
+The first line selects the <i>Support</i> column on the grouped dataset,
+and then calls the <i>pandas</i> method <code>transform</code> on that column to compute the mean per group,
+adding it as a new column by assigning it to the column name.
+The second line uses the regular assignment syntax to create the deviation based on the support and calculated mean.
+</p>
+
+<h2>  <small class='text-muted'><a class='anchor' href='#6_4' name='6_4'>6.4.</a></small>Merging Data
+</h2>
+
+
+<p>
+In many cases, we need to combine data from different sources or data files.
+For example, we might have election poll results in one file and socio-economic data per area in another.
+To test whether we can explain variance in poll results from factors such as education level,
+we would need to combine the poll results with the economic data.
+This process is often called merging or joining data.
+</p>
+
+<h3>  <small class='text-muted'><a class='anchor' href='#6_4_1' name='6_4_1'>6.4.1.</a></small>Equal Units of Analysis
+</h3>
+
+<div class='code-example'><h4>
+  <small class='text-muted'><a class='anchor' href='#ex:piketty' name='ex:piketty'>Example 6.6.</a></small><br />
+Private and Public Capital data (source: Piketty 2014).</h4>
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>url="https://cssbook.net/d/private_capital.csv"</code>
+<code>private = pd.read_csv(url)</code>
+<code>private.tail()</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>url="https://cssbook.net/d/private_capital.csv"</code>
+<code>private = read_csv(url)</code>
+<code>tail(private)</code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>R output. Note that Python output may look slightly different</div>
+<div class='table-wrapper'><table class="dataframe">
+<caption>A tibble: 6 × 10</caption>
+<thead>
+	<tr><th scope=col>Year</th><th scope=col>U.S.</th><th scope=col>Japan</th><th scope=col>Germany</th><th scope=col>France</th><th scope=col>U.K.</th><th scope=col>Italy</th><th scope=col>Canada</th><th scope=col>Australia</th><th scope=col>Spain</th></tr>
+	<tr><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>2005</td><td>4.70</td><td>5.74</td><td>3.84</td><td>5.00</td><td>4.99</td><td>6.24</td><td>3.73</td><td>5.22</td><td>7.24</td></tr>
+	<tr><td>2006</td><td>4.88</td><td>5.83</td><td>3.78</td><td>5.34</td><td>5.19</td><td>6.37</td><td>3.88</td><td>5.32</td><td>7.69</td></tr>
+	<tr><td>2007</td><td>4.94</td><td>5.79</td><td>3.79</td><td>5.53</td><td>5.23</td><td>6.42</td><td>4.02</td><td>5.55</td><td>7.92</td></tr>
+	<tr><td>2008</td><td>4.36</td><td>5.87</td><td>3.90</td><td>5.53</td><td>4.91</td><td>6.61</td><td>3.83</td><td>5.44</td><td>7.86</td></tr>
+	<tr><td>2009</td><td>4.06</td><td>6.19</td><td>4.15</td><td>5.63</td><td>5.04</td><td>6.91</td><td>4.13</td><td>5.04</td><td>7.89</td></tr>
+	<tr><td>2010</td><td>4.10</td><td>6.01</td><td>4.12</td><td>5.75</td><td>5.22</td><td>6.76</td><td>4.16</td><td>5.18</td><td>7.55</td></tr>
+</tbody>
+</table>
+</div>
+</div><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>url = "https://cssbook.net/d/public_capital.csv"</code>
+<code>public = pd.read_csv(url)</code>
+<code>public.tail()</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>url = "https://cssbook.net/d/public_capital.csv"</code>
+<code>public = read_csv(url)</code>
+<code>tail(public)</code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>R output. Note that Python output may look slightly different</div>
+<div class='table-wrapper'><table class="dataframe">
+<caption>A tibble: 6 × 10</caption>
+<thead>
+	<tr><th scope=col>Year</th><th scope=col>U.S.</th><th scope=col>Japan</th><th scope=col>Germany</th><th scope=col>France</th><th scope=col>U.K.</th><th scope=col>Italy</th><th scope=col>Canada</th><th scope=col>Australia</th><th scope=col>Spain</th></tr>
+	<tr><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>2005</td><td>0.48</td><td>0.34</td><td>0.04</td><td>0.28</td><td>0.32</td><td>-0.56</td><td>-0.16</td><td>0.67</td><td>0.13</td></tr>
+	<tr><td>2006</td><td>0.51</td><td>0.36</td><td>0.02</td><td>0.37</td><td>0.32</td><td>-0.54</td><td>-0.10</td><td>0.69</td><td>0.20</td></tr>
+	<tr><td>2007</td><td>0.54</td><td>0.38</td><td>0.06</td><td>0.46</td><td>0.32</td><td>-0.52</td><td>-0.03</td><td>0.69</td><td>0.26</td></tr>
+	<tr><td>2008</td><td>0.49</td><td>0.34</td><td>0.08</td><td>0.43</td><td>0.28</td><td>-0.52</td><td> 0.00</td><td>0.71</td><td>0.25</td></tr>
+	<tr><td>2009</td><td>0.36</td><td>0.24</td><td>0.07</td><td>0.35</td><td>0.19</td><td>-0.65</td><td>-0.02</td><td>0.71</td><td>0.14</td></tr>
+	<tr><td>2010</td><td>0.21</td><td>0.14</td><td>0.04</td><td>0.31</td><td>0.06</td><td>-0.68</td><td>-0.04</td><td>0.67</td><td>0.05</td></tr>
+</tbody>
+</table>
+</div>
+</div></div>
+<p>
+The easiest joins are when both datasets have the same unit of analysis,
+i.e. the rows represent the same units.
+For example, consider the data on public and private capital ownership published by
+<span class="cite" title="Piketty, T. (2017). Capital in the Twenty-First Century. Harvard University Press, Cambridge, MA.">Piketty (2017)</span> alongside his landmark book <i>Capital in the 21st Century</i>.
+As shown in <a href='#ex:piketty'>Example 6.6</a>, he released separate files for public and private capital ownership.
+If we wished to analyze the relationship between these (for example to recreate Figure 3.6 on page 128 of that book),
+we first need to combine them into a single data frame.
+</p>
+
+<p>
+To combine these data frames, we use the <i>pandas</i> data frame method <code>merge</code> in Python or the <i>dplyr</i> method <code>full_join</code> in R.
+Both methods join the data frames on one or more <i>key</i> columns.
+The key column(s) identify the units in both data frames, so in this case the <i>Year</i> column.
+Often, the key column is some sort of identifier, like a respondent or location ID.
+The resulting data frame will contain the shared key column(s), and all other columns from both joined data frames.
+</p>
+
+<p>
+In both Python and R, all columns that occur in both data frames are by default assumed to be the key columns.
+In many cases, this is the desired behavior as both data frames may contain e.g. a <i>Year</i> or <i>RepondentID</i> column.
+Sometimes, however, this is not the case.
+Possibly, the key column is called differently in both data frames, e.g. <i>respID</i> in one and <i>Respondent</i> in the other.
+It is also possible that the two frames contain columns with the same name,
+but which contain actual data that should not be used as a key.
+For example, in the Piketty data shown above the key column is called <i>Year</i> in both frames,
+but they also share the columns for the countries which are data columns.
+</p>
+
+<p>
+In these cases, it is possible to explicitly specify which columns to join on (using the <code>on=</code> (Python) / <code>by=</code> (R) argument).
+However, we would generally recommend preprocessing the data first and select and/or rename columns such that the only shared columns are the key columns.
+The reason for that is that if columns in different data frames mean the same thing (i.e. <i>respID</i> and <i>Respondent</i>), they should generally have the same name to avoid confusion.
+In the case of &ldquo;accidentally&rdquo; shared column names, such as the country names in the current example,
+it is also better to rename them so it is obvious which is which in the resulting dataset:
+if shared columns are not used in the join, by default they get &ldquo;.x&rdquo; and &ldquo;.y&rdquo; (R) or &ldquo;_x&rdquo; and &ldquo;_y&rdquo; (Python) appended to their name, which is not very meaningful.
+Even if the key column is the only shared column, however, it can still be good to explicitly select that column to make it clear to the reader (or for yourself in the future) what is happening.
+</p>
+<div class='code-example'><h4>
+  <small class='text-muted'><a class='anchor' href='#ex:merge' name='ex:merge'>Example 6.7.</a></small><br />
+Merging private and public data for France.</h4>
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>private_fr = private[["Year", "France"]].rename(</code>
+<code>    columns={"France":"fr_private"})</code>
+<code>public_fr = public[["Year", "France"]].rename(</code>
+<code>    columns={"France":"fr_public"})</code>
+<code>capital_fr = pd.merge(private_fr, public_fr)</code>
+<code># Data for Figure 3.6 (Piketty, 2014, p 128)</code>
+<code>capital_fr.head()</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>private_fr = private %&gt;% </code>
+<code>    select(Year, fr_private=France)</code>
+<code>public_fr = public %&gt;% </code>
+<code>    select(Year, fr_public=France)</code>
+<code>capital_fr = full_join(private_fr, public_fr)</code>
+<code># Data for Figure 3.6 (Piketty, 2014, p 128)</code>
+<code>head(capital_fr)</code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>R output. Note that Python output may look slightly different</div>
+<div class='table-wrapper'><table class="dataframe">
+<caption>A tibble: 6 × 3</caption>
+<thead>
+	<tr><th scope=col>Year</th><th scope=col>fr_private</th><th scope=col>fr_public</th></tr>
+	<tr><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>1970</td><td>3.10</td><td>0.41</td></tr>
+	<tr><td>1971</td><td>3.04</td><td>0.43</td></tr>
+	<tr><td>1972</td><td>3.07</td><td>0.45</td></tr>
+	<tr><td>1973</td><td>3.05</td><td>0.46</td></tr>
+	<tr><td>1974</td><td>3.03</td><td>0.48</td></tr>
+	<tr><td>1975</td><td>3.17</td><td>0.53</td></tr>
+</tbody>
+</table>
+</div>
+</div><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code># Are private and public capital correlated?</code>
+<code>r, p = scipy.stats.pearsonr(capital_fr.fr_private,</code>
+<code>                            capital_fr.fr_public)</code>
+<code>print(f"Pearson correlation: rho={r:.2},p={p:.3}")</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code># Are private and public capital correlated?</code>
+<code>cor.test(capital_fr$fr_private, </code>
+<code>         capital_fr$fr_public)</code>
+&nbsp;  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>Pearson correlation: rho=-0.32,p=0.0404</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>
+	Pearson's product-moment correlation
+
+data:  capital_fr$fr_private and capital_fr$fr_public
+t = -2.1204, df = 39, p-value = 0.04039
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.57252488 -0.01537337
+sample estimates:
+       cor
+-0.3215032</pre>
+</div></div></div>
+<p>
+This is shown in <a href='#ex:merge'>Example 6.7</a>.
+The first two lines select only the <i>Year</i> and <i>France</i> columns, and rename the <i>France</i> column to indicate whether it is the private or public data.
+Line 3 does the actual join, with and without the explicit selection of key column, respectively.
+This is then used to compute the correlation between private and public capital,
+which shows that there is a weak but (just) significant negative correlation (\(\rho=-.32, p=.04\))
+<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 6" data-bs-content="Of course, the fact that this is time series data means that the independence assumption of regular correlation is violated badly, so this should be interpreted as a descriptive statistic, e.g. in the years with high private capital there is low public capital and the other way around.">[6]</a>.
+</p>
+<div class='feature'>
+  Next to <code>merge</code>, /textitPandas data frames also have a method called <code>join</code>. It is a simplified version for joining on indices (i.e., the row labels). If you have two data frames in which corresponding rows have the same row number, you can simply write <code>df1.join(df2)</code>. In short: both methods do the same, but merge provides more options, and join is easier if you want to join on the indices.
+</div>
+<h3>  <small class='text-muted'><a class='anchor' href='#6_4_2' name='6_4_2'>6.4.2.</a></small>Inner and Outer Joins
+</h3>
+
+
+<p>
+In the example above, both datasets had exactly one entry for each unit (year), making it the most straightforward case.
+If either (or both) of the datasets have missing units, however, you need to specify how to deal with this.
+</p>
+
+<p>
+Table&nbsp;<a href='#tab:joins'>6.1</a> list the four possible ways of joining, keeping all rows (<i>outer join</i>), only rows present in both (<i>inner join</i>), or all rows from one of the sets and matching rows from the other (<i>left</i> or <i>right join</i>). Left and right here literally refer to the order in which you type the data frame names. Figure&nbsp;<a href='#fig:joinvenn'>6.1</a> and Table&nbsp;<a href='#tab:joins'>6.1</a> give an overview.
+In all cases except inner joins, this can create units where information from one of the datasets is missing.
+This will be lead to missing values (<code>NA</code>/<code>NaN</code>) being inserted in the columns of the datasets with missing units.
+</p>
+<div class='figure'><h4>
+  <small class='text-muted'><a class='anchor' href='#fig:joinvenn' name='fig:joinvenn'>Figure 6.1.</a></small><br />
+The solid area indicates whether the cases in the resulting datasets need to appear in one, both, or any of the datasets.</h4>
+<img src='img/ch07_figjoins.png' /></div><div class='figure'><h4>
+  <small class='text-muted'><a class='anchor' href='#tab:joins' name='tab:joins'>Table 6.1.</a></small><br />
+Different types of joins between datasets d1 and d2</h4>
+<table class='table'><thead>
+  <tr>
+    <th>
+
+    Type 
+    </th>
+    <th>
+  Description  
+    </th>
+    <th>
+ R 
+    </th>
+    <th>
+ Python 
+    </th>
+
+  </tr>
+</thead><tbody>
+  <tr>
+    <td>
+
+    Outer 
+    </td>
+    <td>
+  All units from both sets 
+    </td>
+    <td>
+<code>full_join(d1,d2)</code> 
+    </td>
+    <td>
+<code>d1.merge(d2, how=&#39;outer&#39;)</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    Inner 
+    </td>
+    <td>
+ Only units that are in both sets 
+    </td>
+    <td>
+<code>inner_join(d1,d2)</code> 
+    </td>
+    <td>
+<code>d1.merge(d2, how=&#39;inner&#39;)</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    Left 
+    </td>
+    <td>
+ All units from left-hand set 
+    </td>
+    <td>
+<code>left_join(d1,d2)</code> 
+    </td>
+    <td>
+<code>d1.merge(d2, how=&#39;left&#39;)</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    Right 
+    </td>
+    <td>
+ All units from right-hand set 
+    </td>
+    <td>
+<code>right_join(d1,d2)</code> 
+    </td>
+    <td>
+<code>d1.merge(d2, how=&#39;right&#39;)</code> 
+    </td>
+
+  </tr>
+</tbody>
+</table></div>
+<p>
+In most cases, you will either use inner join or left join.
+Inner join is useful when information should be complete,
+or where you are only interested in units with information in both datasets.
+In general, when joining sets with the same units, it is smart to check the number of rows before and after the operation.
+If it decreases, this shows that there are units where information is missing in either set.
+If it increases, it shows that apparently the sets are not at the same level of analysis,
+or there are duplicate units in the data.
+In either case, an unexpected change in the number of rows is a good indicator that something is wrong.
+</p>
+
+<p>
+Left joins are useful when you are adding extra information to a &ldquo;primary&rdquo; dataset.
+For example, you might have your main survey results in a dataset,
+to which you want to add metadata or extra information about your respondents.
+If this data is not available for all respondents, you can use a left join to add the information
+where it is available, and simply leave the other respondents with missing values.
+</p>
+
+<p>
+A similar use case is when you have a list of news items, and a separate list of items that were coded
+or found with some search term. Using a left join will let you keep all news items, and add the coding where it is available.
+Especially if items that had zero hits of a search term are excluded from the search results,
+you might use a left join followed by a calculation to replace missing values by zeros to indicate that the counts for
+items aren't actually missing, but were zero.
+</p>
+
+<p>
+Of course, you could also use a right join to achieve the same effect.
+It is more natural, however, to work from your primary dataset and add the secondary data,
+so you will generally use left joins rather than right joins.
+</p>
+
+<p>
+Outer (or full) joins can be useful when you are adding information from e.g. multiple survey waves,
+and you want to include any respondent that answered any of the waves.
+Of course, you will have to carefully think about how to deal with the resulting missing values in the substantive analysis.
+</p>
+
+<h3>  <small class='text-muted'><a class='anchor' href='#6_4_3' name='6_4_3'>6.4.3.</a></small>Nested Data
+</h3>
+
+
+<p>
+The sections above discuss merging two datasets at the same level of analysis,
+i.e. with rows representing the same units (respondents, items, years) in both sets.
+It is also possible, however, to join a more aggregate (high level) set with a more detailed dataset.
+For example, you might have respondents that are part of a school or organizational unit.
+It can be desirable to join the respondent level information with the school level information,
+for example to then explore differences between schools or do multilevel modeling.
+</p>
+
+<p>
+For this use the same commands as for equal joins.
+In the resulting merged dataset, information from the group level will be duplicated for all individuals in that group.
+</p>
+
+<p>
+For example, take the two datasets shown in Example&nbsp;<a href='#ex:primary'>6.8</a>.
+The <code>results</code> dataset shows how many votes each US 2016 presidential primary candidate received in each county:
+Bernie Sanders got 544 votes in Autauga County in the US state of Alabama, which was 18.2&percnt; of all votes cast in the
+Democratic primary.
+Conversely, the <code>counties</code> dataset shows a large number of facts about these counties,
+such as population, change in population, gender and education distribution, etc.
+</p>
+<div class='code-example'><h4>
+  <small class='text-muted'><a class='anchor' href='#ex:primary' name='ex:primary'>Example 6.8.</a></small><br />
+ 2016 Primary results and county-level metadata. Note that to avoid duplicate output, we display the counties data in the Python example and the results data in the R example</h4>
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>r="https://cssbook.net/d/2016_primary_results.csv"</code>
+<code>results = pd.read_csv(r)</code>
+<code>results.head()</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>r="https://cssbook.net/d/2016_primary_results.csv"</code>
+<code>results = read_csv(r) </code>
+<code>head(results)</code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>R output. Note that Python output may look slightly different</div>
+<div class='table-wrapper'><table class="dataframe">
+<caption>A tibble: 6 × 7</caption>
+<thead>
+	<tr><th scope=col>state</th><th scope=col>county</th><th scope=col>fips</th><th scope=col>party</th><th scope=col>candidate</th><th scope=col>votes</th><th scope=col>fraction_votes</th></tr>
+	<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>Alabama</td><td>Autauga</td><td>1001</td><td>Democrat</td><td>Bernie~Sanders </td><td> 544</td><td>0.182</td></tr>
+	<tr><td>Alabama</td><td>Autauga</td><td>1001</td><td>Democrat</td><td>Hillary~Clinton</td><td>2387</td><td>0.800</td></tr>
+	<tr><td>Alabama</td><td>Baldwin</td><td>1003</td><td>Democrat</td><td>Bernie~Sanders </td><td>2694</td><td>0.329</td></tr>
+	<tr><td>Alabama</td><td>Baldwin</td><td>1003</td><td>Democrat</td><td>Hillary~Clinton</td><td>5290</td><td>0.647</td></tr>
+	<tr><td>Alabama</td><td>Barbour</td><td>1005</td><td>Democrat</td><td>Bernie~Sanders </td><td> 222</td><td>0.078</td></tr>
+	<tr><td>Alabama</td><td>Barbour</td><td>1005</td><td>Democrat</td><td>Hillary~Clinton</td><td>2567</td><td>0.906</td></tr>
+</tbody>
+</table>
+</div>
+</div><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>c="https://cssbook.net/d/2016_primary_county.csv"</code>
+<code>counties = pd.read_csv(c)</code>
+<code>counties.head()</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>c="https://cssbook.net/d/2016_primary_county.csv"</code>
+<code>counties = read_csv(c)</code>
+<code>head(counties)</code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>R output. Note that Python output may look slightly different</div>
+<div class='table-wrapper'><table class="dataframe">
+<caption>A tibble: 6 × 5</caption>
+<thead>
+	<tr><th scope=col>fips</th><th scope=col>area_name</th><th scope=col>Pop_2014_count</th><th scope=col>Age_over_65_pct</th><th scope=col>Race_black_pct</th></tr>
+	<tr><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>   0</td><td>United States </td><td>318857056</td><td>14.5</td><td>13.2</td></tr>
+	<tr><td>1000</td><td>Alabama       </td><td>  4849377</td><td>15.3</td><td>26.7</td></tr>
+	<tr><td>1001</td><td>Autauga County</td><td>    55395</td><td>13.8</td><td>18.7</td></tr>
+	<tr><td>1003</td><td>Baldwin County</td><td>   200111</td><td>18.7</td><td> 9.6</td></tr>
+	<tr><td>1005</td><td>Barbour County</td><td>    26887</td><td>16.5</td><td>47.6</td></tr>
+	<tr><td>1007</td><td>Bibb County   </td><td>    22506</td><td>14.8</td><td>22.1</td></tr>
+</tbody>
+</table>
+</div>
+</div></div>
+<p>
+Suppose we hypothesize that Hillary Clinton would do relatively well in areas with more black voters.
+We would then need to combine the county level data about ethnic composition with the county \(\times\) candidate
+level data on vote outcomes.
+</p>
+
+<p>
+This is achieved in Example&nbsp;<a href='#ex:nested'>6.9</a> in two steps.
+First, both datasets are cleaned to only contain the relevant data:
+for the <code>results</code> dataset only the Democrat rows are kept, and only the <i>fips</i> (county code), <i>candidate</i>, <i>votes</i>, and <i>fraction</i> columns.
+For the <code>counties</code> dataset, all rows are kept but only the <i>county code</i>, <i>name</i>, and <i>Race_white_pct</i> columns are kept.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:nested' name='ex:nested'>Example 6.9.</a></small><br />
+Joining data at the result and the county level</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>c=counties[["fips","area_name","Race_black_pct"]]</code>
+<code></code>
+<code>r = results.loc[</code>
+<code>    results.candidate == "Hillary Clinton"]</code>
+<code>r = r[["fips", "votes", "fraction_votes"]]</code>
+<code>r = r.merge(c)</code>
+<code>r.head()</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>c = counties %&gt;% </code>
+<code>  select("fips", "area_name", "Race_black_pct")</code>
+<code>r = results %&gt;% </code>
+<code>  filter(candidate == "Hillary Clinton") %&gt;% </code>
+<code>  select(fips, votes, fraction_votes)</code>
+<code>r = inner_join(r, c)</code>
+<code>cor.test(r$Race_black_pct, r$fraction_votes)</code>  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>     fips  votes  fraction_votes       area_name  Race_black_pct
+0  1001.0   2387           0.800  Autauga County            18.7
+1  1003.0   5290           0.647  Baldwin County             9.6
+2  1005.0   2567           0.906  Barbour County            47.6
+3  1007.0    942           0.755     Bibb County            22.1
+4  1009.0    564           0.551   Blount County             1.8</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>
+	Pearson's product-moment correlation
+
+data:  r$Race_black_pct and r$fraction_votes
+t = 50.944, df = 2806, p-value &lt; 2.2e-16
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.6734586 0.7119165
+sample estimates:
+      cor
+0.6931806</pre>
+</div></div></div>
+<p>
+In the next step, both sets are joined using an inner join from the results dataset.
+Note that we could also have used a left join here, but with an inner join it will be immediately
+obvious if county level data is missing, as the number of rows will then decrease.
+In fact, in this case the number of rows does decrease, because some results do not have corresponding county data.
+As a puzzle, can you use the dataset filtering commands discussed above to find out which results these are?
+</p>
+
+<p>
+Note also that the county level data contains units that are not used, particularly the national and state level statistics.
+These, and the results that do not correspond to counties, are automatically filtered out by using an inner join.
+</p>
+
+<p>
+Finally, we can create a scatter plot or correlation analysis of the relation between ethnic composition and electoral success (see how to create the scatter plot in Section&nbsp;<a href='chapter07.html#7_2'>7.2</a>).
+In this case, it turns out that Hillary Clinton did indeed do much better in counties with a high percentage of black residents.
+Note that we cannot take this to mean there is a direct causal relation, there could be any number of underlying factors, including the date of the election which is very important in primary races.
+Statistically, since observations within a state are not independent, we should really control for the state-level vote here.
+For example, we could use a partial correlation, but we would still be violating the independence assumption of the errors,
+so it would be better to take a more sophisticated (e.g. multilevel) modeling approach.
+This, however, is well beyond the scope of this chapter.
+</p>
+
+<h2>  <small class='text-muted'><a class='anchor' href='#6_5' name='6_5'>6.5.</a></small>Reshaping Data: Wide To Long And Long To Wide
+</h2>
+
+
+<p>
+Data that you find or create does not always have the shape that you need it to be  for your analysis.
+In many cases, for further data wrangling or for analyses you want each observation to be in its own row.
+However, many data sources list multiple observations in columns.
+For example, data from panel surveys asking the same question every week will often have one row per respondent,
+and one column for each weekly measurement.
+For a time-series analysis, however, each row should be a single measurement,
+i.e. the unit of analysis is a respondent per week.
+</p>
+
+<p>
+Generally, data with multiple observations of the same unit is called <i>wide data</i> (as there are many columns),
+while a dataset with one row for each observation is called <i>long data</i> (as there are many rows).
+In most cases, long data is easiest to work with, and in fact in <i>tidyverse</i> jargon such data is called <i>tidy data</i>.
+</p>
+
+<p>
+As a first relatively simple example, consider the datasets containing public and private capital.
+This data is &ldquo;wide&rdquo; in the sense that the measurements for the different countries are contained in the columns.
+To make this data &ldquo;long&rdquo; we would have to create rows for each country&ndash;year combination.
+This will make it much easier to do further data wrangling or analysis, as you can now e.g. directly merge the datasets and compute the pooled correlation between these variables.
+In fact, when we merged these datasets earlier in Example&nbsp;<a href='#ex:merge2'>6.10</a>, we selected only the measurements for France, essentially turning it into long data.
+</p>
+<div class='code-example'><h4>
+  <small class='text-muted'><a class='anchor' href='#ex:merge2' name='ex:merge2'>Example 6.10.</a></small><br />
+Converting wide to long data to facilitate merging and visualizing.</h4>
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>url="https://cssbook.net/d/private_capital.csv"</code>
+<code>private = pd.read_csv(url)</code>
+<code>private = private.melt(id_vars="Year", </code>
+<code>                       var_name="country", </code>
+<code>                       value_name="capital")</code>
+<code>private.head()</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>url = "https://cssbook.net/d/private_capital.csv"</code>
+<code>private = read_csv(url)</code>
+<code>private = private %&gt;% pivot_longer(cols = -Year,</code>
+<code>    names_to="country", values_to="capital")</code>
+<code>head(private)</code>
+&nbsp;  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>R output. Note that Python output may look slightly different</div>
+<div class='table-wrapper'><table class="dataframe">
+<caption>A tibble: 6 × 3</caption>
+<thead>
+	<tr><th scope=col>Year</th><th scope=col>country</th><th scope=col>capital</th></tr>
+	<tr><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>1970</td><td>U.S.   </td><td>3.42</td></tr>
+	<tr><td>1970</td><td>Japan  </td><td>2.99</td></tr>
+	<tr><td>1970</td><td>Germany</td><td>2.25</td></tr>
+	<tr><td>1970</td><td>France </td><td>3.10</td></tr>
+	<tr><td>1970</td><td>U.K.   </td><td>3.06</td></tr>
+	<tr><td>1970</td><td>Italy  </td><td>2.39</td></tr>
+</tbody>
+</table>
+</div>
+</div><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>url = "https://cssbook.net/d/public_capital.csv"</code>
+<code>public = pd.read_csv(url)</code>
+<code>public = public.melt(id_vars="Year", </code>
+<code>    var_name="country", value_name="capital")</code>
+<code>d = pd.concat([private.assign(type="private"), </code>
+<code>               public.assign(type="public")])</code>
+<code></code>
+<code>countries = {"France", "U.K.", "Germany"}</code>
+<code>d = d.loc[d.country.isin(countries)]</code>
+<code>plt = sns.lineplot(data=d, x="Year", y="capital", </code>
+<code>                   hue="country", style="type")</code>
+<code>plt.set(ylabel="Capital (% of national income")</code>
+<code>plt.set_title("Capital in Europe, 1970 - 2010" </code>
+<code>    "\nPartial reproduction of Piketty fig 4.4")</code>
+<code></code>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>url = "https://cssbook.net/d/public_capital.csv"</code>
+<code>public = read_csv(url) %&gt;% pivot_longer(-Year,</code>
+<code>    names_to="country", values_to="capital")</code>
+<code></code>
+<code>d = bind_rows(</code>
+<code>    private %&gt;% add_column(type="private"),</code>
+<code>    public %&gt;% add_column(type="public"))</code>
+<code>countries = c("Germany", "France", "U.K.")</code>
+<code>d %&gt;% filter(country %in% countries) %&gt;% </code>
+<code>  ggplot(aes(x=Year, y=capital, </code>
+<code>             color=country, lty=type)) + </code>
+<code>  geom_line()+ </code>
+<code>  ylab("Capital (% of national income)") +</code>
+<code>  guides(colour=guide_legend("Country"), </code>
+<code>         linetype=guide_legend("Capital")) + </code>
+<code>  theme_classic() + </code>
+<code>  ggtitle("Capital in Europe, 1970 - 2010", </code>
+<code>    "Partial reproduction of Piketty fig 4.4")</code>
+<code>  </code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Output</div>
+<a href='img/merge2.r.png' title='Click to open full-size image'>
+  <img src='img/merge2.r_thumb.png' />
+</a>
+</div></div><a href='#ex:merge2'>Example 6.10</a>
+<p>
+ shows how you can &ldquo;pivot&rdquo; the capital data to long format using <code>pivot_longer</code> (R) and <code>melt</code> (Pandas). The second part of this example then goes on to do this for both datasets, merge them, and partially reproduce Figure&nbsp;4.4 from <span class="cite" title="Piketty, T. (2017). Capital in the Twenty-First Century. Harvard University Press, Cambridge, MA.">Piketty (2017)</span>.
+</p>
+
+<h2>  <small class='text-muted'><a class='anchor' href='#6_6' name='6_6'>6.6.</a></small>Restructuring Messy Data
+</h2>
+
+
+<p>
+As a final example, we will look at the data on income and wage shares from Piketty (supplemental tables S8.1 and S8.2).
+We want to visualize the income and wage share going to the top 1&percnt; earners in France and the US.
+<a href='#fig:messy'>Figure 6.2</a> shows a screen shot of this data in Libre Office, with the US data having a similar shape.
+For the previous examples, we used a clean csv version of this data, but now we will tackle the additional challenge
+of dealing with the Excel file including extra header rows and column names aimed at human consumption rather than easy computing.
+</p>
+<div class='figure'><h4>
+  <small class='text-muted'><a class='anchor' href='#fig:messy' name='fig:messy'>Figure 6.2.</a></small><br />
+Data on top incomes as provided in Piketty (2014; digital appendix).</h4>
+<a href='img/messy.png' title='Click to open full-size image'>
+  <img src='img/messy_thumb.png' />
+</a></div>
+<p>
+In order to perform our visualization, we want a dataset containing a single measurement column (percentage share),
+and a row for each year&ndash;country&ndash;type combination, i.e. one row for wage inequality in 1910 in the US.
+One of the most important skills in computational social science (and data-driven analysis in general) is
+understanding which series of generally small steps are needed to go from one data format to the other.
+Although there is not a fixed set of steps that are always needed, the steps to get from the raw data visualized in Figure&nbsp;<a href='#fig:messy'>6.2</a> to a &ldquo;tidy&rdquo; dataset are fairly typical:
+</p>
+
+<ol><li> Input:  read the data into data frames. In this case, reading from an Excel sheet and skipping the extra header rows
+  </li><li> Reshape: pivoting the data into long format
+  </li><li> Normalize: normalize names, value types, etc. In this case, also separate a header like &ldquo;Top 1&percnt; income share&rdquo; into income type (income, wage) and percentile (10&percnt;, 1&percnt;, etc)
+  </li><li> Filter: filter for the desired data
+  </li><li> Analyze: create the visualization
+</li>
+</ol>
+<p>
+Fortunately, these steps have been discussed before: reading csv data in Section&nbsp;<a href='chapter05.html#5_2'>5.2</a>; pivot to long data in Section&nbsp;<a href='#6_5'>6.5</a>;
+add a column in Section&nbsp;<a href='#6_2'>6.2</a>; joining data in Section&nbsp;<a href='#6_4'>6.4</a>; and visualizing in Section&nbsp;<a href='chapter07.html#7_2'>7.2</a>.
+</p>
+
+<p>
+Example&nbsp;<a href='#ex:excel'>6.11</a> shows how to perform these steps for the US case.
+First, we use the <i>readxl</i> (R) and <i>xlrd</i> (Python) to read a sheet from an Excel file into a data frame,
+manually specifying the number of header and footer rows to skip.
+ Then, we pivot the columns into a  long format.
+In step 3, we split the header into two columns using <code>separate</code> (R) and <code>split</code> (Python). Finally, steps 4 and 5 take the desired subset and create a line plot. 
+</p>
+
+<p>
+The missing step, splitting a header into two columns, is done using <code>separate</code> (R) and <code>split</code> (Python).
+</p>
+<div class='code-example'><h4>
+  <small class='text-muted'><a class='anchor' href='#ex:excel' name='ex:excel'>Example 6.11.</a></small><br />
+Dealing with &ldquo;messy&rdquo; data.</h4>
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>url="https://cssbook.net/d/Chapitre8.xls"</code>
+<code>#1 Input: Read the data into a data frame</code>
+<code>d = pd.read_excel(url, sheet_name="TS8.2", </code>
+<code>                  skiprows=4, skipfooter=3)</code>
+<code></code>
+<code>d = d.rename(columns={"Unnamed: 0": "year"})</code>
+<code></code>
+<code>#2 Reshape: Pivoting to long, dropping missing</code>
+<code>d = d.melt(value_name="share", id_vars="year")</code>
+<code></code>
+<code></code>
+<code>#3 Normalize</code>
+<code>cols = ["_top", "percentile", "type", </code>
+<code>            "_share", "capital_gains"]</code>
+<code>d[cols] = d.variable.str.split(n=4, expand=True)</code>
+<code>d = d.drop(columns=["variable", "_top", "_share"])</code>
+<code>d["capital_gains"] = d["capital_gains"].notna()</code>
+<code>d.head()</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>#1 Input: Read the data into a data frame</code>
+<code>url="https://cssbook.net/d/Chapitre8.xls"</code>
+<code>dest = tempfile(fileext=".xls")</code>
+<code>download.file(url, dest)</code>
+<code>d = read_excel(dest,sheet="TS8.2",skip=4)</code>
+<code>d = d%&gt;% rename("year"=1)</code>
+<code></code>
+<code>#2 Reshape: Pivoting to long, dropping missing</code>
+<code>d = d%&gt;%pivot_longer(-year, values_to="share")%&gt;% </code>
+<code>        na.omit()</code>
+<code></code>
+<code>#3 Normalize</code>
+<code>cols = c(NA,"percent","type",NA,"capital_gains")</code>
+<code>d = d %&gt;% separate(name, into=cols,</code>
+<code>   sep=" ", extra="merge", fill="right") %&gt;% </code>
+<code>  mutate(year=as.numeric(year), </code>
+<code>         capital_gains=!is.na(capital_gains))</code>
+<code>head(d)</code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>R output. Note that Python output may look slightly different</div>
+<div class='table-wrapper'><table class="dataframe">
+<caption>A tibble: 6 × 5</caption>
+<thead>
+	<tr><th scope=col>year</th><th scope=col>percent</th><th scope=col>type</th><th scope=col>capital_gains</th><th scope=col>share</th></tr>
+	<tr><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;lgl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>1900</td><td>10%   </td><td>income</td><td>FALSE</td><td>0.40500000</td></tr>
+	<tr><td>1900</td><td>10%   </td><td>income</td><td> TRUE</td><td>0.40280054</td></tr>
+	<tr><td>1910</td><td>10%   </td><td>income</td><td>FALSE</td><td>0.40578506</td></tr>
+	<tr><td>1910</td><td>10%-5%</td><td>income</td><td>FALSE</td><td>0.09886691</td></tr>
+	<tr><td>1910</td><td>5%-1% </td><td>income</td><td>FALSE</td><td>0.12921815</td></tr>
+	<tr><td>1910</td><td>1%    </td><td>income</td><td>FALSE</td><td>0.17770000</td></tr>
+</tbody>
+</table>
+</div>
+</div><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>#4 Filter for the desired data</code>
+<code>subset = d[(d.year &gt;= 1910) & </code>
+<code>           (d.percentile == "1%") & </code>
+<code>           (d.capital_gains == False)]</code>
+<code></code>
+<code>#5 Analyze and/or visualize</code>
+<code>plt = sns.lineplot(data=subset, hue="type",</code>
+<code>                  x="year", y="share")</code>
+<code>plt.set(xlabel="Year", </code>
+<code>        ylabel="Share of income going to top-1%")</code>
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>#4 Filter for the desired data</code>
+<code>subset = d %&gt;% filter(year &gt;=1910, </code>
+<code>                      percent=="1%", </code>
+<code>                      capital_gains==F)</code>
+<code></code>
+<code>#5 Analyze and/or visualization</code>
+<code>ggplot(subset, aes(x=year, y=share, color=type)) +</code>
+<code>  geom_line() + xlab("Year") + </code>
+<code>ylab("Share of income going to top-1%") +</code>
+<code>  theme_classic()</code>
+<code></code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Output</div>
+<a href='img/excel2.r.png' title='Click to open full-size image'>
+  <img src='img/excel2.r_thumb.png' />
+</a>
+</div></div>
+        </div>
+
+	<div class='chevrons'>
+&laquo;
+	  
+	  <a href='chapter05.html'>Ch. 5 Files and Data Frames</a>
+	  
+	  
+	  | <a href='chapter07.html'>Ch. 7 Exploratory data analysis</a>&raquo;
+	  
+</div>
+	<!-- Secondary sidebar -->
+        <aside class="css-rightbar">
+            <nav id="right" class="collapse css-rightnav">
+                <ul class="list-unstyled components">
+  
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+                  <div class="rightbar-header">In this chapter</div>
+
+            <ul class="list-unstyled" id="toc_chap_6">
+<li class='toc-section'>6 Data Wrangling</li>
+
+              
+	          
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_1">6.2. Calculating Values</a>
+		    </li>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_2">6.3. Grouping and Aggregating</a>
+		    </li>
+		    
+		    <ul class="list-unstyled list-subsections" id="toc_chap_2">
+		    
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_2_1">6.3.1. Combining Multiple Operations</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_2_2">6.3.2. Adding Summary Values</a>
+                    </li>
+
+                    
+		    </ul>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_3">6.4. Merging Data</a>
+		    </li>
+		    
+		    <ul class="list-unstyled list-subsections" id="toc_chap_3">
+		    
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_3_1">6.4.1. Equal Units of Analysis</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_3_2">6.4.2. Inner and Outer Joins</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_3_3">6.4.3. Nested Data</a>
+                    </li>
+
+                    
+		    </ul>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_4">6.5. Reshaping Data: Wide To Long And Long To Wide</a>
+		    </li>
+		    
+
+		
+            </ul>
+	    
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+</ul>
+            </nav>
+        </aside>
+</div>
+
+
+
+    </div>
+    <!-- Optional JavaScript; choose one of the two! -->
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+    -->
+  <script>
+      var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+  return new bootstrap.Popover(popoverTriggerEl, {html: true})
+})
+  </script>
+  </body>
+</html>

@@ -1,0 +1,1184 @@
+
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+      <link href="ccsbook.css" rel="stylesheet">
+      <!-- MathJax -->
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js">
+  </script>
+
+    <title>Computational Analysis of Communication</title>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-light fixed-top bg-light">
+    <div class="container-xxl">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#toc" aria-controls="toc" aria-expanded="false" aria-label="Toggle TOC">
+                <div></div>
+                <div></div>
+                <div></div>
+            </button>
+	    <div class='navhome'>
+              <a href="index.html">Computational Analysis of Communication</a>
+	      </div>
+    </div>
+    </nav>
+    <div id='content' class='container-xxl'>
+
+        <!-- Sidebar -->
+        <aside class="toc">
+            <nav id="toc" class="collapse">
+                <div class="subtoc">
+                    <ul class="list-unstyled components">
+  
+  
+    
+  
+                  <div class="rightbar-header">In this chapter</div>
+
+            <ul class="list-unstyled" id="toc_chap_2">
+<li class='toc-section'>2 Fun with Data</li>
+
+              
+	          
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_1">2.1. Fun With Tweets</a>
+		    </li>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_2">2.2. Fun With Textual Data</a>
+		    </li>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_3">2.3. Fun With Visualizing Geographic Information</a>
+		    </li>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_4">2.4. Fun With Networks</a>
+		    </li>
+		    
+
+		
+            </ul>
+	    
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+</ul>
+                </div>
+
+		<div class="rightbar-header">Table of Contents</div>
+                <ul class="list-unstyled components">
+    
+        <li class="active toc-chapter ">
+            <a href="chapter01.html">1 Introduction</a>
+            <!--<a href="#toc_chap_1" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_1"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_1">
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_1">1.1. The Role of Computational Analysis in the Social Sciences</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_2">1.2. Why Python and/or R?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_3">1.3. How to use this book</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_4">1.4. Installing R and Python</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_5">1.5. Installing Third-Party Packages</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter toc-chapter-current">
+            <a href="chapter02.html">2 Fun with Data</a>
+            <!--<a href="#toc_chap_2" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_2"></a>
+            <ul class="collapse list-unstyled show" id="toc_chap_2">
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_1">2.1. Fun With Tweets</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_2">2.2. Fun With Textual Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_3">2.3. Fun With Visualizing Geographic Information</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_4">2.4. Fun With Networks</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter03.html">3 Programming Concepts</a>
+            <!--<a href="#toc_chap_3" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_3"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_3">
+                
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_1">3.1. About Objects and Data Types</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_2">3.2. Simple Control Structures: Loops and Conditions</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_3">3.3. Functions and Methods</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter04.html">4 How to write code</a>
+            <!--<a href="#toc_chap_4" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_4"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_4">
+                
+                    <li class="toc-section">
+                        <a href="chapter04.html#4_1">4.1. Re-using Code: How Not to Re-Invent the Wheel</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter04.html#4_2">4.2. Understanding Errors and Getting Help</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter04.html#4_3">4.3. Best Practice: Beautiful Code, GitHub, and Notebooks</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter05.html">5 Files and Data Frames</a>
+            <!--<a href="#toc_chap_5" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_5"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_5">
+                
+                    <li class="toc-section">
+                        <a href="chapter05.html#5_1">5.1. Why and When Do We Use Data Frames?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter05.html#5_2">5.2. Reading and Saving Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter05.html#5_3">5.3. Data from online sources</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter06.html">6 Data Wrangling</a>
+            <!--<a href="#toc_chap_6" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_6"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_6">
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_1">6.2. Calculating Values</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_2">6.3. Grouping and Aggregating</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_3">6.4. Merging Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_4">6.5. Reshaping Data: Wide To Long And Long To Wide</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter07.html">7 Exploratory data analysis</a>
+            <!--<a href="#toc_chap_7" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_7"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_7">
+                
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_1">7.1. Simple Exploratory Data Analysis</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_2">7.2. Visualizing Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_3">7.3. Clustering and Dimensionality Reduction</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter08.html">8 Machine Learning</a>
+            <!--<a href="#toc_chap_8" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_8"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_8">
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_1">8.1. Statistical Modeling and Prediction</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_2">8.2. Concepts and Principles</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_3">8.3. Classical Machine Learning: From Na&#34;ive Bayes to Neural Networks</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_4">8.4. Deep Learning</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_5">8.5. Validation and Best Practices</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter09.html">9 Processing text</a>
+            <!--<a href="#toc_chap_9" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_9"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_9">
+                
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_1">9.1. Text as a String of Characters</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_2">9.2. Regular Expressions</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_3">9.3. Using Regular Expressions in Python and R</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter10.html">10 Text as data</a>
+            <!--<a href="#toc_chap_10" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_10"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_10">
+                
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_1">10.1. The Bag of Words and the Term-Document Matrix</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_2">10.2. Weighting and Selecting Documents and Terms</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_3">10.3. Advanced Representation of Text</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter11.html">11 Automatic analysis of text</a>
+            <!--<a href="#toc_chap_11" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_11"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_11">
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_1">11.1. Deciding on the Right Method</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_2">11.2. Obtaining a Review Dataset</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_3">11.3. Dictionary Approaches to Text Analysis</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_4">11.4. Supervised Text Analysis: Automatic Classification and Sentiment Analysis</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_5">11.5. Unsupervised Text Analysis: Topic Modeling</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter12.html">12 Scraping online data</a>
+            <!--<a href="#toc_chap_12" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_12"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_12">
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_1">12.1. Using Web APIs: From Open Resources to Twitter</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_2">12.2. Retrieving and Parsing Web Pages</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_3">12.3. Authentication, Cookies, and Sessions</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_4">12.4. Ethical, Legal, and Practical Considerations</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter13.html">13 Network Data</a>
+            <!--<a href="#toc_chap_13" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_13"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_13">
+                
+                    <li class="toc-section">
+                        <a href="chapter13.html#13_1">13.1. Representing and Visualizing Networks</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter13.html#13_2">13.2. Social Network Analysis</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter14.html">14 Multimedia data</a>
+            <!--<a href="#toc_chap_14" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_14"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_14">
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_1">14.1. Beyond Text Analysis: Images, Audio and Video</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_2">14.2. Using Existing Libraries and APIs</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_3">14.3. Storing, Representing, and Converting Images</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_4">14.4. Image Classification</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter15.html">15 Scaling up and distributing</a>
+            <!--<a href="#toc_chap_15" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_15"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_15">
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_1">15.1. Storing Data in SQL and noSQL Databases</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_2">15.2. Using Cloud Computing</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_3">15.3. Publishing Your Source</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_4">15.4. Distributing Your Software as Container</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter16.html">16 Where to go next</a>
+            <!--<a href="#toc_chap_16" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_16"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_16">
+                
+                    <li class="toc-section">
+                        <a href="chapter16.html#16_1">16.1. How Far Have We Come?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter16.html#16_2">16.2. Where To Go Next?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter16.html#16_3">16.3. Open, Transparent, and Ethical Computational Science</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+</ul>
+            </nav>
+        </aside>
+	
+      
+  
+
+    <div class="css-layout">
+      <!-- Main Content -->
+      <div class="css-main">
+	<div class='chevrons'>
+&laquo;
+	  
+	  <a href='chapter01.html'>Ch. 1 Introduction</a>
+	  
+	  
+	  | <a href='chapter03.html'>Ch. 3 Programming Concepts</a>&raquo;
+	  
+</div>
+	  <br/>
+            
+<h1>  <small class='text-muted'><a class='anchor' href='#chap:fundata' name='chap:fundata'>2.</a></small>Getting started: Fun with data and visualizations
+</h1>
+
+
+<div class='abstract'>
+  <span class='caption'>
+Abstract
+  </span>
+  This chapter is a lightning tour of some of the cool (and informative) things you can do with R and Python.
+  Starting from a dataset of tweets about COVID-19, we show how you can analyze this data using
+  text analysis, network analysis, and using geographic information.
+  The goal of this chapter is not to teach you all these techniques in detail,
+  rather, each of the examples showcases a possibility and guides you to the chapter where it will be explained in more detail.
+  So don't worry too much about understanding every line of code, but relax and enjoy the ride!
+
+</div>
+
+<div class='keywords'>
+  <span class='caption'>Keywords:</span>
+basics of programming,  data analysis
+</div>
+<div class='objectives'>
+  <div class='caption'>Chapter objectives:</div>
+  <ul><li> Get an overview of the possibilities of R and Python for data analysis and visualization
+</li><li> Understand how different aspects of data gathering, cleaning, and analysis work together
+</li><li> Have fun with data and visualizations!
+</li>
+  </ul>
+</div><div class='feature'><b>Packages used in this chapter</b><br/>
+  Since this chapter showcases a wide variety of possibilities,
+  it relies on quite a number of third party packages.
+  If needed, you can install these packages with the code below
+  (see Section&nbsp;<a href='chapter01.html#1_4'>1.4</a> for more details):
+  <div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>!pip3 install pandas matplotlib  geopandas </code>
+<code>!pip3 install descartes shifterator</code>
+<code>!pip3 install wordcloud gensim nltk networkx</code>
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>system("apt install libgsl-dev", intern=TRUE) #Install GSL</code>
+<code>install.packages(c("tidyverse", "igraph","maps",</code>
+<code>    "quanteda", "quanteda.textplots", </code>
+<code>    "quanteda.textstats", "topicmodels"))</code>  </pre>
+</div></div> After installing, you need to import (activate) the packages every session:
+  <div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>import re</code>
+<code>import pandas as pd</code>
+<code>import matplotlib.pyplot as plt</code>
+<code>from collections import Counter, defaultdict</code>
+<code>from wordcloud import WordCloud</code>
+<code>from gensim import corpora, models</code>
+<code>import geopandas as gpd</code>
+<code>import shifterator as sh</code>
+<code>import nltk</code>
+<code>from nltk.corpus import stopwords</code>
+<code>import networkx as nx</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>library(tidyverse)</code>
+<code>library(lubridate)</code>
+<code>library(quanteda)</code>
+<code>library(quanteda.textplots)</code>
+<code>library(quanteda.textstats)</code>
+<code>library(topicmodels)</code>
+<code>library(igraph)</code>
+<code>library(maps)</code>
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div></div></div>
+<h2>  <small class='text-muted'><a class='anchor' href='#2_1' name='2_1'>2.1.</a></small>Fun With Tweets
+</h2>
+
+
+<p>
+The goal of this chapter is to showcase how you can use R or Python to quickly and easily
+run some impressive analyses of real world data.
+For this purpose, we will be using a dataset of tweets about the COVID pandemic that is
+engulfing much of the world at the time this book is written.
+Of course, tweets are probably only representative for what is said on Twitter,
+but the data are (semi-)public and rich, containing text, location, and network characteristics.
+This makes them ideal for exploring the many ways in which we can analyze and visualize information
+with Python and R. 
+</p>
+
+<p>
+Example&nbsp;<a href='#ex:funtweets'>2.1</a> shows how you can read this dataset into memory using a single command.
+Note that this does not retrieve the tweets from Twitter itself, but rather downloads
+our cached version of the tweets.
+In Chapter&nbsp;<a href='chapter12.html#12'>12</a> we will show how you can download tweets and location data yourself, but to make sure
+we can get down to business immediately we will start from this cached version. 
+</p>
+<div class='code-example'><h4>
+  <small class='text-muted'><a class='anchor' href='#ex:funtweets' name='ex:funtweets'>Example 2.1.</a></small><br />
+Retrieving cached tweets about COVID</h4>
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>tw=pd.read_csv("https://cssbook.net/d/covid.csv")</code>
+<code>tw.head()</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>tw = read_csv("https://cssbook.net/d/covid.csv")</code>
+<code>head(tw)</code>  </pre>
+</div></div><div class='code-single'><pre class='output'># A tibble: 9,811 x 8
+  status_id created_at          screen_name     lang  location         text               retweet_count reply_to_screen.
+      &lt;dbl&gt; &lt;dttm&gt;              &lt;chr&gt;           &lt;chr&gt; &lt;chr&gt;            &lt;chr&gt;                      &lt;dbl&gt; &lt;chr&gt;
+1   1.31e18 2020-09-25 16:50:33 ghulamabbasshah en    Lahore, Pakistan "Secularism of #G.          1203 NA
+2   1.31e18 2020-09-25 22:49:07 GeoRebekah      en    Florida, USA     "On the day @GovR.          1146 NA
+3   1.31e18 2020-09-25 19:39:16 AlexBerenson    en    New York         "Updated @cgcgov .           988 NA
+# . with 9,808 more rows</pre></div></div>
+<p>
+As you can see, the dataset contains almost 10000 tweets, listing their
+sender, their location and language, the text, the number of retweets, and whether it was a reply (retweet).
+You can read the start of the three most retweeted messages, which contain one (political) tweet from India
+and two seemingly political and factual tweets from the United States.
+</p>
+
+<p>
+<b>My first bar plot</b> Before diving into the textual, network, and geographic data in the dataset,
+let's first make a simple visualization of the date on which the tweets were posted.
+Example&nbsp;<a href='#ex:funtime'>2.2</a> does this in two steps:
+first, the number of tweets per hour is counted with an aggregation command.
+Next, a bar plot is made of this calculated value with some options to make it look relatively clean and professional.
+If you want to play around with this, you can for example try to plot the number of tweets per language,
+or create a line plot instead of a bar plot. 
+For more information on visualization, please see Chapter&nbsp;<a href='chapter07.html#7'>7</a>.
+See Chapter&nbsp;<a href='chapter06.html#6'>6</a> for an in-depth explanation of the aggregation command. 
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:funtime' name='ex:funtime'>Example 2.2.</a></small><br />
+Barplot of tweets over time</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>tw.index=pd.DatetimeIndex(tw["created_at"])</code>
+<code>tw["status_id"].groupby(pd.Grouper(freq="H")) \</code>
+<code>    .count().plot(kind="bar")</code>
+<code># (note the use of \ to split a long line)</code>
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>tweets_per_hour = tw %&gt;% </code>
+<code>  mutate(hour=round_date(created_at, "hour")) %&gt;% </code>
+<code>  group_by(hour) %&gt;% summarize(n=n()) </code>
+<code>ggplot(tweets_per_hour, aes(x=hour, y=n)) + </code>
+<code>  geom_col() + theme_classic() + </code>
+<code>  xlab("Time") + ylab("# of tweets") +</code>
+<code>  ggtitle("Number of COVID tweets over time")</code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>R output. Note that Python output may look slightly different</div>
+<a href='img/funtime.r.png' title='Click to open full-size image'>
+  <img src='img/funtime.r_thumb.png' />
+</a>
+</div></div>
+<h2>  <small class='text-muted'><a class='anchor' href='#2_2' name='2_2'>2.2.</a></small>Fun With Textual Data
+</h2>
+
+
+<p>
+<b>Corpus Analysis</b> Next, we can analyze which hashtags are most frequently used in this dataset.
+Example&nbsp;<a href='#ex:funcloud'>2.3</a> does this by creating a <i>document-term matrix</i> using the package <i>quanteda</i> (in R)
+or by manually counting the words using a defaultdict (in Python).
+The code shows a number of steps that are made to create the final results, each of which represent
+researcher choices about which data to keep and which to discard as noise.
+In this case,  we select English tweets, convert text to lower case,  remove stop words, and keep only words that start with #,
+while dropping words starting with <code>#corona</code> and <code>#covid</code>.
+To play around with this example,
+see if you can adjust the code to e.g. include all words or only at-mentions instead of the hashtags
+and make a different selection of tweets, for example Spanish language tweets or only popular (retweeted) tweets.
+Please see Chapter&nbsp;<a href='chapter10.html#10'>10</a> if you want to learn more about corpus analysis,
+and see Chapter&nbsp;<a href='chapter06.html#6'>6</a> for more information on how to select subsets of your data.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:funcloud' name='ex:funcloud'>Example 2.3.</a></small><br />
+My First Tag Cloud</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>freq = defaultdict(int)</code>
+<code>for tweet in tw["text"]:</code>
+<code>    for tag in re.findall("#\w+", tweet.lower()):</code>
+<code>        if not re.search("#covid|#corona", tag):</code>
+<code>            freq[tag]+=1</code>
+<code>wc = WordCloud().generate_from_frequencies(freq)</code>
+<code>plt.imshow(wc, interpolation="bilinear")</code>
+<code>plt.axis("off")</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>dtm_tags = filter(tw, lang=="en") %&gt;% </code>
+<code>  corpus() %&gt;% tokens() %&gt;% </code>
+<code>  dfm(tolower = T) %&gt;% </code>
+<code>  dfm_select(pattern = "#*") %&gt;% </code>
+<code>  dfm_remove(c("#corona*", "#covid*")) </code>
+<code>textplot_wordcloud(dtm_tags, max_words=100)</code>
+&nbsp;
+&nbsp;  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>R output. Note that Python output may look slightly different</div>
+<a href='img/funcloud.r.png' title='Click to open full-size image'>
+  <img src='img/funcloud.r_thumb.png' />
+</a>
+</div></div>
+<p>
+<b>Topic Model</b>
+Where a word cloud (or tag cloud) shows which words occur most frequently,
+a <code>topic model</code> analysis shows which words co-occur in the same documents.
+Using the most common topic modeling algorithm, Latent Dirichlet Allocation or LDA,
+Example&nbsp;<a href='#ex:funlda'>2.4</a> explores the tweets by automatically clustering the tags selected earlier into 10 <i>topics</i>.
+Topic modeling is non-deterministic &ndash; if you run it again you can get slightly different topics,
+and topics are swapped around randomly as the topic numbers have no special meaning.
+By setting the computer's <i>random seed</i> you can ensure that if you run it again you get the same results.
+As you can see, some topics seem easily interpretable (such as topic 2 about social distancing,
+and topic 8 on health care), it is always recommended that you inspect the clustered documents
+and edge cases in addition to the top words (or tags) as shown here.
+You can play around with this example by using a different selection of words
+(modifying the code in Example&nbsp;<a href='#ex:funcloud'>2.3</a>) or changing the number of topics.
+You can also change (or remove) the random seed and see how running the same model multiple times will give different results. 
+See <a href='chapter11.html#11_5'>Section 11.5</a> for more information about fitting, interpreting, and validating topic models.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:funlda' name='ex:funlda'>Example 2.4.</a></small><br />
+Topic Model of the COVID tags</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>tags = [[tag.lower() </code>
+<code>         for tag in re.findall("#\w+", tweet)] </code>
+<code>        for tweet in tw["text"]]</code>
+<code>voca = corpora.Dictionary(tags)</code>
+<code>corpus = [voca.doc2bow(doc) for doc in tags]</code>
+<code>m = models.LdaModel(corpus, num_topics=10,</code>
+<code>  id2word=voca,</code>
+<code>  distributed=False, random_state=123)</code>
+<code>m.print_topics()</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>set.seed(1)</code>
+<code>m = convert(dtm_tags, to="topicmodel") %&gt;% </code>
+<code>  LDA(10, method="Gibbs")</code>
+<code>terms(m, 5)</code>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>R output. Note that Python output may look slightly different</div>
+<div class='table-wrapper'><table class="dataframe">
+<caption>A matrix: 5 × 10 of type chr</caption>
+<thead>
+	<tr><th scope=col>Topic 1</th><th scope=col>Topic 2</th><th scope=col>Topic 3</th><th scope=col>Topic 4</th><th scope=col>Topic 5</th><th scope=col>Topic 6</th><th scope=col>Topic 7</th><th scope=col>Topic 8</th><th scope=col>Topic 9</th><th scope=col>Topic 10</th></tr>
+</thead>
+<tbody>
+	<tr><td>#vintage   </td><td>#socialdistancing</td><td>#florida        </td><td>#maga         </td><td>#sarscov2 </td><td>#vaccine</td><td>#pandemic    </td><td>#health    </td><td>#india       </td><td>#trump</td></tr>
+	<tr><td>#vote      </td><td>#staysafe        </td><td>#economy        </td><td>#business     </td><td>#china    </td><td>#cdc    </td><td>#virus       </td><td>#healthcare</td><td>#rss         </td><td>#usa  </td></tr>
+	<tr><td>#wfh       </td><td>#lockdown        </td><td>#sandiego       </td><td>#climatechange</td><td>#canada   </td><td>#who    </td><td>#masks       </td><td>#medicine  </td><td>#islamophobia</td><td>#biden</td></tr>
+	<tr><td>#news      </td><td>#love            </td><td>#fridaythoughts </td><td>#             </td><td>#education</td><td>#nhs    </td><td>#pence       </td><td>#doctor    </td><td>#gandhi      </td><td>#uk   </td></tr>
+	<tr><td>#remotework</td><td>#stayhome        </td><td>#rip_indianmedia</td><td>#masks        </td><td>#delhi    </td><td>#podcast</td><td>#publichealth</td><td>#wellness  </td><td>#nehru       </td><td>#ue   </td></tr>
+</tbody>
+</table>
+</div>
+</div></div>
+<h2>  <small class='text-muted'><a class='anchor' href='#2_3' name='2_3'>2.3.</a></small>Fun With Visualizing Geographic Information
+</h2>
+
+
+<p>
+
+For the final set of examples, we will use the location information contained in the Twitter data.
+This information is based on what Twitter users enter into their profile, and as such it is incomplete and noisy
+with many users giving a nonsensical location such as `Ethereally here' or not filling in any location at all.
+However, if we assume that most users that do enter a proper location (such as Lahore or Florida in the top tweets displayed above),
+we can use it to map where most tweets are coming from.
+</p>
+
+<p>
+The first step in this analysis is to resolve a name such as `Lahore, Pakistan' to its geographical coordinates (in this case, about 31 degrees north and 74 degrees east). This is called geocoding, and both Google maps and Open Street Maps can be used
+to perform this automatically.
+As with the tweets themselves, we will use a cached version of the geocoding results here so we can proceed directly.
+Please see https://cssbook.net/datasets for the code that was used to create this file so you can play around with it as well. 
+</p>
+
+<p>
+Example&nbsp;<a href='#ex:funmap'>2.5</a> shows how this data can be used to create a map of Twitter activity.
+First, the cached user data is retrieved, showing the correct location for Lahore but also
+illustrating the noisiness of the data with the location &ldquo;Un peu partout&rdquo;.
+Next, this data is <code>joined</code> to the Twitter data, so the coordinates are filled in where known.
+Finally, we plot this information on a map, showing tweets with more retweets as larger dots.
+See Chapter&nbsp;<a href='chapter07.html#7'>7</a> for more information on visualization.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:funmap' name='ex:funmap'>Example 2.5.</a></small><br />
+Location of COVID tweets</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>url = "https://cssbook.net/d/covid_users.csv"</code>
+<code>users = pd.read_csv(url)</code>
+<code>tw2 = tw.merge(users,on="screen_name",how="left")</code>
+<code>world = gpd.read_file(</code>
+<code>  gpd.datasets.get_path("naturalearth_lowres"))</code>
+<code>gdf = gpd.GeoDataFrame(tw2, </code>
+<code>  geometry=gpd.points_from_xy(tw2.long, tw2.lat))</code>
+<code>ax = world.plot(color="white", edgecolor="black", </code>
+<code>                figsize=(10,10))</code>
+<code>gdf.plot(ax=ax, color="red", alpha=.2,</code>
+<code>         markersize=tw["retweet_count"])</code>
+<code>plt.show()</code>
+&nbsp;
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>url = "https://cssbook.net/d/covid_users.csv"</code>
+<code>users = read_csv(url)</code>
+<code>tw2 = left_join(tw, users)</code>
+<code>ggplot(mapping=aes(x=long, y=lat)) +</code>
+<code>  geom_polygon(aes(group=group), </code>
+<code>    data=map_data("world"), </code>
+<code>    fill="lightgray", colour = "white") +</code>
+<code>  geom_point(aes(size=retweet_count, </code>
+<code>                 alpha=retweet_count), </code>
+<code>             data=tw2, color="red") + </code>
+<code>  theme_void() + theme(aspect.ratio=1) + </code>
+<code>  guides(alpha=FALSE, size=FALSE) + </code>
+<code>  ggtitle("Location of COVID tweets", </code>
+<code>          "Size indicates number of retweets")</code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>R output. Note that Python output may look slightly different</div>
+<a href='img/funmap.r.png' title='Click to open full-size image'>
+  <img src='img/funmap.r_thumb.png' />
+</a>
+</div></div>
+<p>
+<b>Combining textual and structured information</b>
+Since we know the location of a subset of our tweet's users,
+we can differentiate between e.g. American, European, and Asian tweets.
+Example&nbsp;<a href='#ex:funcompare'>2.6</a> creates a very rough identification of North American tweets,
+and uses that to compute the relative frequency of words in those tweets compared to the rest.
+Not surprisingly, those tweets are much more about American politics, locations, and institutions.
+The other tweets talk about UK politics but also use a variety of names to refer to the pandemic.
+To play around with this, see if you can isolate e.g. Asian or South American tweets,
+or compare Spanish tweets from different locations.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:funcompare' name='ex:funcompare'>Example 2.6.</a></small><br />
+Corpus comparison: North American tweets vs. the rest</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>nltk.download("stopwords")</code>
+<code>cn = gdf.query("lang=='en'&(long&lt;-60 & lat&gt;25)")</code>
+<code>cn = Counter(cn["text"].str.cat().lower().split())</code>
+<code>cr = gdf.query("lang=='en' & (long&gt;-60 | lat&lt;25)")</code>
+<code>cr = Counter(cr["text"].str.cat().lower().split())</code>
+<code>for k in stopwords.words("english"):</code>
+<code>    del cn[k]</code>
+<code>    del cr[k]</code>
+<code>key = sh.ProportionShift(type2freq_1=cn,</code>
+<code>                         type2freq_2=cr)</code>
+<code>key.get_shift_graph()</code>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>dfm = tw2 %&gt;% mutate(northamerica=ifelse(</code>
+<code>    long &lt; -60 & lat &gt; 25,"N. America","Rest"))%&gt;%</code>
+<code>  filter(lang=="en") %&gt;% </code>
+<code>  corpus(docid_field="status_id") %&gt;% </code>
+<code>  tokens(remove_punct=T) %&gt;%</code>
+<code>  tokens_group(northamerica) %&gt;%</code>
+<code>  dfm(tolower=T) %&gt;% </code>
+<code>  dfm_remove(stopwords("en")) %&gt;%</code>
+<code>  dfm_select(min_nchar=4)</code>
+<code>key = textstat_keyness(dfm, target="N. America")</code>
+<code>textplot_keyness(key, margin=0.2) +</code>
+<code>  ggtitle("Words preferred by North Americans", </code>
+<code>          "(Only English-language tweets)") + </code>
+<code>  theme_void()</code>
+<code></code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>R output. Note that Python output may look slightly different</div>
+<a href='img/funcompare.r.png' title='Click to open full-size image'>
+  <img src='img/funcompare.r_thumb.png' />
+</a>
+</div></div>
+<h2>  <small class='text-muted'><a class='anchor' href='#2_4' name='2_4'>2.4.</a></small>Fun With Networks
+</h2>
+
+
+<p>
+Twitter, of course, is a social network as well as a microblogging service:
+users are connected to other users because they follow each other and retweet and like each others' tweets.
+Using the <code>reply_to_screen_name</code> column, we can inspect the retweet network contained in the COVID tweet dataset.
+Example&nbsp;<a href='#ex:fungraph'>2.7</a> first uses the data summarization commands from <code>tidyverse</code>(R) and <code>pandas</code>(Python) to
+create a data frame of connections or <code>edges</code> listing how often each user retweets each other user.
+The second code block shows how the <i>igraph</i> (R) and <i>networkx</i> (Python) packages are used to convert this edge list into a graph.
+From this graph, we select only the largest connected component and use a clustering algorithm to analyze which
+nodes (users) form cohesive subnetworks.
+Finally, a number of options are used to set the color and size of the edges, nodes, and labels,
+and the resulting network is plotted.
+As you can see, the central node is Donald Trump, who is retweeted by a large number of users,
+some of which are then retweeted by other users.
+You can play around with different settings for the plot options,
+or try to filter e.g. only tweets from a certain language. 
+You could also easily compute social network metrics such as centrality on this network,
+and/or export the network for further analysis in specialized social network analysis software.
+See Chapter&nbsp;<a href='chapter13.html#13'>13</a> for more information on network analysis,
+and Chapter&nbsp;<a href='chapter06.html#6'>6</a> for the summarization commands used to create the edge list.
+</p>
+<div class='code-example'><h4>
+  <small class='text-muted'><a class='anchor' href='#ex:fungraph' name='ex:fungraph'>Example 2.7.</a></small><br />
+Retweet nework in the COVID tweets.</h4>
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>edges=tw2[["screen_name","reply_to_screen_name"]]</code>
+<code>edges=edges.dropna().rename({"screen_name":"from",</code>
+<code>  "reply_to_screen_name":"to"}, axis="columns")</code>
+<code>edges.groupby(["from","to"]).size().head()</code>
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>edges = tw2 %&gt;% </code>
+<code>  select(from=screen_name, </code>
+<code>         to=reply_to_screen_name) %&gt;% </code>
+<code>  filter(to != "") %&gt;%</code>
+<code>  group_by(to, from) %&gt;% </code>
+<code>  summarize(n=n())</code>
+<code>head(edges)</code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>R output. Note that Python output may look slightly different</div>
+<div class='table-wrapper'><table class="dataframe">
+<caption>A grouped_df: 6 × 3</caption>
+<thead>
+	<tr><th scope=col>to</th><th scope=col>from</th><th scope=col>n</th></tr>
+	<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;int&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>_FutureIsUs   </td><td>_FutureIsUs    </td><td>1</td></tr>
+	<tr><td>_JaylaS_      </td><td>AfronerdRadio  </td><td>1</td></tr>
+	<tr><td>_LoveMTB_     </td><td>ExpatriateNl   </td><td>1</td></tr>
+	<tr><td>_nogueiraneto </td><td>ideobisium     </td><td>1</td></tr>
+	<tr><td>_NotFakeNews_ </td><td>panich52       </td><td>1</td></tr>
+	<tr><td>_vikasupadhyay</td><td>SHADABMOHAMMAD7</td><td>4</td></tr>
+</tbody>
+</table>
+</div>
+</div><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>g1 = nx.Graph()</code>
+<code>g1.add_edges_from(edges.to_numpy())</code>
+<code>largest = max(nx.connected_components(g1),key=len)</code>
+<code>g2 = g1.subgraph(largest)</code>
+<code></code>
+<code>pos = nx.spring_layout(g2)</code>
+<code>plt.figure(figsize=(20,20))</code>
+<code>plt.axis("off")</code>
+<code>sizes = [s*1e4 for s in </code>
+<code>  nx.centrality.degree_centrality(g2).values()]</code>
+<code>nx.draw_networkx_nodes(g2,pos, node_size=sizes)</code>
+<code>nx.draw_networkx_labels(g2,pos)</code>
+<code>nx.draw_networkx_edges(g2,pos)</code>
+<code>plt.show()</code>
+&nbsp;
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code># create igraph and select largest component</code>
+<code>g = graph_from_data_frame(edges)</code>
+<code>components &lt;- decompose.graph(g)</code>
+<code>largest = which.max(sapply(components, gsize))</code>
+<code>g2 = components[[largest]]</code>
+<code># Color nodes by cluster</code>
+<code>clusters = cluster_spinglass(g2)</code>
+<code>V(g2)$color = clusters$membership</code>
+<code>V(g2)$frame.color = V(g2)$color</code>
+<code># Set node (user) and edge (arrow) size</code>
+<code>V(g2)$size = degree(g2)^.5</code>
+<code>V(g2)$label.cex = V(g2)$size/3</code>
+<code>V(g2)$label = ifelse(degree(g2)&lt;=1,"",V(g2)$name) </code>
+<code>E(g2)$width = E(g2)$n</code>
+<code>E(g2)$arrow.size= E(g2)$width/10</code>
+<code>plot(g2)</code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>R output. Note that Python output may look slightly different</div>
+<a href='img/fungraphb.r.png' title='Click to open full-size image'>
+  <img src='img/fungraphb.r_thumb.png' />
+</a>
+</div></div>
+<p>
+<b>Geographic networks</b>
+In the final example of this chapter, we will combine the geographic and network information to
+show which regions of the world interact with each other.
+For this, in Example&nbsp;<a href='#ex:fungeonet'>2.8</a> we join the user information to the edges data frame created above twice:
+once for the sender, once for the replied-to user.
+Then, we adapt the earlier code for plotting the map by adding a line for each node in the network.
+As you can see, users in the main regions (US, EU, India) mostly interact with each other,
+with almost all regions also interacting with the US.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:fungeonet' name='ex:fungeonet'>Example 2.8.</a></small><br />
+Reply Network of Tweets</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>u = users.drop(["location"], axis=1)</code>
+<code>uf = u.rename({"screen_name":"from",</code>
+<code>    "lat":"lat_from","long":"long_from"}, axis=1)</code>
+<code>ut = u.rename({"screen_name":"to",</code>
+<code>    "lat":"lat_to","long":"long_to"}, axis=1)</code>
+<code>edges = edges.merge(uf).merge(ut).query(</code>
+<code>    "long_to!=long_from & lat_to!=lat_from")</code>
+<code></code>
+<code>world = gpd.read_file(</code>
+<code>    gpd.datasets.get_path("naturalearth_lowres"))</code>
+<code>g_to = gpd.GeoDataFrame(edges.copy(),</code>
+<code>    geometry=gpd.points_from_xy(edges.long_to,</code>
+<code>                                edges.lat_to))</code>
+<code>g_from = gpd.GeoDataFrame(edges.copy(),</code>
+<code>    geometry=gpd.points_from_xy(edges.long_from,</code>
+<code>                                edges.lat_from))</code>
+<code></code>
+<code>ax = world.plot(color="white", edgecolor="black",</code>
+<code>                figsize=(10,10))</code>
+<code>g_from.plot(ax=ax, color="red", alpha=.2)</code>
+<code>g_to.plot(ax=ax, color="blue", alpha=.2)</code>
+<code></code>
+<code>e=g_from.join(g_to, lsuffix="_from",rsuffix="_to")</code>
+<code>e = e[["geometry_from", "geometry_to"]]</code>
+<code>px = lambda point: point.x</code>
+<code>py = lambda point: point.y</code>
+<code>x_values = list(zip(e["geometry_from"].map(px),</code>
+<code>                    e["geometry_to"].map(px)))</code>
+<code>y_values = list(zip(e["geometry_from"].map(py),</code>
+<code>                    e["geometry_to"].map(py)))</code>
+<code>plt.plot(x_values, y_values, linewidth = 1,</code>
+<code>    linestyle = "-", color = "green", alpha=.3)</code>
+<code>plt.show()</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>edges2 = edges %&gt;% </code>
+<code>  inner_join(users, by=c("from"="screen_name"))%&gt;%</code>
+<code>  inner_join(users, by=c("to"="screen_name"), </code>
+<code>             suffix=c("", ".to")) %&gt;% </code>
+<code>  filter(lat != lat.to | long != long.to )</code>
+<code>ggplot(mapping=aes(x = long, y = lat)) +</code>
+<code>  geom_polygon(aes(group=group),map_data("world"),</code>
+<code>    fill="lightgray", colour = "white") +</code>
+<code>  geom_point(aes(size=retweet_count, </code>
+<code>  alpha=retweet_count), data=tw2, color="red")+</code>
+<code>  geom_curve(aes(xend=long.to,yend=lat.to,size=n),</code>
+<code>             edges2, curvature=.1, alpha=.5) +</code>
+<code>  theme_void() + guides(alpha=FALSE, size=FALSE) +</code>
+<code>  ggtitle("Retweet network of COVID tweets", </code>
+<code>  "Bubble size indicates total no. of retweets")</code>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>R output. Note that Python output may look slightly different</div>
+<a href='img/fungeonet.r.png' title='Click to open full-size image'>
+  <img src='img/fungeonet.r_thumb.png' />
+</a>
+</div></div>
+        </div>
+
+	<div class='chevrons'>
+&laquo;
+	  
+	  <a href='chapter01.html'>Ch. 1 Introduction</a>
+	  
+	  
+	  | <a href='chapter03.html'>Ch. 3 Programming Concepts</a>&raquo;
+	  
+</div>
+	<!-- Secondary sidebar -->
+        <aside class="css-rightbar">
+            <nav id="right" class="collapse css-rightnav">
+                <ul class="list-unstyled components">
+  
+  
+    
+  
+                  <div class="rightbar-header">In this chapter</div>
+
+            <ul class="list-unstyled" id="toc_chap_2">
+<li class='toc-section'>2 Fun with Data</li>
+
+              
+	          
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_1">2.1. Fun With Tweets</a>
+		    </li>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_2">2.2. Fun With Textual Data</a>
+		    </li>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_3">2.3. Fun With Visualizing Geographic Information</a>
+		    </li>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_4">2.4. Fun With Networks</a>
+		    </li>
+		    
+
+		
+            </ul>
+	    
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+</ul>
+            </nav>
+        </aside>
+</div>
+
+
+
+    </div>
+    <!-- Optional JavaScript; choose one of the two! -->
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+    -->
+  <script>
+      var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+  return new bootstrap.Popover(popoverTriggerEl, {html: true})
+})
+  </script>
+  </body>
+</html>

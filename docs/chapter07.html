@@ -1,0 +1,2147 @@
+
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+      <link href="ccsbook.css" rel="stylesheet">
+      <!-- MathJax -->
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js">
+  </script>
+
+    <title>Computational Analysis of Communication</title>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-light fixed-top bg-light">
+    <div class="container-xxl">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#toc" aria-controls="toc" aria-expanded="false" aria-label="Toggle TOC">
+                <div></div>
+                <div></div>
+                <div></div>
+            </button>
+	    <div class='navhome'>
+              <a href="index.html">Computational Analysis of Communication</a>
+	      </div>
+    </div>
+    </nav>
+    <div id='content' class='container-xxl'>
+
+        <!-- Sidebar -->
+        <aside class="toc">
+            <nav id="toc" class="collapse">
+                <div class="subtoc">
+                    <ul class="list-unstyled components">
+  
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+                  <div class="rightbar-header">In this chapter</div>
+
+            <ul class="list-unstyled" id="toc_chap_7">
+<li class='toc-section'>7 Exploratory data analysis</li>
+
+              
+	          
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_1">7.1. Simple Exploratory Data Analysis</a>
+		    </li>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_2">7.2. Visualizing Data</a>
+		    </li>
+		    
+		    <ul class="list-unstyled list-subsections" id="toc_chap_2">
+		    
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_2_1">7.2.1. Plotting Frequencies and Distributions</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_2_2">7.2.2. Plotting Relationships</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_2_3">7.2.3. Plotting Geospatial Data</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_2_4">7.2.4. Other Possibilities</a>
+                    </li>
+
+                    
+		    </ul>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_3">7.3. Clustering and Dimensionality Reduction</a>
+		    </li>
+		    
+		    <ul class="list-unstyled list-subsections" id="toc_chap_3">
+		    
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_3_1">7.3.1. $k$-means Clustering</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_3_2">7.3.2. Hierarchical Clustering</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_3_3">7.3.3. Principal Component Analysis and Singular Value Decomposition</a>
+                    </li>
+
+                    
+		    </ul>
+		    
+
+		
+            </ul>
+	    
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+</ul>
+                </div>
+
+		<div class="rightbar-header">Table of Contents</div>
+                <ul class="list-unstyled components">
+    
+        <li class="active toc-chapter ">
+            <a href="chapter01.html">1 Introduction</a>
+            <!--<a href="#toc_chap_1" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_1"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_1">
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_1">1.1. The Role of Computational Analysis in the Social Sciences</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_2">1.2. Why Python and/or R?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_3">1.3. How to use this book</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_4">1.4. Installing R and Python</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_5">1.5. Installing Third-Party Packages</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter02.html">2 Fun with Data</a>
+            <!--<a href="#toc_chap_2" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_2"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_2">
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_1">2.1. Fun With Tweets</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_2">2.2. Fun With Textual Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_3">2.3. Fun With Visualizing Geographic Information</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_4">2.4. Fun With Networks</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter03.html">3 Programming Concepts</a>
+            <!--<a href="#toc_chap_3" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_3"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_3">
+                
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_1">3.1. About Objects and Data Types</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_2">3.2. Simple Control Structures: Loops and Conditions</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_3">3.3. Functions and Methods</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter04.html">4 How to write code</a>
+            <!--<a href="#toc_chap_4" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_4"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_4">
+                
+                    <li class="toc-section">
+                        <a href="chapter04.html#4_1">4.1. Re-using Code: How Not to Re-Invent the Wheel</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter04.html#4_2">4.2. Understanding Errors and Getting Help</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter04.html#4_3">4.3. Best Practice: Beautiful Code, GitHub, and Notebooks</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter05.html">5 Files and Data Frames</a>
+            <!--<a href="#toc_chap_5" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_5"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_5">
+                
+                    <li class="toc-section">
+                        <a href="chapter05.html#5_1">5.1. Why and When Do We Use Data Frames?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter05.html#5_2">5.2. Reading and Saving Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter05.html#5_3">5.3. Data from online sources</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter06.html">6 Data Wrangling</a>
+            <!--<a href="#toc_chap_6" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_6"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_6">
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_1">6.2. Calculating Values</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_2">6.3. Grouping and Aggregating</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_3">6.4. Merging Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_4">6.5. Reshaping Data: Wide To Long And Long To Wide</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter toc-chapter-current">
+            <a href="chapter07.html">7 Exploratory data analysis</a>
+            <!--<a href="#toc_chap_7" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_7"></a>
+            <ul class="collapse list-unstyled show" id="toc_chap_7">
+                
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_1">7.1. Simple Exploratory Data Analysis</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_2">7.2. Visualizing Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_3">7.3. Clustering and Dimensionality Reduction</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter08.html">8 Machine Learning</a>
+            <!--<a href="#toc_chap_8" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_8"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_8">
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_1">8.1. Statistical Modeling and Prediction</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_2">8.2. Concepts and Principles</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_3">8.3. Classical Machine Learning: From Na&#34;ive Bayes to Neural Networks</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_4">8.4. Deep Learning</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_5">8.5. Validation and Best Practices</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter09.html">9 Processing text</a>
+            <!--<a href="#toc_chap_9" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_9"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_9">
+                
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_1">9.1. Text as a String of Characters</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_2">9.2. Regular Expressions</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_3">9.3. Using Regular Expressions in Python and R</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter10.html">10 Text as data</a>
+            <!--<a href="#toc_chap_10" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_10"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_10">
+                
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_1">10.1. The Bag of Words and the Term-Document Matrix</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_2">10.2. Weighting and Selecting Documents and Terms</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_3">10.3. Advanced Representation of Text</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter11.html">11 Automatic analysis of text</a>
+            <!--<a href="#toc_chap_11" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_11"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_11">
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_1">11.1. Deciding on the Right Method</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_2">11.2. Obtaining a Review Dataset</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_3">11.3. Dictionary Approaches to Text Analysis</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_4">11.4. Supervised Text Analysis: Automatic Classification and Sentiment Analysis</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_5">11.5. Unsupervised Text Analysis: Topic Modeling</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter12.html">12 Scraping online data</a>
+            <!--<a href="#toc_chap_12" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_12"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_12">
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_1">12.1. Using Web APIs: From Open Resources to Twitter</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_2">12.2. Retrieving and Parsing Web Pages</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_3">12.3. Authentication, Cookies, and Sessions</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_4">12.4. Ethical, Legal, and Practical Considerations</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter13.html">13 Network Data</a>
+            <!--<a href="#toc_chap_13" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_13"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_13">
+                
+                    <li class="toc-section">
+                        <a href="chapter13.html#13_1">13.1. Representing and Visualizing Networks</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter13.html#13_2">13.2. Social Network Analysis</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter14.html">14 Multimedia data</a>
+            <!--<a href="#toc_chap_14" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_14"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_14">
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_1">14.1. Beyond Text Analysis: Images, Audio and Video</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_2">14.2. Using Existing Libraries and APIs</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_3">14.3. Storing, Representing, and Converting Images</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_4">14.4. Image Classification</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter15.html">15 Scaling up and distributing</a>
+            <!--<a href="#toc_chap_15" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_15"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_15">
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_1">15.1. Storing Data in SQL and noSQL Databases</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_2">15.2. Using Cloud Computing</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_3">15.3. Publishing Your Source</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_4">15.4. Distributing Your Software as Container</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter16.html">16 Where to go next</a>
+            <!--<a href="#toc_chap_16" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_16"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_16">
+                
+                    <li class="toc-section">
+                        <a href="chapter16.html#16_1">16.1. How Far Have We Come?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter16.html#16_2">16.2. Where To Go Next?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter16.html#16_3">16.3. Open, Transparent, and Ethical Computational Science</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+</ul>
+            </nav>
+        </aside>
+	
+      
+  
+
+    <div class="css-layout">
+      <!-- Main Content -->
+      <div class="css-main">
+	<div class='chevrons'>
+&laquo;
+	  
+	  <a href='chapter06.html'>Ch. 6 Data Wrangling</a>
+	  
+	  
+	  | <a href='chapter08.html'>Ch. 8 Machine Learning</a>&raquo;
+	  
+</div>
+	  <br/>
+            
+<h1>  <small class='text-muted'><a class='anchor' href='#chap:eda' name='chap:eda'>7.</a></small>Exploratory data analysis
+</h1>
+
+
+<div class='abstract'>
+  <span class='caption'>
+Abstract
+  </span> This chapter explains how to use data analysis and visualization techniques to understand and communicate the structure and story of our data.  It first introduces the reader to exploratory statistics and data visualization in R and Python. Then, it discusses how unsupervised machine learning, in particular clustering and dimensionality reduction techniques, can be used to group similar cases or to decrease the number of features in a dataset.
+
+</div>
+
+<div class='keywords'>
+  <span class='caption'>Keywords:</span>
+descriptive statistics, visualization, unsupervised machine learning, clustering, dimensionality reduction
+</div>
+<div class='objectives'>
+  <div class='caption'>Chapter objectives:</div>
+  <ul><li> Be able to conduct an exploratory data analysis
+</li><li> Understand the principles of unsupervised machine learning
+</li><li> Be able to conduct a cluster analysis
+</li><li> Be able to apply dimension reduction techniques
+</li>
+  </ul>
+</div><div class='feature'>
+
+In this chapter we use the R packages <i>tidyverse</i>, <i>maps</i> and <i>factoextra</i> for data analysis and visualization. For Python we use <i>pandas</i> and <i>numpy</i> for data analysis and <i>matplotlib</i>, <i>seaborn</i> and <i>geopandas</i> for visualization. Additionally, in Python we use <i>scikit-learn</i> and <i>scipy</i> for cluster analysis. You can install these packages with the code below if needed
+  (see Section&nbsp;<a href='chapter01.html#1_4'>1.4</a> for more details):
+
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>!pip3 install pandas matplotlib seaborn geopandas </code>
+<code>!pip3 install scikit-learn scipy bioinfokit </code>
+<code>!pip3 install descartes</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>#install.packages(c("tidyverse", "glue", "maps", </code>
+<code>#                   "factoextra"))</code>
+&nbsp;  </pre>
+</div></div> After installing, you need to import (activate) the packages every session:
+
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>%matplotlib inline</code>
+<code># General packages</code>
+<code>import itertools</code>
+<code>import pandas as pd</code>
+<code>import numpy as np</code>
+<code># Packages for visualizing</code>
+<code>import matplotlib.pyplot as plt</code>
+<code>import seaborn as sns</code>
+<code>import geopandas as gpd</code>
+<code># Packages for clustering</code>
+<code>from sklearn.preprocessing import StandardScaler</code>
+<code>from sklearn.cluster import (KMeans, </code>
+<code>    AgglomerativeClustering)</code>
+<code>import scipy.cluster.hierarchy as sch</code>
+<code>from sklearn.decomposition import PCA</code>
+<code>import bioinfokit.visuz</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>library(tidyverse)</code>
+<code>library(glue)</code>
+<code>library(maps)</code>
+<code>library(factoextra)</code>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div></div></div>
+<h2>  <small class='text-muted'><a class='anchor' href='#7_1' name='7_1'>7.1.</a></small>Simple Exploratory Data Analysis
+</h2>
+
+
+<p>
+Now that you are familiar with data structures (Chapter&nbsp;<a href='chapter05.html#5'>5</a>) and data wrangling (Chapter&nbsp;<a href='chapter06.html#6'>6</a>) you are probably eager to get some real insights into your data beyond the basic techniques we briefly introduced in Chapter&nbsp;<a href='chapter02.html#2'>2</a>.
+</p>
+
+<p>
+As we outlined in Chapter&nbsp;<a href='chapter01.html#1'>1</a>, the computational analysis
+of communication can be  bottom-up or top-down, inductive or
+deductive.  Just as in traditional research methods <span class="cite" title="Bryman, A. (2012). Social research methods. Oxford University Press, New York, NY, 4th edition edition.">Bryman (2012)</span>, sometimes, an inductive
+bottom-up approach is a goal in itself: after all, explorative
+analyses are invaluable for generating hypotheses that can be tested
+in follow-up research. But even when you are conducting a deductive,
+hypothesis-testing study, it is a good idea to start by
+<i>describing</i> your dataset using the tools of exploratory data
+analysis to get a better picture of your data. In fact, we could even
+go as far as saying that obtaining details like frequency tables,
+cross-tabulations, and summary statistics (mean, median, mode, etc.)
+is always necessary, even if your research questions or hypotheses
+require further complex analysis. For the computational analysis of
+communication, a significant amount of time may actually be invested
+at this stage.
+</p>
+
+<p>
+Exploratory data analysis (EDA), as originally conceived by <span class="cite" title="Tukey, J.&nbsp;W. (1977). Exploratory data analysis, volume&nbsp;2. Reading, Mass.">Tukey (1977)</span>, can be a very powerful framework to prepare and evaluate data, as well as to understand its properties and generate insights at any stage of your research.
+It is mandatory to do some EDA before any sophisticated analysis to know if the data is clean enough, if there are missing values and outliers, and how the distributions are shaped.
+Furthermore, before making any multivariate or inferential analysis we might want to know the specific frequencies for each variable, their measures of central tendency, their dispersion, and so on. We might also want to integrate frequencies of different variables into a single table to have an initial picture of their interrelations.
+</p>
+
+<p>
+To illustrate how to do this in R and Python, we will use existing representative survey data to analyze how support for migrants or refugees in Europe changes over time and differs per country.
+ The Eurobarometer (freely available at the Leibniz Institute for the Social Sciences &ndash; GESIS) has contained these specific questions since 2015. We might pose questions about the variation of a single variable or also describe the covariation of different variables to find patterns in our data. In this section, we will compute basic statistics to answer  these questions and in the next section we will visualize them by plotting <em>within</em> and <em>between</em> variable behaviors of a selected group of features of the Eurobarometer conducted in November 2017 to 33193 Europeans.
+</p>
+
+<p>
+For most of the EDA we will use <i>tidyverse</i> in R and <i>pandas</i> as well as <i>numpy</i> and <i>scipy</i> in Python (Example 7.1). After loading a clean version of the survey data<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 1" data-bs-content="Original data ZA6928_v1-0-0.csv was cleaned and prepared for the exercise. The preparation of the data are in the notebooks cleaning_eurobarometer_py.ipynb and cleaning_eurobarometer_r.ipynb.">[1]</a>  stored in a csv file (using the <i>tidyverse</i> function <code>read_csv</code> in R and the <i>pandas</i> function <code>read_csv</code> in R), checking the dimensions of our data frame (33193 x 17), we probably want to get a global picture of each of our variables by getting a frequency table. This table shows the frequency of different outcomes for every case in a distribution. This means that we can know how many cases we have for each number or category in the distribution of every variable, which is useful in order to have an initial understanding of our data.
+</p>
+<div class='feature'><b>pandas versus pure numpy/scipy</b> In this book, we use pandas
+  data frames a lot: they make our lives easier compared to native
+  data types (Section&nbsp;<a href='chapter03.html#3_1'>3.1</a>), and they already integrate a lot of
+  functionality of underlying math and statistics packages such as
+  <i>numpy</i> and <i>scipy</i>. However, you do not have to force your
+  data into a data frame if a different structure makes more sense in
+  your script. <i>numpy</i> and <i>scipy</i> will happily calculate
+  mean, media, skewness, and kurtosis of the values in a list, or the
+  correlation between two lists. It's up to you.
+</div><div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:load' name='ex:load'>Example 7.1.</a></small><br />
+Load data from Eurobarometer survey and select some variables</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>url="https://cssbook.net/d/eurobarom_nov_2017.csv"</code>
+<code>d2=pd.read_csv(url)</code>
+<code>print("Shape of my filtered data =", d2.shape)</code>
+<code>print("Variables:", d2.columns)</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>url="https://cssbook.net/d/eurobarom_nov_2017.csv"</code>
+<code>d2= read_csv(url, col_names = TRUE)</code>
+<code>glue("{nrow(d2)} row x {ncol(d2)} columns")</code>
+<code>colnames(d2)</code>  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>Shape of my filtered data = (33193, 17)
+Variables: Index(['survey', 'uniqid', 'date', 'country', 'marital_status', 'educational',
+       'gender', 'age', 'occupation', 'type_community',
+       'household_composition', 'support_refugees', 'support_migrants',
+       'date_n', 'support_refugees_n', 'support_migrants_n', 'educational_n'],
+      dtype='object')</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>33193 row x 17 columns
+ [1] "survey"                "uniqid"                "date"
+ [4] "country"               "marital_status"        "educational"
+ [7] "gender"                "age"                   "occupation"
+[10] "type_community"        "household_composition" "support_refugees"
+[13] "support_migrants"      "date_n"                "support_refugees_n"
+[16] "support_migrants_n"    "educational_n"</pre>
+</div></div></div>
+<p>
+Let us first get the distribution of the categorical variable <em>gender</em> by creating tables that include absolute and relative frequencies. The frequency tables (using the <code>dplyr</code> functions <code>group_by</code> and <code>summarize</code> in R, and <i>pandas</i> function <code>value_counts</code> in Python) reveals that 17716 (53.38&percnt;) women and 15477 (46.63&percnt;) men answered this survey (Example 7.2). We can do the same with the level of support of refugees [<em>support_refugees</em>] (<em>To what extent do you agree or disagree with the following statement: our country should help refugees</em>) and obtain that 4957 (14.93&percnt;) persons totally agreed with this statement, 12695 (38.25&percnt;) tended to agree, 5931 (16.24&percnt;) tended to disagree and 3574 (10.77&percnt;) totally disagreed.
+</p>
+<div class='code-example'><h4>
+  <small class='text-muted'><a class='anchor' href='#ex:frequency2' name='ex:frequency2'>Example 7.2.</a></small><br />
+Absolute and relative frequencies of support of refugees and gender.</h4>
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>print(d2["gender"].value_counts())</code>
+<code>print(d2["gender"].value_counts(normalize=True))</code>
+&nbsp;
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>d2 %&gt;%</code>
+<code>  group_by(gender) %&gt;%</code>
+<code>  summarise(frequency = n()) %&gt;%</code>
+<code>  mutate(rel_freq = frequency / sum(frequency))   </code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>R output. Note that Python output may look slightly different</div>
+<div class='table-wrapper'><table class="dataframe">
+<caption>A tibble: 2 × 3</caption>
+<thead>
+	<tr><th scope=col>gender</th><th scope=col>frequency</th><th scope=col>rel_freq</th></tr>
+	<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>Man  </td><td>15477</td><td>0.466273</td></tr>
+	<tr><td>Woman</td><td>17716</td><td>0.533727</td></tr>
+</tbody>
+</table>
+</div>
+</div><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>print(d2["support_refugees"].value_counts())</code>
+<code>print(d2["support_refugees"].value_counts(</code>
+<code>    normalize=True,dropna=False))</code>
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>d2 %&gt;%</code>
+<code>  group_by(support_refugees) %&gt;%</code>
+<code>  summarise(frequency = n()) %&gt;%</code>
+<code>  mutate(rel_freq = frequency / sum(frequency)) </code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>R output. Note that Python output may look slightly different</div>
+<div class='table-wrapper'><table class="dataframe">
+<caption>A tibble: 5 × 3</caption>
+<thead>
+	<tr><th scope=col>support_refugees</th><th scope=col>frequency</th><th scope=col>rel_freq</th></tr>
+	<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>Tend to agree   </td><td>12695</td><td>0.3824602</td></tr>
+	<tr><td>Tend to disagree</td><td> 5391</td><td>0.1624138</td></tr>
+	<tr><td>Totally agree   </td><td> 4957</td><td>0.1493387</td></tr>
+	<tr><td>Totally disagree</td><td> 3574</td><td>0.1076733</td></tr>
+	<tr><td>NA              </td><td> 6576</td><td>0.1981141</td></tr>
+</tbody>
+</table>
+</div>
+</div></div>
+<p>
+Before diving any further into any <em>between</em> variables analysis, you might have noticed that there might be some missing values in the data. These values represent an important amount of data in many real social and communication analysis (just remember that you cannot be forced to answer  every question in a telephone or face-to-face survey!). From a statistical point of view, we can have many approaches to address missing values: For example, we can drop either the rows or columns that contain any of them, or we can impute the missing values by predicting them based on their relation with other variables &ndash; as we did in Section&nbsp;<a href='chapter06.html#6_2'>6.2</a> by replacing the missing values with the column mean. It goes beyond the scope of this chapter to explain all the imputation methods (and, in fact, mean imputation has some serious drawbacks when used in subsequent analysis), but at least we need to know how to identify the missing values in our data and how to drop the cases that contain them from our dataset.
+</p>
+
+<p>
+In the case of the variable <em>support_refugees</em> we can count its missing data (6576 cases) with base R function <code>is.na</code> and the pandas method <code>isna</code><a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 2" data-bs-content="See https://cssbook.net/datasets" for more information.">[2]</a>. Then we may decide to drop all the records that contain these values in our dataset using the <i>tidyr</i> function <code>drop_na</code> in R and the <i>Pandas</i> function <code>dropna</code> in Python<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 3" data-bs-content="We may also use: dropna(axis='columns') if you want to drop columns instead of rows.">[3]</a> (Example 7.3). By doing this we get a cleaner dataset and can continue with a more sophisticated EDA with cross-tabulation and summary statistics for the group of cases.	
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:na' name='ex:na'>Example 7.3.</a></small><br />
+Drop missing values</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>n_miss = d2["support_refugees"].isna().sum()</code>
+<code>print(f"# of missing values: {n_miss}")</code>
+<code></code>
+<code>d2 = d2.dropna()</code>
+<code>print(f"Shape after dropping NAs: {d2.shape}")</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>n_miss = sum(is.na(d2$support_refugees))</code>
+<code>print(glue("# of missing values: {n_miss}"))</code>
+<code></code>
+<code>d2 = d2 %&gt;% drop_na()</code>
+<code>print(glue("Rows after dropping NAs: {nrow(d2)}"))</code>  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'># of missing values: 6576
+Shape after dropping NAs: (23448, 17)</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'># of missing values: 6576
+Rows after dropping NAs: 23448</pre>
+</div></div></div>
+<p>
+Now let us cross tabulate the <em>gender</em> and <em>support_refugees</em> to have an initial idea of what the relationship between these two variables might be. With this purpose we create a contingency table or cross-tabulation to get the frequencies in each combination of categories (using <i>dplyr</i> functions <code>group_by</code>, <code>summarize</code> and <code>spread</code> in R, and the <i>pandas</i> function <code>crosstab</code> in Python; example 7.4). From this table you can easily see that 2178 women totally supported helping refugees and 1524 men totally did not.  Furthermore, other interesting questions about our data might now arise if we compute summary statistics for a group of cases (using again <i>dplyr</i> functions <code>group_by</code>, <code>summarize</code> and <code>spread</code>, and base <code>mean</code> in R; and <i>pandas</i> function <code>groupby</code> and base <code>mean</code> in Python). For example, you might wonder what  the average ages of the women were that totally supported (52.42) or not (53.2) to help  refugees.  This approach will open a huge amount of possible analysis by grouping variables and estimating different statistics beyond the mean, such as count, sum, median, mode, minimum or maximum, among others.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:cross' name='ex:cross'>Example 7.4.</a></small><br />
+Cross tabulation of support of refugees and gender, and summary statistics</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>print("Crosstab gender and support_refugees:")</code>
+<code>print(pd.crosstab(d2["support_refugees"], </code>
+<code>                  d2["gender"]))</code>
+<code></code>
+<code>print("Summary statistics for group of cases:")</code>
+<code>print(d2.groupby(["support_refugees", "gender"])</code>
+<code>      ["age"].mean())</code>
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>print("Crosstab gender and support_refugees:")</code>
+<code>d2 %&gt;%</code>
+<code>  group_by(gender, support_refugees)%&gt;%</code>
+<code>  summarise(n=n())%&gt;%</code>
+<code>  pivot_wider(values_from="n",names_from="gender")</code>
+<code></code>
+<code>print("Summary statistics for group of cases:")</code>
+<code>d2 %&gt;%</code>
+<code>  group_by(support_refugees, gender)%&gt;%</code>
+<code>  summarise(mean_age=mean(age, na.rm = TRUE))</code>  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>Crosstab gender and support_refugees:
+gender             Man  Woman
+support_refugees
+Tend to agree     5067   5931
+Tend to disagree  2176   2692
+Totally agree     2118   2178
+Totally disagree  1524   1762
+Summary statistics for group of cases:
+support_refugees  gender
+Tend to agree     Man       54.073022
+                  Woman     53.373799
+Tend to disagree  Man       52.819853
+                  Woman     52.656761
+Totally agree     Man       53.738905
+                  Woman     52.421947
+Totally disagree  Man       52.368110
+                  Woman     53.203746
+Name: age, dtype: float64</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>[1] "Crosstab gender and support_refugees:"
+  support_refugees Man  Woman
+1 Tend to agree    5067 5931
+2 Tend to disagree 2176 2692
+3 Totally agree    2118 2178
+4 Totally disagree 1524 1762
+[1] "Summary statistics for group of cases:"
+  support_refugees gender mean_age
+1 Tend to agree    Man    54.07302
+2 Tend to agree    Woman  53.37380
+3 Tend to disagree Man    52.81985
+4 Tend to disagree Woman  52.65676
+5 Totally agree    Man    53.73890
+6 Totally agree    Woman  52.42195
+7 Totally disagree Man    52.36811
+8 Totally disagree Woman  53.20375</pre>
+</div></div></div>
+<h2>  <small class='text-muted'><a class='anchor' href='#7_2' name='7_2'>7.2.</a></small>Visualizing Data
+</h2>
+
+
+<p>
+Data visualization is a powerful technique for both understanding data yourself and communicating the story of your data to others. Based on <i>ggplot2</i> in R and <i>matplotlib</i> and <i>seaborn</i> in Python, this section covers histograms, line and bar graphs, scatterplots and heatmaps. It touches on combining multiple graphs, communicating uncertainty with boxplots and ribbons, and plotting geospatial data.  In fact, visualizing data is an important stage in both EDA and advanced analytics, and we can use graphs to obtain important insights into our data. For example, if we want to visualize the age and the support for refugees of European citizens, we can plot a histogram and a bar graph, respectively.
+</p>
+<div class='figure'><div class='feature'><b> R: GGPlot syntax</b>
+
+One of the nicest features of using R for data exploration is the <i>ggplot2</i> package for data visualization. This is a package that brings a unified method for visualizing with generally good defaults but that can be customized in every way if desired. The syntax, however, can look a little strange at first.
+Let's consider the command from Example&nbsp;<a href='#ex:bar'>7.5</a>:
+<pre>
+ggplot (data=d2) + geom_bar(mapping=aes(x= support_refugees), fill=&#34;blue&#34;)
+</pre>
+What you can see here is that every ggplot is composed of multiple sub-commands that are added together with the plus sign.
+At a minimum, every ggplot needs two sub-commands: <code>ggplot</code>,
+which initiates the plot and can be seen as an empty canvas,
+and one or more <code>geom</code> commands which add <i>geometries</i> to the plot,
+such as bars, lines, or points.
+Moreover, each geometry needs a <i>data</i> source, and an <i>aesthetic mapping</i>
+which tells ggplot how to map columns in the data (in this case the <code>support_refugees</code> column) to graphical (aesthetic) elements of the plot,
+in this case the \(x\) position of each bar.
+Graphical elements can also be set to a constant value rather than mapped to a column,
+in which case the argument is placed outside the <code>aes</code> function, as in the <code>fill=&#34;blue&#34;</code> above.
+
+Each aesthetic mapping is assigned a <i>scale</i>.
+This scale is initialized with a sensible default which depends on the data type.
+For example, the color of the lines in Example&nbsp;<a href='#ex:combine2'>7.9</a> are mapped to the <code>group</code> column.
+Since that is a nominal value (character column), ggplot automatically assigns colors to each group,
+in this case blue and red.
+In Example&nbsp;<a href='#ex:heatmap'>7.15</a>, on the other hand, the fill color is mapped to the <code>score</code> column, which is numerical (interval) data, to which ggplot by default assigns a color range of white to blue.
+
+Almost every aspect of ggplot can be customized by adding more subcommands.
+For example, you can specify the title and axis labels by adding <code>+ labs(title=&#34;Title&#34;, x=&#34;Axis Label&#34;)</code> to the plot,
+and you can completely alter the look of the graph by applying a theme.
+For example, the <i>ggthemes</i> package defines an Economist theme, so by simply adding <code>+ theme_economist()</code> to your plot you get the characteristic layout of plots from that magazine.
+You can also customize the way scales are mapped using the various <code>scale_variable_mapping</code> functions.
+For example, Example&nbsp;<a href='#ex:map2'>7.19</a> uses <code>scale_fill_viridis_c(option = &#34;B&#34;)</code> to use the <i>viridis</i> scale for the <i>fill</i> aesthetic, specifying that scale B should be used. Similar commands can be used to e.g. change the colors of color ranges, the size of points, etc.
+
+Because all geometries start with <code>geom_</code>, all scales start with <code>scale_</code>, all themes start with <code>theme_</code>, etc.,
+you can use the RStudio autocompletion to browse through the complete list of options:
+simply type <code>geom_</code>, press tab or control+space, and you get a list of the options with a short description, and you can press F1 to get help on each option. The help for every geometry also lists all aesthetic elements that can or must be supplied.
+
+
+
+
+
+
+Besides the built-in help, there are a number of great (online) resources to learn more. Specifically, we recommend the book <i>Data Visualization: A practical introduction</i> by Kieran Healy<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 4" data-bs-content="Freely available at <a href='https://socviz.co/'>socviz.co/</a>">[4]</a>. Another great resource is the R Graph Gallery<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 5" data-bs-content="<a href='https://www.r-graph-gallery.com/'>www.r-graph-gallery.com/</a>">[5]</a>, which has an enormous list of possible visualizations, all with R code included and most of them based on <i>ggplot</i>. Finally, we recommend the Data-to-Viz<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 6" data-bs-content="<a href='https://www.data-to-viz.com/'>www.data-to-viz.com/</a>">[6]</a> website, which allows you to explore a number of graph types depending on your data, lists the do's and don'ts for each graph, and links to the Graph Gallery for concrete examples.
+</div>
+<h3>  <small class='text-muted'><a class='anchor' href='#7_2_1' name='7_2_1'>7.2.1.</a></small>Plotting Frequencies and Distributions
+</h3>
+
+
+<p>
+
+In the case of nominal data, the most straightforward way to visualize them is to simply count the frequency of value and then plot them as a bar chart. For instance, when we depict the support to help refugees (Example&nbsp;<a href='#ex:bar'>7.5</a>) you can quickly get that the option &ldquo;tend to agree&rdquo; is the most frequently voiced answer.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:bar' name='ex:bar'>Example 7.5.</a></small><br />
+Barplot of support for refugees</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>d2["support_refugees"].value_counts().plot(</code>
+<code>    kind="bar")</code>
+<code>plt.show()</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>ggplot(data=d2) +</code>
+<code>  geom_bar(mapping = aes(x= support_refugees))</code>
+&nbsp;  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<img src='img/bar.py.png' />
+</div></div>
+<p>
+If we have continuous variables, however, having such a bar chart would lead to too many bars: we may lose oversight (and creating the graph may be resource-intensive). Instead, we want to group the data into <i>bins</i>, such as age groups.
+Hence, a histogram is used to examine the distribution of a continuous variable (<i>ggplot2</i> function geom_histogram in R and <i>pandas</i> function <code>hist</code> in Python) and a bar graph to inspect the distribution of a categorical one (<i>ggplot2</i> function geom_bar() in R and <i>matplotlib</i> function <code>plot</code> in Python). In Example&nbsp;<a href='#ex:hist'>7.6</a> you can easily see the shape of the distribution of the variable age, with many values close to the average and a slightly bigger tail to the right (not that far from the normal distribution!).
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:hist' name='ex:hist'>Example 7.6.</a></small><br />
+Histogram of Age</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>d2.hist(column="age", bins=15)</code>
+<code>plt.show()</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>ggplot(data=d2) +</code>
+<code>  geom_histogram(mapping = aes(x= age), bins = 15)</code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<img src='img/hist.py.png' />
+</div></div>
+<p>
+Another way to show distributions is using bloxplots, which are powerful representations of the distribution of our variables through the use of quartiles that are marked with the 25th, 50th (median) and 75th percentiles of any given variable. By examining the lower and upper levels of two or more distributions you can compare their variability and even detect possible outliers. You can generate multiple boxplots to compare the ages of the surveyed citizens by country and quickly see that in terms of age the distributions of Spain and Greece are quite similar, but we can identify some differences between Croatia and the Netherlands. In R we use the base function <code>geom_boxplot</code>, while in Python we use the <i>seaborn</i> function <code>boxplot</code>.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:boxplots' name='ex:boxplots'>Example 7.7.</a></small><br />
+Bloxplots of age by country</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>d2 = d2.sort_values(by ="country" )</code>
+<code>plt.figure(figsize=(8,8))</code>
+<code>sns.boxplot(x="age", y="country", data=d2)</code>
+<code>plt.show()</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>ggplot(d2, aes(y=fct_rev(country), x=age))+</code>
+<code>  geom_boxplot()</code>
+&nbsp;
+&nbsp;  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<img src='img/boxplots.py.png' />
+</div></div>
+<h3>  <small class='text-muted'><a class='anchor' href='#7_2_2' name='7_2_2'>7.2.2.</a></small>Plotting Relationships
+</h3>
+
+
+<p>
+After having inspected distributions of single variables, you may want to check how two variables are related. We are going to discuss two ways of doing so: plotting data over time, and scatterplots to illustrate the relationship between two continuous variables.
+</p>
+
+<p>
+The Eurobarometer collects data for 15 days (in the example from November 5 to 19, 2017) and you may wonder if the level of support to refugees or even to general migrants changes over the time. This is actually a simple time series and you can use a line graph to represent it. Firstly you must use a numerical variable for the level of support (<i>support_refugees_n</i>, which ranges from 1 to 4, 4 being the maximum support) and group it by day in order to get the average for each day. In the case of R, you can plot the two series using the base function <code>plot</code>, or you can use the <i>ggplot2</i> function <code>geom_line</code>. In the case of Python you can use the <i>matplotlib</i> function <code>plot</code> or the <i>seaborn</i> function <code>lineplot</code>. To start, Example&nbsp;<a href='#ex:line'>7.8</a> shows how to create a graph for the average support for refugees by day.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:line' name='ex:line'>Example 7.8.</a></small><br />
+Line graph of average support for refugees by day</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>support_refugees = (d2.groupby(["date_n"])</code>
+<code>                    ["support_refugees_n"].mean())</code>
+<code>support_refugees = support_refugees.to_frame()</code>
+<code></code>
+<code>plt.plot(support_refugees.index, </code>
+<code>         support_refugees["support_refugees_n"])</code>
+<code>plt.xlabel("Day")</code>
+<code>plt.ylabel("Support for refugees")</code>
+<code>plt.show()</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>support_refugees = d2 %&gt;%</code>
+<code>  group_by(date_n) %&gt;%</code>
+<code>  summarise(support=mean(support_refugees_n, </code>
+<code>                         na.rm = TRUE))</code>
+<code>ggplot(support_refugees,aes(x=date_n, y=support))+</code>
+<code>  geom_line() + </code>
+<code>  xlab("Day") + </code>
+<code>  ylab("Support for refugees")</code>
+&nbsp;  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<img src='img/line.py.png' />
+</div></div>
+<p>
+To also plot the support for migrants, you can combine multiple subgraphs in a single plot,
+giving the reader a broader and more comparative perspective (Example&nbsp;<a href='#ex:combine2'>7.9</a>).
+In R, the <code>geom_line</code> also takes a color aesthetic, but this requires the data to be in long format.
+So, we first reshape the data and also change the factor labels to get a better legend (see Section&nbsp;<a href='chapter06.html#6_5'>6.5</a>).
+In Python, you can plot the two lines as separate figures  and add the <i>pyplot</i> function <code>show</code> to display an integrated figure.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:combine2' name='ex:combine2'>Example 7.9.</a></small><br />
+Plotting multiple lines in one graph</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code># Combine data</code>
+<code>support_combined = d2.groupby(["date_n"]).agg(</code>
+<code>    refugees = ("support_refugees_n", "mean"),</code>
+<code>    migrants = ("support_migrants_n", "mean"))</code>
+<code></code>
+<code></code>
+<code>#plot</code>
+<code>sns.lineplot(x="date_n", y="refugees", </code>
+<code>             data=support_combined, color="blue")</code>
+<code>sns.lineplot(x="date_n", y="migrants", </code>
+<code>             data=support_combined, color="red")</code>
+<code>plt.xlabel("Day")</code>
+<code>plt.ylabel("Level of support")</code>
+<code>plt.title("Support of refugees and migrants") </code>
+<code>plt.show()</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code># Combine data</code>
+<code>support_combined = d2 %&gt;% group_by(date_n) %&gt;%</code>
+<code> summarise(</code>
+<code>  refugees=mean(support_refugees_n, na.rm = TRUE),</code>
+<code>  migrants=mean(support_migrants_n, na.rm = TRUE))</code>
+<code></code>
+<code># Pivot to long format and plot </code>
+<code>support_long = support_combined %&gt;% </code>
+<code>  pivot_longer(-date_n, names_to="group", </code>
+<code>               values_to="support")</code>
+<code>ggplot(support_long, </code>
+<code>       aes(x=date_n, y=support, colour=group)) +</code>
+<code>  geom_line(size = 1.5) +</code>
+<code>  labs(title="Support for refugees and migrants", </code>
+<code>       x="Day", y="Level of Support") </code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<img src='img/combine2.py.png' />
+</div></div>
+<p>
+Alternatively, you can create multiple subplots, one for each group that you want to show (Example&nbsp;<a href='#ex:combine'>7.10</a>).
+In <i>ggplot</i> (R), you can use the <code>facet_grid</code> function to automatically create subplots that each show one of the groups. In the case of Python you can use the <i>matplotlib</i> function <code>subplots</code> that allows you to configure multiple plots in a single one.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:combine' name='ex:combine'>Example 7.10.</a></small><br />
+Creating subfigures)</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>f, axes = plt.subplots(2,1)</code>
+<code>sns.lineplot(x="date_n", y="refugees", </code>
+<code>             data=support_combined, ax=axes[0])</code>
+<code>sns.lineplot(x="date_n", y="migrants", </code>
+<code>             data=support_combined, ax=axes[1])</code>
+<code></code>
+<code>sns.lineplot(x="date_n", y="support_refugees_n", </code>
+<code>             data=d2, ci=0, ax=axes[0])</code>
+<code>sns.lineplot(x="date_n", y="support_migrants_n", </code>
+<code>             data=d2, ci=0, ax=axes[1])</code>
+<code>plt.show()</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>ggplot(support_long, aes(x=date_n, y=support)) +  </code>
+<code>  geom_line() + facet_grid(rows=vars(group)) +</code>
+<code>  xlab("Day") + ylab("Support")</code>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<img src='img/combine.py.png' />
+</div></div>
+<p>
+Now if you want to explore the possible correlation between the average support for refugees (<code>mean_support_refugees_by_day</code>) and the average support to migrants by year (<code>mean_support_migrants_by_day</code>), you might need a scatterplot, which is a better way to visualize the type and strength of this relationship <i>scatter</i>.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:scatter' name='ex:scatter'>Example 7.11.</a></small><br />
+Scatterplot of average support for refugees and migrants by year</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>sns.scatterplot(data=support_combined, </code>
+<code>                x="refugees", y="migrants")</code>
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>ggplot(support_combined, </code>
+<code>       aes(x=refugees, y=migrants))+</code>
+<code>  geom_point()</code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<img src='img/scatter.py.png' />
+</div></div>
+<p>
+A scatterplot uses dots to depict the values of two variables in a Cartesian plane (with coordinates for the axes \(x\) and \(y\)). You can easily plot this figure in R using the <i>ggplot2</i> function <code>geom_point</code> (and <code>geom_smooth</code> to display a regression line!), or in Python using <i>seaborn</i> function <code>scatterplot</code> (<code>lmplot</code> to include the regression line as shown in Example&nbsp;<a href='#ex:scatter2'>7.12</a>).
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:scatter2' name='ex:scatter2'>Example 7.12.</a></small><br />
+Scatterplot with regression line</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>sns.lmplot(data=support_combined, </code>
+<code>           x="refugees", y="migrants")</code>
+<code>plt.show()</code>
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>ggplot(support_combined,</code>
+<code>       aes(x=refugees, y= migrants))+</code>
+<code>  geom_point()+</code>
+<code>  geom_smooth(method = lm)</code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<img src='img/scatter2.py.png' />
+</div></div>
+<p>
+Looking at the dispersion of points in the provided example you can infer that there might be a positive correlation between the two variables, or in other words, the more the average support to refugees the more the average support to migrants over time.
+</p>
+
+<p>
+We can check and measure the existence of this correlation by computing the Pearson correlation coefficient or Pearson's <i>r</i>, which is the most well-known correlation function. As you probably remember from your statistics class, a correlation refers to a relationship between two continuous variables and is usually applied to measure linear relationships (although there  also exist nonlinear correlation coefficients, such as Spearman's \(\rho\)). Specifically, Pearson's \(r\)  measures the linear correlation between two variables (<i>X</i> and <i>Y</i>) producing a value between \(-1\) and \(+1\), where 0 depicts the absence of correlation and values near to 1 a strong correlation. The signs (\(+\) or \(-\)) represent the direction of the relationship (being positive if two variables variate in the same direction, and negative if they vary in the opposite direction). The correlation coefficient is usually represented with <i>r</i> or the Greek letter \(\rho\) and mathematically expressed as:
+</p>
+<p>\(
+  r =
+  \frac{ \sum_{i=1}^{n}(x_i-\bar{x})(y_i-\bar{y}) }{%
+        \sqrt{\sum_{i=1}^{n}(x_i-\bar{x})^2}\sqrt{\sum_{i=1}^{n}(y_i-\bar{y})^2}}
+\)</p>
+<p>
+You can estimate this correlation coefficient with the <i>pandas</i> function <code>corr</code> in Python and the base R function <code>cor</code> in R. As shown in Example&nbsp;<a href='#ex:corr'>7.13</a> the two variables plotted above are highly correlated with a coefficient of 0.95.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:corr' name='ex:corr'>Example 7.13.</a></small><br />
+Pearson correlation coefficient</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>print(support_combined["refugees"]</code>
+<code>      .corr(support_combined["migrants"], </code>
+<code>            method="pearson"))</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>cor.test(support_combined$refugees, </code>
+<code>         support_combined$migrants, </code>
+<code>         method = "pearson")</code>  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>0.9541243084907629</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>
+	Pearson's product-moment correlation
+
+data:  support_combined$refugees and support_combined$migrants
+t = 9.0133, df = 8, p-value = 1.833e-05
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.8127522 0.9893855
+sample estimates:
+      cor
+0.9541243</pre>
+</div></div></div>
+<p>
+Another useful representation is the heatmap. This figure can help you plot a continuous variable using a color scale and shows its relation with another two variables.  This means that you represent your data as colors, which might be useful for understanding patterns. For example, we may wonder what  the level of support for refugees is given the nationality and the gender of the individuals. For this visualization, it is necessary to create a proper data frame (Example&nbsp;<a href='#ex:pivot'>7.14</a>) to plot the heatmap, in which each number of your continuous variable <i>_refugees_n</i> is included in a table where each axis (x= gender, y=country) represents the categorical variables. This pivoted table stored in an object called <code>pivot_data</code> can be generated using some of the already explained commands.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:pivot' name='ex:pivot'>Example 7.14.</a></small><br />
+Create a data frame to plot the heatmap</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>pivot_data = pd.pivot_table(d2, </code>
+<code>  values="support_refugees_n", </code>
+<code>  index=["country"], columns="gender")</code>
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>pivot_data= d2 %&gt;% </code>
+<code>  select(gender, country, support_refugees_n) %&gt;%</code>
+<code>  group_by(country, gender) %&gt;%</code>
+<code>  summarise(score = mean(support_refugees_n))</code>  </pre>
+</div></div></div>
+<p>
+In the first resulting figure proposed in Example&nbsp;<a href='#ex:heatmap'>7.15</a>, the lighter the blue the greater the support in each combination of country \(\times\) gender. You can see that level of support is similar in countries such as Slovenia or Spain, and is different in the Czech Republic or Austria. It also seems that women have a higher level of support. For this default heatmap we can use the <i>ggplot2</i> function <code>geom_tile</code> in R and <i>seaborn</i> function <code>heatmap</code> in Python.  To personalize the scale colors (e.g. if we want a scale of blues) we can use the <i>ggplot2</i> function <code>scale_fill_gradient</code> in R or the parameter <code>cmap</code> of the <i>seaborn</i> function <code>heatmap</code> in Python.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:heatmap' name='ex:heatmap'>Example 7.15.</a></small><br />
+Heatmap of country gender and support for refugees</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>plt.figure(figsize=(10,6))</code>
+<code>sns.heatmap(pivot_data, cmap="Blues", </code>
+<code>  cbar_kws={"label": "support_refugees_n"}) </code>
+<code>plt.show()</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>ggplot(pivot_data, aes(x = gender, </code>
+<code>    y = fct_rev(country), fill = score)) + </code>
+<code>  geom_tile()+</code>
+<code>  scale_fill_gradient2(low="white", high="blue")</code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<img src='img/heatmap.py.png' />
+</div></div>
+<p>
+As you will notice, one of the goals of EDA is exploring the variance of our variables, which includes some uncertainty about their behavior. We will introduce you to two basic plots to visually communicate this uncertainty. Firstly, ribbons and area plots can help us to clearly identify a predefined interval of a variable in order to interpret its variance over some cases. Let us mark this interval in 0.15 points in the above-mentioned plots of the average support to refugees or migrants by day, and we can see that the lines tend to converge more on the very last day and are more separated by day four. This simple representation can be conducted in R using the <i>ggplot2</i> function <code>geom_ribbon</code> and in Python using the parameter <code>ci</code> of the <i>seaborn</i> function <code>lineplot</code>.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:ribbons' name='ex:ribbons'>Example 7.16.</a></small><br />
+Add ribbons to the graph lines of support to refugees and migrants</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>sns.lineplot(x="date_n", y="support_refugees_n", </code>
+<code>  data=d2, color="blue", ci=100, label="Refugees")</code>
+<code>sns.lineplot(x="date_n", y="support_migrants_n", </code>
+<code>  data=d2, color="red", ci=100, label="Migrants")</code>
+<code>plt.xlabel("Day")</code>
+<code>plt.ylabel("Level of support")</code>
+<code>plt.title("Support for refugees and migrants") </code>
+<code>plt.show()</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>ggplot(support_long, </code>
+<code>       aes(x=date_n, y=support, color=group)) + </code>
+<code>  geom_line(size=1.5) + </code>
+<code>  geom_ribbon(aes(fill=group, ymin=support-0.15,</code>
+<code>                  ymax=support+0.15),</code>
+<code>              alpha=.1, lty=0) +</code>
+<code>  ggtitle("Support for refugees and migrants")</code>
+&nbsp;  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<img src='img/ribbons.py.png' />
+</div></div>
+<h3>  <small class='text-muted'><a class='anchor' href='#7_2_3' name='7_2_3'>7.2.3.</a></small>Plotting Geospatial Data
+</h3>
+
+
+<p>
+Plotting geospatial data is a more powerful tool to compare countries or other regions.  Maps are very easy to understand and can have greater impact to all kinds of readers, which make them a useful representation for a wide range of studies that any computational analyst has to deal with. Geospatial data is based on the specific location of any country, region, city or geographical area, marked by its coordinates, latitude and longitude, that can later build points and polygon areas. The coordinates are normally mandatory to plot any data on a map, but are not always provided in our raw data. In those cases, we must join the geographical information we have (i.e. the name of a country) with its coordinates in order to have an accurate data frame for plotting geospatial data. Some libraries in R and Python might directly read and interpret different kinds of geospatial information by recognizing strings such as &ldquo;France&rdquo; or &ldquo;Paris&rdquo;, but in the end they will be converted into coordinates.
+</p>
+
+<p>
+Using the very same data 
+as our example, we might want to plot in a map the level of support to European refugees by country. Firstly, we should create a data frame with the average level of support to refugees by country (<code>supports_country</code>). Secondly, we must install an existing library that provides you with accurate geospatial information. In the case of R, we recommend the package <i>maps</i> which contains the function <code>map_data</code> that helps you generate an object with geospatial information of specific areas, countries or regions, that can be easily read and plotted by <i>ggplot2</i>. Even if not explained in this book, we also recommend <i>ggmap</i> in R (Kahle and Wickham, 2013). When working with Python we recommend <i>geopandas</i> that works very well with <i>pandas</i> and <i>matplotlib</i> (it will also need some additional packages such as <i>descartes</i>).
+</p>
+
+<p>
+In Example&nbsp;<a href='#ex:map'>7.17</a> we illustrate how to plot a world map (from existing geographical information).
+We then save a partial map into the object <code>some_eu_maps</code> containing the European countries that participated in the survey. After we merge <code>supports_country</code> and <code>some_eu_maps</code> (by region) and get a complete data frame called <code>support_map</code> with coordinates for each country (Example&nbsp;<a href='#ex:countries'>7.18</a>).
+Finally, we plot it using the <i>ggplot2</i> function <code>geom_polygon</code> in R and the <i>geopandas</i> method <code>plot</code> in Python (Example&nbsp;<a href='#ex:map2'>7.19</a>). Voil&agrave;: a nice and comprehensible representation of our data with a scale of colors!
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:map' name='ex:map'>Example 7.17.</a></small><br />
+Simple world map</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>supports_country = (d2.groupby(["country"])</code>
+<code>  ["support_refugees_n"].mean()</code>
+<code>  .to_frame().reset_index())</code>
+<code></code>
+<code>#Load a world map and plot it</code>
+<code>wmap = gpd.read_file(</code>
+<code>    gpd.datasets.get_path("naturalearth_lowres"))</code>
+<code>wmap = wmap.rename(columns={"name": "country"})</code>
+<code>wmap.plot();</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>supports_country = d2 %&gt;%</code>
+<code>  group_by(country) %&gt;%</code>
+<code>  summarise(m=mean(support_refugees_n,na.rm=TRUE))</code>
+<code></code>
+<code>#Load a world map and plot it</code>
+<code>wmap = map_data("world")</code>
+<code>ggplot(wmap, aes(x=long,y=lat,group=group)) +</code>
+<code>  geom_polygon(fill="lightgray", colour = "white")</code>
+&nbsp;  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<img src='img/map.py.png' />
+</div></div><div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:countries' name='ex:countries'>Example 7.18.</a></small><br />
+Select EU countries and joint the map with Eurobarometer data</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>countries = [</code>
+<code>  "Portugal", "Spain", "France", "Germany",</code>
+<code>  "Austria", "Belgium", "Netherlands", "Ireland",</code>
+<code>  "Denmark", "Poland", "UK", "Latvia", "Cyprus",</code>
+<code>  "Croatia", "Slovenia", "Hungary", "Slovakia",</code>
+<code>  "Czech republic", "Greece", "Finland", "Italy",</code>
+<code>  "Luxemburg", "Sweden", "Sweden", "Bulgaria", </code>
+<code>  "Estonia", "Lithuania", "Malta", "Romania"]</code>
+<code>m = wmap.loc[</code>
+<code>    wmap["country"].isin(countries)]</code>
+<code>m = pd.merge(supports_country, m, on="country")</code>
+<code></code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>countries = c(</code>
+<code>  "Portugal", "Spain", "France", "Germany",</code>
+<code>  "Austria", "Belgium", "Netherlands", "Ireland",</code>
+<code>  "Denmark", "Poland", "UK", "Latvia", "Cyprus",</code>
+<code>  "Croatia", "Slovenia", "Hungary", "Slovakia",</code>
+<code>  "Czech republic", "Greece", "Finland", "Italy",</code>
+<code>  "Luxemburg", "Sweden", "Sweden", "Bulgaria", </code>
+<code>  "Estonia", "Lithuania", "Malta", "Romania")</code>
+<code>m = wmap %&gt;% rename(country=region) %&gt;% </code>
+<code>  filter(country %in% countries) %&gt;%</code>
+<code>  left_join(supports_country, by="country")</code>
+&nbsp;  </pre>
+</div></div></div><div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:map2' name='ex:map2'>Example 7.19.</a></small><br />
+Map of Europe with the average level of support for refugees by country</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>m = gpd.GeoDataFrame(m, geometry=m["geometry"])</code>
+<code>m.plot(column="support_refugees_n", </code>
+<code>  legend=True, cmap="OrRd",</code>
+<code>  legend_kwds={"label": "Level of suppport"}</code>
+<code>).set_title("Support of refugees by country")</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>ggplot(m, aes(long, lat, group=group))+</code>
+<code>  geom_polygon(aes(fill = m), color="white")+</code>
+<code>  scale_fill_viridis_c(option="B")+</code>
+<code>  labs(title="Support for refugees by country", </code>
+<code>       fill="Level of support")</code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>R output. Note that Python output may look slightly different</div>
+<a href='img/map2.r.png' title='Click to open full-size image'>
+  <img src='img/map2.r_thumb.png' />
+</a>
+</div></div>
+<h3>  <small class='text-muted'><a class='anchor' href='#7_2_4' name='7_2_4'>7.2.4.</a></small>Other Possibilities
+</h3>
+
+
+<p>
+There are many other ways of visualizing data. For EDA we have covered in this chapter only some of the most used techniques but they might be still limited for your future work. There are many books that cover data visualization in detail, such as <span class="cite" title="Tufte, E.&nbsp;R. (2006). Beautiful evidence, volume&nbsp;1. Graphics Press Cheshire, CT.">Tufte (2006)</span>, <span class="cite" title="Cairo, A. (2019). How charts lie. WW Norton &amp; Company.">Cairo (2019)</span>, and <span class="cite" title="Kirk, A. (2016). Data visualisation: A handbook for data driven design. SAGE, London, UK.">Kirk (2016)</span>.  There are also many online resources, such as the Python Graph Gallery <a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 7" data-bs-content="<a href='https://www.python-graph-gallery.com/'>www.python-graph-gallery.com/</a>">[7]</a> and the R Graph Gallery <a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 8" data-bs-content="<a href='https://r-graph-gallery.com/'>r-graph-gallery.com/</a>">[8]</a>, which introduce you to other useful plot types.  These sites include code examples, many using the <i>ggplot</i>, <i>matplotlib</i> and <i>seaborn</i> packages introduced here, but also using other packages such as <i>bokeh</i> or <i>plotly</i> for interactive plots.
+</p>
+
+<h2>  <small class='text-muted'><a class='anchor' href='#7_3' name='7_3'>7.3.</a></small>Clustering and Dimensionality Reduction
+</h2>
+
+
+<p>
+So far, we have reviewed traditional statistical exploratory and
+visualization techniques that any social scientist should be able to apply. A more
+computational next step in your EDA workflow is using machine learning
+(ML) to let your computer &ldquo;learn&rdquo; about our data and in turn give 
+more initial insights.  ML is a branch of artificial intelligence that
+uses algorithms to interact with data and obtain some patterns or
+rules that characterize that data. We normally distinguish between
+supervised machine learning (SML) and unsupervised machine learning
+(UML). In Chapter&nbsp;<a href='chapter08.html#8'>8</a>, we will come back to this distinction.
+For now, it may suffice to say that the main characteristic of
+unsupervised methods is that we do not have any measurement available
+for a dependent variable, label, or categorization, which we want
+to predict. Instead, we want to identify
+<i>patterns</i> in the data without knowing in advance what these may
+look like. In this, unsupervised machine learning is very much of a
+inductive, bottom-up technique (see Chapter&nbsp;<a href='chapter01.html#1'>1</a> and
+<span class="cite" title="Boumans, J.&nbsp;W. and Trilling, D. (2016). Taking stock of the toolkit: An overview of relevant autmated content analysis approaches and techniques for digital journalism scholars. Digital Journalism, 4(1):8--23.">Boumans and Trilling (2016)</span>).
+</p>
+
+<p>
+In this chapter, we will focus on UML as a means of finding groups and
+latent dimensions in our data, which can also help to reduce our
+number of variables. Specifically, we will use base R and Python's
+<i>scikit-learn</i> to conduct \(k\)-means clustering, hierarchical
+clustering, and principal component analysis (PCA) as well as the
+closely related singular value decomposition (SVD).
+</p>
+
+<p>
+In data mining, we use clustering as a UML technique that aims to find
+the relationship between a set of descriptive variables. By doing
+cluster analysis we can identify underlying groups in our data that we
+will call <em>clusters</em>. Imagine we want to explore how European
+countries can be grouped based on their average support to
+refugees/migrants, age and educational level. We might create some
+<em>a priori</em> groups (such as southern versus northern countries),
+but cluster analysis would be a great method to let the data &ldquo;talk&rdquo;
+and then create the most appropriate groups for this specific case. As
+in all UML, the groups will come unlabeled and the computational
+analyst will be in charge of finding an appropriate and meaningful
+label for each cluster to better communicate the results.
+</p>
+
+<h3>  <small class='text-muted'><a class='anchor' href='#7_3_1' name='7_3_1'>7.3.1.</a></small>\(k\)-means Clustering
+</h3>
+
+
+<p>
+\(k\)-means is a very frequently used algorithm to perform cluster
+analysis. Its main advantage is that, compared to the hierarchical
+clustering methods we will discuss later, it is very fast and does not
+consume many resources. This makes it especially useful for larger
+datasets.
+</p>
+
+<p>
+\(k\)-means cluster analysis is a method that takes any number of observations (cases) and groups them into a given number of clusters based on the proximity of each observation to the mean of the formed cluster (centroid).  Mathematically, we measure this proximity as the distance of any given point to its cluster center, and can be expressed as
+</p>
+<p>\(J = \sum_{n=1}^{N} \sum_{k=1}^{K} r_{nk} \|x_n - \mu_k\|^2\)</p>
+<p>
+where \(\|x_n - \mu_k\|\) is the distance between the data point \(x_n\) and the center of the cluster \(\mu_k\).
+</p>
+
+<p>
+Instead of taking the mean, some variations of this algorithm take the median (\(k\)-medians) or a representative observation, also called medoid (\(k\)-medoids or partitioning around medoids, PAM) as a way to optimize the initial method.
+</p>
+
+<p>
+Because \(k\)-means clustering calculates <i>distances</i> between cases,
+these distances need to be meaningful &ndash; which is only the cases if
+the scales on which the variables are measured are comparable. If all
+your variables are measured on the same (continuous) scale with the
+same endpoints, you may be fine. In most cases, you need to normalize
+your data by transforming them into, for instance, \(z\)-scores<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 9" data-bs-content="A  <em>z</em> -transformation means rescaling data to a mean of 0 and a standard deviation of 1">[9]</a>, or a
+scale from 0 to 1.
+</p>
+
+<p>
+Hence, the first thing we do in our example, is to prepare a proper
+dataset with only continuous variables, scaling the data (for
+comparability) and avoiding missing values (drop or impute). In
+Example&nbsp;<a href='#ex:elbow'>7.20</a>, we will use the variables support to refugees
+(<i>support_refugees_n</i>), support to
+migrants (<i>support_migrants_n</i>), age (<i>age</i>) and
+educational level (number of years of education)
+(<i>educational_n</i>) and will create a data frame <code>d3</code> with the
+mean of all these variables for each <i>country</i> (each observation
+will be a country). \(k\)-means requires us to specify the number of
+clusters, \(k\), in advance. This is a tricky question, and (besides 
+arbitrarily deciding \(k\)!), you essentially need to re-estimate your
+model multiple times with different \(k\)s.
+</p>
+
+<p>
+The simplest method to obtain the optimal number of clusters is to
+estimate the variability within the groups for different runs. This
+means that we must run \(k\)-means for different number of clusters
+(e.g. 1 to 15 clusters) and then choose the number of clusters that
+decreases the variability maintaining the highest number of
+clusters. When you generate and plot a vector with the variability,
+or more technically, the within-cluster sum of squares (WSS)
+obtained after each execution, it is easy to identify the optimal
+number: just look at the bend (<em>knee</em> or <em>elbow</em>) and
+you will find the point where it decreases the most and then get the
+optimal number of clusters (three clusters in our example).
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:elbow' name='ex:elbow'>Example 7.20.</a></small><br />
+Getting the optimal number of clusters</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code># Average variables by country and scale</code>
+<code>d3 = d2.groupby(["country"])[[</code>
+<code>    "support_refugees_n", </code>
+<code>    "support_migrants_n", </code>
+<code>    "age", </code>
+<code>    "educational_n"]].mean()</code>
+<code></code>
+<code>scaler = StandardScaler()</code>
+<code>d3_s = scaler.fit_transform(d3) </code>
+<code></code>
+<code># Store sum of squares for 1..15 clusters</code>
+<code>wss = []</code>
+<code>for i in range(1, 15):</code>
+<code>    km_out = KMeans(n_clusters=i, n_init=20)</code>
+<code>    km_out.fit(d3_s)</code>
+<code>    wss.append(km_out.inertia_)</code>
+<code>  </code>
+<code>plt.plot(range(1, 15), wss, marker="o")</code>
+<code>plt.xlabel("Number of clusters")</code>
+<code>plt.ylabel("Within groups sum of squares")</code>
+<code>plt.show()</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code># Average variables by country and scale</code>
+<code>d3_s = d2%&gt;%</code>
+<code>  group_by(country)%&gt;%</code>
+<code>  summarise(</code>
+<code>    m_refugees=mean(support_refugees_n, na.rm=T), </code>
+<code>    m_migrants=mean(support_migrants_n, na.rm=T),</code>
+<code>    m_age=mean(age, na.rm=T),</code>
+<code>    m_edu=mean(educational_n, na.rm=T)) %&gt;%</code>
+<code>  column_to_rownames(var="country") %&gt;%</code>
+<code>  scale()</code>
+<code># Store sum of squares for 1..15 clusters</code>
+<code>wss = list()</code>
+<code>for (i in 1:15) {</code>
+<code>  km.out = kmeans(d3_s, centers=i, nstart=25)</code>
+<code>  wss[[i]] = tibble(k=i, ss=km.out$tot.withinss)</code>
+<code>}</code>
+<code>wss = bind_rows(wss)</code>
+<code>ggplot(wss, aes(x=k, y=ss)) + </code>
+<code>  geom_line() + geom_point() + </code>
+<code>  xlab("Number of Clusters") + </code>
+<code>  ylab("Within groups sum of squares")</code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<img src='img/elbow.py.png' />
+</div></div>
+<p>
+Now we can estimate our final model (Example&nbsp;<a href='#ex:kmeans'>7.21</a>). We generate 25
+initial random centroids (the algorithm will choose the one that
+optimizes the cost). The default of this parameter is 1, but it is
+recommended to set it with a higher number (i.e. 20 to 50) to guarantee
+the maximum benefit of the method. The base R function <code>kmeans</code> and
+<i>scikit-learn</i> function <code>KMeans</code> in Python will produce the
+clustering. You can observe the mean (scaled) for each variable in
+each cluster, as well as the corresponding cluster for each
+observation.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:kmeans' name='ex:kmeans'>Example 7.21.</a></small><br />
+Using Kmeans to group countries based on the average support of refugees and migrants, age, and educational level</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code># Compute k-means with k = 3</code>
+<code>km_res = KMeans(n_clusters=3, n_init=25).fit(d3_s)</code>
+<code>print(km_res)</code>
+<code>print("K-means cluste sizes:",  </code>
+<code>  np.bincount(km_res.labels_[km_res.labels_&gt;=0]))</code>
+<code>print(f"Cluster means: {km_res.cluster_centers_}")</code>
+<code>print("Clustering vector:")</code>
+<code>print(np.column_stack((d3.index, km_res.labels_)))</code>
+<code>print("Within cluster sum of squares:")</code>
+<code>print(km_res.inertia_)</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>set.seed(123)</code>
+<code>km.res = kmeans(d3_s, 3, nstart=25)</code>
+<code>print(km.res)</code>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<pre class='output'>KMeans(n_clusters=3, n_init=25)
+K-means cluste sizes: [13  3 12]
+Cluster means: [[-0.89000978 -0.82574663 -0.3892184  -0.21560025]
+ [ 1.2101425   1.01720791  1.78536032  2.49604445]
+ [ 0.66164163  0.64025687 -0.02468681 -0.39044418]]
+Clustering vector:
+[['Austria' 2]
+ ['Belgium' 2]
+ ['Bulgaria' 0]
+ ['Croatia' 0]
+ ['Cyprus' 2]
+ ['Czech republic' 0]
+ ['Denmark' 1]
+ ['Estonia' 0]
+ ['Finland' 1]
+ ['France' 2]
+ ['Germany' 2]
+ ['Greece' 0]
+ ['Hungary' 0]
+ ['Ireland' 2]
+ ['Italy' 0]
+ ['Latvia' 0]
+ ['Lithuania' 0]
+ ['Luxemburg' 2]
+ ['Malta' 2]
+ ['Netherlands' 2]
+ ['Poland' 0]
+ ['Portugal' 2]
+ ['Romania' 0]
+ ['Slovakia' 0]
+ ['Slovenia' 0]
+ ['Spain' 2]
+ ['Sweden' 1]
+ ['UK' 2]]
+Within cluster sum of squares:
+42.50488485460034</pre>
+</div></div>
+<p>
+Using the function <code>fviz_cluster</code> of the library <i>factoextra</i> in R, or the <i>pyplot</i> function <code>scatter</code> in Python, you can get a visualization of the clusters. In Example&nbsp;<a href='#ex:kmeans2'>7.22</a> you can clearly identify that the clusters correspond to Nordic countries (more support to foreigners, more education and age), Central and Southern European countries (middle support, lower education and age), and Eastern European countries (less support, lower education and age)<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 10" data-bs-content="We can re-run this cluster analysis using  <em>k</em> -medoids or partitioning around medoids (PAM) and get similar results (the three medoids are: Slovakia,  Belgium and Denmark), both in data and visualization. In R you must install the package <i>cluster</i> than contains the function <code>pam</code>, and in Python the package <i>scikit-learn-extra</i> with the function <code>Kmedoids</code>.">[10]</a> .
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:kmeans2' name='ex:kmeans2'>Example 7.22.</a></small><br />
+Visualization of clusters</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>for cluster in range(km_res.n_clusters):</code>
+<code>  plt.scatter(d3_s[km_res.labels_ == cluster, 0], </code>
+<code>              d3_s[km_res.labels_ == cluster, 1])</code>
+<code>plt.scatter(km_res.cluster_centers_[:, 0], </code>
+<code>            km_res.cluster_centers_[:, 1], </code>
+<code>            s=250, marker="*")</code>
+<code>plt.legend(scatterpoints=1)</code>
+<code>plt.show()</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>fviz_cluster(km.res, d3_s, ellipse.type="norm")</code>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>R output. Note that Python output may look slightly different</div>
+<a href='img/kmeans2.r.png' title='Click to open full-size image'>
+  <img src='img/kmeans2.r_thumb.png' />
+</a>
+</div></div>
+<h3>  <small class='text-muted'><a class='anchor' href='#7_3_2' name='7_3_2'>7.3.2.</a></small>Hierarchical Clustering
+</h3>
+
+
+<p>
+Another method to conduct a cluster analysis is hierarchical clustering, which builds a hierarchy of clusters that we can visualize in a dendogram.  This algorithm has two versions: a bottom-up approach (observations begin in their own clusters), also called <em>agglomerative</em>, and a top-down approach (all observations begin in one cluster), also called <em>divisive</em>. We will follow the bottom-up approach in this chapter and when you  look at the dendogram you will realize how this strategy repeatedly combines the two <em>nearest</em> clusters at the bottom into a larger one in the top. The distance between clusters is initially estimated for every pair of observation points and then put every point in its own cluster in order to get the closest pair of points and iteratively compute the distance between each new cluster and the previous ones. This is the internal rule of the algorithm and we must choose a specific linkage method (complete, single, average or centroid, or Ward's linkage). Ward's linkage is a good default choice: it minimizes the variance of the clusters being merged. In doing so, it tends to produce roughly evenly sized clusters and is less sensitive to noise and outliers than some of the other methods.
+In Example&nbsp;<a href='#ex:hc'>7.23</a> we will use the function <code>hcut</code> of the package <i>factoextra</i> in R and <i>scikit-learn</i> function <code>AgglomerativeClustering</code> in Python, to compute the hierarchical clustering.
+</p>
+
+<p>
+A big advantage of hierarchical clustering is that, once estimated,
+you can freely choose the number of clusters in which to group your
+cases without re-estimating the model. If you decide, for instance, to
+use four instead of three clusters, then the cases in one of
+your three clusters are divided into two subgroups. With \(k\)-means, in
+contrast, a three-cluster solution can be completely different from a
+four-cluster solution. However, this comes at a big cost: hierarchical
+clustering requires a lot more computing resources and may therefore
+not be feasible for large datasets.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:hc' name='ex:hc'>Example 7.23.</a></small><br />
+Using hierarchical clustering to group countries based on the average support of refugees and migrants, age and educational level</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>hc_res = AgglomerativeClustering(</code>
+<code>    affinity = "euclidean", linkage = "complete") </code>
+<code>hc_res.fit_predict(d3_s)</code>
+<code>print(hc_res)</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>hc.res &lt;- hcut(d3_s, hc_method="complete")</code>
+<code>summary(hc.res)</code>
+&nbsp;
+&nbsp;  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<pre class='output'>AgglomerativeClustering(linkage='complete')</pre>
+</div></div>
+<p>
+We can then plot the dendogram  with base R function <code>plot</code> and <i>scipy</i> (module <code>cluster.hierarchy</code>) function <code>dendogram</code> in Python. The summary of the initial model suggest  two clusters (size=2) but by looking at the dendogram you can choose the number of clusters you want to work with by choosing a height (for example four to get three clusters).
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:dendogram' name='ex:dendogram'>Example 7.24.</a></small><br />
+Dendogram to visualize the hierarchical clustering</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>dendrogram = sch.dendrogram(</code>
+<code>    sch.linkage(d3_s, method="complete"), </code>
+<code>    labels=list(d3.index), leaf_rotation=90) </code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>plot(hc.res, cex=0.5)</code>
+&nbsp;
+&nbsp;  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<img src='img/dendogram.py.png' />
+</div></div>
+<p>
+If you re-run the hierarchical clustering for three clusters (Example&nbsp;<a href='#ex:hc3'>7.25</a>) and visualize it (Example&nbsp;<a href='#ex:vishc3'>7.26</a>) you will get a graph similar to the one produced by \(k\)-means.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:hc3' name='ex:hc3'>Example 7.25.</a></small><br />
+Re-run hierarchical clustering with three clusters</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>hc_res = AgglomerativeClustering(n_clusters=3, </code>
+<code>  affinity = "euclidean", linkage = "ward")</code>
+<code>hc_res.fit_predict(d3_s)</code>
+<code>print(hc_res)</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>hc.res = hcut(d3_s, k=3, hc_method="complete") </code>
+<code>summary(hc.res)</code>
+&nbsp;
+&nbsp;  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<pre class='output'>AgglomerativeClustering(n_clusters=3)</pre>
+</div></div><div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:vishc3' name='ex:vishc3'>Example 7.26.</a></small><br />
+Re-run hierarchical clustering with three clusters</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>for cluster in range(hc_res.n_clusters):</code>
+<code>    plt.scatter(d3_s[hc_res.labels_==cluster, 0], </code>
+<code>                d3_s[hc_res.labels_==cluster, 1])</code>
+<code>plt.legend(scatterpoints=1)</code>
+<code>plt.show()</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>fviz_cluster(hc.res, d3_s, ellipse.type="convex")</code>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>R output. Note that Python output may look slightly different</div>
+<a href='img/vishc3.r.png' title='Click to open full-size image'>
+  <img src='img/vishc3.r_thumb.png' />
+</a>
+</div></div>
+<h3>  <small class='text-muted'><a class='anchor' href='#7_3_3' name='7_3_3'>7.3.3.</a></small>Principal Component Analysis and Singular Value Decomposition
+</h3>
+
+
+<p>
+Cluster analyses are in principle used to group similar
+cases. Sometimes, we want to group similar variables instead.  A
+well-known method for this is principal component analysis (PCA)<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 11" data-bs-content="If you had to learn statistics using SPSS, you have almost certainly already conducted a PCA. Quite counter-intuitively, the default analysis that is run when clicking on the &ldquo;Factor&rdquo; menu in SPSS, is a PCA.">[11]</a>. This
+unsupervised method is useful to reduce the dimensionality of your
+data by creating new uncorrelated variables or <em>components</em>
+that describe the original dataset. PCA uses linear transformations to
+create principal components that are ordered by the level of explained
+variance (the first component will catch the largest variance). We
+will get as many principal components as number of variables we have
+in the dataset, but when we look at the cumulative variance we can
+easily select only few of these components to explain most of the
+variance and thus work with a smaller and summarized data frame that
+might be more convenient for many tasks (i.e. those that require
+avoiding multicollinearity or just need to be more computationally
+efficient). By simplifying the complexity of our data we can have a
+first understanding of how our variables are related and also of how
+our observations might be grouped. All components have specific loadings
+for each original variable, which can tell you how the old variables
+are represented in the new components. This statistical technique is
+especially useful in EDA when working with high dimensional datasets
+but it can be used in many other situations.
+</p>
+
+<p>
+The mathematics behind PCA can be relatively easy to
+understand. However, for the sake of simplicity, we will just say that
+in order to obtain the principal components the algorithm firstly has
+to compute the mean of each variable and then compute the covariance
+matrix of the data. This matrix contains the covariance between the
+elements of a vector and the output will be a square matrix with an 
+identical number of rows and columns, corresponding to the total
+number of dimensions of the original dataset. Specifically, we can
+calculate the covariance matrix of the variables <i>X</i> and <i>y</i>
+with the formula:
+</p>
+<p>\(cov_{x,y}=\frac{\sum_{i=1}^{N}(x_{i}-\bar{x})(y_{i}-\bar{y})}{N-1}\)</p>
+<p>
+Secondly, using the covariance matrix the algorithm computes the eigenvectors and their corresponding eigenvalues, and then drop the eigenvectors with the lowest eigenvalues. With this reduced matrix it transforms the original values to the new subspace in order to obtain the principal components that will synthesize the original dataset.
+</p>
+
+<p>
+Let us now conduct a PCA over the Eurobarometer data.  In Example&nbsp;<a href='#ex:pca'>7.27</a> we will re-use the sub-data frame <i>d3</i> containing the means of 4 variables (support to refugees, support to migrants, age and educational level) for each of the 30 European countries. The question is  can we have a new data frame containing less than 4 variables but that explains most of the variance, or in other words, that represents our original dataset well enough, but with fewer dimensions? As long as our features are measured on different scales, it is normally suggested to center (to mean 0) and scale (to standard deviation 1) the data. You may also know this transformation as &ldquo;calculating \(z\)-scores&rdquo;. We can perform the PCA in R using the base function <code>prcomp</code> and in Python using the function <code>PCA</code> of the module <code>decomposition</code> of <i>scikit-learn</i>.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:pca' name='ex:pca'>Example 7.27.</a></small><br />
+Principal component analysis (PCA) of a data frame with 30 records and 4 variables</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>pca_m = PCA()</code>
+<code>pca = pca_m.fit(d3_s)</code>
+<code>pca_n = PCA()</code>
+<code>pca = pca_n.fit_transform(d3_s)</code>
+<code>pca_df = pd.DataFrame(data=pca, </code>
+<code>  columns=["PC1", "PC2", "PC3", "PC4"])</code>
+<code>pca_df.index = d3.index</code>
+<code>print(pca_df.head())</code>
+<code></code>
+<code>pca_df_2 = pd.DataFrame(data=pca_n.components_.T, </code>
+<code>  columns=["PC1", "PC2", "PC3", "PC4"])</code>
+<code>pca_df_2.index = d3.columns</code>
+<code>print(pca_df_2)</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>pca = prcomp(d3_s, scale=TRUE)</code>
+<code>head(pca$x)</code>
+<code>pca$rotation</code>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<pre class='output'>               PC1       PC2       PC3       PC4
+country
+Austria  -0.103285 -1.220018 -0.535673  0.066888
+Belgium  -0.029355 -0.084707  0.051515  0.227609
+Bulgaria -1.660518  0.949533 -0.480337 -0.151837
+Croatia  -1.267502 -0.819093 -0.920657  0.843682
+Cyprus    0.060590 -0.195928  0.573670  0.812519
+                         PC1       PC2       PC3       PC4
+support_refugees_n  0.573292 -0.369010  0.139859  0.718058
+support_migrants_n  0.513586 -0.533140 -0.094283 -0.665659
+age                 0.445117  0.558601  0.670994 -0.199005
+educational_n       0.457642  0.517261 -0.722023  0.041073</pre>
+</div></div>
+<p>
+The generated object with the PCA contains different elements (in R <code>sdev</code>, <code>rotation</code>, <code>center</code>, <code>scale</code> and <code>x</code>) or attributes in Python (<code>components_</code>, <code>explained_variance_</code>, <code>explained_variance_ratio</code>, <code>singular_values_</code>, <code>mean_</code>, <code>n_components_</code>, <code>n_features_</code>, <code>n_samples_</code>, and <code>noise_variance_</code>). In the resulting object we can see the values of four principal components of each country, and the values of the loadings, technically called <em>eigenvalues</em>, for the variables in each principal component.  In our example we can see that support for refugees and migrants are more represented on PC1, while age and educational level are more represented on PC2. If we plot the first two principal components using base function <code>biplot</code> in R and the library <i>bioinfokit</i> in Python (Example&nbsp;<a href='#ex:plot_pca'>7.28</a>), we can clearly see how the variables are associated with either PC1 or with PC2 (we might also want to plot any pair of the four components!). But we can also get a picture of how countries are grouped based only in these two new variables.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:plot_pca' name='ex:plot_pca'>Example 7.28.</a></small><br />
+Plot PC1 and PC2</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>var1 = round(pca_n.explained_variance_ratio_[0],2)</code>
+<code>var2 = round(pca_n.explained_variance_ratio_[1],2)</code>
+<code>bioinfokit.visuz.cluster.biplot(cscore=pca, </code>
+<code>  loadings=pca_n.components_, </code>
+<code>  labels=pca_df_2.index.values, </code>
+<code>  var1=var1, var2=var2, show=True)</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>biplot(x = pca, scale = 0, cex = 0.6, </code>
+<code>       col = c("blue4", "brown3"))</code>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<img src='img/plot_pca.py.png' />
+</div></div>
+<p>
+So far we are not sure  how many components are enough to accurately represent our data, so we need to know how much variance (which is the square of the standard deviation) is explained by each component. We can get the values (Example&nbsp;<a href='#ex:prop'>7.29</a>) and plot  the proportion of explained variance (Example&nbsp;<a href='#ex:prop2'>7.30</a>). We get that the first component explains 57.85&percnt; of the variance, the second 27.97&percnt;, the third 10.34&percnt; and the fourth just 3.83&percnt;.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:prop' name='ex:prop'>Example 7.29.</a></small><br />
+Proportion of variance explained</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>print("Proportion of variance explained:")</code>
+<code>print(pca_n.explained_variance_ratio_)</code>
+&nbsp;
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>print("Proportion of variance explained:")</code>
+<code>prop_var = tibble(pc=1:4,</code>
+<code>    var=pca$sdev^2 / sum(pca$sdev^2))</code>
+<code>prop_var</code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<pre class='output'>Proportion of variance explained:
+[0.57848569 0.27974794 0.10344996 0.03831642]</pre>
+</div></div><div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:prop2' name='ex:prop2'>Example 7.30.</a></small><br />
+Plot of the proportion of variance explained</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>plt.bar([1,2,3,4],pca_n.explained_variance_ratio_)</code>
+<code>plt.ylabel("Proportion of variance explained")</code>
+<code>plt.xlabel("Principal component")</code>
+<code>plt.xticks([1,2,3,4])</code>
+<code>plt.show()</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>ggplot(prop_var, aes(x=pc, y=var)) +</code>
+<code>  geom_col() +</code>
+<code>  scale_y_continuous(limits = c(0,1)) +</code>
+<code>  xlab("Principal component") + </code>
+<code>  ylab("Proportion of variance explained")</code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<img src='img/prop2.py.png' />
+</div></div>
+<p>
+When we estimate (Example&nbsp;<a href='#ex:acum'>7.31</a>) and plot (Example&nbsp;<a href='#ex:acum2'>7.32</a>) the cumulative explained variance it is easy to identify that with just the two first components we explain 88.82&percnt; of the variance. It might now seem a good deal to reduce our dataset from four to two variables, or let’s say half of the data, but retaining most of the original information.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:acum' name='ex:acum'>Example 7.31.</a></small><br />
+Cumulative explained variance</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>cvar = np.cumsum(pca_n.explained_variance_ratio_)</code>
+<code>cvar </code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>cvar = cumsum(prop_var)</code>
+<code>cvar</code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<pre class='output'>array([0.57848569, 0.85823362, 0.96168358, 1.        ])</pre>
+</div></div><div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:acum2' name='ex:acum2'>Example 7.32.</a></small><br />
+Plot of the cumulative explained variance</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>plt.plot(cvar)</code>
+<code>plt.xlabel("number of components")</code>
+<code>plt.xticks(np.arange(len(cvar)), </code>
+<code>           np.arange(1, len(cvar)+1))</code>
+<code>plt.ylabel("cumulative explained variance") </code>
+<code>plt.show()</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>ggplot(cvar, aes(x=pc, y=var)) +</code>
+<code>  geom_point() +</code>
+<code>  geom_line() +</code>
+<code>  theme_bw() +</code>
+<code>  xlab("Principal component") +</code>
+<code>  ylab("Cumulative explained variance")</code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<img src='img/acum2.py.png' />
+</div></div>
+<p>
+And what if we want to use this PCA and deploy a clustering (as explained above) with just these two new variables instead of the four original ones?  Just repeat the \(k\)-means procedure but now using a new smaller data frame selecting PC1 and PC2 from the PCA. After estimating the optimal number of clusters (three again!) we can compute and visualize the clusters, and get a very similar picture to the one obtained in the previous examples, with little differences such as the change of cluster of the Netherlands (more similar now to the Nordic countries!). This last exercise is a good example of how to combine different techniques in EDA.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:new' name='ex:new'>Example 7.33.</a></small><br />
+Combining PCA to reduce dimensionality and \(k\)-means to group countries</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>#Generate a new dataset with first components</code>
+<code>d5 = pca[:,0:2]</code>
+<code>d5[0:5]</code>
+<code></code>
+<code>#Get optimal number of clusters</code>
+<code>wss = []</code>
+<code>for i in range(1, 15):</code>
+<code>    km_out = KMeans(n_clusters=i, n_init=20)</code>
+<code>    km_out.fit(d5)</code>
+<code>    wss.append(km_out.inertia_)</code>
+<code></code>
+<code>    </code>
+<code># Plot sum of squares vs. number of clusters</code>
+<code>plt.plot(range(1, 15), wss, marker="o")</code>
+<code>plt.xlabel("Number of clusters")</code>
+<code>plt.ylabel("Within groups sum of squares")</code>
+<code>plt.show()</code>
+<code></code>
+<code># Compute again with k = 3 and visualize</code>
+<code>km_res_5 = KMeans(n_clusters=3, n_init=25).fit(d5)</code>
+<code>for cluster in range(km_res_5.n_clusters):</code>
+<code>  plt.scatter(d3_s[km_res_5.labels_==cluster, 0], </code>
+<code>              d3_s[km_res_5.labels_==cluster, 1])</code>
+<code>plt.scatter(km_res_5.cluster_centers_[:, 0], </code>
+<code>            km_res_5.cluster_centers_[:, 1], </code>
+<code>            s=250, marker="*")</code>
+<code>plt.legend(scatterpoints=1)</code>
+<code>plt.show()</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>#Generate a new dataset with first components</code>
+<code>d5 = pca$x[, c("PC1", "PC2")]</code>
+<code>head(d5)</code>
+<code></code>
+<code>#Get optimal number of clusters</code>
+<code>wss = list()</code>
+<code>for (i in 1:15) {</code>
+<code>  km.out = kmeans(d5, centers = i, nstart = 20)</code>
+<code>  wss[[i]] = tibble(k=i, ss=km.out$tot.withinss)</code>
+<code>}</code>
+<code>wss = bind_rows(wss)</code>
+<code></code>
+<code># Plot sum of squares vs. number of clusters</code>
+<code>ggplot(wss, aes(x=k, y=ss)) + geom_line() + </code>
+<code>     xlab("Number of Clusters") + </code>
+<code>     ylab("Within groups sum of squares")</code>
+<code></code>
+<code></code>
+<code># Compute again with k = 3 and visualize</code>
+<code>set.seed(123)</code>
+<code>km.res_5 &lt;- kmeans(d5, 3, nstart = 25)</code>
+<code>fviz_cluster(km.res_5, d5, ellipse.type = "norm")</code>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div></div></div>
+<p>
+When your dataset gets bigger, though, you may actually not use PCA
+but the very much related singular value decomposition, SVD. They are
+closely interrelated, and in fact SVD can be used &ldquo;under the hood&rdquo;
+to estimate a PCA. While PCA is taught in a lot of classical textbooks
+for statistics in the social sciences, SVD is usually not. Yet, it has
+a great advantage: in the way that it is implemented in
+<i>scikit-learn</i>, it does not require to store the (dense)
+covariance matrix in memory (see the feature box
+in <a href='chapter11.html#11_4_1'>Section 11.4.1</a> for more information on sparse versus dense
+matrices). This means that once your dataset grows bigger than
+typical survey datasets, a PCA maybe quickly become impossible to estimate,
+whereas the SVD can still be estimated without much resource
+required. Therefore, especially when you are working with textual data,
+you will see that SVD is used instead of PCA. For all practical
+purposes, the way that  you can use and interpret the results stays the
+same.
+</p>
+
+        </div>
+
+	<div class='chevrons'>
+&laquo;
+	  
+	  <a href='chapter06.html'>Ch. 6 Data Wrangling</a>
+	  
+	  
+	  | <a href='chapter08.html'>Ch. 8 Machine Learning</a>&raquo;
+	  
+</div>
+	<!-- Secondary sidebar -->
+        <aside class="css-rightbar">
+            <nav id="right" class="collapse css-rightnav">
+                <ul class="list-unstyled components">
+  
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+                  <div class="rightbar-header">In this chapter</div>
+
+            <ul class="list-unstyled" id="toc_chap_7">
+<li class='toc-section'>7 Exploratory data analysis</li>
+
+              
+	          
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_1">7.1. Simple Exploratory Data Analysis</a>
+		    </li>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_2">7.2. Visualizing Data</a>
+		    </li>
+		    
+		    <ul class="list-unstyled list-subsections" id="toc_chap_2">
+		    
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_2_1">7.2.1. Plotting Frequencies and Distributions</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_2_2">7.2.2. Plotting Relationships</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_2_3">7.2.3. Plotting Geospatial Data</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_2_4">7.2.4. Other Possibilities</a>
+                    </li>
+
+                    
+		    </ul>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_3">7.3. Clustering and Dimensionality Reduction</a>
+		    </li>
+		    
+		    <ul class="list-unstyled list-subsections" id="toc_chap_3">
+		    
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_3_1">7.3.1. $k$-means Clustering</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_3_2">7.3.2. Hierarchical Clustering</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_3_3">7.3.3. Principal Component Analysis and Singular Value Decomposition</a>
+                    </li>
+
+                    
+		    </ul>
+		    
+
+		
+            </ul>
+	    
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+</ul>
+            </nav>
+        </aside>
+</div>
+
+
+
+    </div>
+    <!-- Optional JavaScript; choose one of the two! -->
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+    -->
+  <script>
+      var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+  return new bootstrap.Popover(popoverTriggerEl, {html: true})
+})
+  </script>
+  </body>
+</html>

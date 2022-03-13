@@ -1,0 +1,2822 @@
+
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+      <link href="ccsbook.css" rel="stylesheet">
+      <!-- MathJax -->
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js">
+  </script>
+
+    <title>Computational Analysis of Communication</title>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-light fixed-top bg-light">
+    <div class="container-xxl">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#toc" aria-controls="toc" aria-expanded="false" aria-label="Toggle TOC">
+                <div></div>
+                <div></div>
+                <div></div>
+            </button>
+	    <div class='navhome'>
+              <a href="index.html">Computational Analysis of Communication</a>
+	      </div>
+    </div>
+    </nav>
+    <div id='content' class='container-xxl'>
+
+        <!-- Sidebar -->
+        <aside class="toc">
+            <nav id="toc" class="collapse">
+                <div class="subtoc">
+                    <ul class="list-unstyled components">
+  
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+                  <div class="rightbar-header">In this chapter</div>
+
+            <ul class="list-unstyled" id="toc_chap_10">
+<li class='toc-section'>10 Text as data</li>
+
+              
+	          
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_1">10.1. The Bag of Words and the Term-Document Matrix</a>
+		    </li>
+		    
+		    <ul class="list-unstyled list-subsections" id="toc_chap_1">
+		    
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_1_1">10.1.1. Tokenization</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_1_2">10.1.2. The DTM as a Sparse Matrix</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_1_3">10.1.3. The DTM as a ``Bag of Words&#39;&#39;</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_1_4">10.1.4. The (Unavoidable) Word Cloud</a>
+                    </li>
+
+                    
+		    </ul>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_2">10.2. Weighting and Selecting Documents and Terms</a>
+		    </li>
+		    
+		    <ul class="list-unstyled list-subsections" id="toc_chap_2">
+		    
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_2_1">10.2.1. Removing stopwords</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_2_2">10.2.2. Removing Punctuation and Noise</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_2_3">10.2.3. Trimming a DTM</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_2_4">10.2.4. Weighting a DTM</a>
+                    </li>
+
+                    
+		    </ul>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_3">10.3. Advanced Representation of Text</a>
+		    </li>
+		    
+		    <ul class="list-unstyled list-subsections" id="toc_chap_3">
+		    
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_3_1">10.3.1. $n$-grams</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_3_2">10.3.2. Collocations</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_3_3">10.3.3. Word Embeddings</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_3_4">10.3.4. Linguistic Preprocessing</a>
+                    </li>
+
+                    
+		    </ul>
+		    
+
+		
+            </ul>
+	    
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+</ul>
+                </div>
+
+		<div class="rightbar-header">Table of Contents</div>
+                <ul class="list-unstyled components">
+    
+        <li class="active toc-chapter ">
+            <a href="chapter01.html">1 Introduction</a>
+            <!--<a href="#toc_chap_1" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_1"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_1">
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_1">1.1. The Role of Computational Analysis in the Social Sciences</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_2">1.2. Why Python and/or R?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_3">1.3. How to use this book</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_4">1.4. Installing R and Python</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_5">1.5. Installing Third-Party Packages</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter02.html">2 Fun with Data</a>
+            <!--<a href="#toc_chap_2" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_2"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_2">
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_1">2.1. Fun With Tweets</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_2">2.2. Fun With Textual Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_3">2.3. Fun With Visualizing Geographic Information</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_4">2.4. Fun With Networks</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter03.html">3 Programming Concepts</a>
+            <!--<a href="#toc_chap_3" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_3"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_3">
+                
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_1">3.1. About Objects and Data Types</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_2">3.2. Simple Control Structures: Loops and Conditions</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_3">3.3. Functions and Methods</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter04.html">4 How to write code</a>
+            <!--<a href="#toc_chap_4" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_4"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_4">
+                
+                    <li class="toc-section">
+                        <a href="chapter04.html#4_1">4.1. Re-using Code: How Not to Re-Invent the Wheel</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter04.html#4_2">4.2. Understanding Errors and Getting Help</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter04.html#4_3">4.3. Best Practice: Beautiful Code, GitHub, and Notebooks</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter05.html">5 Files and Data Frames</a>
+            <!--<a href="#toc_chap_5" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_5"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_5">
+                
+                    <li class="toc-section">
+                        <a href="chapter05.html#5_1">5.1. Why and When Do We Use Data Frames?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter05.html#5_2">5.2. Reading and Saving Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter05.html#5_3">5.3. Data from online sources</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter06.html">6 Data Wrangling</a>
+            <!--<a href="#toc_chap_6" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_6"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_6">
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_1">6.2. Calculating Values</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_2">6.3. Grouping and Aggregating</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_3">6.4. Merging Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_4">6.5. Reshaping Data: Wide To Long And Long To Wide</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter07.html">7 Exploratory data analysis</a>
+            <!--<a href="#toc_chap_7" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_7"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_7">
+                
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_1">7.1. Simple Exploratory Data Analysis</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_2">7.2. Visualizing Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_3">7.3. Clustering and Dimensionality Reduction</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter08.html">8 Machine Learning</a>
+            <!--<a href="#toc_chap_8" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_8"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_8">
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_1">8.1. Statistical Modeling and Prediction</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_2">8.2. Concepts and Principles</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_3">8.3. Classical Machine Learning: From Na&#34;ive Bayes to Neural Networks</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_4">8.4. Deep Learning</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_5">8.5. Validation and Best Practices</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter09.html">9 Processing text</a>
+            <!--<a href="#toc_chap_9" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_9"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_9">
+                
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_1">9.1. Text as a String of Characters</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_2">9.2. Regular Expressions</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_3">9.3. Using Regular Expressions in Python and R</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter toc-chapter-current">
+            <a href="chapter10.html">10 Text as data</a>
+            <!--<a href="#toc_chap_10" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_10"></a>
+            <ul class="collapse list-unstyled show" id="toc_chap_10">
+                
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_1">10.1. The Bag of Words and the Term-Document Matrix</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_2">10.2. Weighting and Selecting Documents and Terms</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_3">10.3. Advanced Representation of Text</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter11.html">11 Automatic analysis of text</a>
+            <!--<a href="#toc_chap_11" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_11"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_11">
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_1">11.1. Deciding on the Right Method</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_2">11.2. Obtaining a Review Dataset</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_3">11.3. Dictionary Approaches to Text Analysis</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_4">11.4. Supervised Text Analysis: Automatic Classification and Sentiment Analysis</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_5">11.5. Unsupervised Text Analysis: Topic Modeling</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter12.html">12 Scraping online data</a>
+            <!--<a href="#toc_chap_12" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_12"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_12">
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_1">12.1. Using Web APIs: From Open Resources to Twitter</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_2">12.2. Retrieving and Parsing Web Pages</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_3">12.3. Authentication, Cookies, and Sessions</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_4">12.4. Ethical, Legal, and Practical Considerations</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter13.html">13 Network Data</a>
+            <!--<a href="#toc_chap_13" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_13"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_13">
+                
+                    <li class="toc-section">
+                        <a href="chapter13.html#13_1">13.1. Representing and Visualizing Networks</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter13.html#13_2">13.2. Social Network Analysis</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter14.html">14 Multimedia data</a>
+            <!--<a href="#toc_chap_14" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_14"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_14">
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_1">14.1. Beyond Text Analysis: Images, Audio and Video</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_2">14.2. Using Existing Libraries and APIs</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_3">14.3. Storing, Representing, and Converting Images</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_4">14.4. Image Classification</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter15.html">15 Scaling up and distributing</a>
+            <!--<a href="#toc_chap_15" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_15"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_15">
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_1">15.1. Storing Data in SQL and noSQL Databases</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_2">15.2. Using Cloud Computing</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_3">15.3. Publishing Your Source</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_4">15.4. Distributing Your Software as Container</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter16.html">16 Where to go next</a>
+            <!--<a href="#toc_chap_16" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_16"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_16">
+                
+                    <li class="toc-section">
+                        <a href="chapter16.html#16_1">16.1. How Far Have We Come?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter16.html#16_2">16.2. Where To Go Next?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter16.html#16_3">16.3. Open, Transparent, and Ethical Computational Science</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+</ul>
+            </nav>
+        </aside>
+	
+      
+  
+
+    <div class="css-layout">
+      <!-- Main Content -->
+      <div class="css-main">
+	<div class='chevrons'>
+&laquo;
+	  
+	  <a href='chapter09.html'>Ch. 9 Processing text</a>
+	  
+	  
+	  | <a href='chapter11.html'>Ch. 11 Automatic analysis of text</a>&raquo;
+	  
+</div>
+	  <br/>
+            
+<h1>  <small class='text-muted'><a class='anchor' href='#chap:dtm' name='chap:dtm'>10.</a></small>Text as data
+</h1>
+
+
+<div class='abstract'>
+  <span class='caption'>
+Abstract
+  </span>
+  This chapter shows how you can analyze texts that are stored as a data frame column or variable using functions from the package <i>quanteda</i> in R and the package <i>sklearn</i> in Python and R.
+  Please see Chapter&nbsp;<a href='chapter09.html#9'>9</a> for more information on reading and cleaning text.
+
+
+</div>
+
+<div class='keywords'>
+  <span class='caption'>Keywords:</span>
+Text as Data, Document-Term Matrix
+</div>
+<div class='objectives'>
+  <div class='caption'>Chapter objectives:</div>
+  <ul><li> Create a document-term matrix from text
+</li><li> Perform  document and feature selection and weighting
+</li><li> Understand and use more advanced representations such as n-grams and embeddings
+</li>
+  </ul>
+</div><div class='feature'>
+  This chapter introduces the packages <i>quanteda</i> (R) and <i>sklearn</i> and <i>nltk</i> (Python) for converting text into a document-term matrix. It also introduces the <i>udpipe</i> package for natural language processing.
+You can install these packages with the code below if needed  (see Section&nbsp;<a href='chapter01.html#1_4'>1.4</a> for more details):
+
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>!pip3 install ufal.udpipe spacy nltk scikit-learn </code>
+<code>!pip3 install gensim wordcloud</code>
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>install.packages(c("glue","tidyverse","quanteda", </code>
+<code>    "quanteda.textstats", "quanteda.textplots", </code>
+<code>    "udpipe", "spacyr"))</code>  </pre>
+</div></div> After installing, you need to import (activate) the packages every session:
+
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code># Standard library and basic data wrangling</code>
+<code>import os</code>
+<code>import sys</code>
+<code>import urllib</code>
+<code>import urllib.request</code>
+<code>import re</code>
+<code>import regex</code>
+<code>import pandas as pd</code>
+<code>import numpy as np</code>
+<code></code>
+<code># Tokenization</code>
+<code>import nltk</code>
+<code>from nltk.tokenize import (TreebankWordTokenizer, </code>
+<code>                           WhitespaceTokenizer)</code>
+<code>from nltk.corpus import stopwords</code>
+<code>from sklearn.feature_extraction.text import (</code>
+<code>    CountVectorizer, TfidfVectorizer)</code>
+<code>import nagisa</code>
+<code></code>
+<code># For plotting word clouds</code>
+<code>%matplotlib inline</code>
+<code>from matplotlib import pyplot as plt</code>
+<code>from wordcloud import WordCloud</code>
+<code></code>
+<code># Natural language processing</code>
+<code>import spacy</code>
+<code>import ufal.udpipe</code>
+<code>from gensim.models import KeyedVectors, Phrases</code>
+<code>from gensim.models.phrases import Phraser</code>
+<code>from ufal.udpipe import Model, Pipeline</code>
+<code>import conllu</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>library(glue)</code>
+<code>library(tidyverse)</code>
+<code># Tokenization</code>
+<code>library(quanteda)</code>
+<code>library(quanteda.textstats)</code>
+<code>library(quanteda.textplots)</code>
+<code># Natural language processing</code>
+<code>library(udpipe)</code>
+<code>library(spacyr)</code>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div></div></div>
+<h2>  <small class='text-muted'><a class='anchor' href='#10_1' name='10_1'>10.1.</a></small>The Bag of Words and the Term-Document Matrix
+</h2>
+
+
+<p>
+Before you can conduct any computational analysis of text, you need to solve a problem: computations are usually done on numerical data &ndash; but you have text. Hence, you must find a way to <i>represent</i> the text by numbers.
+The document-term matrix (DTM, also called the term-document matrix or TDM) is one common numerical representation of text.
+It represents a <i>corpus</i> (or set of documents) as a matrix or table, where each row represents a document, each column represents a term (word),
+and the numbers in each cell show how often that word occurs in that document.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:dtm' name='ex:dtm'>Example 10.1.</a></small><br />
+Example document-term matrix</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>texts = [</code>
+<code>    "The caged bird sings with a fearful trill", </code>
+<code>    "for the caged bird sings of freedom"]</code>
+<code>cv = CountVectorizer()</code>
+<code>d = cv.fit_transform(texts)</code>
+<code># Create a dataframe of the word counts to inspect</code>
+<code># - todense transforms the dtm into a dense matrix</code>
+<code># - get_feature_names() gives a list words</code>
+<code>pd.DataFrame(d.todense(), </code>
+<code>             columns=cv.get_feature_names()) </code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>texts = c(</code>
+<code>    "The caged bird sings with a fearful trill", </code>
+<code>    "for the caged bird sings of freedom")</code>
+<code>d = tokens(texts) %&gt;% dfm()</code>
+<code># Inspect by converting to a (dense) matrix</code>
+<code>convert(d, "matrix") </code>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>R output. Note that Python output may look slightly different</div>
+<div class='table-wrapper'><table class="dataframe">
+<caption>A matrix: 2 × 11 of type dbl</caption>
+<thead>
+	<tr><th></th><th scope=col>the</th><th scope=col>caged</th><th scope=col>bird</th><th scope=col>sings</th><th scope=col>with</th><th scope=col>a</th><th scope=col>fearful</th><th scope=col>trill</th><th scope=col>for</th><th scope=col>of</th><th scope=col>freedom</th></tr>
+</thead>
+<tbody>
+	<tr><th scope=row>text1</th><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td></tr>
+	<tr><th scope=row>text2</th><td>1</td><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td></tr>
+</tbody>
+</table>
+</div>
+</div></div>
+<p>
+As an example, Example&nbsp;<a href='#ex:dtm'>10.1</a> shows a DTM made from two lines from the famous poem by Mary Angelou.
+The resulting matrix has two rows, one for each line; and 11 columns, one for each unique term (word).
+In the columns you see the document frequencies of each term: the word &ldquo;bird&rdquo; occurs once in each line,
+but the word &ldquo;with&rdquo; occurs only in the first line (text1) and not in the second (text2).
+</p>
+
+<p>
+In R, you can use the <code>dfm</code> function from the <i>quanteda</i> package <span class="cite" title="Benoit, K., Watanabe, K., Wang, H., Nulty, P., Obeng, A., Müller, S., and Matsuo, A. (2018). quanteda: An r package for the quantitative analysis of textual data. Journal of Open Source Software, 3(30):774.">Benoit et&nbsp;al., 2018</span>.
+This function can take a vector or column of texts and transforms it directly into a DTM
+(which quanteda actually calls a document-<i>feature</i> matrix, hence the function name <code>dfm</code>).
+In Python, you achieve the same by creating an object of the <code>CountVectorizer</code> class, which has a <code>fit_transform</code> function.
+</p>
+
+<h3>  <small class='text-muted'><a class='anchor' href='#10_1_1' name='10_1_1'>10.1.1.</a></small>Tokenization
+</h3>
+
+
+<p>
+In order to turn a corpus into a matrix, each text needs to be <i>tokenized</i>,
+meaning that it must be split into a list (vector) of words.
+This seems trivial, as English (and most western) text generally uses spaces to demarcate words.
+However, even for English there are a number of edge cases.
+For example, should &ldquo;haven't&rdquo; be seen as a single word, or two?
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:tokenize' name='ex:tokenize'>Example 10.2.</a></small><br />
+Differences between tokenizers</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>text = "I haven't seen John's derring-do"</code>
+<code>tokenizer = CountVectorizer().build_tokenizer()</code>
+<code>print(tokenizer(text))</code>
+<code></code>
+<code></code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>text = "I haven't seen John's derring-do"</code>
+<code>tokens(text)</code>
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>['haven', 'seen', 'John', 'derring', 'do']</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>Tokens consisting of 1 document.
+text1 :
+[1] "I"          "haven't"    "seen"       "John's"     "derring-do"</pre>
+</div></div></div>
+<p>
+Example&nbsp;<a href='#ex:tokenize'>10.2</a> shows how Python and R deal with the sentence &ldquo;I haven't seen John's derring-do&rdquo;.
+For Python, we first use <code>CountVectorizer.build_tokenizer</code> to access the built-in tokenizer.
+As you can see in the first line of input, this tokenizes &ldquo;haven't&rdquo; to <code>haven</code>,
+which of course has a radically different meaning. Moreover, it silently drops all single-letter words,
+including the <code>&#39;t</code>, <code>&#39;s</code>, and <code>I</code>.
+</p>
+
+<p>
+In the box &ldquo;Tokenizing in Python&rdquo; below, we therefore discuss some alternatives.
+For instance, the <code>TreebankWordTokenizer</code> included in the <i>nltk</i> package is a more reasonable tokenizer and
+splits &ldquo;haven't&rdquo; into <code>have</code> and <code>n&#39;t</code>, which is a reasonable outcome.
+Unfortunately, this tokenizer assumes that text has already been split into sentences,
+and it also includes punctuation as tokens by default.
+To circumvent this, we can introduce a custom tokenizer based on the Treebank tokenizer,
+which splits text into sentences (using <code>nltk.sent_tokenize</code>) &ndash; see the box for more details.
+</p>
+
+<p>
+For R, we simply call the <code>tokens</code> function from the <i>quanteda</i> package.
+This keeps <code>haven&#39;t</code> and <code>John&#39;s</code> as a single word, which is probably less desirable than splitting the words
+but at least better than outputting the word <code>haven</code>.
+</p>
+
+<p>
+As this simple example shows, even a relatively simple sentence is tokenized differently by the tokenizers considered here (and see the box on tokenization in Python).
+Depending on the research question, these differences might or might not be important.
+However, it is always a good idea to check the output of this (and other) preprocessing steps so you understand
+what information is kept or discarded.
+</p>
+<div class='figure'><div class='feature'><b>Tokenization in Python</b><br/>
+  As you can see in the example, the built-in tokenizer in <code>scikit-learn</code>is not actually very good.
+  For example, <i>haven't</i> is tokenized to <i>haven</i>, which is an entirely different word.
+  Fortunately, there are other tokenizers in the <i>nltk.tokenize</i> package that do better.
+
+  For example, the <code>TreebankTokenizer</code> uses the tokenization rules for the Penn Treebank
+  to tokenize, which produces better results:
+
+  <div class='code-single'><pre class='output'>text = """I haven't seen John's derring-do. 
+          Second sentence!"""
+print(TreebankWordTokenizer().tokenize(text))
+</pre></div>
+
+  Another example is the <code>WhitespaceTokenizer</code>, which simply uses whitespace to tokenize,
+  which can be useful if your input has already been tokenized,
+  and is used in Example&nbsp;<a href='#ex:tagcloud'>10.11</a> below for tweets to conserve hash tags.
+
+  <div class='code-single'><pre class='output'>print(WhitespaceTokenizer().tokenize(text))</pre></div>
+
+  You can also write your own tokenizer if needed.
+  For example, the <code>TreebankTokenizer</code> assumes that text has already been split into sentences
+  (which is why the period is attached to the word <i>derring-do.</i>).
+  The code below shows how we can make our own tokenizer class,
+  which uses <code>nltk.sent_tokenize</code> to first split the text into sentences,
+  and then uses the <code>TreebankTokenizer</code> to tokenize each sentence,
+  keeping only tokens that include at least one letter character.
+  Although a bit more complicated, this approach can give you maximum flexibility.
+
+  <div class='code-single'><pre class='output'>nltk.download("punkt")
+class MyTokenizer:
+    def tokenize(self, text):
+        tokenizer = TreebankWordTokenizer()
+        result = []
+        word = r"\p{letter}"
+        for sent in nltk.sent_tokenize(text):
+            tokens = tokenizer.tokenize(sent)    
+            tokens = [t for t in tokens 
+                      if regex.search(word, t)]
+            result += tokens
+        return result
+mytokenizer = MyTokenizer()
+print(mytokenizer.tokenize(text))</pre></div></div><div class='code-example'><h4>
+  <small class='text-muted'><a class='anchor' href='#ex:haiku' name='ex:haiku'>Example 10.3.</a></small><br />
+Tokenization of Japanese verse.</h4>
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code># this snippet uses the tokenizer created above</code>
+<code># (example "Tokenization with Python")</code>
+<code>haiku = ("\u53e4\u6c60\u86d9"</code>
+<code>         "\u98db\u3073\u8fbc\u3080"</code>
+<code>         "\u6c34\u306e\u97f3")</code>
+<code>print(f"Default: {mytokenizer.tokenize(haiku)}")</code>
+<code>print(f"Nagisa: {nagisa.tagging(haiku).words}")</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>haiku = "\u53e4\u6c60\u86d9</code>
+<code>         \u98db\u3073\u8fbc\u3080</code>
+<code>         \u6c34\u306e\u97f3"</code>
+<code>tokens(haiku)</code>
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python Output</div>
+<a href='img/haiku.py.png' title='Click to open full-size image'>
+  <img src='img/haiku.py_thumb.png' />
+</a>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R Output</div>
+<a href='img/haiku.r.png' title='Click to open full-size image'>
+  <img src='img/haiku.r_thumb.png' />
+</a>
+</div></div></div>
+<p>
+Note that for languages such as Chinese, Japanese, and Korean, which do not use spaces to delimit words, the story is more difficult.
+Although a full treatment is beyond the scope of this book, Example&nbsp;<a href='#ex:haiku'>10.3</a> shows a small example of tokenizing Japanese text,
+in this case the famous haiku &ldquo;the sound of water&rdquo; by Bash&omacr;.
+The default tokenizer in quanteda actually does a good job, in contrast to the default Python tokenizer
+that simply keeps the whole string as one word
+(which makes sense since this tokenizer only looks for whitespace or punctuation).
+For Python the best bet is to use a custom package for tokenizing Japanese, such as the <i>nagisa</i> package.
+This package contains a tokenizer which is able to tokenize the Japanese text, and we could use this in the <code>CountVectorizer</code>
+much like we used the <code>TreebankWordTokenizer</code> for English earlier.
+Similarly, with heavily inflected languages such as Hungarian or Arabic,
+it might be better to use preprocessing tools developed specifically for these languages, but treating those is
+beyond the scope of this book.
+</p>
+
+<h3>  <small class='text-muted'><a class='anchor' href='#10_1_2' name='10_1_2'>10.1.2.</a></small>The DTM as a Sparse Matrix
+</h3>
+
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:sotu' name='ex:sotu'>Example 10.4.</a></small><br />
+Example document-term matrix</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code># this snippet uses the tokenizer created above</code>
+<code># (example "Tokenization with Python")</code>
+<code>sotu=pd.read_csv("https://cssbook.net/d/sotu.csv")</code>
+<code>cv=CountVectorizer(tokenizer=mytokenizer.tokenize)</code>
+<code>d=cv.fit_transform(sotu["text"])</code>
+<code>d</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>url = "https://cssbook.net/d/sotu.csv"</code>
+<code>sotu = read_csv(url) %&gt;% </code>
+<code>       mutate(doc_id=paste(lubridate::year(Date), </code>
+<code>                           President, delivery))</code>
+<code>d = corpus(sotu) %&gt;% tokens() %&gt;% dfm()</code>
+<code>d</code>  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>&lt;85x17185 sparse matrix of type '&lt;class 'numpy.int64'&gt;'
+	with 132900 stored elements in Compressed Sparse Row format&gt;</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>Document-feature matrix of: 85 documents, 18,165 features (91.07% sparse) and 6 docvars.
+                        features
+docs                      to  the congress  :  in considering state   of union
+  1945 Roosevelt written 247  642       14  6 236           1     5  376     2
+  1945 Roosevelt spoken  110  238        8  3  90           0     1  137     0
+  1946 Truman written    738 2141       74 17 669           4    24 1264     8
+  1947 Truman spoken     227  473       27  7 132           1     5  292     7
+  1948 Truman spoken     175  325       15  2  98           0     7  252     5
+  1949 Truman spoken     139  239       17  2  69           1     1  150     1
+                        features
+docs                        ,
+  1945 Roosevelt written  351
+  1945 Roosevelt spoken   139
+  1946 Truman written    1042
+  1947 Truman spoken      236
+  1948 Truman spoken      155
+  1949 Truman spoken      148
+[ reached max_ndoc ... 79 more documents, reached max_nfeat ... 18,155 more features ]</pre>
+</div></div></div>
+<p>
+Example&nbsp;<a href='#ex:sotu'>10.4</a> shows a more realistic example.
+It downloads all US &ldquo;State of the Union&rdquo; speeches and creates a document-term matrix from them.
+Since the matrix is now easily too large to print, both Python and R simply list the size of the matrix.
+R lists \(85\) documents (rows) and \(17999\) features (columns), and Python reports that its size is \(85\times17185\).
+Note the difference in the number of columns (unique terms) due to the differences in tokenization as discussed above.
+</p>
+<div class='code-example'><h4>
+  <small class='text-muted'><a class='anchor' href='#ex:freq' name='ex:freq'>Example 10.5.</a></small><br />
+A look inside the DTM.</h4>
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>def termstats(dfm, vectorizer):</code>
+<code>  """Helper function to calculate term and </code>
+<code>  document frequency per term"""</code>
+<code>  # Frequencies are the column sums of the DFM</code>
+<code>  frequencies = dfm.sum(axis=0).tolist()[0]</code>
+<code>  # Document frequencies are the binned count </code>
+<code>  # of the column indices of DFM entries</code>
+<code>  docfreqs = np.bincount(dfm.indices)</code>
+<code>  freq_df=pd.DataFrame(</code>
+<code>    dict(frequency=frequencies,docfreq=docfreqs), </code>
+<code>    index=vectorizer.get_feature_names())</code>
+<code>  return freq_df.sort_values("frequency", </code>
+<code>                             ascending=False)</code>
+<code></code>
+<code>termstats(d, cv).iloc[[0, 10,  100,  1000, 10000]]</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>textstat_frequency(d)[c(1, 10, 100, 1000, 15000)]</code>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>            frequency  docfreq
+the             34996       85
+is               5472       85
+energy            707       68
+scientific         73       28
+escalate            2        2</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>      feature     frequency rank  docfreq group
+1     the         34999         1 85      all
+10    our          9334        10 85      all
+100   first         750       100 83      all
+1000  investments    76       988 34      all
+15000 tobago          1     11005  1      all</pre>
+</div></div><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>words = ["the", "is", "energy",</code>
+<code>         "scientific","escalate"]</code>
+<code>indices = [cv.vocabulary_[x] for x in words]</code>
+<code>           </code>
+<code>d[[[0], [25], [50], [75]], indices].todense()</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>as.matrix(d[</code>
+<code>  c(3, 25, 50, 75),</code>
+<code>  c("the","first","investment","defrauded")])</code>
+&nbsp;
+&nbsp;  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>            frequency  docfreq
+the             34996       85
+is               5472       85
+energy            707       68
+scientific         73       28
+escalate            2        2</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>      feature     frequency rank  docfreq group
+1     the         34999         1 85      all
+10    our          9334        10 85      all
+100   first         750       100 83      all
+1000  investments    76       988 34      all
+15000 tobago          1     11005  1      all</pre>
+</div></div></div>
+<p>
+In Example&nbsp;<a href='#ex:freq'>10.5</a> we show how you can look at the content of the DTM. First, we show the overall term and document frequencies of each word, where we showcase words at different frequencies. Unsurprisingly, the word <i>the</i> tops both charts, but further down there are minor differences.
+In all cases, the highly frequent words are mostly functional words like <i>them</i> or <i>first</i>. More informative words such as <i>investments</i> are by their nature used much less often.
+Such term statistics are very useful to check for noise in the data and get a feeling of the kind of language that is used.
+Second, we take a look at the frequency of these same words in four speeches from Truman to Obama. All use words like <i>the</i> and <i>first</i>, but none of them talk about <i>defrauded</i> &ndash; which is not surprising, since it was only used once in all the speeches in the corpus.
+</p>
+
+<p>
+However, the words that ranked around 1000 in the top frequency are still used in less than half of the documents.
+Since there are about 17000 even less frequent words in the corpus, you can imagine that most of the document-term matrix consists of zeros.
+The output also noted this <i>sparsity</i> in the first output above.
+In fact, R reports that the dtm is \(91\%\) sparse, meaning 91&percnt; percent of all entries are zero.
+Python reports a similar figure, namely that there are only just under 150000 non-zero entries
+out of a possible \(8\times22219\), which boils down to a 92&percnt; sparse matrix.
+</p>
+
+<p>
+Note that to display the matrix we turned it from a <i>sparse matrix</i> representation into a <i>dense matrix</i>.
+Briefly put, in a dense matrix, all entries are stored as a long list of numbers, including all the zeros.
+In a sparse matrix,  only the non-zero entries and their location are stored.
+This conversion (using the function <code>as.matrix</code> and the method <code>todense</code> respectively), however, was only performed after selecting a small subset of the data.
+In general,  it is very inefficient to store and work with the matrix in a <code>dense</code> format.
+For a reasonably large corpus with tens of thousands of documents and different words, this can quickly run to billions of numbers,
+which can cause problems even on modern computers and is, moreover, very inefficient.
+Because sparsity values are often higher than 99&percnt;, using a sparse matrix representation can easily reduce storage requirements by a hundred times, and in the process speed up calculations by reducing the number of entries that need to be inspected.
+Both <i>quanteda</i> and <code>scikit-learn</code>store DTMs as sparse matrices by default,
+and most analysis tools are able to deal with sparse matrices very efficiently
+(see, however, Section&nbsp;<a href='chapter11.html#11_4_1'>11.4.1</a> for problems with machine learning on sparse matrices in R).
+</p>
+
+<p>
+A final note on the difference between Python and R in this example.
+The code in R is much simpler and produces nicer results since it also shows the words and the speech names.
+In Python, we wrote our own helper function to create the frequency statistics which is built into the R <i>quanteda</i> package.
+These differences between Python and R reflect a pattern that is true in many (but not all) cases:
+in Python libraries such as <code>numpy</code>and <code>scikit-learn</code>are setup to maximize performance,
+while in R a library such as <i>quanteda</i> or <i>tidyverse</i> is more geared towards ease of use.
+For that reason, the DTM in Python does not &ldquo;remember&rdquo; the actual words, it uses the index of each word,
+so it consumes less memory if you don't need to use the actual words in e.g. a machine learning setup.
+R, on the other hand, stores the words and also the document IDs and metadata in the DFM object.
+This is easier to use if you need to look up a word or document, but it consumes (slightly) more memory.
+</p>
+<div class='feature'><b>Python: Why fit_transform?</b>
+In Python, you don't have a function that directly transforms text into a DTM.
+Instead, you create an <i>transformer</i> called a CountVectorizer,
+which can then be used to &ldquo;vectorize&rdquo; texts (turn it into a row of numbers)
+by counting how often each word occurs.
+This uses the <code>fit_transform</code> function which is offered by all <code>scikit-learn</code>transformers.
+It &ldquo;fits&rdquo; the model on the training data, which in this case means learning the vocabulary.
+It can then be used to transform other data into a DTM with the exact same columns,
+which is often required for algorithms.
+Because the feature names (the words themselves) are stored in the CountVectorizer
+rather than the document-term matrix, you generally need to keep both objects.
+</div>
+<h3>  <small class='text-muted'><a class='anchor' href='#10_1_3' name='10_1_3'>10.1.3.</a></small>The DTM as a &ldquo;Bag of Words&rdquo;
+</h3>
+
+
+<p>
+As you can see already in these simple examples, the document-term matrix discards quite a lot of information from text.
+Specifically, it disregards the order or words in a text: &ldquo;John fired Mary&rdquo; and &ldquo;Mary fired John&rdquo; both result in the same DTM,
+even though the meaning of the sentences is quite different.
+For this reason, a DTM is often called a <i>bag of words</i>, in the sense that all words in the document are simply put in a big bag
+without looking at the sentences or context of these words.
+</p>
+
+<p>
+Thus, the DTM can be said to be a specific and &ldquo;lossy&rdquo; representation of the text, that turns out to be quite useful for certain tasks:
+the frequent occurrence of words like &ldquo;employment&rdquo;, &ldquo;great&rdquo;, or &ldquo;I&rdquo; might well be good indicators that a text is about the economy,
+is positive, or contains personal expressions respectively.
+As we will see in the next chapter, the DTM representation can be used for many different text analyses, from dictionaries to supervised and unsupervised machine learning.
+</p>
+
+<p>
+Sometimes, however, you need information that is encoded in the order of words.
+For example, in analyzing conflict coverage it might be quite important to know who attacks whom, not just that an attack took place.
+In the Section&nbsp;<a href='#10_3'>10.3</a> we will look at some ways to create a richer matrix-representation by using word pairs.
+Although it is beyond the scope of this book,
+you can also use automatic syntactic analysis to take grammatical relations into account as well.
+As is always the case with automatic analyses, it is important to understand what information the computer is looking at,
+as the computer cannot find patterns in information that it doesn't have.
+</p>
+
+<h3>  <small class='text-muted'><a class='anchor' href='#10_1_4' name='10_1_4'>10.1.4.</a></small>The (Unavoidable) Word Cloud
+</h3>
+
+
+<p>
+ One of the most famous text visualizations is without doubt the word cloud.
+Essentially, a word cloud is an image where each word is displayed in a size that is representative of its frequency.
+Depending on preference, word position and color can be random, depending on word frequency, or in a decorative shape.
+</p>
+
+<p>
+Word clouds are often criticized since they are (sometimes) pretty but mostly not very informative.
+The core reason for that is that only a single aspect of the words is visualized (frequency),
+and simple word frequency is often not that informative: the most frequent words are generally uninformative &ldquo;stop words&rdquo; like &ldquo;the&rdquo; and &ldquo;I&rdquo;.
+</p>
+
+<p>
+For example, Example&nbsp;<a href='#ex:wordcloud'>10.6</a> shows the word cloud for the state of the union speeches downloaded above.
+In R, this is done using the <i>quanteda</i> function <code>textplot_wordcloud</code>.
+In Python we need to work a little harder, since it only has the counts, not the actual words.
+So, we sum the DTM columns to get the frequency of each word, and combine that with the feature names (words)
+from the <code>CountVectorized</code> object <code>cv</code>. Then we can create the word cloud and give it the frequencies to use.
+Finally, we plot the cloud and remove the axes.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:wordcloud' name='ex:wordcloud'>Example 10.6.</a></small><br />
+Word cloud of the US State of the Union corpus</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>def wordcloud(dfm, vectorizer, **options):</code>
+<code>    freq_dict = dict(</code>
+<code>        zip(vectorizer.get_feature_names(),</code>
+<code>            dfm.sum(axis=0).tolist()[0]))</code>
+<code>    wc = WordCloud(**options)</code>
+<code>    return wc.generate_from_frequencies(freq_dict)</code>
+<code></code>
+<code>wc = wordcloud(d, cv, background_color="white")</code>
+<code>plt.imshow(wc)</code>
+<code>plt.axis("off")</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>textplot_wordcloud(d, max_words=200)</code>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<img src='img/wordcloud.py.png' />
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<a href='img/wordcloud.r.png' title='Click to open full-size image'>
+  <img src='img/wordcloud.r_thumb.png' />
+</a>
+</div></div></div>
+<p>
+The results from Python and R look different at first &ndash; for one thing, R is nice and round but Python has more colors!
+However, if you look at the cloud you can see both are not very meaningful: the largest words are all punctuation or words like
+&ldquo;a&rdquo;, &ldquo;and&rdquo;, or &ldquo;the&rdquo;.
+You have to look closely to find words like &ldquo;federal&rdquo; or &ldquo;security&rdquo; that give a hint on what the texts were actually about.
+</p>
+
+<h2>  <small class='text-muted'><a class='anchor' href='#10_2' name='10_2'>10.2.</a></small>Weighting and Selecting Documents and Terms
+</h2>
+
+
+<p>
+So far, the DTMs you made in this chapter simply show the count of each word in each document.
+Many words, however, are not informative for many questions.
+This is especially apparent if you look at a <i>word cloud</i>,
+essentially a plot of the most frequent words in a  <i>corpus</i> (set of documents).
+</p>
+<div class='feature'><b>Vectors and a geometric interpretation of document-term matrices</b>
+  We said that a document is represented by a &ldquo;vector&rdquo; of numbers, where each number (for a document-term matrix)
+  is the frequency of a specific word in that document. This term is also seen in the name for the tokenizer <code>scikit-learn</code>:
+  a <i>vectorizer</i> or function to turn texts into vectors. \&percnt;
+  
+  The term <i>vector</i> here can be read as just a fancy word for a group of numbers.
+  In this meaning, the term is also often used in R, where a column of a data frame is called a vector,
+  and where functions that can be called on a whole vector at once are called <i>vectorized</i>. \&percnt;
+  
+  More generally, however, a vector in geometry is a point (or line from the origin) in an \(n\)-dimensional space,
+  where \(n\) is the length or dimensionality of the vector.
+  This is also a very useful interpretation for vectors in text analysis:
+  the dimensionality of the space is the number of unique words (columns) in the document-term matrix,
+  and each document is a point in that \(n\)-dimensional space.\&percnt;
+  
+  In that interpretation, various geometric distances between documents can be calculated as an indicator for how similar
+  two documents are. Techniques that reduce the number of columns in the matrix (such as clustering or topic modeling)
+  can then be seen as dimensionality reduction techniques since they turn the DTM into a matrix with lower dimensionality
+  (while hopefully retaining as much of the relevant information as possible).
+</div>
+<p>
+More formally, a document-term matrix can be seen as a representation of data points about documents:
+each document (row) is represented as a vector containing the count per word (column).
+Although it is a simplification compared to the original text,
+an unfiltered document-term matrix contains a lot of relevant information.
+For example, if a president uses the word &ldquo;terrorism&rdquo; more often than the word &ldquo;economy&rdquo;, that could be an indication of their policy priorities.
+</p>
+
+<p>
+However, there is also a lot of <i>noise</i> crowding out this <i>signal</i>:
+as seen in the word cloud in the previous section the most frequent words are generally quite uninformative.
+The same holds for words that hardly occur in any document (but still require a column to be represented)
+and noisy &ldquo;words&rdquo; such as punctuation or technical artifacts like HTML code.
+</p>
+
+<p>
+This section will discuss a number of techniques for cleaning a corpus or document-term matrix in order to minimize the amount of noise: removing stop words, cleaning punctuation and other artifacts, and trimming and weighting.
+As a running example in this section, we will use a collection of tweets from US president Donald Trump.
+Example&nbsp;<a href='#ex:trumptweets'>10.7</a> shows how to load these tweets into a data frame containing the ID and text of the tweets.
+As you can see, this dataset contains a lot of non-textual features such as hyperlinks and hash tags as well as regular punctuation and stop words.
+Before we can start analyzing this data, we need to decide on and perform multiple cleaning steps such as detailed below.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:trumptweets' name='ex:trumptweets'>Example 10.7.</a></small><br />
+Top words used in Trump Tweets</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>url = "https://cssbook.net/d/trumptweets.csv"</code>
+<code>tweets = pd.read_csv(url, </code>
+<code>    usecols=["status_id", "text"], </code>
+<code>    index_col="status_id")</code>
+<code>tweets.head()</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>url = "https://cssbook.net/d/trumptweets.csv"</code>
+<code>tweets = read_csv(url, </code>
+<code>    col_types=cols_only(text="c", status_id="c")) </code>
+<code>head(tweets)</code>
+&nbsp;  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<div class='table-wrapper'><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>text</th>
+    </tr>
+    <tr>
+      <th>status_id</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>x1864367186</th>
+      <td>Read a great interview with Donald Trump that ...</td>
+    </tr>
+    <tr>
+      <th>x9273573134835712</th>
+      <td>Congratulations to Evan Lysacek for being nomi...</td>
+    </tr>
+    <tr>
+      <th>x29014512646</th>
+      <td>I was on The View this morning. We talked abou...</td>
+    </tr>
+    <tr>
+      <th>x7483813542232064</th>
+      <td>Tomorrow night's episode of The Apprentice del...</td>
+    </tr>
+    <tr>
+      <th>x5775731054</th>
+      <td>Donald Trump Partners with TV1 on New Reality ...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div></div>
+<p>
+Please note that although tweets are perhaps overused as a source of scientific information,
+we use them here because they nicely exemplify issues around non-textual elements such as hyperlinks.
+See Chapter&nbsp;<a href='chapter12.html#12'>12</a> for information on how to use the Twitter and other APIs to collect your own data.
+</p>
+
+<h3>  <small class='text-muted'><a class='anchor' href='#10_2_1' name='10_2_1'>10.2.1.</a></small>Removing stopwords
+</h3>
+
+
+<p>
+A first step in cleaning a DTM is often <i>stop word removal</i>.
+Words such as &ldquo;a&rdquo; and &ldquo;the&rdquo; are often called stop words, i.e. words that do not tell us much about the content.
+Both <i>quanteda</i> and <code>scikit-learn</code>include built-in lists of stop words, making it very easy to remove the most common words.
+Example&nbsp;<a href='#ex:stopwords'>10.8</a> shows the result of specifying &ldquo;English&rdquo; stop words to be removed for both packages.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:stopwords' name='ex:stopwords'>Example 10.8.</a></small><br />
+Simple stop word removal</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>cv = CountVectorizer(</code>
+<code>    stop_words=stopwords.words("english"), </code>
+<code>    tokenizer=mytokenizer.tokenize)</code>
+<code>d = cv.fit_transform(tweets.text)</code>
+<code>wc = wordcloud(d, cv, background_color="white")</code>
+<code>plt.imshow(wc)</code>
+<code>plt.axis("off")</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>d = corpus(tweets) %&gt;% </code>
+<code>  tokens(remove_punct=T) %&gt;% </code>
+<code>  dfm() %&gt;%</code>
+<code>  dfm_remove(stopwords("english"))</code>
+<code>textplot_wordcloud(d, max_words=100)</code>
+<code></code>
+<code></code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>R output. Note that Python output may look slightly different</div>
+<a href='img/stopwords.r.png' title='Click to open full-size image'>
+  <img src='img/stopwords.r_thumb.png' />
+</a>
+</div></div>
+<p>
+Note, however, that it might seem easy to list words like &ldquo;a&rdquo; and &ldquo;and&rdquo;,
+but as it turns out there is no single well-defined list of stop words,
+and (as always) the best choice depends on your data and your research question.
+</p>
+
+<p>
+Linguistically, stop words are generally function words or closed word classes such as determiner or pronoun,
+with closed classes meaning that while you can coin new nouns, you can't simply invent  new determiners or prepositions.
+However, there are many different stop word lists around which make different choices and are compatible with
+different kinds of preprocessing.
+The Python word cloud in Example&nbsp;<a href='#ex:stopwords'>10.8</a> shows a nice example of the importance of matching stopwords with the used
+tokenization: a central &ldquo;word&rdquo; in the cloud is the contraction <i>'s</i>.
+We are using the NLTK tokenizer, which splits <i>'s</i> from the word it was attached to, but the <code>scikit-learn</code>stop word list
+does not include that term.
+So, it is important to make sure that the words created by the tokenization match the way that words appear in the stop word list.
+</p>
+
+<p>
+As an example of the substantive choices inherent in using a stop word lists,
+consider the word &ldquo;will&rdquo;.
+As an auxiliary verb, this is probably indeed a stop word: for most substantive questions, there is no difference
+whether you will do something or simply do it.
+However, &ldquo;will&rdquo; can also be a noun (a testament) and a name (e.g. Will Smith).
+Simply dropping such words from the corpus can be problematic; see Section&nbsp;<a href='#10_3_4'>10.3.4</a> for ways of telling nouns and verbs apart
+for more fine-grained filtering.
+</p>
+
+<p>
+Moreover, some research questions might actually be interested in certain stop words.
+If you are interested in references to the future or specific modalities,
+the word might actually be a key indicator.
+Similarly, if you are studying self-expression on Internet forums, social identity theory, or populist rhetoric,
+words like &ldquo;I&rdquo;, &ldquo;us&rdquo; and &ldquo;them&rdquo; can actually be very informative.
+</p>
+
+<p>
+For this reason, it is always a good idea to understand and inspect what stop word list you are using,
+and use a different one or customize it as needed see also <span class="cite" title="Nothman, J., Qin, H., and Yurchak, R. (2018). Stop word lists in free open-source software packages. In  Proceedings of Workshop for NLP Open Source Software (NLP-OSS), pages 7--12.">Nothman et&nbsp;al., 2018</span> .
+Example&nbsp;<a href='#ex:stopwords2'>10.9</a> shows how you can inspect and customize stop word lists.
+For more details on which lists are available and what choices these lists make,
+see the package documentation for the <i>stopwords</i> package in Python (part of NLTK) and R (part of quanteda)
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:stopwords2' name='ex:stopwords2'>Example 10.9.</a></small><br />
+Inspecting and Customizing stop word lists</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>mystopwords=["go","to"]+stopwords.words("english")</code>
+<code>print(f"{len(mystopwords)} stopwords:"</code>
+<code>      f"{', '.join(mystopwords[:5])}...")</code>
+&nbsp;
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>mystopwords = stopwords("english", </code>
+<code>                        source="snowball")</code>
+<code>mystopwords = c("go", "one", mystopwords)</code>
+<code>glue("Now {length(mystopwords)} stopwords:")</code>
+<code>mystopwords[1:5]</code>  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>181 stopwords:go, to, i, me, my...</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>Now 177 stopwords:
+[1] "go"  "one" "i"   "me"  "my"</pre>
+</div></div></div>
+<h3>  <small class='text-muted'><a class='anchor' href='#10_2_2' name='10_2_2'>10.2.2.</a></small>Removing Punctuation and Noise
+</h3>
+
+
+<p>
+Next to stop words, text often contains punctuation and other things that can be considered &ldquo;noise&rdquo; for most research questions.
+For example, it could contain emoticons or emoji, Twitter hashtags or at-mentions, or HTML tags or other annotations.
+</p>
+
+<p>
+In both Python and R, we can use regular expressions to remove (parts of) words.
+As explained above in Section&nbsp;<a href='chapter09.html#9_2'>9.2</a>, regular expressions are a powerful way to specify (sequences of) characters which are to be kept or removed.
+You can use this, for example, to remove things like punctuation, emoji, or HTML tags.
+This can be done either before or after tokenizing (splitting the text into words):
+in other words, we can clean the raw texts or the individual words (tokens).
+</p>
+
+<p>
+In general, if you only want to keep or remove certain words, it is often easiest to do so after tokenization
+using a regular expression to select the words to keep or remove.
+If you want to remove parts of words (e.g. to remove the leading &ldquo;#&rdquo; in hashtags) it is easiest to do that before tokenization,
+that is, as a preprocessing step before the tokenization.
+Similarly, if you want to remove a term that would be split by the tokenization (such as hyperlinks),
+if can be better to remove them before the tokenization occurs.
+</p>
+
+<p>
+Example&nbsp;<a href='#ex:noise'>10.10</a> shows how we can use regular expressions to remove noise in Python and R.
+For clarity, it shows the result of each step, it shows the result of each processing step on a single tweet that exemplifies many of the problems described above.
+To better understand the tokenization process, we print the tokens in that tweet separated by a vertical bar (<code>|</code>).
+As a first cleaning step, we will use a regular expression to remove hyperlinks and HTML entities like <code>&amp;amp;</code> from the untokenized texts.
+Since both hyperlinks and HTML entities are split over multiple tokens, it would be hard to remove them after tokenization.
+</p>
+<div class='code-example'><h4>
+  <small class='text-muted'><a class='anchor' href='#ex:noise' name='ex:noise'>Example 10.10.</a></small><br />
+Cleaning a single tweet at the text and token level</h4>
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>id = "x263687274812813312"</code>
+<code>one_tweet=tweets.text.values[tweets.index==id][0]</code>
+<code>print(f"Raw:\n{one_tweet}")</code>
+<code>tweet_tokens = mytokenizer.tokenize(one_tweet)</code>
+<code>print("\nTokenized:")</code>
+<code>print(" | ".join(tweet_tokens))</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>id="x263687274812813312"</code>
+<code>single_tweet = tweets$text[tweets$status_id == id]</code>
+<code>glue("Raw:\n{single_tweet}")</code>
+<code>tweet_tokens = tokens(single_tweet)</code>
+<code>glue("After tokenizing:")</code>
+<code>paste(tweet_tokens, collapse=" | ")</code>  </pre>
+</div></div><div class='code-single'><pre class='output'>Raw:
+Part 1 of my @jimmyfallon interview discussing my $5M offer to Obama, #TRUMP Tower atrium, my tweets &amp; 57th st. crane http://t.co/AvLO9Inf
+After tokenizing:
+[1] "Part | 1 | of | my | @jimmyfallon | interview | discussing | my | $ | 5M | offer | to | Obama | , | #TRUMP | Tower | atrium | , | my | tweets | & | amp | ; | 57th | st | . | crane | http://t.co/AvLO9Inf"</pre></div><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>one_tweet = re.sub(r"\bhttps?://\S*|&\w+;", "", </code>
+<code>                   one_tweet)</code>
+<code>tweet_tokens = mytokenizer.tokenize(one_tweet)</code>
+<code>print("After pre-processing:")</code>
+<code>print(" | ".join(tweet_tokens))</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>single_tweet = single_tweet  %&gt;% </code>
+<code>  str_remove_all("\\bhttps?://\\S*|&\\w+;")</code>
+<code>tweet_tokens = tokens(single_tweet)</code>
+<code>glue("After pre-processing:")</code>
+<code>paste(tweet_tokens, collapse=" | ")</code>  </pre>
+</div></div><div class='code-single'><pre class='output'>After pre-processing:
+[1] "Part | 1 | of | my | @jimmyfallon | interview | discussing | my | $ | 5M | offer | to | Obama | , | #TRUMP | Tower | atrium | , | my | tweets | 57th | st | . | crane"</pre></div><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>tweet_tokens = [t.lower() for t in tweet_tokens </code>
+<code>  if not (t.lower() in stopwords.words("english")</code>
+<code>     or regex.match(r"\P{LETTER}", t))]</code>
+<code>print("After pruning tokens:")</code>
+<code>print(" | ".join(tweet_tokens))</code>
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>tweet_tokens = tweet_tokens %&gt;%</code>
+<code>  tokens_tolower()  %&gt;% </code>
+<code>  tokens_remove(stopwords("english")) %&gt;% </code>
+<code>  tokens_keep("^\\p{LETTER}", valuetype="regex")</code>
+<code>print("After pruning tokens:")</code>
+<code>paste(tweet_tokens, collapse=" | ")</code>  </pre>
+</div></div><div class='code-single'><pre class='output'>[1] "After pruning tokens:"
+[1] "part | interview | discussing | offer | obama | tower | atrium | tweets | st | crane"</pre></div></div>
+<p>
+Regular expressions are explained fully in Section&nbsp;<a href='chapter09.html#9_2'>9.2</a>, so we will keep the explanation short:
+the bar <code>|</code> splits the pattern in two parts, i.e. it will match if it finds either of the subpatterns.
+The first pattern looks for the literal text <code>http</code>, followed by an optional <code>s</code> and the sequence <code>://</code>.
+Then, it takes all non-whitespace characters it finds, i.e. the pattern ends at the next whitespace or end of the text.
+The second pattern looks for an ampersand (<code>&amp;</code>) followed by one or more letters (<code>\\w+</code>), followed by a semicolon (<code>;</code>).
+This matches HTML escapes like <code>&amp;amp;</code> for an ampersand.
+</p>
+
+<p>
+In the next step, we process the tokenized text to remove every token that is either a stopword or does not start with a letter.
+In Python, this is done by using a list comprehension (<code>[process(item) for item in list]</code>) for tokenizing each document; and a nested list comprehension for filtering each token in each document.
+In R this is not needed as the <code>tokens_*</code> functions are <i>vectorized</i>, that is, they directly run over all the tokens.
+</p>
+
+<p>
+Comparing R and Python, we see that the different tokenization functions mean that <code>#trump</code> is removed in R (since it is a token that does not start with a letter),
+but in Python the tokenization splits the <code>#</code> from the name and the resulting token <code>trump</code> is kept.
+If we would have used a different tokenizer for Python (e.g. the <code>WhitespaceTokenizer</code>) this would have been different again.
+This underscores the importance of inspecting and understanding the results of the specific tokenizer used,
+and to make sure that subsequent steps match these tokenization choices.
+Concretely, with the <code>TreebankWordtokenizer</code> we would have had to also remove hashtags at the text level rather than the token level.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:tagcloud' name='ex:tagcloud'>Example 10.11.</a></small><br />
+Cleaning the whole corpus and making a tag cloud</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>def do_nothing(x):</code>
+<code>    return x</code>
+<code></code>
+<code>tokenized = [WhitespaceTokenizer().tokenize(text) </code>
+<code>             for text in tweets.text.values]</code>
+<code>tokens = [[t.lower() for t in tokens </code>
+<code>           if regex.match("#", t)]</code>
+<code>          for tokens in tokenized]</code>
+<code></code>
+<code>cv = CountVectorizer(tokenizer=do_nothing, </code>
+<code>                     lowercase=False)</code>
+<code>dtm_emoji = cv.fit_transform(tokens)</code>
+<code>wc = wordcloud(dtm_emoji, cv, </code>
+<code>               background_color="white")</code>
+<code>plt.imshow(wc)</code>
+<code>plt.axis("off")</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>dfm_cleaned = tweets %&gt;% </code>
+<code>  corpus() %&gt;% </code>
+<code>  tokens()  %&gt;% </code>
+<code>  tokens_keep("^#", valuetype="regex")  %&gt;% </code>
+<code>  dfm()</code>
+<code>colors = RColorBrewer::brewer.pal(8, "Dark2")</code>
+<code>textplot_wordcloud(dfm_cleaned, max_words=100, </code>
+<code>    min_size = 1, max_size=4, random_order=TRUE,</code>
+<code>    random_color= TRUE, color=colors)</code>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>R output. Note that Python output may look slightly different</div>
+<a href='img/tagcloud.r.png' title='Click to open full-size image'>
+  <img src='img/tagcloud.r_thumb.png' />
+</a>
+</div></div>
+<p>
+As a final example, Example&nbsp;<a href='#ex:tagcloud'>10.11</a> shows how to filter tokens for the whole corpus, but rather than removing hashtags it keeps only the hashtags to produce a tag cloud.
+In R, this is mostly a pipeline of <i>quanteda</i> functions to create the corpus, tokenize, keep only hashtags, and create a DFM.
+To spice up the output we use the <i>RColorBrewer</i> package to set random colors for the tags.
+In Python, you can see that we now have a nested list comprehension, where the outer loop iterates over the texts and the inner loop iterates over the tokens in each text.
+Next, we make a <code>do_nothing</code> function for the vectorizer since the results are already tokenized.
+Note that we need to disable lowercasing as otherwise it will try to call <code>.lower()</code> on the token lists.
+</p>
+<div class='feature'><b><code>lambda</code> functions in Python.</b>
+  Sometimes, we need to define a function that is very simple and that we need only once.
+  An example for such a throwaway function is <code>do_nothing</code> in Example&nbsp;<a href='#ex:tagcloud'>10.11</a>.
+  Instead of defining a reusable function with the <code>def</code> keyword and then to call it by its name when we need it later,
+  we can therefore also directly define an unnamed function when we need it with the <code>lambda</code> keyword.
+  The syntax is simple: <code>lambda argument: returnvalue</code>.
+  A function that maps a value onto itself can therefore be written as <code>lambda x: x</code>.
+  In Example&nbsp;<a href='#ex:tagcloud'>10.11</a>, instead of defining a named function,
+  we could therefore also simply write <code>v = CountVectorizer(tokenizer=lambda x: x, lowercase=False)</code>.
+  The advantages are that it saves you two lines of code here and  you don't clutter your environment with functions you do not intend to re-use anyway.
+  The disadvantage is that it may be less clear what is happening, at least for people not familiar with lambda functions.
+</div>
+<h3>  <small class='text-muted'><a class='anchor' href='#10_2_3' name='10_2_3'>10.2.3.</a></small>Trimming a DTM
+</h3>
+
+
+<p>
+The techniques above both drop terms from the DTM based on specific choices or patterns.
+It can also be beneficial to trim a DTM by removing words that occur very infrequently or overly frequently.
+For the former, the reason is that if a word only occurs in a very small percentage of documents it is unlikely to be very informative.
+Overly frequent words, for example occurring in more than half or 75&percnt; of all documents, function basically like stopwords for this corpus.
+In many cases, this can be a result of the selection strategy. If we select all tweets containing &ldquo;Trump&rdquo;, the word Trump itself is no longer informative about their content.
+It can also be that some words are used as standard phrases, for example &ldquo;fellow Americans&rdquo; in state of the union speeches.
+If every president in the corpus uses those terms, they are no longer informative about differences between presidents.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:trimming' name='ex:trimming'>Example 10.12.</a></small><br />
+Trimming a Document-Term Matrix</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>print(f"# of words before trimming: {d.shape[1]}")</code>
+<code>cv_trim = CountVectorizer(</code>
+<code>    stop_words=stopwords.words("english"),</code>
+<code>    tokenizer=mytokenizer.tokenize, </code>
+<code>    max_df=0.75, min_df=0.005)</code>
+<code>d_trim = cv_trim.fit_transform(tweets.text)</code>
+<code>print(f"  after trimming: {d_trim.shape[1]}")</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>glue("# of words before trimming: {ncol(d)}")</code>
+<code>d_trim = dfm_trim(d, min_docfreq = 0.005, </code>
+<code>                  max_docfreq = 0.75,</code>
+<code>                  docfreq_type = "prop")</code>
+<code>glue("# of word after trimming: {ncol(d_trim)}")</code>
+<code></code>
+&nbsp;  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'># of words before trimming: 45912
+  after trimming: 294</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'># of words before trimming: 44386
+# of word after trimming: 301</pre>
+</div></div></div>
+<p>
+Example&nbsp;<a href='#ex:trimming'>10.12</a> shows how you can use the <i>relative document frequency</i> to trim a DTM in Python and R.
+We keep only words with a document frequency of between 0.5&percnt; and 75&percnt;.
+</p>
+
+<p>
+Although these are reasonable numbers every choice depends on the corpus and the research question, so it can be a good idea to check which words are dropped.
+</p>
+
+<p>
+Note that dropping words that occur almost never should normally not influence the results that much, since those words do not occur anyway.
+However, trimming a DTM to e.g. at least 1&percnt; document frequency often radically reduces the number of words (columns) in the DTM.
+Since many algorithms have to assign weights or parameters to each word, this can provide a significant improvement in computing speed or memory use.
+</p>
+
+<h3>  <small class='text-muted'><a class='anchor' href='#10_2_4' name='10_2_4'>10.2.4.</a></small>Weighting a DTM
+</h3>
+
+
+<p>
+The DTMs created above all use the raw frequencies as cell values.
+It can also be useful to weight the words so more informative words have a higher weight than less informative ones.
+A common technique for this is <i>tf\(\cdot\)idf</i> weighting.
+This stands for <i>term frequency \(\cdot\) inverse document frequency</i> and weights each occurrence by its raw frequency (term frequency) corrected for how often it occurs in all documents (inverse document frequency). In a formula, the most common implementation of this weight is given as follows:
+</p>
+
+<p>
+\(tf\cdot idf(t,d)=tf(t,d)\cdot idf(t)=f_{t,d}\cdot -\log \frac{n_t}{N}\)
+</p>
+
+<p>
+Where \(f_{t,d}\) is the frequency of term \(t\) in document \(d\), \(N\) is the total number of documents, and \(n_t\) is the number of documents in which term \(t\) occurs. In other words, the term frequency is weighted by the negative log of the fraction of documents in which that term occurs. Since \(\log(1)\) is zero, terms that occur in every document are disregarded, and in general the less frequent a term is, the higher the weight will be.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:tfidf' name='ex:tfidf'>Example 10.13.</a></small><br />
+Tf\(\cdot\)Idf weighting</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>tfidf_vectorizer = TfidfVectorizer(</code>
+<code>    tokenizer=mytokenizer.tokenize, </code>
+<code>    sublinear_tf=True)</code>
+<code>d_w = tfidf_vectorizer.fit_transform(sotu["text"])</code>
+<code>indices = [tfidf_vectorizer.vocabulary_[x] </code>
+<code>  for x in ["the","for","them","submit","sizes"]]</code>
+<code>d_w[[[0], [25], [50], [75]], indices].todense()</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>d_tf = corpus(sotu) %&gt;% </code>
+<code>  tokens() %&gt;% </code>
+<code>  dfm() %&gt;% </code>
+<code>  dfm_tfidf(scheme_tf="prop", smoothing=1)</code>
+<code>as.matrix(</code>
+<code>  d_tf[c(3, 25, 50, 75),</code>
+<code>       c("the","first","investment","defrauded")])</code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>R output. Note that Python output may look slightly different</div>
+<div class='table-wrapper'><table class="dataframe">
+<caption>A matrix: 4 × 4 of type dbl</caption>
+<thead>
+	<tr><th></th><th scope=col>the</th><th scope=col>first</th><th scope=col>investment</th><th scope=col>defrauded</th></tr>
+</thead>
+<tbody>
+	<tr><th scope=row>1946 Truman written</th><td>0.02084698</td><td>0.0002080106</td><td>1.103379e-04</td><td>0</td></tr>
+	<tr><th scope=row>1965 Johnson spoken</th><td>0.01746801</td><td>0.0008790725</td><td>0.000000e+00</td><td>0</td></tr>
+	<tr><th scope=row>1984 Reagan spoken</th><td>0.01132996</td><td>0.0004411759</td><td>6.825554e-05</td><td>0</td></tr>
+	<tr><th scope=row>2009 Obama spoken</th><td>0.01208793</td><td>0.0003657038</td><td>2.263162e-04</td><td>0</td></tr>
+</tbody>
+</table>
+</div>
+</div></div>
+<p>
+tf\(\cdot\)idf weighting is a fairly common technique and can improve the results of subsequent analyses such as supervised machine learning.
+As such, it is no surprise that it is easy to apply this in both Python and R, as shown in Example&nbsp;<a href='#ex:tfidf'>10.13</a>.
+This example uses the same data as Example&nbsp;<a href='#ex:sotu'>10.4</a> above, so you can compare the resulting weighted values with the results reported there.
+As you can see, the tf\(\cdot\)idf weighting in both languages have roughly the same effect:
+very frequent terms such as <i>the</i> are made less important compared to less frequent words such as <i>submit</i>.
+For example, in the raw frequencies for the 1965 Johnson speech, <i>the</i> occurred 355 times compared to <i>submit</i> only once.
+In the weighted matrix, the weight for <i>submit</i> is four times as low as the weight for <i>the</i>.
+</p>
+
+<p>
+There are two more things to note if you compare the examples from R and Python.
+First, to make the two cases somewhat comparable we have to use two options for R, namely to set the term frequency to proportional (<code>scheme_tf=&#39;prop&#39;</code>),
+and to add smoothing to the document frequencies (<code>smooth=1</code>).
+Without those options, the counts for the first columns would all be zero (since they occur in all documents, and \(\log \frac{85}{85}=0\)),
+and the other counts would be greater than one since they would only be weighted, not normalized.
+</p>
+
+<p>
+Even with those options the results are still different (in details if not in proportions),
+mainly because R normalizes the frequencies before weighting, while Python normalizes after the weighting.
+Moreover, Python by default uses L2 normalization, meaning that the length of the document vectors will be one,
+while R uses L1 normalization, that is, the row sums are one (before weighting).
+Both R and Python have various parameters to control these choices which are explained in their respective help pages.
+However, although the differences in absolute values look large, the relative effect of making more frequent terms less important is the same,
+and the specific weighting scheme and options will probably not matter that much for the final results.
+However, it is always good to be aware of the specific options available and try out which work best for your specific research question.
+</p>
+
+<h2>  <small class='text-muted'><a class='anchor' href='#10_3' name='10_3'>10.3.</a></small>Advanced Representation of Text
+</h2>
+
+
+<p>
+The examples above all created document-term matrices where each column actually represents a word.
+There is more information in a text, however, than pure word counts.
+The phrases: <i>the movie was not good, it was in fact quite bad</i> and <i>the movie was not bad, in fact it was quite good</i>
+have exactly the same word frequencies, but are quite different in meaning.
+Similarly, <i>the new kings of York</i> and <i>the kings of New York</i> refer to very different people.
+</p>
+
+<p>
+Of course, in the end which aspect of the meaning of a text is important depends on your research question:
+if you want to know the sentiment about the movie, it is important to take a word like &ldquo;not&rdquo; into account;
+but if you are interested in the topic or genre of the review, or the extremity of the language used, this might not be relevant.
+</p>
+
+<p>
+The core idea of this section is that in many cases this information can be captured in a DTM by having the columns represent different information than just words, for example word combinations or groups of related words.
+This is often called <i>feature engineering</i>, as we are using our domain expertise to find the right features (columns, independent variables) to capture the relevant meaning for our research question.
+If we are using other columns than words it is also technically more correct to use the name <i>document-feature matrix</i>, as <i>quanteda</i> does, but we will stick to the most common name here and simply continue using the name DTM.
+</p>
+
+<h3>  <small class='text-muted'><a class='anchor' href='#10_3_1' name='10_3_1'>10.3.1.</a></small>\(n\)-grams
+</h3>
+
+
+<p>
+The first feature we will discuss are n-grams.
+The simplest case is a bigram (or 2-gram), where each feature is a pair of adjacent words.
+The example used above, <i>the movie was not bad</i>, will yield the following bigrams: <i>the-movie</i>, <i>movie-was</i>, <i>was-not</i>, and <i>not-bad</i>.
+Each of those bigrams is then treated as a feature, that is, a DTM would contain one column for each word pair.
+</p>
+
+<p>
+As you can see in this example, we can now see the difference between <i>not-bad</i> and <i>not-good</i>.
+The downside of using n-grams is that there are many more unique word pairs than unique words,
+so the resulting DTM will have many more columns.
+Moreover, there is a bigger <i>data scarcity problem</i>, as each of those pairs will be less frequent,
+making it more difficult to find sufficient examples of each to generalize over.
+</p>
+
+<p>
+Although bigrams are the most frequent use case, trigrams (3-grams) and (rarely) higher-order n-grams can also be used.
+As you can imagine, this will create even bigger DTMs and worse data scarcity problems,
+so even more attention must be paid to feature selection and/or trimming.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:ngram' name='ex:ngram'>Example 10.14.</a></small><br />
+Generating n-grams</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>cv = CountVectorizer(ngram_range=(1,3), </code>
+<code>    tokenizer=mytokenizer.tokenize)</code>
+<code>cv.fit_transform(["This is a test"])</code>
+<code>cv.get_feature_names()</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>text = "This is a test"</code>
+<code>tokens(text) %&gt;% </code>
+<code>  tokens_tolower() %&gt;% </code>
+<code>  tokens_ngrams(1:3)</code>  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>['a',
+ 'a test',
+ 'is',
+ 'is a',
+ 'is a test',
+ 'test',
+ 'this',
+ 'this is',
+ 'this is a']</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>Tokens consisting of 1 document.
+text1 :
+[1] "this"      "is"        "a"         "test"      "this_is"   "is_a"
+[7] "a_test"    "this_is_a" "is_a_test"</pre>
+</div></div></div>
+<p>
+Example&nbsp;<a href='#ex:ngram'>10.14</a> shows how n-grams can be created and used in Python and R.
+In Python, you can pass the <code>ngram_range=(n, m)</code> option to the vectorizer,
+while R has a <code>tokens_ngrams(n:m)</code> function.
+Both will post-process the tokens to create all n-grams in the range of n to m.
+In this example, we are asking for unigrams (i.e., the words themselves), bigrams and trigrams of a simple example sentence.
+Both languages produce the same output, with R separating the words with an underscore while Python uses a simple space.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:ngram2' name='ex:ngram2'>Example 10.15.</a></small><br />
+Words and bigrams containing &ldquo;government&rdquo;</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>cv = CountVectorizer(ngram_range=(1,2), </code>
+<code>    tokenizer=mytokenizer.tokenize, </code>
+<code>    stop_words="english")</code>
+<code>dfm = cv.fit_transform(sotu.text.values)</code>
+<code>ts = termstats(dfm, cv)</code>
+<code>ts.filter(like="government", axis=0).head(10)</code>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>sotu_tokens = corpus(sotu) %&gt;% </code>
+<code>  tokens(remove_punct=T)  %&gt;%  </code>
+<code>  tokens_remove(stopwords("english")) %&gt;% </code>
+<code>  tokens_tolower()</code>
+<code>dfm_bigram = sotu_tokens %&gt;% </code>
+<code>  tokens_ngrams(1:2) %&gt;% </code>
+<code>  dfm()</code>
+<code>textstat_frequency(dfm_bigram) %&gt;% </code>
+<code>  filter(str_detect(feature, "government")) %&gt;%</code>
+<code>  head(12)</code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>R output. Note that Python output may look slightly different</div>
+<div class='table-wrapper'><table class="dataframe">
+<caption>A frequency: 12 × 5</caption>
+<thead>
+	<tr><th></th><th scope=col>feature</th><th scope=col>frequency</th><th scope=col>rank</th><th scope=col>docfreq</th><th scope=col>group</th></tr>
+	<tr><th></th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;chr&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><th scope=row>10</th><td>government         </td><td>1424</td><td>  10</td><td>84</td><td>all</td></tr>
+	<tr><th scope=row>198</th><td>federal_government </td><td> 265</td><td> 198</td><td>56</td><td>all</td></tr>
+	<tr><th scope=row>319</th><td>governments        </td><td> 188</td><td> 318</td><td>50</td><td>all</td></tr>
+	<tr><th scope=row>652</th><td>local_governments  </td><td> 104</td><td> 648</td><td>28</td><td>all</td></tr>
+	<tr><th scope=row>980</th><td>government's       </td><td>  71</td><td> 972</td><td>25</td><td>all</td></tr>
+	<tr><th scope=row>1212</th><td>government_must    </td><td>  55</td><td>1195</td><td>28</td><td>all</td></tr>
+	<tr><th scope=row>1455</th><td>government_can     </td><td>  44</td><td>1433</td><td>26</td><td>all</td></tr>
+	<tr><th scope=row>1539</th><td>governmental       </td><td>  41</td><td>1537</td><td>19</td><td>all</td></tr>
+	<tr><th scope=row>1956</th><td>local_government   </td><td>  32</td><td>1919</td><td>16</td><td>all</td></tr>
+	<tr><th scope=row>2186</th><td>government_spending</td><td>  28</td><td>2135</td><td>19</td><td>all</td></tr>
+	<tr><th scope=row>2301</th><td>self-government    </td><td>  26</td><td>2259</td><td>20</td><td>all</td></tr>
+	<tr><th scope=row>2690</th><td>government_programs</td><td>  22</td><td>2589</td><td>17</td><td>all</td></tr>
+</tbody>
+</table>
+</div>
+</div></div>
+<p>
+Example&nbsp;<a href='#ex:ngram2'>10.15</a> shows how you can generate n-grams for a whole corpus.
+In this case, we create a DTM of the state of the union matrix with all bigrams included.
+A glance at the frequency table for all words containing <i>government</i> shows that,
+besides the word itself and its plural and possessive forms, the bigrams include compound words (federal and local government),
+phrases with  the government as subject (the government can and must), and nouns for which the government is an adjective
+(government spending and government programs).
+</p>
+
+<p>
+You can imagine that including all these words as features will add many possibilities for analysis of the DTM
+which would not be possible in a normal bag-of-words approach.
+The terms local and federal government can be quite important to understand policy positions,
+but for e.g. sentiment analysis a bigram like <i>not good</i> would also be insightful
+(but make sure &ldquo;not&rdquo; is not on your stop word list!).
+</p>
+
+<h3>  <small class='text-muted'><a class='anchor' href='#10_3_2' name='10_3_2'>10.3.2.</a></small>Collocations
+</h3>
+
+
+<p>
+A special case of n-grams are collocations.
+In the strict corpus linguistic sense of the word, collocations are pairs of words that occur more frequently than expected
+based on their underlying occurrence.
+For example, the phrase <i>crystal clear</i> presumably occurs much more often than would be expected by chance given
+how often <i>crystal</i> and <i>clear</i> occur separately.
+Collocations are important for text analysis since they often have a specific meaning,
+for example because they refer to names such as <i>New York</i> or disambiguate a term like <i>sound</i> in <i>sound asleep</i>,
+a <i>sound proposal</i>, or <i>loud sound</i>.
+</p>
+
+<p>
+Example&nbsp;<a href='#ex:colloc'>10.16</a> shows how to identify the most &ldquo;surprising&rdquo; collocations using R and Python.
+For Python, we use the <i>gensim</i> package which we will also use for topic modeling in Section&nbsp;<a href='chapter11.html#11_5'>11.5</a>.
+This package has a <code>Phrases</code> class which can identify the bigrams in a list of tokens.
+In R, we use the <code>textstat_collocations</code> function from <i>quanteda</i>.
+These packages each use a different implementation: <i>gensim</i> uses pointwise mutual information,
+i.e. how much information about finding the second word does seeing the first word give you?
+Quanteda estimates an interaction parameter in a loglinear model.
+Nonetheless, both methods give very similar results, with Saddam Hussein, the Iron Curtain, Al Qaida, and red tape topping the list for each.
+</p>
+<div class='code-example'><h4>
+  <small class='text-muted'><a class='anchor' href='#ex:colloc' name='ex:colloc'>Example 10.16.</a></small><br />
+Identifying and applying collocations in the US State of the Union.</h4>
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>tokenized_texts = [mytokenizer.tokenize(t) </code>
+<code>                   for t in sotu.text]</code>
+<code>tokens = [[t.lower() for t in tokens </code>
+<code>           if not regex.search("\P{letter}", t) ]</code>
+<code>           for tokens in tokenized_texts]</code>
+<code>phrases_model = Phrases(tokens, min_count=10, </code>
+<code>            scoring="npmi", threshold=.5)</code>
+<code>score_dict = phrases_model.export_phrases()</code>
+<code>scores = pd.DataFrame(score_dict.items(), </code>
+<code>                      columns=["phrase", "score"])</code>
+<code>scores.sort_values("score",ascending=False).head()</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>sotu_tokens = corpus(sotu)  %&gt;% </code>
+<code>  tokens(remove_punct=T) %&gt;% </code>
+<code>  tokens_tolower()</code>
+<code></code>
+<code>colloc = sotu_tokens %&gt;% </code>
+<code>  textstat_collocations(min_count=10) %&gt;% </code>
+<code>  as_tibble() </code>
+<code></code>
+<code></code>
+<code>colloc %&gt;% arrange(-lambda)  %&gt;% head()</code>
+&nbsp;  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>R output. Note that Python output may look slightly different</div>
+<div class='table-wrapper'><table class="dataframe">
+<caption>A tibble: 6 × 6</caption>
+<thead>
+	<tr><th scope=col>collocation</th><th scope=col>count</th><th scope=col>count_nested</th><th scope=col>length</th><th scope=col>lambda</th><th scope=col>z</th></tr>
+	<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>saddam hussein</td><td>26</td><td>0</td><td>2</td><td>15.24282</td><td>10.344950</td></tr>
+	<tr><td>iron curtain  </td><td>11</td><td>0</td><td>2</td><td>15.17020</td><td> 9.848551</td></tr>
+	<tr><td>al qaida      </td><td>37</td><td>0</td><td>2</td><td>14.58446</td><td>10.123583</td></tr>
+	<tr><td>red tape      </td><td>22</td><td>0</td><td>2</td><td>13.46975</td><td>15.143993</td></tr>
+	<tr><td>persian gulf  </td><td>31</td><td>0</td><td>2</td><td>12.90333</td><td>18.512806</td></tr>
+	<tr><td>line-item veto</td><td>10</td><td>0</td><td>2</td><td>12.85070</td><td> 8.813416</td></tr>
+</tbody>
+</table>
+</div>
+</div><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>from gensim.models.phrases import Phraser</code>
+<code>phraser = Phraser(phrases_model)</code>
+<code>tokens_phrases = [phraser[doc] for doc in tokens]</code>
+<code>cv = CountVectorizer(tokenizer=lambda x: x, </code>
+<code>                     lowercase=False)</code>
+<code>dtm = cv.fit_transform(tokens_phrases)</code>
+<code>termstats(dtm, cv).filter(like="hussein", axis=0)</code>
+<code></code>
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>collocations = colloc  %&gt;% </code>
+<code>  filter(lambda &gt; 8)  %&gt;%  </code>
+<code>  pull(collocation)  %&gt;%  </code>
+<code>  phrase()</code>
+<code>dfm = sotu_tokens %&gt;% </code>
+<code>  tokens_compound(collocations) %&gt;% </code>
+<code>  dfm()</code>
+<code>textstat_frequency(dfm) %&gt;% </code>
+<code>  filter(str_detect(feature, "hussein"))</code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>R output. Note that Python output may look slightly different</div>
+<div class='table-wrapper'><table class="dataframe">
+<caption>A frequency: 2 × 5</caption>
+<thead>
+	<tr><th></th><th scope=col>feature</th><th scope=col>frequency</th><th scope=col>rank</th><th scope=col>docfreq</th><th scope=col>group</th></tr>
+	<tr><th></th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;dbl&gt;</th><th scope=col>&lt;chr&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><th scope=row>2186</th><td>saddam_hussein</td><td>26</td><td>2120</td><td>5</td><td>all</td></tr>
+	<tr><th scope=row>8529</th><td>hussein's     </td><td> 3</td><td>7341</td><td>2</td><td>all</td></tr>
+</tbody>
+</table>
+</div>
+</div></div>
+<p>
+The next block demonstrates how to use these collocations in further processing.
+In R, we filter the collocations list on \(lambda>8\) and use the <code>tokens_compound</code> function to compound bigrams from that list.
+As you can see in the term frequencies filtered on &ldquo;Hussein&rdquo;, the regular terms (apart from the possessive) are removed and the compounded term now has 26 occurrences.
+For Python, we use the <code>PhraseTransformer</code> class, which is an adaptation of the <code>Phrases</code> class to the <code>scikit-learn</code>methodology.
+After setting a standard threshold of 0.7, we can use <code>fit_transform</code> to change the tokens.
+The term statistics again show how the individual terms are now replaced by their compound.
+</p>
+
+<h3>  <small class='text-muted'><a class='anchor' href='#10_3_3' name='10_3_3'>10.3.3.</a></small>Word Embeddings
+</h3>
+
+
+<p>
+A recent addition to the text analysis toolbox are <i>word embeddings</i>.
+Although it is beyond the scope of this book to give a full explanation of the algorithms behind word embeddings,
+they are relatively easy to understand and use at an intuitive level.
+</p>
+
+<p>
+The first core idea behind word embeddings is that the meaning of a word can be expressed using a relatively small <i>embedding vector</i>, generally consisting of around 300 numbers which can be interpreted as dimensions of meaning.
+The second core idea is that these embedding vectors can be derived by scanning the context of each word in millions and millions of documents.
+</p>
+
+<p>
+These embedding vectors can then be used as features or DTM columns for further analysis.
+Using embedding vectors instead of word frequencies has the advantages of strongly reducing the dimensionality of the DTM:
+instead of (tens of) thousands of columns for each unique word we only need hundreds of columns for the embedding vectors.
+This means that further processing can be more efficient as fewer parameters need to be fit,
+or conversely that more complicated models can be used without blowing up the parameter space.
+Another advantage is that a model can also give a result for words it never saw before, as these words most likely will have an embedding vector and so can be fed into the model.
+Finally, since words with similar meanings should have similar vectors,
+a model fit on embedding vectors gets a &ldquo;head start&rdquo; since the vectors for words like &ldquo;great&rdquo; and &ldquo;fantastic&rdquo; will already be relatively close to each other, while all columns in a normal DTM are treated independently.
+</p>
+
+<p>
+The assumption that words with similar meanings have similar vectors can also be used directly to extract synonyms.
+This can be very useful, for example for (semi-)automatically expanding a dictionary for a concept.
+Example&nbsp;<a href='#ex:embedding'>10.17</a> shows how to download and use pre-trained embedding vectors to extract synonyms.
+First, we download a very small subset of the pre-trained Glove embedding vectors<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 1" data-bs-content="The full embedding models can be downloaded from https://nlp.stanford.edu/projects/glove/. To make the file easier to download, we took only the 10000 most frequent words of the smallest embeddings file (the 50 dimension version of the 6B tokens model). For serious applications you probably want to download the larger files, in our experience the 300 dimension version usually gives good results. Note that the files on that site are in a slightly different format which lacks the initial header line, so if you want to use other vectors for the examples here you can convert them with the <code>glove2word2vec</code> function in the <i>gensim</i> package. For R, you can also simply omit the <code>skip=1</code> argument as apart from the header line the formats are identical.">[1]</a>,
+wrapping the download call in a condition to only download it when needed.
+</p>
+
+<p>
+Then, for Python, we use the excellent support from the <i>gensim</i> package to load the embeddings into a <code>KeyedVectors</code> object.
+Although not needed for the rest of the example, we create a <em>Pandas</em> data frame from the internal embedding values so the internal structure becomes clear: each row is a word, and the columns (in this case 50) are the different (semantic) dimensions that characterize that word according to the embeddings model.
+This data frame is sorted on the first dimension, which shows that negative values on that dimension are related to various sports.
+Next, we switch back to the <code>KeyedVectors</code> object to get the most similar words to the word <i>fraud</i>, which is apparently related to similar words like <i>bribery</i> and <i>corruption</i> but also to words like <i>charges</i> and <i>alleged</i>.
+These similarities are a good way to (semi-)automatically expand a dictionary: start from a small list of words,
+find all words that are similar to those words, and if needed manually curate that list.
+Finally, we use the embeddings to solve the &ldquo;analogies&rdquo; that famously showcase the geometric nature of these vectors:
+if you take the vector for <i>king</i>, subtract the vector for <i>man</i> and add that for <i>woman</i>,
+the closest word to the resulting vector is <i>queen</i>.
+Amusingly, it turns out that soccer is a female form of football, probably showing the American cultural origin of the source material.
+</p>
+
+<p>
+For R, there was less support from existing packages so we decided to use the opportunity to show both the conceptual simplicity of embeddings vectors and the power of matrix manipulation in R.
+Thus, we directly read in the word vector file which has a head line and then on each line a word followed by its 50 values.
+This is converted to a matrix with the row names showing the word,
+which we normalize to (Euclidean) length of one for each vector for easier processing.
+To determine similarity, we take the cosine distance between the vector representing a word with all other words in the matrix.
+As you might remember from algebra, the cosine distance is the dot product between the vectors normalized to have length one
+(just like Pearson's product&ndash;moment correlation is the dot product between the vectors normalized to z-scores per dimension).
+Thus, we can simply multiply the normalized target vector with the normalized matrix to get the similarity scores.
+These are then sorted, renamed, and the top values are taken using the basic functions from Chapter&nbsp;<a href='chapter06.html#6'>6</a>.
+Finally, analogies are solved by simply adding and subtracting the vectors as explained above, and then listing the closest words to the resulting vector
+(excluding the words in the analogy itself).
+</p>
+<div class='code-example'><h4>
+  <small class='text-muted'><a class='anchor' href='#ex:embedding' name='ex:embedding'>Example 10.17.</a></small><br />
+Using word embeddings for finding similar and analogous words.</h4>
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>glove_fn = "glove.6B.50d.10k.w2v.txt"</code>
+<code>url = f"https://cssbook.net/d/{glove_fn}"</code>
+<code>if not os.path.exists(glove_fn):</code>
+<code>      urllib.request.urlretrieve (url, glove_fn)</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>glove_fn = "glove.6B.50d.10k.w2v.txt"</code>
+<code>url = glue("https://cssbook.net/d/{glove_fn}")</code>
+<code>if (!file.exists(glove_fn)) </code>
+<code>    download.file(url, glove_fn)</code>  </pre>
+</div></div><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>wv = KeyedVectors.load_word2vec_format(glove_fn)</code>
+<code>wvdf = pd.DataFrame(wv.vectors, </code>
+<code>                    index=wv.index_to_key)</code>
+<code>wvdf.sort_values(0, ascending=False).head()</code>
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>wv_tibble = read_delim(glove_fn, skip=1,</code>
+<code>                       delim=" ", quote="", </code>
+<code>    col_names = c("word", paste0("d", 1:50)))</code>
+<code>wv = as.matrix(wv_tibble[-1])</code>
+<code>rownames(wv) = wv_tibble$word</code>
+<code>wv = wv / sqrt(rowSums(wv^2))</code>
+<code>wv[order(wv[,1])[1:5], 1:5]</code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>R output. Note that Python output may look slightly different</div>
+<div class='table-wrapper'><table class="dataframe">
+<caption>A matrix: 5 × 5 of type dbl</caption>
+<thead>
+	<tr><th></th><th scope=col>d1</th><th scope=col>d2</th><th scope=col>d3</th><th scope=col>d4</th><th scope=col>d5</th></tr>
+</thead>
+<tbody>
+	<tr><th scope=row>20003</th><td>-0.4402265</td><td>0.07209431</td><td>-0.02397687</td><td>0.18428984</td><td> 0.001802660</td></tr>
+	<tr><th scope=row>basketball</th><td>-0.4234652</td><td>0.23817458</td><td>-0.09346347</td><td>0.17270343</td><td>-0.001520135</td></tr>
+	<tr><th scope=row>collegiate</th><td>-0.4232457</td><td>0.23873925</td><td>-0.28741579</td><td>0.02797958</td><td>-0.066008001</td></tr>
+	<tr><th scope=row>volleyball</th><td>-0.4217268</td><td>0.18378662</td><td>-0.26229465</td><td>0.31409226</td><td>-0.124286069</td></tr>
+	<tr><th scope=row>ncaa</th><td>-0.4131240</td><td>0.14502199</td><td>-0.06088206</td><td>0.17017979</td><td>-0.157397324</td></tr>
+</tbody>
+</table>
+</div>
+</div><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>wv.most_similar("fraud")</code>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>wvector = function(wv, word) wv[word,,drop=F]</code>
+<code>wv_similar = function(wv, target, n=5) {</code>
+<code>  similarities = wv %*% t(target)</code>
+<code>  similarities %&gt;% </code>
+<code>    as_tibble(rownames = "word") %&gt;% </code>
+<code>    rename(similarity=2) %&gt;% </code>
+<code>    arrange(-similarity) %&gt;% </code>
+<code>    head(n=n)  </code>
+<code>}</code>
+<code>wv_similar(wv, wvector(wv, "fraud"))</code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>R output. Note that Python output may look slightly different</div>
+<div class='table-wrapper'><table class="dataframe">
+<caption>A tibble: 5 × 2</caption>
+<thead>
+	<tr><th scope=col>word</th><th scope=col>similarity</th></tr>
+	<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;dbl&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>fraud     </td><td>1.0000000</td></tr>
+	<tr><td>charges   </td><td>0.8591152</td></tr>
+	<tr><td>bribery   </td><td>0.8559850</td></tr>
+	<tr><td>alleged   </td><td>0.8415063</td></tr>
+	<tr><td>corruption</td><td>0.8299386</td></tr>
+</tbody>
+</table>
+</div>
+</div><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>def analogy(a, b, c):</code>
+<code>    result = wv.most_similar(positive=[b, c], </code>
+<code>                             negative=[a])</code>
+<code>    return result[0][0]</code>
+<code></code>
+<code>words = ["king","boy","father","pete","football"]</code>
+<code>for x in words:</code>
+<code>    y = analogy("man", x, "woman")</code>
+<code>    print(f"Man is to {x} as woman is to {y}")</code>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>wv_analogy = function(wv, a, b, c) {</code>
+<code>  result = (wvector(wv, b) </code>
+<code>            + wvector(wv, c) </code>
+<code>            - wvector(wv, a))</code>
+<code>  matches = wv_similar(wv, result) %&gt;% </code>
+<code>    filter(!word %in% c(a,b,c))</code>
+<code>  matches$word[1]</code>
+<code>}</code>
+<code>words=c("king","boy","father","pete","football")</code>
+<code>for (x in words) {</code>
+<code>  y = wv_analogy(wv, "man", x, "woman")</code>
+<code>  print(glue("Man is to {x} as woman is to: {y}"))</code>
+<code>}</code>  </pre>
+</div></div><div class='code-single'><pre class='output'>Man is to king as woman is to: queen
+Man is to boy as woman is to: girl
+Man is to father as woman is to: mother
+Man is to pete as woman is to: barbara
+Man is to football as woman is to: soccer</pre></div></div>
+<h3>  <small class='text-muted'><a class='anchor' href='#10_3_4' name='10_3_4'>10.3.4.</a></small>Linguistic Preprocessing
+</h3>
+
+
+<p>
+A final technique to be discussed here is the use of linguistic preprocessing steps to enrich and filter a DTM.
+So far, all techniques discussed here are language independent.
+However, there are also many language-specific tools for automatically enriching text developed by computational linguistics communities around the world.
+Two techniques will be discussed here as they are relatively widely available for many languages and easy and quick to apply: <i>Part-of-speech tagging</i> and <i>lemmatizing</i>.
+</p>
+
+<p>
+In <i>part-of-speech tagging</i> or POS-tagging, each word is enriched with information on its function in the sentence: verb, noun, determiner etc.
+For most languages, this can be determined with very high accuracy, although sometimes text can be ambiguous:
+in one famous example, the word flies in <i>fruit flies</i> is generally a noun (fruit flies are a type of fly), but it can also be a verb (if fruit could fly).
+Although there are different sets of POS tags used by different tools, there is broad agreement on the core set of tags listed in Table&nbsp;<a href='#tab:postags'>10.1</a>.
+</p>
+<div class='figure'><h4>
+  <small class='text-muted'><a class='anchor' href='#tab:postags' name='tab:postags'>Table 10.1.</a></small><br />
+Overview of part-of-speech (POS) tags.</h4>
+<table class='table'><thead>
+  <tr>
+    <th>
+
+    Part of speech 
+    </th>
+    <th>
+ Example 
+    </th>
+    <th>
+ UDPipe/Spacy Tag 
+    </th>
+    <th>
+ Penn Treebank Tag 
+    </th>
+
+  </tr>
+</thead><tbody>
+  <tr>
+    <td>
+
+    Noun            
+    </td>
+    <td>
+ apple 
+    </td>
+    <td>
+ NOUN 
+    </td>
+    <td>
+ NN, NNS 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    Proper Name     
+    </td>
+    <td>
+ Carlos 
+    </td>
+    <td>
+ PROPN 
+    </td>
+    <td>
+ NNP 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    Verb            
+    </td>
+    <td>
+ write 
+    </td>
+    <td>
+ VERB 
+    </td>
+    <td>
+ VB, VBD, VBP, .. 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    Auxiliary verb 
+    </td>
+    <td>
+ be, have 
+    </td>
+    <td>
+ AUX 
+    </td>
+    <td>
+ (same as verb) 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    Adjective       
+    </td>
+    <td>
+ quick 
+    </td>
+    <td>
+ ADJ 
+    </td>
+    <td>
+ JJ, JJR, JJS 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    Adverb          
+    </td>
+    <td>
+ quickly 
+    </td>
+    <td>
+ ADV 
+    </td>
+    <td>
+ RB 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    Pronoun         
+    </td>
+    <td>
+ I, him  
+    </td>
+    <td>
+ PRON 
+    </td>
+    <td>
+ PRP 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    Adposition      
+    </td>
+    <td>
+ of, in  
+    </td>
+    <td>
+ ADP 
+    </td>
+    <td>
+ IN 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    Determiner      
+    </td>
+    <td>
+ the, a 
+    </td>
+    <td>
+ DET 
+    </td>
+    <td>
+ DT 
+    </td>
+
+  </tr>
+</tbody>
+</table></div>
+<p>
+POS tags are useful since they allow us for example to analyze only the <em>nouns</em> if we care about the things that are discussed, only the <em>verbs</em> if we care about actions that are described, or only the <em>adjectives</em> if we care about the characteristics given to a noun.
+Moreover, knowing the POS tag of a word can help disambiguate it.
+For example, like as a verb (I like books) is generally positive, but like as a preposition (a day like no other) has no clear sentiment attached.
+</p>
+
+<p>
+<i>Lemmatizing</i> is a technique for reducing each word to its root or <i>lemma</i> (plural: lemmata).
+For example, the lemma of the verb <i>reads</i> is (to) <i>read</i> and the lemma of the noun <i>books</i> is <i>book</i>.
+Lemmatizing is useful since for most of our research questions we do not care about these different conjugations of the same word.
+By lemmatizing the texts, we do not need to include all conjugations in a dictionary,
+and it reduces the dimensionality of the DTM &ndash; and thus also the data scarcity.
+</p>
+
+<p>
+Note that lemmatizing is related to a technique called <i>stemming</i>, which removes known suffixes (endings) from words.
+For example, for English it will remove the &ldquo;s&rdquo; from both reads and books.
+Stemming is much less sophisticated than lemmatizing, however, and will trip over irregular conjugations
+(e.g. <i>are</i> as a form of to be) and regular word endings that look like conjugations (e.g. <i>virus</i> will be stemmed to <i>viru</i>).
+English has relatively simple conjugations and stemming can produce adequate results.
+For morphologically richer languages such as German or French, however, it is strongly advised to use lemmatizing instead of stemming.
+Even for English we would generally advise lemmatization since it is so easy nowadays and will yield better results than stemming.
+</p>
+
+<p>
+For Example&nbsp;<a href='#ex:udpipe'>10.18</a>, we use the <i>UDPipe</i> natural language processing toolkit <span class="cite" title="Straka, M. and Straková, J. (2017). Tokenizing, pos tagging, lemmatizing and parsing ud 2.0 with udpipe. In  Proceedings of the CoNLL 2017 Shared Task: Multilingual Parsing from Raw Text to Universal Dependencies, pages 88--99, Vancouver, Canada. Association for Computational Linguistics.">Straka and Straková, 2017</span>,
+a &ldquo;Pipeline&rdquo; that parses text into &ldquo;Universal Dependencies&rdquo;, a representation of the syntactic structure of the text.
+For R, we can immediately call the <code>udpipe</code> function from the package of the same name.
+This parses the given text and returns the result as a data frame with one token (word) per row,
+and the various features in the columns.
+For Python, we need to take some more steps ourselves.
+First, we download the English models if they aren't present.
+Second, we load the model and create a pipeline with all default settings,
+and use that to parse the same sentence.
+Finally, we use the <i>conllu</i> package to read the results into a form that can be turned into a data frame.
+</p>
+
+<p>
+In both cases, the resulting tokens clearly show some of the potential advantages of linguistic processing:
+the lemma column shows that it correctly deals with irregular verbs and plural forms.
+Looking at the upos (universal part-of-speech) column, John is recognized as a proper name (PROPN), bought as a verb, and knives as a noun.
+Finally, the <code>head_token_id</code> and <code>dep_rel</code> columns represent the syntactic information in the sentence:
+&ldquo;Bought&rdquo; (token 2) is the root of the sentence, and &ldquo;John&rdquo; is the subject (nsubj) while &ldquo;knives&rdquo; is the object of the buying.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:udpipe' name='ex:udpipe'>Example 10.18.</a></small><br />
+Using UDPipe to analyze a sentence</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>m = Model.load(udpipe_model)</code>
+<code>pipeline = Pipeline(m, "tokenize", </code>
+<code>    Pipeline.DEFAULT, Pipeline.DEFAULT, "conllu")</code>
+<code>text = "John bought new knives"</code>
+<code>tokenlist = conllu.parse(pipeline.process(text)) </code>
+<code>pd.DataFrame(tokenlist[0])</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>udpipe("John bought new knives", "english") %&gt;% </code>
+<code>  select(token_id:upos, head_token_id:dep_rel)</code>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>R output. Note that Python output may look slightly different</div>
+<div class='table-wrapper'><table class="dataframe">
+<caption>A data.frame: 4 × 6</caption>
+<thead>
+	<tr><th scope=col>token_id</th><th scope=col>token</th><th scope=col>lemma</th><th scope=col>upos</th><th scope=col>head_token_id</th><th scope=col>dep_rel</th></tr>
+	<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>1</td><td>John  </td><td>John </td><td>PROPN</td><td>2</td><td>nsubj</td></tr>
+	<tr><td>2</td><td>bought</td><td>buy  </td><td>VERB </td><td>0</td><td>root </td></tr>
+	<tr><td>3</td><td>new   </td><td>new  </td><td>ADJ  </td><td>4</td><td>amod </td></tr>
+	<tr><td>4</td><td>knives</td><td>knife</td><td>NOUN </td><td>2</td><td>obj  </td></tr>
+</tbody>
+</table>
+</div>
+</div></div>
+<p>
+The syntactic relations can be useful if you need to differentiate between who is doing something and whom it was done to.
+For example, one of the authors of this book used syntactic relations to analyze conflict coverage,
+where there is an important difference between attacking and getting attacked <span class="cite" title="Van Atteveldt, W., Sheafer, T., Shenhav, S., and Fogel-Dror, Y. (2017). Clause analysis: Using syntactic information to automatically extract source, subject, and predicate from texts with an application to the 2008--2009 Gaza War. Political Analysis, 25(2):207--222.">Van Atteveldt et&nbsp;al., 2017</span>.
+However, in most cases you probably don't need this information and analyzing dependency graphs is relatively complex.
+We would advise you to almost always consider lemmatizing and tagging your texts, as lemmatizing is simply so much better than stemming
+(especially for languages other than English), and the part-of-speech can be very useful for analyzing different aspects of a text.
+</p>
+
+<p>
+If you only need the lemmatizer and tagger, you can speed up processing by setting <code>udpipe(.., parser=&#39;none&#39;)</code> (R) or setting the third argument to Pipeline (the parser) to <code>Pipeline.NONE</code> (Python).
+Example&nbsp;<a href='#ex:nouncloud'>10.19</a> shows how this can be used to extract only the nouns from the most recent state of the union speeches,
+create a DTM with these nouns, and then visualize them as a word cloud.
+As you can see, these words (such as student, hero, childcare, healthcare, and terrorism), are much more indicative of the topic of a text than the general words used earlier.
+In the next chapter we will show how you can further analyze these data, for example by analyzing usage patterns per person or over time, or using an unsupervised topic model to cluster words into topics.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:nouncloud' name='ex:nouncloud'>Example 10.19.</a></small><br />
+Nouns used in the most recent State of the Union addresses</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>def get_nouns(text):</code>
+<code>    result = conllu.parse(pipeline.process(text))</code>
+<code>    for sentence in result:</code>
+<code>        for token in sentence:</code>
+<code>            if token["upos"] == "NOUN":</code>
+<code>                yield token["lemma"]</code>
+<code></code>
+<code>parser = Pipeline.NONE</code>
+<code>pipeline = Pipeline(m, "tokenize", </code>
+<code>    Pipeline.DEFAULT, Pipeline.NONE, "conllu")</code>
+<code>                </code>
+<code>tokens = [list(get_nouns(text)) </code>
+<code>          for text in sotu.text[-5:]]</code>
+<code>cv = CountVectorizer(tokenizer=lambda x: x, </code>
+<code>                     lowercase=False, max_df=.7)</code>
+<code>dtm_verbs = cv.fit_transform(tokens)</code>
+<code>wc = wordcloud(dtm_verbs, cv, </code>
+<code>               background_color="white")</code>
+<code>plt.imshow(wc)</code>
+<code>plt.axis("off")</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>tokens = sotu %&gt;% </code>
+<code>  top_n(5, Date) %&gt;% </code>
+<code>  udpipe("english", parser="none")</code>
+<code>nouns = tokens %&gt;% </code>
+<code>  filter(upos == "NOUN") %&gt;% </code>
+<code>  group_by(doc_id)  %&gt;% </code>
+<code>  summarize(text=paste(lemma, collapse=" "))</code>
+<code>nouns %&gt;% </code>
+<code>  corpus() %&gt;% </code>
+<code>  tokens() %&gt;%</code>
+<code>  dfm() %&gt;% </code>
+<code>  dfm_trim(max_docfreq=0.7,docfreq_type="prop")%&gt;%</code>
+<code>  textplot_wordcloud(max_words=50)</code>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<img src='img/nouncloud.py.png' />
+</div></div>
+<p>
+As an alternative to UDPipe, you can also use Spacy,
+which is another free and popular natural language toolkit.
+It is written in Python, but the <i>spacyr</i> package offers an easy way to use it from R.
+For R users, installation of <i>spacyr</i> on MacOS and Linux is easy,
+but note that on Windows there are some additional steps, see
+<a href='https://cran.r-project.org/web/packages/spacyr/readme/README.html'>cran.r-project.org/web/packages/spacyr/readme/README.html</a> for more details.
+</p>
+
+<p>
+Example&nbsp;<a href='#ex:spacy'>10.20</a> shows how you can use Spacy to analyze the proverb &ldquo;all roads lead to Rome&rdquo; in Spanish.
+In the first block, the Spanish language model is downloaded (this is only needed once).
+The second block loads the language model and parses the sentence.
+You can see that the output is quite similar to UDPipe, but one additional feature is the inclusion of
+<i>Named Entity Recognition</i>:
+Spacy can automatically identify persons, locations, organizations and other entities.
+In this example, it identifies &ldquo;Rome&rdquo; as a location.
+This can be very useful to extract e.g. all persons from a newspaper corpus automatically.
+Note that in R, you can use the <i>quanteda</i> function <code>as.tokens</code> to directly use the Spacy output in quanteda.
+</p>
+<div class='code-example'><h4>
+  <small class='text-muted'><a class='anchor' href='#ex:spacy' name='ex:spacy'>Example 10.20.</a></small><br />
+Using Spacy to analyze a Spanish sentence.</h4>
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>model = "es_core_news_sm"</code>
+<code>!{sys.executable} -m spacy download {model}</code>
+<code># Note: restart the kernel and re-import spacy</code>
+<code>#       for the model to be found by python</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code># Only needed once</code>
+<code>spacy_install()</code>
+<code># Only needed for languages other than English:</code>
+<code>spacy_download_langmodel("es_core_news_sm")</code>  </pre>
+</div></div><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>nlp = spacy.load("es_core_news_sm")</code>
+<code>tokens = nlp("Todos los caminos llevan a Roma")</code>
+<code>pd.DataFrame([dict(i=t.i, word=t.text, </code>
+<code>                   lemma=t.lemma_, head=t.head, </code>
+<code>                   dep=t.dep_, ner=t.ent_type_)</code>
+<code>             for t in tokens])</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>spacy_initialize("es_core_news_sm")</code>
+<code>spacy_parse("Todos los caminos llevan a Roma")</code>
+<code># To close spacy (or switch languages), use:</code>
+<code>spacy_finalize()</code>
+&nbsp;
+&nbsp;  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>R output. Note that Python output may look slightly different</div>
+<div class='table-wrapper'><table class="dataframe">
+<caption>A spacyr_parsed: 6 × 7</caption>
+<thead>
+	<tr><th scope=col>doc_id</th><th scope=col>sentence_id</th><th scope=col>token_id</th><th scope=col>token</th><th scope=col>lemma</th><th scope=col>pos</th><th scope=col>entity</th></tr>
+	<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>text1</td><td>1</td><td>1</td><td>Todos  </td><td>todo  </td><td>DET  </td><td>     </td></tr>
+	<tr><td>text1</td><td>1</td><td>2</td><td>los    </td><td>el    </td><td>DET  </td><td>     </td></tr>
+	<tr><td>text1</td><td>1</td><td>3</td><td>caminos</td><td>camino</td><td>NOUN </td><td>     </td></tr>
+	<tr><td>text1</td><td>1</td><td>4</td><td>llevan </td><td>llevar</td><td>VERB </td><td>     </td></tr>
+	<tr><td>text1</td><td>1</td><td>5</td><td>a      </td><td>a     </td><td>ADP  </td><td>     </td></tr>
+	<tr><td>text1</td><td>1</td><td>6</td><td>Roma   </td><td>Roma  </td><td>PROPN</td><td>LOC_B</td></tr>
+</tbody>
+</table>
+</div>
+</div></div>
+<p>
+As you can see, nowadays there are a number of good and relatively easy to use linguistic toolkits that can be used.
+Especially <i>Stanza</i><span class="cite" title="Qi, P., Zhang, Y., Zhang, Y., Bolton, J., and Manning, C.&nbsp;D. (2020). Stanza: A Python natural language processing toolkit for many human languages. In  Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics: System Demonstrations.">Qi et&nbsp;al., 2020</span> is also a very good and flexible toolkit with support for multiple (human) languages and good integration especially with Python.
+If you want to learn more about natural language processing, the book <i>Speech and Language Processing</i> by Jurafsky and Martin is a very good starting point <span class="cite" title="Jurafsky, D. and Martin, J.&nbsp;H. (2009). Speech and Language Processing: An Introduction to Natural Language Processing, Computational Linguistics, and Speech Recognition (2nd ed.). Prentice Hall.">Jurafsky and Martin, 2009</span><a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 2" data-bs-content="See <a href='https://web.stanford.edu/~jurafsky/slp3/'>web.stanford.edu/~jurafsky/slp3/</a> for their draft of a new edition, which is (at the time of writing) free to download.">[2]</a>.
+</p>
+
+<h2>  <small class='text-muted'><a class='anchor' href='#10_4' name='10_4'>10.4.</a></small>Which Preprocessing to Use?
+</h2>
+
+
+<p>
+This chapter has shown how to create a DTM and especially introduced a number of different steps that can be used to clean and preprocess the DTM before analysis.
+All of these steps are used by text analysis practitioners and in the relevant literature.
+However, no study ever uses all of these steps on top of each other.
+This of courses raises the question of how to know which preprocessing steps to use for your research question.
+</p>
+
+<p>
+First, there are a number of things that you should (almost) always do.
+If your data contains noise such as boilerplate language, HTML artifacts, etc., you should generally strip these out before proceeding.
+Second, text almost always has an abundance of uninformative (stop) words and a very long tail of very rare words.
+Thus, it is almost always a good idea to use a combination of stop word removal, trimming based on document frequency, and/or <code>tf.idf</code> weighting.
+Note that when using a stop word list, you should always manually inspect and/or fine-tune the word list to make sure it matches your domain and research question.
+</p>
+
+<p>
+The other steps such as n-grams, collocations, and tagging and lemmatization are more optional but can be quite important depending on the specific research.
+For this (and for choosing a specific combination of trimming and weighting), it is always good to know your domain well, look at the results, and think whether you think they make sense.
+Using the example given above, bigrams can make more sense for sentiment analysis (since <i>not good</i> is quite different from <i>good</i>),
+but for analyzing the topic of texts it may be less important.
+</p>
+
+<p>
+Ultimately, however, many of these questions have no good theoretical answer, and the only way to find a good preprocessing &ldquo;pipeline&rdquo; for your research question is to try many different
+options and see which works best.
+This might feel like &ldquo;cheating&rdquo; from a social science perspective, since it is generally frowned upon to just test many different statistical models and report on what works best.
+There is a difference, however, between substantive statistical modeling where you actually want to understand the mechanisms,
+and technical processing steps where you just want the best possible measurement of an underlying variable (presumably to be used in a subsequent substantive model).
+<span class="cite" title="Lin, J. (2015). On building better mousetraps and understanding the human condition: Reflections on big data in the social sciences. The ANNALS of the American Academy of Political and Social Science, 659(1):33--47.">Lin (2015)</span> uses the analogy of the mouse trap and the human condition: in engineering you want to make the best possible mouse trap,
+while in social science we want to understand the human condition.
+For the mouse trap, it is OK if it is a black box for which we have no understanding of how it works, as long as we are sure that it does work.
+For the social science model, this is not the case as it is exactly the inner workings we are interested in.
+</p>
+
+<p>
+Technical (pre)processing steps such as those reviewed in this chapter are primarily engineering devices:
+we don't really care how something like <code>tfc.idf</code> works, as long as it produces the best possible measurement of the variables we need for our analysis.
+In other words, it is an engineering challenge, not a social science research question.
+As a consequence, the key criterion by which to judge these steps is validity, not explainability.
+Thus, it is fine to try out different options, as long as you validate the results properly.
+If you have many different choices to evaluate against some metric such as performance on a subsequent prediction task,
+using the split-half or cross-validation techniques discussed in chapter Chapter&nbsp;<a href='chapter08.html#8'>8</a> are also relevant here to avoid biasing the evaluation.
+</p>
+
+        </div>
+
+	<div class='chevrons'>
+&laquo;
+	  
+	  <a href='chapter09.html'>Ch. 9 Processing text</a>
+	  
+	  
+	  | <a href='chapter11.html'>Ch. 11 Automatic analysis of text</a>&raquo;
+	  
+</div>
+	<!-- Secondary sidebar -->
+        <aside class="css-rightbar">
+            <nav id="right" class="collapse css-rightnav">
+                <ul class="list-unstyled components">
+  
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+                  <div class="rightbar-header">In this chapter</div>
+
+            <ul class="list-unstyled" id="toc_chap_10">
+<li class='toc-section'>10 Text as data</li>
+
+              
+	          
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_1">10.1. The Bag of Words and the Term-Document Matrix</a>
+		    </li>
+		    
+		    <ul class="list-unstyled list-subsections" id="toc_chap_1">
+		    
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_1_1">10.1.1. Tokenization</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_1_2">10.1.2. The DTM as a Sparse Matrix</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_1_3">10.1.3. The DTM as a ``Bag of Words&#39;&#39;</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_1_4">10.1.4. The (Unavoidable) Word Cloud</a>
+                    </li>
+
+                    
+		    </ul>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_2">10.2. Weighting and Selecting Documents and Terms</a>
+		    </li>
+		    
+		    <ul class="list-unstyled list-subsections" id="toc_chap_2">
+		    
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_2_1">10.2.1. Removing stopwords</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_2_2">10.2.2. Removing Punctuation and Noise</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_2_3">10.2.3. Trimming a DTM</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_2_4">10.2.4. Weighting a DTM</a>
+                    </li>
+
+                    
+		    </ul>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_3">10.3. Advanced Representation of Text</a>
+		    </li>
+		    
+		    <ul class="list-unstyled list-subsections" id="toc_chap_3">
+		    
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_3_1">10.3.1. $n$-grams</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_3_2">10.3.2. Collocations</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_3_3">10.3.3. Word Embeddings</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_3_4">10.3.4. Linguistic Preprocessing</a>
+                    </li>
+
+                    
+		    </ul>
+		    
+
+		
+            </ul>
+	    
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+</ul>
+            </nav>
+        </aside>
+</div>
+
+
+
+    </div>
+    <!-- Optional JavaScript; choose one of the two! -->
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+    -->
+  <script>
+      var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+  return new bootstrap.Popover(popoverTriggerEl, {html: true})
+})
+  </script>
+  </body>
+</html>

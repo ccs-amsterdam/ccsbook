@@ -1,0 +1,745 @@
+
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+      <link href="ccsbook.css" rel="stylesheet">
+      <!-- MathJax -->
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js">
+  </script>
+
+    <title>Computational Analysis of Communication</title>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-light fixed-top bg-light">
+    <div class="container-xxl">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#toc" aria-controls="toc" aria-expanded="false" aria-label="Toggle TOC">
+                <div></div>
+                <div></div>
+                <div></div>
+            </button>
+	    <div class='navhome'>
+              <a href="index.html">Computational Analysis of Communication</a>
+	      </div>
+    </div>
+    </nav>
+    <div id='content' class='container-xxl'>
+
+        <!-- Sidebar -->
+        <aside class="toc">
+            <nav id="toc" class="collapse">
+                <div class="subtoc">
+                    <ul class="list-unstyled components">
+  
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+                  <div class="rightbar-header">In this chapter</div>
+
+            <ul class="list-unstyled" id="toc_chap_16">
+<li class='toc-section'>16 Where to go next</li>
+
+              
+	          
+                    <li class="toc-section">
+                        <a href="chapter16.html#16_1">16.1. How Far Have We Come?</a>
+		    </li>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter16.html#16_2">16.2. Where To Go Next?</a>
+		    </li>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter16.html#16_3">16.3. Open, Transparent, and Ethical Computational Science</a>
+		    </li>
+		    
+
+		
+            </ul>
+	    
+    
+</ul>
+                </div>
+
+		<div class="rightbar-header">Table of Contents</div>
+                <ul class="list-unstyled components">
+    
+        <li class="active toc-chapter ">
+            <a href="chapter01.html">1 Introduction</a>
+            <!--<a href="#toc_chap_1" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_1"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_1">
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_1">1.1. The Role of Computational Analysis in the Social Sciences</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_2">1.2. Why Python and/or R?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_3">1.3. How to use this book</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_4">1.4. Installing R and Python</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_5">1.5. Installing Third-Party Packages</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter02.html">2 Fun with Data</a>
+            <!--<a href="#toc_chap_2" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_2"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_2">
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_1">2.1. Fun With Tweets</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_2">2.2. Fun With Textual Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_3">2.3. Fun With Visualizing Geographic Information</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_4">2.4. Fun With Networks</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter03.html">3 Programming Concepts</a>
+            <!--<a href="#toc_chap_3" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_3"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_3">
+                
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_1">3.1. About Objects and Data Types</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_2">3.2. Simple Control Structures: Loops and Conditions</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_3">3.3. Functions and Methods</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter04.html">4 How to write code</a>
+            <!--<a href="#toc_chap_4" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_4"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_4">
+                
+                    <li class="toc-section">
+                        <a href="chapter04.html#4_1">4.1. Re-using Code: How Not to Re-Invent the Wheel</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter04.html#4_2">4.2. Understanding Errors and Getting Help</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter04.html#4_3">4.3. Best Practice: Beautiful Code, GitHub, and Notebooks</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter05.html">5 Files and Data Frames</a>
+            <!--<a href="#toc_chap_5" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_5"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_5">
+                
+                    <li class="toc-section">
+                        <a href="chapter05.html#5_1">5.1. Why and When Do We Use Data Frames?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter05.html#5_2">5.2. Reading and Saving Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter05.html#5_3">5.3. Data from online sources</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter06.html">6 Data Wrangling</a>
+            <!--<a href="#toc_chap_6" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_6"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_6">
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_1">6.2. Calculating Values</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_2">6.3. Grouping and Aggregating</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_3">6.4. Merging Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_4">6.5. Reshaping Data: Wide To Long And Long To Wide</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter07.html">7 Exploratory data analysis</a>
+            <!--<a href="#toc_chap_7" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_7"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_7">
+                
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_1">7.1. Simple Exploratory Data Analysis</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_2">7.2. Visualizing Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_3">7.3. Clustering and Dimensionality Reduction</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter08.html">8 Machine Learning</a>
+            <!--<a href="#toc_chap_8" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_8"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_8">
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_1">8.1. Statistical Modeling and Prediction</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_2">8.2. Concepts and Principles</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_3">8.3. Classical Machine Learning: From Na&#34;ive Bayes to Neural Networks</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_4">8.4. Deep Learning</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_5">8.5. Validation and Best Practices</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter09.html">9 Processing text</a>
+            <!--<a href="#toc_chap_9" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_9"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_9">
+                
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_1">9.1. Text as a String of Characters</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_2">9.2. Regular Expressions</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_3">9.3. Using Regular Expressions in Python and R</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter10.html">10 Text as data</a>
+            <!--<a href="#toc_chap_10" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_10"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_10">
+                
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_1">10.1. The Bag of Words and the Term-Document Matrix</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_2">10.2. Weighting and Selecting Documents and Terms</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_3">10.3. Advanced Representation of Text</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter11.html">11 Automatic analysis of text</a>
+            <!--<a href="#toc_chap_11" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_11"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_11">
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_1">11.1. Deciding on the Right Method</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_2">11.2. Obtaining a Review Dataset</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_3">11.3. Dictionary Approaches to Text Analysis</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_4">11.4. Supervised Text Analysis: Automatic Classification and Sentiment Analysis</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_5">11.5. Unsupervised Text Analysis: Topic Modeling</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter12.html">12 Scraping online data</a>
+            <!--<a href="#toc_chap_12" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_12"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_12">
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_1">12.1. Using Web APIs: From Open Resources to Twitter</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_2">12.2. Retrieving and Parsing Web Pages</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_3">12.3. Authentication, Cookies, and Sessions</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_4">12.4. Ethical, Legal, and Practical Considerations</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter13.html">13 Network Data</a>
+            <!--<a href="#toc_chap_13" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_13"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_13">
+                
+                    <li class="toc-section">
+                        <a href="chapter13.html#13_1">13.1. Representing and Visualizing Networks</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter13.html#13_2">13.2. Social Network Analysis</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter14.html">14 Multimedia data</a>
+            <!--<a href="#toc_chap_14" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_14"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_14">
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_1">14.1. Beyond Text Analysis: Images, Audio and Video</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_2">14.2. Using Existing Libraries and APIs</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_3">14.3. Storing, Representing, and Converting Images</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_4">14.4. Image Classification</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter15.html">15 Scaling up and distributing</a>
+            <!--<a href="#toc_chap_15" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_15"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_15">
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_1">15.1. Storing Data in SQL and noSQL Databases</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_2">15.2. Using Cloud Computing</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_3">15.3. Publishing Your Source</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_4">15.4. Distributing Your Software as Container</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter toc-chapter-current">
+            <a href="chapter16.html">16 Where to go next</a>
+            <!--<a href="#toc_chap_16" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_16"></a>
+            <ul class="collapse list-unstyled show" id="toc_chap_16">
+                
+                    <li class="toc-section">
+                        <a href="chapter16.html#16_1">16.1. How Far Have We Come?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter16.html#16_2">16.2. Where To Go Next?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter16.html#16_3">16.3. Open, Transparent, and Ethical Computational Science</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+</ul>
+            </nav>
+        </aside>
+	
+      
+  
+
+    <div class="css-layout">
+      <!-- Main Content -->
+      <div class="css-main">
+	<div class='chevrons'>
+&laquo;
+	  
+	  <a href='chapter15.html'>Ch. 15 Scaling up and distributing</a>
+	  
+	  
+</div>
+	  <br/>
+            
+<h1>  <small class='text-muted'><a class='anchor' href='#chap:wherenext' name='chap:wherenext'>16.</a></small>Where to go next
+</h1>
+
+
+<div class='abstract'>
+  <span class='caption'>
+Abstract
+  </span>
+This chapter summarizes the main learning goals of the book, and outlines possible next steps. Special attention is paid to an ethical application of computational methods, as well as to the importance of open and transparent science.
+
+</div>
+
+<div class='keywords'>
+  <span class='caption'>Keywords:</span>
+summary, open science, ethics
+</div>
+<div class='objectives'>
+  <div class='caption'>Chapter objectives:</div>
+  <ul><li> Reflect on the learning goals of the book
+</li><li> Point out avenues for future study
+</li><li> Highlight ethical considerations for applying the techniques covered in the book
+</li><li> Relate the techniques covered in the book to Open Science practices
+</li>
+  </ul>
+</div><div class='feature'>
+This concluding chapter provides a broad overview of what was covered so far, and what interesting avenues there are to explore next. It gives pointers to resources to learn more about topics such as programming, statistical modeling or deep learning. It also discusses considerations regarding ethics and open science.
+
+</div>
+<h2>  <small class='text-muted'><a class='anchor' href='#16_1' name='16_1'>16.1.</a></small>How Far Have We Come?
+</h2>
+
+
+<p>
+
+In this book, we introduced you to the computational analysis of communication. In Chapter&nbsp;<a href='chapter01.html#1'>1</a>, we tried to convince you that the computational analysis of communication is a worthwhile endeavor &ndash; and we also highlighted that there is much more to the subject  than this book can cover.
+So here we are now. Maybe you skipped some chapters, maybe you did some additional reading or followed some online tutorials, and maybe you completed your first small project that involved some of techniques we covered. Time to recap.
+</p>
+
+<p>
+You now have some knowledge of programming. We hope that this has opened new doors for you, and allows you to use a wealth of libraries, tutorials, and tools that may make your life easier, your research more productive, and your analyses better.
+</p>
+
+<p>
+You have learned how to handle new types of data. Not only traditional tabular datasets, but also textual data, semi-structured data, and to some extent network data and images.
+</p>
+
+<p>
+You can apply machine-learning frameworks. You know about both unsupervised and supervised approaches, and can decide  how they can be useful for finding answers to your research questions.
+</p>
+
+<p>
+Finally, you have got at least a first impression of some cool techniques like neural networks and services such as databases, containers, and cloud computing. We hope that being aware of them will help you to make an informed decision whether they may be good tools to dive into for your upcoming projects.
+</p>
+
+<h2>  <small class='text-muted'><a class='anchor' href='#16_2' name='16_2'>16.2.</a></small>Where To Go Next?
+</h2>
+
+
+<p>
+
+But what should you learn next?
+</p>
+
+<p>
+Most importantly, we cannot stress enough that it should be the research question that is the guide, not the method. You shouldn't use the newest neural network module just because it's cool, when counting occurrences of a simple regular expression does the trick. But this also applies the other way around: if a new method performs much better than an old one, you should learn it! For too long, for instance, people have relied on simple bag-of-words sentiment analyses with off-the-shelf dictionaries, simply because they were easy to use &ndash; despite better alternatives being available.
+</p>
+
+<p>
+Having said that, we will nevertheless try to give some general recommendations for what to learn next.
+</p>
+
+<p>
+<b>Become better at programming</b> In this book, we tried to find a compromise between teaching the programming concepts necessary to apply our methods on the one hand, and not getting overly technical on the other hand. After all, for many social scientists, programming is a means to an end, not a goal in itself. But as you progress, a deeper understanding of some programming concepts will make it easier for you to tailor everything according to your needs, and will &ndash; again &ndash; open new doors. There are countless books and online tutorials on &ldquo;Programming in [Language of your choice]&rdquo;. In fact, in this &ldquo;bilingual&rdquo; book we have shown you how to program with R and Python (the most used languages by data scientists), but there are other programming languages that might also deserve your attention (e.g. Java, Scala, Julia, etc.) if you become a computational scientist.
+</p>
+
+<p>
+<b>Learn how to write libraries</b> A very specific yet widely applicable skill we'd encourage you to learn is writing your own packages (&ldquo;modules&rdquo; or &ldquo;libraries&rdquo;). One of the nice things about computational analyses is that they are very much compatible with an Open Science approach. Sharing what you have done is much easier if everything you did is already documented in some code that you can share. But you can go one step further: of course it is nice if people can exactly reproduce your analysis, but wouldn't it be even nicer if they could also use your code to run analyses using their own data?
+If you thought about a great way to compute some statistic, why not make it easy for others to do the same?
+Consider writing (and documenting!) your code  in a general way and then publishing it on CRAN or pypi so others can easily install and use it.
+</p>
+
+<p>
+<b>Get inspiration for new types of studies</b> Try to think a bit out of the box and beyond classical surveys, experiments, and content analyses to design new studies. Books like <i>Bit by Bit</i><span class="cite" title="Salganik, M. (2019). Bit by bit: Social research in the digital age. Princeton University Press.">Salganik (2019)</span> may help you with this. You can also take a look at other scientific disciplines such as computational biology that has reinvented its methods, questions and hypotheses. Keep in mind that computational methods have an impact on the theoretical and empirical discussions of communication processes, which in turn will call for novel types of studies. The emerging scientific fields such as Computational Communication Science, Computational Social Sciences and Digital Humanities show how theory and methods can develop hand in hand.
+</p>
+
+<p>
+<b>Get a deeper understanding of deep learning</b> For many tasks in the computational analysis of communication, classical machine learning approaches (like regression or support vector machines) work just fine. In fact, there is no need to always jump on the latest band wagon of the newest technique. If a simple logistic regression achieves an F1-score of 88.1, and the most fancy neural network achieves an 88.5 &ndash; would it be worth the extra effort and the loss of explainability? It depends on your use case, but probably not. Nevertheless, by now, we can be fairly certain that neural networks and deep learning are here to stay. We could only give a limited introduction in this book, but state-of-the-art analysis of text and especially visual material cannot do without it any more. Even though you may not train such models yourself all the time, but may use, for instance, pre-trained word embeddings or use packages like <i>spacy</i> that have been trained using neural networks, it seems worthwhile to understand these techniques better. Also here, a lot of online tutorials exist for frameworks such as <code>keras</code> or <code>tensorflow</code>, but also thorough books that provide a sound understanding of the underlying models <span class="cite" title="Goldberg, Y. (2017). Neural Network Models for Natural Language Processing. Morgan &amp; Claypool.">Goldberg (2017)</span>.
+</p>
+
+<p>
+<b>Learn more about statistical models</b> Not everything in the computational analysis of communication is machine learning. We used the analogy of the mouse trap (where we only care about the performance, not the underlying mechanism) versus better prior understanding, and argued that often, we may use machine learning as a &ldquo;mouse trap&rdquo; to enrich our data &ndash; even if we are ultimately interested in explaining some other process. For instance, we may want to use machine learning as one step in a workflow to predict the topic of social media messages, and then use a conventional statistical approach to understand which factors explain how often the message has been shared. Such data, though, often have different characteristics than data that you may encounter in surveys or experiments. In this case, for instance, the number of shares is a so-called count variable: it can take only positive integers, and thus has a lower bound (0) but no upper bound. That's very different than normally distributed data and requires regression models such as negative binomial regression. That's not difficult to do, but worth  reading up on. Similarly, multilevel modelling will often be appropriate for the data you work with. Being familiar with this and other techniques (such as mediation and moderation analysis, or even structural equation modeling) will allow you to make better choices. On a different note, you may want to familiarize yourself with Bayesian statistics &ndash; a framework that is very different from the so-called frequentist approach that you probably know from your statistics courses.
+</p>
+
+<p>
+And, last but not least: have fun! At least for us, that is one of the most important parts: don't forget to enjoy the skills you gained, and create projects that you enjoy!
+</p>
+
+<h2>  <small class='text-muted'><a class='anchor' href='#16_3' name='16_3'>16.3.</a></small>Open, Transparent, and Ethical Computational Science
+</h2>
+
+
+<p>
+We started this book by reflecting on what we are actually doing when conducting computational analyses of communication.
+One of the things we highlighted in Chapter&nbsp;<a href='chapter01.html#1'>1</a> was our use of open-source tools, in particular Python and R
+and the wealth of open-source libraries that extend them. Hopefully, you have also realized not only how much your work could
+therefore build on the work of others, but also how many of the resources you used were created as a community effort.
+</p>
+
+<p>
+Now that you acquired the knowledge it takes to conduct computational research on communication, it is time to reflect
+on how to give back to the community, and how to contribute to an open research environment. At the same time, it is
+not as simple as &ldquo;just putting everything online&rdquo; &ndash; after all, researchers often work with sensitive data. We therefore
+conclude this book with a short discussion on open, transparent, and ethical computational science.
+</p>
+
+<p>
+<b>Transparent and Open Science</b>
+In the wake of the so-called reproducibility crisis, the call for transparent and open science has become louder and louder
+in the last years. The public, funders, and journals increasingly ask for access to data and analysis scripts that underly
+published research. Of course, publishing your data and code is not a panacea for all problems, but it is a step towards
+better science from at least two perspectives <span class="cite" title="Van Atteveldt, W., Strycharz, J., Trilling, D., and Welbers, K. (2019). Toward Open Computational Communication Science : A Practical Road Map for Reusable Data and Code University of Amsterdam , the Netherlands. International Journal of Communication, 13:3935--3954.">Van Atteveldt et&nbsp;al., 2019</span>: first, it allows others to reproduce your work, enhancing its credibility
+(and the credibility of the field as a whole). Second, it allows others to build on your work without reinventing the wheel.
+</p>
+
+<p>
+So, how can you contribute to this? Most importantly, as we advised in Section&nbsp;<a href='chapter04.html#4_3'>4.3</a>: use a version control system
+and share your code on a site like github.com. We also discussed code-sharing possibilities in Section&nbsp;<a href='chapter15.html#15_3'>15.3</a>. Finally, you can find a template for organizing your code and data so that your
+research is easy to reproduce at <a href='https://github.com/ccs-amsterdam/compendium'>github.com/ccs-amsterdam/compendium</a>.
+</p>
+
+<p>
+<b>The privacy&ndash;transparency trade-off</b> While the sharing of code is not particularly controversial, the sharing of
+data sometimes is. In particular, you may deal with data that contain personally identifiable information. On the one
+hand, you should share your data to make sure that your work can be reproduced &ndash; on the other hand, it would be ethically
+(and depending on your jurisdiction, potentially also legally) wrong to share personal data about individuals.
+As <span class="cite" title="boyd, D. and Crawford, K. (2012). Critical questions for Big Data. Information, Communication &amp; Society, 15(5):662--679.">boyd and Crawford (2012)</span> write: &ldquo;Just because it is accessible does not make it ethical.&rdquo; Hence, the
+situation is not always black or white, and some techniques exist to find a balance between the two: you can remove
+(or hash) information such as usernames, you can aggregate your data, you can add artificial noise. Ideally, you should
+integrate legal, ethical, and technical considerations to make an informed decision on how to find a balance such that
+transparency is maximized while privacy risks are minimized. More and more literature explores different possibilities <span class="cite" title="Breuer, J., Bishop, L., and Kinder-Kurlanda, K. (2020). The practical and ethical challenges in acquiring and sharing digital trace data: Negotiating public-private partnerships. New Media &amp; Society, 22(11):2058--2080.">Breuer et&nbsp;al. (2020)</span>.
+</p>
+
+<p>
+<b>Other Ethical Challenges in Computational Analyses</b>
+Lastly, there are also other ethical challenges that go beyond the use of privacy-sensitive data. Many tools we
+use give us great power, and with that comes great responsibility. For instance, as we highlighted in
+Section&nbsp;<a href='chapter12.html#12_4'>12.4</a>, every time we scrape a website, we cause some costs somewhere. They may be
+neglectable for a single http request, but they may add up. Similarly, calculations on some cloud service
+cause environmental costs. Before starting a large-scale project, we should therefore make a trade-off between
+the costs or damage we cause, and the (scientific) gain that we achieve.
+</p>
+
+<p>
+In the end, though, we firmly believe that as computational scientists, we are well-equipped to contribute to the move towards
+more ethical, open, and transparent science. Let's do it!
+
+        </div>
+
+	<div class='chevrons'>
+&laquo;
+	  
+	  <a href='chapter15.html'>Ch. 15 Scaling up and distributing</a>
+	  
+	  
+</div>
+	<!-- Secondary sidebar -->
+        <aside class="css-rightbar">
+            <nav id="right" class="collapse css-rightnav">
+                <ul class="list-unstyled components">
+  
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+                  <div class="rightbar-header">In this chapter</div>
+
+            <ul class="list-unstyled" id="toc_chap_16">
+<li class='toc-section'>16 Where to go next</li>
+
+              
+	          
+                    <li class="toc-section">
+                        <a href="chapter16.html#16_1">16.1. How Far Have We Come?</a>
+		    </li>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter16.html#16_2">16.2. Where To Go Next?</a>
+		    </li>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter16.html#16_3">16.3. Open, Transparent, and Ethical Computational Science</a>
+		    </li>
+		    
+
+		
+            </ul>
+	    
+    
+</ul>
+            </nav>
+        </aside>
+</div>
+
+
+
+    </div>
+    <!-- Optional JavaScript; choose one of the two! -->
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+    -->
+  <script>
+      var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+  return new bootstrap.Popover(popoverTriggerEl, {html: true})
+})
+  </script>
+  </body>
+</html>

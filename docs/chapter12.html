@@ -1,0 +1,2433 @@
+
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+      <link href="ccsbook.css" rel="stylesheet">
+      <!-- MathJax -->
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js">
+  </script>
+
+    <title>Computational Analysis of Communication</title>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-light fixed-top bg-light">
+    <div class="container-xxl">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#toc" aria-controls="toc" aria-expanded="false" aria-label="Toggle TOC">
+                <div></div>
+                <div></div>
+                <div></div>
+            </button>
+	    <div class='navhome'>
+              <a href="index.html">Computational Analysis of Communication</a>
+	      </div>
+    </div>
+    </nav>
+    <div id='content' class='container-xxl'>
+
+        <!-- Sidebar -->
+        <aside class="toc">
+            <nav id="toc" class="collapse">
+                <div class="subtoc">
+                    <ul class="list-unstyled components">
+  
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+                  <div class="rightbar-header">In this chapter</div>
+
+            <ul class="list-unstyled" id="toc_chap_12">
+<li class='toc-section'>12 Scraping online data</li>
+
+              
+	          
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_1">12.1. Using Web APIs: From Open Resources to Twitter</a>
+		    </li>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_2">12.2. Retrieving and Parsing Web Pages</a>
+		    </li>
+		    
+		    <ul class="list-unstyled list-subsections" id="toc_chap_2">
+		    
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_2_1">12.2.1. Retrieving and Parsing an HTML Page</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_2_2">12.2.2. Crawling Websites</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_2_3">12.2.3. Dynamic Web Pages</a>
+                    </li>
+
+                    
+		    </ul>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_3">12.3. Authentication, Cookies, and Sessions</a>
+		    </li>
+		    
+		    <ul class="list-unstyled list-subsections" id="toc_chap_3">
+		    
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_3_1">12.3.1. Authentication and APIs</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_3_2">12.3.2. Authentication and Webpages</a>
+                    </li>
+
+                    
+		    </ul>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_4">12.4. Ethical, Legal, and Practical Considerations</a>
+		    </li>
+		    
+
+		
+            </ul>
+	    
+    
+  
+    
+  
+    
+  
+    
+  
+    
+</ul>
+                </div>
+
+		<div class="rightbar-header">Table of Contents</div>
+                <ul class="list-unstyled components">
+    
+        <li class="active toc-chapter ">
+            <a href="chapter01.html">1 Introduction</a>
+            <!--<a href="#toc_chap_1" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_1"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_1">
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_1">1.1. The Role of Computational Analysis in the Social Sciences</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_2">1.2. Why Python and/or R?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_3">1.3. How to use this book</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_4">1.4. Installing R and Python</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_5">1.5. Installing Third-Party Packages</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter02.html">2 Fun with Data</a>
+            <!--<a href="#toc_chap_2" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_2"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_2">
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_1">2.1. Fun With Tweets</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_2">2.2. Fun With Textual Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_3">2.3. Fun With Visualizing Geographic Information</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_4">2.4. Fun With Networks</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter03.html">3 Programming Concepts</a>
+            <!--<a href="#toc_chap_3" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_3"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_3">
+                
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_1">3.1. About Objects and Data Types</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_2">3.2. Simple Control Structures: Loops and Conditions</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_3">3.3. Functions and Methods</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter04.html">4 How to write code</a>
+            <!--<a href="#toc_chap_4" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_4"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_4">
+                
+                    <li class="toc-section">
+                        <a href="chapter04.html#4_1">4.1. Re-using Code: How Not to Re-Invent the Wheel</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter04.html#4_2">4.2. Understanding Errors and Getting Help</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter04.html#4_3">4.3. Best Practice: Beautiful Code, GitHub, and Notebooks</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter05.html">5 Files and Data Frames</a>
+            <!--<a href="#toc_chap_5" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_5"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_5">
+                
+                    <li class="toc-section">
+                        <a href="chapter05.html#5_1">5.1. Why and When Do We Use Data Frames?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter05.html#5_2">5.2. Reading and Saving Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter05.html#5_3">5.3. Data from online sources</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter06.html">6 Data Wrangling</a>
+            <!--<a href="#toc_chap_6" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_6"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_6">
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_1">6.2. Calculating Values</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_2">6.3. Grouping and Aggregating</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_3">6.4. Merging Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_4">6.5. Reshaping Data: Wide To Long And Long To Wide</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter07.html">7 Exploratory data analysis</a>
+            <!--<a href="#toc_chap_7" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_7"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_7">
+                
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_1">7.1. Simple Exploratory Data Analysis</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_2">7.2. Visualizing Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_3">7.3. Clustering and Dimensionality Reduction</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter08.html">8 Machine Learning</a>
+            <!--<a href="#toc_chap_8" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_8"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_8">
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_1">8.1. Statistical Modeling and Prediction</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_2">8.2. Concepts and Principles</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_3">8.3. Classical Machine Learning: From Na&#34;ive Bayes to Neural Networks</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_4">8.4. Deep Learning</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_5">8.5. Validation and Best Practices</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter09.html">9 Processing text</a>
+            <!--<a href="#toc_chap_9" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_9"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_9">
+                
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_1">9.1. Text as a String of Characters</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_2">9.2. Regular Expressions</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_3">9.3. Using Regular Expressions in Python and R</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter10.html">10 Text as data</a>
+            <!--<a href="#toc_chap_10" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_10"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_10">
+                
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_1">10.1. The Bag of Words and the Term-Document Matrix</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_2">10.2. Weighting and Selecting Documents and Terms</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_3">10.3. Advanced Representation of Text</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter11.html">11 Automatic analysis of text</a>
+            <!--<a href="#toc_chap_11" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_11"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_11">
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_1">11.1. Deciding on the Right Method</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_2">11.2. Obtaining a Review Dataset</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_3">11.3. Dictionary Approaches to Text Analysis</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_4">11.4. Supervised Text Analysis: Automatic Classification and Sentiment Analysis</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_5">11.5. Unsupervised Text Analysis: Topic Modeling</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter toc-chapter-current">
+            <a href="chapter12.html">12 Scraping online data</a>
+            <!--<a href="#toc_chap_12" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_12"></a>
+            <ul class="collapse list-unstyled show" id="toc_chap_12">
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_1">12.1. Using Web APIs: From Open Resources to Twitter</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_2">12.2. Retrieving and Parsing Web Pages</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_3">12.3. Authentication, Cookies, and Sessions</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_4">12.4. Ethical, Legal, and Practical Considerations</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter13.html">13 Network Data</a>
+            <!--<a href="#toc_chap_13" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_13"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_13">
+                
+                    <li class="toc-section">
+                        <a href="chapter13.html#13_1">13.1. Representing and Visualizing Networks</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter13.html#13_2">13.2. Social Network Analysis</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter14.html">14 Multimedia data</a>
+            <!--<a href="#toc_chap_14" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_14"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_14">
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_1">14.1. Beyond Text Analysis: Images, Audio and Video</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_2">14.2. Using Existing Libraries and APIs</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_3">14.3. Storing, Representing, and Converting Images</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_4">14.4. Image Classification</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter15.html">15 Scaling up and distributing</a>
+            <!--<a href="#toc_chap_15" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_15"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_15">
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_1">15.1. Storing Data in SQL and noSQL Databases</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_2">15.2. Using Cloud Computing</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_3">15.3. Publishing Your Source</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_4">15.4. Distributing Your Software as Container</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter16.html">16 Where to go next</a>
+            <!--<a href="#toc_chap_16" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_16"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_16">
+                
+                    <li class="toc-section">
+                        <a href="chapter16.html#16_1">16.1. How Far Have We Come?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter16.html#16_2">16.2. Where To Go Next?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter16.html#16_3">16.3. Open, Transparent, and Ethical Computational Science</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+</ul>
+            </nav>
+        </aside>
+	
+      
+  
+
+    <div class="css-layout">
+      <!-- Main Content -->
+      <div class="css-main">
+	<div class='chevrons'>
+&laquo;
+	  
+	  <a href='chapter11.html'>Ch. 11 Automatic analysis of text</a>
+	  
+	  
+	  | <a href='chapter13.html'>Ch. 13 Network Data</a>&raquo;
+	  
+</div>
+	  <br/>
+            
+<h1>  <small class='text-muted'><a class='anchor' href='#chap:scraping' name='chap:scraping'>12.</a></small>Scraping online data
+</h1>
+
+
+<div class='abstract'>
+  <span class='caption'>
+Abstract
+  </span>
+In this chapter, you will learn how to retrieve your data from online sources. We first discuss the use of Application Programming Interfaces, more commonly known as APIs, which allow you to retrieve data from social media platforms, government websites, or other forms of open data, in a machine-readable format. We then discuss how to do web scraping in a narrower sense to retrieve data from websites that do not offer an API. We also discuss how to deal with authentication mechanisms, cookies, and the like, as well as ethical, legal, and practical considerations.
+
+</div>
+
+<div class='keywords'>
+  <span class='caption'>Keywords:</span>
+web scraping, application programming interface (API), crawling, HTML parsing
+</div>
+<div class='objectives'>
+  <div class='caption'>Chapter objectives:</div>
+  <ul><li> Be able to use APIs for data retrieval
+</li><li> Be able to write your own web scraper
+</li><li> Assess basics of legal, ethical, and practical constraints
+</li>
+  </ul>
+</div><div class='feature'><b>Packages used in this chapter</b><br/>
+  This chapter uses in particular <i>httr</i> (R) and <i>requests</i> (Python) to retrieve data, <i>json</i> (Python) and <i>jsonlite</i> (R) to handle JSON responses, and <i>lxml</i> and <i>Selenium</i> for web scraping.
+
+You can install these and some additional packages (e.g., for geocoding) with the code below if needed  (see Section&nbsp;<a href='chapter01.html#1_4'>1.4</a> for more details):
+
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>!pip3 install requests geopandas geopy selenium</code>
+&nbsp;
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>install.packages(c("tidyverse", </code>
+<code>                   "httr", "jsonlite", "glue", </code>
+<code>                   "data.table"))</code>  </pre>
+</div></div> After installing, you need to import (activate) the packages every session:
+
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code># accessing APIs and URLs</code>
+<code>import requests</code>
+<code></code>
+<code># handling of JSON responses</code>
+<code>import json</code>
+<code>from pprint import pprint</code>
+<code>from pandas import json_normalize</code>
+<code></code>
+<code># general data handling</code>
+<code># note: you need to additionally install geopy</code>
+<code>import geopandas as gpd </code>
+<code>import pandas as pd</code>
+<code></code>
+<code># static web scraping</code>
+<code>from urllib.request import urlopen</code>
+<code>from lxml.html import parse, fromstring</code>
+<code></code>
+<code># selenium</code>
+<code>from selenium import webdriver</code>
+<code>from selenium.webdriver.common.keys import Keys</code>
+<code>from selenium.webdriver.support.ui import (</code>
+<code>    WebDriverWait)</code>
+<code>from selenium.webdriver.support import (</code>
+<code>    expected_conditions as EC)</code>
+<code>from selenium.webdriver.common.by import By</code>
+<code></code>
+<code>import time</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>library("tidyverse")</code>
+<code>library("httr")</code>
+<code>library("jsonlite")</code>
+<code>library("rvest")</code>
+<code>library("xml2")</code>
+<code>library("glue")</code>
+<code>library("data.table")</code>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div></div></div>
+<h2>  <small class='text-muted'><a class='anchor' href='#12_1' name='12_1'>12.1.</a></small>Using Web APIs: From Open Resources to Twitter
+</h2>
+
+
+<p>
+Let's assume we want to retrieve data from some online service. This
+could be some social media platform, but could also be a government website,
+some <i>open data</i> platform or initiative, or sometimes a
+commercial organization that provides some online service.  Of course,
+we could surf to their website, enter a search query, and somehow save
+the result. This would result in a lot of impracticalities,
+though. Most notably, websites are designed such that they are
+perfectly readable and understandable for humans, but the cues that
+are used often have no &ldquo;meaning&rdquo; for a computer program. As humans,
+we have no problem understanding which parts of a web page refer to
+the author of some item on a web page, what the numbers &ldquo;2006&rdquo; and
+&ldquo;2008&rdquo; mean, and on. But it is not trivial to think of a way to
+explain to a computer program how to identify variables like
+<code>author</code>, <code>title</code>, or <code>year</code> on a web page.
+We will learn how to do exactly that in Section&nbsp;<a href='#12_2'>12.2</a>. Writing
+such a <i>parser</i> is often necessary, but it is also error-prone
+and  a detour, as we are trying to bring some information
+that has been optimized for human reading <i>back</i> to a more
+structured data structure.
+</p>
+
+<p>
+Luckily, however, many online services  not only have web interfaces
+optimized for human reading, but also offer another possibility to
+access the data they provide: an API (Application Programming
+Interface).
+The vast amount of contemporary web APIs work like this: you send a
+<i>request</i> to some URL, and you get back a  JSON object. As you
+learned in Section&nbsp;<a href='chapter05.html#5_2'>5.2</a>, JSON is a nested data structure, very
+much like a Python dictionary or R named list (and, in fact, JSON data are typically 
+represented as such in Python and R). In other words: APIs directly
+gives us machine-readable data that we can work with without any need
+to develop a custom parser.
+</p>
+
+<p>
+Discussing specific APIs in a book can be a bit tricky, as there is a
+chance that it will be outdated: after all, the API provider may change
+it at any time. We therefore decided not to include a chapter on very
+specific applications such as &ldquo;How to use the Twitter API&rdquo; or similar &ndash;
+given the popularity of such APIs, a quick online search will produce
+enough up-to-date (and out-of-date) tutorials on these. Instead,
+we discuss the generic principles of APIs that should easily translate
+to  examples other than ours.
+</p>
+
+<p>
+In its simplest form, using an API is nothing more than visiting
+a specific URL. The first part of the URL specifies the so-called
+API endpoint: the address of the specific API you want to use. This
+address is then followed by a <code>?</code> and one or more key-value pairs with an
+equal sign like this: <code>key=value</code>. Multiple key-value pairs are
+separated with a <code>&amp;</code>.
+</p>
+
+<p>
+For instance, at the time of the writing of this book, Google offers
+an API endpoint, <code>https://www.googleapis.com/books/v1/volumes</code>, to search for books on Google Books.
+If you want to search for books about Python, you can supply a key <code>q</code> (which stands for query) with
+the value &ldquo;python&rdquo; (Example&nbsp;<a href='#ex:googleapi1'>12.1</a>). We do not need any specific
+software for this &ndash; we could, in fact, use a web browser as well.
+Popular packages that allow us to do it programatically are <i>httr</i>
+in combination with <i>jsonlite</i> (R) and <i>requests</i> (Python).
+</p>
+
+<p>
+But how do we know which parameters (i.e., which key-value pairs) we can use?
+We need to look it up in the documentation of the API we are
+interested in (in this example <a href='https://developers.google.com/books/docs/v1/using'>developers.google.com/books/docs/v1/using</a>).
+There is no other way of knowing that the key to submit a query
+is called <code>q</code>, and which other parameters can be specified.
+</p>
+<div class='feature'>
+  In our example, we used a simple value to include in the request:
+  the string &ldquo;python&rdquo;.  But what if we want to submit a string that
+  contains, let's say, a space, or a character like <code>&amp;</code> or <code>?</code> which,
+  as we have seen, have a special meaning in the request? In these
+  cases, you need to &ldquo;encode&rdquo; your URL using a mechanism called URL
+  encoding or percent encoding. You may have seen this earlier: a
+  space, for instance, is represented by <code>&percnt;20</code></div><div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:googleapi1' name='ex:googleapi1'>Example 12.1.</a></small><br />
+Retrieving JSON data from the Google Books API. </h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>r = requests.get("https://www.googleapis.com/"</code>
+<code>                 "books/v1/volumes?q=python")</code>
+<code>data = r.json()</code>
+<code>print(data.keys())  # "items" seems most promising</code>
+<code>pprint(data["items"][0]) # let's print the 1st one</code>
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>url = str_c("https://www.googleapis.com/books/",</code>
+<code>          "v1/volumes?q=python")</code>
+<code>r = GET(url)</code>
+<code>data = content(r, as="parsed")</code>
+<code>print(names(data))</code>
+<code>print(data$items[[1]])</code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<pre class='output'>dict_keys(['kind', 'totalItems', 'items'])
+{'accessInfo': {'accessViewStatus': 'NONE',
+                'country': 'NL',
+                'embeddable': False,
+                'epub': {'isAvailable': False},
+                'pdf': {'isAvailable': False},
+                'publicDomain': False,
+                'quoteSharingAllowed': False,
+                'textToSpeechPermission': 'ALLOWED',
+                'viewability': 'NO_PAGES',
+                'webReaderLink': 'http://play.google.com/books/reader?id=yijjwAEACAAJ&hl=&printsec=frontcover&source=gbs_api'},
+ 'etag': 'zp/xhhsKukU',
+ 'id': 'yijjwAEACAAJ',
+ 'kind': 'books#volume',
+ 'saleInfo': {'country': 'NL', 'isEbook': False, 'saleability': 'NOT_FOR_SALE'},
+ 'searchInfo': {'textSnippet': 'With this handbook, you&#39;ll learn how to '
+                               'use: IPython and Jupyter: provide '
+                               'computational environments for data scientists '
+                               'using Python NumPy: includes the ndarray for '
+                               'efficient storage and manipulation of dense '
+                               'data arrays in Python Pandas: ...'},
+ 'selfLink': 'https://www.googleapis.com/books/v1/volumes/yijjwAEACAAJ',
+ 'volumeInfo': {'allowAnonLogging': False,
+                'authors': ['Jacob T. Vanderplas', 'Jake VanderPlas'],
+                'averageRating': 5,
+                'canonicalVolumeLink': 'https://books.google.com/books/about/Python_Data_Science_Handbook.html?hl=&id=yijjwAEACAAJ',
+                'categories': ['Computers'],
+                'contentVersion': 'preview-1.0.0',
+                'description': 'For many researchers, Python is a first-class '
+                               'tool mainly because of its libraries for '
+                               'storing, manipulating, and gaining insight '
+                               'from data. Several resources exist for '
+                               'individual pieces of this data science stack, '
+                               'but only with the Python Data Science Handbook '
+                               'do you get them all--IPython, NumPy, Pandas, '
+                               'Matplotlib, Scikit-Learn, and other related '
+                               'tools. Working scientists and data crunchers '
+                               'familiar with reading and writing Python code '
+                               'will find this comprehensive desk reference '
+                               'ideal for tackling day-to-day issues: '
+                               'manipulating, transforming, and cleaning data; '
+                               'visualizing different types of data; and using '
+                               'data to build statistical or machine learning '
+                               'models. Quite simply, this is the must-have '
+                               'reference for scientific computing in Python. '
+                               "With this handbook, you'll learn how to use: "
+                               'IPython and Jupyter: provide computational '
+                               'environments for data scientists using Python '
+                               'NumPy: includes the ndarray for efficient '
+                               'storage and manipulation of dense data arrays '
+                               'in Python Pandas: features the DataFrame for '
+                               'efficient storage and manipulation of '
+                               'labeled/columnar data in Python Matplotlib: '
+                               'includes capabilities for a flexible range of '
+                               'data visualizations in Python Scikit-Learn: '
+                               'for efficient and clean Python implementations '
+                               'of the most important and established machine '
+                               'learning algorithms',
+                'imageLinks': {'smallThumbnail': 'http://books.google.com/books/content?id=yijjwAEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api',
+                               'thumbnail': 'http://books.google.com/books/content?id=yijjwAEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api'},
+                'industryIdentifiers': [{'identifier': '1491912057',
+                                         'type': 'ISBN_10'},
+                                        {'identifier': '9781491912058',
+                                         'type': 'ISBN_13'}],
+                'infoLink': 'http://books.google.nl/books?id=yijjwAEACAAJ&dq=python&hl=&source=gbs_api',
+                'language': 'un',
+                'maturityRating': 'NOT_MATURE',
+                'pageCount': 529,
+                'panelizationSummary': {'containsEpubBubbles': False,
+                                        'containsImageBubbles': False},
+                'previewLink': 'http://books.google.nl/books?id=yijjwAEACAAJ&dq=python&hl=&cd=1&source=gbs_api',
+                'printType': 'BOOK',
+                'publishedDate': '2016',
+                'publisher': "O'Reilly Media",
+                'ratingsCount': 1,
+                'readingModes': {'image': False, 'text': False},
+                'subtitle': 'Essential Tools for Working with Data',
+                'title': 'Python Data Science Handbook'}}</pre>
+</div></div>
+<p>
+The data our request returns are nested data, and hence, they do not
+really &ldquo;fit&rdquo; in a tabular data frame. We could keep the data as they
+are (and then, for instance, just extract the key-value pairs that we
+are interested in), but &ndash; for the sake of getting a quick overview &ndash;
+let's flatten the data so that they can be represented in a data frame
+(Example&nbsp;<a href='#ex:googleapi2'>12.2</a>). This works quite well here, but may be more
+problematic when the items have a widely varying structure. If that
+is the case, we probably would want to write a loop to iterate
+over the different items and extract the information we are interested in.
+</p>
+<div class='code-example'><h4>
+  <small class='text-muted'><a class='anchor' href='#ex:googleapi2' name='ex:googleapi2'>Example 12.2.</a></small><br />
+Transforming the data into a data frame.</h4>
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>d = json_normalize(data["items"])</code>
+<code>d.head()</code>
+&nbsp;
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>r_text = content(r, "text")</code>
+<code>data_json = fromJSON(r_text, flatten=T)</code>
+<code>d = as.data.frame(data_json)</code>
+<code>head(d)</code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>R output. Note that Python output may look slightly different</div>
+<div class='table-wrapper'><table>
+<caption>A data.frame: 6 × 5</caption>
+<thead>
+	<tr><th></th><th scope=col>kind</th><th scope=col>totalItems</th><th scope=col>items.kind</th><th scope=col>items.id</th><th scope=col>items.etag</th></tr>
+	<tr><th></th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><th scope=row>1</th><td>books#volumes</td><td>443</td><td>books#volume</td><td>2ZggjwEACAAJ</td><td>SL/fqJ1dIHQ</td></tr>
+	<tr><th scope=row>2</th><td>books#volumes</td><td>443</td><td>books#volume</td><td>1mZtP9H6OMQC</td><td>9Xwidh/MUg4</td></tr>
+	<tr><th scope=row>3</th><td>books#volumes</td><td>443</td><td>books#volume</td><td>ENIVBdZIJ6cC</td><td>54DFGUmBbfQ</td></tr>
+	<tr><th scope=row>4</th><td>books#volumes</td><td>443</td><td>books#volume</td><td>yijjwAEACAAJ</td><td>PBNxIPu/Dk8</td></tr>
+	<tr><th scope=row>5</th><td>books#volumes</td><td>443</td><td>books#volume</td><td>9MS9BQAAQBAJ</td><td>83CRBc7BfXw</td></tr>
+	<tr><th scope=row>6</th><td>books#volumes</td><td>443</td><td>books#volume</td><td>BP_WAgAAQBAJ</td><td>gOkbxCI0oFI</td></tr>
+</tbody>
+</table>
+</div>
+</div></div>
+<p>
+You may have realized that you did not get <i>all</i> results.
+This protects you from accidentally downloading a huge dataset (you
+may have underestimated the number of Python books available on the
+market), and saves the provider of the API a lot of bandwidth.
+This does not mean that you cannot get more data. In fact, many APIs work
+with <i>pagination</i>: you first get the first &ldquo;page&rdquo; of results,
+then the next, and so on. Sometimes, the API response contains
+a specific key-value pair (sometimes called a &ldquo;continuation key&rdquo;)
+that you can use to get the next results; sometimes, you can just
+say at which result you want to start (say, result number 11) and
+then get the next &ldquo;page&rdquo;. You can then write a loop to retrieve
+as many results as you need (Example&nbsp;<a href='#ex:googleapi3'>12.3</a>) &ndash; just make sure
+that you do not get stuck in an eternal loop. When you start playing
+around with APIs, make sure you do not cause unnecessary traffic,
+but limit the number of calls that are made (see also Section&nbsp;<a href='#12_4'>12.4</a>).
+</p>
+<div class='code-example'><h4>
+  <small class='text-muted'><a class='anchor' href='#ex:googleapi3' name='ex:googleapi3'>Example 12.3.</a></small><br />
+Full script including pagination.</h4>
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>allitems = []</code>
+<code>i = 0</code>
+<code>while True:</code>
+<code>    r = requests.get("https://www.googleapis.com/"</code>
+<code>        "books/v1/volumes?q=python&maxResults="</code>
+<code>        f"40&startIndex={i}")</code>
+<code>    data = r.json()</code>
+<code>    if not "items" in data:</code>
+<code>        print(f"Retrieved {len(allitems)},"</code>
+<code>              "it seems like that's it")</code>
+<code>        break</code>
+<code>    allitems.extend(data["items"])</code>
+<code>    i+=40</code>
+<code>d = json_normalize(allitems)</code>
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>i = 0</code>
+<code>j = 1</code>
+<code>url = str_c("https://www.googleapis.com/books/",</code>
+<code>            "v1/volumes?q=python&maxResults=40",</code>
+<code>            "&startIndex={i}")</code>
+<code>alldata = list()</code>
+<code>while (TRUE) {</code>
+<code>    r = GET(glue(url))</code>
+<code>    r_text = content(r, "text")</code>
+<code>    data_json = fromJSON(r_text, flatten=T)</code>
+<code>    if (length(data_json$items)==0) {break}</code>
+<code>    alldata[[j]] = as.data.frame(data_json)</code>
+<code>    i = i + 40</code>
+<code>    j = j + 1} </code>
+<code>d = rbindlist(alldata, fill=TRUE)</code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>R output. Note that Python output may look slightly different</div>
+<div class='table-wrapper'><table>
+<caption>A data.table: 6 × 5</caption>
+<thead>
+	<tr><th scope=col>kind</th><th scope=col>totalItems</th><th scope=col>items.kind</th><th scope=col>items.id</th><th scope=col>items.etag</th></tr>
+	<tr><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;int&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th><th scope=col>&lt;chr&gt;</th></tr>
+</thead>
+<tbody>
+	<tr><td>books#volumes</td><td>433</td><td>books#volume</td><td>2ZggjwEACAAJ</td><td>w8RpK1LsfT4</td></tr>
+	<tr><td>books#volumes</td><td>433</td><td>books#volume</td><td>1mZtP9H6OMQC</td><td>T7fABU4eveM</td></tr>
+	<tr><td>books#volumes</td><td>433</td><td>books#volume</td><td>ENIVBdZIJ6cC</td><td>aCgPlDS7evE</td></tr>
+	<tr><td>books#volumes</td><td>433</td><td>books#volume</td><td>yijjwAEACAAJ</td><td>vtQw9sGLFuA</td></tr>
+	<tr><td>books#volumes</td><td>433</td><td>books#volume</td><td>9MS9BQAAQBAJ</td><td>Wb3CmjuAY/I</td></tr>
+	<tr><td>books#volumes</td><td>433</td><td>books#volume</td><td>pjqbAgAAQBAJ</td><td>Muu0EHCF6k8</td></tr>
+</tbody>
+</table>
+</div>
+</div></div>
+<p>
+Many APIs work very much like the example we discussed, and you
+can adapt the logic above to many APIs once you have read their
+documentation. You would usually start by playing around with
+single requests, and then try to automate the process by means
+of a loop.
+</p>
+
+<p>
+However, many APIs have restrictions regarding who can use them,
+how many requests can be made, and so on.
+For instance, you may need to limit the number of requests per minute
+by calling a <code>sleep</code> function within your loop to delay the
+execution of the next call. Or, you may need to authenticate
+yourself. In the example of the Google Books API, this will
+allow you to request more data (such as whether you own an
+(electronic) copy of the books you retrieved). In this case,
+the documentation outlines that you can simply pass an authentication
+token as a parameter with the URL. However, many APIs use
+more advanced authentication methods such as OAuth (see Section&nbsp;<a href='#12_3'>12.3</a>).
+</p>
+
+<p>
+Lastly, for many APIs that are very popular with social
+scientists, specific wrapper packages exist (such as <i>tweepy</i> (Python) or <i>rtweet</i> (R) for downloading twitter messages)
+which are a bit more user-friendly and handle things like authentication, pagination,
+respecting rate-limits, etc., for you.
+</p>
+
+<h2>  <small class='text-muted'><a class='anchor' href='#12_2' name='12_2'>12.2.</a></small>Retrieving and Parsing Web Pages
+</h2>
+
+
+<p>
+Unfortunately, not all online services we may be interested in offer
+an API &ndash; in fact, it has even been suggested that computational
+researchers have arrived in an &ldquo;post-API age&rdquo; <span class="cite" title="Freelon, D. (2018). Computational Research in the Post-API Age. Political Communication, 35(4):665--668.">Freelon, 2018</span>, as
+API access for researchers has become increasingly restricted.
+</p>
+
+<p>
+If data cannot be collected using an API (or a similar service, such
+as RSS feeds), we need to resort to web scraping. Before you start a
+web scraping project, make sure to ask the appropriate  authorities for
+ethical and legal advice (see also Section&nbsp;<a href='#12_4'>12.4</a>).
+</p>
+
+<p>
+Web scraping (sometimes also referred to as harvesting), in essence,
+boils down to automatically downloading web pages aimed at a human
+audience, and extracting meaningful information out of them. One could
+also say that we are reverse-engineering the way the information was
+published on the web. For instance, a news site may always use a
+specific formatting to denote the title of an article &ndash; and we would
+then use this to extract the title. This process is called &ldquo;parsing&rdquo;,
+which in this context is just a fancy term for &ldquo;extracting meaningful
+information&rdquo;.
+</p>
+
+<p>
+When scraping data from the web, we can distinguish two different
+tasks: (1) downloading a (possibly large) number of webpages, and (2)
+parsing the content of the webpages. Often, both go hand in
+hand. For instance, the URL of the next page to be downloaded might
+actually be parsed from the content of the current page; or some
+overview page may contain the links and thus has to be parsed first in
+order to download subsequent pages.
+</p>
+
+<p>
+We will first discuss how to parse a single HTML page (say, the page
+containing one specific product review, or one specific news article),
+and then describe how to &ldquo;scale up&rdquo; and repeat the process in a
+loop (to scrape, let's say, all reviews for the product; or all
+articles in a specific time frame).
+</p>
+
+<h3>  <small class='text-muted'><a class='anchor' href='#12_2_1' name='12_2_1'>12.2.1.</a></small>Retrieving and Parsing an HTML Page
+</h3>
+
+
+<p>
+In order to parse an HTML file, you need to have a basic understanding
+of the structure of an HTML file. Open your web browser, visit a
+website of your choice (we suggest to use a simple page, such as
+<a href='http://css-book.net/d/restaurants/index.html'>css-book.net/d/restaurants/index.html</a>), and
+ inspect its underlying HTML code (almost all browsers have a
+function called something like &ldquo;view source&rdquo;, which enables you to
+do so).
+</p>
+
+<p>
+You will see that there are some regular patterns in there. For
+example, you may see that each paragraph is enclosed with the tags
+<code>&lt;p&gt;</code> and <code>&lt;/p&gt;</code>. Thinking back to Section&nbsp;<a href='chapter09.html#9_2'>9.2</a>, you may figure out
+that you could, for instance, use a regular expression to extract
+the text of the first paragraph. In fact, packages like <i>beautifulsoup</i>
+under the hood use regular expressions to do exactly that.
+</p>
+
+<p>
+Writing your own set of regular expressions to parse an HTML
+page is usually not a good idea (but it can be a last resort when
+everything else fails). Chances are high that you will make
+a mistake or  not handle some edge case correctly; and besides,
+it would be a bit like re-inventing the wheel. Packages like
+<i>rvest</i> (R), <i>beautifulsoup</i>, and <i>lxml</i> (both Python)
+already do this for you.
+</p>
+
+<p>
+In order to use them, though, you need to have a basic
+understanding of what an HTML page looks like. Here is a simplified
+example:
+</p>
+<pre>
+&lt;html&gt;
+&lt;body&gt;
+&lt;h1&gt;This is a title&lt;/h1&gt;
+&lt;div id=&#34;main&#34;&gt;
+&lt;p&gt; Some text with one &lt;a href=&#34;test.html&#34;&gt;link &lt;/a&gt; &lt;/p&gt;
+&lt;img src = &#34;plaatje.jpg&#34;&gt;an image &lt;/img&gt;
+&lt;/div&gt;
+&lt;div id=&#34;body&#34;&gt;
+&lt;p class=&#34;lead&#34;&gt; Some more text &lt;/p&gt;
+&lt;p&gt; Even more... &lt;/p&gt;
+&lt;p&gt; And more. &lt;/p&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<p>
+For now, it is not too important to understand the function of each
+specific tag (although it might help, for instance, to realize that
+<code>a</code> denotes a link, <code>h1</code> a first-level heading,
+<code>p</code> a paragraph and <code>div</code> some kind of section).
+</p>
+
+<p>
+What is important, though, is to realize that each tag is opened and
+closed (e.g., <code>&lt;p&gt;</code> is closed by <code>&lt;/p&gt;</code>).
+Because tags can be nested, we can actually
+draw the code as a tree. In our example, this would look like this:
+</p>
+<ul style='list-style-type: "↪"'><li>html</li><ul style='list-style-type: "↪"'><li>body</li><ul style='list-style-type: "↪"'><li>h1</li><li>div#main</li><ul style='list-style-type: "↪"'><li>p</li><ul style='list-style-type: "↪"'><li>a</li></ul><li>img</li></ul><li>div</li><ul style='list-style-type: "↪"'><li>p.lead</li><li>p</li><li>p</li></ul></ul></ul></ul>
+<p>
+Additionally, tags can have <i>attributes</i>. For instance, the
+makers of a page with customer reviews may use attributes to specify
+what a section contains. For example, they may have written
+<code>&lt;p class=&#34;lead&#34;&gt; ... &lt;/div&gt;</code> to mark the lead paragraph of an article,
+and <code>&lt;a href=test.html&#34;&gt; ...&lt;/a&gt;</code> to specify the target of a hyperlink.
+Especially important here are the <code>id</code> and <code>class</code> attributes,
+which are often used by webpages to control the formatting.
+<code>id</code> (indicated with the hash sign <code>#</code> above) gives a unique ID to a single element,
+while <code>class</code> (indicated with a period) assigns a class label to one or more elements.
+This enables web sites to specify their layout and formatting using a technique called Cascading Style Sheets (CSS).
+For example, the web page could set the lead paragraph to be bold.
+The nice thing is that we can exploit
+this information to tell our parser where to find the elements we
+are interested in.
+</p>
+<div class='figure'><h4>
+  <small class='text-muted'><a class='anchor' href='#tab:cssselect' name='tab:cssselect'>Table 12.1.</a></small><br />
+Overview of CSSSelect and XPath syntax</h4>
+<table class='table'><thead>
+  <tr>
+    <th colspan="2">
+Example      
+    </th>
+    <th>
+ CSS Select   
+    </th>
+    <th>
+ XPath    
+    </th>
+
+  </tr>
+</thead><tbody>
+  <tr>
+    <td colspan="3">
+<em>Basic tree navigation</em> 
+    </td>
+    <td>
+
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+<code>h1</code> anywhere in document 
+    </td>
+    <td>
+<code>h1</code> 
+    </td>
+    <td>
+<code>//h1</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+<code>h1</code> inside a body 
+    </td>
+    <td>
+<code>body h1</code> 
+    </td>
+    <td>
+<code>//body//h1</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+<code>h1</code> directly inside <code>div</code> 
+    </td>
+    <td>
+<code>div > h1</code> 
+    </td>
+    <td>
+<code>//div/h1</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+ Any node directly inside <code>div</code> 
+    </td>
+    <td>
+<code>div</code> > * 
+    </td>
+    <td>
+<code>//div/*</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+<code>p</code> next to a <code>h1</code> 
+    </td>
+    <td>
+<code>h1 &nbsp; p</code> 
+    </td>
+    <td>
+<code>//h1/following-sibling::p</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+<code>p</code> next to a <code>h1</code> 
+    </td>
+    <td>
+<code>h1 + p</code> 
+    </td>
+    <td>
+<code>//h1/following-sibling::p[1]</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td colspan="3">
+<em>Node attributes</em> 
+    </td>
+    <td>
+
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+<code>&lt;div id='x1'></code> 
+    </td>
+    <td>
+<code>div#x1</code> 
+    </td>
+    <td>
+<code>//div[@id='x1']</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+ any node with <code>id x1</code> 
+    </td>
+    <td>
+<code>#x1</code> 
+    </td>
+    <td>
+<code>//*[@id='x1']</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+<code>&lt;div class='row'></code> 
+    </td>
+    <td>
+<code>div.row</code> 
+    </td>
+    <td>
+<code>//div[@class='row']</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+ any node with <code>class row</code> 
+    </td>
+    <td>
+<code>.row</code> 
+    </td>
+    <td>
+<code>//*[@class='row']</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+<code>a</code> with <code>href="#"</code> 
+    </td>
+    <td>
+<code>a[href="#"]</code> 
+    </td>
+    <td>
+<code>//a[@href="#"]</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td colspan="3">
+<em>Advanced tree navigation</em> 
+    </td>
+    <td>
+
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+<code>a</code> in a <code>div</code> with class 'meta' 
+    </td>
+    <td>
+<code>#main > div.meta a</code> 
+    </td>
+    <td>
+<code>//*[@id='main']</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+\(\;\;\;\;\) directly inside the <code>main</code> element 
+    </td>
+    <td>
+
+    </td>
+    <td>
+\(\;\;\;\;\) <code>/div[@class='meta']//a</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+ First <code>p</code> in a <code>div</code> 
+    </td>
+    <td>
+<code>div p:first-of-type</code> 
+    </td>
+    <td>
+<code>//div/p[1]</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+ First child of a <code>div</code> 
+    </td>
+    <td>
+<code>div :first-child</code> 
+    </td>
+    <td>
+<code>//div/*[1]</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+ Second <code>p</code> in a <code>div</code> 
+    </td>
+    <td>
+<code>div p:nth-of-type(2)</code> 
+    </td>
+    <td>
+<code>//div/p[2]</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+ Second <code>p</code> in a <code>div</code> 
+    </td>
+    <td>
+<code>div p:nth-of-type(2)</code> 
+    </td>
+    <td>
+<code>//div/p[2]</code> 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    </td>
+    <td>
+ parent of the <code>div</code> with id <code>x1</code> 
+    </td>
+    <td>
+ (not possible) 
+    </td>
+    <td>
+<code>//div[@id='x1']/parent::*</code> 
+    </td>
+
+  </tr>
+</tbody>
+</table></div>
+<p>
+<b>CSS Selectors</b> The easiest way to specify our parser to look for a specific element is to use a <i>CSS Selector</i>,
+which might be familiar to you if you have created web pages.
+For example, to find the lead paragraph(s) we specify <code>p.lead</code>.
+To find the node with <code>id="body"</code>, we can specify <code>#body</code>.
+You can also use this to specify relations between nodes. For example,
+to find all paragraphs within the body element we would write <code>#body p</code>.
+</p>
+
+<p>
+Table&nbsp;<a href='#tab:cssselect'>12.1</a> gives an overview of the possibilities of CSS Select.
+In general, a CSS selector is a set of node specifiers (like <code>h1</code>, <code>.lead</code> or <code>div#body</code>),
+optionally with relation specifiers between them.
+So, <code>#body p</code> finds a <code>p</code> anywhere inside the <code>id=body</code> element,
+while <code>#body > p</code> requires the <code>p</code> to be directly contained inside the body
+(with no other nodes in between).
+</p>
+
+<p>
+<b>XPath</b>
+An alternative to CSS Selectors is <i>XPath</i>.
+Where CSS Selectors are directly based on HTML and CSS styling,
+XPath is a general way to describe nodes in XML (and HTML) documents.
+The general form of XPath is similar to CSS Select:
+a sequence of node descriptors (such as <code>h1</code> or <code>*[@id='body']</code>).
+Contrary to CSS Select, you always have to specify the relationship, where
+<code>//</code> means any direct or indirect descendant and <code>/</code> means a direct child.
+If the relationship is not a child or descendant relationship (but for example a sibling or parent),
+you specify the <code>axis</code> with e.g. <code>//a/parent::p</code> meaning an <code>a</code> anywhere in the document (<code>//a</code>) which has a direct parent (<code>/parent::</code>) that is a <code>p</code>.
+</p>
+
+<p>
+A second difference with CSS Selectors is that the <i>class</i> and <i>id</i> attributes are not given special treatment,
+but can be used with the general <code>[@attribute='value']</code> pattern.
+Thus, to get the lead paragraph you would specify <code>//p[@class='lead']</code>.
+</p>
+
+<p>
+The advantage of XPath is that it is a very powerful tool.
+Everything that you can describe with a CSS Selector can also be described with an XPath pattern,
+but there are some things that CSS Selectors cannot describe,
+such as parents.
+On the other hand, XPath patterns can be a bit harder to write, read, and debug.
+You can choose to use either tool, and you can even mix and match them in a single script,
+but our general recommendation is to use CSS Selectors unless you need to use the specific abilities of XPath.
+</p>
+
+<p>
+Example&nbsp;<a href='#ex:htmlparse1'>12.4</a> shows how to use XPATHs and CSS selectors to parse
+an HTML page. To fully understand it, open
+<a href='https://cssbook.net/d/restaurants/index.html'>cssbook.net/d/restaurants/index.html</a> in a browser and
+look at its source code (all modern browsers have a function &ldquo;View
+page source&rdquo; or similar), or &ndash; more comfortable &ndash; right-click on an
+element you are interested in (such as a restaurant name) and select
+&ldquo;Inspect element&rdquo; or similar. This will give you a user-friendly
+view of the HTML code.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:htmlparse1' name='ex:htmlparse1'>Example 12.4.</a></small><br />
+Parsing websites using XPATHs or CSS selectors</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>tree=parse(urlopen(</code>
+<code>    "https://cssbook.net/d/eat/index.html"))</code>
+<code></code>
+<code># get the restaurant names via XPATH </code>
+<code>print([e.text_content().strip() for e in </code>
+<code>       tree.xpath("//h3")])</code>
+<code></code>
+<code># get the restaurant names via CSS Selector</code>
+<code>print([e.text_content().strip() for e in</code>
+<code>       tree.getroot().cssselect("h3")])</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>url = "https://cssbook.net/d/eat/index.html"</code>
+<code>page = read_html(url)</code>
+<code></code>
+<code># get the restaurant names via XPATH</code>
+<code>page %&gt;% html_nodes(xpath="//h3") %&gt;% html_text() </code>
+<code></code>
+<code># get the restaurant names via CSS Selector</code>
+<code>page %&gt;% html_nodes("h3") %&gt;% html_text() </code>
+&nbsp;
+&nbsp;  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<pre class='output'>['Pizzeria Roma', 'Trattoria Napoli', 'Curry King']
+['Pizzeria Roma', 'Trattoria Napoli', 'Curry King']</pre>
+</div></div>
+<p>
+Of course, Example&nbsp;<a href='#ex:htmlparse1'>12.4</a> only parses one possible element of interest: the restaurant names. Try to retrieve other elements as well!
+</p>
+<div class='feature'><b>Do you care about children?</b>
+Regardless of whether you use XPATHS or CSS Selectors to specify which part of the page you are interested in, it is often the case that there are other elements within it. Depending on whether you want to also retrieve the text of these elements or not, you have to use different approaches (see Example&nbsp;<a href='#ex:htmlparse2'>12.5</a>).
+</div><div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:htmlparse2' name='ex:htmlparse2'>Example 12.5.</a></small><br />
+Getting the text of an HTML element versus getting the text of the element and its children</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code># three ways of extracting text</code>
+<code>print("Appending `/text()` to the XPATH gives you "</code>
+<code>      "exactly the text that is in the element "</code>
+<code>      "itself, including line-breaks that happen "</code>
+<code>      "to be in the source code:" )</code>
+<code>print(tree.xpath(</code>
+<code>    "//div[@class='restaurant']/text()"))</code>
+<code></code>
+<code>print("\nUsing the `text` property of the"</code>
+<code>      "elements in the list of elements that are "</code>
+<code>      "matched by the XPATH expression gives you "</code>
+<code>      "the text of the elements themselves "</code>
+<code>      "without the line breaks: ")</code>
+<code>print([e.text for e in tree.xpath(</code>
+<code>    "//div[@class='restaurant']")])</code>
+<code></code>
+<code>print("\nUsing the `text_content()` method "</code>
+<code>      "instead returns the text of the element "</code>
+<code>      "*and the text of its children*:")</code>
+<code>print([e.text_content() for e in tree.xpath(</code>
+<code>    "//div[@class='restaurant']")])</code>
+<code></code>
+<code>print("\nThe same but using CSS Selectors (note "</code>
+<code>      "the .getroot() method, because the "</code>
+<code>      "selectors can only be applied to HTML "</code>
+<code>      "elements, not to DOM trees): ")</code>
+<code>print([e.text_content() for e in</code>
+<code>       tree.getroot().cssselect(".restaurant")])</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>url = "https://cssbook.net/d/eat/index.html"</code>
+<code>page = read_html(url)</code>
+<code></code>
+<code>glue("Appending `/text()` to the XPATH gives you\\</code>
+<code>exactly the text that is in the element itself, \\</code>
+<code>including line-breaks that happen to be in the \\</code>
+<code>source code:" )</code>
+<code>page %&gt;% html_nodes(xpath=</code>
+<code>    "//div[@class='restaurant']/text()") </code>
+<code></code>
+<code>glue("Using the `html_text` function instead \\</code>
+<code>returns the text of the element *and the text \\</code>
+<code>of its children*:")</code>
+<code>page %&gt;% html_nodes(xpath=</code>
+<code>    "//div[@class='restaurant']") %&gt;% html_text()</code>
+<code></code>
+<code>glue("The same but using CSS Selectors:")</code>
+<code>page %&gt;% html_nodes(".restaurant") %&gt;% html_text()</code>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<pre class='output'>Appending `/text()` to the XPATH gives you exactly the text that is in the element itself, including line-breaks that happen to be in the source code:
+[' ', '\n      ', '\n      ', '\n    ', ' ', '\n      ', '\n      ', '\n    ', ' ', '\n      ', '\n      ', '\n    ']
+
+Using the `text` property of theelements in the list of elements that are matched by the XPATH expression gives you the text of the elements themselves without the line breaks:
+[' ', ' ', ' ']
+
+Using the `text_content()` method instead returns the text of the element *and the text of its children*:
+['  Pizzeria Roma \n       Here you can get ... ... \n       Read the full review here\n    ', '  Trattoria Napoli \n       Another restaurant ... ... \n       Read the full review here\n    ', '  Curry King \n       Some description. \n       Read the full review here\n    ']
+
+The same but using CSS Selectors (note the .getroot() method, because the selectors can only be applied to HTML elements, not to DOM trees):
+['  Pizzeria Roma \n       Here you can get ... ... \n       Read the full review here\n    ', '  Trattoria Napoli \n       Another restaurant ... ... \n       Read the full review here\n    ', '  Curry King \n       Some description. \n       Read the full review here\n    ']</pre>
+</div></div>
+<p>
+Notably, you may want to parse links. In HTML, links use a specific tag, <code>a</code>. These tags have an attribute, <code>href</code>, which contains the link itself. Example&nbsp;<a href='#ex:htmlparse3'>12.6</a> shows how, after selecting the <code>a</code> tags, we can access these attributes.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:htmlparse3' name='ex:htmlparse3'>Example 12.6.</a></small><br />
+Parsing link texts and links</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>linkelements = tree.xpath("//a")</code>
+<code>linktexts = [e.text for e in linkelements]</code>
+<code>links = [e.attrib["href"] for e in linkelements]</code>
+<code></code>
+<code>print(linktexts)</code>
+<code>print(links)</code>
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>page %&gt;% </code>
+<code>  html_nodes(xpath="//a") %&gt;% </code>
+<code>  html_text() </code>
+<code>page %&gt;% </code>
+<code>  html_nodes(xpath="//a") %&gt;% </code>
+<code>  html_attr("href")</code>
+<code></code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<pre class='output'>['here', 'here', 'here']
+['review0001.html', 'review0002.html', 'review0003.html']</pre>
+</div></div><div class='feature'><b>Pretending to be a specific browser.</b>  When <i>lxml</i>, <i>rvest</i>, or your web browser download an HTML page, they send a so-called HTTP request. This request contains the URL, but also some meta-data, such as a so-called user-agent string. This string specifies the name and version of the browser. Some sites may block specific user agents (such as, for instance, the ones that <i>lxml</i> or <i>rvest</i> use); and sometimes, they deliver different content for different browsers. By using a more powerful module for downloading the HTML code (such as <i>requests</i> or <i>httr</i>) before parsing it, you can specify your own user-agent string and thus pretend to be a specific browser. If you do a web search, you will quickly find long lists with popular strings. In Example&nbsp;<a href='#ex:htmlparse1useragent'>12.7</a>, we rewrote Example&nbsp;<a href='#ex:htmlparse1'>12.4</a> such that a custom user-agent can be specified.
+</div><div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:htmlparse1useragent' name='ex:htmlparse1useragent'>Example 12.7.</a></small><br />
+Specifying a user agent to pretend to be a
+    specific browser</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>import requests</code>
+<code>from lxml.html import fromstring</code>
+<code>headers = {"User-Agent": "Mozilla/5.0 (Windows "</code>
+<code>    "NT 10.0; Win64; x64; rv:60.0) "</code>
+<code>    "Gecko/20100101 Firefox/60.0"}</code>
+<code></code>
+<code>htmlsource = requests.get(</code>
+<code>    "https://cssbook.net/d/eat/index.html", </code>
+<code>    headers = headers).text</code>
+<code>tree = fromstring(htmlsource)</code>
+<code>print([e.text_content().strip() for e in </code>
+<code>       tree.xpath("//h3")])</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>r = GET("https://cssbook.net/d/eat/index.html",</code>
+<code>    user_agent=str_c("Mozilla/5.0 (Windows NT ",</code>
+<code>    "10.0; Win64; x64; rv:60.0) Gecko/20100101 ",</code>
+<code>    "Firefox/60.0"))</code>
+<code>page = read_html(r)</code>
+<code>page %&gt;% html_nodes(xpath="//h3") %&gt;% html_text() </code>
+<code></code>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<pre class='output'>['Pizzeria Roma', 'Trattoria Napoli', 'Curry King']</pre>
+</div></div>
+<h3>  <small class='text-muted'><a class='anchor' href='#12_2_2' name='12_2_2'>12.2.2.</a></small>Crawling Websites
+</h3>
+
+
+<p>
+Once we have mastered parsing a single HTML page, it is time to scale
+up. Only rarely are we interested in parsing a single page. In most
+cases, we want to use an HTML page as a starting point, parse it,
+follow a link to some other interesting page, parse it as well, and so
+on. There are some dedicated frameworks for this such as <i>scrapy</i>,
+but in our experience, it may be more of a burden to learn that
+framework than to just implement your crawler yourself.
+</p>
+
+<p>
+Staying with the example of a restaurant review website, we might be
+interested in retrieving all restaurants from a specific city, and for
+all of these restaurants, all available reviews.
+</p>
+
+<p>
+Our approach, thus, could look as follows:
+</p>
+
+<ol><li> Retrieve the overview page.
+	</li><li> Parse the names of the restaurants and the corresponding links.
+	</li><li> Loop over all the links, retrieve the corresponding pages.
+	</li><li> On each of these pages, parse the interesting content (i.e., the reviews, ratings, and so on).
+</li>
+</ol>
+<p>
+So, what if there are multiple overview pages (or multiple pages with
+reviews)? Basically, there are two possibilities: the first
+possibility is to look for the link to the next page, parse it,
+download the next page, and so on.  The second possibility exploits
+the fact that often, URLs are very systematic: for instance, the first
+page of restaurants might have a URL such as
+<a href='http://myreviewsite.com/amsterdam/restaurants.html?page=1'>myreviewsite.com/amsterdam/restaurants.html?page=1</a>.  If this
+is the case, we can simply construct a list with all possible URLs
+(Example&nbsp;<a href='#ex:createurls'>12.8</a>)
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:createurls' name='ex:createurls'>Example 12.8.</a></small><br />
+Generating a list of URLs that follow the same pattern.</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>baseurl="https://reviews.com/?page="</code>
+<code>tenpages = [f"{baseurl}{i+1}" for i in range(10)]</code>
+<code>print(tenpages)</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>baseurl="https://reviews.com/?page="</code>
+<code>tenpages=glue("{baseurl}{1:10}")</code>
+<code>print(tenpages)</code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<pre class='output'>['https://reviews.com/?page=1', 'https://reviews.com/?page=2', 'https://reviews.com/?page=3', 'https://reviews.com/?page=4', 'https://reviews.com/?page=5', 'https://reviews.com/?page=6', 'https://reviews.com/?page=7', 'https://reviews.com/?page=8', 'https://reviews.com/?page=9', 'https://reviews.com/?page=10']</pre>
+</div></div>
+<p>
+Afterwards, we would just loop over this list and retrieve all the
+pages (a bit like how we approached Example&nbsp;<a href='#ex:googleapi3'>12.3</a> in Section&nbsp;<a href='#12_1'>12.1</a>).
+</p>
+
+<p>
+However, often, things are not as straightforward, and we need to find
+the correct links on a page that we have been parsing &ndash; that's why we
+<i>crawl</i> through the website.
+</p>
+
+<p>
+Writing a good crawler can take some time, and they will look very
+differently for different pages. The best advice is to build them up
+step-by-step. Carefully inspect the website you are interested in.
+Take a sheet of paper, draw its structure, and try to find out which
+pages you need to parse, and how you can get from one page to the next.
+Also think about how the data that you want to extract should be organized.
+</p>
+
+<p>
+We will illustrate this process using our mock-up review website <a href='https://cssbook.net/d/restaurants/'>cssbook.net/d/restaurants/</a>.
+First, have a look at the site and try to understand its structure.
+</p>
+
+<p>
+You will see that it has an overview page, <code>index.html</code>, with the
+names of all restaurants and, per restaurant, a link to a page with reviews.
+Click on these links, and note your observations, such as:
+
+</p>
+
+<ul><li> the pages have different numbers of reviews;
+</li><li> each review consists of an author name, a review text, and a rating;
+</li><li> some, but not all, pages have a link saying &ldquo;Get older reviews&rdquo;
+</li><li>&hellip;</li>
+</ul>
+<p>
+If you combine what you just learned about extracting text and links from HTML
+pages with your knowledge about control structures like loops and conditional
+statements (Section&nbsp;<a href='chapter03.html#3_2'>3.2</a>), you can now write your own crawler.
+</p>
+
+<p>
+Writing a scraper is a craft, and there are several ways of achieving your goal.
+You probably want to develop your scraper in steps: first write a function to
+parse the overview page, then a function to parse the review pages, then try
+to combine all elements into one script. Before you read on, try to write
+such a scraper.
+</p>
+
+<p>
+To show you one possible solution, we implemented a scraper in Python
+that crawls and parses all reviews for all restaurants
+(Example&nbsp;<a href='#ex:crawling'>12.9</a>), which we describe in detail below.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:crawling' name='ex:crawling'>Example 12.9.</a></small><br />
+Crawling a website</h4><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>BASEURL = "https://cssbook.net/d/eat/"</code>
+<code></code>
+<code>def get_restaurants(url):</code>
+<code>  """takes the URL of an overview page as input</code>
+<code>  returns a list of (name, link) tuples"""</code>
+<code>  tree = parse(urlopen(url))</code>
+<code>  names = [e.text.strip() for e in </code>
+<code>    tree.xpath("//div[@class='restaurant']/h3")]</code>
+<code>  links = [e.attrib["href"] for e in </code>
+<code>    tree.xpath("//div[@class='restaurant']//a")]</code>
+<code>  return list(zip(names, links))</code>
+<code></code>
+<code>def get_reviews(url):</code>
+<code>  """yields reviews on the specified page"""</code>
+<code>  while True:</code>
+<code>    print(f"Downloading {url}...")</code>
+<code>    tree = parse(urlopen(url))</code>
+<code>    names = [e.text.strip() for e in </code>
+<code>      tree.xpath("//div[@class='review']/h3")]</code>
+<code>    texts = [e.text.strip() for e in </code>
+<code>      tree.xpath("//div[@class='review']/p")]</code>
+<code>    ratings = [e.text.strip() for e in tree.xpath(</code>
+<code>      "//div[@class='rating']")]</code>
+<code>    for u,txt,rating in zip(names,texts,ratings):</code>
+<code>      review = {}</code>
+<code>      review["username"] = u.replace("wrote:","")</code>
+<code>      review["reviewtext"] = txt</code>
+<code>      review["rating"] = rating</code>
+<code>      yield review</code>
+<code>    bb=tree.xpath("//span[@class='backbutton']/a")</code>
+<code>    if bb:</code>
+<code>      print("Processing next page")</code>
+<code>      url = BASEURL+bb[0].attrib["href"]</code>
+<code>    else:</code>
+<code>      print("No more pages found.")</code>
+<code>      break</code>
+<code>        </code>
+<code>print("Retrieving all restaurants...")</code>
+<code>links = get_restaurants(BASEURL+"index.html")</code>
+<code>print(links)</code>
+<code></code>
+<code>with open("reviews.json", mode = "w") as f:</code>
+<code>    for restaurant, link in links:</code>
+<code>        print(f"Processing {restaurant}...")</code>
+<code>        for r in get_reviews(BASEURL+link):</code>
+<code>            r["restaurant"] = restaurant</code>
+<code>            f.write(json.dumps(r))</code>
+<code>            f.write("\n")</code>
+<code>            </code>
+<code># You can process the results with pandas</code>
+<code># (using lines=True since it"s one json per line)</code>
+<code>df = pd.read_json("reviews.json", lines=True)</code>
+<code>print(df)</code>  </pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<pre class='output'>Retrieving all restaurants...
+[('Pizzeria Roma', 'review0001.html'), ('Trattoria Napoli', 'review0002.html'), ('Curry King', 'review0003.html')]
+Processing Pizzeria Roma...
+Downloading https://cssbook.net/d/eat/review0001.html...
+No more pages found.
+Processing Trattoria Napoli...
+Downloading https://cssbook.net/d/eat/review0002.html...
+No more pages found.
+Processing Curry King...
+Downloading https://cssbook.net/d/eat/review0003.html...
+Processing next page
+Downloading https://cssbook.net/d/eat/review0003-1.html...
+Processing next page
+Downloading https://cssbook.net/d/eat/review0003-2.html...
+No more pages found.
+          username                                         reviewtext  rating  \
+0     gourmet2536   The best thing to do is ordering a full menu, ...  7.0/10
+1        foodie12                          The worst food I ever had!  1.0/10
+2    mrsdiningout             If nothing else is open, you can do it.  6.5/10
+3        foodie12                               Best Italian in town!  8.6/10
+4           smith                                            Love it!  9.0/10
+5        foodie12                                             Superb!  9.2/10
+6      dontlikeit                       As expected, I didn't like it  4.0/10
+7        otherguy                              Try the yoghurt curry!  7.7/10
+8           tasty                    We went here for dinner once and  7.0/10
+9            anna                I have mixed feeling about this one.  6.2/10
+10           hans                                     Not much to say  5.0/10
+11        bee1983                                    I am a huge fan!   10/10
+12         rhebjf           The service is good, the food not so much  6.5/10
+13  foodcritic555                              Once and never again!.  1.0/10
+
+          restaurant
+0      Pizzeria Roma
+1      Pizzeria Roma
+2   Trattoria Napoli
+3   Trattoria Napoli
+4         Curry King
+5         Curry King
+6         Curry King
+7         Curry King
+8         Curry King
+9         Curry King
+10        Curry King
+11        Curry King
+12        Curry King
+13        Curry King</pre>
+</div></div>
+<p>
+First, we need to get a list of all restaurants and the links to their
+reviews. That's what is done in the function <em>get_restaurants</em>. This
+is actually the first thing we do (see line 32).
+</p>
+
+<p>
+We now want to loop over these links and retrieve the reviews.  We
+decided to use a <i>generator</i> (Section&nbsp;<a href='chapter03.html#3_2'>3.2</a>): instead of writing a
+function that collects <i>all</i> reviews in a list first, we let the
+function yield each review immediately &ndash; and then append that review
+to a file. This has a big advantage: if our scraper fails (for
+instance, due to a time out, a block, or a programming error), then we
+have already saved the reviews we got so far.
+</p>
+
+<p>
+We loop over the links to the restaurants (line 36) and call the
+function <em>get_reviews</em> (line 38). Each review it returns (the review
+is a dict) gets the name of the restaurant as an extra key, and then
+gets written to a file which contains one JSON-object per line (also
+known as a jsonlines-file).
+</p>
+
+<p>
+The function <code>get_reviews</code> takes a link to a review page as input and
+yields reviews. If we knew all pages with reviews already, then we
+would not need the while loop statement in line 12 and the lines
+24&ndash;29. However, as we have seen, some review pages contain a link to
+older reviews. We therefore use a loop that runs forever (that is what
+<code>while True:</code> does), <i>unless</i> it encounters a <code>break</code> statement
+(line 29).  An inspection of the HTML code shows that these links have
+a <code>span</code> tag with the attribute <code>class=&#34;backbutton&#34;</code>. We therefore
+check if such a button exists (line 24), and if so, we get its <code>href</code>
+attribute (i.e., the link itself), overwrite the <code>url</code> variable with
+it, and then go back to line 16, the beginning of the loop, so that we
+can download and parse this next URL.  This goes on until such a
+link is no longer found.
+</p>
+
+<h3>  <small class='text-muted'><a class='anchor' href='#12_2_3' name='12_2_3'>12.2.3.</a></small>Dynamic Web Pages
+</h3>
+
+
+<p>
+You may have realized that all our scraping efforts until now
+proceeded in two steps: we retrieved (downloaded) the HTML source of a
+web page and then parsed it. However, modern websites more and more frequently 
+are dynamic rather than static. For example, after being loaded, they
+load additional content, or what is displayed changes based on what
+the user does. Frequently, some JavaScript is run within the user's
+browser to do that. However, we do not have a browser here. The HTML
+code we downloaded may contain some instructions for the browser that
+some code needs to be run, but in the absence of a browser, our Python
+or R script cannot do this.
+</p>
+
+<p>
+As a first test to check out whether this is a concern, you can simply
+check whether the HTML code in your browser is the same as that you would
+get if you downloaded it with R or Python.  After having retrieved the
+page (Example&nbsp;<a href='#ex:htmlparse1useragent'>12.7</a>), you simply dump it to a file
+(Example&nbsp;<a href='#ex:htmltofile'>12.10</a>) and open this file in your browser to verify that
+you indeed downloaded what you intended to download (and not, for
+instance, a login page, a cookie wall, or an error message).
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:htmltofile' name='ex:htmltofile'>Example 12.10.</a></small><br />
+Dumping the HTML source to a file</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>with open("test.html", mode="w") as fo:</code>
+<code>    fo.write(htmlsource)</code>
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>fileConn&lt;-file("test.html")</code>
+<code>writeLines(content(r, as = "text"), fileConn)</code>
+<code>close(fileConn)</code>  </pre>
+</div></div></div>
+<p>
+If this test  shows that the data you are interested in is
+indeed not part of the HTML code you can retrieve with R or Python,
+and use the following checklist to find
+</p>
+
+<ol><li> Does using a different user-agent string (see above) solve the issue?
+</li><li> Is the issue due to some cookie that needs to be accepted or requires you to log in (see below)?
+</li><li> Is a different page delivered for different browsers, devices, display settings, etc.?
+</li>
+</ol>
+<p>
+If all of this does not help, or if you already know for sure that the
+content you are interested in is dynamically fetched via JavaScript or
+similar, you can use <i>Selenium</i> to literally start a browser and
+extract the content you are interested in from there. Selenium has
+been designed for testing web sites and allows you to automate clicks 
+in a browser window, and also supports CSS selectors and Xpaths
+to specify parts of the web page.
+</p>
+
+<p>
+Using Selenium may require some additional setup on your computer,
+which may depend on your operating system and the software versions you
+are using &ndash; check out the usual online sources for guidance if
+needed.  It is possible to use  Selenium through R using
+<i>Rselenium</i>. However, doing so can be quite a hassle and requires,
+ running a separate Selenium server, for instance,  using
+Docker. If you opt to use Selenium for web scraping, your safest bet
+is probably to follow an online tutorial and/or to dive into the
+documentation. To give you a first impression of the general working,
+Example&nbsp;<a href='#ex:selenium'>12.11</a> shows you how to (at the time of writing of this
+book) open Firefox, surf to Google, google for Tintin by entering that
+string and pressing the return key, click on the first link containing
+that string, and take a screenshot of the result.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:selenium' name='ex:selenium'>Example 12.11.</a></small><br />
+Using Selenium to literally open a browser, input text, click on a link, and take a screenshot.</h4><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>driver = webdriver.Firefox()</code>
+<code>driver.implicitly_wait(10)</code>
+<code>driver.get("https://www.duckduckgo.com")</code>
+<code>element = driver.find_element_by_name("q")</code>
+<code># also check out other options such as </code>
+<code># .find_element_by_xpath</code>
+<code># or .find_element_by_css_selector</code>
+<code>element.send_keys("TinTin")</code>
+<code>element.send_keys(Keys.RETURN)</code>
+<code>try:</code>
+<code>    driver.find_element_by_css_selector(</code>
+<code>        "#links a").click()</code>
+<code>    # let"s be cautious and wait 10 seconds</code>
+<code>    # so that everything is loaded</code>
+<code>    time.sleep(10)</code>
+<code>    driver.save_screenshot("screenshotTinTin.png")</code>
+<code>finally:</code>
+<code>    # whatever happens, close the browser</code>
+<code>    driver.quit()</code>  </pre>
+</div></div><div class='feature'><b>Losing your head</b>
+If you want to run long-lasting scraping processes using Selenium in
+the background (or on a server without a graphical user interface),
+you may want to look into what is called a &ldquo;headless&rdquo; browser. For
+instance, Selenium can start Firefox in &ldquo;headless&rdquo; mode, which means
+that it will run without making any connection to a graphical
+interface. Of course, that also means that you cannot watch Selenium
+scrape, which may make debugging more difficult. You could opt for
+developing your scraper first using a normal browser, and then
+changing it to use a headless browser once everything works.
+</div>
+<h2>  <small class='text-muted'><a class='anchor' href='#12_3' name='12_3'>12.3.</a></small>Authentication, Cookies, and Sessions
+</h2>
+
+
+<h3>  <small class='text-muted'><a class='anchor' href='#12_3_1' name='12_3_1'>12.3.1.</a></small>Authentication and APIs
+</h3>
+
+
+<p>
+When we introduced APIs in Section&nbsp;<a href='#12_1'>12.1</a>, we used the example of an
+API where you did not need to authenticate yourself. As we have seen,
+using such an API is as simple as sending an HTTP request to an
+endpoint and getting a response (usually, a JSON object) back. And
+indeed, there are plenty of interesting APIs (think for instance of
+open government APIs) that work this way.
+</p>
+
+<p>
+While this has obvious advantages for you, it also has some serious
+downsides from the perspective of the API provider as well as from
+a security and privacy standpoint. The more confidential the data is,
+the more likely it is that the API provider needs to know who you
+are in order to determine which data you are allowed to retrieve;
+and even if the data are not confidential, authentication may be
+used to limit the number of requests that an individual can make
+in a given time frame.
+</p>
+
+<p>
+In its most simple form, you just need to provide a unique key that
+identifies you as a user. For instance, Example&nbsp;<a href='#ex:textrazor'>12.12</a> shows how
+such a key can be passed along as an HTTP header, essentially as
+additional information next to the URL that you want to retrieve (see
+also Section&nbsp;<a href='#12_3_2'>12.3.2</a>). The example shows a call to an endpoint
+of a commercial API for natural language processing to inform how
+many requests we have made today.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:textrazor' name='ex:textrazor'>Example 12.12.</a></small><br />
+Passing a key as HTTP request header to authenticate at an API endpoint</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>import requests</code>
+<code></code>
+<code>requests.get("https://api.textrazor.com/account/",</code>
+<code>  headers={"x-textrazor-key": "SECRET"}).json()</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>r = GET("https://api.textrazor.com/account/", </code>
+<code>  add_headers("x-textrazor-key"="SECRET"))</code>
+<code>print(content(r, "text"))</code>
+&nbsp;  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<pre class='output'>{'ok': False, 'time': 0, 'error': 'Your TextRazor API Key was invalid.'}</pre>
+</div></div>
+<p>
+As you see, using an API that requires authentication by passing a key
+as an HTTP header is hardly more complicated than using APIs that do
+not require authentication such as outlined in Section&nbsp;<a href='#12_1'>12.1</a>.
+However, many APIs use more complex protocols for authentication.
+</p>
+
+<p>
+The most popular one is called OAuth, and it is used by many APIs
+provided by major players such as Google, Facebook, Twitter, GitHub,
+LinkedIn, etc. Here, you have a client ID and a client secret
+(sometimes also called consumer key and consumer secret, or API key and API secret) and an
+access token with associated access token secret. The first pair
+authenticates you as a user, the second pair authenticates the
+specific &ldquo;app&rdquo; (i.e., your script). Once authenticated, your
+script can then interact with the API. While it is possible to
+directly work with OAuth HTTP requests using <i>requests_oauthlib</i>
+(Python) or <i>httr</i> (R), chances are relatively low that you
+have to do so, unless you plan on really developing your own app
+or even your own API: for all popular API's, so-called wrappers,
+packages that provide a simpler interface to the API, are available
+on pypi and CRAN. Still, all of these require to have at least
+a consumer key and a consumer secret. The access token sometimes
+is generated via a web interface where you manage your account
+(e.g., in the case of Twitter), or can be acquired by your script
+itself, which then will redirect the user to a website in which
+they are asked to authenticate the app. The nice thing about this
+is that it only needs to happen once: once your app is authenticated,
+it can keep making requests.
+</p>
+
+<h3>  <small class='text-muted'><a class='anchor' href='#12_3_2' name='12_3_2'>12.3.2.</a></small>Authentication and Webpages
+</h3>
+
+
+<p>
+In this section, we briefly discuss different approaches for dealing
+with websites where you need to log on, accept something (e.g., a
+so-called cookie wall), or have to otherwise authenticate yourself.
+One approach can be the use of a web testing framework like Selenium
+(see Section&nbsp;<a href='#12_2_3'>12.2.3</a>): you let your script literally open a browser
+and, for instance, fill in your login information.
+</p>
+
+<p>
+However, sometimes that's not necessary and we can still use simpler
+and more efficient webscraping without invoking a browser. As we have already
+seen in Section&nbsp;<a href='#12_2_1'>12.2.1</a>, when making an HTTP request, we can transmit
+additional information, such as the so-called user-agent string. In a
+similar way, we can pass other information, such as cookies.
+</p>
+
+<p>
+In the developer tools of your browser (which we already used to determine
+XPATHs and CSS selectors), you can look up which cookies a specific website
+has placed. For instance, you could inspect all cookies <i>before</i> you
+logged on (or passed a cookie wall) and again inspect them afterwards to
+determine what has changed. With this kind of reverse-engineering, you
+can find out what cookies you need to manually set.
+</p>
+
+<p>
+In Example&nbsp;<a href='#ex:cookiewall'>12.13</a>, we illustrate this for a specific page  (at the
+time of writing of our book). Here, by inspecting the cookies in Firefox,
+we found out that clicking &ldquo;Accept&rdquo; on the cookie wall landing page
+caused a cookie with the name <code>cpc</code> and the value <code>10</code> to be set.   To set those cookies in our scraper, the easiest way is to retrieve that page first and store the cookies sent by the server. In Example&nbsp;<a href='#ex:cookiewall'>12.13</a>, we therefore start a <i>session</i>
+and try to download the page. We know that this will only show us the
+cookie wall &ndash; but it will also generate the necessary cookies. We then
+store these cookies, and add the cookie that we want to be set (<code>cpc=10</code>)
+to this cookie jar. Now, we have all cookies that we need for future
+requests. They will stay there for the whole session.
+</p>
+
+<p>
+If we only want to get a single page, we may not need to start a session
+to remember all the cookies, and we can just directly pass the single
+cookie we care about to a request instead (Example&nbsp;<a href='#ex:cookiewall2'>12.14</a>).
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:cookiewall' name='ex:cookiewall'>Example 12.13.</a></small><br />
+Explicitly setting a cookie to circumvent a cookie wall</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>URL = "https://www.geenstijl.nl/5160019/page"</code>
+<code></code>
+<code># circumvent cookie wall by setting a specific</code>
+<code># cookie: the key-value pair (cpc: 10)</code>
+<code>client = requests.session()</code>
+<code>r = client.get(URL)</code>
+<code></code>
+<code>cookies = client.cookies.items()</code>
+<code>cookies.append(("cpc","10"))</code>
+<code>response = client.get(URL,cookies=dict(cookies))</code>
+<code># end circumvention</code>
+<code></code>
+<code>tree = fromstring(response.text)</code>
+<code>allcomments = [e.text_content().strip() for e in </code>
+<code>               tree.cssselect(".cmt-content")]</code>
+<code>print(f"There are {len(allcomments)} comments.")</code>
+&nbsp;
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>URL = "https://www.geenstijl.nl/5160019/page/"</code>
+<code></code>
+<code># circumvent cookie wall by setting a specific</code>
+<code># cookie: the key-value pair (cpc: 10)</code>
+<code>r = GET(URL)</code>
+<code>cookies = setNames(cookies(r)$value, </code>
+<code>                   cookies(r)$name)</code>
+<code>cookies = c(cookies, cpc=10)</code>
+<code>r = GET(URL, set_cookies(cookies))</code>
+<code># end circumvention</code>
+<code></code>
+<code>allcomments = r %&gt;% </code>
+<code>  read_html() %&gt;%</code>
+<code>  html_nodes(".cmt-content") %&gt;% </code>
+<code>  html_text()</code>
+<code></code>
+<code>glue("There are {length(allcomments)} comments.")</code>
+<code></code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<pre class='output'>Een kudtkoekiewall. Omdat dat moet, van de kudtkoekiewet.
+There are 318 comments.</pre>
+</div></div><div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:cookiewall2' name='ex:cookiewall2'>Example 12.14.</a></small><br />
+Shorter version of &lt;a href='#ex:cookiewall'>Example 12.13&lt;/a> for single requests</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>r = requests.get(URL,cookies={"cpc": "10"})</code>
+<code>tree = fromstring(r.text)</code>
+<code>allcomments = [e.text_content().strip() for e in </code>
+<code>               tree.cssselect(".cmt-content")]</code>
+<code>print(f"There are {len(allcomments)} comments.")</code>
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>r = GET(URL, set_cookies(cpc=10))</code>
+<code>allcomments = r %&gt;% </code>
+<code>  read_html() %&gt;%</code>
+<code>  html_nodes(".cmt-content") %&gt;% </code>
+<code>  html_text()</code>
+<code>glue("There are {length(allcomments)} comments.")</code>  </pre>
+</div></div></div>
+<h2>  <small class='text-muted'><a class='anchor' href='#12_4' name='12_4'>12.4.</a></small>Ethical, Legal, and Practical Considerations
+</h2>
+
+
+<p>
+
+Web scraping is a powerful tool, but it needs to be handled
+responsibly. Between the white area of sites that explicitly consented
+to creating a copy of their data (for instance, by using a creative
+commons license) and the black area of an exact copy of copyrighted
+material and redistributing it as it is, there is a large gray area
+where it is less clear what is acceptable and what is not.
+</p>
+
+<p>
+There is a tension between legitimate interests of the operators of
+web sites and the producers of content on the one hand, and the
+societal interest of studying online communication on the other
+hand. Which interest prevails may differ on a case-to-case basis. For
+instance, when using APIs as described in Section&nbsp;<a href='#12_1'>12.1</a>, in most
+cases, you have to consent to the terms of service (TOS) of the API
+provider.
+</p>
+
+<p>
+For example, Twitter's TOS allow you to redistribute the numerical
+tweet ids, but not the tweets themselves, and therefore, it is common
+to share such lists of ids with fellow researchers instead of the
+&ldquo;real&rdquo; Twitter datasets. Of course, this is not optimal from a
+reproducibility point of view: if another researcher has to retrieve
+the tweets again based on their ids, then this is not only cumbersome,
+but most likely also leads to a slightly different dataset, because
+tweets may have been deleted in the meantime. At the same time, it is
+a compromise most people can live with.
+</p>
+
+<p>
+Other social media platforms have closed their APIs or tightened the
+restrictions a lot, making it impossible to study many pressing
+research questions. Therefore, some have even called researchers to
+neglect these TOS, because &ldquo;in some circumstances the benefits to
+society from breaching the terms of service outweigh the detriments to
+the platform itself&rdquo; <span class="cite" title="Bruns, A. (2019). After the ‘APIcalypse': social media platforms and their fight against critical scholarly research. Information, Communication &amp; Society, 22(11):1544--1566.">Bruns, 2019</span>p.~1561 . Others acknowledge
+the problem, but doubt that this is a good solution
+<span class="cite" title="Puschmann, C. (2019). An end to the wild west of social media research: a response to Axel Bruns. Information, Communication &amp; Society, 22(11):1582--1589.">Puschmann, 2019</span>.
+In general, one needs to distinguish between the act of collecting the
+data and sharing the data. For instance, in many jurisdictions, there
+are legal exemptions for collecting data for scientific purposes, but
+that does not mean that they can be re-distributed as they are
+<span class="cite" title="Van Atteveldt, W., Strycharz, J., Trilling, D., and Welbers, K. (2019). Toward Open Computational Communication Science : A Practical Road Map for Reusable Data and Code University of Amsterdam , the Netherlands. International Journal of Communication, 13:3935--3954.">Van Atteveldt et&nbsp;al., 2019</span>.
+</p>
+
+<p>
+This chapter can by no means replace the consultation of a legal
+expert and/or an ethics board, but we would like to offer some
+strategies to minimize potential problems.
+</p>
+
+<p>
+<b>Be nice</b> Of course, you could send hundreds of requests per minute (or second) to a website and try to download everything that they have ever published. However, this causes unnecessary load on their servers (and you would probably  get blocked). If, on the other hand, you carefully think about what you really need to download, and include a lot of waiting times (for instance, using <code>sys.sleep</code> (R) or <code>time.sleep</code> (Python) so that your script essentially does the same as could be done by hiring a couple of student assistants to copy-paste the data manually, then problems are much less likely to arise.
+</p>
+
+<p>
+<b>Collaborate</b> Another way to minimize traffic and server load is to collaborate more. A concerted effort with multiple researchers may lead to less duplicate data and in the end probably an even better, re-usable dataset.
+</p>
+
+<p>
+<b>Be extra careful with personal data</b> Both from an ethical and a legal point of view, the situation changes drastically as soon as personal data are involved. Especially since the General Data Protection Regulation (GDPR) regulations took effect in the European Union, collecting and processing such data requires a lot of additional precaution and is usually subject to explicit consent. It is clearly infeasible to ask every Twitter user  for consent to process their tweet and doing so is probably covered by research exceptions, the general advice is to store as little personal data as possible and only what is absolutely needed. Most likely, you need to have a data management plan in place, and should get appropriate  advice from your legal department. Therefore, think carefully whether you really need, for instance, the user names of the authors of reviews you are going to scrape, or whether the text alone suffices.
+</p>
+
+<p>
+Once all ethical and legal concerns are sorted out and you have made sure that you have written a scraper in such a way that it does not cause unnecessary traffic and load on the servers from which you are scraping, and after doing some test runs, it is time to think about how to actually run it on a larger scale. You may already have figured that you probably do not want to run your scraper from a Jupyter Notebook that is constantly open in your browser on your personal laptop. Also here, we would like to offer some suggestions.
+</p>
+
+<p>
+<b>Consider using a database</b> Imagine the following scenario: your scraper visits hundreds of websites, collects its results in a list or in a data frame, and after hours of running suddenly crashes &ndash; maybe because some element that you were sure must exist on each page,  exists only on 999 out of 1000 pages, because a connection timed out, or any other error. Your data is lost, you need to start again (not only annoying, but also undesirable from a traffic minimization point of view). A better strategy may be to immediately write the data for each page  to a file. But then, you need to handle a potentially huge number of files later on. A much better approach, especially if you plan to run your scraper repeatedly over a long period of time, is to consider the use of a database in which you dump the results immediately after a page has been scraped (see Section&nbsp;<a href='chapter15.html#15_1'>15.1</a>).
+</p>
+
+<p>
+<b>Run your script from the command line</b> Store your scraper as a .py or .R script and run it from your terminal (your command line) by typing <code>python myscript.py</code> or <code>R myscript.R</code> rather than using an IDE such as Spyder or R Studio or a Jupyter Notebook. You may want to have your script print a lot of status information (for instance, which page it is currently scraping), so that you can watch what it is doing. If you want to, you can have your computer run this script in regular intervals (e.g., once an hour). On Linux and MacOS, for instance, you can use a so-called <i>cron</i> job to automate this.
+</p>
+
+<p>
+<b>Run your script on a server</b> If your scraper runs for longer than a couple of hours, you may not want to run it on your laptop, especially if your Internet connection is not stable. Instead, you may consider using a server. As we will explain in Section&nbsp;<a href='chapter15.html#15_2'>15.2</a>, it is quite affordable to set up a Linux VM on a cloud computing platform (and next to commercial services, in some countries and institutions there are free services for academics). You can then use tools like <i>nohup</i> or <i>screen</i> to run your script on the background, even if you are no longer connected to the server (see Section&nbsp;<a href='chapter15.html#15_2'>15.2</a>).
+</p>
+
+        </div>
+
+	<div class='chevrons'>
+&laquo;
+	  
+	  <a href='chapter11.html'>Ch. 11 Automatic analysis of text</a>
+	  
+	  
+	  | <a href='chapter13.html'>Ch. 13 Network Data</a>&raquo;
+	  
+</div>
+	<!-- Secondary sidebar -->
+        <aside class="css-rightbar">
+            <nav id="right" class="collapse css-rightnav">
+                <ul class="list-unstyled components">
+  
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+                  <div class="rightbar-header">In this chapter</div>
+
+            <ul class="list-unstyled" id="toc_chap_12">
+<li class='toc-section'>12 Scraping online data</li>
+
+              
+	          
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_1">12.1. Using Web APIs: From Open Resources to Twitter</a>
+		    </li>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_2">12.2. Retrieving and Parsing Web Pages</a>
+		    </li>
+		    
+		    <ul class="list-unstyled list-subsections" id="toc_chap_2">
+		    
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_2_1">12.2.1. Retrieving and Parsing an HTML Page</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_2_2">12.2.2. Crawling Websites</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_2_3">12.2.3. Dynamic Web Pages</a>
+                    </li>
+
+                    
+		    </ul>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_3">12.3. Authentication, Cookies, and Sessions</a>
+		    </li>
+		    
+		    <ul class="list-unstyled list-subsections" id="toc_chap_3">
+		    
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_3_1">12.3.1. Authentication and APIs</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_3_2">12.3.2. Authentication and Webpages</a>
+                    </li>
+
+                    
+		    </ul>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_4">12.4. Ethical, Legal, and Practical Considerations</a>
+		    </li>
+		    
+
+		
+            </ul>
+	    
+    
+  
+    
+  
+    
+  
+    
+  
+    
+</ul>
+            </nav>
+        </aside>
+</div>
+
+
+
+    </div>
+    <!-- Optional JavaScript; choose one of the two! -->
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+    -->
+  <script>
+      var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+  return new bootstrap.Popover(popoverTriggerEl, {html: true})
+})
+  </script>
+  </body>
+</html>
