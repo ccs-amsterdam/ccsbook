@@ -1,0 +1,2357 @@
+
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+      <link href="ccsbook.css" rel="stylesheet">
+      <!-- MathJax -->
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js">
+  </script>
+
+    <title>Computational Analysis of Communication</title>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-light fixed-top bg-light">
+    <div class="container-xxl">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#toc" aria-controls="toc" aria-expanded="false" aria-label="Toggle TOC">
+                <div></div>
+                <div></div>
+                <div></div>
+            </button>
+	    <div class='navhome'>
+              <a href="index.html">Computational Analysis of Communication</a>
+	      </div>
+    </div>
+    </nav>
+    <div id='content' class='container-xxl'>
+
+        <!-- Sidebar -->
+        <aside class="toc">
+            <nav id="toc" class="collapse">
+                <div class="subtoc">
+                    <ul class="list-unstyled components">
+  
+  
+    
+  
+    
+  
+                  <div class="rightbar-header">In this chapter</div>
+
+            <ul class="list-unstyled" id="toc_chap_3">
+<li class='toc-section'>3 Programming Concepts</li>
+
+              
+	          
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_1">3.1. About Objects and Data Types</a>
+		    </li>
+		    
+		    <ul class="list-unstyled list-subsections" id="toc_chap_1">
+		    
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_1_1">3.1.1. Storing Single Values: Integers, Floating-Point Numbers, Booleans</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_1_2">3.1.2. Storing Text</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_1_3">3.1.3. Combining Multiple Values: Lists, Vectors, And Friends</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_1_4">3.1.4. Dictionaries</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_1_5">3.1.5. From One to More Dimensions: Matrices and $n$-Dimensional Arrays</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_1_6">3.1.6. Making Life Easier: Data Frames</a>
+                    </li>
+
+                    
+		    </ul>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_2">3.2. Simple Control Structures: Loops and Conditions</a>
+		    </li>
+		    
+		    <ul class="list-unstyled list-subsections" id="toc_chap_2">
+		    
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_2_1">3.2.1. Loops</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_2_2">3.2.2. Conditional Statements</a>
+                    </li>
+
+                    
+		    </ul>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_3">3.3. Functions and Methods</a>
+		    </li>
+		    
+
+		
+            </ul>
+	    
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+</ul>
+                </div>
+
+		<div class="rightbar-header">Table of Contents</div>
+                <ul class="list-unstyled components">
+    
+        <li class="active toc-chapter ">
+            <a href="chapter01.html">1 Introduction</a>
+            <!--<a href="#toc_chap_1" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_1"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_1">
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_1">1.1. The Role of Computational Analysis in the Social Sciences</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_2">1.2. Why Python and/or R?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_3">1.3. How to use this book</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_4">1.4. Installing R and Python</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_5">1.5. Installing Third-Party Packages</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter02.html">2 Fun with Data</a>
+            <!--<a href="#toc_chap_2" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_2"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_2">
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_1">2.1. Fun With Tweets</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_2">2.2. Fun With Textual Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_3">2.3. Fun With Visualizing Geographic Information</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_4">2.4. Fun With Networks</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter toc-chapter-current">
+            <a href="chapter03.html">3 Programming Concepts</a>
+            <!--<a href="#toc_chap_3" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_3"></a>
+            <ul class="collapse list-unstyled show" id="toc_chap_3">
+                
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_1">3.1. About Objects and Data Types</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_2">3.2. Simple Control Structures: Loops and Conditions</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_3">3.3. Functions and Methods</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter04.html">4 How to write code</a>
+            <!--<a href="#toc_chap_4" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_4"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_4">
+                
+                    <li class="toc-section">
+                        <a href="chapter04.html#4_1">4.1. Re-using Code: How Not to Re-Invent the Wheel</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter04.html#4_2">4.2. Understanding Errors and Getting Help</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter04.html#4_3">4.3. Best Practice: Beautiful Code, GitHub, and Notebooks</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter05.html">5 Files and Data Frames</a>
+            <!--<a href="#toc_chap_5" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_5"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_5">
+                
+                    <li class="toc-section">
+                        <a href="chapter05.html#5_1">5.1. Why and When Do We Use Data Frames?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter05.html#5_2">5.2. Reading and Saving Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter05.html#5_3">5.3. Data from online sources</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter06.html">6 Data Wrangling</a>
+            <!--<a href="#toc_chap_6" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_6"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_6">
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_1">6.2. Calculating Values</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_2">6.3. Grouping and Aggregating</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_3">6.4. Merging Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_4">6.5. Reshaping Data: Wide To Long And Long To Wide</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter07.html">7 Exploratory data analysis</a>
+            <!--<a href="#toc_chap_7" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_7"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_7">
+                
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_1">7.1. Simple Exploratory Data Analysis</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_2">7.2. Visualizing Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_3">7.3. Clustering and Dimensionality Reduction</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter08.html">8 Machine Learning</a>
+            <!--<a href="#toc_chap_8" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_8"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_8">
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_1">8.1. Statistical Modeling and Prediction</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_2">8.2. Concepts and Principles</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_3">8.3. Classical Machine Learning: From Na&#34;ive Bayes to Neural Networks</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_4">8.4. Deep Learning</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_5">8.5. Validation and Best Practices</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter09.html">9 Processing text</a>
+            <!--<a href="#toc_chap_9" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_9"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_9">
+                
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_1">9.1. Text as a String of Characters</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_2">9.2. Regular Expressions</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_3">9.3. Using Regular Expressions in Python and R</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter10.html">10 Text as data</a>
+            <!--<a href="#toc_chap_10" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_10"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_10">
+                
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_1">10.1. The Bag of Words and the Term-Document Matrix</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_2">10.2. Weighting and Selecting Documents and Terms</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_3">10.3. Advanced Representation of Text</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter11.html">11 Automatic analysis of text</a>
+            <!--<a href="#toc_chap_11" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_11"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_11">
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_1">11.1. Deciding on the Right Method</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_2">11.2. Obtaining a Review Dataset</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_3">11.3. Dictionary Approaches to Text Analysis</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_4">11.4. Supervised Text Analysis: Automatic Classification and Sentiment Analysis</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_5">11.5. Unsupervised Text Analysis: Topic Modeling</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter12.html">12 Scraping online data</a>
+            <!--<a href="#toc_chap_12" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_12"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_12">
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_1">12.1. Using Web APIs: From Open Resources to Twitter</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_2">12.2. Retrieving and Parsing Web Pages</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_3">12.3. Authentication, Cookies, and Sessions</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_4">12.4. Ethical, Legal, and Practical Considerations</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter13.html">13 Network Data</a>
+            <!--<a href="#toc_chap_13" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_13"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_13">
+                
+                    <li class="toc-section">
+                        <a href="chapter13.html#13_1">13.1. Representing and Visualizing Networks</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter13.html#13_2">13.2. Social Network Analysis</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter14.html">14 Multimedia data</a>
+            <!--<a href="#toc_chap_14" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_14"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_14">
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_1">14.1. Beyond Text Analysis: Images, Audio and Video</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_2">14.2. Using Existing Libraries and APIs</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_3">14.3. Storing, Representing, and Converting Images</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_4">14.4. Image Classification</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter15.html">15 Scaling up and distributing</a>
+            <!--<a href="#toc_chap_15" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_15"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_15">
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_1">15.1. Storing Data in SQL and noSQL Databases</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_2">15.2. Using Cloud Computing</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_3">15.3. Publishing Your Source</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_4">15.4. Distributing Your Software as Container</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter16.html">16 Where to go next</a>
+            <!--<a href="#toc_chap_16" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_16"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_16">
+                
+                    <li class="toc-section">
+                        <a href="chapter16.html#16_1">16.1. How Far Have We Come?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter16.html#16_2">16.2. Where To Go Next?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter16.html#16_3">16.3. Open, Transparent, and Ethical Computational Science</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+</ul>
+            </nav>
+        </aside>
+	
+      
+  
+
+    <div class="css-layout">
+      <!-- Main Content -->
+      <div class="css-main">
+	<div class='chevrons'>
+&laquo;
+	  
+	  <a href='chapter02.html'>Ch. 2 Fun with Data</a>
+	  
+	  
+	  | <a href='chapter04.html'>Ch. 4 How to write code</a>&raquo;
+	  
+</div>
+	  <br/>
+            
+<h1>  <small class='text-muted'><a class='anchor' href='#chap:programmingconcepts' name='chap:programmingconcepts'>3.</a></small>Programming concepts for data analysis
+</h1>
+
+
+<div class='abstract'>
+  <span class='caption'>
+Abstract
+  </span>
+  This chapter introduces readers to the basics of programming, data types, control structures, and functions
+  in Python and R. It
+explains how to deal with objects, statements, expressions, variables
+and different types of data, and shows how to create and understand
+simple control structures such as loops and conditions.
+
+</div>
+
+<div class='keywords'>
+  <span class='caption'>Keywords:</span>
+basics of programming
+</div>
+<div class='objectives'>
+  <div class='caption'>Chapter objectives:</div>
+  <ul><li> Understand objects and data types
+</li><li> Write control structures
+</li><li> Use functions and methods
+</li>
+  </ul>
+</div><div class='feature'><b>Packages used in this chapter</b><br/>
+  This chapter focuses on the built-in capabilities of Python and R,
+  so it does not rely on many packages.
+  For R, only <i>glue</i> is used (which allows nice text formatting).
+  For Python, we only use the packages <i>numpy</i> and <i>pandas</i>
+  for data frame support.
+  If needed, you can install these packages with the code below
+  (see Section&nbsp;<a href='chapter01.html#1_4'>1.4</a> for more details).
+  <div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>!pip3 install numpy pandas</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>install.packages("glue")</code>  </pre>
+</div></div> After installing, you need to import (activate) the packages every session:
+  <div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>import numpy as np</code>
+<code>import pandas as pd</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>library(glue)</code>
+&nbsp;  </pre>
+</div></div></div>
+<h2>  <small class='text-muted'><a class='anchor' href='#3_1' name='3_1'>3.1.</a></small>About Objects and Data Types
+</h2>
+
+
+<p>
+Now that you have seen what R and Python can do in Chapter&nbsp;<a href='chapter02.html#2'>2</a>,
+it is time to take a small step back and learn more about how it all actually works under the hood.
+</p>
+
+<p>
+In both languages, you write a
+<i>script</i> or <i>program</i> containing the commands for the
+computer.  But before we get to
+some real programming and exciting data analyses, we need to understand
+how data can be represented and stored.
+</p>
+
+<p>
+No matter whether you use R or Python, both store your data in memory as <i>objects</i>.
+Each of these objects has a name, and you create them by
+assigning a value to a name. For example, the command <code>x=10</code>
+creates a new object<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 1" data-bs-content="In both R and Python, the equals
+  sign (<code>=</code>) can be used to assign values. In R, however, the
+  traditional way of doing this is using an arrow (<code>&lt;-</code>). In
+  this book we will use the equals sign for assignment in both
+  languages, but remember that for R, <code>x=10</code> and
+  <code>x&lt;-10</code> are essentially the same.">[1]</a>, named <code>x</code>, and stores the value 10
+in it.  This object is now stored in memory and can be used in later
+commands. Objects can be simple values such as the number 10, but they can also
+be pieces of text, whole data frames (tables), or analysis results.
+We call this distinction the <i>type</i> or <i>class</i> of an
+object. 
+</p>
+<div class='feature'><b>Objects, pointers, and variables.</b> In programming, a distinction is
+  often made between an object (such as the number 10) and the
+  variable in which it is stored (such as <code>x</code>). The latter is also called a &ldquo;pointer&rdquo;.
+  However, this distinction is not very relevant for most of our
+  purposes. Moreover, in statistics, the word variable often refers to a
+  column of data, rather than to the name of, for instance, the object
+  containing the whole data frame (or table).  For that
+  reason, we will use the word <i>object</i> to refer to both the
+  actual object or value and its name. (If you want some extra food
+  for thought and want to challenge your brain
+  a bit, try to see the relationship between the idea of a pointer and
+  the discussion about mutable and immutable objects below.)
+</div>
+<p>
+Let us create an object that we call <code>a</code> (an arbitrary name, you can use
+whatever you want), assign the value 100 to it, and use the class
+function (R) or type function (Python) to check what kind of
+object we created (Example&nbsp;<a href='#ex:var1'>3.1</a>).
+As you can see, R reports the type of the number as &ldquo;numeric&rdquo;, while Python reports it
+as &ldquo;int&rdquo;, short for integer or whole number.  Although they use
+different names, both languages offer very similar data types.
+Table&nbsp;<a href='#tab:types'>3.1</a> provides an overview of some common basic data types.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:var1' name='ex:var1'>Example 3.1.</a></small><br />
+Determining the type of an object</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>a = 100</code>
+<code>print(type(a))</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>a = 100</code>
+<code>print(class(a))</code>  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>&lt;class 'int'&gt;</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>[1] "numeric"</pre>
+</div></div></div><div class='figure'><h4>
+  <small class='text-muted'><a class='anchor' href='#tab:types' name='tab:types'>Table 3.1.</a></small><br />
+Most used basic data types in Python and R</h4>
+<table class='table'><thead>
+  <tr>
+    <th colspan="2">
+Python 
+    </th>
+    <th colspan="2">
+R
+    </th>
+    <th>
+ Description 
+    </th>
+
+  </tr>
+  <tr>
+    <th>
+
+    Name 
+    </th>
+    <th>
+ Example 
+    </th>
+    <th>
+ Name 
+    </th>
+    <th>
+ Example 
+    </th>
+    <th>
+
+    </th>
+
+  </tr>
+</thead><tbody>
+  <tr>
+    <td>
+
+    int   
+    </td>
+    <td>
+<code>1</code>             
+    </td>
+    <td>
+ integer   
+    </td>
+    <td>
+<code>1L</code>             
+    </td>
+    <td>
+ whole numbers 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    float 
+    </td>
+    <td>
+<code>1.3</code>           
+    </td>
+    <td>
+ numeric   
+    </td>
+    <td>
+<code>1.3</code>           
+    </td>
+    <td>
+ numbers with decimals 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    str   
+    </td>
+    <td>
+<code>&#34;Spam&#34;, &#39;ham&#39;</code> 
+    </td>
+    <td>
+ character 
+    </td>
+    <td>
+<code>&#34;Spam&#34;, &#39;ham&#39;</code> 
+    </td>
+    <td>
+ textual data  
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+    bool  
+    </td>
+    <td>
+<code>True, False</code>   
+    </td>
+    <td>
+ logical   
+    </td>
+    <td>
+<code>TRUE, FALSE</code>   
+    </td>
+    <td>
+ the truth values 
+    </td>
+
+  </tr>
+</tbody>
+</table></div>
+<p>
+Let us have a closer look at the code in Example&nbsp;<a href='#ex:var1'>3.1</a> above.
+The first line is a command to create the object <i>a</i> and store
+its value 100; and the second is illustrative and will give you the
+class of the created object, in this case &ldquo;numeric&rdquo;. Notice that we
+are using two native functions of R, <code>print</code> and <code>class</code>, and
+including <code>a</code> as an argument of <code>class</code>, and the very same
+<code>class(a)</code> as an argument of <code>print</code>. The only difference
+between R and Python, here, is that the relevant Python function is
+called <code>type</code> instead of <code>class</code>.
+</p>
+
+<p>
+Once created, you can now perform multiple operations
+with <code>a</code> and other values or new variables as shown in Example&nbsp;<a href='#ex:var2'>3.2</a>. For example, you
+could transform <code>a</code> by multiplying <code>a</code> by 2, create a new
+variable <code>b</code> of value 50 and then create another new object
+<code>c</code> with the result of <code>a + b</code>.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:var2' name='ex:var2'>Example 3.2.</a></small><br />
+Some simple operations</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>a = 100</code>
+<code>a = a*2    # equivalent to (shorter) a*=2</code>
+<code>b = 50</code>
+<code>c = a + b</code>
+<code>print(a, b, c)</code>
+&nbsp;
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>a = 100</code>
+<code>a = a*2</code>
+<code>b = 50</code>
+<code>c = a + b</code>
+<code>print(a)</code>
+<code>print(b)</code>
+<code>print(c)</code>  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>200 50 250</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>[1] 200
+[1] 50
+[1] 250</pre>
+</div></div></div>
+<h3>  <small class='text-muted'><a class='anchor' href='#3_1_1' name='3_1_1'>3.1.1.</a></small>Storing Single Values: Integers, Floating-Point Numbers, Booleans
+</h3>
+
+
+<p>
+ When working with numbers, we distinguish between integers (whole
+numbers) and floating point numbers (numbers with a decimal point,
+called &ldquo;numeric&rdquo; in R). Both Python and R automatically determine the
+data type when creating an object, but differ in their default
+behavior when storing a number that can be represented as an int: R
+will store it as a float anyway and you need to force it to do
+otherwise, for Python it is the other way round
+(Example&nbsp;<a href='#ex:var3'>3.3</a>). We can also convert between types later on,
+even though converting a float to an int might not be too good an idea,
+as you truncate your data.
+</p>
+
+<p>
+So why not just always use a float? First,
+floating point operations usually take more time than integer operations.
+Second, because floating point numbers are stored as a combination of
+a coefficient and an exponent (to the base of 2), many decimal fractions can only approximately be stored
+as a floating point number. Except for specific domains (such
+as finance), these inaccuracies are often not of much practical importance.
+But it explains why calculating <code>6*6/10</code> in Python returns 3.6, while
+<code>6*0.6</code> or <code>6*(6/10)</code> returns 3.5999999999999996. Therefore, if
+a value can logically only be a whole number (anything that is
+countable, in fact), it makes sense to restrict it to an integer.
+</p>
+
+<p>
+We also have a data type that is even more restricted and can take
+only two values: true or false. It is called &ldquo;logical&rdquo; (R) or &ldquo;bool&rdquo;
+(Python).  Just notice that boolean values are case sensitive:
+while in R you must capitalize the whole value (<code>TRUE</code>, <code>FALSE</code>), in
+Python we only capitalize the first letter: <code>True</code>, <code>False</code>.  As you can
+see in Example&nbsp;<a href='#ex:var3'>3.3</a>, such an object behaves exactly as an integer that
+is only allowed to be 0 or 1, and it can easily be converted to an
+integer.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:var3' name='ex:var3'>Example 3.3.</a></small><br />
+Floating point numbers, integers, and boolean values.</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>d = 20</code>
+<code>print(type(d))</code>
+<code># forcing python to treat 20 as a float</code>
+<code>d2 = 20.0</code>
+<code>print(type(d2))</code>
+<code></code>
+<code>e = int(20.7)</code>
+<code>print(type(e))</code>
+<code>print(e)</code>
+<code></code>
+<code>f = True</code>
+<code>print(type(f))</code>
+<code>print(int(f))</code>
+<code>print(int(False))</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>d = 20</code>
+<code>print(class(d))</code>
+<code># forcing R to treat 20 as an int</code>
+<code>d2 = 20L</code>
+<code>print(class(d2))</code>
+<code></code>
+<code>e = as.integer(20.7)</code>
+<code>print(class(e))</code>
+<code>print(e)</code>
+<code></code>
+<code>f = TRUE</code>
+<code>print(class(f))</code>
+<code>print(as.integer(f))</code>
+<code>print(as.integer(FALSE))</code>  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>&lt;class 'int'&gt;
+&lt;class 'float'&gt;
+&lt;class 'int'&gt;
+20
+&lt;class 'bool'&gt;
+1
+0</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>[1] "numeric"
+[1] "integer"
+[1] "integer"
+[1] 20
+[1] "logical"
+[1] 1
+[1] 0</pre>
+</div></div></div>
+<h3>  <small class='text-muted'><a class='anchor' href='#3_1_2' name='3_1_2'>3.1.2.</a></small>Storing Text
+</h3>
+
+
+<p>
+As a computational analyst of communication you will usually work with
+text objects or strings of characters. Commonly simply known as &ldquo;strings&rdquo;,
+such text objects are also referred to as &ldquo;character vector objects&rdquo; in R.
+Every time you want to analyze a social-media message, or any other text, you will be dealing with such strings. 
+</p>
+<div class='code-example'><h4>
+  <small class='text-muted'><a class='anchor' href='#ex:var4' name='ex:var4'>Example 3.4.</a></small><br />
+Strings and bytes.</h4>
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>text1 = "This is a text"</code>
+<code>print(f"Type of text1: {type(text1)}")</code>
+<code>text2 = "Using 'single' and \"double\" quotes"</code>
+<code>text3 = 'Using \"single\" and "double" quotes'</code>
+<code>print(f"Are text2 and text3 equal?{text2==text3}")</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>text1 = "This is a text"</code>
+<code>glue("Class of text1: {class(text1)}")</code>
+<code>text2 = "Using 'single' and \"double\" quotes"</code>
+<code>text3 = 'Using \'single\' and "double" quotes'</code>
+<code>glue("Are text2 and text3 equal? {text2==text3}")</code>  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>Type of text1: &lt;class 'str'&gt;
+Are text2 and text3 equal?False</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>Class of text1: character
+Are text2 and text3 equal? TRUE</pre>
+</div></div><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>somebytes= text1.encode("utf-8")</code>
+<code>print(type(somebytes))</code>
+<code>print(somebytes)</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>somebytes= charToRaw(text1)</code>
+<code>print(class(somebytes))</code>
+<code>print(somebytes)</code>  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>&lt;class 'bytes'&gt;
+b'This is a text'</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>[1] "raw"
+ [1] 54 68 69 73 20 69 73 20 61 20 74 65 78 74</pre>
+</div></div></div>
+<p>
+As you see in Example&nbsp;<a href='#ex:var4'>3.4</a>, you can create a string by enclosing  text in quotation
+marks. You can use either double or single quotation marks, but you
+need to use the same mark to begin and end the string. This can be
+useful if you want to use quotation marks within a string, then you can
+use the other type to denote the beginning and end of the string.
+If you need to use a single quotation mark within a single-quoted string,
+you can <i>escape</i> the quotation mark by prepending it with a backslash (<code>\&#39;</code>),
+and similarly for double-quoted strings.
+To include an actual backslash in a text, you also escape it with a backslash,
+so you end up with a double backslash (<code>\\</code>). 
+</p>
+
+<p>
+The Python example also shows a concept introduced in Python 3.6:
+the f-string. These are strings that are prefixed with the letter <code>f</code> and are <i>formatted</i> strings.
+This means that these strings will automatically insert a value where curly brackets indicate that you wish to do so.
+This means that you can write: <code>print(f&#34;The value of i is {i}&#34;)</code> in order to print &ldquo;The value of i is 5&rdquo; (given that <code>i</code> equals 5).
+In R, the <i>glue</i> package allows you to use an f-string-like syntax as well: <code>glue("The value of i is {i}")</code>.
+</p>
+
+<p>
+Although this will be explained in more detail in Section 5.2.2&nbsp;<a href='chapter09.html#9_1'>9.1</a>,
+it is good to introduce how computers store text in memory or files. 
+It is not too difficult to imagine how a computer internally
+handles <i>integers</i>: after all, even though the number may be displayed
+as a decimal number to us, it can be trivially converted and stored
+as a binary number (effectively, a series of zeros and ones)
+&ndash;- we do not have to care about that.
+But when we think about text, it is not
+immediately obvious how a string should be stored as a sequence of
+zeros and ones, especially given the huge variety of writing systems used for different languages. 
+</p>
+
+<p>
+Indeed, there are several ways of how textual characters can be stored as bytes,
+which are called <i>encodings</i>. 
+The process of moving from bytes (numbers) to characters is called decoding,
+and the reverse process is called encoding. 
+Ideally, this is not something you should need to think of,
+and indeed strings (or character vectors) already represent decoded text.
+This means that often when you read from or write data to a file,
+you need to specify the encoding (usually UTF-8). 
+However, both Python and R also allow you to work with the raw data
+(e.g. before decoding) in the form of <i>bytes</i> (Python) or <i>raw</i> (R) data,
+which is sometimes necessary if there are encoding problems.
+This is shown briefly in the bottom part of <i>var4</i>.
+Note that while R shows the underlying hexadecimal byte values of the raw data (so 54 is <code>T</code>, 68 is <code>h</code> and so on) and Python 
+displays the bytes as text characters, in both cases the underlying data type is the same: raw (non-decoded) bytes.
+</p>
+
+<h3>  <small class='text-muted'><a class='anchor' href='#3_1_3' name='3_1_3'>3.1.3.</a></small>Combining Multiple Values: Lists, Vectors, And Friends
+</h3>
+
+
+<p>
+Until now, we have focused on the basic, initial data types or &ldquo;vector
+objects&rdquo;, as they are called in R.  Often, however, we want to group
+a number of these objects. For example, we do not want to manually
+create thousands of objects called tweet0001, tweet0002, &hellip;,
+tweet9999 &ndash; we'd rather have one list called tweets that contains all
+of them. You will encounter several names for such combined data
+structures: lists, vectors, arrays, series, and 
+more. 
+The core idea is always the same: we take multiple objects
+(be it numbers, strings, or anything else) and then create one object that combines all of them (Example&nbsp;<a href='#ex:1darray1'>3.5</a>).
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:1darray1' name='ex:1darray1'>Example 3.5.</a></small><br />
+Collections arrays (such as vectors in R or lists in Python) can contain multiple values</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>scores = [8, 8, 7, 6, 9, 4, 9, 2, 8, 5]</code>
+<code>print(type(scores))</code>
+<code>countries = ["Netherlands", "Germany", "Spain"]</code>
+<code>print(type(countries))</code>
+<code></code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>scores = c(8, 8, 7, 6, 9, 4, 9, 2, 8, 5)</code>
+<code>print(class(scores))</code>
+<code>countries = c("Netherlands", "Germany", "Spain")</code>
+<code>print(class(countries))</code>
+<code></code>  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>&lt;class 'list'&gt;
+&lt;class 'list'&gt;</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>[1] "numeric"
+[1] "character"</pre>
+</div></div></div>
+<p>
+As you see, we now have one name (such as <code>scores</code>) to refer to all of the scores.
+The Python object in Example&nbsp;<a href='#ex:1darray1'>3.5</a> is called a <i>list</i>, the R object a <i>vector</i>.
+There are more  such combined data types, which have slightly different
+properties that can be important to know about: first, whether you can mix different
+types (say, integers and strings); second, what happens if you change the array.
+We will discuss both points below and show how this relates to different
+specific types of arrays in Python and R which you can choose from. But first,
+we will show how to work with them.
+</p>
+
+<p>
+<b>Operations on vectors and lists</b>
+One of the most
+basic operations you can perform on all types of one-dimensional arrays
+is <i>indexing</i>. It lets you locate any given
+element or group of elements within a vector using its or their
+positions. The first item of a vector in R is called 1, the second 2, and so on;
+in Python, we begin counting with 0.  You can retrieve a specific element
+from a vector or list by simply putting the index between square brackets <code>[]</code> (Example&nbsp;<a href='#ex:1darray2'>3.6</a>).
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:1darray2' name='ex:1darray2'>Example 3.6.</a></small><br />
+Slicing vectors and converting data types</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>scores = ["8","8","7","6","9","4","9","2","8","5"]</code>
+<code></code>
+<code>print(scores[4])</code>
+<code>print([scores[0], scores[9]])</code>
+<code>print(scores[0:4])</code>
+<code></code>
+<code># Convert the first 4 scores into numbers</code>
+<code># Note the use of a list comprehension [.. for ..]</code>
+<code># This will be explained in the section on loops</code>
+<code>scores_new = [int(e) for e in scores[1:4]]</code>
+<code>print(type(scores_new))</code>
+<code>print(scores_new)</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>scores=c("8","8","7","6","9","4","9","2","8","5")</code>
+<code></code>
+<code>scores[5]</code>
+<code>scores[c(1, 10)]</code>
+<code>scores[1:4]</code>
+<code></code>
+<code># Convert the first 4 scores into numbers</code>
+<code>scores_new = as.numeric(scores[1:4])</code>
+<code>class(scores_new)</code>
+<code>scores_new</code>
+&nbsp;
+&nbsp;  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>9
+['8', '5']
+['8', '8', '7', '6']
+&lt;class 'list'&gt;
+[8, 7, 6]</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>[1] "9"
+[1] "8" "5"
+[1] "8" "8" "7" "6"
+[1] "numeric"
+[1] 8 8 7 6</pre>
+</div></div></div>
+<p>
+In the first case, we asked for the score of the 5th student ("9");
+in the second we asked for the 1st and 10th position ("8" "5"); and
+finally for all the elements between the 1st and 4th position ("8"
+"8" "7" "6"). We can directly indicate a range
+by using a <code>:</code>. After the colon, we provide the index of
+the last element (in R), while Python stops just <i>before</i> the index.<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 2" data-bs-content="This is related to the
+reason why Python starts counting with zero. If you are interested
+in this, have a look at <a href='https://www.cs.utexas.edu/users/EWD/transcriptions/EWD08xx/EWD831.html'>www.cs.utexas.edu/users/EWD/transcriptions/EWD08xx/EWD831.html</a>">[2]</a>
+If we want to pass multiple single index values instead of a range in R,
+we need to create a vector of these indices by using <code>c()</code> (Example&nbsp;<a href='#ex:1darray2'>3.6</a>).
+Take a moment to compare the different ways of indexing between Python
+and R in Example&nbsp;<a href='#ex:1darray2'>3.6</a>!
+</p>
+
+<p>
+Indexing is very useful to access elements and also to
+create new objects from a part of another one. The last line of our
+example shows how to create a new array with just the first four
+entries of <code>scores</code> and store them all as numbers. To do so, we
+use <i>slicing</i> to get the first four scores and then either change its class using the function
+as.numeric (in R) or convert the elements to integers one-by-one (Python)  (Example&nbsp;<a href='#ex:1darray2'>3.6</a>).
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:1darray3' name='ex:1darray3'>Example 3.7.</a></small><br />
+Some more operations on one-dimensional arrays</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code># Appending a new value to a list:</code>
+<code>scores.append(7)</code>
+<code></code>
+<code># Create a new list instead of overwriting:</code>
+<code>scores4 = scores + [7]</code>
+<code></code>
+<code># Removing an entry:</code>
+<code>del scores[-10]</code>
+<code></code>
+<code># Creating a list containing various ranges</code>
+<code>list(range(1,21)) </code>
+<code>list(range(-5,6))    </code>
+<code></code>
+<code># A range of fractions: 0, 0.2, 0.4, ... 1.0 </code>
+<code># Because range only handles integers, we first</code>
+<code>#   make a range of 0, 2, etc, and divide by 10</code>
+<code>my_sequence = [e/10 for e in range(0,11,2)]</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code># appending a new value to a vector</code>
+<code>scores = c(scores, 7)</code>
+<code></code>
+<code># Create a new list instead of overwriting:</code>
+<code>scores4 = c(scores, 7)</code>
+<code></code>
+<code># removing an entry from a vector</code>
+<code>scores = scores[-10]</code>
+<code></code>
+<code></code>
+<code># Creating a vector containing various ranges</code>
+<code>range1 = 1:20</code>
+<code>range2 = -5:5</code>
+<code></code>
+<code># A range of fractions: 0, 0.2, 0.4, ... 1.0 </code>
+<code>my_sequence = seq(0,1, by=0.2)</code>
+&nbsp;  </pre>
+</div></div></div>
+<p>
+We can do many other things like adding or removing values, or creating a vector from scratch by using a
+function (Example&nbsp;<a href='#ex:1darray3'>3.7</a>). For instance, rather than just typing  a large number of values by hand, we often might
+wish to create a vector from an operator or a function, without typing
+each value. Using the operator <code>:</code> (R) or the functions <code>seq</code> (R) or <code>range</code> (Python), we 
+can create numeric vectors with
+a range of numbers.
+</p>
+
+<p>
+<b>Can we mix different types?</b>
+There is a reason that the basic data types (numeric, character, etc.) we described above are called
+&ldquo;vector objects&rdquo; in R: The vector is a very important structure in
+R and consists of these objects. A vector can be easily created with the
+<code>c</code> function and can only combine elements of the same type (numeric, integer, complex,
+character, logical, raw).
+Because the data types within a vector correspond to only one class,
+when we create a vector with for example numeric data, the <code>class</code> function will display
+&ldquo;numeric&rdquo; and not &ldquo;vector&rdquo;.
+</p>
+
+<p>
+If we try to
+create a vector with two different data types, R will 
+force some elements to be transformed, so that all elements belong to the same
+class. For example, if you re-build the vector of scores with a new student who has
+been graded with the letter <i>b</i> instead of a number (Example&nbsp;<a href='#ex:1darray1b'>3.8</a>), your vector
+will become a character vector. If you print it, you will see that the
+values are now displayed surrounded by <code>&#34;</code>.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:1darray1b' name='ex:1darray1b'>Example 3.8.</a></small><br />
+R enforces that all elements of a vector have the same data type</h4><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>scores2 = c(8, 8, 7, 6, 9, 4, 9, 2, 8, 5, "b")</code>
+<code>print(class(scores2))</code>
+<code>print(scores2)</code>  </pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output. Note that Python output may look slightly different</div>
+<pre class='output'>[1] "character"
+ [1] "8" "8" "7" "6" "9" "4" "9" "2" "8" "5" "b"</pre>
+</div></div>
+<p>
+In contrast to a vector, a <i>list</i> is much less restricted: a list does not care
+whether you mix numbers and text. In Python, such lists are the most common type for creating
+a one-dimensional array. Because they
+can contain very different objects, running the <code>type</code> function on them
+does not return anything about the objects inside the list, but simply states that we
+are dealing with a list (Example&nbsp;<a href='#ex:1darray1'>3.5</a>).
+In fact, lists can even contain other lists, or any other object for
+that matter.
+</p>
+
+<p>
+In R you can also use lists, even though they are much less popular in R than
+they are in Python, because vectors are better if all objects are of the same type.
+R lists are created in a similar way as vectors, except that we have to add the word <code>list</code>
+before declaring the values. Let us build a list with four different
+kinds of elements, a numeric object, a character object, a square root
+function (<code>sqrt</code>), and a numeric vector (Example&nbsp;<a href='#ex:1darray4'>3.9</a>). In fact, you
+can use any of the elements in the list through indexing &ndash; even the
+function <code>sqrt</code> that you stored in there to get the square root of
+16!
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:1darray4' name='ex:1darray4'>Example 3.9.</a></small><br />
+Lists can store very different objects of multiple data types and even functions</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>my_list = [33, "Twitter", np.sqrt, [1,2,3,4]]</code>
+<code>print(type(my_list))</code>
+<code></code>
+<code># this resolves to sqrt(16):</code>
+<code>print(my_list[2](16))</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>my_list = list(33, "Twitter", sqrt, c(1,2,3,4))</code>
+<code>class(my_list)</code>
+<code></code>
+<code># this resolves to sqrt(16):</code>
+<code>my_list[[3]](16)</code>  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>&lt;class 'list'&gt;
+4.0</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>[1] "list"
+[1] 4</pre>
+</div></div></div>
+<p>
+Python users often like the fact that lists give  a lot of flexibility, as they happily accept
+entries of very different types. But also Python users sometimes may want a stricter
+structure like R's vector. This may be especially interesting for
+high-performance calculations, and therefore, such a structure is
+available from the <i>numpy</i> (which stands for Numbers in Python)
+package: the numpy array.
+This will be discussed in more detail when we deal with data frames in Chapter&nbsp;<a href='chapter05.html#5'>5</a>.
+</p>
+<div class='feature'><b>Object references and mutable objects.</b>
+  A subtle difference between Python and R is how they deal with copying objects.
+  Suppose we define \(x\) containing the numbers \(1,2,3\) (<code>x=[1,2,3]</code> in Python or <code>x=c(1,2,3)</code> in R)
+  and then define an object \(y\) to equal \(x\) (<code>y=x</code>).
+  In R, both objects are kept separate, so changing \(x\) does not affect \(y\),
+  which is probably what you expect.
+  In Python, however, we now have two variables (names) that both point to or <i>reference</i> the same object,
+  and if we change \(x\) we also change \(y\) and vice versa, which can be quite unexpected.
+  Note that if you really want to copy an object in Python, you can run <code>x.copy()</code>.
+  See Example&nbsp;<a href='#ex:mutable'>3.10</a> for an example. 
+
+  Note that this is only important for <i>mutable</i> objects, that is,
+  objects that can be changed.
+  For example, lists in Python and R and vectors in R are mutable because you can replace or append members.
+  Strings and numbers, on the other hand, are immutable:
+  you cannot change a number or string, a statement such as <code>x=x*2</code> creates a new object containing the value of <code>x*2</code> and stores it under the name <code>x</code>.
+
+</div><div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:mutable' name='ex:mutable'>Example 3.10.</a></small><br />
+The (unexpected) behavior of mutable objects</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>x = [1,2,3]</code>
+<code>y = x</code>
+<code>y[0] = 99</code>
+<code>print(x)</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>x = c(1,2,3)</code>
+<code>y = x</code>
+<code>y[1] = 99</code>
+<code>print(x)</code>  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>[99, 2, 3]</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>[1] 1 2 3</pre>
+</div></div></div>
+<p>
+<b>Sets and Tuples</b>
+The <i>vector</i> (R) and <i>list</i> (Python) are the most frequently used collections
+for storing multiple objects. 
+In Python there are two more collection types you are likely to encounter.
+First, <i>tuples</i> are very similar to lists, but they cannot be changed after creating them
+(they are <i>immutable</i>).
+You can create a tuple by replacing the square brackets by regular parentheses:
+<code>x=(1,2,3)</code>. 
+</p>
+
+<p>
+Second, in Python there is an object type called a <i>set</i>.
+A set is a mutable collection of <i>unique</i> elements (you cannot repeat a value) with
+no order. As it is not properly ordered, you cannot run any indexing
+or slicing operation on it.
+Although R does not have an explicit set type,
+it does have functions for the various set operations,
+the most useful of which is probably the function <code>unique</code> which removes all duplicate values in a vector.
+Example&nbsp;<a href='#ex:sets'>3.11</a> shows a number of set operations in Python and R,
+which can be very useful,  e.g. finding all elements that occur in two lists.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:sets' name='ex:sets'>Example 3.11.</a></small><br />
+Sets</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>a = {3, 4, 5}</code>
+<code>my_list = [3, 2, 3, 2, 1]</code>
+<code>b = set(my_list)</code>
+<code>print(f"Set a: {a}; b: {b}")</code>
+<code>print(f"intersect:  a & b = {a & b}")</code>
+<code>print(f"union:      a | b = {a | b}")</code>
+<code>print(f"difference: a - b = {a - b}")</code>
+<code></code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>a = c(3, 4, 5)</code>
+<code>my_vector = c(3, 2, 3, 2, 1)</code>
+<code>b = unique(my_vector)</code>
+<code>print(b)</code>
+<code>print(intersect(a,b))</code>
+<code>print(union(a,b))</code>
+<code>print(setdiff(a,b))</code>
+&nbsp;  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>Set a: {3, 4, 5}; b: {1, 2, 3}
+intersect:  a & b = {3}
+union:      a | b = {1, 2, 3, 4, 5}
+difference: a - b = {4, 5}</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>[1] 3 2 1
+[1] 3
+[1] 3 4 5 2 1
+[1] 4 5</pre>
+</div></div></div>
+<h3>  <small class='text-muted'><a class='anchor' href='#3_1_4' name='3_1_4'>3.1.4.</a></small>Dictionaries
+</h3>
+
+
+<p>
+Python <i>dictionaries</i> are a very powerful and versatile data type.
+Dictionaries contain unordered<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 3" data-bs-content="Newer versions of Python actually do remember the order in which items are inserted into a dictionary. However, for the purpose of this introduction, you can assume that you hardly ever care about the order of elements in a dictionary.">[3]</a> and mutable collections of objects that
+contain certain information in another object. Python generates this
+data type in the form of <code>{key : value}</code> pairs in order
+to map any object by its key and not by its relative position in the
+collection. Unlike in a list, in which you index with an integer denoting
+the position in a list, you can index a dictionary using the key.
+This is the case shown in Example&nbsp;<a href='#ex:dict'>3.12</a>, in which we want to get the values of the object &ldquo;positive&rdquo; in the
+dictionary <i>sentiments</i> and of the object &ldquo;A&rdquo; in the dictionary
+<i>grades</i>. You will
+find dictionaries very useful in your journey as a computational
+scientist or practitioner, since they are flexible ways to store and
+retrieve structured information. We can create them using the curly
+brackets {} and including each key-value pair as an element of the
+collection (Example&nbsp;<a href='#ex:dict'>3.12</a>).
+</p>
+
+<p>
+In R, the closest you can get to a Python dictionary is to use lists with named elements.
+This allows you to assign and retrieve values by key,
+however the key is restricted to names, while in Python most objects can be used as keys.
+You create a named list with <code>d = list(name=value)</code> and access individual elements with either
+<code>d$name</code> or <code>d[[&#34;name&#34;]]</code>.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:dict' name='ex:dict'>Example 3.12.</a></small><br />
+Key-value pairs in Python dictionaries and R named lists</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>sentiments = {"positive":1, "neutral" : 0, </code>
+<code>              "negative" : -1}</code>
+<code>print(type(sentiments))</code>
+<code>print("Sentiment for positive:", </code>
+<code>      sentiments["positive"])</code>
+<code></code>
+<code>grades =  {}</code>
+<code>grades["A"] = 4</code>
+<code>grades["B"] = 3</code>
+<code>grades["C"] = 2</code>
+<code>grades["D"] = 1</code>
+<code></code>
+<code>print(f"Grade for A: {grades['A']}")</code>
+<code>print(grades)</code>
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>sentiments = list(positive=1, neutral=0, </code>
+<code>                  negative=-1)</code>
+<code>print(class(sentiments))</code>
+<code>print(glue("Sentiment for positive: ",</code>
+<code>           sentiments$positive))</code>
+<code></code>
+<code>grades =  list()</code>
+<code>grades$A = 4</code>
+<code>grades$B = 3</code>
+<code>grades$C = 2</code>
+<code>grades$D = 1</code>
+<code># Note: grades[["A"]] is equivalent to grades$A</code>
+<code>print(glue("Grade for A: {grades[['A']]}"))</code>
+<code>print(glue("Grade for A: {grades$A}"))</code>
+<code>print(grades)</code>  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>&lt;class 'dict'&gt;
+Sentiment for positive: 1
+Grade for A: 4
+{'A': 4, 'B': 3, 'C': 2, 'D': 1}</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>[1] "list"
+Sentiment for positive: 1
+Grade for A: 4
+Grade for A: 4
+$A
+[1] 4
+
+$B
+[1] 3
+
+$C
+[1] 2
+
+$D
+[1] 1
+</pre>
+</div></div></div>
+<p>
+A good analogy for a dictionary is a telephone book (imagine a paper
+one, but it actually often holds true for digital phone books as
+well): the names are the keys, and the associated phone numbers the
+values. If you know someone's name (the key), it is <i>very easy</i>
+to look up the corresponding values: even in a phone book of thousands
+of pages, it takes you maybe 10 or 20 seconds to look up the name
+(key). But if you know someone's phone number (the value) instead and
+want to look up the name, that's very inefficient: you need to read
+the whole phone book until you find the number.
+</p>
+
+<p>
+Just as the elements of a list can be of <i>any</i> type, and you can
+have lists of lists, you can also nest dictionaries to get dicts of
+dicts. Think of our phone book example: rather than storing just a
+phone number as value, we could store another dict with the keys
+&ldquo;office phone&rdquo;, &ldquo;mobile phone&rdquo;, etc. This is very often done, and you
+will come across many examples dealing with such data structures.
+You have one restriction, though: the keys in a dictionary (as opposed
+to the values) are not allowed to be mutable. After all, imagine that
+you could use a list as a key in a dictionary, and if at the same time,
+some other pointer to that very same list could just change it, this
+would lead to a quite confusing situation.
+</p>
+
+<h3>  <small class='text-muted'><a class='anchor' href='#3_1_5' name='3_1_5'>3.1.5.</a></small>From One to More Dimensions: Matrices and \(n\)-Dimensional Arrays
+</h3>
+
+
+<p>
+ Matrices are two-dimensional rectangular datasets that include values
+in rows and columns. This is the kind of data you will have to deal
+with in many analyses shown in this book, such as those related to
+machine learning. Often, we can generalize to higher dimensions.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:2darray' name='ex:2darray'>Example 3.13.</a></small><br />
+Working with two- or \(n\)-dimensional arrays</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>matrix = [[1, 2, 3], [4, 5, 6], [7,8,9]]</code>
+<code>print(matrix)</code>
+<code></code>
+<code>array2d = np.array(matrix)</code>
+<code>print(array2d)</code>
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>my_matrix = matrix(c(0, 0, 1, 1, 0, 1), </code>
+<code>    nrow = 2, ncol = 3, byrow = TRUE)</code>
+<code>print(dim(my_matrix))</code>
+<code>print(my_matrix)</code>
+<code></code>
+<code>my_matrix2 = matrix(c(0, 0, 1, 1, 0, 1), </code>
+<code>    nrow = 2, ncol = 3, byrow = FALSE)</code>
+<code>print(my_matrix2)</code>  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>[[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+[[1 2 3]
+ [4 5 6]
+ [7 8 9]]</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>[1] 2 3
+     [,1] [,2] [,3]
+[1,]    0    0    1
+[2,]    1    0    1
+     [,1] [,2] [,3]
+[1,]    0    1    0
+[2,]    0    1    1</pre>
+</div></div></div>
+<p>
+In Python, the easiest representation is to simply construct a list of
+lists. This is, in fact, often done, but has the disadvantage that
+there are no easy ways to get, for instance, the dimensions (the
+shape) of the table, or to print it in a neat(er) format. To get all
+that, one can transform the list of lists into an <code>array</code>, a
+datastructure provided by the package <i>numpy</i> (see Chapter 5 for more details).
+</p>
+
+<p>
+To create a matrix in R, you have to use the function <code>matrix</code> and
+create a vector of values with the indication of how many rows and
+columns will be on it. We also have to tell R if the order of the
+values is determined by the row or not. In Example&nbsp;<a href='#ex:2darray'>3.13</a>, we create
+two matrices in which we vary the <code>byrow</code> argument to be TRUE and
+FALSE, respectively, to illustrate how it changes the values of the
+matrix, even when the shape (\(2 \times3\)) remains identical. As you may
+imagine, we can operate with matrices, such as adding up two of them.
+</p>
+
+<h3>  <small class='text-muted'><a class='anchor' href='#3_1_6' name='3_1_6'>3.1.6.</a></small>Making Life Easier: Data Frames
+</h3>
+
+
+<p>
+So far, we have discussed the general built-in collections that you find in most programming languages
+such as the list and array.
+However, in data science and statistics you are very likely to encounter a specific collection type that we haven't discussed yet: the <code>Data frame</code>.
+Data frames are discussed in detail in Chapter&nbsp;<a href='chapter05.html#5'>5</a>,
+but for completeness we will also introduce them briefly here. 
+</p>
+
+<p>
+Data frames are user-friendly data structures that look very much like
+what you find in SPSS, Stata, or Excel. They will help you in a wide
+range of statistical analysis.  A
+data frame is a tabular data object that includes rows (usually the
+instances or cases) and columns (the variables). In a three-column data frame,
+the first variable can be <i>numeric</i>, the second <i>character</i>
+and the third <i>logical</i>, but the important thing is that each
+variable is a vector and that all these vectors must be of the same
+length. We create data frames from scratch using the data.frame()
+function.  Let’s generate a simple data frame of three instances (each
+case is an author of this book) and three variables of the types
+numeric (<i>age</i>), character (<i>country</i> where they obtained their
+master degree) and logic (<i>living abroad</i>, whether they currently
+live outside the country in which they were born) (Example&nbsp;<a href='#ex:dataframe1'>3.14</a>).
+Notice that you have the label of the variables at the top of each column and that it creates an automatic numbering for indexing the rows.  
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:dataframe1' name='ex:dataframe1'>Example 3.14.</a></small><br />
+Creating a simple data frame</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>authors = pd.DataFrame({"age": [38, 36, 39], </code>
+<code>  "countries": ["Netherlands","Germany","Spain"], </code>
+<code>  "living_abroad": [False, True, True]})</code>
+<code>print(authors)</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>authors = data.frame(age = c(38, 36, 39), </code>
+<code>  countries = c("Netherlands","Germany","Spain"), </code>
+<code>  living_abroad= c(FALSE, TRUE, TRUE))</code>
+<code>print(authors)</code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<pre class='output'>   age    countries  living_abroad
+0   38  Netherlands          False
+1   36      Germany           True
+2   39        Spain           True</pre>
+</div></div>
+<h2>  <small class='text-muted'><a class='anchor' href='#3_2' name='3_2'>3.2.</a></small>Simple Control Structures: Loops and Conditions
+</h2>
+
+<div class='feature'><b>Control structures in Python and R.</b>
+  This section and the next explain the working of control structures
+  such as loops, conditions, and functions.
+  These exist (and are very useful) in both Python and R.
+  In R, however, you do not need them as much because most functions
+  can work on whole columns in one go, while in Python you often run things
+  on each row of a column and sometimes do not use data frames at all.
+  Thus, if you are primarily interested in using R you could consider skipping
+  the remainder of this chapter for now and returning later when you are ready to learn more.
+  If you are learning Python, we strongly recommend continuing with this chapter, as
+  control structures are used in many of the examples in the book.
+  </div>
+<p>
+Having a clear understanding of objects and data types is a first step
+towards comprehending how object-orientated languages such as R and Python work,
+but now we need to get some literacy in writing code and <i>interacting</i>
+with the computer and the objects we created. Learning a programming
+language is just like learning any new language.  Imagine you want to
+speak Italian or you want to learn how to play the piano. The first thing
+will be to learn some words or musical notes, and to get familiarized
+with some examples or basic structures &ndash; just as we did in Chapter&nbsp;<a href='chapter02.html#2'>2</a>. In the
+case of Italian or the piano, you would then have to learn  some grammar:
+how to form sentences, how play some chords; or, more generally,
+how to reproduce patterns. And this is exactly how we 
+now move on to acquiring computational literacy: by learning some
+rules to make the computer do exactly what you want.
+</p>
+
+<p>
+Remember that you can interact with R and Python directly on their
+consoles just by typing any given command. However, when
+you begin to use several of these commands and combine them
+you will need to put all these instructions into a
+script that you can then run partially or entirely. Recall Section&nbsp;<a href='chapter01.html#1_4'>1.4</a>,
+where we showed how IDEs such as RStudio (and Pycharm) offer both a
+console for directly typing single commands and a larger window
+for writing longer scripts.
+</p>
+
+<p>
+Both R and Python are <i>interpreted</i> languages (as opposed to
+<i>compiled</i> languages), which means that interacting with
+them is very straightforward: You provide your computer with some
+<i>statements</i> (directly or from a script), and your computer
+reacts. We call a sequence of these statements a <i>computer program</i>.
+When we created objects by writing, for instance,
+<code>a = 100</code>,  we already dealt with a very basic statement, the <i>assignment statement</i>. But of course the statements can be more complex.
+</p>
+
+<p>
+In particular, we may want to say more about how and when
+statements need to be executed. Maybe we want to repeat
+the calculation of a value for each item on a list, or maybe
+we want to do this only if some condition is fulfilled.
+</p>
+
+<p>
+Both R and Python have such <i>loops</i> and <i>conditional statements</i>, which will
+make your coding journey much easier and with more sophisticated
+results because you can control the way your statements are
+executed. By controlling the flow of instructions you can deal with a
+lot of challenges in computer programming such as iterating over
+unlimited cases or executing part of your code as a function of new
+inputs.
+</p>
+
+<p>
+In your script, you usually indicate such loops and conditions
+visually by using <i>indentation</i>. Logical empty spaces &ndash; two in R and four in
+Python &ndash; depict blocks and sub-blocks on your code structure.
+As you will see in the next section, in R, using indentation
+is optional, and curly brackets will indicate the beginning (<code>{</code>)
+and end (<code>}</code>) of a code block; whereas in Python, indentation
+is mandatory and tells your interpreter where the block
+starts and ends.
+</p>
+
+<h3>  <small class='text-muted'><a class='anchor' href='#3_2_1' name='3_2_1'>3.2.1.</a></small>Loops
+</h3>
+
+
+<p>
+Loops can be used to repeat a block of statements.
+They are executed once, indefinitely, or
+until a certain condition is reached. This means that you can operate
+over a set of objects as many times as you want just by giving one
+instruction. The most common types of loops are <i>for</i>,
+<i>while</i>, and <i>repeat</i> (do-while), but we will be mostly
+concerned with so-called for-loops. Imagine you have a list of
+headlines as an object and you want a simple script
+to print the length of each message. Of course you can go headline
+by headline using indexing, but you will get bored or will not
+have  enough time if you have thousands of cases. Thus, the idea is to
+operate a loop in the list so you can get all the results, from the
+first until the last element, with just one instruction. The syntax
+of the for-loop is:
+</p>
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>for val in sequence:</code>
+<code>    statement1</code>
+<code>    statement2</code>
+<code>    statement3 </code>
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>for (val in sequence) {</code>
+<code>    statement1 </code>
+<code>    statement2 </code>
+<code>    statement3</code>
+<code>}</code>  </pre>
+</div></div>
+<p>
+As Example&nbsp;<a href='#ex:forloop'>3.15</a> illustrates, every time you find yourself
+<i>repeating</i> something, for instance printing each element from a
+list, you can get the same results easier by <i>iterating</i> or
+<i>looping</i> over the elements of the list, in this case.  Notice
+that you get the same results, but with the loop you can automate your
+operation writing few lines of code. As we will stress in this
+book, a good practice in coding is to be efficient and harmonious in
+the amount of code we write, which is another justification for using
+loops.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:forloop' name='ex:forloop'>Example 3.15.</a></small><br />
+For-loops let you repeat operations.</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>headlines = ["US condemns terrorist attacks", </code>
+<code>  "New elections forces UK to go back to the UE",</code>
+<code>  "Venezuelan president is dismissed"]</code>
+<code># Manually counting each element</code>
+<code>print("manual results:")</code>
+<code>print(len(headlines[0]))</code>
+<code>print(len(headlines[1]))</code>
+<code>print(len(headlines[2]))</code>
+<code>#and the second is using a for-loop</code>
+<code>print("for-loop results:")</code>
+<code>for x in headlines:</code>
+<code>    print(len(x))</code>
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>headlines = list("US condemns terrorist attacks", </code>
+<code>  "New elections forces UK to go back to the UE",</code>
+<code>  "Venezuelan president is dismissed")</code>
+<code># Manually counting each element</code>
+<code>print("manual results:  ")</code>
+<code>print(nchar(headlines[1]))</code>
+<code>print(nchar(headlines[2]))</code>
+<code>print(nchar(headlines[3]))</code>
+<code># Using a for-loop</code>
+<code>print("for-loop results:")</code>
+<code>for (x in headlines){</code>
+<code>  print(nchar(x))</code>
+<code>}</code>  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>manual results:
+29
+44
+33
+for-loop results:
+29
+44
+33</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>[1] "manual results:  "
+[1] 29
+[1] 44
+[1] 33
+[1] "for-loop results:"
+[1] 29
+[1] 44
+[1] 33</pre>
+</div></div></div><div class='feature'><b>Don't repeat yourself!</b>
+  You may be used to copy-pasting
+  syntax and slightly changing it when working with some statistics
+  program: you run an analysis and then you want to repeat the same
+  analysis with different datasets or different specifications. But
+  this is error-prone and hard to maintain, as it involves a lot of
+  extra work if you want to change something. In many cases where you
+  find yourself pasting multiple versions of your code, you would
+  probably be better using a for-loop instead.
+  </div>
+<p>
+Another way to iterate in Python is using list comprehensions  (not available natively in R), which are a stylish way to create list of elements automatically even with conditional clauses. This is the syntax:
+</p>
+<pre>
+newlist  = [expression for item in list if conditional]
+</pre>
+<p>
+In Example&nbsp;<a href='#ex:listcomprehensions'>3.16</a> we provide a simple example (without any
+conditional clause) that creates a list with the number of characters
+of each headline. As this example illustrates, list comprehensions
+allow you to essentially write a whole for-loop in one
+line. Therefore, list comprehensions are very popular in Python.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:listcomprehensions' name='ex:listcomprehensions'>Example 3.16.</a></small><br />
+List comprehensions are very popular in Python</h4><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>len_headlines= [len(x) for x in headlines]</code>
+<code>print(len_headlines)</code>
+<code></code>
+<code># Note: the "list comprehension" above is</code>
+<code>#   equivalent to the more verbose code below:</code>
+<code>len_headlines = []</code>
+<code>for x in headlines:</code>
+<code>    len_headlines.append(len(x))</code>
+<code>print(len_headlines)</code>  </pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<pre class='output'>[29, 44, 33]
+[29, 44, 33]</pre>
+</div></div>
+<h3>  <small class='text-muted'><a class='anchor' href='#3_2_2' name='3_2_2'>3.2.2.</a></small>Conditional Statements
+</h3>
+
+
+<p>
+Conditional statements will allow you to control the flow and order of
+the commands you give the computer. This means you can tell the
+computer to do this or that, depending on a given circumstance. These
+statements use logic operators to test <i>if</i> your condition is met
+(True) or not (False) and execute an instruction accordingly. Both in
+R and Python, we use the clauses <i>if</i>, <i>else if</i>
+(<i>elif</i> in Python), and <i>else</i> to write the syntax of the
+conditional statements. Let's begin showing you the basic structure of
+the conditional statement:
+</p>
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>if condition:</code>
+<code>    statement1</code>
+<code>elif other_condition:</code>
+<code>    statement2</code>
+<code>else:</code>
+<code>    statement3</code>
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>if (condition) {</code>
+<code>    statement1</code>
+<code>} else if (other_condition) {</code>
+<code>    statement2</code>
+<code>} else {</code>
+<code>    statement3</code>
+<code>}</code>  </pre>
+</div></div>
+<p>
+Suppose you want to print the headlines of Example&nbsp;<a href='#ex:forloop'>3.15</a> only if the text is less than 40 characters long.
+To do this, we can include the conditional statement in the loop, executing the body only if the condition is met (Example&nbsp;<a href='#ex:if1'>3.17</a>)
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:if1' name='ex:if1'>Example 3.17.</a></small><br />
+A simple conditional control structure</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>for x in headlines:</code>
+<code>  if len(x)&lt;40:</code>
+<code>    print(x)</code>
+&nbsp;
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>for (x in headlines){</code>
+<code>  if (nchar(x)&lt;40) {</code>
+<code>    print(x)}</code>
+<code>  }</code>
+<code></code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<pre class='output'>US condemns terrorist attacks
+Venezuelan president is dismissed</pre>
+</div></div>
+<p>
+We could also make it a bit more complicated: first check whether the length is smaller than 40,
+then check whether it is exactly 44 (<code>elif</code> / <code>else if</code>), and finally specify what to do if none of the conditions was met (<code>else</code>).
+</p>
+
+<p>
+In Example&nbsp;<a href='#ex:if2'>3.18</a>, we will print the headline if it is shorter than 40 characters,
+print the string &ldquo;What a coincidence!&rdquo; if it is exactly 44 characters, and print &ldquo;Too Low&rdquo; in all other cases.
+Notice that we have included the clause <i>elif</i> in the structure (in R it is noted <i>else if</i>).
+<i>elif</i> is a combination of <i>else</i> and <i>if</i>: if the previous condition is not satisfied,
+this condition is checked and the corresponding code block (or <i>else</i> block) is executed.
+This avoids having to nest the second <i>if</i> within the <i>else</i>, but otherwise the reasoning behind the control flow statements remains the same.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:if2' name='ex:if2'>Example 3.18.</a></small><br />
+A more complex conditional control structure</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>for x in headlines:</code>
+<code>  if len(x)&lt;30:</code>
+<code>    print(x)</code>
+<code>  elif len(x) == 44:</code>
+<code>    print("What a coincidence!")</code>
+<code>  else :</code>
+<code>    print ("Too low")</code>
+<code></code>
+&nbsp;
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>for (x in headlines) {</code>
+<code>  if (nchar(x)&lt;30) {</code>
+<code>    print(x)</code>
+<code>  } else if (nchar(x)==44) {</code>
+<code>      print("What a coincidence!")</code>
+<code>  } else {</code>
+<code>      print("Too low")</code>
+<code>  }</code>
+<code>}</code>
+<code></code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<pre class='output'>US condemns terrorist attacks
+What a coincidence!
+Too low</pre>
+</div></div>
+<h2>  <small class='text-muted'><a class='anchor' href='#3_3' name='3_3'>3.3.</a></small>Functions and Methods
+</h2>
+
+
+<p>
+<i>Functions</i> and <i>methods</i> are fundamental concepts in
+writing code in object-orientated programming. Both are objects that
+we use to store a set of statements and operations that we can use later
+without having to write the whole syntax again. This makes our code
+simpler and more powerful.
+</p>
+
+<p>
+We have already used some built-in functions, such as <code>length</code> and
+<code>class</code> (R) and <code>len</code> and <code>type</code> (Python) to get the length
+of an object and the class to which it belongs. But, as you will learn
+in this chapter, you can also write your own functions. In essence, a
+function takes some input (the <i>arguments</i> supplied between
+brackets) and returns some output.  Methods and functions are very
+similar concepts. The difference between them is that the functions
+are defined independently from the object, while methods are created
+based on a class, meaning that they are associated with an object. For
+example, in Python, each string has an associated method <code>lower</code>,
+so that writing <code>&#39;HELLO&#39;.lower()</code> will return 'hello'. In R, in
+contrast, one uses a function, <code>tolower(&#39;HELLO&#39;)</code>. For now, it is not
+really important to know why some things are implemented as a method
+and some are implemented as a function; it is partly an arbitrary
+choice that the developers made, and to fully understand it, you need
+to dive into the concept of <code>class</code>es, which is beyond the scope of
+this book.
+</p>
+<div class='feature'><b>Tab completion.</b> Because methods are associated with an object, you have a very
+  useful trick at your disposal to find out which methods (and other
+  properties of an object) there are: TAB completion. In Jupyter, just
+  type the name of an object followed by a dot (e.g., <code>a.&lt;TAB></code> in case you
+  have an object called a) and hit the TAB key. This will open a
+  drop-down menu to choose from.
+</div>
+<p>
+We will illustrate how to create simple functions in R and Python, so you
+will have a better understanding of how they work. Imagine you want to
+create two functions: one that computes the 60&percnt; of any given number
+and another that estimates this percentage only if the given argument
+is above the threshold of 5.
+The general structure of a function in R and Python is:
+</p>
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>def f(par1, par2=0):</code>
+<code>    statements</code>
+<code>    return return_value   </code>
+<code></code>
+<code>result = f(arg1, arg2)</code>
+<code>result = f(par1=arg1, par2=arg2)</code>
+<code>result = f(arg1, par2=arg2)</code>
+<code>result = f(arg1)</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>f = function(par1, par2=0) {</code>
+<code>   statements </code>
+<code>   return_value</code>
+<code>}</code>
+<code>result = f(arg1, arg2)</code>
+<code>result = f(par1=arg1, par2=arg2)</code>
+<code>result = f(arg1, par2=arg2)</code>
+<code>result = f(arg1)</code>  </pre>
+</div></div>
+<p>
+In both cases, this defines a function called <code>f</code>,
+with two <i>arguments</i>, <code>arg_1</code> and <code>arg_2</code>.
+When you call the function, you specify the values for these parameters (the arguments) between brackets after the function name.
+You can then store the result of the function as an object as normal.
+</p>
+
+<p>
+As you can see in the syntax above, you have some choices when specifying the arguments.
+First, you can specify them <i>by name</i> or <i>by position</i>.
+If you include the name (<code>f(param1=arg1)</code>) you explicitly bind that argument to that parameter.
+If you don't include the name (<code>f(arg1, arg2)</code>) the first argument matches the first parameter and so on.
+Note that you can mix and match these choices, specifying some parameters by name and others by position.
+</p>
+
+<p>
+Second, some functions have <i>optional parameters</i>, for which they provide a default value.
+In this case, <code>par2</code> is optional, with default value <code>0</code>.
+This means that if you don't specify the parameter it will use the default value instead.
+Usually, the mandatory parameters are the main objects used by the function to do its work,
+while the optional parameters are additional options or settings.
+It is recommended to generally specify these options by name when you call a function,
+as that increases the readability of the code.
+Whether to specify the mandatory arguments by name depends on the function:
+if it's obvious what the argument does, you can specify it by position,
+but if in doubt it's often better to specify them by name. 
+</p>
+
+<p>
+Finally, note that in Python you explicitly indicate the result value of the function with
+<code>return value</code>.
+In R, the value of the last expression is automatically returned,
+although you can also explicitly call <code>return(value)</code>. 
+</p>
+
+<p>
+Example&nbsp;<a href='#ex:functions'>3.19</a> shows how to write our function and how to use it.
+
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:functions' name='ex:functions'>Example 3.19.</a></small><br />
+Writing functions</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>#The first function just computes 60% of the value</code>
+<code>def perc_60(x):</code>
+<code>  return x*0.6</code>
+<code>print(perc_60(10))</code>
+<code>print(perc_60(4))</code>
+<code></code>
+<code># The second function only computes 60% it the</code>
+<code>#  value is bigger than 5</code>
+<code>def perc_60_cond(x):</code>
+<code>  if x&gt;5:</code>
+<code>    return x*0.6</code>
+<code>  else:</code>
+<code>    return x</code>
+<code>print(perc_60_cond(10))</code>
+<code>print(perc_60_cond(4))</code>
+&nbsp;
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>#The first function just computes 60% of the value</code>
+<code>perc_60 = function(x) x*0.6</code>
+<code></code>
+<code>print(perc_60(10))</code>
+<code>print(perc_60(4))</code>
+<code></code>
+<code># The second function only computes 60% it the</code>
+<code>#  value is bigger than 5</code>
+<code>perc_60_cond = function(x) {</code>
+<code>  if (x&gt;5) {</code>
+<code>    return(x*0.6)</code>
+<code>  } else {</code>
+<code>    return(x)</code>
+<code>  }</code>
+<code>}</code>
+<code>print(perc_60_cond(10))</code>
+<code>print(perc_60_cond(4))</code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<pre class='output'>6.0
+2.4
+6.0
+4</pre>
+</div></div>
+<p>
+The power of functions, though, lies in scenarios where they are used
+repeatedly.  Imagine that you have a list of 5 (or 5 million!) scores
+and you wish to apply the function <code>perc_60_cond</code> to all the scores at
+once using a loop. This costs you only two extra lines of code
+(Example&nbsp;<a href='#ex:functions2'>3.20</a>).
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:functions2' name='ex:functions2'>Example 3.20.</a></small><br />
+Functions are particular useful when used repeatedly</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code># Apply the function in a for-loop</code>
+<code>scores = [3,4,5,7]</code>
+<code>for x in scores:</code>
+<code>  print(perc_60_cond(x))</code>
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code># Apply the function in a for-loop</code>
+<code>scores = list(3,4,5,6,7)</code>
+<code>for (x in scores) {</code>
+<code>  print(perc_60_cond(x))</code>
+<code>}</code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<pre class='output'>3
+4
+5
+4.2</pre>
+</div></div><div class='feature'>
+  A specific type of Python function that you may come across at some point (for instance, in Section&nbsp;<a href='chapter12.html#12_2_2'>12.2.2</a>) is the <code>generator</code>. 
+  Think of a function that returns a list of multiple values. Often, you do not need all values at once: you may only 
+  need the <i>next</i> value at a time. This is especially interesting when calculating the whole list would take a lot of time or a lot 
+  of memory. Rather than waiting for all values to be calculated, you can immediately begin processing the first value before the next arrives; or 
+  you can work with data so large that it doesn't all fit into your memory at the same time.  You recognize a generator by 
+  the <code>yield</code> keyword instead of a <code>return</code> keyword (Example&nbsp;<a href='#ex:generators'>3.21</a>)
+</div><div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:generators' name='ex:generators'>Example 3.21.</a></small><br />
+Generators behave like lists in that you can iterate (loop) over them, but each element is only 
+calculated when it is needed. Hence, they do not have a length.</h4><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>mylist = [35,2,464,4]</code>
+<code></code>
+<code>def square1(somelist):</code>
+<code>    listofsquares = []</code>
+<code>    for i in somelist:</code>
+<code>        listofsquares.append(i**2)</code>
+<code>    return(listofsquares)</code>
+<code></code>
+<code>def square2(somelist):</code>
+<code>    for i in somelist:</code>
+<code>        yield i**2</code>
+<code></code>
+<code>print("As a list:")</code>
+<code>mysquares = square1(mylist)</code>
+<code>for mysquare in mysquares:</code>
+<code>    print(mysquare)</code>
+<code>print(type(mysquares))</code>
+<code>print(f"The list has {len(mysquares)} entries")</code>
+<code></code>
+<code>    </code>
+<code>print("\nAs a generator:")</code>
+<code></code>
+<code>mysquares = square2(mylist)</code>
+<code>for mysquare in mysquares:</code>
+<code>    print(mysquare)</code>
+<code>print(type(mysquares))</code>
+<code># This throws an error (generators have no length)</code>
+<code>print(f"mysquares has {len(mysquares)} entries")  </code>  </pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<pre class='output'>As a list:
+1225
+4
+215296
+16
+&lt;class 'list'&gt;
+The list has 4 entries
+
+As a generator:
+1225
+4
+215296
+16
+&lt;class 'generator'&gt;</pre>
+</div></div>
+<p>
+So far you have taken your first steps as a programmer, but there are many
+more advanced things to learn that are beyond the scope of this
+book. You can find a lot of literature, online documentation and even
+wonderful Youtube tutorials to keep learning. We can recommend the
+books by <span class="cite" title="Crawley, M.&nbsp;J. (2012). The R book. Wiley, 2nd edition edition.">Crawley (2012)</span> and <span class="cite" title="VanderPlas, J. (2016). Python data science handbook: essential tools for working with data. O'Reilly.">VanderPlas (2016)</span> to have
+more insights into R and Python, respectively. In the next chapter, we
+will go deeper into the world of code in order to learn how and why
+you should re-use existing code, what to do if you get stuck during your
+programming journey and what are the best practices when coding.
+
+        </div>
+
+	<div class='chevrons'>
+&laquo;
+	  
+	  <a href='chapter02.html'>Ch. 2 Fun with Data</a>
+	  
+	  
+	  | <a href='chapter04.html'>Ch. 4 How to write code</a>&raquo;
+	  
+</div>
+	<!-- Secondary sidebar -->
+        <aside class="css-rightbar">
+            <nav id="right" class="collapse css-rightnav">
+                <ul class="list-unstyled components">
+  
+  
+    
+  
+    
+  
+                  <div class="rightbar-header">In this chapter</div>
+
+            <ul class="list-unstyled" id="toc_chap_3">
+<li class='toc-section'>3 Programming Concepts</li>
+
+              
+	          
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_1">3.1. About Objects and Data Types</a>
+		    </li>
+		    
+		    <ul class="list-unstyled list-subsections" id="toc_chap_1">
+		    
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_1_1">3.1.1. Storing Single Values: Integers, Floating-Point Numbers, Booleans</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_1_2">3.1.2. Storing Text</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_1_3">3.1.3. Combining Multiple Values: Lists, Vectors, And Friends</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_1_4">3.1.4. Dictionaries</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_1_5">3.1.5. From One to More Dimensions: Matrices and $n$-Dimensional Arrays</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_1_6">3.1.6. Making Life Easier: Data Frames</a>
+                    </li>
+
+                    
+		    </ul>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_2">3.2. Simple Control Structures: Loops and Conditions</a>
+		    </li>
+		    
+		    <ul class="list-unstyled list-subsections" id="toc_chap_2">
+		    
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_2_1">3.2.1. Loops</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_2_2">3.2.2. Conditional Statements</a>
+                    </li>
+
+                    
+		    </ul>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_3">3.3. Functions and Methods</a>
+		    </li>
+		    
+
+		
+            </ul>
+	    
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+</ul>
+            </nav>
+        </aside>
+</div>
+
+
+
+    </div>
+    <!-- Optional JavaScript; choose one of the two! -->
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+    -->
+  <script>
+      var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+  return new bootstrap.Popover(popoverTriggerEl, {html: true})
+})
+  </script>
+  </body>
+</html>

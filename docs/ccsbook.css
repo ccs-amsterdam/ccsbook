@@ -1,0 +1,285 @@
+.concept {
+    font-family: monospace;
+    color: red
+}
+
+.verbatim {
+    font-family: monospace;
+    color: blue
+}
+
+.code-example {
+    border: 1px solid grey;
+    padding: 1em;
+    border-radius: .5em;
+}
+
+.cite:hover {
+    color: darkblue;
+}
+
+a.note {
+    color: darkblue;
+}
+
+a.note:hover {
+    cursor: pointer
+}
+
+a.anchor {
+    visibility: visible;
+    color: grey;
+    text-decoration: none;
+}
+
+.toc-chapter-current {
+
+    border: 1px solid grey;
+    border-radius: .2em;
+}
+
+/********* Code examples *******/
+
+pre.output {
+    max-height: 20ch;
+}
+
+.code-row-double .code-output pre {
+    width: 52ch !important;
+}
+
+.code-output pre {
+    width: 110ch;
+    max-width: 100%;
+    overflow: scroll;
+    white-space: pre-wrap;
+    font-size: small;
+
+}
+
+.code-single pre {
+    max-width: 100%;
+    overflow: scroll;
+    white-space: pre-wrap;
+}
+
+@media (min-width: 992px) {
+    .code-row-double pre {
+        font-size: small !important;
+    }
+}
+
+pre.code {
+    border-top: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+}
+
+pre.code:before {
+    counter-reset: listing;
+}
+
+pre.code code {
+    counter-increment: listing;
+}
+
+pre.code code::before {
+    content: counter(listing) ". ";
+    display: inline-block;
+    width: 2em; /* now works */
+    padding-left: auto; /* now works */
+    margin-left: auto; /* now works */
+    text-align: right; /* now works */
+    color: grey;
+}
+
+.code-example .table-wrapper {
+    overflow-x: auto;
+    width: 100%;
+}
+
+.code-example table {
+    font-size: small;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+    caption-side: top;
+
+}
+
+.code-example thead {
+    border-bottom: 1px solid black;
+}
+
+.code-example img {
+    max-width: 100%;
+}
+
+.code-caption {
+    color: grey;
+    font-style: italic;
+    font-size: small;
+}
+
+.code-output .code-caption{
+    border-bottom: 1px dotted grey;
+}
+
+.code-row-double {
+        width: 100%;
+    }
+
+.figure {
+    display: block;
+    max-width: 100%
+}
+
+.figure img {
+    max-width: 100%
+}
+
+/********* Various markup *******/
+
+.abstract {
+    max-width: 60em;
+    margin-right: 4em;
+    margin-left: 4em;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    font-style: italic;
+}
+
+.caption {
+    font-weight: bold;
+}
+
+.keywords {
+    margin-right: 4em;
+    margin-left: 4em;
+    font-style: italic;
+
+}
+
+.objectives {
+    margin-right: 4em;
+    margin-left: 4em;
+    margin-bottom: 2em;
+}
+
+.feature {
+    margin: .5em;
+    padding: .5em;
+    background: #eee;
+}
+
+
+/****** Sidebar and main structure ******/
+
+body {padding-top: 4em}
+
+@media (min-width: 992px)  {
+    .css-layout {
+        display: grid;
+        gap: 1.5rem;
+        grid-template-areas: "main rightbar";
+        grid-template-columns: auto auto !important;
+    }
+
+    .css-rightnav {
+        display: block !important;
+        position: sticky;
+        overflow-y: auto;
+        top: 5rem;
+    }
+    .subtoc {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .navhome {
+	display:none;
+    }
+}
+
+
+@media (min-width: 768px) {
+    .code-row-double {
+        display: grid;
+        gap: 1.5rem;
+        grid-template-areas: "left right";
+        grid-template-columns: 1fr 1fr;
+        width: 100%;
+    }
+}
+
+.toc {
+    font-size: .9rem;
+}
+
+.css-rightbar {
+    font-size: .9rem;
+    grid-area: rightbar;
+}
+
+a {
+    text-decoration: none;
+}
+
+header a {
+    color: black;
+}
+
+#toc a {
+    text-decoration: none;
+    word-wrap: break-word;
+    white-space: nowrap;
+}
+
+.rightbar-header {
+    font-weight:bold;
+    margin-bottom: .5em;
+}
+
+.list-subsections {
+    margin-left: .5em;
+}
+
+.css-main {
+    grid-area: main;
+}
+
+.navbar-toggler div {
+    width: 35px;
+    height: 5px;
+    background-color: black;
+    margin: 6px 0;
+}
+
+.gray {
+    color: dimgrey;
+}
+
+
+.indextoc {
+        display: grid;
+        gap: 1.5rem;
+    
+    grid-template-areas: "pic toc";
+    grid-template-columns: 200px auto;   
+   align-items: center;>
+}
+
+.bookpicture{
+    width: 100%;
+
+}
+
+.chevrons {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+body {
+    padding-top: 5em;
+}
+

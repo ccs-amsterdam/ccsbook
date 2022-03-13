@@ -1,0 +1,1852 @@
+
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+      <link href="ccsbook.css" rel="stylesheet">
+      <!-- MathJax -->
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js">
+  </script>
+
+    <title>Computational Analysis of Communication</title>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-light fixed-top bg-light">
+    <div class="container-xxl">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#toc" aria-controls="toc" aria-expanded="false" aria-label="Toggle TOC">
+                <div></div>
+                <div></div>
+                <div></div>
+            </button>
+	    <div class='navhome'>
+              <a href="index.html">Computational Analysis of Communication</a>
+	      </div>
+    </div>
+    </nav>
+    <div id='content' class='container-xxl'>
+
+        <!-- Sidebar -->
+        <aside class="toc">
+            <nav id="toc" class="collapse">
+                <div class="subtoc">
+                    <ul class="list-unstyled components">
+  
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+                  <div class="rightbar-header">In this chapter</div>
+
+            <ul class="list-unstyled" id="toc_chap_14">
+<li class='toc-section'>14 Multimedia data</li>
+
+              
+	          
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_1">14.1. Beyond Text Analysis: Images, Audio and Video</a>
+		    </li>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_2">14.2. Using Existing Libraries and APIs</a>
+		    </li>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_3">14.3. Storing, Representing, and Converting Images</a>
+		    </li>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_4">14.4. Image Classification</a>
+		    </li>
+		    
+		    <ul class="list-unstyled list-subsections" id="toc_chap_4">
+		    
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_4_1">14.4.1. Basic Classification with Shallow Algorithms</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_4_2">14.4.2. Deep Learning for Image Analysis</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_4_3">14.4.3. Re-using an Open Source CNN</a>
+                    </li>
+
+                    
+		    </ul>
+		    
+
+		
+            </ul>
+	    
+    
+  
+    
+  
+    
+</ul>
+                </div>
+
+		<div class="rightbar-header">Table of Contents</div>
+                <ul class="list-unstyled components">
+    
+        <li class="active toc-chapter ">
+            <a href="chapter01.html">1 Introduction</a>
+            <!--<a href="#toc_chap_1" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_1"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_1">
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_1">1.1. The Role of Computational Analysis in the Social Sciences</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_2">1.2. Why Python and/or R?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_3">1.3. How to use this book</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_4">1.4. Installing R and Python</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter01.html#1_5">1.5. Installing Third-Party Packages</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter02.html">2 Fun with Data</a>
+            <!--<a href="#toc_chap_2" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_2"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_2">
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_1">2.1. Fun With Tweets</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_2">2.2. Fun With Textual Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_3">2.3. Fun With Visualizing Geographic Information</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter02.html#2_4">2.4. Fun With Networks</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter03.html">3 Programming Concepts</a>
+            <!--<a href="#toc_chap_3" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_3"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_3">
+                
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_1">3.1. About Objects and Data Types</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_2">3.2. Simple Control Structures: Loops and Conditions</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter03.html#3_3">3.3. Functions and Methods</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter04.html">4 How to write code</a>
+            <!--<a href="#toc_chap_4" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_4"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_4">
+                
+                    <li class="toc-section">
+                        <a href="chapter04.html#4_1">4.1. Re-using Code: How Not to Re-Invent the Wheel</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter04.html#4_2">4.2. Understanding Errors and Getting Help</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter04.html#4_3">4.3. Best Practice: Beautiful Code, GitHub, and Notebooks</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter05.html">5 Files and Data Frames</a>
+            <!--<a href="#toc_chap_5" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_5"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_5">
+                
+                    <li class="toc-section">
+                        <a href="chapter05.html#5_1">5.1. Why and When Do We Use Data Frames?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter05.html#5_2">5.2. Reading and Saving Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter05.html#5_3">5.3. Data from online sources</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter06.html">6 Data Wrangling</a>
+            <!--<a href="#toc_chap_6" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_6"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_6">
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_1">6.2. Calculating Values</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_2">6.3. Grouping and Aggregating</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_3">6.4. Merging Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter06.html#6_4">6.5. Reshaping Data: Wide To Long And Long To Wide</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter07.html">7 Exploratory data analysis</a>
+            <!--<a href="#toc_chap_7" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_7"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_7">
+                
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_1">7.1. Simple Exploratory Data Analysis</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_2">7.2. Visualizing Data</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter07.html#7_3">7.3. Clustering and Dimensionality Reduction</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter08.html">8 Machine Learning</a>
+            <!--<a href="#toc_chap_8" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_8"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_8">
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_1">8.1. Statistical Modeling and Prediction</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_2">8.2. Concepts and Principles</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_3">8.3. Classical Machine Learning: From Na&#34;ive Bayes to Neural Networks</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_4">8.4. Deep Learning</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter08.html#8_5">8.5. Validation and Best Practices</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter09.html">9 Processing text</a>
+            <!--<a href="#toc_chap_9" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_9"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_9">
+                
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_1">9.1. Text as a String of Characters</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_2">9.2. Regular Expressions</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter09.html#9_3">9.3. Using Regular Expressions in Python and R</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter10.html">10 Text as data</a>
+            <!--<a href="#toc_chap_10" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_10"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_10">
+                
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_1">10.1. The Bag of Words and the Term-Document Matrix</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_2">10.2. Weighting and Selecting Documents and Terms</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter10.html#10_3">10.3. Advanced Representation of Text</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter11.html">11 Automatic analysis of text</a>
+            <!--<a href="#toc_chap_11" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_11"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_11">
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_1">11.1. Deciding on the Right Method</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_2">11.2. Obtaining a Review Dataset</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_3">11.3. Dictionary Approaches to Text Analysis</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_4">11.4. Supervised Text Analysis: Automatic Classification and Sentiment Analysis</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter11.html#11_5">11.5. Unsupervised Text Analysis: Topic Modeling</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter12.html">12 Scraping online data</a>
+            <!--<a href="#toc_chap_12" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_12"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_12">
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_1">12.1. Using Web APIs: From Open Resources to Twitter</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_2">12.2. Retrieving and Parsing Web Pages</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_3">12.3. Authentication, Cookies, and Sessions</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter12.html#12_4">12.4. Ethical, Legal, and Practical Considerations</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter13.html">13 Network Data</a>
+            <!--<a href="#toc_chap_13" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_13"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_13">
+                
+                    <li class="toc-section">
+                        <a href="chapter13.html#13_1">13.1. Representing and Visualizing Networks</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter13.html#13_2">13.2. Social Network Analysis</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter toc-chapter-current">
+            <a href="chapter14.html">14 Multimedia data</a>
+            <!--<a href="#toc_chap_14" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_14"></a>
+            <ul class="collapse list-unstyled show" id="toc_chap_14">
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_1">14.1. Beyond Text Analysis: Images, Audio and Video</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_2">14.2. Using Existing Libraries and APIs</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_3">14.3. Storing, Representing, and Converting Images</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_4">14.4. Image Classification</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter15.html">15 Scaling up and distributing</a>
+            <!--<a href="#toc_chap_15" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_15"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_15">
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_1">15.1. Storing Data in SQL and noSQL Databases</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_2">15.2. Using Cloud Computing</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_3">15.3. Publishing Your Source</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter15.html#15_4">15.4. Distributing Your Software as Container</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+        <li class="active toc-chapter ">
+            <a href="chapter16.html">16 Where to go next</a>
+            <!--<a href="#toc_chap_16" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_16"></a>
+            <ul class="collapse list-unstyled " id="toc_chap_16">
+                
+                    <li class="toc-section">
+                        <a href="chapter16.html#16_1">16.1. How Far Have We Come?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter16.html#16_2">16.2. Where To Go Next?</a>
+                    </li>
+                
+                    <li class="toc-section">
+                        <a href="chapter16.html#16_3">16.3. Open, Transparent, and Ethical Computational Science</a>
+                    </li>
+                
+            </ul>-->
+        </li>
+    
+</ul>
+            </nav>
+        </aside>
+	
+      
+  
+
+    <div class="css-layout">
+      <!-- Main Content -->
+      <div class="css-main">
+	<div class='chevrons'>
+&laquo;
+	  
+	  <a href='chapter13.html'>Ch. 13 Network Data</a>
+	  
+	  
+	  | <a href='chapter15.html'>Ch. 15 Scaling up and distributing</a>&raquo;
+	  
+</div>
+	  <br/>
+            
+<h1>  <small class='text-muted'><a class='anchor' href='#chap:image' name='chap:image'>14.</a></small>Multimedia data
+</h1>
+
+
+<div class='abstract'>
+  <span class='caption'>
+Abstract
+  </span>
+Digitally collected data often does not only contain texts, but also audio, images, and videos. Instead of using only textual features as we did in previous chapters, we can also use pixel values
+to analyze images. First, we will see how to use existing libraries, commercial services or APIs to conduct multimedia analysis (i.e., optical character recognition, speech-to-text or object recognition). Then we will show how to store, represent, and convert image data in order to use it as an input in our computational analysis.  We will focus on image analysis using machine learning classification techniques based on deep learning, and will explain how to build (or fine-tune) a Convolutional Neural Network (CNN) by ourselves.
+
+</div>
+
+<div class='keywords'>
+  <span class='caption'>Keywords:</span>
+image, audio, video, multimedia, image classification, deep learning
+</div>
+<div class='objectives'>
+  <div class='caption'>Chapter objectives:</div>
+  <ul><li> Learn how to transform multimedia data into useful inputs for computational analysis
+</li><li> Understand how to conduct deep learning to automatic classification of images
+</li>
+  </ul>
+</div><div class='feature'>
+This chapter uses <i>tesseract</i> (generic) and  Google 'Cloud Speech' API (<i>googleLanguageR</i> and <i>google-cloud-language</i> in Python) to convert images or audio files into text. We will use <i>PIL</i> (Python) and <i>imagemagic</i> (generic) to convert pictures as inputs; and <i>Tensorflow</i> and <i>keras</i> (both in Python and R) to build and fine-tune CNNs.
+
+You can install these and other auxiliary packages with the code below if needed  (see Section&nbsp;<a href='chapter01.html#1_4'>1.4</a> for more details):
+
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>!pip3 install Pillow requests numpy sklearn</code>
+<code>!pip3 install tensorflow keras</code>
+&nbsp;
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>install.packages(c("magick", "glue","lsa",</code>
+<code>    "tidyverse","dslabs","randomForest","caret",</code>
+<code>    "tensorflow","keras"))</code>
+<code></code>  </pre>
+</div></div> After installing, you need to import (activate) the packages every session:
+
+<div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>import matplotlib.pyplot as plt</code>
+<code>from PIL import Image</code>
+<code>import requests</code>
+<code>import numpy as np</code>
+<code></code>
+<code>import sklearn</code>
+<code>from sklearn.datasets import fetch_openml</code>
+<code>from sklearn.metrics.pairwise import (</code>
+<code>    cosine_similarity)</code>
+<code>from sklearn.ensemble import (</code>
+<code>    RandomForestClassifier)</code>
+<code>from sklearn.metrics import accuracy_score</code>
+<code></code>
+<code>import tensorflow as tf</code>
+<code>import keras</code>
+<code>from keras.applications import resnet50</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>library(magick)</code>
+<code>library(lsa)</code>
+<code>library(tidyverse)</code>
+<code>library(dslabs)</code>
+<code>library(randomForest)</code>
+<code>library(caret)</code>
+<code>library(tensorflow)</code>
+<code>library(keras)</code>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div></div></div>
+<h2>  <small class='text-muted'><a class='anchor' href='#14_1' name='14_1'>14.1.</a></small>Beyond Text Analysis: Images, Audio and Video
+</h2>
+
+
+<p>
+A book about the <em>computational analysis of communication</em> would be incomplete without a chapter dedicated to analyzing visual data.
+In fact, if you think of the possible contents derived from social, cultural and political dynamics in the current digital landscape, you will realize that written content is only a limited slice of the bigger cake. Humans produce much more oral content than text messages, and are more agile in deciphering sounds and visual content. Digitalization of social and political life, as well as the explosion of self-generated digital content in the web and social media, have provoked an unprecedented amount of multimedia content that deserve to be included in many types of research.
+</p>
+
+<p>
+Just imagine a collection of digital recorded radio stations, or the enormous amount of pictures produced every day on Instagram, or even the millions of videos of social interest uploaded on Youtube. These are definitely goldmines for social researchers who traditionally used manual techniques to analyze just a very small portion of this multimedia content. However, it is also true that computational techniques to analyze audio, images or video are still little developed in social sciences given the difficulty of application for non-computational practitioners and the novelty of the discoveries in fields such as computer vision.
+</p>
+
+<p>
+This section gives a brief overview of different formats of multimedia files. We explain how to generate useful inputs into our pipeline to perform computational analysis.
+</p>
+
+<p>
+You are probably already familiar with digital formats of images (.jpg, .bmp, .gif, etc.), audio (.mp3, .wav, .wma, flac, etc.) or video (.avi, .mov, .wmv, .flv, etc.), which is the very first step to use these contents as input. However, similar to the case of texts you will need to do some preprocessing to put these formats into good shape and get a proper mathematical representation of the content.
+</p>
+
+<p>
+In the case of audio, there are many useful computational approaches to do research over these contents: from voice recognition, audio sentiment analysis or sound classification, to automatic generation of music. Recent advances in the field of artificial intelligence have created a prosperous and diversified field with multiple academic and commercial applications. Nevertheless, computational social scientists can obtain great insights just by using specific applications such as speech-to-text transformation and then apply text analytics (already explained in chapters 9, 10, and 11) to the results. As you will see in Section&nbsp;<a href='#14_2'>14.2</a>, there are some useful libraries in R and Python to use pre-trained models to transcribe voice in different languages.
+</p>
+
+<p>
+Even when this approach is quite limited (just a small portion of the audio analytics world) and constrained (we will not address how to create the models), it will show how a specific, simple and powerful application of the automatic analysis of audio inputs can help answering many social questions (e.g., what are the topics of a natural conversation, what are the sentiments expressed in the scripts of radio news pieces, or which actors are named in oral speeches of any political party). In fact, automated analysis of audio can enable new research questions,  different from those typically applied to text analysis. This is the case of the research by <span class="cite" title="Knox, D. and Lucas, C. (2021). A dynamic model of speech for the social sciences. American Political Science Review, 115(2):649--666.">Knox and Lucas (2021)</span>,  who used a computational approach over audio data from the Supreme Court Oral Arguments (407 arguments and 153 hours of audio, comprising over 66000 justice utterances and 44 million moments) to demonstrate that some crucial information such as the skepticism of legal arguments was transmitted by vocal delivery (e.g., speech tone), something indecipherable to text analysis. Or we could also mention the work by <span class="cite" title="Dietrich, B.&nbsp;J., Hayes, M., and O’BRIEN, D.&nbsp;Z. (2019). Pitch perfect: Vocal pitch and the emotional intensity of congressional speech. American Political Science Review, 113(4):941--962.">Dietrich et&nbsp;al. (2019)</span> who computationally analyzed the vocal pitch of more than 70000 Congressional floor audio speeches and found that female members of the Congress spoke with greater <em>emotional intensity</em> when talking about women.
+</p>
+
+<p>
+On the other hand, applying computational methods to video input is probably the most challenging task in spite of the recent and promising advances in computer vision. For the sake of space, we will not cover specific video analytics in this chapter, but it is important to let you know that most of the computational analysis of video is based on the inspection of image and audio contents. With this standard approach you need to specify which key frames you are going to extract from the video (for example take a still image every 1000 frames) and then apply computer vision techniques (such as object detection) to those independent images. Check for example  version 3 of the object detection architecture <em>You Only Look Once Take</em> (YOLOv3)<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 1" data-bs-content="https://pjreddie.com/darknet/yolo/">[1]</a> created by <span class="cite" title="Redmon, J. and Farhadi, A. (2018). Yolov3: An incremental improvement. arXiv.">Redmon and Farhadi (2018)</span>, which uses a pre-trained Convolutional Neural Network (CNN) (see Section&nbsp;<a href='#14_4'>14.4</a>) to locate objects within the video (Figure&nbsp;<a href='#fig:yolo'>14.1</a>). To answer many social science questions you might complement this frame-to-frame image analysis with an analysis of audio features. In any case, this approach will not cover some interesting aspects of the video such as the camera frame shots and movements, or the editing techniques, which certainly give more content information.
+</p>
+<div class='figure'><h4>
+  <small class='text-muted'><a class='anchor' href='#fig:yolo' name='fig:yolo'>Figure 14.1.</a></small><br />
+A screen shot of a real-time video analyzed by YOLOv3 on its website https://pjreddie.com/darknet/yolo/</h4>
+<a href='img/ch15_yolo.png' title='Click to open full-size image'>
+  <img src='img/ch15_yolo_thumb.png' />
+</a></div>
+<h2>  <small class='text-muted'><a class='anchor' href='#14_2' name='14_2'>14.2.</a></small>Using Existing Libraries and APIs
+</h2>
+
+
+<p>
+In the following sections we will show you how to deal with multimedia contents from scratch, with special attention to image classification using state-of-the-art libraries. However, it might be a good idea to begin by using existing libraries that directly implement multimedia analyses or by connecting to commercial services to deploy classification tasks remotely using their APIs. There is a vast variety of available libraries and APIs, which we cannot cover in this book, but we will briefly mention some of them that may be useful in the computational analysis of communication.
+</p>
+
+<p>
+One example in the field of visual analytics is the <em>optical character recognition</em> (OCR). It is true that you can train your own models to deploy multi-class classification and predict every letter, number or symbol in an image, but it will be a task that will take you a lot of effort. Instead, there are specialized libraries in both R and Python such as <i>tesseract</i> that deploy this task in seconds with high accuracy. It is still possible that you will have to apply some pre-processing to the input images in order to get them in good shape. This means that you may need to use packages such as <i>PIL</i> or <i>Magick</i> to improve the quality of the image by cropping it or by reducing the background noise.  In the case of PDF files you will have to convert them first into images and then apply OCR.
+</p>
+
+<p>
+In the case of more complex audio and image documents you can use more sophisticated services provided by private companies (e.g., Google, Amazon, Microsoft, etc.). These commercial services have already deployed their own machine learning models with very good results. Sometimes you can even customize some of their models, but as a rule their internal features and configuration are not transparent to the user. Moreover, these services offer friendly APIs and, usually, a free quota to deploy your first exercises.
+</p>
+
+<p>
+To work with audio files, many social researchers might need to convert long conversations, radio programs, or interviews to plain text. For this propose, <em>Google Cloud</em> offer the service <em>Speech-to-Text</em><a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 2" data-bs-content="https://cloud.google.com/speech-to-text">[2]</a>  that remotely transcribes the audio to a text format supporting multiple languages (more than 125!). With this service you can remotely use the advanced deep learning models created by Google Platform from your own local computer (you must have an account and connect with the proper packages such as <i>googleLanguageR</i> or <i>google-cloud-language</i> in Python).
+</p>
+
+<p>
+If you apply either OCR to images or Speech-to-Text recognition to audio content you will have juicy plain text to conduct NLP, sentiment analysis, topic modelling, among other techniques (see Chapter 11).  Thus, it is very likely that you will have to combine different libraries and services to perform a complete computational pipeline, even jumping from R to Python, and vice versa!
+</p>
+
+<p>
+Finally, we would like to mention the existence of the commercial services of <em>autotaggers</em>, such as Google's Cloud Vision, Microsoft's Computer Vision or Amazon's Recognition. For example, if you connect to the services of Amazon's Recognition you can not only detect and classify images, but also conduct sentiment analysis over faces or predict sensitive contents within the images. As in the case of Google Cloud, you will have to obtain commercially sold credentials to be able to connect to Amazon's Recognition API (although you get  a free initial  &ldquo;quota&rdquo; of API access calls before you are required to pay for usage). This approach has two main advantages. The first is the access to a very well trained and validated model (continuously re-trained) over millions of images and with the participation of thousands of coders. The second is the scalability because you can store and analyze images at scale at a very good speed using cloud computing services.
+</p>
+<div class='figure'><h4>
+  <small class='text-muted'><a class='anchor' href='#fig:refugees' name='fig:refugees'>Figure 14.2.</a></small><br />
+A photograph of refugees on a lifeboat, used as an input for Amazon's Recognition API. The commercial service detects in the pictures classes such as clothing, apparel, human, person, life jacket or vest.</h4>
+<a href='img/ch15_refugees.png' title='Click to open full-size image'>
+  <img src='img/ch15_refugees_thumb.png' />
+</a></div>
+<p>
+As an example, you can use Amazon's Recognition to detect objects in a news photograph of refugees in a lifeboat (Figure&nbsp;<a href='#fig:refugees'>14.2</a>) and you will obtain a set of accurate labels: <em>Clothing</em> (99.95&percnt;), <em>Apparel</em> (99.95&percnt;), <em>Human</em> (99.70&percnt;), <em>Person</em> (99.70&percnt;), <em>Life jacket</em> (99.43&percnt;) and <em>Vest</em> (99.43&percnt;). With a lower confidence you will also find labels such as <em>Coat</em> (67.39&percnt;) and <em>People</em> (66.78&percnt;). This example also highlights the need for validation, and the difficulty of grasping complex concepts in automated analyses: while all of these labels are arguably correct, it is safe to say that they fail to actually grasp the essence of the picture and the social context. One may even go as far as saying that &ndash; knowing the picture is about refugees &ndash; some of these labels, were they given by a human to describe the picture, would sound pretty cynical.
+</p>
+
+<p>
+In Section&nbsp;<a href='#14_4'>14.4</a> we will use this very same image (stored as <code>myimg2_RGB</code>) to detect objects using a classification model trained with an open-access database of images (ImageNet). You will find that there are some different predictions in both methods, but especially that the time to conduct the classification is shorter in the commercial service, since we don't have to train or choose a model. As you may imagine, you can  neither modify the commercial models nor have access to their internal details, which is a strong limitation if you want to build your own customized classification system.
+</p>
+
+<h2>  <small class='text-muted'><a class='anchor' href='#14_3' name='14_3'>14.3.</a></small>Storing, Representing, and Converting Images
+</h2>
+
+
+<p>
+In this section we will focus on learning how to store, represent, and convert images for further computational analysis. For a more exhaustive discussion of the computational analysis of images, see <span class="cite" title="Williams, N.&nbsp;W., Casas, A., and Wilkerson, J.&nbsp;D. (2020). Images as data for social science research: An introduction to convolutional neural nets for image classification. Elements in Quantitative and Computational Methods for the Social Sciences.">Williams et&nbsp;al. (2020)</span>.
+</p>
+
+<p>
+To perform basic image manipulation we have to: (i) load images and transform their shape when it is necessary (by cropping or resizing), and (ii) create a mathematical representation of the image (normally derived from its size, colors and pixel intensity) such as a three-dimensional matrix (x, y, color channel) or a flattened vector. You have some useful libraries in Python and R (<i>pil</i> and <i>imagemagik</i>, respectively) to conduct research in these initial stages, but you will also find that more advanced libraries in computer vision will include functions or modules for pre-processing images. At this point you can work either locally or remotely, but keep in mind that images can be heavy files and if you are working with thousands of files you will probably need to store or process them in the cloud (see Section&nbsp;<a href='chapter15.html#15_2'>15.2</a>).
+</p>
+
+<p>
+You can load any image as an object into your workspace as we show in Example&nbsp;<a href='#ex:loadimg'>14.1</a>. In this case we load two pictures of refugees published by mainstream media in Europe (see <span class="cite" title="Amores, J.&nbsp;J., Calderón, C.&nbsp;A., and Stanek, M. (2019). Visual frames of migrants and refugees in the main western european media. Economics &amp; Sociology, 12(3):147--161.">Amores et&nbsp;al. (2019)</span>), one is a JPG and the other is a PNG file. For this basic loading step we used the <code>open</code> function of the <code>Image</code> module in <i>pil</i> and <code>image_read</code> function in <i>imagemagik</i>. The JPG image file is a \(805\times 453\) picture with the color model <em>RGB</em> and the PNG is a \(1540\times 978\) picture with the color model <em>RGBA</em>. As you may notice the two objects have different formats, sizes and color models, which means that there is little analysis you can do if you don't create a standard mathematical representation of both.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:loadimg' name='ex:loadimg'>Example 14.1.</a></small><br />
+Loading JPG and PNG pictures as objects</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>myimg1 = Image.open(requests.get(</code>
+<code>    "https://cssbook.net/d/259_3_32_15.jpg",</code>
+<code>    stream=True).raw)</code>
+<code>myimg2 = Image.open(requests.get(</code>
+<code>    "https://cssbook.net/d/298_5_52_15.png",</code>
+<code>    stream=True).raw)</code>
+<code>print(myimg1)</code>
+<code>print(myimg2)</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>myimg1 = image_read(</code>
+<code>    "https://cssbook.net/d/259_3_32_15.jpg")</code>
+<code>myimg2 = image_read(</code>
+<code>    "https://cssbook.net/d/298_5_52_15.png")</code>
+<code>rbind(image_info(myimg1), image_info(myimg2))</code>
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>&lt;PIL.JpegImagePlugin.JpegImageFile image mode=RGB size=805x453 at 0x7F2650CA9130&gt;
+&lt;PIL.PngImagePlugin.PngImageFile image mode=RGBA size=1540x978 at 0x7F2616F839D0&gt;</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>  format width height colorspace matte filesize density
+1 JPEG    805  453    sRGB       FALSE   75275  72x72
+2 PNG    1540  978    sRGB        TRUE 2752059  57x57</pre>
+</div></div></div><div class='figure'><h4>
+  <small class='text-muted'><a class='anchor' href='#fig:pixel' name='fig:pixel'>Figure 14.3.</a></small><br />
+Representation of the matrix data structure of a RGB image in which each pixel contains information for the intensity of each color component.</h4>
+<img src='img/ch15_pixel.png' /></div>
+<p>
+The good news when working with digital images is that the concept of <code>pixel</code> (picture element) will help you to understand the basic mathematical representation behind computational analysis of images. A rectangular grid of pixels is represented by a dot matrix which in turn generates a <code>bitmap image</code> or <code>raster graphic</code>. The dot matrix data structure is a basic but powerful representation of the images since we can conduct multiple simple and advanced operations with the matrices. Specifically, each dot in the matrix is a number that contains information about the intensity of each pixel (that commonly ranges from 0 to 255) also known as bit or color depth (figure&nbsp;<a href='#fig:pixel'>14.3</a>). This means that the numerical representation of a pixel can have 256 different values, 0 being the darkest tone of a given color and 255 the lightest. Keep in mind that if you divide the pixel values by 255 you will have a 0&ndash;1 scale to represent the intensity.
+</p>
+
+<p>
+In a black-and-white picture we will only have one color (gray-scale), with the darker points representing the black and the lighter ones the white. The mathematical representation will be a single matrix or a two-dimensional array in which the number of rows and columns will correspond to the dimensions of the image. For instance in a \(224 \times 224\) black-and-white picture we will have 50176 integers (0&ndash;255 scales) representing each pixel intensity.
+</p>
+
+<p>
+In Example&nbsp;<a href='#ex:imagel'>14.2</a> we convert our original JPG picture to gray-scale and then create an object with the mathematical representation (a \(453 \times 805\) matrix).
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:imagel' name='ex:imagel'>Example 14.2.</a></small><br />
+Converting images to gray-scale and creating a two-dimensional array</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>myimg1_L = myimg1.convert("L")</code>
+<code>print(type(myimg1_L))</code>
+<code>myimg1_L_array = np.array(myimg1_L)</code>
+<code>print(type(myimg1_L_array))</code>
+<code>print(myimg1_L_array.shape)</code>
+&nbsp;
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>myimg1_L = image_convert(myimg1,</code>
+<code>                         colorspace = "gray")</code>
+<code>print(class(myimg1_L))</code>
+<code>myimg1_L_array = as.integer(myimg1_L[[1]])</code>
+<code>print(class(myimg1_L_array))</code>
+<code>print(dim(myimg1_L_array))</code>
+<code></code>  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>&lt;class 'PIL.Image.Image'&gt;
+&lt;class 'numpy.ndarray'&gt;
+(453, 805)</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>[1] "magick-image"
+[1] "array"
+[1] 453 805   1</pre>
+</div></div></div>
+<p>
+By contrast, color images will have multiple color channels that depend on the color model you chose. One standard color model is the  three-channel RGB (<em>red</em>, <em>green</em> and <em>blue</em>), but you can find other variations in the chosen colors and the number of channels such as: RYB (<em>red</em>, <em>yellow</em> and <em>blue</em>), RGBA (<em>red</em>, <em>green</em>, <em>blue</em> and <em>alpha</em><a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 3" data-bs-content="Alpha refers to the opacity of each pixel.">[3]</a> ) or CMYK (<em>cyan</em>, <em>magenta</em>, <em>yellow</em> and <em>key</em><a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 4" data-bs-content="Key refers to <em>black</em>.">[4]</a>).  Importantly, while schemes used for printing such as CMYK are <i>substractive</i> (setting all colors to their highest value results in black, setting them to their lowest value results in white), schemes used for computer and television screens (such as RGB) are <i>additive</i>: setting all of the colors to their maximal value results in white (pretty much the opposite as what you got with your paintbox in primary school).
+</p>
+
+<p>
+We will mostly use RGB in this book since it is the most used representation in the state-of-the-art literature in computer vision given that normally these color channels yield more accurate models. RGB's mathematical representation will be a three-dimensional matrix or a collection of three two-dimensional arrays (one for each color) as we showed in figure&nbsp;<a href='#fig:pixel'>14.3</a>. Then an RGB \(224 \times 224\) picture will have 50176 pixel intensities for each of the three colors, or in other words a total of 150528 integers!
+</p>
+
+<p>
+Now, in Example&nbsp;<a href='#ex:imagergb'>14.3</a> we convert our original JPG file to a RGB object and then create a new object with the mathematical representation (a \(453 \times 805 \times 3\) matrix).
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:imagergb' name='ex:imagergb'>Example 14.3.</a></small><br />
+Converting images to RGB color model and creating three two-dimensional arrays</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>myimg1_RGB = myimg1.convert("RGB")</code>
+<code>print(type(myimg1_RGB))</code>
+<code>myimg1_RGB_array = np.array(myimg1_RGB)</code>
+<code>print(type(myimg1_RGB_array))</code>
+<code>print(myimg1_RGB_array.shape)</code>
+&nbsp;
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>myimg1_RGB = image_convert(myimg1,</code>
+<code>                           colorspace = "RGB")</code>
+<code>print(class(myimg1_RGB))</code>
+<code>myimg1_RGB_array = as.integer(myimg1_RGB[[1]])</code>
+<code>print(class(myimg1_RGB_array))</code>
+<code>print(dim(myimg1_RGB_array))</code>
+<code></code>  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>&lt;class 'PIL.Image.Image'&gt;
+&lt;class 'numpy.ndarray'&gt;
+(453, 805, 3)</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>[1] "magick-image"
+[1] "array"
+[1] 453 805   3</pre>
+</div></div></div>
+<p>
+Instead of pixels, there are other ways to store digital images. One of them is the <em>vector graphics</em>, with formats such as .ai, .eps, .svg or .drw. Differently to bitmap images, they don't have a grid of dots but a set of <em>paths</em> (lines, triangles, square, curvy shapes, etc.) that have a start and end point, so  simple and complex images are created with paths. The great advantage of this format is that images do not get  &ldquo;pixelated&rdquo; when you enlarge them because the paths can easily be transformed 	while remaining smooth. However, to obtain the standard mathematical representation of images you can convert the vector graphics to raster graphics (the way back is a bit more difficult and often only possible by approximation).
+</p>
+
+<p>
+Sometimes you need to convert your image to a specific size. For example, in the case of image classification this is a very important step since all the input images of the model must have the same size. For this reason, one of the most common tasks in the preprocessing stage is to change the dimensions of the image in order to adjust width and height to a specific size. In Example&nbsp;<a href='#ex:resize'>14.4</a> we use the <code>resize</code> method provided by <i>pil</i> and the <code>image_scale</code> function in <i>imagemagik</i> to reduce the first of our original pictures in RGB (<code>myimg1_RGB</code>) to 25&percnt; . Notice that we first obtain the original dimensions of the photograph
+(i.e. <code>myimg1_RGB.width</code> or <code>image_info(myimg1_RGB)[&#39;width&#39;][[1]]</code>) and then multiply it by 0.25 in order to obtain the new size which is the argument required by the functions.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:resize' name='ex:resize'>Example 14.4.</a></small><br />
+Resize to 25&percnt; and visualize a picture</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>#Resize and visalize myimg1. Reduce to 25%</code>
+<code>myimg1_RGB_25 = myimg1_RGB.resize(</code>
+<code>    (int(myimg1_RGB.width * 0.25),</code>
+<code>     int(myimg1_RGB.height * 0.25)))</code>
+<code>myimg1_RGB_25</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>#Resize and visalize myimg1. Reduce to 25%</code>
+<code>myimg1_RGB_25 = image_scale(myimg1_RGB,</code>
+<code>        image_info(myimg1_RGB)["width"][[1]]*0.25)</code>
+<code>plot(myimg1_RGB_25)</code>
+&nbsp;  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<img src='img/resize.py.png' />
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<a href='img/resize.r.png' title='Click to open full-size image'>
+  <img src='img/resize.r_thumb.png' />
+</a>
+</div></div></div>
+<p>
+Now, using the same functions of the latter example, we specify in Example&nbsp;<a href='#ex:resize2'>14.5</a> how to resize the same picture to \(224 \times 244\), which is one of the standard dimensions in computer vision.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:resize2' name='ex:resize2'>Example 14.5.</a></small><br />
+Resize to \(224 \times 224\) and visualize a picture</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>#Resize to 224 x 224</code>
+<code>myimg1_RGB_224 = myimg1_RGB.resize(</code>
+<code>    (224,224))</code>
+<code>myimg1_RGB_224</code>
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>#Resize and visalize myimg1. Resize to 224 x 224</code>
+<code>#! indicates to resize width and height exactly</code>
+<code>myimg1_RGB_224 = image_scale(myimg1_RGB,</code>
+<code>                             "!224x!224")</code>
+<code>plot(myimg1_RGB_224)</code>  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<img src='img/resize2.py.png' />
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<a href='img/resize2.r.png' title='Click to open full-size image'>
+  <img src='img/resize2.r_thumb.png' />
+</a>
+</div></div></div>
+<p>
+You may have noticed that the new image has now the correct width and height but that it looks deformed. The reason is that the original picture was not squared and our order was to force it to fit  into a \(224 \times 224\) square, losing its original aspect. There are different alternatives to solving this issue, but probably the most extended is to <em>crop</em> the original image to create a squared picture. As you can see in Example&nbsp;<a href='#ex:crop'>14.6</a> we can create a function that first determines the orientation of the picture (vertical versus horizontal) and then cut the margins  (up and down if it is vertical; and left and right if it is horizontal) to create a square. After applying this ad hoc function <code>crop</code> to the original image we can resize again to obtain a non-distorted \(224 \times 224\) image.
+</p>
+
+<p>
+Of course you are now losing part of the picture information, so you may think of other alternatives such as filling a couple of sides with blank pixels (or <code>padding</code>) in order to create the square by adding information instead of removing it.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:crop' name='ex:crop'>Example 14.6.</a></small><br />
+Function to crop the image to create a square and the resize the picture</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>#Crop and resize to 224 x 224</code>
+<code></code>
+<code>#Adapted from Webb, Casas & Wilkerson (2020)</code>
+<code>def crop(img):</code>
+<code>    height = img.height</code>
+<code>    width = img.width</code>
+<code>    hw_dif = abs(height - width)</code>
+<code>    hw_halfdif = hw_dif / 2</code>
+<code>    crop_leftright = width &gt; height</code>
+<code>    if crop_leftright:</code>
+<code>        y0 = 0</code>
+<code>        y1 = height</code>
+<code>        x0 = 0 + hw_halfdif</code>
+<code>        x1 = width - hw_halfdif        </code>
+<code>    else:</code>
+<code>        y0 = 0 + hw_halfdif</code>
+<code>        y1 = height - hw_halfdif</code>
+<code>        x0 = 0</code>
+<code>        x1 = width</code>
+<code>    return img.crop((x0, y0, x1, y1))</code>
+<code></code>
+<code>myimg1_RGB_crop = crop(myimg1_RGB)</code>
+<code>myimg1_RGB_crop_224 = myimg1_RGB_crop.resize(</code>
+<code>    (224,224))</code>
+<code>myimg1_RGB_crop_224</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>#Crop and resize to 224 x 224</code>
+<code>#Create function</code>
+<code>crop = function(img) {</code>
+<code>    width = image_info(img)["width"][[1]]</code>
+<code>    height = image_info(img)["height"][[1]]</code>
+<code>    if (width &gt; height) {</code>
+<code>        return (image_crop(img, </code>
+<code>                sprintf("%dx%d+%d", height,</code>
+<code>                    height, (width-height)/2)))</code>
+<code>    }   else  {</code>
+<code>        return (image_crop(img,</code>
+<code>                sprintf("%sx%s+%s+%s", width,</code>
+<code>        width, (width-width), (height-width)/2)))</code>
+<code>        }</code>
+<code>    }</code>
+<code></code>
+<code>myimg1_RGB_crop = crop(myimg1_RGB)</code>
+<code>myimg1_RGB_crop_224 = image_scale(myimg1_RGB_crop,</code>
+<code>                                  "!224x!224")</code>
+<code>plot(myimg1_RGB_crop_224)</code>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<img src='img/crop.py.png' />
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<a href='img/crop.r.png' title='Click to open full-size image'>
+  <img src='img/crop.r_thumb.png' />
+</a>
+</div></div></div>
+<p>
+You can also adjust the orientation of the image, flip it, or change its background, among other commands. These techniques might be useful for creating extra images in order to enlarge the training set in image classification (see Section&nbsp;<a href='#14_4'>14.4</a>). This is called <em>data augmentation</em> and consists of duplicating the initial examples on which the model was trained and altering them so that the algorithm can be more robust and generalize better. In Example&nbsp;<a href='#ex:rotate'>14.7</a> we used the <code>rotate</code> method in <i>pil</i> and <code>image_rotate</code> function in <i>imagemagik</i>
+to rotate 45 degrees the above resized image <code>myimg1_RGB_224</code> to see how easily we can get an alternative picture with similar information to include in an augmented training set.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:rotate' name='ex:rotate'>Example 14.7.</a></small><br />
+Rotating a picture 45 degrees</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>#Rotate 45 degrees</code>
+<code>myimg1_RGB_224_rot=myimg1_RGB_224.rotate(-45)</code>
+<code>myimg1_RGB_224_rot</code>
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>#Rotate 45 degrees</code>
+<code>myimg1_RGB_224_rot = image_rotate(</code>
+<code>    myimg1_RGB_224, 45)</code>
+<code>plot(myimg1_RGB_224_rot)</code>  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<img src='img/rotate.py.png' />
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<a href='img/rotate.r.png' title='Click to open full-size image'>
+  <img src='img/rotate.r_thumb.png' />
+</a>
+</div></div></div>
+<p>
+Finally, the numerical representation of visual content can help us to <em>compare</em> pictures in order to find similar or even duplicate images. Let's take the case of RGB images which in Example&nbsp;<a href='#ex:imagergb'>14.3</a> we showed how to transform to a three two-dimensional array. If we now convert the three-dimensional matrix of the image into a flattened vector we can use this simpler numerical representation to estimate similarities. Specifically, as we do in Example&nbsp;<a href='#ex:flatten'>14.8</a>, we can take the vectors of two <em>flattened images</em> of resized \(15 \times 15\) images to ease computation (<code>img_vect1</code> and <code>img_vect2</code>) and use the <em>cosine similarity</em> to estimate how akin those images are. We stacked the two vectors in a matrix and then used the <code>cosine_similarity</code> function of the <code>metrics</code> module of the  <i>sklearn</i> package in Python and the <code>cosine</code> function of the <i>lsa</i> package in R.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:flatten' name='ex:flatten'>Example 14.8.</a></small><br />
+Comparing two flattened vectors to detect similarities between images</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>#Create two 15x15 small images to compare</code>
+<code></code>
+<code>#image1</code>
+<code>myimg1_RGB_crop_15 = myimg1_RGB_crop_224.resize(</code>
+<code>    (15,15))</code>
+<code>#image2</code>
+<code>myimg2_RGB = myimg2.convert("RGB")</code>
+<code>myimg2_RGB_array = np.array(myimg2_RGB)</code>
+<code>myimg2_RGB_crop = crop(myimg2_RGB)</code>
+<code>myimg2_RGB_crop_224 = myimg2_RGB_crop.resize(</code>
+<code>    (224,224))</code>
+<code>myimg2_RGB_crop_15 = myimg2_RGB_crop_224.resize(</code>
+<code>    (15,15))</code>
+<code></code>
+<code>img_vect1 = np.array(myimg1_RGB_crop_15).flatten()</code>
+<code>img_vect2 = np.array(myimg2_RGB_crop_15).flatten()</code>
+<code></code>
+<code>matrix = np.row_stack((img_vect1, img_vect2))</code>
+<code></code>
+<code>sim_mat = cosine_similarity(matrix)</code>
+<code>sim_mat</code>
+&nbsp;
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>#Create two 15x15 small images to compare</code>
+<code></code>
+<code>#image1</code>
+<code>myimg1_RGB_crop_15 = image_scale(</code>
+<code>    myimg1_RGB_crop_224, 15)</code>
+<code>img_vect1 = as.integer(myimg1_RGB_crop_15[[1]])</code>
+<code>img_vect1 = as.vector(img_vect1)</code>
+<code></code>
+<code>#image2</code>
+<code>myimg2_RGB = image_convert(myimg2,</code>
+<code>                           colorspace = "RGB")</code>
+<code>myimg2_RGB_crop = crop(myimg2_RGB)</code>
+<code>myimg2_RGB_crop_15 = image_scale(</code>
+<code>    myimg2_RGB_crop, 15)</code>
+<code>img_vect2 = as.integer(myimg2_RGB_crop_15[[1]])</code>
+<code>#drop the extra channel for comparision</code>
+<code>img_vect2 = img_vect2[,,-4] </code>
+<code>img_vect2 = as.vector(img_vect2)</code>
+<code></code>
+<code>matrix = cbind(img_vect1, img_vect2)</code>
+<code></code>
+<code>cosine(img_vect1, img_vect2)</code>
+<code>cosine(matrix)</code>  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>array([[1.        , 0.86462734],
+       [0.86462734, 1.        ]])</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>     [,1]
+[1,] 0.8987007
+          img_vect1 img_vect2
+img_vect1 1.0000000 0.8987007
+img_vect2 0.8987007 1.0000000</pre>
+</div></div></div>
+<p>
+As you can see in the resulting matrix when the images are compared with themselves (that would be the case of an exact duplicate) they obtain a value of 1. Similar images would obtain values under 1 but still close to it, while dissimilar images would obtain low values.
+</p>
+
+<h2>  <small class='text-muted'><a class='anchor' href='#14_4' name='14_4'>14.4.</a></small>Image Classification
+</h2>
+
+
+<p>
+The implementation of computational image classification can help to answer many scientific questions, from testing some traditional hypotheses to opening new fields of interest in social science research. Just think about the potential of detecting at scale <em>who</em> appears in news photographs or what are the facial <em>emotions</em> expressed in the profiles of a social network. Moreover, imagine you can automatically label whether an image contains a certain action or not. For example, this is the case of <span class="cite" title="Williams, N.&nbsp;W., Casas, A., and Wilkerson, J.&nbsp;D. (2020). Images as data for social science research: An introduction to convolutional neural nets for image classification. Elements in Quantitative and Computational Methods for the Social Sciences.">Williams et&nbsp;al. (2020)</span> who conducted a binary classification of pictures related to the  <em>Black Lives Matter</em> movement in order to model if a picture was a protest or not, which can help to understand the extent to which the media covered a relevant social and political issue.
+</p>
+
+<p>
+There are many other excellent examples of how you can adopt image classification tasks to answer specific research questions in social sciences such as those of <span class="cite" title="Horiuchi, Y., Komatsu, T., and Nakaya, F. (2012). Should candidates smile to win elections? an application of automated face recognition technology. Political Psychology, 33(6):925--933.">Horiuchi et&nbsp;al. (2012)</span> who detected smiles in images of politicians to estimate the effects of facial appearance on election outcomes; or the work by <span class="cite" title="Peng, Y. (2018). Same candidates, different faces: Uncovering media bias in visual portrayals of presidential candidates with computer vision. Journal of Communication, 68(5):920--941.">Peng (2018)</span> who used automated recognition of facial traits in American politicians to investigating the bias of media portrayals.
+</p>
+
+<p>
+In this section, we will learn how to conduct computational image classification which is probably the most extended computer vision application in communication and social sciences (see Table&nbsp;<a href='#tab:visionlingo'>14.1</a> for some terminology). We will first discuss how to apply a <em>shallow</em> algorithm and then a deep-learning approach, given a labelled data set. 	
+</p>
+<div class='figure'><h4>
+  <small class='text-muted'><a class='anchor' href='#tab:visionlingo' name='tab:visionlingo'>Table 14.1.</a></small><br />
+Some computer vision concepts used in computational analysis of communication </h4>
+<table class='table'><thead>
+  <tr>
+    <th>
+
+Computer vision lingo  
+    </th>
+    <th>
+ Definition 
+    </th>
+
+  </tr>
+</thead><tbody>
+  <tr>
+    <td>
+
+bitmap         
+    </td>
+    <td>
+ Format to store digital images using a rectangular grid of points of colors. Also called &ldquo;raster image&rdquo;.
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+pixel                 
+    </td>
+    <td>
+ Stands for &ldquo;picture element&rdquo; and is the smallest point of a bitmap image  
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+color model                   
+    </td>
+    <td>
+ Mathematical representation of colors in a picture. The standard in computer vision is RGB, but there are others such as RYB, RGBA or CMYK.  
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+vector graphic        
+    </td>
+    <td>
+ Format to store digital images using lines and curves formed by points. 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+data augmentation            
+    </td>
+    <td>
+ Technique to increase the training set of images by creating new ones base on the modification of some of the originals (cropping, rotating, etc.) 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+image classification  
+    </td>
+    <td>
+ Machine learning task to predict a class of an image based on a model. State-of-the-art image classification is conducted with Convolutional Neural Networks (CNN). Related tasks are object detection and image segmentation. 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+activation function            
+    </td>
+    <td>
+ Parameter of a CNN that defines the output of a layer given the inputs of the previous layer. Some usual activation functions in image classification are sigmoid, softmax, or RELU. 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+loss function           
+    </td>
+    <td>
+ Parameter of a CNN which accounts for the difference between the prediction and the target variable (confidence in the prediction). A common one in image classification is the cross entropy loss. 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+optimization           
+    </td>
+    <td>
+ Parameter of a CNN that updates weights and biases in order to reduce the error. Some common optimizers in image classification are Stochastic Gradient Descent and ADAM. 
+    </td>
+
+  </tr>
+  <tr>
+    <td>
+
+transfer learning             
+    </td>
+    <td>
+ Using trained layers of other CNN architectures to fine tune a new model investing less resources (e.g. training data). 
+    </td>
+
+  </tr>
+</tbody>
+</table></div>
+<p>
+Technically, in an image classification task we train a model with examples (e.g., a corpus of pictures with labels) in order to predict the category of any given new sample. It is the same logic used in supervised text classification  explained in Section&nbsp;<a href='chapter11.html#11_4'>11.4</a> but using images instead of texts. For example, if we show many pictures of cats and houses the algorithm would learn the constant features in each and will tell you with some degree of confidence if a new picture contains either a cat or a house. It is the same with letters, numbers, objects or faces, and you can apply either binary or multi-class classification. Just think when your vehicle registration plate is recognized by a camera or when your face is automatically labelled in pictures posted on Facebook.
+</p>
+
+<p>
+Beyond image classification we have other specific tasks in computer vision such as <em>object detection</em> or <em>semantic segmentation</em> (Figure 14.4). To conduct object detection we first have to locate all the possible objects contained in a picture by predicting a bounding box (i.e., the four points corresponding to the vertical and horizontal coordinates of the center of the object), which is normally a regression task. Once the bounding boxes are placed around the objects, we must apply multi-class classification as explained earlier. In the case of semantic segmentation, instead of classifying objects, we classify each pixel of the image according to the class of the object the pixel belongs to, which means that different objects of the same class might not be distinguished. See <span class="cite" title="Géron, A. (2019). Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow: Concepts, Tools, and Techniques to Build Intelligent Systems. O'Reilly Media.">Géron (2019)</span> for a more detailed explanation and graphical examples of object detection versus image segmentation.
+</p>
+<div class='figure'><h4>
+  <small class='text-muted'><a class='anchor' href='#fig:location' name='fig:location'>Figure 14.4.</a></small><br />
+Object detection (left) versus semantic segmentation (right).
+Source: <span class="cite" title="Géron, A. (2019). Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow: Concepts, Tools, and Techniques to Build Intelligent Systems. O'Reilly Media.">Géron (2019)</span></h4>
+<a href='img/ch15_location.png' title='Click to open full-size image'>
+  <img src='img/ch15_location_thumb.png' />
+</a></div>
+<p>
+It is beyond the scope of this book to address the implementation of object detection or semantic segmentation, but we will focus on how to conduct basic image classification in state-of-the-art libraries in R and Python. As you may have imagined we will need some already-labelled images to have a proper training set. It is also out of the scope of this chapter to collect and annotate the images, which is the reason why we will mostly rely on pre-existing image databases (i.e., MINST or Fashion MINST) and pre-trained models (i.e., CNN architectures).
+</p>
+
+<h3>  <small class='text-muted'><a class='anchor' href='#14_4_1' name='14_4_1'>14.4.1.</a></small>Basic Classification with Shallow Algorithms
+</h3>
+
+
+<p>
+In Chapter&nbsp;<a href='chapter08.html#8'>8</a> we introduced you to the exciting world of machine learning and in Section&nbsp;<a href='chapter11.html#11_4'>11.4</a>  we introduced the <em>supervised</em> approach to classify texts. Most of the discussed models used so-called <em>shallow</em> algorithms such as Na&iuml;ve Bayes or Support Vector Machines rather than the various large neural network models called <i>deep learning</i>. As we will see in the next section, deep neural networks are nowadays the best option for complex tasks in image classification. However, we will now explain how to conduct simple multi-class classification of images that contain numbers with a shallow algorithm.
+</p>
+
+<p>
+Let us begin by training a model to recognize numbers using 70000 small images of digits handwritten from the Modified National Institute of Standards and Technology (MNIST) dataset  (<span class="cite" title="LeCun, Y., Bottou, L., Bengio, Y., and Haffner, P. (1998). Gradient-based learning applied to document recognition. Proceedings of the IEEE, 86(11):2278--2324.">LeCun et&nbsp;al., 1998</span>). This popular training corpus contains gray-scale examples of numbers written by American students and workers and it is usually employed to test machine learning models (60000 for training and 10000 for testing). The image sizes are \(28 \times 28\), which generates 784 features for each image, with pixels values from white to black represented by a 0&ndash;255 scales. In Figure&nbsp;<a href='#fig:numbers'>14.5</a> you can observe the first 10 handwritten numbers used in both training and test set.
+</p>
+<div class='figure'><h4>
+  <small class='text-muted'><a class='anchor' href='#fig:numbers' name='fig:numbers'>Figure 14.5.</a></small><br />
+First 10 handwritten digits from the training and test set of the MNIST.</h4>
+<a href='img/ch15_numbers.png' title='Click to open full-size image'>
+  <img src='img/ch15_numbers_thumb.png' />
+</a></div>
+<p>
+You can download the MNIST images from its project web page<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 5" data-bs-content="http://yann.lecun.com/exdb/mnist/">[5]</a>, but many libraries also offer this dataset. In Example&nbsp;<a href='#ex:mnist'>14.9</a> we use the <code>read_mnist</code> function from the <i>dslabs</i> package (Data Science Labs) in R and the <code>fetch_openml</code> function from the <i>sklearn</i> package (<code>datasets</code> module) in Python to read and load a <code>mnist</code> object into our workspace. We then create the four necessary objects (<code>X_train</code>, <code>X_test</code>, <code>y_train</code>, <code>y_test</code>) to generate a ML model and print the first numbers in training and test sets and check they coincide with those in <a href='#fig:numbers'>14.5</a>.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:mnist' name='ex:mnist'>Example 14.9.</a></small><br />
+Loading MNIST dataset and preparing training and test sets</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>mnist = fetch_openml("mnist_784", version=1)</code>
+<code>X, y = mnist["data"], mnist["target"]</code>
+<code>y = y.astype(np.uint8)</code>
+<code>X_train, X_test = X[:60000], X[60000:]</code>
+<code>y_train, y_test = y[:60000], y[60000:]</code>
+<code>print("Shape = ", X.shape)</code>
+<code>print("Numbers in training set= ", y_train[0:10])</code>
+<code>print("Numbers in test set= ", y_test[0:10])</code>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>mnist = read_mnist()</code>
+<code></code>
+<code>X_train = mnist$train$images</code>
+<code>y_train = factor(mnist$train$labels)</code>
+<code>X_test = mnist$test$images</code>
+<code>y_test = factor(mnist$test$labels)</code>
+<code></code>
+<code>print("Shape = ")</code>
+<code>dim(mnist$train$images)</code>
+<code>print("Numbers in training set = ")</code>
+<code>print(factor(y_train[1:10]), max.levels = 0)</code>
+<code>print("Numbers in test set = ")</code>
+<code>print(factor(y_test[1:10]), max.levels = 0)</code>  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>Shape =  (70000, 784)
+Numbers in training set=  [5 0 4 1 9 2 1 3 1 4]
+Numbers in test set=  [7 2 1 0 4 1 4 9 5 9]</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>[1] "Shape = "
+[1] 60000   784
+[1] "Numbers in training set = "
+ [1] 5 0 4 1 9 2 1 3 1 4
+[1] "Numbers in test set = "
+ [1] 7 2 1 0 4 1 4 9 5 9</pre>
+</div></div></div>
+<p>
+Once we are ready to model the numbers we choose one of the shallow algorithms explained in Section <a href='chapter08.html#8_3'>8.3</a> to deploy a binary or multi-class image classification task. In the case of binary, we should select a number of reference (for instance &ldquo;3&rdquo;) and then create the model of that number against all the others (to answer questions such as &ldquo;What's the probability of this digit of being number 3?&rdquo;). On the other hand, if we choose multi-class classification our model can predict any of the ten numbers (0, 1, 2, 3, 4, 5, 6, 7, 8, 9) included in our examples.
+</p>
+
+<p>
+Now, we used the basic concepts of the Random Forest algorithm (see section&nbsp;<a href='chapter08.html#subsec:randomforest'>8.3.4</a>) to create and fit a model with 100 trees (<code>forest_clf</code>). In Example&nbsp;<a href='#ex:multiclass'>14.10</a> we use again the <i>randomForest</i> package in R and <i>sklearn</i> package in Python to estimate a model for the ten classes using the corpus of 60000 images (classes were similarly balanced, \(\sim\)9&ndash;11&percnt; each). As we do in the examples, you can check the predictions for the first ten images of the test set (<code>X_test</code>), which correctly correspond to the right digits, and also check the (<code>predictions</code>) for the whole test set and then get some metrics of the model. The accuracy is over 0.97 which means the classification task is performed very well.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:multiclass' name='ex:multiclass'>Example 14.10.</a></small><br />
+Modeling the handwritten digits with RandomForest and predicting some outcomes</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>forest_clf = RandomForestClassifier(</code>
+<code>    n_estimators=100, random_state=42)</code>
+<code>forest_clf.fit(X_train, y_train)</code>
+<code>print(forest_clf)</code>
+<code>print("Predict the first 10 numbers of our set:", </code>
+<code>      forest_clf.predict(X_test[:10]))</code>
+<code></code>
+<code>predictions = forest_clf.predict(X_test)</code>
+<code>print("Overall Accuracy: ", accuracy_score(</code>
+<code>    y_test, predictions))</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>#Multiclass classification with RandomForest</code>
+<code>rf_clf = randomForest(X_train, y_train, ntree=100)</code>
+<code>rf_clf</code>
+<code>predict(rf_clf, X_test[1:10,])</code>
+<code>predictions = predict(rf_clf, X_test)</code>
+<code>cm = confusionMatrix(predictions, y_test)</code>
+<code>print(cm$overall["Accuracy"])</code>
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>RandomForestClassifier(random_state=42)
+Predict the first 10 numbers of our set: [7 2 1 0 4 1 4 9 5 9]
+Overall Accuracy:  0.9705</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>
+Call:
+ randomForest(x = X_train, y = y_train, ntree = 100)
+               Type of random forest: classification
+                     Number of trees: 100
+No. of variables tried at each split: 28
+
+        OOB estimate of  error rate: 3.47%
+Confusion matrix:
+     0    1    2    3    4    5    6    7    8    9 class.error
+0 5846    2    6    6    4    8   23    1   25    2  0.01300017
+1    0 6630   35   14   13    9    4   12   13   12  0.01661228
+2   29    9 5763   24   28    4   14   39   38   10  0.03272910
+3    5   11   96 5807    4   62    5   55   60   26  0.05284619
+4    8   12   12    2 5656    1   25   11   13  102  0.03183841
+5   19    5   10   76    8 5189   42    7   36   29  0.04279653
+6   25   10    7    1   12   39 5806    0   18    0  0.01892531
+7    6   20   56   10   36    1    0 6058   13   65  0.03304070
+8   12   26   39   56   33   54   33    7 5533   58  0.05434968
+9   21   13   13   62   79   25    5   57   46 5628  0.05395865
+ 1  2  3  4  5  6  7  8  9 10
+ 7  2  1  0  4  1  4  9  5  9
+Levels: 0 1 2 3 4 5 6 7 8 9
+Accuracy
+   0.971</pre>
+</div></div></div>
+<p>
+This approach based on shallow algorithms seems to work pretty well for simple images, but has a lot of limitations for more complex images such as figures or real pictures. After all, the more complex the image and the more abstract the concept, the less likely it is that one can expect a direct relationship between a pixel color and the classification. In the next section we introduce the use of deep learning in image classification which is nowadays a more accurate approach for complex tasks.
+</p>
+
+<h3>  <small class='text-muted'><a class='anchor' href='#14_4_2' name='14_4_2'>14.4.2.</a></small>Deep Learning for Image Analysis
+</h3>
+
+
+<p>
+Even though they require heavy computations, Deep Neural Networks (DNN) are nowadays the best way to conduct image classification because their performance is normally higher than shallow algorithms. The reason is that we broaden the learning process using intermediate hidden layers, so each of these layers can learn different patterns or aspects of the image with different levels of abstraction: e.g., from detecting lines or contours in the first layers to catching higher feature representation of an image (such as the color of skin, the shapes of the eyes or the noses) in the next layers. In Section&nbsp;<a href='chapter08.html#8_3_5'>8.3.5</a> and Section&nbsp;<a href='chapter11.html#11_4_4'>11.4.4</a> we introduced the general concepts of a DNN (such as perceptrons, layers, hidden layers, back or forward propagation, and output functions), and now we will cover some common architectures for image analysis.
+</p>
+
+<p>
+One of the simplest DNNs architectures is the Multilayer Perceptron (MLP) which contains one input layer, one or many hidden layers, and one output layer (all of them <em>fully</em> connected and with bias neurons except for the output layer). Originally in a MLP the signals propagate from the inputs to the outputs (in one direction), which we call a feedforward neural network (FNN), but using Gradient Decent as an optimizer we can apply <em>backpropagation</em> (automatically computing the gradients of the network's errors in two stages: one forward and one backward) and then obtain a more efficient training.
+</p>
+
+<p>
+We can use MLPs for binary and multi-class classification. In the first case, we normally use a single output neuron with the <em>sigmoid</em> or <em>logistic</em> activation function (probability from 0 to 1) (see section&nbsp;<a href='#subsec:regression'>??</a>); and in the second case we will need one output neuron per class with the <em>softmax</em> activation function (probabilities from 0 to 1 for each class but they must add up to 1 if the classes are exclusive. This is the function used in multinomial logistic regression). To predict probabilities, in both cases we will need a <em>loss</em> function and the one that is normally recommended is the <em>cross entropy loss</em> or simply <em>log loss</em>.
+</p>
+
+<p>
+The state-of-the-art library for neural networks in general and for computer vision in particular is <i>TensorFlow</i><a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 6" data-bs-content="We will deploy <i>TensorFlow</i> <em>2</em> in our exercises.">[6]</a>  (originally created by Google and later publicly released) and the high-level Deep Learning API <i>Keras</i>, although you can find other good implementation packages such as <i>PyTorch</i> (created by Facebook), which has many straightforward functionalities and has also become popular in recent years (see for example the image classification tasks for social sciences conducted in <i>PyTorch</i> by <span class="cite" title="Williams, N.&nbsp;W., Casas, A., and Wilkerson, J.&nbsp;D. (2020). Images as data for social science research: An introduction to convolutional neural nets for image classification. Elements in Quantitative and Computational Methods for the Social Sciences.">Williams et&nbsp;al. (2020)</span>). All these packages have current versions for both R and Python.
+</p>
+
+<p>
+Now, let's train an MLP to build an image classifier to recognize fashion items using the Fashion MNIST dataset<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 7" data-bs-content="https://github.com/zalandoresearch/fashion-mnist">[7]</a>. This dataset contains 70000 (60000 for training and 10000 for test) gray scale examples (\(28\times 28\)) of ten different classes that include ankle boots, bags, coats, dresses, pullovers, sandals, shirts, sneakers, t-shirts/tops and trousers (Figure&nbsp;<a href='#fig:fashion'>14.6</a>). If you compare this dataset with the MINST, you will find that figures of fashion items are more complex than handwritten digits, which normally generates a lower accuracy in supervised classification.
+</p>
+<div class='figure'><h4>
+  <small class='text-muted'><a class='anchor' href='#fig:fashion' name='fig:fashion'>Figure 14.6.</a></small><br />
+Examples of Fashion MNIST items.</h4>
+<img src='img/ch15_fashion.png' /></div>
+<p>
+You can use <i>Keras</i> to load the Fashion MNIST. In Example&nbsp;<a href='#ex:fashion'>14.11</a> we load the complete dataset and create the necessary objects for modeling (<code>X_train_full</code>, <code>y_train_full</code>, <code>X_test</code>, <code>y_test</code>). In addition we rescaled all the input features from 0&ndash;255 to 0&ndash;1 by dividing them by 255 in order to apply Gradient Decent. Then, we obtained three sets with \(28\times 28\) arrays: 60000 in the training, and 10000 in the test. We could also generate here a validation set (e.g., <code>X_valid</code> and <code>y_valid</code>) with a given amount of records extracted from the training set (e.g., 5000), but as you will later see  <i>Keras</i> allows us to automatically generate the validation set as a proportion of the training set (e.g., 0.1, which would be 6000 records in our example) when fitting the model (check the importance to work with a validation set to avoid over-fitting, explained in Section&nbsp;<a href='chapter08.html#8_5_2'>8.5.2</a>).
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:fashion' name='ex:fashion'>Example 14.11.</a></small><br />
+Loading Fashion MNIST dataset and preparing training, test and validation sets</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>fashion_mnist = keras.datasets.fashion_mnist</code>
+<code>(X_train, y_train), (X_test, y_test) = \</code>
+<code>    fashion_mnist.load_data()</code>
+<code>class_names = ["T-shirt/top", "Trouser",</code>
+<code>               "Pullover", "Dress", "Coat",</code>
+<code>               "Sandal", "Shirt", "Sneaker",</code>
+<code>               "Bag", "Ankle boot"]</code>
+<code>X_train = X_train / 255.</code>
+<code>X_test = X_test / 255.</code>
+<code>print(X_train.shape, X_test.shape)</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>fashion_mnist &lt;- dataset_fashion_mnist()</code>
+<code>c(X_train, y_train) %&lt;-% fashion_mnist$train</code>
+<code>c(X_test, y_test) %&lt;-% fashion_mnist$test</code>
+<code>class_names = c("T-shirt/top","Trouser",</code>
+<code>    "Pullover","Dress", "Coat", "Sandal","Shirt",</code>
+<code>    "Sneaker", "Bag","Ankle boot")</code>
+<code>X_train &lt;- X_train / 255</code>
+<code>y_test &lt;- y_test / 255</code>
+<code>print(dim(X_train))</code>
+<code>print(dim(X_test))</code>  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>(60000, 28, 28) (10000, 28, 28)</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>[1] 60000    28    28
+[1] 10000    28    28</pre>
+</div></div></div>
+<p>
+The next step is to design the architecture of our model. There are three ways to create the models in <i>Keras</i> (<em>sequential</em>, <em>functional</em>, or <em>subclassing</em>), but there are thousands of ways to configure a deep neural network. In the case of this MLP, we have to include first an input layer with the <code>input_shape</code> equal to the image dimension (\(28\times 28\) for 784 neurons). At the top of the MLP you will  need a output layer with 10 neurons (the number of possible outcomes in our multi-class classification task) and a <em>softmax</em> activation function for the final probabilities for each class.
+</p>
+
+<p>
+In Example&nbsp;<a href='#ex:mlp'>14.12</a> we use the <em>sequential</em> model to design our MLP layer by layer including the above-mentioned input and output layers. In the middle, there are many options for the configuration of the <em>hidden</em> layers: number of layers, number of neurons, activation functions, etc. As we know that each hidden layer will help to model different patterns of the image, it would be fair to include at least two of them with different numbers of neurons (significantly reducing this number in the second one) and transmit its information using the <em>relu</em> activation function. What we actually do is create an object called <code>model</code> which saves the proposed architecture. We can use the method <code>summary</code> to obtain a clear representation of the created neural network and the number of parameters of the model (266610 in this case!).
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:mlp' name='ex:mlp'>Example 14.12.</a></small><br />
+Creating the architecture of the MLP with Keras</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>model = keras.models.Sequential([</code>
+<code>    keras.layers.Flatten(input_shape=[28, 28]),</code>
+<code>    keras.layers.Dense(300, activation="relu"),</code>
+<code>    keras.layers.Dense(100, activation="relu"),</code>
+<code>    keras.layers.Dense(10, activation="softmax")</code>
+<code>])</code>
+<code>model.summary()</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>model = keras_model_sequential()</code>
+<code>model %&gt;%</code>
+<code>layer_flatten(input_shape = c(28, 28)) %&gt;%</code>
+<code>layer_dense(units=300, activation="relu") %&gt;%</code>
+<code>layer_dense(units=100, activation="relu") %&gt;%</code>
+<code>layer_dense(units=10, activation="softmax")</code>
+<code>model</code>  </pre>
+</div></div>
+<div class='code-output'>
+    <div class='code-caption'>Python output. Note that R output may look slightly different</div>
+<pre class='output'>Model: "sequential"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #
+=================================================================
+flatten (Flatten)            (None, 784)               0
+_________________________________________________________________
+dense (Dense)                (None, 300)               235500
+_________________________________________________________________
+dense_1 (Dense)              (None, 100)               30100
+_________________________________________________________________
+dense_2 (Dense)              (None, 10)                1010
+=================================================================
+Total params: 266,610
+Trainable params: 266,610
+Non-trainable params: 0
+_________________________________________________________________</pre>
+</div></div>
+<p>
+The next steps will be to <code>compile</code>, <code>fit</code>, and <code>evaluate</code> the model, similarly to what you have already done in previous exercises of this book. In Example&nbsp;<a href='#ex:model'>14.13</a> we first include the parameters (loss, optimizer, and metrics) of the compilation step and fit the model, which might take some minutes (or even hours depending on your dataset, the architecture of you DNN and, of course, your computer).
+</p>
+
+<p>
+When fitting the model you have to separate your training set into phases or <em>epochs</em>. A good rule of thumb to choose the optimal number of epochs is to stop a few iterations after the test loss stops improving<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 8" data-bs-content="The train loss/accuracy will gradually be better and better. And the test loss/accuracy as well, in the beginning. But then, at some point train loss/acc improves but test loss/acc stops getting better. If we keep training the model for more epochs, we are just overfitting on the train set, which of course we do not want to. Specifically, we do not want to simply stop at the iteration where we got the best loss/acc for the test set, because then we are overfitting on the test set. Hence practitioners often let it run for a few more epochs after hitting the best loss/acc for the test set. Then, a final check on the validation set will really tell us how well we do out of sample.">[8]</a>   (here we chose five epochs for the example). You will also have to set the proportion of the training set that will become the validation set (in this case 0.1). In addition, you can use the parameter <code>verbose</code> to choose whether to see the progress (1 for progress bar and 2 for one line per epoch) or not (0 for silent) of the training process. By using the method <code>evaluate</code> you can then obtain the final loss and accuracy, which in this case is 0.84 (but you can reach up 0.88 if you fit it with 25 epochs!).
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:model' name='ex:model'>Example 14.13.</a></small><br />
+Compiling fitting and evaluating the model for the MLP</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>model.compile(loss=</code>
+<code>              "sparse_categorical_crossentropy",</code>
+<code>              optimizer="sgd",</code>
+<code>              metrics=["accuracy"])</code>
+<code></code>
+<code>history = model.fit(X_train, y_train, epochs=5,</code>
+<code>                verbose=2, validation_split=0.1)</code>
+<code></code>
+<code>print("Evaluation: ")</code>
+<code>print(model.evaluate(X_test, y_test))</code>
+<code></code>
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>model %&gt;% compile(</code>
+<code>  optimizer = "sgd", </code>
+<code>  loss = "sparse_categorical_crossentropy",</code>
+<code>  metrics = c("accuracy")</code>
+<code>)</code>
+<code>history = model %&gt;% fit(X_train, y_train,</code>
+<code>    validation_split=0.1, epochs=5, verbose= 2)</code>
+<code>print(history$metrics)</code>
+<code>score = model %&gt;% evaluate(</code>
+<code>    X_test, y_test, verbose = 0)</code>
+<code>print("Evaluation")</code>
+<code>print(score)</code>  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>Epoch 1/5
+1688/1688 - 3s - loss: 0.7240 - accuracy: 0.7638 - val_loss: 0.5081 - val_accuracy: 0.8257
+Epoch 2/5
+1688/1688 - 3s - loss: 0.4884 - accuracy: 0.8307 - val_loss: 0.4512 - val_accuracy: 0.8423
+Epoch 3/5
+1688/1688 - 3s - loss: 0.4429 - accuracy: 0.8462 - val_loss: 0.4220 - val_accuracy: 0.8518
+Epoch 4/5
+1688/1688 - 3s - loss: 0.4151 - accuracy: 0.8551 - val_loss: 0.4176 - val_accuracy: 0.8553
+Epoch 5/5
+1688/1688 - 3s - loss: 0.3960 - accuracy: 0.8618 - val_loss: 0.4225 - val_accuracy: 0.8477
+Evaluation:
+313/313 [==============================] - 0s 1ms/step - loss: 0.4424 - accuracy: 0.8428
+[0.442379355430603, 0.8428000211715698]</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>$loss
+[1] 0.7306390 0.4967282 0.4491161 0.4183640 0.3996364
+
+$accuracy
+[1] 0.7600371 0.8282592 0.8423889 0.8542222 0.8609815
+
+$val_loss
+[1] 0.5421531 0.4740246 0.4287954 0.4058699 0.3931496
+
+$val_accuracy
+[1] 0.8135000 0.8310000 0.8450000 0.8561667 0.8590000
+
+[1] "Evaluation"
+     loss  accuracy
+0.4202759 0.8539000</pre>
+</div></div></div>
+<p>
+Finally, you can use the model to predict the classes of any new image (using <code>predict_classes</code>). In Example&nbsp;<a href='#ex:predict'>14.14</a> we used the model to predict the classes of the first six elements of the test set. If you go back to <a href='#fig:fashion'>14.6</a> you can compare these predictions  (&ldquo;ankle boot&rdquo;, &ldquo;pullover&rdquo;, &ldquo;trouser&rdquo;, &ldquo;trouser&rdquo;, &ldquo;shirt&rdquo;, and &ldquo;tTrouser&rdquo;) with the actual first six images of the test set, and see how accurate our model was.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:predict' name='ex:predict'>Example 14.14.</a></small><br />
+Predicting classes using the MLP</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>X_new = X_test[:6]</code>
+<code>y_pred = np.argmax(model.predict(X_new), axis=-1)</code>
+<code>class_pred = [class_names[i] for i in y_pred]</code>
+<code>class_pred</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>img = X_test[1:6, , , drop = FALSE]</code>
+<code>class_pred = model %&gt;% predict_classes(img)</code>
+<code>class_pred</code>
+&nbsp;  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>['Ankle boot', 'Pullover', 'Trouser', 'Trouser', 'Shirt', 'Trouser']</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>[1] 9 2 1 1 6 1</pre>
+</div></div></div>
+<p>
+Using the above-described concepts and code you may try to train a new MLP using color images of ten classes (airplane, automobile, bird, cat, deer, dog, frog, horse, ship, and truck) using the CIFAR-10 and CIFAR-100 datasets<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 9" data-bs-content="https://www.cs.toronto.edu/&nbsp;kriz/cifar.html">[9]</a>!
+</p>
+
+<h3>  <small class='text-muted'><a class='anchor' href='#14_4_3' name='14_4_3'>14.4.3.</a></small>Re-using an Open Source CNN
+</h3>
+
+
+<p>
+Training complex images such as photographs is normally a more sophisticated task if we compare it to the examples included in the last sections. On the one hand, it might not be a good idea to build a deep neural network from scratch as we did in section&nbsp;<a href='#subsec:deep'>14.4.2</a> to train a MLP. This means that you can re-use some lower layers of other DNNs and deploy <em>transfer learning</em> to save time with less training data. On the other hand, we should also move from traditional MLPs to other kinds of DNNs such as Convolutional Neural Networks (CNNs) which are  nowadays the state-of-the-art approach in computer vision. Moreover, to get good results we should also build or explore different CNNs architectures that can produce more accurate predictions in image classification.  In this section we will show how to re-use an open source CNN architecture and will suggest an example of how to fine-tune an existing CNN for a social science problem.
+</p>
+
+<p>
+As explained in Section&nbsp;<a href='chapter08.html#8_4_1'>8.4.1</a> a CNN is a specific type of DNN that has had great success in complex visual tasks (image classification, object detection or semantic segmentation) and voice recognition<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 10" data-bs-content="CNNs have also a great performance in natural language processing.">[10]</a>. Instead of using <em>fully connected</em> layers like in a typical MLP, a CNN uses only <em>partially connected</em> layers inspired on how &ldquo;real&rdquo; neurons connect in the visual cortex: some neurons only react to stimuli located in a limited <em>receptive field</em>. In other words, in a CNN every neuron is connected to some neurons of the previous layer (and not to all of them), which significantly reduces the amount of information transmitted to the next layer and helps the DNN to detect complex patterns. Surprisingly, this reduction in the number of parameters and weights involved in the model works better for larger and more complex images, different from those shown in MNIST.
+</p>
+
+<p>
+Building a CNN is quite similar to a MLP, except for the fact that you will have to work with <em>convolutional</em> and <em>pooling</em> layers. The convolutional layers include a <em>bias term</em> and are the most important blocks of a CNN because they establish the specific connections  among the neurons. In simpler words: a given neuron of a high-level layer is connected only to a rectangular group of neurons (the receptive field) of the low-level layer and not to all of them<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 11" data-bs-content="If the input layer (in the case of color images there are three sublayers, one per color channel) and the convolutional layers are of different sizes we can apply techniques such as <em>zero padding</em> (adding zeros around the inputs) or spacing out the receptive fields (each shift from one receptive field to the other will be a <em>stride</em>). In order to transmit the weights from the receptive fields to the neurons, the convolutional layer will automatically generate some <em>filters</em> to create <em>features maps</em>, which are the areas of the input that mostly activate those filters. Additionally, by creating subsamples of the inputs, the pooling layers will reduce the number of parameters, the computational effort of the network and the risk of overfitting. The pooling layers <em>aggregates</em> the inputs using a standard arithmetic function such as minimum, maximum or mean.">[11]</a>. For more technical details of the basis of a CNN you can go to specific literature such as <span class="cite" title="Géron, A. (2019). Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow: Concepts, Tools, and Techniques to Build Intelligent Systems. O'Reilly Media.">Géron (2019)</span>.
+</p>
+
+<p>
+Instead of building a CNN from scratch, there are many pre-trained and open-source architectures that have been optimized for image classification. Besides a stack of convolutional and pooling layers,  these architectures normally include some fully connected layers and a regular output layer for prediction (just like in MLPs). We can mention here some of these architectures: LeNet-5, AlexNet, GoogLeNet, VGGNet, ResNet, Xception or SENet<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 12" data-bs-content="The description of technical details of all of these architectures is beyond the scope of this book, but besides the specific scientific literature of each architecture, some packages such as <i>keras</i> usually include basic documentation.">[12]</a>. All these CNNs have been previously tested in image classification with promising results, but you still have to look at the internal composition of each of them and their metrics to choose the most appropriate for you. You can implement and train most of them from scratch either in <i>keras</i> or <i>PyTorch</i>, or you can just use them directly or even fine-tune the pre-trained model in order to save time.
+</p>
+
+<p>
+Let's use the pre-trained model of a Residual Network (ResNet) with 50 layers, also known as <em>ResNet50</em>, to show you how to deploy a multi-class classifier over pictures. The ResNet architecture (also with 34, 101 and 152 layers) is based on residual learning and uses <em>skip connections</em>, which means that the input layer  not only feeds the next layer but this signal is also added to the output of another high-level layer. This allows you to have a much deeper network and in the case of ResNet152 it has achieved a top-five error rate of 3.6&percnt;. As we do in Example&nbsp;<a href='#ex:resnet50'>14.15</a>, you can easily import into your workspace a ResNet50 architecture and include the pre-trained weights of a model trained with ImageNet (uncomment the second line of the code to visualize the complete model!).
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:resnet50' name='ex:resnet50'>Example 14.15.</a></small><br />
+Loading a visualizing the ResNet50 architecture</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>model_rn50 = resnet50.ResNet50(weights="imagenet")</code>
+&nbsp;
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>model_resnet50 = application_resnet50(</code>
+<code>    weights="imagenet")</code>
+<code>#model_resnet50</code>  </pre>
+</div></div></div>
+<p>
+ImageNet is a corpus of labelled images based on the WordNet hierarchy. ResNet uses a subset of ImageNet with &amp;nbsp;1000 examples for each of the 1000 classes for a total corpus of roughly 1350000 pictures (1200000 for training, 100000 for test, and 50000 for validation).
+</p>
+
+<p>
+In Example&nbsp;<a href='#ex:newimages'>14.16</a> we crop a part of our second example picture of refugees arriving at the European coast (<code>myimg2_RGB</code>) in order to get just the sea landscape. With the created <code>model_resnet50</code> we then ask for up to three predictions of the class of the photograph in Example&nbsp;<a href='#ex:resnetpredictions'>14.17</a>.
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:newimages' name='ex:newimages'>Example 14.16.</a></small><br />
+Cropping an image to get a picture of a see landscape</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>def plot_color_image(image):</code>
+<code>    plt.imshow(image, interpolation="nearest")</code>
+<code>    plt.axis("off")</code>
+<code>picture1 = np.array(myimg2_RGB)/255</code>
+<code>picture2 = np.array(myimg2_RGB)/255</code>
+<code>images = np.array([picture1, picture2])</code>
+<code>see = [0, 0, 0.3, 0.3]</code>
+<code>refugees = [0.1, 0.35, 0.8, 0.95]</code>
+<code>tf_images = tf.image.crop_and_resize(images,</code>
+<code>            [see, refugees], [0, 1], [224, 224])</code>
+<code>plot_color_image(tf_images[0])</code>
+<code>plt.show()</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>picture1 = image_crop(myimg2_RGB, "224x224+50+50")</code>
+<code>plot(picture1)</code>
+<code>picture1 = as.integer(picture1[[1]])</code>
+<code>#drop the extra channel for comparision</code>
+<code>picture1 = picture1[,,-4] </code>
+<code>picture1 = array_reshape(picture1, </code>
+<code>                         c(1, dim(picture1)))</code>
+<code>picture1 = imagenet_preprocess_input(picture1)</code>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<img src='img/newimages.py.png' />
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<a href='img/newimages.r.png' title='Click to open full-size image'>
+  <img src='img/newimages.r_thumb.png' />
+</a>
+</div></div></div><div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:resnetpredictions' name='ex:resnetpredictions'>Example 14.17.</a></small><br />
+Predicting the class of the first image</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>inputs = resnet50.preprocess_input(tf_images*255)</code>
+<code>Y_proba = model_rn50.predict(inputs)</code>
+<code>preds = resnet50.decode_predictions(Y_proba,top=3)</code>
+<code>preds[0]</code>  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>preds1 = model_resnet50 %&gt;% predict(picture1)</code>
+<code>imagenet_decode_predictions(preds1, top = 3)[[1]]</code>
+&nbsp;
+&nbsp;  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>[('n09421951', 'sandbar', 0.083578914),
+ ('n09428293', 'seashore', 0.061473377),
+ ('n09246464', 'cliff', 0.05028374)]</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>  class_name class_description score
+1 n09421951  sandbar           0.07926153
+2 n04347754  submarine         0.04810236
+3 n02066245  grey_whale        0.04798749</pre>
+</div></div></div>
+<p>
+As you can see in the Python and R outputs<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 13" data-bs-content="Outputs in Python and R might differ a little bit since the cropping of the new images were similar but not identical.">[13]</a>, the best guess of the model is a <em>sandbar</em>, which is very close to the real picture that contains sea water, mountains and sky. However, it seems that the model is confusing sand with sea. Other results in the Python model are <em>seashore</em> and <em>cliff</em>, which are also very close to real sea landscape. Nevertheless, in the case of the R prediction the model detects a <em>submarine</em> and a <em>gray whale</em>, which revels that predictions are not 100&percnt; accurate yet.
+</p>
+
+<p>
+If we do the same with another part of that original picture and focus only on the  group of refugees in a lifeboat  arriving at the European coast, we will get a different result! In Example&nbsp;<a href='#ex:newimages2'>14.18</a> we crop again (<code>myimg2_RGB</code>) and get a new framed picture. Then in Example&nbsp;<a href='#ex:resnetpredictions2'>14.19</a> we re-run the prediction task using the model <em>ResNet50</em> trained with ImageNet and get a correct result: both predictions coincide to see a <em>lifeboat</em>, which is a good tag for the image we want to classify. Again, other lower-level predictions can seem accurate (<em>speedboat</em>) and totally inaccurate (<em>volcano</em>, <em>gray whale</em> or <em>amphibian</em>).
+</p>
+<div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:newimages2' name='ex:newimages2'>Example 14.18.</a></small><br />
+Cropping an image to get a picture of refugees in a lifeboat</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>plot_color_image(tf_images[1])</code>
+<code>plt.show()</code>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>picture2 = image_crop(myimg2_RGB, "224x224+1000")</code>
+<code>plot(picture2)</code>
+<code>picture2 = as.integer(picture2[[1]])</code>
+<code>#drop the extra channel for comparision</code>
+<code>picture2 = picture2[,,-4] </code>
+<code>picture2 = array_reshape(picture2,</code>
+<code>                         c(1, dim(picture2)))</code>
+<code>picture2 = imagenet_preprocess_input(picture2)</code>  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<img src='img/newimages2.py.png' />
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<a href='img/newimages2.r.png' title='Click to open full-size image'>
+  <img src='img/newimages2.r_thumb.png' />
+</a>
+</div></div></div><div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:resnetpredictions2' name='ex:resnetpredictions2'>Example 14.19.</a></small><br />
+Predicting the class of the second image</h4><div class='code-row-double'><div class='code-input'>
+  <div class='code-caption'>Python code</div>
+  <pre class='code'><code>preds[1]</code>
+&nbsp;  </pre>
+</div><div class='code-input'>
+  <div class='code-caption'>R code</div>
+  <pre class='code'><code>preds2 = model_resnet50 %&gt;% predict(picture2)</code>
+<code>imagenet_decode_predictions(preds2, top = 3)[[1]]</code>  </pre>
+</div></div><div class='code-row-double'>
+<div class='code-output'>
+    <div class='code-caption'>Python output</div>
+<pre class='output'>[('n03662601', 'lifeboat', 0.19698676),
+ ('n09472597', 'volcano', 0.100913115),
+ ('n02066245', 'grey_whale', 0.05104692)]</pre>
+</div>
+<div class='code-output'>
+    <div class='code-caption'>R output</div>
+<pre class='output'>  class_name class_description score
+1 n03662601  lifeboat          0.39761350
+2 n04273569  speedboat         0.11085811
+3 n02704792  amphibian         0.06916212</pre>
+</div></div></div>
+<p>
+These examples show you how to use an open-source and pre-trained CNN that has 1000 classes and has been trained on images that we do not have control of. However, you may want to build your own classifier with your own training data, but using part of an existing architecture. This is called fine-tuning and you can follow a good example in social science in <span class="cite" title="Williams, N.&nbsp;W., Casas, A., and Wilkerson, J.&nbsp;D. (2020). Images as data for social science research: An introduction to convolutional neural nets for image classification. Elements in Quantitative and Computational Methods for the Social Sciences.">Williams et&nbsp;al. (2020)</span> in which the authors reuse RestNet18 to build binary and multi-class classifiers adding their own data examples over the pre-trained CNN<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 14" data-bs-content="The examples are provided in Python with the package <i>PyTorch</i>, which is quite friendly if you are already familiar to <i>Keras</i>. ">[14]</a>.
+</p>
+
+<p>
+So far we have covered the main techniques, methods, and services to analyze multimedia data, specifically images. It is up to you to choose which library or service to use, and you will find most of them in R and Python, using the basic concepts explained in this chapter. If you are interested in deepening your understanding of multimedia analysis, we encourage you explore this emerging and exciting field of expertise given the enormous importance it will no doubt have in the near future.
+</p>
+
+        </div>
+
+	<div class='chevrons'>
+&laquo;
+	  
+	  <a href='chapter13.html'>Ch. 13 Network Data</a>
+	  
+	  
+	  | <a href='chapter15.html'>Ch. 15 Scaling up and distributing</a>&raquo;
+	  
+</div>
+	<!-- Secondary sidebar -->
+        <aside class="css-rightbar">
+            <nav id="right" class="collapse css-rightnav">
+                <ul class="list-unstyled components">
+  
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+                  <div class="rightbar-header">In this chapter</div>
+
+            <ul class="list-unstyled" id="toc_chap_14">
+<li class='toc-section'>14 Multimedia data</li>
+
+              
+	          
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_1">14.1. Beyond Text Analysis: Images, Audio and Video</a>
+		    </li>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_2">14.2. Using Existing Libraries and APIs</a>
+		    </li>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_3">14.3. Storing, Representing, and Converting Images</a>
+		    </li>
+		    
+
+		
+	          
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_4">14.4. Image Classification</a>
+		    </li>
+		    
+		    <ul class="list-unstyled list-subsections" id="toc_chap_4">
+		    
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_4_1">14.4.1. Basic Classification with Shallow Algorithms</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_4_2">14.4.2. Deep Learning for Image Analysis</a>
+                    </li>
+
+                    
+                    <li class="toc-section">
+                        <a href="chapter14.html#14_4_3">14.4.3. Re-using an Open Source CNN</a>
+                    </li>
+
+                    
+		    </ul>
+		    
+
+		
+            </ul>
+	    
+    
+  
+    
+  
+    
+</ul>
+            </nav>
+        </aside>
+</div>
+
+
+
+    </div>
+    <!-- Optional JavaScript; choose one of the two! -->
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+    -->
+  <script>
+      var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+  return new bootstrap.Popover(popoverTriggerEl, {html: true})
+})
+  </script>
+  </body>
+</html>
