@@ -1,3 +1,5 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:05a19c44db3debfa95df151f8cc4fc8cc0e5f34938e7a68daa2b47d48f062a3f
-size 169
+id,text
+1,RT: @john_doe https://example.com/news very interesting!
+2,tweet with just text
+3,http://example.com/pandas #breaking #mustread 
+4,@me and @myself #selfietime
