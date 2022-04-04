@@ -60,6 +60,7 @@ print(f"** Index")
 current_chapter = "index"
 inf = get_template("index.html")
 outf = out / "index.html"
+current_chapter_py = current_chapter_r = None
 html = inf.render(**locals())
 
 outf.open("w").write(html)
