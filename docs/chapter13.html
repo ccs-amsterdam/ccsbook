@@ -483,8 +483,15 @@
 </ul>
             </nav>
         </aside>
-	
-      
+
+    
+  Python code: <a href="https://colab.research.google.com/github/ccs-amsterdam/ccsbook/blob/master/chapter13/chapter_13_py.ipynb">
+    <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+  </a> |
+  R code: <a href="https://colab.research.google.com/github/ccs-amsterdam/ccsbook/blob/master/chapter13/chapter_13_r.ipynb">
+    <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+  </a> 
+
   
 
     <div class="css-layout">
@@ -552,12 +559,14 @@ graphs, social network analysis
 <code>import matplotlib.pyplot as plt</code>
 <code>import networkx as nx</code>
 <code>import networkx.algorithms.community as nxcom</code>
-<code>import community # from python-louvain package</code>  </pre>
+<code>import community</code>
+<code>import community.community_louvain as community_louvain </code>  </pre>
 </div><div class='code-input'>
   <div class='code-caption'>R code</div>
   <pre class='code'><code>library(glue)</code>
 <code>library(igraph)</code>
 <code>library(tidyverse)</code>
+&nbsp;
 &nbsp;
 &nbsp;
 &nbsp;  </pre>
@@ -626,9 +635,9 @@ Nodes: 5 Edges:  5
 <div class='code-output'>
     <div class='code-caption'>R output</div>
 <pre class='output'>Imaginary Facebook network of 5American politicians
-IGRAPH 2f92795 UN-- 5 5 --
+IGRAPH 14833c0 UN-- 5 5 --
 + attr: name (v/c)
-+ edges from 2f92795 (vertex names):
++ edges from 14833c0 (vertex names):
 [1] Hillary Clinton--Donald Trump   Hillary Clinton--Bernie Sanders
 [3] Hillary Clinton--Barack Obama   Donald Trump   --John McCain
 [5] Bernie Sanders --Barack Obama</pre>
@@ -710,9 +719,9 @@ Nodes: 5 Edges:  7
 <div class='code-output'>
     <div class='code-caption'>R output</div>
 <pre class='output'>Imaginary Facebook network of 5American politicians
-IGRAPH ba21464 DN-- 5 7 --
+IGRAPH bed9c25 DN-- 5 7 --
 + attr: name (v/c)
-+ edges from ba21464 (vertex names):
++ edges from bed9c25 (vertex names):
 [1] Hillary Clinton-&gt;Donald Trump    Bernie Sanders -&gt;Hillary Clinton
 [3] Hillary Clinton-&gt;Barack Obama    John McCain    -&gt;Donald Trump
 [5] Barack Obama   -&gt;Bernie Sanders  Hillary Clinton-&gt;Bernie Sanders
@@ -1528,11 +1537,11 @@ In Example&nbsp;<a href='#ex:clustalgo'>13.21</a> we use <code>cluster_louvain</
 Community detection with Louvain Propagating Label and Greedy Optimization</h4><div class='code-row-double'><div class='code-input'>
   <div class='code-caption'>Python code</div>
   <pre class='code'><code>print("Louvain")</code>
-<code>cluster2 = community.best_partition(g1)</code>
+<code>cluster2 = community_louvain.best_partition(g1)</code>
 <code>print("Length: "</code>
 <code>      f"{float(len(set(cluster2.values())))}")</code>
 <code>print("Modularity: "</code>
-<code>      f"{community.modularity(cluster2, g1):.2f}")</code>
+<code>      f"{community_louvain.modularity(cluster2, g1):.2f}")</code>
 <code>print(f"Membership: {cluster2}")</code>
 <code></code>
 <code>print("\nGreedy optimization")</code>
@@ -1667,11 +1676,11 @@ Loading and analyzing a real network of Spanish politicians and their followers 
 <code>    g_friends).items(), key=lambda x: x[1],</code>
 <code>             reverse=True)[0:9])</code>
 <code>print("Clustering with Louvain: ")</code>
-<code>cluster5 = community.best_partition(g_friends)</code>
+<code>cluster5 = community_louvain.best_partition(g_friends)</code>
 <code>size = float(len(set(cluster5.values())))</code>
 <code>print("Length: ", size)</code>
 <code>print("Modularity: "</code>
-<code>f"{community.modularity(cluster5,g_friends):.2f}")</code>  </pre>
+<code>f"{community_louvain.modularity(cluster5,g_friends):.2f}")</code>  </pre>
 </div><div class='code-input'>
   <div class='code-caption'>R code</div>
   <pre class='code'><code>edges = read_delim(</code>

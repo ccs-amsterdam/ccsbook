@@ -511,8 +511,15 @@
 </ul>
             </nav>
         </aside>
-	
-      
+
+    
+  Python code: <a href="https://colab.research.google.com/github/ccs-amsterdam/ccsbook/blob/master/chapter06/chapter_06_py.ipynb">
+    <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+  </a> |
+  R code: <a href="https://colab.research.google.com/github/ccs-amsterdam/ccsbook/blob/master/chapter06/chapter_06_r.ipynb">
+    <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+  </a> 
+
   
 
     <div class="css-layout">
@@ -561,7 +568,7 @@ data wrangling, data cleaning, filtering, merging, reshaping
 
 <div class='code-row-double'><div class='code-input'>
   <div class='code-caption'>Python code</div>
-  <pre class='code'><code>!pip3 install pandas scipy seaborn xlrd</code>  </pre>
+  <pre class='code'><code>!pip3 install pandas scipy seaborn  "xlrd&gt;1.2"</code>  </pre>
 </div><div class='code-input'>
   <div class='code-caption'>R code</div>
   <pre class='code'><code>#install.packages("tidyverse")</code>  </pre>
@@ -1622,13 +1629,13 @@ Converting wide to long data to facilitate merging and visualizing.</h4>
 <code></code>
 <code>countries = {"France", "U.K.", "Germany"}</code>
 <code>d = d.loc[d.country.isin(countries)]</code>
+<code>d.reset_index(inplace=True)</code>
 <code>plt = sns.lineplot(data=d, x="Year", y="capital", </code>
 <code>                   hue="country", style="type")</code>
 <code>plt.set(ylabel="Capital (% of national income")</code>
 <code>plt.set_title("Capital in Europe, 1970 - 2010" </code>
 <code>    "\nPartial reproduction of Piketty fig 4.4")</code>
 <code></code>
-&nbsp;
 &nbsp;
 &nbsp;
 &nbsp;  </pre>

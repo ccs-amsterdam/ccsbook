@@ -511,8 +511,15 @@
 </ul>
             </nav>
         </aside>
-	
-      
+
+    
+  Python code: <a href="https://colab.research.google.com/github/ccs-amsterdam/ccsbook/blob/master/chapter12/chapter_12_py.ipynb">
+    <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+  </a> |
+  R code: <a href="https://colab.research.google.com/github/ccs-amsterdam/ccsbook/blob/master/chapter12/chapter_12_r.ipynb">
+    <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+  </a> 
+
   
 
     <div class="css-layout">
@@ -2046,16 +2053,14 @@ many requests we have made today.
 <div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:textrazor' name='ex:textrazor'>Example 12.12.</a></small><br />
 Passing a key as HTTP request header to authenticate at an API endpoint</h4><div class='code-row-double'><div class='code-input'>
   <div class='code-caption'>Python code</div>
-  <pre class='code'><code>import requests</code>
-<code></code>
-<code>requests.get("https://api.textrazor.com/account/",</code>
-<code>  headers={"x-textrazor-key": "SECRET"}).json()</code>  </pre>
+  <pre class='code'><code>requests.get("https://api.textrazor.com/account/",</code>
+<code>  headers={"x-textrazor-key": "SECRET"}).json()</code>
+&nbsp;  </pre>
 </div><div class='code-input'>
   <div class='code-caption'>R code</div>
   <pre class='code'><code>r = GET("https://api.textrazor.com/account/", </code>
 <code>  add_headers("x-textrazor-key"="SECRET"))</code>
-<code>print(content(r, "text"))</code>
-&nbsp;  </pre>
+<code>print(content(r, "text"))</code>  </pre>
 </div></div>
 <div class='code-output'>
     <div class='code-caption'>Python output. Note that R output may look slightly different</div>

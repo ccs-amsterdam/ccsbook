@@ -490,8 +490,15 @@
 </ul>
             </nav>
         </aside>
-	
-      
+
+    
+  Python code: <a href="https://colab.research.google.com/github/ccs-amsterdam/ccsbook/blob/master/chapter05/chapter_05_py.ipynb">
+    <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+  </a> |
+  R code: <a href="https://colab.research.google.com/github/ccs-amsterdam/ccsbook/blob/master/chapter05/chapter_05_r.ipynb">
+    <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+  </a> 
+
   
 
     <div class="css-layout">
@@ -552,6 +559,7 @@ file formats, encodings, reading and writing files, data frames, datasets
 <code>import pandas as pd</code>
 <code>import nltk</code>
 <code>from nltk.corpus import state_union</code>
+<code>nltk.download('punkt')</code>
 <code>from sklearn.datasets import fetch_20newsgroups</code>  </pre>
 </div><div class='code-input'>
   <div class='code-caption'>R code</div>
@@ -560,6 +568,7 @@ file formats, encodings, reading and writing files, data frames, datasets
 <code>library(sotu)</code>
 <code>library(glue)</code>
 <code>library(jsonlite)</code>
+&nbsp;
 &nbsp;  </pre>
 </div></div></div>
 <h2>  <small class='text-muted'><a class='anchor' href='#5_1' name='5_1'>5.1.</a></small>Why and When Do We Use Data Frames?
@@ -1032,7 +1041,7 @@ Reading files without data frames</h4><div class='code-row-double'><div class='c
 &nbsp;
 &nbsp;  </pre>
 </div></div></div><div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:extendedfilehandling' name='ex:extendedfilehandling'>Example 5.4.</a></small><br />
-More examples for reading from and writing to files. Because dictionaries do not exist in R and handling non-rectangular data is more uncommon in R, we do not show an example for direct interaction with JSON files without involvement of a data frame in the R example.</h4><div class='code-row-double'><div class='code-input'>
+More examples for reading from and writing to files.</h4><div class='code-row-double'><div class='code-input'>
   <div class='code-caption'>Python code</div>
   <pre class='code'><code># Modify the stopword list and save it:</code>
 <code>stopwords += ["somenewstopword", "andanotherone"]</code>

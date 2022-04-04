@@ -543,8 +543,15 @@
 </ul>
             </nav>
         </aside>
-	
-      
+
+    
+  Python code: <a href="https://colab.research.google.com/github/ccs-amsterdam/ccsbook/blob/master/chapter10/chapter_10_py.ipynb">
+    <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+  </a> |
+  R code: <a href="https://colab.research.google.com/github/ccs-amsterdam/ccsbook/blob/master/chapter10/chapter_10_r.ipynb">
+    <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+  </a> 
+
   
 
     <div class="css-layout">
@@ -592,8 +599,8 @@ You can install these packages with the code below if needed  (see Section&nbsp;
 
 <div class='code-row-double'><div class='code-input'>
   <div class='code-caption'>Python code</div>
-  <pre class='code'><code>!pip3 install ufal.udpipe spacy nltk scikit-learn </code>
-<code>!pip3 install gensim wordcloud</code>
+  <pre class='code'><code>!pip3 install ufal.udpipe spacy nltk scikit-learn==0.24.2</code>
+<code>!pip3 install gensim==4.0.1 wordcloud nagisa conllu tensorflow==2.5.0 tensorflow-estimator==2.5.0</code>
 &nbsp;  </pre>
 </div><div class='code-input'>
   <div class='code-caption'>R code</div>
@@ -619,6 +626,7 @@ You can install these packages with the code below if needed  (see Section&nbsp;
 <code>from nltk.tokenize import (TreebankWordTokenizer, </code>
 <code>                           WhitespaceTokenizer)</code>
 <code>from nltk.corpus import stopwords</code>
+<code>nltk.download('stopwords')</code>
 <code>from sklearn.feature_extraction.text import (</code>
 <code>    CountVectorizer, TfidfVectorizer)</code>
 <code>import nagisa</code>
@@ -646,6 +654,7 @@ You can install these packages with the code below if needed  (see Section&nbsp;
 <code># Natural language processing</code>
 <code>library(udpipe)</code>
 <code>library(spacyr)</code>
+&nbsp;
 &nbsp;
 &nbsp;
 &nbsp;
@@ -2548,7 +2557,7 @@ Using Spacy to analyze a Spanish sentence.</h4>
   <div class='code-caption'>Python code</div>
   <pre class='code'><code>model = "es_core_news_sm"</code>
 <code>!{sys.executable} -m spacy download {model}</code>
-<code># Note: restart the kernel and re-import spacy</code>
+<code># Note: restart the kernel and re-import spacy and pandas</code>
 <code>#       for the model to be found by python</code>  </pre>
 </div><div class='code-input'>
   <div class='code-caption'>R code</div>

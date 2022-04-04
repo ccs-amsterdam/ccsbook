@@ -44,8 +44,15 @@
                 {%  include 'toc.html' %}
             </nav>
         </aside>
-	
-      
+
+    {%  if current_chapter_py %}
+  Python code: <a href="https://colab.research.google.com/github/ccs-amsterdam/ccsbook/blob/master/{{ current_chapter_py }}">
+    <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+  </a> |
+  R code: <a href="https://colab.research.google.com/github/ccs-amsterdam/ccsbook/blob/master/{{ current_chapter_r }}">
+    <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+  </a> {%  endif %}
+
   {% block content %}{% endblock %}
     </div>
     <!-- Optional JavaScript; choose one of the two! -->

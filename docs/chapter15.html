@@ -497,8 +497,15 @@
 </ul>
             </nav>
         </aside>
-	
-      
+
+    
+  Python code: <a href="https://colab.research.google.com/github/ccs-amsterdam/ccsbook/blob/master/chapter15/chapter_15_py.ipynb">
+    <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+  </a> |
+  R code: <a href="https://colab.research.google.com/github/ccs-amsterdam/ccsbook/blob/master/chapter15/chapter_15_r.ipynb">
+    <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+  </a> 
+
   
 
     <div class="css-layout">
@@ -779,7 +786,7 @@ SQLite offers you database functionality without setting up a database server su
 <code># connecting  to a SQLite database</code>
 <code>mydb = dbConnect(RSQLite::SQLite(), "mydb.sqlite")</code>
 <code># store the df as table "gunpolls" in the database</code>
-<code>#dbWriteTable(mydb, "gunpolls", d)</code>
+<code>dbWriteTable(mydb, "gunpolls", d)</code>
 <code></code>
 <code># run a query on the SQLite database</code>
 <code>sql = "SELECT support, pollster </code>

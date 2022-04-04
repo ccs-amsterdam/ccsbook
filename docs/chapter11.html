@@ -543,8 +543,15 @@
 </ul>
             </nav>
         </aside>
-	
-      
+
+    
+  Python code: <a href="https://colab.research.google.com/github/ccs-amsterdam/ccsbook/blob/master/chapter11/chapter_11_py.ipynb">
+    <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+  </a> |
+  R code: <a href="https://colab.research.google.com/github/ccs-amsterdam/ccsbook/blob/master/chapter11/chapter_11_r.ipynb">
+    <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+  </a> 
+
   
 
     <div class="css-layout">
@@ -599,7 +606,7 @@ dictionary approaches, supervised machine learning, unsupervised machine learnin
   <div class='code-caption'>R code</div>
   <pre class='code'><code>install.packages(c("tidyverse", "readtext", </code>
 <code>    "quanteda", "quanteda.textmodels", </code>
-<code>    "topicmodels", "keras", "topicdoc"))</code>  </pre>
+<code>    "topicmodels", "keras", "topicdoc", "MLmetrics"))</code>  </pre>
 </div></div> After installing, you need to import (activate) the packages every session:
 
 <div class='code-row-double'><div class='code-input'>
@@ -611,8 +618,12 @@ dictionary approaches, supervised machine learning, unsupervised machine learnin
 <code>import urllib.request</code>
 <code>import re</code>
 <code>import pickle</code>
+<code>import nltk</code>
+<code>import eli5</code>
+<code>import joblib</code>
 <code>import requests</code>
 <code>import pandas as pd</code>
+<code>import numpy as np</code>
 <code>from nltk.tokenize import TreebankWordTokenizer</code>
 <code>import matplotlib.pyplot as plt</code>
 <code></code>
@@ -629,12 +640,13 @@ dictionary approaches, supervised machine learning, unsupervised machine learnin
 <code>import joblib</code>
 <code>import eli5</code>
 <code>from nltk.sentiment import vader</code>
+<code>from nltk.sentiment.vader import SentimentIntensityAnalyzer</code>
 <code></code>
 <code># Deep learning with Keras</code>
 <code>from keras.layers import (Dense, Input, </code>
 <code>    GlobalMaxPooling1D, Conv1D, Embedding)</code>
 <code>from keras.models import Model</code>
-<code>from keras.optimizers import RMSprop</code>
+<code>from tensorflow.keras.optimizers import RMSprop</code>
 <code>from keras.preprocessing.sequence import (</code>
 <code>    pad_sequences)</code>
 <code>from keras.preprocessing.text import Tokenizer</code>
@@ -642,11 +654,11 @@ dictionary approaches, supervised machine learning, unsupervised machine learnin
 <code>    KeyedVectors)</code>
 <code></code>
 <code># Topic Modeling</code>
+<code>import gensim</code>
 <code>from gensim import matutils</code>
 <code>from gensim.models.ldamodel import LdaModel</code>
 <code>from gensim.models.coherencemodel import (</code>
-<code>    CoherenceModel)</code>
-<code></code>  </pre>
+<code>    CoherenceModel)</code>  </pre>
 </div><div class='code-input'>
   <div class='code-caption'>R code</div>
   <pre class='code'><code># General packages and dictionary analysis</code>
@@ -659,9 +671,14 @@ dictionary approaches, supervised machine learning, unsupervised machine learnin
 <code>library(quanteda.textmodels)</code>
 <code>library(MLmetrics)</code>
 <code></code>
+<code># Deep learning with Keras</code>
+<code>library(keras)</code>
+<code></code>
 <code># Topic Modeling</code>
 <code>library(topicmodels)</code>
 <code>library(topicdoc)</code>
+<code></code>
+<code>reviewdata= readRDS("reviewdata.rds")</code>
 &nbsp;
 &nbsp;
 &nbsp;
@@ -2466,7 +2483,7 @@ Accuracy: 0.46468561584840656</pre>
 </div>
 <div class='code-output'>
     <div class='code-caption'>R output</div>
-<pre class='output'>Accuracy: 0.431955218315125</pre>
+<pre class='output'>Accuracy: 0.447889745235443</pre>
 </div></div></div>
 <p>
 First, Example&nbsp;<a href='#ex:rnndata'>11.11</a> loads a dataset described by <span class="cite" title="Van Atteveldt, W., Van der Velden, M.&nbsp;A., and Boukes, M. (2020b). The validity of sentiment analysis: Comparing manual annotation, crowd-coding, dictionary approaches, and machine learning algorithms. Computational Methods and Measures.">Van Atteveldt et&nbsp;al. (2020)b</span>, which consists of Dutch economic news headlines with a sentiment value.

@@ -42,6 +42,8 @@ for chapnr, chapter in enumerate(toc.chapters, start=1):
     nextchap = toc.chapters[chapnr] if chapnr < len(toc.chapters) else None
     print(f"{chapter.nr}: {chapter.texfile} -> {outf}")
     current_chapter = chapter.fn
+    current_chapter_py = None if chapnr == 1 else f"chapter{chapnr:02}/chapter_{chapnr:02}_py.ipynb"
+    current_chapter_r = None if chapnr == 1 else f"chapter{chapnr:02}/chapter_{chapnr:02}_r.ipynb"
     with open(chapter.texfile) as source:
         tex, verbs = preprocess(source.read())
 

@@ -13,11 +13,11 @@ def task_process():
         yield {
             'name': fn.relative_to(Path.cwd()),
             'file_dep': [fn],
-            'task_dep':['install_kernel'],
+            'task_dep': ['install_kernel'],
             'actions': [f"{PYTHON} -m jupro {fn}"],
             'verbosity': 2,
         }
-        
+
 def _tex_deps(wd: Path, fn: Path, seen=None):
     if fn in seen:
         return
@@ -34,11 +34,11 @@ def _tex_deps(wd: Path, fn: Path, seen=None):
             yield dep
             if dep.exists():
                 yield from _tex_deps(wd, dep, seen)
-        
+
 
 def tex_deps(fn: Path):
     yield from _tex_deps(fn, fn, set())
-    
+
 def task_tex():
     for fn in Path.cwd().glob("*.tex"):
         if "\\documentclass" not in fn.open().read():
@@ -55,7 +55,7 @@ def task_tex():
             ],
             'verbosity': 2,
             }
-        
+
 
 
 
@@ -82,7 +82,19 @@ def task_install_kernel():
         'verbosity': 2,
         'uptodate': [run_once],
         'task_dep':['install_env'],
-        
+
     }
 
 
+def task_render_html():
+    """Render the HTML version of the book to docs/"""
+    deps = []
+    for folder in [Path.cwd()] + list(Path.cwd().glob("chapter*")):
+        deps += [str(x) for x in folder.glob("*.tex")]
+    print(deps)
+    yield {
+        'name': "Render HTML",
+        # TODO: call in a nicer way, sorry :(
+        'actions': ["PYTHONPATH=.:tools env/bin/python tools/render_html.py"],
+        'file_dep': deps,
+    }

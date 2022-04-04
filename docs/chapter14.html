@@ -497,8 +497,15 @@
 </ul>
             </nav>
         </aside>
-	
-      
+
+    
+  Python code: <a href="https://colab.research.google.com/github/ccs-amsterdam/ccsbook/blob/master/chapter14/chapter_14_py.ipynb">
+    <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+  </a> |
+  R code: <a href="https://colab.research.google.com/github/ccs-amsterdam/ccsbook/blob/master/chapter14/chapter_14_r.ipynb">
+    <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+  </a> 
+
   
 
     <div class="css-layout">
@@ -547,14 +554,12 @@ You can install these and other auxiliary packages with the code below if needed
   <div class='code-caption'>Python code</div>
   <pre class='code'><code>!pip3 install Pillow requests numpy sklearn</code>
 <code>!pip3 install tensorflow keras</code>
-&nbsp;
 &nbsp;  </pre>
 </div><div class='code-input'>
   <div class='code-caption'>R code</div>
   <pre class='code'><code>install.packages(c("magick", "glue","lsa",</code>
 <code>    "tidyverse","dslabs","randomForest","caret",</code>
-<code>    "tensorflow","keras"))</code>
-<code></code>  </pre>
+<code>    "tensorflow","keras"))</code>  </pre>
 </div></div> After installing, you need to import (activate) the packages every session:
 
 <div class='code-row-double'><div class='code-input'>
@@ -574,7 +579,7 @@ You can install these and other auxiliary packages with the code below if needed
 <code></code>
 <code>import tensorflow as tf</code>
 <code>import keras</code>
-<code>from keras.applications import resnet50</code>  </pre>
+<code>from tensorflow.keras.applications.resnet50 import ResNet50</code>  </pre>
 </div><div class='code-input'>
   <div class='code-caption'>R code</div>
   <pre class='code'><code>library(magick)</code>
@@ -712,8 +717,8 @@ Loading JPG and PNG pictures as objects</h4><div class='code-row-double'><div cl
 </div></div><div class='code-row-double'>
 <div class='code-output'>
     <div class='code-caption'>Python output</div>
-<pre class='output'>&lt;PIL.JpegImagePlugin.JpegImageFile image mode=RGB size=805x453 at 0x7F2650CA9130&gt;
-&lt;PIL.PngImagePlugin.PngImageFile image mode=RGBA size=1540x978 at 0x7F2616F839D0&gt;</pre>
+<pre class='output'>&lt;PIL.JpegImagePlugin.JpegImageFile image mode=RGB size=805x453 at 0x7FF990D54460&gt;
+&lt;PIL.PngImagePlugin.PngImageFile image mode=RGBA size=1540x978 at 0x7FF980A9F460&gt;</pre>
 </div>
 <div class='code-output'>
     <div class='code-caption'>R output</div>
@@ -1037,10 +1042,10 @@ Comparing two flattened vectors to detect similarities between images</h4><div c
 <div class='code-output'>
     <div class='code-caption'>R output</div>
 <pre class='output'>     [,1]
-[1,] 0.8987007
+[1,] 0.8994653
           img_vect1 img_vect2
-img_vect1 1.0000000 0.8987007
-img_vect2 0.8987007 1.0000000</pre>
+img_vect1 1.0000000 0.8994653
+img_vect2 0.8994653 1.0000000</pre>
 </div></div></div>
 <p>
 As you can see in the resulting matrix when the images are compared with themselves (that would be the case of an exact duplicate) they obtain a value of 1. Similar images would obtain values under 1 but still close to it, while dissimilar images would obtain low values.
@@ -1311,19 +1316,19 @@ Call:
                      Number of trees: 100
 No. of variables tried at each split: 28
 
-        OOB estimate of  error rate: 3.47%
+        OOB estimate of  error rate: 3.41%
 Confusion matrix:
      0    1    2    3    4    5    6    7    8    9 class.error
-0 5846    2    6    6    4    8   23    1   25    2  0.01300017
-1    0 6630   35   14   13    9    4   12   13   12  0.01661228
-2   29    9 5763   24   28    4   14   39   38   10  0.03272910
-3    5   11   96 5807    4   62    5   55   60   26  0.05284619
-4    8   12   12    2 5656    1   25   11   13  102  0.03183841
-5   19    5   10   76    8 5189   42    7   36   29  0.04279653
-6   25   10    7    1   12   39 5806    0   18    0  0.01892531
-7    6   20   56   10   36    1    0 6058   13   65  0.03304070
-8   12   26   39   56   33   54   33    7 5533   58  0.05434968
-9   21   13   13   62   79   25    5   57   46 5628  0.05395865
+0 5849    2    8    2    4    5   20    1   28    4  0.01249367
+1    0 6643   34   10   10    9    5   13   11    7  0.01468407
+2   27    8 5762   28   30    0   22   39   37    5  0.03289695
+3    7    9   74 5810    3   79   10   53   58   28  0.05235687
+4    9    8   10    0 5647    2   24   12   16  114  0.03337898
+5   18    8   13   55   16 5190   46    7   43   25  0.04261206
+6   26   10    5    0    8   37 5814    0   18    0  0.01757350
+7    3   23   54    6   37    0    0 6050   10   82  0.03431764
+8   13   35   30   48   28   46   29    5 5563   54  0.04922236
+9   22    9   12   64   87   21    4   52   50 5628  0.05395865
  1  2  3  4  5  6  7  8  9 10
  7  2  1  0  4  1  4  9  5  9
 Levels: 0 1 2 3 4 5 6 7 8 9
@@ -1501,20 +1506,20 @@ Evaluation:
 <div class='code-output'>
     <div class='code-caption'>R output</div>
 <pre class='output'>$loss
-[1] 0.7306390 0.4967282 0.4491161 0.4183640 0.3996364
+[1] 0.7321857 0.4862316 0.4412138 0.4125885 0.3933831
 
 $accuracy
-[1] 0.7600371 0.8282592 0.8423889 0.8542222 0.8609815
+[1] 0.7612222 0.8325926 0.8458518 0.8564815 0.8623889
 
 $val_loss
-[1] 0.5421531 0.4740246 0.4287954 0.4058699 0.3931496
+[1] 0.5111727 0.4504242 0.4330572 0.4080020 0.3937299
 
 $val_accuracy
-[1] 0.8135000 0.8310000 0.8450000 0.8561667 0.8590000
+[1] 0.8268333 0.8458334 0.8490000 0.8506666 0.8596666
 
 [1] "Evaluation"
      loss  accuracy
-0.4202759 0.8539000</pre>
+1855.0688    0.0811</pre>
 </div></div></div>
 <p>
 Finally, you can use the model to predict the classes of any new image (using <code>predict_classes</code>). In Example&nbsp;<a href='#ex:predict'>14.14</a> we used the model to predict the classes of the first six elements of the test set. If you go back to <a href='#fig:fashion'>14.6</a> you can compare these predictions  (&ldquo;ankle boot&rdquo;, &ldquo;pullover&rdquo;, &ldquo;trouser&rdquo;, &ldquo;trouser&rdquo;, &ldquo;shirt&rdquo;, and &ldquo;tTrouser&rdquo;) with the actual first six images of the test set, and see how accurate our model was.
@@ -1529,7 +1534,7 @@ Predicting classes using the MLP</h4><div class='code-row-double'><div class='co
 </div><div class='code-input'>
   <div class='code-caption'>R code</div>
   <pre class='code'><code>img = X_test[1:6, , , drop = FALSE]</code>
-<code>class_pred = model %&gt;% predict_classes(img)</code>
+<code>class_pred = model %&gt;% predict(img) %&gt;% k_argmax()</code>
 <code>class_pred</code>
 &nbsp;  </pre>
 </div></div><div class='code-row-double'>
@@ -1539,7 +1544,7 @@ Predicting classes using the MLP</h4><div class='code-row-double'><div class='co
 </div>
 <div class='code-output'>
     <div class='code-caption'>R output</div>
-<pre class='output'>[1] 9 2 1 1 6 1</pre>
+<pre class='output'>tf.Tensor([9 2 1 1 6 1], shape=(6,), dtype=int64)</pre>
 </div></div></div>
 <p>
 Using the above-described concepts and code you may try to train a new MLP using color images of ten classes (airplane, automobile, bird, cat, deer, dog, frog, horse, ship, and truck) using the CIFAR-10 and CIFAR-100 datasets<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 9" data-bs-content="https://www.cs.toronto.edu/&nbsp;kriz/cifar.html">[9]</a>!
@@ -1571,7 +1576,7 @@ Let's use the pre-trained model of a Residual Network (ResNet) with 50 layers, a
 <div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:resnet50' name='ex:resnet50'>Example 14.15.</a></small><br />
 Loading a visualizing the ResNet50 architecture</h4><div class='code-row-double'><div class='code-input'>
   <div class='code-caption'>Python code</div>
-  <pre class='code'><code>model_rn50 = resnet50.ResNet50(weights="imagenet")</code>
+  <pre class='code'><code>model_rn50 = tf.keras.applications.resnet50.ResNet50(weights="imagenet")</code>
 &nbsp;
 &nbsp;  </pre>
 </div><div class='code-input'>
@@ -1629,9 +1634,9 @@ Cropping an image to get a picture of a see landscape</h4><div class='code-row-d
 </div></div></div><div class='code-example'><h4>  <small class='text-muted'><a class='anchor' href='#ex:resnetpredictions' name='ex:resnetpredictions'>Example 14.17.</a></small><br />
 Predicting the class of the first image</h4><div class='code-row-double'><div class='code-input'>
   <div class='code-caption'>Python code</div>
-  <pre class='code'><code>inputs = resnet50.preprocess_input(tf_images*255)</code>
+  <pre class='code'><code>inputs = tf.keras.applications.resnet50.preprocess_input(tf_images*255)</code>
 <code>Y_proba = model_rn50.predict(inputs)</code>
-<code>preds = resnet50.decode_predictions(Y_proba,top=3)</code>
+<code>preds = tf.keras.applications.resnet50.decode_predictions(Y_proba,top=3)</code>
 <code>preds[0]</code>  </pre>
 </div><div class='code-input'>
   <div class='code-caption'>R code</div>
@@ -1642,16 +1647,18 @@ Predicting the class of the first image</h4><div class='code-row-double'><div cl
 </div></div><div class='code-row-double'>
 <div class='code-output'>
     <div class='code-caption'>Python output</div>
-<pre class='output'>[('n09421951', 'sandbar', 0.083578914),
+<pre class='output'>Downloading data from https://storage.googleapis.com/download.tensorflow.org/data/imagenet_class_index.json
+40960/35363 [==================================] - 0s 1us/step
+[('n09421951', 'sandbar', 0.083578914),
  ('n09428293', 'seashore', 0.061473377),
  ('n09246464', 'cliff', 0.05028374)]</pre>
 </div>
 <div class='code-output'>
     <div class='code-caption'>R output</div>
 <pre class='output'>  class_name class_description score
-1 n09421951  sandbar           0.07926153
-2 n04347754  submarine         0.04810236
-3 n02066245  grey_whale        0.04798749</pre>
+1 n09421951  sandbar           0.07926150
+2 n04347754  submarine         0.04810239
+3 n02066245  grey_whale        0.04798750</pre>
 </div></div></div>
 <p>
 As you can see in the Python and R outputs<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 13" data-bs-content="Outputs in Python and R might differ a little bit since the cropping of the new images were similar but not identical.">[13]</a>, the best guess of the model is a <em>sandbar</em>, which is very close to the real picture that contains sea water, mountains and sky. However, it seems that the model is confusing sand with sea. Other results in the Python model are <em>seashore</em> and <em>cliff</em>, which are also very close to real sea landscape. Nevertheless, in the case of the R prediction the model detects a <em>submarine</em> and a <em>gray whale</em>, which revels that predictions are not 100&percnt; accurate yet.
@@ -1710,9 +1717,9 @@ Predicting the class of the second image</h4><div class='code-row-double'><div c
 <div class='code-output'>
     <div class='code-caption'>R output</div>
 <pre class='output'>  class_name class_description score
-1 n03662601  lifeboat          0.39761350
-2 n04273569  speedboat         0.11085811
-3 n02704792  amphibian         0.06916212</pre>
+1 n03662601  lifeboat          0.39761329
+2 n04273569  speedboat         0.11085816
+3 n02704792  amphibian         0.06916215</pre>
 </div></div></div>
 <p>
 These examples show you how to use an open-source and pre-trained CNN that has 1000 classes and has been trained on images that we do not have control of. However, you may want to build your own classifier with your own training data, but using part of an existing architecture. This is called fine-tuning and you can follow a good example in social science in <span class="cite" title="Williams, N.&nbsp;W., Casas, A., and Wilkerson, J.&nbsp;D. (2020). Images as data for social science research: An introduction to convolutional neural nets for image classification. Elements in Quantitative and Computational Methods for the Social Sciences.">Williams et&nbsp;al. (2020)</span> in which the authors reuse RestNet18 to build binary and multi-class classifiers adding their own data examples over the pre-trained CNN<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note 14" data-bs-content="The examples are provided in Python with the package <i>PyTorch</i>, which is quite friendly if you are already familiar to <i>Keras</i>. ">[14]</a>.
