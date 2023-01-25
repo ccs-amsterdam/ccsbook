@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<h1>Computational Analysis of Communication</h1>
+<h2>Wouter van Atteveldt, Damian Trilling, Carlos Arcila Calderon</h2>
+
+<p>
+    This is the online version of the book <i>Computational Analysis of Communication</i>
+    published with <a href="https://www.wiley.com/en-us/Computational+Analysis+of+Communication-p-9781119680239">
+    Wiley-Blackwell</a>. To buy a hard copy or eBook version of the book, please visit your local
+    academic or independent bookstore or order online at <a href="#">(TBA)</a>.
+</p>
+
+<div class='indextoc'>
+  <div class='indexpic'>
+    <img src="https://media.wiley.com/product_data/coverImage300/39/11196802/1119680239.jpg" class='bookpicture'>
+  </div>
+  <div class='indextoctoc'>
+    <b>Table of contents</b>
+    {% include 'toc.html' %}
+  </div>
+</div>
+
+
+
+<p>
+    This website contains the full contents (text, code examples, and figures) of the book
+    and is (and will be) available completely free and open access.
+    We hope that this will make computational techniques accessible (and fun!) to as many students
+    and researchers as possible, regardless of means and institutional support.
+    We also hope that this will make it easy for students and professors to use a sub set of chapters
+    without forcing students to buy the whole book.
+    We would really like to thank Wiley-Blackwell for their confidence in making this open access option possible.
+</p>
+<h2>
+    Acknowledgements and feedback
+</h2>
+<p>
+We would like to thank colleagues, friends, and students who provided feedback and input on earlier versions of parts of the manuscript:
+Dmitry Bogdanov,
+Andreu Casas,
+Modesto Escobar,
+Anne Kroon,
+Nicolas Mattis ,
+Cecil Meeusen,
+Jes&uacute;s S&aacute;nchez-Oro,
+Nel Ruigrok,
+Susan Vermeer,
+Mehdi Zamani,
+    Marthe M&ouml;ller.
+    Of course, we also want to thank all others that we might have forgotten to mention here (sorry!) -- please contact us if you feel that your name should be here.
+</p>
+<p>
+    Our intention is for the online version to be a 'living document' that we will update as tools (or our insights) change,
+    and hopefully serve as the basis for a second edition in the future.
+    For that reason, all feedback is highly appreciated!
+    Please create a <a href="https://github.com/vanatteveldt/cssbook/issues/new">github issue</a> if you see any errors, find anything hard to understand,
+    or have any other sort of suggestions or feedback.
+</p>
+
+{% endblock %}

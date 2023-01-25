@@ -1,0 +1,15 @@
+<ul class="list-unstyled components">
+    {% for chapter in toc.chapters %}
+        <li class="active toc-chapter {% if chapter.fn == current_chapter %}toc-chapter-current{% endif %}">
+            <a href="{{ chapter.fn }}">{{ chapter.nr }} {{ chapter.caption }}</a>
+            <!--<a href="#toc_chap_{{ loop.index }}" data-bs-toggle="collapse" role="button" aria-expanded="false" class="dropdown-toggle" aria-controls="toc_chap_{{ loop.index }}"></a>
+            <ul class="collapse list-unstyled {% if chapter.fn == current_chapter %}show{% endif %}" id="toc_chap_{{ loop.index }}">
+                {% for section in chapter.children %}
+                    <li class="toc-section">
+                        <a href="{{ chapter.fn }}#{{ chapter.nr }}_{{ loop.index }}">{{ section.nr }}. {{ section.caption }}</a>
+                    </li>
+                {% endfor %}
+            </ul>-->
+        </li>
+    {% endfor %}
+</ul>

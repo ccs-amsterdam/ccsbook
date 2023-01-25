@@ -1,0 +1,25 @@
+
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="css-layout">
+      <!-- Main Content -->
+      <div class="css-main">
+	{% include 'chevrons.html' %}
+	  <br/>
+            {{content|safe}}
+        </div>
+
+	{% include 'chevrons.html' %}
+	<!-- Secondary sidebar -->
+        <aside class="css-rightbar">
+            <nav id="right" class="collapse css-rightnav">
+                {%  include 'subtoc.html' %}
+            </nav>
+        </aside>
+</div>
+
+
+{%  endblock %}
