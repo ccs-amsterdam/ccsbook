@@ -133,15 +133,15 @@ class Parser:
     def parse_node(self, node, nodes):
         assert isinstance(node, TexExpr), f"Node is not a TexExpr but a {type(node)}: {repr(node)}"
         if hasattr(self, node.name):
-            getattr(self, node.name)(node, nodes)
+            pass#getattr(self, node.name)(node, nodes)
         elif node.name == "$":
-            self.dollar(node)
+            pass#self.dollar(node)
         elif node.name == "$$":
-            self.double_dollar(node)
+            pass#self.double_dollar(node)
         elif node.name in SIMPLE_ENVS:
-            self.simple_env(node)
+            pass#self.simple_env(node)
         elif node.name in SIMPLE_COMMANDS:
-            self.simple_cmd(node)
+            pass#self.simple_cmd(node)
         elif node.name in SIMPLE_NODES:
             self.simple_node(node, nodes)
         elif node.name in IGNORE:

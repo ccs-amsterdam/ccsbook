@@ -29,6 +29,10 @@ template = get_template('_quarto.yml')
 chapters = [x for x in toc.chapters if (not args.chapters) or (int(x.nr) in args.chapters)]
 (out / "_quarto.yml").open("w").write(template.render(**locals()))
 
+shutil.copy((Path(template.filename).parent) / "index.qmd", out/"index.qmd")
+shutil.copy("references.bib", out/"references.bib")
+
+template = get_template('chapter.qmd')
 unknown = {}
 for chapnr, chapter in enumerate(toc.chapters, start=1):
     if args.chapters and chapnr not in args.chapters:
@@ -46,12 +50,12 @@ for chapnr, chapter in enumerate(toc.chapters, start=1):
     parser = Parser(chapter=chapnr, toc=toc, bibliography=bibliography, verbs=verbs,
                     base=base, out_folder=out)
     content = parser.parse_str(TexSoup(tex).expr._contents)
-    html = template.render(**locals())
-    open(outf, "w").write(html)
+    open(outf, "w").write(content)
 
     #if parser.unknown_nodes:
     #    unknown[chapter.nr] = parser.unknown_nodes
 
+sys.exit()
 print(f"** Index")
 current_chapter = "index"
 inf = get_template("index.html")

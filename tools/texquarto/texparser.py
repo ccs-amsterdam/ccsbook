@@ -63,21 +63,9 @@ SIMPLE_NODES = {
 
 }
 SUBS = {
-    "<": "&lt;",
-    "\\{": "{",
-    "\\}": "}",
-    "~": "&nbsp;",
-    "\\&": "&amp;",
-    '``': '&ldquo;',
-    "''": '&rdquo;',
-    '--': '&ndash;',
-    "\\#": '#',
-    "\\%": "&percnt;",
-    "\\_": "_",
-    "\\$": "$",
-    "\\^": "^",
-    "\\(": "(",
-    "\\)": ")",
+    '``': '"',
+    "''": '"',
+    "~": " "
 }
 ACCENTS = {
     "\\'": 'acute',
@@ -109,6 +97,8 @@ class Parser:
         self._last_float = None
         self._in_footnote = False
         self._current_ref = None
+        self._current_list = None
+        self._current_caption = None
 
 
     def emit(self, text: str):
@@ -135,13 +125,13 @@ class Parser:
         if hasattr(self, node.name):
             getattr(self, node.name)(node, nodes)
         elif node.name == "$":
-            self.dollar(node)
+            pass#self.dollar(node)
         elif node.name == "$$":
-            self.double_dollar(node)
+            pass#self.double_dollar(node)
         elif node.name in SIMPLE_ENVS:
-            self.simple_env(node)
+            pass#self.simple_env(node)
         elif node.name in SIMPLE_COMMANDS:
-            self.simple_cmd(node)
+            pass#self.simple_cmd(node)
         elif node.name in SIMPLE_NODES:
             self.simple_node(node, nodes)
         elif node.name in IGNORE:
@@ -214,30 +204,20 @@ class Parser:
             text = text.replace(k, v)
         text = re.sub("%.*", "", text)
         if not self._intable:
-            text = text.replace("\\\\", "<br/>")
+            text = text.replace("\\\\", "\n\n")
         if self._depth == 0:
             for i, par in enumerate(re.split(r"(\n\s*\n)", text)):
-                if re.match(r"(\n\s*\n)", par):
-                    self._close_p()
-                elif par.strip():
-                    self._open_p()
-                    self.emit(f"{par}")
+                self.emit(f"{par}")
         elif self._intable:
             self._table_text(text)
         elif self._in_p or text.strip():
             self.emit(f"{text}")
 
     def _close_p(self):
-        if self._depth == 0 and self._in_p:
-            self.emit("\n</p>\n")
-            self._in_p = False
+        pass
 
     def _open_p(self):
-        if self._intable:
-            self._open_cell()
-        elif self._depth == 0 and not self._in_p:
-            self.emit("\n<p>\n")
-            self._in_p = True
+        pass
 
     ###### MATH ######
 
@@ -310,84 +290,56 @@ class Parser:
 
     def chapter(self, node, nodes):
         assert len(node.args) == 1
-        label = self._get_label(nodes)
-        nr = self._toc.labels[label]
-        self.emit(f"\n<h1>")
-        self._caption(label, nr, br=False)
+        self.emit(f"# ")
         self.parse(node.args[0]._contents)
-        self.emit("\n</h1>\n\n")
+        
 
     def section(self, node, _nodes):
-        self._close_p()
-        self._thesection += 1
-        self._thesubsection = 0
-        nr = f"{self._thechapter}.{self._thesection}"
-        logging.info(f"Processing section {nr}: {node.args[0]}")
-        label = nr.replace(".", "_")
-        self.emit(f"\n<h2>")
-        self._caption(label, nr, br=False)
+        logging.info(f"Processing section: {node.args[0]}")
+        self.emit(f"\n## ")
         self.parse(node.args[0]._contents)
-        self.emit("\n</h2>\n\n")
 
     def subsection(self, node, _nodes):
-        self._close_p()
-        self._thesubsection += 1
-        nr = f"{self._thechapter}.{self._thesection}.{self._thesubsection}"
-        logging.info(f"... Processig subsection {nr}: {node.args[0]}")
-        label = nr.replace(".", "_")
-        self.emit(f"\n<h3>")
-        self._caption(label, nr, br=False)
+        logging.info(f"... Processig subsection: {node.args[0]}")
+        self.emit(f"### ")
         self.parse(node.args[0]._contents)
-        self.emit("\n</h3>\n\n")
 
     def abstract(self, node, _nodes):
-        self._close_p()
         assert len(node.args) == 1
-        self.emit("\n<div class='abstract'>\n  <span class='caption'>\n")
+        self.emit("**")
         self.parse(node.args[0]._contents)
-        self.emit("\n  </span>")
+        self.emit(".**")
         self.parse(node._contents)
-        self.emit("\n</div>")
 
     def keywords(self, node, _nodes):
-        self._close_p()
         assert len(node.args) == 1
-        self.emit("\n\n<div class='keywords'>\n  <span class='caption'>Keywords:</span>\n")
+        self.emit("**Keywords.** ")
         self.parse(node.args[0]._contents)
-        self.emit("\n</div>")
 
     def objectives(self, node, _nodes):
-        self._close_p()
-        self.emit("\n<div class='objectives'>\n  <div class='caption'>Chapter objectives:</div>\n  <ul>")
+        self.emit("**Objectives:**\n\n")
         self.parse(node._contents)
-        self.emit("\n  </ul>\n</div>")
 
     def enumerate(self, node, _nodes):
-        self._close_p()
-        self.emit("\n<ol>")
+        self._current_list = "enumerate"
         self.parse(node._contents)
-        self.emit("\n</ol>")
-
     def itemize(self, node, _nodes):
-        self._close_p()
-        self.emit("\n<ul>")
+        self._current_list = "itemize"
         self.parse(node._contents)
-        self.emit("\n</ul>")
     description = itemize
 
     def item(self, node, _nodes):
-        self._close_p()
-        self.emit("<li>")
+        self.emit(" - ")
         if node.args:
             args = list(node.args)
             if isinstance(args[0], BracketGroup):
                 title = args.pop(0)
-                self.emit("<b>")
+                self.emit("**")
                 self.parse(title._contents)
-                self.emit("</b>.")
+                self.emit("**.")
             self.parse(args)
         self.parse(node._contents)
-        self.emit("</li>")
+        
 
     ### FIGURES / TABLES ###
 
@@ -395,7 +347,6 @@ class Parser:
         self.parse(node._contents)
 
     def figure(self, node, nodes):
-        self.emit("<div class='figure'>")
         # pull caption and label to start
         nodes = list(node._contents)
         names = [node.name for node in nodes]
@@ -406,10 +357,8 @@ class Parser:
         label = _pop_named(nodes, "label", strict=False)
         if not label:
             label = _label_from_caption(caption)
-        nodes = [caption, label] + nodes
+        self._current_caption = " ".join(caption.args[0].contents)
         self.parse(nodes)
-        self.emit("</div>")
-
 
     def includegraphics(self, node, _nodes):
         if self._intable:
@@ -425,8 +374,12 @@ class Parser:
             return self.emit("&#21336;&#35486;")
         if img.suffix in (".pdf", ".eps"):
             img = img.with_suffix(".png")
-        html = self._img_html(img)
-        self.emit(html)
+
+        outf = self._img_folder / img.name
+        shutil.copy(self._base / img, outf)
+        self.emit("![")
+        self.emit(self._current_caption)
+        self.emit(f"](img/{img.name})")
 
     def tikzpicture(self, node, _nodes):
         fn = f"{self._last_float.replace(':', '_')}.png"
@@ -793,7 +746,6 @@ class Parser:
 
     #### CITATIONS ####
     def citep(self, node, nodes):
-        self._open_p()
         opt = _optargs(node)
         if len(opt) == 1:
             pre, post = "", opt[0] + " "
@@ -801,22 +753,21 @@ class Parser:
             pre, post = opt[0] + " ", opt[1] + " "
         else:
             pre, post = "", ""
-        self.emit(pre)
+        self.emit("[")
+        if pre:
+            self.emit(pre + " ")
         self.citet(node, nodes, add_parentheses=False)
-        self.emit(post)
+        if post:
+            self.emit(" " + post)
+        self.emit("]")
 
     def citet(self, node, nodes, add_parentheses=True):
-        self._open_p()
-        refs = []
         arg, = _args(node)
-        for item in arg.split(","):
-            short, entries = self._bibliography[item.strip()]
-            if add_parentheses:
-                short = re.sub(r", (\d\d\d\d)", " (\\1)", short)
-            entry = " ".join(entries)
-            html = short if self._in_footnote else f'<span class="cite" title="{entry}">{short}</span>'
-            refs.append(html)
-        self.emit('; '.join(refs))
+        for i, item in enumerate(arg.split(",")):
+            if i:
+                self.emit(";")
+            self.emit(f"@{item}")
+
     def citealp(self, node, nodes):
         self.citet(node, nodes, add_parentheses=False)
     cite = citet
