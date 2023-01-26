@@ -31,6 +31,7 @@ chapters = [x for x in toc.chapters if (not args.chapters) or (int(x.nr) in args
 
 shutil.copy((Path(template.filename).parent) / "index.qmd", out/"index.qmd")
 shutil.copy("references.bib", out/"references.bib")
+shutil.copy((Path(template.filename).parent) / "references.qmd", out/"references.qmd")
 
 template = get_template('chapter.qmd')
 unknown = {}
@@ -49,7 +50,7 @@ for chapnr, chapter in enumerate(toc.chapters, start=1):
 
     parser = Parser(chapter=chapnr, toc=toc, bibliography=bibliography, verbs=verbs,
                     base=base, out_folder=out)
-    content = parser.parse_str(TexSoup(tex).expr._contents)
+    content = parser.parse_str(TexSoup(tex).expr._contents, finalize=True)
     open(outf, "w").write(content)
 
     #if parser.unknown_nodes:

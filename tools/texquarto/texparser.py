@@ -37,6 +37,14 @@ SIMPLE_ENVS = {
     "feature": "div class='feature'",
     "table": "div class='figure'"
 }
+
+SIMPLE_MARKUP = {
+    "concept": "`",
+    "emph": "*",
+    "textbf": "**",
+    "texttt": "`",
+    "ttt": "`",
+}
 SIMPLE_COMMANDS = {
     "textit": "em",
     "texttt": "code",
@@ -95,10 +103,11 @@ class Parser:
         self._img_folder.mkdir(parents=True, exist_ok=True)
         self._intable = False
         self._last_float = None
-        self._in_footnote = False
         self._current_ref = None
+
         self._current_list = None
         self._current_caption = None
+        self._footnotes = []
 
 
     def emit(self, text: str):
@@ -113,9 +122,11 @@ class Parser:
                 return
         self._depth -= 1
 
-    def parse_str(self, nodes):
+    def parse_str(self, nodes, finalize=False):
         old, self._sink = self._sink, StringIO()
         self.parse(nodes)
+        if finalize:
+            self.finalize()
         result, self._sink = self._sink.getvalue(), old
         return result
 
@@ -130,8 +141,8 @@ class Parser:
             pass#self.double_dollar(node)
         elif node.name in SIMPLE_ENVS:
             pass#self.simple_env(node)
-        elif node.name in SIMPLE_COMMANDS:
-            pass#self.simple_cmd(node)
+        elif node.name in SIMPLE_MARKUP:
+            self.simple_markup(node)
         elif node.name in SIMPLE_NODES:
             self.simple_node(node, nodes)
         elif node.name in IGNORE:
@@ -171,18 +182,16 @@ class Parser:
         self.parse(node._contents)
         #print(node._contents, _nodes and _nodes[0])
 
-    def simple_cmd(self, node):
-        self._open_p()
+    def simple_markup(self, node):
         args = [a for a in node.args if isinstance(a, BraceGroup)]
         assert len(args) == 1, f"#arguments != 1: [{node.name}] {repr(args)} : {repr(node)}"
         assert isinstance(node, TexCmd)
-        tag = SIMPLE_COMMANDS[node.name]
+        tag = SIMPLE_MARKUP[node.name]
         if tag:
-            self.emit(f"<{tag}>")
+            self.emit(f"{tag}")
         self.parse(args[0]._contents)
         if tag:
-            end_tag = tag.split(" ")[0]
-            self.emit(f"</{end_tag}>")
+            self.emit(f"{tag}")
 
     def small(self, node, _nodes):
         self._open_p()
@@ -219,6 +228,10 @@ class Parser:
     def _open_p(self):
         pass
 
+    def finalize(self):
+        for i, note in enumerate(self._footnotes):
+            self.emit(f"[^{i+1}]: {note}\n\n")
+
     ###### MATH ######
 
     def dollar(self, node):
@@ -238,15 +251,14 @@ class Parser:
 
     def verbatim(self, node, _nodes):
         assert len(node._contents) == 1
-        text = escape(str(node._contents[0]))
-
-        self.emit(f"<pre>{text}</pre>")
+        text = escape(str(node._contents[0])).strip("\n")
+        self.emit(f"```\n{text}\n```")
     lstlisting = verbatim
 
     def verbplaceholder(self, node, _nodes):
         self._open_p()
         verb = escape(self._verbs[int(_arg(node))])
-        self.emit(f"<code>{verb}</code>")
+        self.emit(f"`{verb}`")
 
 
     def accent(self, node, nodes):
@@ -268,14 +280,9 @@ class Parser:
         self.emit(f"<a href='{href}'>{text}</a>")
 
     def footnote(self, node, nodes):
-        self._in_footnote = True
         inner = self.parse_str(node.args[0]._contents)
-        self._in_footnote = False
-        # Footnote cannot contain math, so un-jax it:
-        #TODO: deal with expressions within footnotes?
-        inner = inner.replace("\\(", " <em>").replace("\\)", "</em> ")
-        self._n_notes += 1
-        self.emit(f'<a tabindex="0" class="note" data-bs-trigger="focus" data-bs-toggle="popover" title="Note {self._n_notes}" data-bs-content="{inner}">[{self._n_notes}]</a>')
+        self._footnotes.append(inner)
+        self.emit(f"[^{len(self._footnotes)}]")
 
     ######### STRUCTURE #########
     def _get_label(self, nodes):
@@ -303,6 +310,12 @@ class Parser:
         logging.info(f"... Processig subsection: {node.args[0]}")
         self.emit(f"### ")
         self.parse(node.args[0]._contents)
+
+    def paragraph(self, node, _nodes):
+        self.emit("**")
+        self.parse(node.args[0]._contents)
+        self.emit(".**" )
+
 
     def abstract(self, node, _nodes):
         assert len(node.args) == 1
