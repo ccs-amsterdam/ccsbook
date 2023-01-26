@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% block content %} 
 
-# Computational Analysis of Communication 
+# Computational Analysis of Communication {.unnumbered}
 ## Wouter van Atteveldt, Damian Trilling, Carlos Arcila Calderon
 
 This is the online version of the book _Computational Analysis of Communication_ ...

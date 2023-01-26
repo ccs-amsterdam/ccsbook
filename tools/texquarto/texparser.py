@@ -4,6 +4,7 @@ import shutil
 import subprocess
 import sys
 import re
+import json
 import tempfile
 from collections import namedtuple
 from io import StringIO
@@ -18,6 +19,8 @@ import TexSoup
 from TexSoup.data import BraceGroup, BracketGroup, TexExpr, TexEnv, TexCmd
 
 from tools.texhtml.toc import TOC
+
+BLA = None
 
 IGNORE = {
     "centering",
@@ -89,7 +92,9 @@ ACCENTS = {
 
 class Parser:
     def __init__(self, *, base:Path, out_folder:Path,
-                 chapter:int, toc: TOC, bibliography: dict, verbs:List[str]=None, sink=sys.stdout):
+                 chapter:int, toc: TOC, bibliography: dict, verbs:List[str]=None, sink=sys.stdout,
+                 notebook_py: str, notebook_r: str
+                 ):
         self._sink = sink
         self._toc = toc
         self._bibliography = bibliography
@@ -112,7 +117,7 @@ class Parser:
         self._current_list = None
         self._current_caption = None
         self._footnotes = []
-
+        self.tags = dict(read_tags(python=notebook_py, r=notebook_r))  # (language: snippet) -> tags
 
     def emit(self, text: str):
         self._sink.write(text)
@@ -313,6 +318,11 @@ class Parser:
         logging.info(f"Processing section: {node.args[0]}")
         self.emit(f"\n## ")
         self.parse(node.args[0]._contents)
+        label = self._get_label(_nodes)
+        if label:
+            label = label.replace(":", "-")
+            self.emit(f" {{#{label}}}")
+
 
     def subsection(self, node, _nodes):
         logging.info(f"... Processig subsection: {node.args[0]}")
@@ -551,36 +561,62 @@ class Parser:
                 self.emit(f"<li>{text}</li>")
         self.emit("</ul>" * cur_depth)
 
-    ##### CODE EXAMPLES #####
+    ### CODE EXAMPLES
+
+    def feature(self, node, _nodes):
+        self.emit("\n::: {.callout-note icon=false collapse=true}\n")
+        # is there a caption?
+        contents = node._contents
+        # skip initial empty whitespace
+        while contents and isinstance(contents[0], str) and contents[0].strip() == "":
+            contents.pop(0)
+        if contents and isinstance(contents[0], TexCmd) and contents[0].name == "textbf":
+            caption = ''.join(contents.pop(0).contents)
+            self.emit(f"## {caption}")
+            
+        self.BLA = list(contents)
+
+        self.parse(contents)
+        self.emit("\n:::\n")
+
     def _read_snippet(self, fn):
         snippet_file = self._base / "snippets" / f"{fn}"
         code = snippet_file.open().read()
-        lines = [x.replace("<", "&lt;").replace(">", "&gt;")
-                 for x in code.split("\n")]
-        return lines
+        #lines = [x.replace("<", "&lt;").replace(">", "&gt;")
+        #         for x in code.split("\n")]
+        return code
 
-    def _code_input(self, caption, lines):
+    def _code_input(self, caption, lines, language=None, snippet=None, execute=None):
+        if language is None:
+            # let's guess the language :D
+            if "python" in caption.lower() or "jupyter" in caption.lower():
+                language = "python"
+            else:
+                language = "r"
+        if execute is None:
+            # Check the tags
+            tags = self.tags.get((language, snippet))
+            execute = "dontrun" not in tags
         self.emit(f"## {caption}")
+        self.emit(f"\n```{{{language}}}\n")
+        if not execute:
+            self.emit("#| eval: false\n")
+        self.emit(lines)
         self.emit("\n```\n")
-        for i, line in enumerate(lines):
-            if line:
-                self.emit(line)
-            self.emit("\n")
-        self.emit("```\n")
 
     def _doublecodex(self, fn):
-        self._close_p()
-        self.emit("<div class='code-row-double'>")
+        snippet = fn.split("/")[-1]
         snippets = [self._read_snippet(f"{fn}.{ext}") for ext in ["py", "r"]]
-        add_blank_lines(*snippets)
-        self._code_input("Python code", snippets[0])
-        self._code_input("R code", snippets[1])
-        self.emit("</div>")
+        self.emit("\n::: {.panel-tabset}\n")
+        self._code_input("Python code", snippets[0], language="python", snippet=snippet)
+        self._code_input("R code", snippets[1], language="r", snippet=snippet)
+        self.emit("\n:::\n")
 
     def doublecodex(self, node, nodes):
         self._doublecodex(_arg(node))
 
     def codex(self, node, nodes):
+        return
         fn = _arg(node)
         snippet_file = self._base / "snippets" / f"{fn}"
         content = snippet_file.open().read()
@@ -653,15 +689,13 @@ class Parser:
         self.emit("</div>")
 
     def tcbraster(self, node, _nodes):
-        self._close_p()
         self.emit("\n::: {.panel-tabset}\n")
         codices = [n for n in node._contents if getattr(n, "name", None) == "codex"]
         if len(codices) == 2:
             snippets = [self._read_snippet(_arg(n)) for n in codices]
-            add_blank_lines(*snippets)
             captions = [self.extract_kwargs(_optarg(n))['caption'] for n in codices]
-            self._code_input(captions[0], snippets[0])
-            self._code_input(captions[1], snippets[1])
+            self._code_input(captions[0], snippets[0], execute=False)
+            self._code_input(captions[1], snippets[1], execute=False)
         else:
             boxes = [n for n in node._contents if getattr(n, "name", None) == "tcolorbox"]
             assert len(boxes) == 2
@@ -678,8 +712,6 @@ class Parser:
         self.emit("\n</div>")
 
     def ccsexample(self, node, nodes):
-        self._close_p()
-        self.emit(f"<div class='code-example'>")
         nodes = list(node._contents)
         caption = _pop_named(nodes, "caption")
         label = _pop_named(nodes, "label", strict=False)
@@ -687,20 +719,25 @@ class Parser:
             label = _label_from_caption(caption)
         if not label:
             raise Exception("!")
-        nodes = [caption, label] + nodes
+
+        caption_text = " ".join(caption.args[0].contents)
+        label_text = " ".join(label.args[0].contents).replace("ex:", "exm-")
+
+        self.emit('::: {.callout-note appearance="simple" icon=false}\n')
+        self.emit(f"::: {{#{label_text}}}\n{caption_text}\n\n")
+
         self.parse(nodes)
-        self.emit("</div>")
+        self.emit(":::\n")
+        self.emit(":::\n")
 
     def pyrex(self, node, nodes):
-        self._close_p()
-        self.emit(f"<div class='code-example'>")
         fn = _arg(node)
         kwargs = self.extract_kwargs(_optarg(node))
-        ref = f"ex:{Path(fn).name}"
-        nr = self._toc.labels[ref]
+        ref = f"exm-{Path(fn).name}"
+
         # Captions from kwargs are not parsed, so manually do required substitutions
         caption = kwargs['caption']
-        caption = re.sub("\$([^$]+)\$", "<i>\\1</i>", caption)
+        caption = re.sub("\$([^$]+)\$", "*\\1*", caption)
         parts = []
         for x in re.split(r"(\\['\"`=]\w)", caption):
             if x[:-1] in ACCENTS:
@@ -709,49 +746,69 @@ class Parser:
                 parts.append(x)
         caption = "".join(parts)
         caption = self.parse_str(TexSoup.TexSoup(kwargs['caption']).expr._contents)
-        self.emit("<h4>")
-        self._caption(ref, f"Example {nr}", caption=caption)
-        self.emit("</h4>")
+
+        self.emit('\n::: {.callout-note appearance="simple" icon=false}\n')
+        self.emit(f'\n::: {{#{ref}}}\n{caption}\n')
+
         input = kwargs.get('input', 'both')
         if input == 'both':
             self._doublecodex(fn)
         else:
+            raise Exception("?")
             lines = self._read_snippet(f"{fn}.{input}")
             name = dict(py="Python", r="R")[input]
             self._code_input(f"{name} code", lines)
-        output = kwargs.get('output', 'both')
-        format = kwargs.get('format', 'plain')
-        if output in ('r', 'py'):
-            self._codexoutput(f"{fn}.{output}", format, caption=outputcaption(output))
-        elif output == "both":
-            self._doubleoutput(fn, format)
-        self.emit("</div>")
+        #output = kwargs.get('output', 'both')
+        #format = kwargs.get('format', 'plain')
+        #if output in ('r', 'py'):
+        #    self._codexoutput(f"{fn}.{output}", format, caption=outputcaption(output))
+        #elif output == "both":
+        #    self._doubleoutput(fn, format)
+        #self.emit("</div>")
+        self.emit("\n:::\n:::\n")
 
 
     ##### REFERENCES #####
     def refchap(self, node, _nodes):
-        self.ref(node, prefix="chap")
+        self._ref(node, prefix="chap")
 
     def refsec(self, node, _nodes):
-        self.ref(node, prefix="sec")
+        self._ref(node, prefix="sec")
 
     def pageref(self, node, _nodes):
+        raise Exception("Sorry!")
         ref = _arg(node)
         assert ref == "feature:sparse"
         return self.ref
 
 
     def reffig(self, node, _nodes):
-        self.ref(node, prefix="fig")
+        self._ref(node, prefix="fig")
 
     def refex(self, node, _nodes):
-        self._ref("Example", f"ex:{_args(node)[0]}")
+        self._ref(node, prefix="exm")
 
-    def ref(self, node, _nodes=None, prefix=None):
+    def ref(self, node, _nodes):
+        ref = _args(node)[0]
+        if ":" in ref:
+            prefix, ref = ref.split(":", 1)
+            prefix = {'ex': 'exm'}.get(prefix, prefix)
+        else:
+            prefix = None
+        self.emit("[-")
+        self._doref(ref, prefix)
+        self.emit("]")
+
+    def _ref(self, node, prefix=None):
+        self._doref(_args(node)[0], prefix=prefix)
+
+    def _doref(self, ref, prefix=None):
         self.emit("@")
         if prefix:
             self.emit(prefix + "-")
-        self.emit(_args(node)[0])
+        self.emit(ref)
+
+
 
     #### CITATIONS ####
     def citep(self, node, nodes):
@@ -907,6 +964,16 @@ def tikzfig(outf: Path, tikz: str, density=144):
     subprocess.check_call(cmd)
     shutil.rmtree(tmpdir)
 
+def read_tags(**files):
+    for lang, file in files.items():
+        if not file:
+            continue
+        for cell in json.load(open(file))['cells']:
+            tags = cell.get("metadata", {}).get("tags", [])
+            snippet = [t for t in tags if t.startswith("snippet:")]
+            if snippet:
+                yield (lang, snippet[0].replace("snippet:", "")), tags
+
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, format='[%(asctime)s %(name)-12s %(levelname)-5s] %(message)s')
     tex = " ".join(sys.argv[1:])
@@ -918,3 +985,5 @@ if __name__ == '__main__':
     html = p.parse_str(nodes)
     print(html)
     #open("/tmp/bla.html", "w").write(html)
+
+

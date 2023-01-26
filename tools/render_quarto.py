@@ -49,7 +49,7 @@ for chapnr, chapter in enumerate(toc.chapters, start=1):
         tex, verbs = preprocess(source.read())
 
     parser = Parser(chapter=chapnr, toc=toc, bibliography=bibliography, verbs=verbs,
-                    base=base, out_folder=out)
+                    base=base, out_folder=out, notebook_py=current_chapter_py, notebook_r=current_chapter_r)
     content = parser.parse_str(TexSoup(tex).expr._contents, finalize=True)
     open(outf, "w").write(content)
 

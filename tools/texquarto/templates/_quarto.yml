@@ -24,3 +24,6 @@ format:
 
 editor: visual
 
+engine: knitr
+execute:
+  warning: false
