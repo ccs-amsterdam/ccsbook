@@ -1,3 +1,4 @@
+import html
 import logging
 import shutil
 import subprocess
@@ -70,10 +71,13 @@ SIMPLE_NODES = {
     "numpy": "<code>numpy</code>",
 
 }
+
+NBSP = " "
+
 SUBS = {
     '``': '"',
     "''": '"',
-    "~": " "
+    "~": NBSP
 }
 ACCENTS = {
     "\\'": 'acute',
@@ -252,12 +256,13 @@ class Parser:
     def verbatim(self, node, _nodes):
         assert len(node._contents) == 1
         text = escape(str(node._contents[0])).strip("\n")
+        text = str(node._contents[0]).strip("\n")
         self.emit(f"```\n{text}\n```")
     lstlisting = verbatim
 
     def verbplaceholder(self, node, _nodes):
         self._open_p()
-        verb = escape(self._verbs[int(_arg(node))])
+        verb = self._verbs[int(_arg(node))]
         self.emit(f"`{verb}`")
 
 
@@ -271,13 +276,16 @@ class Parser:
             text = str(next)
         else:
             raise TypeError(f"Expeced token or bracegroup, got {type(next)}: {str(next)}")
-        self.emit(f"&{text[0]}{accent};")
+        entity = f"&{text[0]}{accent};"
+        print(str(node), accent, text, html.unescape(entity))
+
+        self.emit(html.unescape(entity))
         self._text(text[1:])
 
     def url(self, node, nodes):
         href, = _args(node)
         text = re.sub("https?://", "", href)
-        self.emit(f"<a href='{href}'>{text}</a>")
+        self.emit(f"[{text}]({href})")
 
     def footnote(self, node, nodes):
         inner = self.parse_str(node.args[0]._contents)
@@ -370,7 +378,9 @@ class Parser:
         label = _pop_named(nodes, "label", strict=False)
         if not label:
             label = _label_from_caption(caption)
+        
         self._current_caption = " ".join(caption.args[0].contents)
+        self._current_label = " ".join(label.args[0].contents)
         self.parse(nodes)
 
     def includegraphics(self, node, _nodes):
@@ -393,6 +403,8 @@ class Parser:
         self.emit("![")
         self.emit(self._current_caption)
         self.emit(f"](img/{img.name})")
+        if self._current_label:
+            self.emit(f"{{#{self._current_label.replace(':', '-')}}}")
 
     def tikzpicture(self, node, _nodes):
         fn = f"{self._last_float.replace(':', '_')}.png"
@@ -548,15 +560,13 @@ class Parser:
         return lines
 
     def _code_input(self, caption, lines):
-        self.emit(f"<div class='code-input'>\n  <div class='code-caption'>{caption}</div>\n  <pre class='code'>")
+        self.emit(f"## {caption}")
+        self.emit("\n```\n")
         for i, line in enumerate(lines):
-            if i:
-                self.emit("\n")
-            if line is None:
-                self.emit("&nbsp;")
-            else:
-                self.emit(f"<code>{line}</code>")
-        self.emit("  </pre>\n</div>")
+            if line:
+                self.emit(line)
+            self.emit("\n")
+        self.emit("```\n")
 
     def _doublecodex(self, fn):
         self._close_p()
@@ -644,7 +654,7 @@ class Parser:
 
     def tcbraster(self, node, _nodes):
         self._close_p()
-        self.emit("<div class='code-row-double'>")
+        self.emit("\n::: {.panel-tabset}\n")
         codices = [n for n in node._contents if getattr(n, "name", None) == "codex"]
         if len(codices) == 2:
             snippets = [self._read_snippet(_arg(n)) for n in codices]
@@ -656,7 +666,7 @@ class Parser:
             boxes = [n for n in node._contents if getattr(n, "name", None) == "tcolorbox"]
             assert len(boxes) == 2
             self.parse(boxes)
-        self.emit("</div>")
+        self.emit("\n:::\n")
 
     def tcolorbox(self, node, _nodes):
         self._close_p()
@@ -719,28 +729,11 @@ class Parser:
 
 
     ##### REFERENCES #####
-    def _ref(self, label, ref):
-        self.emit(self._ref_html(label, ref))
-
-    def _ref_html(self, label, ref):
-        if not self._toc or ref not in self._toc.labels:
-            logging.warning(f"unknown reference: {ref}")
-            file, nr = "", "??"
-        else:
-            nr = self._toc.labels[ref]
-            chap = int(nr.split(".")[0])
-            if ref.startswith("sec:") or ref.startswith("chap:"):
-                ref = nr.replace(".", "_")
-            file = "" if chap == self._thechapter else f"chapter{chap:02d}.html"
-        if label:
-            label = f"{label} "
-        return f"<a href='{file}#{ref}'>{label}{nr}</a>"
-
     def refchap(self, node, _nodes):
-        self._ref("Chapter", f"chap:{_args(node)[0]}")
+        self.ref(node, prefix="chap")
 
     def refsec(self, node, _nodes):
-        self._ref("Section", f"sec:{_args(node)[0]}")
+        self.ref(node, prefix="sec")
 
     def pageref(self, node, _nodes):
         ref = _arg(node)
@@ -749,13 +742,16 @@ class Parser:
 
 
     def reffig(self, node, _nodes):
-        self._ref("Figure", f"fig:{_args(node)[0]}")
+        self.ref(node, prefix="fig")
 
     def refex(self, node, _nodes):
         self._ref("Example", f"ex:{_args(node)[0]}")
 
-    def ref(self, node, _nodes):
-        self._ref("", f"{_args(node)[0]}")
+    def ref(self, node, _nodes=None, prefix=None):
+        self.emit("@")
+        if prefix:
+            self.emit(prefix + "-")
+        self.emit(_args(node)[0])
 
     #### CITATIONS ####
     def citep(self, node, nodes):
@@ -767,11 +763,11 @@ class Parser:
         else:
             pre, post = "", ""
         self.emit("[")
-        if pre:
-            self.emit(pre + " ")
+        if pre and pre.strip():
+            self.emit(pre)
         self.citet(node, nodes, add_parentheses=False)
-        if post:
-            self.emit(" " + post)
+        if post and post.strip():
+            self.emit(post)
         self.emit("]")
 
     def citet(self, node, nodes, add_parentheses=True):
