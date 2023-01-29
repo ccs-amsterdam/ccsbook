@@ -50,6 +50,8 @@ SIMPLE_MARKUP = {
     "textbf": "**",
     "texttt": "`",
     "ttt": "`",
+    "textit": "*",
+    "fn": "`"
 }
 SIMPLE_COMMANDS = {
     "textit": "em",
