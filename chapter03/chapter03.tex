@@ -752,10 +752,12 @@ once using a loop. This costs you only two extra lines of code
   of memory. Rather than waiting for all values to be calculated, you can immediately begin processing the first value before the next arrives; or 
   you can work with data so large that it doesn't all fit into your memory at the same time.  You recognize a generator by 
   the \verb|yield| keyword instead of a \verb|return| keyword (Example~\ref{ex:generators})
+
+
+  \pyrex[input=py, output=py, caption={Generators behave like lists in that you can iterate (loop) over them, but each element is only 
+  calculated when it is needed. Hence, they do not have a length.}]{chapter03/generators}
 \end{feature}
 
-\pyrex[input=py, output=py, caption={Generators behave like lists in that you can iterate (loop) over them, but each element is only 
-calculated when it is needed. Hence, they do not have a length.}]{chapter03/generators}
 
 
 So far you have taken your first steps as a programmer, but there are many

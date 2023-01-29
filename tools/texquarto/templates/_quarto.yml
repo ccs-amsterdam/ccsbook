@@ -27,3 +27,4 @@ editor: visual
 engine: knitr
 execute:
   warning: false
+  freeze: auto

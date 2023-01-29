@@ -1,3 +1,4 @@
+import re
 import logging
 import shutil
 import sys
@@ -26,7 +27,13 @@ out = base / "quarto"
 out.mkdir(exist_ok=True)
 toc = TOC(base)
 template = get_template('_quarto.yml')
-chapters = [x for x in toc.chapters if (not args.chapters) or (int(x.nr) in args.chapters)]
+
+if args.chapters:
+    keep = set(args.chapters) | {int(x.name.replace("chapter", "").replace(".qmd", "")) for x in out.glob("chapter*.qmd")}
+    chapters = [x for x in toc.chapters if (not args.chapters) or (int(x.nr) in keep)]
+else:
+    chapters = toc.chapters
+
 (out / "_quarto.yml").open("w").write(template.render(**locals()))
 
 shutil.copy((Path(template.filename).parent) / "index.qmd", out/"index.qmd")
@@ -51,6 +58,9 @@ for chapnr, chapter in enumerate(toc.chapters, start=1):
     parser = Parser(chapter=chapnr, toc=toc, bibliography=bibliography, verbs=verbs,
                     base=base, out_folder=out, notebook_py=current_chapter_py, notebook_r=current_chapter_r)
     content = parser.parse_str(TexSoup(tex).expr._contents, finalize=True)
+    content = re.sub(r"\s*\n\s*\n\s*", "\n\n", content)
+    content = re.sub(r"\n\s*\n:::\n", "\n:::\n", content)
+    content = re.sub(r"\n\s*\n:::\n", "\n:::\n", content)
     open(outf, "w").write(content)
 
     #if parser.unknown_nodes:

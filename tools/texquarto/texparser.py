@@ -17,6 +17,8 @@ from TexSoup.utils import Token
 from markupsafe import escape
 import TexSoup
 from TexSoup.data import BraceGroup, BracketGroup, TexExpr, TexEnv, TexCmd
+from black import format_str, FileMode
+
 
 from tools.texhtml.toc import TOC
 
@@ -118,6 +120,7 @@ class Parser:
         self._current_caption = None
         self._footnotes = []
         self.tags = dict(read_tags(python=notebook_py, r=notebook_r))  # (language: snippet) -> tags
+        self.chunk_names = set()
 
     def emit(self, text: str):
         self._sink.write(text)
@@ -572,7 +575,7 @@ class Parser:
             contents.pop(0)
         if contents and isinstance(contents[0], TexCmd) and contents[0].name == "textbf":
             caption = ''.join(contents.pop(0).contents)
-            self.emit(f"## {caption}")
+            self.emit(f"## {caption}\n")
             
         self.BLA = list(contents)
 
@@ -587,20 +590,28 @@ class Parser:
         return code
 
     def _code_input(self, caption, lines, language=None, snippet=None, execute=None):
+        for i in count():
+            chunkname = f"{snippet}-{language}{i if i else ''}"
+            if chunkname not in self.chunk_names:
+                self.chunk_names.add(chunkname)
+                break
         if language is None:
             # let's guess the language :D
             if "python" in caption.lower() or "jupyter" in caption.lower():
                 language = "python"
             else:
                 language = "r"
+        tags = self.tags.get((language, snippet), set())
         if execute is None:
-            # Check the tags
-            tags = self.tags.get((language, snippet))
             execute = "dontrun" not in tags
         self.emit(f"## {caption}")
-        self.emit(f"\n```{{{language}}}\n")
+        self.emit(f"\n```{{{language} {chunkname}}}\n")
         if not execute:
             self.emit("#| eval: false\n")
+        if language == "python" and "!pip" not in lines:
+            lines = format_str(lines, mode=FileMode(line_length=80))
+        if language == 'python' and "output:png" in tags:
+            self.emit("#| results: hide\n")
         self.emit(lines)
         self.emit("\n```\n")
 
@@ -627,6 +638,7 @@ class Parser:
         self.emit("</div>")
 
     def codexoutputtable(self, node, _nodes):
+        return
         fn = _arg(node)
         lang = Path(fn).suffix.replace(".", "")
         caption = outputcaption(lang)
@@ -638,11 +650,14 @@ class Parser:
         self.emit(f"<div class='table-wrapper'>{content}</div>")
 
     def codexpng(self, node, _nodes):
+        return
         caption, _size, fn = _args(node)
         self._codexoutput(fn, "png", caption)
 
 
     def codexoutputpng(self, node, _nodes):
+        return
+
         fn = _arg(node)
         lang = Path(fn).suffix.replace(".", "")
         caption = outputcaption(lang)
@@ -678,6 +693,7 @@ class Parser:
         self.emit("\n</div>")
 
     def doubleoutput(self, node, _nodes):
+        return
         self._doubleoutput(_arg(node), format="plain")
 
 
@@ -753,6 +769,11 @@ class Parser:
         input = kwargs.get('input', 'both')
         if input == 'both':
             self._doublecodex(fn)
+        elif input in ["py", "r"]:
+            snippet = fn.split("/")[-1]
+            code = self._read_snippet(f"{fn}.{input}")
+            language = dict(r="r", py="python")[input]
+            self._code_input(f"{language.title()} code", code, language=language, snippet=snippet)
         else:
             raise Exception("?")
             lines = self._read_snippet(f"{fn}.{input}")
