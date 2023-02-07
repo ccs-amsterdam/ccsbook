@@ -1,3 +1,4 @@
+import pandoc
 import html
 import logging
 import shutil
@@ -23,6 +24,11 @@ from black import format_str, FileMode
 from tools.texhtml.toc import TOC
 
 BLA = None
+
+PYTHON_WARNINGS = """\n\n```{python}
+#| echo: false
+import warnings; warnings.filterwarnings('ignore')
+```\n\n"""
 
 IGNORE = {
     "centering",
@@ -146,11 +152,18 @@ class Parser:
 
 
     def parse_node(self, node, nodes):
-        assert isinstance(node, TexExpr), f"Node is not a TexExpr but a {type(node)}: {repr(node)}"
+        if isinstance(node, Token):
+            self.text(node, nodes)
+            return
+        if not isinstance(node, TexExpr):
+            logging.warning(f"Skipping Node:  it's not a TexExpr but a {type(node)}: {repr(node)}")
+            self.NODE = node
+            raise Exception("!")
+            return
         if hasattr(self, node.name):
             getattr(self, node.name)(node, nodes)
         elif node.name == "$":
-            pass#self.dollar(node)
+            self.dollar(node)
         elif node.name == "$$":
             pass#self.double_dollar(node)
         elif node.name in SIMPLE_ENVS:
@@ -219,15 +232,16 @@ class Parser:
         text = [str(node)]
         while nodes and nodes[0].name == "text" and not str(nodes[0]).startswith("\\"):
             text.append(str(nodes.pop(0)))
-        text = "".join(text)
+        text = "".join(text).replace("\\_", "_")
         self._text(text)
 
     def _text(self, text):
         for k, v in SUBS.items():
             text = text.replace(k, v)
-        text = re.sub("%.*", "", text)
+        text = re.sub(r"(?<!\\)%.*", "", text)
         if not self._intable:
             text = text.replace("\\\\", "\n\n")
+        text = text.replace("*", "\\*")
         if self._depth == 0:
             for i, par in enumerate(re.split(r"(\n\s*\n)", text)):
                 self.emit(f"{par}")
@@ -249,12 +263,15 @@ class Parser:
     ###### MATH ######
 
     def dollar(self, node):
-        self._open_p()
+        self.emit("$")
         expr = str(node).strip("$")
-        if self._intable and expr == "\\cdots":
-            self.emit("&hellip;")
-        else:
-            self.emit(f"\\({expr}\\)")
+        self.emit(expr)
+        #if self._intable and expr == "\\cdots":
+        #    self.emit("&hellip;")
+        #else:
+        #    self.emit(f"\\({expr}\\)")
+        self.emit("$")
+
 
     def double_dollar(self, node):
         self._close_p()
@@ -287,7 +304,7 @@ class Parser:
         else:
             raise TypeError(f"Expeced token or bracegroup, got {type(next)}: {str(next)}")
         entity = f"&{text[0]}{accent};"
-        print(str(node), accent, text, html.unescape(entity))
+        #print(str(node), accent, text, html.unescape(entity))
 
         self.emit(html.unescape(entity))
         self._text(text[1:])
@@ -315,24 +332,35 @@ class Parser:
 
     def chapter(self, node, nodes):
         assert len(node.args) == 1
+        label = self._get_label(nodes)
         self.emit(f"# ")
         self.parse(node.args[0]._contents)
+        if label:
+            label = label.replace('chap:', "sec-chap-")
+            self.emit(f" {{#{label}}}")
+        self.emit(PYTHON_WARNINGS)
+
         
 
-    def section(self, node, _nodes):
+    def section(self, node, nodes):
         logging.info(f"Processing section: {node.args[0]}")
         self.emit(f"\n## ")
         self.parse(node.args[0]._contents)
-        label = self._get_label(_nodes)
+        label = self._get_label(nodes)
         if label:
             label = label.replace(":", "-")
             self.emit(f" {{#{label}}}")
 
 
-    def subsection(self, node, _nodes):
+    def subsection(self, node, nodes):
         logging.info(f"... Processig subsection: {node.args[0]}")
         self.emit(f"### ")
-        self.parse(node.args[0]._contents)
+        self.parse(node.args[0]._contents)        
+        label = self._get_label(nodes)
+        if label:
+            label = label.replace(":", "-")
+            self.emit(f" {{#{label}}}")
+
 
     def paragraph(self, node, _nodes):
         self.emit("**")
@@ -393,15 +421,13 @@ class Parser:
         label = _pop_named(nodes, "label", strict=False)
         if not label:
             label = _label_from_caption(caption)
-        
+        print(node)
+        print(caption.args[0])
         self._current_caption = " ".join(caption.args[0].contents)
         self._current_label = " ".join(label.args[0].contents)
         self.parse(nodes)
 
     def includegraphics(self, node, _nodes):
-        if self._intable:
-            self._open_cell()
-
         fn = _arg(node).replace("{", "").replace("}", "")
         img = Path(fn)
         if img.name == "emoji.pdf":
@@ -422,9 +448,15 @@ class Parser:
             self.emit(f"{{#{self._current_label.replace(':', '-')}}}")
 
     def tikzpicture(self, node, _nodes):
-        fn = f"{self._last_float.replace(':', '_')}.png"
+        fn =  f"{self._current_label.replace(':', '_')}.png"
         tikzfig(self._img_folder / fn, str(node))
-        self.emit(f"<img src='img/{fn}' />")
+        self.emit(f"![{self._current_caption}](img/{fn}){{#{self._current_label.replace(':', '-')}}}")
+
+        # tikzpicture doesn't work because I can't include the pgfplots :(
+        #self.emit("```{r, engine = 'tikz'}\n")
+        #self.emit(str(node))
+        #self.emit("```\n")
+
     neuralnetwork=tikzpicture
 
     def _img_html(self, img: Path):
@@ -443,6 +475,28 @@ class Parser:
         self._float(ref, caption._contents)
         self.parse(body._contents)
 
+    def table(self, node, _nodes):   
+        caption = _pop_named(node._contents, "caption", strict=False)
+        self.CAPTION = caption
+        args = list(caption.all)  
+        label = args.pop(0)
+        caption = args.pop(0)
+        while args:
+            tabularx = args.pop(0)
+            if tabularx.name == "tabularx":
+                break
+        else:
+            raise Exception("No tabularx found :(")
+        self.parse([tabularx])
+        #tbl = pandoc.read(str(tabularx), format='latex')
+        #self.emit(pandoc.write(tbl, format='markdown'))
+        ref = label.contents[0].replace("tab:", "tbl-")
+        self.emit(f": {caption} {{#{ref}}}\n\n")
+
+        if args:
+            # Table notes
+            self.parse(args)
+
     def tabularx(self, node, _nodes):
         size, columns = _args(node)
         self._table(node, columns)
@@ -451,69 +505,46 @@ class Parser:
         columns = _arg(node)
         self._table(node, columns)
 
+    def parse_columns(self, columns):
+        columns = re.sub("@{}", "", columns)
+        return list(columns)
+
     def _table(self, node, columns):
-        self._intable = dict(columns=list(columns), inhead=True, inrow=None, incell=False)
-        self.emit("<table class='table'>")
-        self.emit("<thead>\n")
+        self._intable = dict(columns=self.parse_columns(columns), inhead=True, inrow=False, incell=False)
         self.parse(node._contents)
-        self._close_row()
-        self.emit(f"</{'thead' if self._intable['inhead'] else 'tbody'}>\n")
-        self.emit("</table>")
         self._intable = None
 
     def multicolumn(self, node, _nodes):
-        self._open_row()
         ncol, _just, content = node.args
         ncol = int(ncol.string)
-        self._open_cell(ncol=ncol)
         self.parse(content._contents)
+        for i in range(ncol-1):
+            self.emit("|")
         #self._close_cell()
 
     def _table_text(self, text):
         for t in re.split(r"(\\\\|&(?!\w+;))", text):
             if t == "\\\\":
-                self._close_row()
+                self.emit("|\n")
+                self._table_close_head()
+                self._intable['inrow'] = False
             elif t == "&":
                 if not self._intable['incell']:
-                    self._open_cell() # empty cell
-                self._close_cell()
+                    self.emit(" | ")
             elif self._intable['incell'] or t.strip():
-                self._open_cell()
-                self.emit(t)
-
-    def _close_row(self):
-        if self._intable['inrow'] is not None:
-            empty_cells = len(self._intable['columns']) - self._intable['inrow']
-            self._close_cell()
-            if empty_cells > 0:
-                self._open_cell(ncol=empty_cells)
-                self._close_cell()
-            self.emit(f"\n  </tr>\n")
-            self._intable['inrow'] = None
-
-    def _open_row(self):
-        if self._intable['inrow'] is None:
-            self.emit(f"  <tr>\n")
-            self._intable['inrow'] = 0
-            self._intable['incell'] = False
-
-    def _open_cell(self, ncol=1):
-        if not self._intable['incell']:
-            self._open_row()
-            extra = f' colspan="{ncol}"' if ncol > 1 else ''
-            self.emit(f"    <{'th' if self._intable['inhead'] else 'td'}{extra}>\n")
-            self._intable['incell'] = True
-            self._intable['inrow'] += ncol
-
-    def _close_cell(self):
-        if self._intable['incell']:
-            self.emit(f"\n    </{'th' if self._intable['inhead'] else 'td'}>\n")
-            self._intable['incell'] = False
+                if not self._intable['inrow']:
+                    self.emit("|")
+                    self._intable['inrow'] = True
+                self.emit(t.strip())
 
     def midrule(self, _node, _nodes):
-        self._close_row()
+        return
+
+    def _table_close_head(self):
         if self._intable['inhead']:
-            self.emit(f"</thead><tbody>\n")
+            self.emit("|")
+            self.emit("|".join(["-"]*len(self._intable['columns'])))
+            self.emit("|\n")
             self._intable['inhead'] = False
 
     def cmidrule(self, _node, nodes):
@@ -521,13 +552,6 @@ class Parser:
         next = nodes.pop(0)
         if re.match(r"\(\w+\)", str(next)):
             nodes.pop(0)
-
-    def caption(self, node, nodes):
-        if len(node.args) == 3:
-            # Wiley has weird tables - the caption has arguments {caption}{body}{note}
-            return self._wiley_table(*node.args)
-        ref = self._get_label(nodes)
-        self._float(ref, node.args[0]._contents)
 
     def _float(self, ref, contents):
         nr = self._toc.labels[ref]
@@ -580,13 +604,16 @@ class Parser:
             self.emit(f"## {caption}\n")
             
         self.BLA = list(contents)
-
         self.parse(contents)
         self.emit("\n:::\n")
 
     def _read_snippet(self, fn):
         snippet_file = self._base / "snippets" / f"{fn}"
-        code = snippet_file.open().read()
+        if not snippet_file.exists():
+            logging.warning(f"File not found: {fn}")
+            code = f"#File not found: {fn}"
+        else:
+            code = snippet_file.open().read()
         #lines = [x.replace("<", "&lt;").replace(">", "&gt;")
         #         for x in code.split("\n")]
         return code
@@ -610,7 +637,8 @@ class Parser:
         self.emit(f"\n```{{{language} {chunkname}}}\n")
         if not execute:
             self.emit("#| eval: false\n")
-        if language == "python" and "!pip" not in lines:
+        if language == "python" and "!pip" not in lines and "!{sys" not in lines:
+            lines = lines.replace("%matplotlib inline", "")
             lines = format_str(lines, mode=FileMode(line_length=80))
         if language == 'python' and "output:png" in tags:
             self.emit("#| results: hide\n")
@@ -629,15 +657,15 @@ class Parser:
         self._doublecodex(_arg(node))
 
     def codex(self, node, nodes):
-        return
-        fn = _arg(node)
-        snippet_file = self._base / "snippets" / f"{fn}"
-        content = snippet_file.open().read()
+        fn = Path(_arg(node))
+        if fn.suffix == ".out":
+            return
+        language = {".r": "r", ".py": "python"}[fn.suffix]
+        snippet = self._read_snippet(fn)
+        self._code_input(f"{language.title()} code", snippet, language=language, snippet=fn.stem)
         kwargs = self.extract_kwargs(_optarg(node))
-        content = content.replace("<", "&lt;").replace(">", "&gt;")
-        self.emit("<div class='code-single'>")
-        self.emit(f"<pre class='output'>{content}</pre>")
-        self.emit("</div>")
+        print(kwargs)
+
 
     def codexoutputtable(self, node, _nodes):
         return
@@ -721,6 +749,7 @@ class Parser:
         self.emit("\n:::\n")
 
     def tcolorbox(self, node, _nodes):
+        return  # I think it's only used within output, which we don't need to render...
         self._close_p()
         kwargs = self.extract_kwargs(_optarg(node))
         self.emit(f"\n<div class='code-output'>")
@@ -752,7 +781,7 @@ class Parser:
         fn = _arg(node)
         kwargs = self.extract_kwargs(_optarg(node))
         ref = f"exm-{Path(fn).name}"
-
+        print(f"PYREX {fn}")
         # Captions from kwargs are not parsed, so manually do required substitutions
         caption = kwargs['caption']
         caption = re.sub("\$([^$]+)\$", "*\\1*", caption)
@@ -793,7 +822,7 @@ class Parser:
 
     ##### REFERENCES #####
     def refchap(self, node, _nodes):
-        self._ref(node, prefix="chap")
+        self._ref(node, prefix="sec-chap")
 
     def refsec(self, node, _nodes):
         self._ref(node, prefix="sec")
@@ -815,7 +844,8 @@ class Parser:
         ref = _args(node)[0]
         if ":" in ref:
             prefix, ref = ref.split(":", 1)
-            prefix = {'ex': 'exm'}.get(prefix, prefix)
+            fixes = {'ex': 'exm', 'chap': 'sec-chap', 'tab': 'tbl'}
+            prefix = fixes.get(prefix, prefix)
         else:
             prefix = None
         self.emit("[-")
@@ -867,11 +897,11 @@ class Parser:
         # HACK remove index/emph tags from caption since they mess up processing
         argtext = re.sub(r"\\index\{([^}]+)}", "", argtext)
         argtext = re.sub(r"\\(emph|texttt)\{([^}]+)}", "\\2", argtext)
-        if "\\refex" in argtext:
-            m = re.match(r"(.*)\\refex\{([^}]+)}(.*)", argtext)
-            pre, ex, post = m.groups()
-            ex = self._ref_html("Example", f"ex:{ex}")
-            argtext = "".join([pre, ex, post])
+        #if "\\refex" in argtext:
+        #    m = re.match(r"(.*)\\refex\{([^}]+)}(.*)", argtext)
+        #    pre, ex, post = m.groups()
+        #    ex = self._ref_html("Example", f"ex:{ex}")
+        #    argtext = "".join([pre, ex, post])
 
         argtext = re.sub(r"\\refex\{([^}]+)}", "", argtext)
         # HACK to parse braces around caption
@@ -983,7 +1013,7 @@ def tikzfig(outf: Path, tikz: str, density=144):
         f.write("\n\n\\end{document}")
     cmd = 'pdflatex -halt-on-error -interaction=batchmode -jobname "test-figure0" "\\def\\tikzexternalrealjob{test}\input{test}"'
     subprocess.check_call(cmd, shell=True, cwd=tmpdir)
-    cmd = ["convert", "-density", str(density), tmpdir/'test-figure0.pdf', outf]
+    cmd = ["convert", "-density", str(density), str(tmpdir/'test-figure0.pdf'), str(outf)]
     subprocess.check_call(cmd)
     shutil.rmtree(tmpdir)
 

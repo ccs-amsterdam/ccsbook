@@ -164,7 +164,7 @@ There are many other excellent examples of how you can adopt image classificatio
 In this section, we will learn how to conduct computational image classification which is probably the most extended computer vision application in communication and social sciences (see Table~\ref{tab:visionlingo} for some terminology). We will first discuss how to apply a \textit{shallow} algorithm and then a deep-learning approach, given a labelled data set. 	
 
 \begin{table}
-\caption{Some computer vision concepts used in computational analysis of communication \label{tab:visionlingo}}{
+\caption{\label{tab:visionlingo} Some computer vision concepts used in computational analysis of communication}{
   \centering
 \begin{tabularx}{\textwidth}{XX}
 \toprule
@@ -191,9 +191,7 @@ Beyond image classification we have other specific tasks in computer vision such
 \begin{figure}
 \centering
 \includegraphics[width=0.9\linewidth]{figures/ch15_location.png}
-\caption{Object detection (left) versus semantic segmentation (right).
-Source: \citet{geron2019hands}}
-\label{fig:location}
+\caption{\label{fig:location} Object detection (left) versus semantic segmentation (right). Source: geron2019hands}
 \end{figure}
 
 It is beyond the scope of this book to address the implementation of object detection or semantic segmentation, but we will focus on how to conduct basic image classification in state-of-the-art libraries in R and Python. As you may have imagined we will need some already-labelled images to have a proper training set. It is also out of the scope of this chapter to collect and annotate the images, which is the reason why we will mostly rely on pre-existing image databases (i.e., MINST or Fashion MINST) and pre-trained models (i.e., CNN architectures).
